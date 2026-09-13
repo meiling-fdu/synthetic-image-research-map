@@ -66,7 +66,7 @@ let activeInstitutionFilter = null;
 const currentYearSelection = () => ({{start: 2018, end: 2026}});
 const TASK_COLORS = {{
   detection: '#1', source_attribution: '#2',
-  detection_and_source_attribution: '#3',
+  localization: '#3',
 }};
 const escapeHtml = value => String(value);
 const recordInstitution = record => record.institution;
@@ -79,12 +79,14 @@ const normalizedSetSize = values => new Set(values.filter(Boolean)).size;
 const paperListRecordsForDisplay = records => [
   ...new Map(records.map(record => [paperIdentity(record), record])).values(),
 ];
+{self.function_block("selectedFilterValues", "serializedFilterValues")}
+const getTasks = record => record.tasks;
 {statistics}
 {charts}
 const records = [
-  {{paper: 'p1', institution: 'Alpha', country: 'US', task: 'detection', year: 2022}},
-  {{paper: 'p1', institution: 'Beta', country: 'GB', task: 'detection', year: 2022}},
-  {{paper: 'p2', institution: 'Alpha', country: 'US', task: 'source_attribution', year: 2023}},
+  {{paper: 'p1', institution: 'Alpha', country: 'US', tasks: ['detection', 'localization'], year: 2022}},
+  {{paper: 'p1', institution: 'Beta', country: 'GB', tasks: ['detection', 'localization'], year: 2022}},
+  {{paper: 'p2', institution: 'Alpha', country: 'US', tasks: ['source_attribution'], year: 2023}},
 ];
 // This mirrors deriveFilteredRecordSets: one entry per paper identity.
 const papers = [records[0], records[2]];
@@ -118,8 +120,12 @@ process.stdout.write(JSON.stringify({{all, filtered: snapshot()}}));
         )
         self.assertIn("Alpha — 2 unique papers", result["all"]["institution"])
         self.assertIn("Alpha — 1 unique paper", result["filtered"]["institution"])
-        self.assertIn("2 filtered unique papers", result["all"]["task"])
-        self.assertIn("1 filtered unique paper", result["filtered"]["task"])
+        # Multilabel task counts overlap; the displayed total is deduplicated.
+        self.assertIn('<span>Total Unique Papers</span><strong>2</strong>', result["all"]["task"])
+        self.assertIn('Localization — 1 unique paper', result["all"]["task"])
+        self.assertIn('Detection — 1 unique paper', result["all"]["task"])
+        self.assertIn('<span>Total Unique Papers</span><strong>1</strong>', result["filtered"]["task"])
+        self.assertIn('Labels overlap; counts do not sum to the total.', result["filtered"]["task"])
         self.assertIn("2023 — 1 unique paper", result["all"]["year"])
         self.assertNotIn("2023", result["filtered"]["year"])
 

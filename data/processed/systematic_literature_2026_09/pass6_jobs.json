@@ -1,0 +1,219 @@
+[
+  {
+    "channel": "A",
+    "kind": "neurips_index",
+    "seed": "ICLR 2024 official proceedings",
+    "url": "https://proceedings.iclr.cc/paper_files/paper/2024",
+    "query": {},
+    "retrieval_bound": "complete official returned book index",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH"
+  },
+  {
+    "channel": "A",
+    "kind": "neurips_index",
+    "seed": "ICLR 2025 official proceedings",
+    "url": "https://proceedings.iclr.cc/paper_files/paper/2025",
+    "query": {},
+    "retrieval_bound": "complete official returned book index",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH"
+  },
+  {
+    "channel": "A",
+    "kind": "neurips_index",
+    "seed": "ICLR 2026 official proceedings",
+    "url": "https://proceedings.iclr.cc/paper_files/paper/2026",
+    "query": {},
+    "retrieval_bound": "complete official returned book index",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH"
+  },
+  {
+    "channel": "A",
+    "kind": "neurips_index",
+    "seed": "NeurIPS 2025 Main Conference",
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2025/vol38-main-conference",
+    "query": {},
+    "retrieval_bound": "complete official book; main/position/dataset tracks",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "url_provenance": "Main Conference link in cached Creative AI book"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "GenImage",
+    "url": "https://arxiv.org/abs/2306.08571",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "GenImage: A Million-Scale Benchmark for Detecting AI-Generated Image"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "GenImage++",
+    "url": "https://arxiv.org/abs/2506.00874",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "Breaking Latent Prior Bias in Detectors for Generalizable AIGC Image Detection"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "Community Forensics",
+    "url": "https://doi.org/10.1109/cvpr52734.2025.00772",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "Community Forensics: Using Thousands of Generators to Train Fake Image Detectors"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "FakeBench",
+    "url": "https://arxiv.org/abs/2404.13306",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "FakeBench: Probing Explainable Fake Image Detection via Large Multimodal Models"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "ForensicHub",
+    "url": "https://arxiv.org/abs/2505.11003",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "GIM",
+    "url": "https://arxiv.org/abs/2406.16531",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "GIM: A Million-Scale Benchmark for Generative Image Manipulation Detection and Localization"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "OpenFake",
+    "url": "https://arxiv.org/abs/2509.09495",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "OpenFake: An Open Dataset and Platform Toward Real-World Deepfake Detection"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "UniAIDet",
+    "url": "https://arxiv.org/abs/2510.23023",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "UniAIDet: A Unified and Universal Benchmark for AI-Generated Image Content Detection and Localization"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "WildFake",
+    "url": "https://arxiv.org/abs/2402.11843",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "WildFake: A Large-Scale and Hierarchical Dataset for AI-Generated Images Detection"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "Semi-Truths",
+    "url": "https://doi.org/10.52202/079017-3748",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "Semi-Truths: A Large-Scale Dataset of AI-Augmented Images for Evaluating Robustness of AI-Generated Image Detectors"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "Artifact",
+    "url": "https://arxiv.org/abs/2302.11970",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "Artifact: A Large-Scale Dataset With Artificial And Factual Images For Generalizable And Robust Synthetic Image Detection"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "Synthbuster",
+    "url": "https://doi.org/10.1109/ojsp.2023.3337714",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "Synthbuster: Towards Detection of Diffusion Model Generated Images"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "ImageAttributionBench",
+    "url": "https://arxiv.org/abs/2605.12967",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "ImageAttributionBench: How Far Are We from Generalizable Attribution?"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "SAFE",
+    "url": "https://doi.org/10.1109/wacvw68408.2026.00103",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "The SAFE Image Authenticity Challenge: Detecting and Localizing Partial and Fully Synthetic Manipulations"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "ForenSynths",
+    "url": "https://doi.org/10.1109/cvpr42600.2020.00872",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "CNN-Generated Images Are Surprisingly Easy to Spot\u2026 for Now"
+  },
+  {
+    "channel": "C",
+    "kind": "lineage_paper",
+    "seed": "Chameleon",
+    "url": "https://arxiv.org/abs/2406.19435",
+    "query": {},
+    "retrieval_bound": "foundational dataset/benchmark primary paper; no arbitrary dataset users",
+    "discovery_pass": 6,
+    "enumeration_level": "BOUNDED_SEARCH",
+    "paper_title": "A Sanity Check for AI-Generated Image Detection"
+  }
+]

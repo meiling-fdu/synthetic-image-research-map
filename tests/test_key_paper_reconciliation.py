@@ -59,20 +59,23 @@ def test_resolved_identity_recognizes_existing_exclusion():
     assert rows[0]['coverage_status'] == 'excluded'
 
 
-def test_all_targeted_additions_remain_unreviewed_and_have_no_inferred_geography():
+def test_targeted_additions_were_unreviewed_before_explicit_primary_curation():
     decisions = audit.load_json_records(audit.ROOT / audit.RECONCILIATION_PATH)
     additions = [d for d in decisions if d['action'] == 'added_needs_review']
     assert len(decisions) == 46
     assert len(additions) == 10
     papers = audit.load_csv(audit.ROOT / 'data/curated/papers.csv')
-    mappings = audit.load_csv(audit.ROOT / 'data/curated/author_institution_mappings.csv')
+    baseline = json.loads((audit.ROOT / 'data/processed/primary_curation_baseline_2026_09_08.json').read_text())
+    original = {p['paper_id']: p for p in baseline['target_initial_rows']}
+    assert baseline['target_initial_mapping_rows'] == []
     for d in additions:
         assert d['classification'] == 'MISSING_ADD'
         matches = [p for p in papers if p['paper_id'] == d['matched_record']['paper_id']]
         assert len(matches) == 1
-        assert matches[0]['curation_status'] == 'needs_review'
-        assert matches[0]['review_status'] == 'pending'
-        assert not any(m['paper_id'] == matches[0]['paper_id'] for m in mappings)
+        assert original[matches[0]['paper_id']]['curation_status'] == 'needs_review'
+        assert original[matches[0]['paper_id']]['review_status'] == 'pending'
+        # Current relationships are checked against inspected primary evidence
+        # by test_primary_paper_curation, not frozen at the addition-time state.
         assert set(d['deduplication']) >= {'doi', 'arxiv', 'openalex', 'normalized_exact_title', 'method_acronym', 'bounded_fuzzy_candidates'}
 
 

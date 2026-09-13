@@ -145,12 +145,44 @@ def values_to_lists(values):
     return {k: sorted(v) for k, v in values.items()}
 
 
+def verify_current_curation():
+    """Verify today's membership using the persisted pre-curation snapshot."""
+    try:
+        from .report_primary_paper_curation import build_audit, BASELINE
+    except ImportError:
+        from report_primary_paper_curation import build_audit, BASELINE
+    primary = build_audit()
+    artifacts, totals, errors = audit.expected_artifacts()
+    assert not errors and not audit.validate_artifacts()
+    rows = audit.load_csv(ROOT / audit.OUT_PATH)
+    counts = Counter(r['coverage_status'] for r in rows)
+    assert sum(counts.values()) == totals['key_papers'] == 299
+    assert all(totals[k] == counts[k] for k in audit.ALLOWED_STATUSES)
+    assert totals['public_papers'] == 620 and totals['excluded'] == 10
+    assert totals['candidate_only'] == totals['missing_from_candidate_pool'] == 0
+    decisions = audit.load_json_records(ROOT / audit.RECONCILIATION_PATH)
+    additions = [d['matched_record']['paper_id'] for d in decisions if d['action'] == 'added_needs_review']
+    assert len(additions) == 10 and set(additions) == {p['paper_id'] for p in primary['papers']}
+    excluded = [p for p in primary['papers'] if p['public_status'] == 'excluded']
+    assert len(excluded) == 3
+    return {
+        'baseline': str(BASELINE), 'baseline_public_papers': 623,
+        'final_audit': totals, 'published_only': primary['summary']['published_only'],
+        'integrity': primary['integrity'], 'additions': primary['papers'],
+        'exclusion_identity_traces': excluded,
+        'source_sha256': {str(p): sha(ROOT / p) for p in (*audit.INPUT_PATHS, BASELINE)},
+        'audit_fresh': True,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--baseline', type=Path, required=True)
+    parser.add_argument('--baseline', type=Path,
+                        help='Optional original reconciliation snapshot for historical verification; omit for current primary curation.')
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args()
-    expected = json.dumps(verify(args.baseline), indent=2, ensure_ascii=False) + '\n'
+    report = verify(args.baseline) if args.baseline else verify_current_curation()
+    expected = json.dumps(report, indent=2, ensure_ascii=False) + '\n'
     if args.check:
         return int(not OUTPUT.exists() or OUTPUT.read_text() != expected)
     OUTPUT.write_text(expected)

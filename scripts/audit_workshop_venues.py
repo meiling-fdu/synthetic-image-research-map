@@ -21,10 +21,20 @@ FIELDS = {"venue": "canonical_venue", "venue_name": "canonical_venue", "venue_id
           "host_venue_name": "source_container", "proceedings": "container_title", "booktitle": "container_title"}
 
 
-def source_hashes():
-    return {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
+def is_research_source_path(path):
+    """Exclude incidental OS metadata, including in immutable old manifests.
+
+    Do not exclude arbitrary hidden files: they may be meaningful evidence.
+    """
+    return not any(part in {".DS_Store", "Thumbs.db", "desktop.ini", "__MACOSX"}
+                   or part.startswith("._") for part in Path(path).parts)
+
+
+def source_hashes(root=ROOT):
+    return {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
             for folder in ("data/raw", "data/manual", "data/curated")
-            for p in sorted((ROOT / folder).rglob("*")) if p.is_file()}
+            for p in sorted((root / folder).rglob("*"))
+            if p.is_file() and is_research_source_path(p.relative_to(root))}
 
 
 def inventory():
@@ -113,7 +123,10 @@ def main():
         "workshops_to_workshop": sum(c["fields"].get("venue_track", {}).get("before", "").casefold() == "workshops"
                                      and c["fields"]["venue_track"]["after"] == "Workshop" for c in changes),
         "manual_review": sum(bool(p.get("venue_review_required")) for p in current["papers"]),
-        "source_files_unchanged": current["source_hashes"] == before["source_hashes"],
+        "source_files_unchanged": current["source_hashes"] == {
+            path: digest for path, digest in before["source_hashes"].items()
+            if is_research_source_path(path)
+        },
         "parent_workshop_papers_corrected": len(parent_corrections),
         "parent_acronyms_corrected": sum("venue_acronym" in c["fields"] for c in parent_corrections),
         "parent_identities_corrected": sum("venue_id" in c["fields"] for c in parent_corrections),

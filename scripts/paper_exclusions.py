@@ -186,6 +186,36 @@ def record_is_excluded(
     return any(key in active_index for key in (strong_keys or keys))
 
 
+def exclusions_with_curated_identities(
+    exclusion_rows: Sequence[Mapping[str, Any]],
+    curated_papers: Sequence[Mapping[str, Any]],
+) -> List[Dict[str, Any]]:
+    """Link existing exclusions to authoritative IDs for this export only.
+
+    A preserved preview may predate a curated DOI/OpenAlex correction. Its
+    stable paper ID must still resolve to the same active exclusion. Never
+    infer this bridge from title similarity or write it to the source CSV.
+    """
+    result = [dict(row) for row in exclusion_rows]
+    index = build_active_exclusion_index(exclusion_rows)
+    for paper in curated_papers:
+        if not clean(paper.get("paper_id")):
+            continue
+        matches = {}
+        for key in all_identity_keys(paper):
+            if key.startswith("title_year:"):
+                continue
+            for exclusion in index.get(key, ()):
+                matches[id(exclusion)] = exclusion
+        for exclusion in matches.values():
+            result.append({
+                **exclusion,
+                **{field: paper.get(field, "") for field in
+                   ("paper_id", "title", "year", "doi", "arxiv_id", "openalex_url")},
+            })
+    return result
+
+
 def filter_public_output_pair(
     paper_records: Sequence[Mapping[str, Any]],
     map_records: Sequence[Mapping[str, Any]],

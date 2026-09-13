@@ -436,6 +436,7 @@ class InstitutionHierarchyTests(unittest.TestCase):
                 "AI-Generated Images via Real-Only Representation Learning",
                 "SynerDetect: Hierarchical Synergistic Learning for "
                 "Generalizable AI-Generated Image Detection",
+                "Can VLMs Detect and Localize Fine-Grained AI-Edited Images?",
             ],
         )
 

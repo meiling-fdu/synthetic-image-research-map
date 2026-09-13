@@ -31,7 +31,7 @@ class FrontendChartQuickFilterTests(unittest.TestCase):
         activation = self.function("activateChartFilter", "renderTaskChart")
         result = self.run_node(f"""
 const taskFilter = {{
-  value: 'all', options: [{{value: 'all'}}, {{value: 'detection'}}],
+  multiple: true, options: [{{value: 'all', selected: true}}, {{value: 'detection', selected: false}}],
 }};
 const minYearFilter = {{value: '2018'}};
 const maxYearFilter = {{value: '2026'}};
@@ -46,7 +46,7 @@ let rangeSyncs = 0;
 let focusRestores = 0;
 const headerStatistics = {{
   querySelectorAll: () => [
-    ['task', 'detection'],
+    ['tasks', 'detection'],
     ['institution', 'institution:alpha'],
     ['year', '2024'],
   ].map(([chartFilter, chartValue]) => ({{
@@ -64,24 +64,25 @@ const hideChartTooltip = () => {{}};
 const rememberFilterChange = () => {{}};
 const requestUrlStateSync = mode => urlUpdates.push(mode);
 const renderRecords = () => {{ renders += 1; }};
+{self.function("selectedFilterValues", "serializedFilterValues")}
 {activation}
 const snapshot = name => ({{
-  name, task: taskFilter.value,
+  name, task: selectedFilterValues(taskFilter),
   institution: activeInstitutionFilter,
   years: [minYearFilter.value, maxYearFilter.value],
   renders, urlUpdates: [...urlUpdates], dropdownSyncs, rangeSyncs, focusRestores,
 }});
 const states = [];
-activateChartFilter('task', 'detection'); states.push(snapshot('task-on'));
-activateChartFilter('task', 'detection'); states.push(snapshot('task-off'));
+activateChartFilter('tasks', 'detection'); states.push(snapshot('task-on'));
+activateChartFilter('tasks', 'detection'); states.push(snapshot('task-off'));
 activateChartFilter('institution', 'institution:alpha', 'Alpha'); states.push(snapshot('institution-on'));
 activateChartFilter('institution', 'institution:alpha', 'Alpha'); states.push(snapshot('institution-off'));
 activateChartFilter('year', '2024'); states.push(snapshot('year-on'));
 activateChartFilter('year', '2024'); states.push(snapshot('year-off'));
 process.stdout.write(JSON.stringify(states));
 """)
-        self.assertEqual(result[0]["task"], "detection")
-        self.assertEqual(result[1]["task"], "all")
+        self.assertEqual(result[0]["task"], ["detection"])
+        self.assertEqual(result[1]["task"], [])
         self.assertEqual(result[2]["institution"], {
             "identity": "institution:alpha", "label": "Alpha",
         })
@@ -105,7 +106,7 @@ const taskChartContent = {{innerHTML: ''}};
 const institutionChartContent = {{innerHTML: ''}};
 const yearChartContent = {{innerHTML: ''}};
 const TASK_COLORS = {{
-  detection: '#1', source_attribution: '#2', detection_and_source_attribution: '#3',
+  detection: '#1', source_attribution: '#2', localization: '#3',
 }};
 const escapeHtml = value => String(value);
 const recordInstitution = record => record.institution;
@@ -114,17 +115,19 @@ const paperIdentity = record => record.paper;
 const publicationYear = record => record.year;
 const compareTextValues = (first, second) => first.localeCompare(second);
 const renderChartEmpty = container => {{ container.innerHTML = 'empty'; }};
-const taskFilter = {{value: 'detection'}};
+const taskFilter = {{multiple: true, options: [{{value: 'detection', selected: true}}]}};
 let activeInstitutionFilter = {{identity: 'institution:alpha', label: 'Alpha'}};
 const minYearFilter = {{value: '2024'}};
 const maxYearFilter = {{value: '2024'}};
 const currentYearSelection = () => ({{
   start: Number(minYearFilter.value), end: Number(maxYearFilter.value),
 }});
+{self.function("selectedFilterValues", "serializedFilterValues")}
+const getTasks = record => record.tasks;
 {charts}
 const records = [
-  {{paper: 'p1', institution: 'Alpha', institutionKey: 'institution:alpha', task: 'detection', year: 2024}},
-  {{paper: 'p2', institution: 'Beta', institutionKey: 'institution:beta', task: 'source_attribution', year: 2023}},
+  {{paper: 'p1', institution: 'Alpha', institutionKey: 'institution:alpha', tasks: ['detection'], year: 2024}},
+  {{paper: 'p2', institution: 'Beta', institutionKey: 'institution:beta', tasks: ['source_attribution'], year: 2023}},
 ];
 renderTaskChart(records);
 renderInstitutionChart(records);
@@ -134,7 +137,7 @@ const selected = {{
   institution: institutionChartContent.innerHTML,
   year: yearChartContent.innerHTML,
 }};
-taskFilter.value = 'all';
+taskFilter.options.forEach(option => {{ option.selected = false; }});
 activeInstitutionFilter = null;
 minYearFilter.value = '2018';
 maxYearFilter.value = '2026';

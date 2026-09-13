@@ -960,6 +960,11 @@ def build_curated_paper_preview_records(
     }
 
 
+def has_explicit_primary_review(record: Mapping[str, Any]) -> bool:
+    """A source-backed field review need not imply overall confirmation."""
+    return clean(record.get("metadata_source")).casefold().startswith("primary-source review ")
+
+
 def _merge_curated_paper(
     existing: MutableMapping[str, Any],
     curated: Mapping[str, Any],
@@ -969,7 +974,7 @@ def _merge_curated_paper(
     formal_publication = clean(curated.get("metadata_source")).casefold().startswith(
         "formal publication"
     )
-    authoritative = confirmed or formal_publication
+    authoritative = confirmed or formal_publication or has_explicit_primary_review(curated)
     if authoritative:
         curated_year = _parse_year(
             curated.get("publication_year") or curated.get("year")
@@ -1581,6 +1586,10 @@ def _mark_location_known(
         if row_index is not None or (
             set(_queue_keys(row)) & set(_queue_keys(mapping))
         ):
+            # Export can use an independently confirmed canonical location,
+            # but it is not a review action on this paper-specific queue row.
+            if clean(row.get("review_status")) not in {"confirmed", "alias_of_confirmed"}:
+                return False
             if (
                 clean(row.get("location_status")) == "known"
                 and clean(row.get("coordinate_status")) == "known"

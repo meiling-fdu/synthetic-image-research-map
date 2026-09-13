@@ -1,0 +1,30 @@
+Public preview validation: web/data/public_preview_map_data.json
+Total records: 1438
+Unique papers: 614
+Unique institutions: 632
+Errors: 0
+Warnings: 0
+
+Public preview validation: web/data/public_preview_papers.json
+Total records: 620
+Unique papers: 620
+Papers with map locations: 613
+Papers missing affiliations: 0
+Papers missing coordinates: 1
+Errors: 0
+Warnings: 11
+
+Issues:
+WARNING record[3] 'A Difference-in-Difference Approach to Detecting AI-Generated Images': author has no institution index: Kai Ye
+WARNING record[3] 'A Difference-in-Difference Approach to Detecting AI-Generated Images': author has no institution index: Chengchun Shi
+WARNING record[3] 'A Difference-in-Difference Approach to Detecting AI-Generated Images': author has no institution index: Jin Zhu
+WARNING record[261] 'Denoising Trajectory Biases for Zero-Shot AI-Generated Image Detection': author has no institution index: Jingyuan Li
+WARNING record[261] 'Denoising Trajectory Biases for Zero-Shot AI-Generated Image Detection': author has no institution index: Lanchi Xie
+WARNING record[266] 'Detecting Generated Images by Fitting Natural Image Distributions': author has no institution index: Bo Han
+WARNING record[281] 'Epistemic Uncertainty for Generated Image Detection': author has no institution index: Yiu-ming Cheung
+WARNING record[281] 'Epistemic Uncertainty for Generated Image Detection': author has no institution index: Bo Han
+WARNING record[435] 'Evasion on General GAN-Generated Image Detection by Disentangled Representation': author has no institution index: Daniel S. Yeung
+WARNING record[538] "Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model": author has no institution index: Gopal Sarkarkar
+WARNING record[538] "Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model": author has no institution index: Shilpa Gedam
+
+Validation passed.

@@ -1,0 +1,41 @@
+{
+  "authoritative_corpus_changed": false,
+  "canonical_reproduces_from_cached_screening": true,
+  "changed_frozen_files": [],
+  "frozen_files_checked": 670,
+  "full_suite": {
+    "errors": 0,
+    "failures": 0,
+    "passed": 1450,
+    "skipped": 0,
+    "tests": 1450
+  },
+  "git_diff_check_exit": 0,
+  "initial_full_suite": {
+    "cause": "Report generator was edited after pytest collection; the loaded generator differed from the regenerated report. Initial log/XML retained; final rerun uses frozen generator and artifacts.",
+    "failed": 1,
+    "passed": 1449
+  },
+  "offline_artifacts_byte_identical": true,
+  "public_sha256": {
+    "public_preview_map_data.json": "4c959c175da31a6b7fe3f92591f4950d02f14f79b5a1f55fe7b6c1cfa7b81125",
+    "public_preview_papers.json": "8fd68f2c487dbc8872698205db7e1a8158c886e6bb14c58245005b964a6f523d"
+  },
+  "report_reproduces": true,
+  "test_command": "env PATH=<bundled-node-bin>:/opt/homebrew/bin:/usr/bin:/bin /usr/bin/python3 -m pytest -q --junitxml=data/processed/systematic_literature_2026_09/full_suite.xml",
+  "test_environment": "System Python 3.9 with installed pytest; bundled Node on PATH; localhost test-server binding permitted.",
+  "validators": {
+    "curated": {
+      "errors": 0,
+      "warnings": 215
+    },
+    "exclusion": {
+      "errors": 0,
+      "warnings": 2
+    },
+    "public": {
+      "errors": 0,
+      "warnings": 11
+    }
+  }
+}

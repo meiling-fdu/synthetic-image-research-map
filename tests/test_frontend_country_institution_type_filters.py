@@ -128,7 +128,8 @@ process.stdout.write(JSON.stringify({{
 
     def test_dropdowns_are_compact_defaults_near_institution_filters(self):
         self.assertIn('id="country-filter"', self.html)
-        self.assertEqual(self.html.count('data-filter-dropdown'), 9)
+        # Publication Status shares the same dropdown controller.
+        self.assertEqual(self.html.count('data-filter-dropdown'), 10)
         self.assertIn('button.setAttribute("role", "combobox")', self.app)
         self.assertIn('options.setAttribute("role", "listbox")', self.app)
         self.assertNotIn('role="searchbox"', self.html)

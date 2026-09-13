@@ -11,7 +11,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-09-08T14:39:05Z |
+| public_preview_generated_at | 2026-09-09T15:06:52Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1425 |
-| Unique mapped papers | 607 |
-| Unique institutions | 629 |
+| Map records | 1438 |
+| Unique mapped papers | 613 |
+| Unique institutions | 632 |
 | Countries | 52 |
-| arXiv/preprint records | 729 |
-| Records with DOI | 1180 |
-| Records with venue | 1421 |
+| arXiv/preprint records | 739 |
+| Records with DOI | 1182 |
+| Records with venue | 1434 |
 | Records missing venue | 4 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -36,18 +36,18 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Task | Records |
 | --- | ---: |
-| detection | 571 |
+| detection | 577 |
 | source_attribution | 76 |
-| localization | 18 |
+| localization | 20 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 207 |
-| 2025 | 168 |
+| 2026 | 209 |
+| 2025 | 171 |
 | 2024 | 112 |
-| 2023 | 48 |
+| 2023 | 49 |
 | 2022 | 22 |
 | 2021 | 23 |
 | 2020 | 15 |
@@ -73,9 +73,9 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Country | Records |
 | --- | ---: |
-| China | 693 |
-| United States | 180 |
-| Italy | 98 |
+| China | 700 |
+| United States | 184 |
+| Italy | 99 |
 | India | 67 |
 | Germany | 46 |
 | South Korea | 41 |
@@ -96,14 +96,14 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | Shenzhen University | 18 |
 | University of Science and Technology of China | 18 |
 | Zhejiang University | 18 |
+| Tsinghua University | 17 |
 | Peking University | 15 |
-| Tsinghua University | 15 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1333 |
+| high | 1346 |
 | medium | 92 |
 
 ## Potential quality issues

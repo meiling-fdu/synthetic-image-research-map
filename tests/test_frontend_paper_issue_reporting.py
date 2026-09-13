@@ -105,13 +105,17 @@ function recordInstitution(record) {{ return record.institution || ''; }}
 function recordLocation(record) {{ return record.location_display || ''; }}
 function recordTitle(record) {{ return record.title; }}
 function publicationYear(record) {{ return record.publication_year ?? null; }}
-function getPaperCategories(record) {{ return record.paper_categories || []; }}
+function getPaperCategories(record) {{ return record.research_types || []; }}
+function getTasks(record) {{ return record.tasks || []; }}
+function getImageScopes(record) {{ return record.image_scopes || []; }}
+const IMAGE_SCOPE_LABELS = {{fully_generated: 'Fully Generated'}};
 function getEntryTypeLabel(value) {{ return value === 'method' ? 'Method' : value; }}
 function formatPublicTask() {{ return 'Detection'; }}
 {context_helper}
 const context = paperIssueContext({{
   title: 'Public title', publication_type: 'Journal', venue: 'Public Venue',
-  publication_year: 2024, paper_categories: ['method'],
+  publication_year: 2024, research_types: ['method'],
+  tasks: ['detection'], image_scopes: ['fully_generated'],
   aggregated_institutions: ['Public University'],
   aggregated_locations: [{{location_display: 'Paris, France'}}],
   manual_review: true, provenance_sources: ['internal-source'],
@@ -123,6 +127,8 @@ console.log(JSON.stringify(context));
         self.assertEqual(result["title"], "Public title")
         self.assertEqual(result["publicationType"], "Journal")
         self.assertEqual(result["researchTypes"], ["Method"])
+        self.assertEqual(result["tasks"], ["Detection"])
+        self.assertEqual(result["imageScopes"], ["Fully Generated"])
         self.assertEqual(
             result["institutions"], ["Public University", "Public Lab"]
         )

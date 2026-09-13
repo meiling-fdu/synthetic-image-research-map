@@ -318,7 +318,11 @@ process.stdout.write(JSON.stringify(view));
         affiliation_items = self.css.split(
             ".paper-details-affiliations li {", 1
         )[1].split("}", 1)[0]
-        close = self.css.split(".paper-details-close {", 1)[1].split("}", 1)[0]
+        # The earlier coarse-pointer override is not the base close-button rule.
+        close = self.css.split("\n.paper-details-close {\n", 1)[1].split("}", 1)[0]
+        coarse = self.css.split("@media (pointer: coarse) {", 1)[1].split("\n}", 1)[0]
+        self.assertIn(".paper-details-close { min-height: 44px; }", coarse)
+        self.assertIn(".paper-details-close { min-width: 44px; }", coarse)
         actions = self.css.split(
             ".copy-paper-link-button,\n.report-paper-issue-link {", 1
         )[1].split("}", 1)[0]

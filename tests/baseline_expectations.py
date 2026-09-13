@@ -6,22 +6,20 @@ data change and the identity and relationship invariants in
 ``test_repository_baseline.py``.
 """
 
+# Primary curation of ten additions: six gain public markers; verified IDs
+# expose three existing exclusions. Exactly those three leave the public corpus.
 CURRENT_REPOSITORY_BASELINE = {
-    # Institution cleanup 2026-09-06: five merges, 20 locations, 22 map relationships.
-    # Canonical public records after ten needs_review reconciliation additions (2026-09-08).
-    "public_unique_papers": 623,
-    # Distinct paper identities represented by at least one public map marker.
-    "public_map_source_papers": 608,
-    # Canonical public papers that resolve to at least one public map marker.
-    "public_papers_with_map": 607,
-    "public_papers_without_map": 16,
-    # Registry rows include active identities plus retained merged/ignored history.
-    "total_institution_registry_rows": 691,
-    "active_canonical_institutions": 670,
+    "public_unique_papers": 620,
+    # Map source identities include one identity resolved to a canonical paper.
+    "public_map_source_papers": 614,
+    "public_papers_with_map": 613,
+    "public_papers_without_map": 7,
+    "total_institution_registry_rows": 703,
+    "active_canonical_institutions": 682,
     "non_active_institution_registry_rows": 21,
-    # Unique public paper–institution relationships; one relationship has two markers.
-    "public_paper_institution_relationships": 1424,
-    "institution_hierarchy_edges": 11,
+    # One paper–institution relationship has two markers (1438 markers total).
+    "public_paper_institution_relationships": 1437,
+    "institution_hierarchy_edges": 15,
     "institution_aliases": 120,
 }
 
@@ -40,11 +38,7 @@ RELEASE_REPOSITORY_BASELINE = {
     "institution_aliases": 80,
 }
 
-CANONICAL_INSTITUTION_STATUS_TOTALS = {
-    "active": 670,
-    "merged": 15,
-    "ignored": 6,
-}
+CANONICAL_INSTITUTION_STATUS_TOTALS = {'active': 682, 'ignored': 6, 'merged': 15}
 
 RELEASE_CANONICAL_INSTITUTION_STATUS_TOTALS = {
     "active": 650,
@@ -52,35 +46,19 @@ RELEASE_CANONICAL_INSTITUTION_STATUS_TOTALS = {
     "ignored": 6,
 }
 
-CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 508,
-    "research_unit": 80,
-    "company": 79,
-    "other": 24,
-}
+CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 511, 'company': 81, 'research_unit': 87, 'other': 24}
 
-ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 500, 'company': 77, 'research_unit': 76, 'other': 17}
+ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 503, 'company': 79, 'research_unit': 83, 'other': 17}
 
-PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 583, 'research_unit': 120, 'other': 33, 'company': 119}
+PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 588, 'research_unit': 123, 'other': 33, 'company': 121}
 
 # Historical release artifacts are immutable; current effective venues have
 # changed since the 2026-08-24 checkpoint.
 RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint": 64, "book": 1}
 
-PUBLICATION_TYPE_TOTALS = {
-    # Current corpus after the 2026-09-08 targeted reconciliation.
-    "conference": 361,
-    "journal": 157,
-    "preprint": 104,
-    "book": 1,
-}
+PUBLICATION_TYPE_TOTALS = {'conference': 362, 'preprint': 100, 'journal': 157, 'book': 1}
 
-TASK_TOTALS = {
-    # Multi-label public-paper counts after resolving the taxonomy review queue.
-    "detection": 587,
-    "source_attribution": 77,
-    "localization": 21,
-}
+TASK_TOTALS = {'detection': 584, 'source_attribution': 77, 'localization': 21}
 
 RELEASE_TASK_TOTALS = {
     "detection": 471,
@@ -115,16 +93,7 @@ INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS = {
     "curated-map:ff03ae3f6aab250e53d0",
 }
 
-# Exactly these additions intentionally await affiliation evidence and Admin review.
-RECONCILIATION_PENDING_PAPERS = {
-    "Detecting Generated Images by Real Images Only",
-    'Provenance Detection for AI-Generated Images: Combining Perceptual Hashing, Homomorphic Encryption, and AI Detection Models',
-    'Prefill-Guided Thinking for Zero-Shot Detection of AI-Generated Images',
-    'Pay Less Attention to Deceptive Artifacts: Robust Detection of Compressed Deepfakes on Online Social Networks',
-    'Redefining Generalization in Visual Domains: A Two-Axis Framework for Fake Image Detection with FusionDetect',
-    'LADLE-MM: Limited Annotation Based Detector with Learned Ensembles for Multimodal Misinformation',
+# Affiliation identity is reviewed; a defensible location is still pending.
+CURATED_PAPERS_AWAITING_COORDINATES = {
     'UniAIDet: A Unified and Universal Benchmark for AI-Generated Image Content Detection and Localization',
-    'Can VLMs Detect and Localize Fine-Grained AI-Edited Images?',
-    'The SAFE Image Authenticity Challenge: Detecting and Localizing Partial and Fully Synthetic Manipulations',
-    'Dynamic Ensemble of Deepfake Detectors Conditioned on CLIP Features',
 }

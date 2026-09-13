@@ -33,7 +33,7 @@ class FrontendPaperDeepLinkTests(unittest.TestCase):
 
     def test_restoration_opens_visible_and_filtered_out_papers_without_changing_filters(self):
         restore = self.function_source(
-            "restoreLinkedPaperSelection", "activateHoverPreview"
+            "restoreLinkedPaperSelection", "reconcilePersistentSelectionAfterFilter"
         )
         result = self.run_node(f"""
 const paper = {{title: 'Stable paper'}};
@@ -41,62 +41,70 @@ const origin = {{record: paper, marker: {{id: 1}}, institutionKey: 'institution:
 let requestedPaperIdentity = 'doi:10.1000/stable';
 const canonicalPaperRecordsByIdentity = new Map([[requestedPaperIdentity, paper]]);
 const visiblePaperSelectionByIdentity = new Map([[requestedPaperIdentity, origin]]);
-const interactionState = {{selected: null, selectedMarkerId: null}};
+const interactionState = {{selectedPaperId: null, detailMode: 'empty', selectionSource: null}};
 const filters = {{task: 'detection'}};
 {restore}
 const visible = restoreLinkedPaperSelection(new Set([requestedPaperIdentity]));
 const visibleSelection = {{
   state: visible,
-  identity: interactionState.selected.identity,
-  markerId: interactionState.selectedMarkerId,
-  filteredOut: interactionState.selected.filteredOut,
+  identity: interactionState.selectedPaperId,
+  mode: interactionState.detailMode,
+  source: interactionState.selectionSource,
 }};
 visiblePaperSelectionByIdentity.clear();
+// Bibliographic coverage remains selectable even without a map marker.
+const markerless = restoreLinkedPaperSelection(new Set([requestedPaperIdentity]));
 const filtered = restoreLinkedPaperSelection(new Set());
 console.log(JSON.stringify({{
   visibleSelection,
+  markerless,
   filtered,
-  filteredOut: interactionState.selected.filteredOut,
-  recordTitle: interactionState.selected.record.title,
+  identity: interactionState.selectedPaperId,
+  mode: interactionState.detailMode,
+  recordTitle: canonicalPaperRecordsByIdentity.get(interactionState.selectedPaperId).title,
   filters,
 }}));
 """)
         self.assertEqual(result["visibleSelection"], {
             "state": "open",
             "identity": "doi:10.1000/stable",
-            "markerId": "institution:a",
-            "filteredOut": False,
+            "mode": "paper",
+            "source": "deep-link",
         })
         self.assertEqual(result["filtered"], "filtered-out")
-        self.assertTrue(result["filteredOut"])
+        self.assertEqual(result["markerless"], "open")
+        self.assertEqual(result["identity"], "doi:10.1000/stable")
+        self.assertEqual(result["mode"], "paper")
         self.assertEqual(result["recordTitle"], "Stable paper")
         self.assertEqual(result["filters"], {"task": "detection"})
 
     def test_stale_identifier_has_a_closable_non_destructive_state(self):
         restore = self.function_source(
-            "restoreLinkedPaperSelection", "activateHoverPreview"
+            "restoreLinkedPaperSelection", "reconcilePersistentSelectionAfterFilter"
         )
         result = self.run_node(f"""
 let requestedPaperIdentity = 'doi:10.9999/stale';
 const canonicalPaperRecordsByIdentity = new Map();
 const visiblePaperSelectionByIdentity = new Map();
-const interactionState = {{selected: {{old: true}}, selectedMarkerId: 'old'}};
+const interactionState = {{selectedPaperId: 'old', detailMode: 'paper'}};
 {restore}
 console.log(JSON.stringify({{
   state: restoreLinkedPaperSelection(new Set()),
-  selected: interactionState.selected,
-  markerId: interactionState.selectedMarkerId,
+  selected: interactionState.selectedPaperId,
+  mode: interactionState.detailMode,
+  requested: requestedPaperIdentity,
 }}));
 """)
         self.assertEqual(result, {
-            "state": "unavailable", "selected": None, "markerId": None
+            "state": "unavailable", "selected": None, "mode": "empty",
+            "requested": "doi:10.9999/stale",
         })
         self.assertIn("Linked paper unavailable", self.app)
         self.assertIn("Your filters were not changed", self.app)
         self.assertIn("Close linked paper details", self.app)
         active = self.app[
             self.app.index("function renderActiveSelection"):
-            self.app.index("\nfunction setHoveredSelection")
+            self.app.index("\nfunction clearHoveredSelection")
         ]
         self.assertIn("!canonicalPaperRecordsByIdentity.has(requestedPaperIdentity)", active)
         self.assertIn("showLinkedPaperUnavailable()", active)
@@ -104,9 +112,11 @@ console.log(JSON.stringify({{
     def test_explicit_selection_and_close_push_only_the_paper_url_state(self):
         start = self.app.index("function setPersistentSelection")
         end = self.app.index("\nfunction restoreLinkedPaperSelection", start)
-        helpers = self.app[start:end]
+        # Include the shared selector used by the current compatibility wrapper.
+        helpers = self.function_source("selectPaper", "selectMapMarker") + self.app[start:end]
         result = self.run_node(f"""
-const interactionState = {{hovered: {{old: true}}, hoveredMarkerId: 'old'}};
+const interactionState = {{transientHover: {{old: true}}, detailMode: 'empty'}};
+const markerHoverIntent = {{cancel() {{}}}};
 let requestedPaperIdentity = '';
 let pendingResultReveal = {{old: true}};
 const calls = [];
@@ -115,17 +125,23 @@ function requestUrlStateSync(mode) {{ calls.push(`history:${{mode}}`); }}
 function syncUrlFromState() {{ calls.push(`url:${{requestedPaperIdentity}}`); }}
 function scheduleMapResize() {{ calls.push('resize'); }}
 {helpers}
-setPersistentSelection({{identity: 'openalex:W123', markerId: 'institution:a'}});
+setPersistentSelection({{identity: 'openalex:W123', contextualInstitutionId: 'institution:a'}});
 const opened = requestedPaperIdentity;
+const openedState = {{...interactionState}};
 clearPersistentSelection();
 console.log(JSON.stringify({{
-  opened,
+  opened, openedState, closedState: interactionState,
   closed: requestedPaperIdentity,
   pendingResultReveal,
   calls,
 }}));
 """)
         self.assertEqual(result["opened"], "openalex:W123")
+        self.assertEqual(result["openedState"]["selectedPaperId"], "openalex:W123")
+        self.assertEqual(result["openedState"]["contextualInstitutionId"], "institution:a")
+        self.assertEqual(result["openedState"]["detailMode"], "paper")
+        self.assertIsNone(result["closedState"]["selectedPaperId"])
+        self.assertEqual(result["closedState"]["detailMode"], "empty")
         self.assertEqual(result["closed"], "")
         self.assertIsNone(result["pendingResultReveal"])
         self.assertEqual(result["calls"].count("history:push"), 2)

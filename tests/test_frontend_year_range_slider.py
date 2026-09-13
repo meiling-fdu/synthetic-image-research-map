@@ -152,6 +152,7 @@ process.stdout.write(JSON.stringify({{values, constrainedStartEnd, constrainedEn
         matching_source = self.app[start:end]
         payload = self.run_node(f"""
 const taskFilter = {{value: 'all'}};
+const imageScopeFilter = {{value: 'all'}};
 const entryTypeFilter = {{value: 'all', selectedOptions: []}};
 const venueFilter = {{value: 'venue:wifs'}};
 const venueTypeFilter = {{value: 'conference'}};
@@ -177,6 +178,7 @@ function recordMatchesInstitutionDimensions(record, country, type) {{
 function isPreprintOnlyRecord() {{ return false; }}
 function hasPublishedVenue() {{ return true; }}
 function hasArxivVersion() {{ return false; }}
+{self.app[self.app.index("function selectedFilterValues"):self.app.index("function serializedFilterValues")]}
 {matching_source}
 const records = [
   {{id: 'match', year: 2022, venue: 'venue:wifs', venueType: 'conference', country: 'Italy', institutionType: 'university'}},

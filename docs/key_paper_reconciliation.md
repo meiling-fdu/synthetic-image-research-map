@@ -4,22 +4,24 @@ Scope: the original 17 identity-review, 3 candidate-only and 26 missing checklis
 
 The 17 identity cases resolve to 16 existing works and one distinct follow-up, now added under the resumed request. Nine of the 26 missing-list papers are added, nine already exist, six follow exclusion decisions, and two remain ambiguous. The candidate-only cases resolve to two existing works and one existing exclusion.
 
+The tables of original decisions below preserve the addition-time adjudications. Current curation and public membership are shown in the Added papers table; primary-source curation subsequently recognized the existing Provenance, PLADA and FusionDetect exclusions. The prior 623-paper reconciliation milestone is now 620 public papers. No exclusion was restored or newly invented.
+
 ## Corpus impact
 
-| Metric | Before | After |
+| Metric | Before original reconciliation | Current after primary curation |
 | --- | ---: | ---: |
-| Public bibliography | 613 | 623 |
-| Published-only (conference/journal/book) | 517 | 519 |
-| Unique mapped bibliography papers | 607 | 607 |
-| Checklist bibliography-covered | 253 | 290 |
-| Checklist covered with marker | 253 | 280 |
-| Checklist covered but markerless | 0 | 10 |
+| Public bibliography | 613 | 620 |
+| Published-only (conference/journal/book) | 517 | 520 |
+| Unique mapped bibliography papers | 607 | 613 |
+| Checklist bibliography-covered | 253 | 287 |
+| Checklist covered with marker | 253 | 286 |
+| Checklist covered but markerless | 0 | 1 |
 | Candidate-only | 3 | 0 |
 | Possible-match review | 17 | 2 |
 | Genuinely missing | 26 | 0 |
-| Excluded checklist rows | 0 | 7 |
+| Excluded checklist rows | 0 | 10 |
 
-The original zero exclusions was a checklist matching result, not an empty exclusion registry. Four existing active exclusions are now recognized (Reverse Engineering, HFI, LDR-Net, DeepArt). Three new scope exclusions are appended (DBINDS, Over-coherence, Perceptual Artifacts). Active registry exclusions increase from 47 to 50; none is removed or restored.
+The original zero exclusions was a checklist matching result, not an empty exclusion registry. Four existing active exclusions are now recognized (Reverse Engineering, HFI, LDR-Net, DeepArt). The original reconciliation appended three scope exclusions (DBINDS, Over-coherence, Perceptual Artifacts), increasing active registry exclusions from 47 to 50. Primary curation subsequently recognized three more pre-existing exclusions through verified OpenAlex IDs: Provenance, PLADA and FusionDetect. Active registry exclusions remain 50, while excluded checklist entries are now 10. None was removed or restored.
 
 ## Identity review — 17 cases
 
@@ -84,20 +86,20 @@ The original zero exclusions was a checklist matching result, not an empty exclu
 
 ## Added papers
 
-All ten records remain `needs_review` with `pending` review and no inferred affiliations. Empty DOI fields follow the existing schema: arXiv-issued DOIs are represented by the arXiv ID, not treated as formal publication DOIs. Unavailable OpenAlex IDs are not invented.
+All ten authoritative curated records remain auditable. Seven are public; Provenance, PLADA and FusionDetect are CURATED_BUT_EXCLUDED. Their reviewed evidence is retained. Empty DOI fields follow the existing schema: arXiv-issued DOIs are represented by the arXiv ID, not treated as formal publication DOIs. Unavailable OpenAlex IDs are not invented.
 
-| Canonical title | Internal ID | DOI | arXiv | OpenAlex | Year | Venue | Review state |
-| --- | --- | --- | --- | --- | ---: | --- | --- |
-| Detecting Generated Images by Real Images Only | curated:8aa00584c346440e0c41 |  | 2311.00962 |  | 2023 | arXiv | needs_review |
-| Provenance Detection for AI-Generated Images: Combining Perceptual Hashing, Homomorphic Encryption, and AI Detection Models | curated:2334b1774b5f65217e7b |  | 2503.11195 |  | 2025 | arXiv | needs_review |
-| Prefill-Guided Thinking for Zero-Shot Detection of AI-Generated Images | curated:168e13e349336a266783 |  | 2506.11031 |  | 2025 | arXiv | needs_review |
-| Pay Less Attention to Deceptive Artifacts: Robust Detection of Compressed Deepfakes on Online Social Networks | curated:509324a7a8bc94c3eb78 |  | 2506.20548 |  | 2025 | arXiv | needs_review |
-| Redefining Generalization in Visual Domains: A Two-Axis Framework for Fake Image Detection with FusionDetect | curated:40d551857163fa643202 |  | 2510.05740 |  | 2025 | arXiv | needs_review |
-| LADLE-MM: Limited Annotation Based Detector with Learned Ensembles for Multimodal Misinformation | curated:fc87c72c7e8c831652ea |  | 2512.20257 |  | 2025 | arXiv | needs_review |
-| UniAIDet: A Unified and Universal Benchmark for AI-Generated Image Content Detection and Localization | curated:0e0f70c0146b624226ca |  | 2510.23023 |  | 2025 | arXiv | needs_review |
-| Can VLMs Detect and Localize Fine-Grained AI-Edited Images? | curated:4bafe8e39a3e39ed2088 |  | 2505.15644 |  | 2025 | arXiv | needs_review |
-| The SAFE Image Authenticity Challenge: Detecting and Localizing Partial and Fully Synthetic Manipulations | curated:f0a62826c32151c731c7 | 10.1109/wacvw68408.2026.00103 |  |  | 2026 | IEEE/CVF Winter Conference on Applications of Computer Vision | needs_review |
-| Dynamic Ensemble of Deepfake Detectors Conditioned on CLIP Features | curated:980afddea0a156b5020b |  |  |  | 2026 | Computer Vision Winter Workshop | needs_review |
+| Canonical title | Internal ID | DOI | arXiv | OpenAlex | Year | Venue | Review state | Public membership |
+| --- | --- | --- | --- | --- | ---: | --- | --- | --- |
+| Detecting Generated Images by Real Images Only | curated:8aa00584c346440e0c41 |  | 2311.00962 | https://openalex.org/W4388328956 | 2023 | arXiv | confirmed | CURATED_AND_PUBLIC |
+| Provenance Detection for AI-Generated Images: Combining Perceptual Hashing, Homomorphic Encryption, and AI Detection Models | curated:2334b1774b5f65217e7b |  | 2503.11195 | https://openalex.org/W4417284156 | 2025 | arXiv | needs_review | CURATED_BUT_EXCLUDED |
+| Prefilled Responses Enhance Zero-Shot Detection of AI-Generated Images | curated:168e13e349336a266783 |  | 2506.11031 | https://openalex.org/W4415314077 | 2025 | Advances in Neural Information Processing Systems | confirmed | CURATED_AND_PUBLIC |
+| Pay Less Attention to Deceptive Artifacts: Robust Detection of Compressed Deepfakes on Online Social Networks | curated:509324a7a8bc94c3eb78 |  | 2506.20548 | https://openalex.org/W4414989730 | 2025 | arXiv | confirmed | CURATED_BUT_EXCLUDED |
+| Redefining Generalization in Visual Domains: A Two-Axis Framework for Fake Image Detection with FusionDetect | curated:40d551857163fa643202 |  | 2510.05740 | https://openalex.org/W4414978765 | 2025 | arXiv | confirmed | CURATED_BUT_EXCLUDED |
+| LADLE-MM: Limited Annotation Based Detector with Learned Ensembles for Multimodal Misinformation | curated:fc87c72c7e8c831652ea |  | 2512.20257 | https://openalex.org/W7117248393 | 2025 | arXiv | confirmed | CURATED_AND_PUBLIC |
+| UniAIDet: A Unified and Universal Benchmark for AI-Generated Image Content Detection and Localization | curated:0e0f70c0146b624226ca |  | 2510.23023 | https://openalex.org/W7101910542 | 2025 | arXiv | needs_review | CURATED_AND_PUBLIC |
+| Can VLMs Detect and Localize Fine-Grained AI-Edited Images? | curated:4bafe8e39a3e39ed2088 |  | 2505.15644 | https://openalex.org/W4415329274 | 2025 | arXiv | confirmed | CURATED_AND_PUBLIC |
+| The SAFE Image Authenticity Challenge: Detecting and Localizing Partial and Fully Synthetic Manipulations | curated:f0a62826c32151c731c7 | 10.1109/wacvw68408.2026.00103 |  | https://openalex.org/W7172429649 | 2026 | IEEE/CVF Winter Conference on Applications of Computer Vision | needs_review | CURATED_AND_PUBLIC |
+| Dynamic Ensemble of Deepfake Detectors Conditioned on CLIP Features | curated:980afddea0a156b5020b |  |  |  | 2026 | Computer Vision Winter Workshop | confirmed | CURATED_AND_PUBLIC |
 
 ## Identity details and conflicts
 
@@ -125,16 +127,16 @@ All ten records remain `needs_review` with `pending` review and no inferred affi
 
 ## Pending decisions
 
-- Row 73 is a verified distinct 2023 follow-up (arXiv 2311.00962), now added as MISSING_ADD under the resumed request. It remains needs_review and is not merged into the ECCV 2022 paper.
+- Row 73 is a verified distinct 2023 follow-up (arXiv 2311.00962), added as MISSING_ADD during reconciliation and now primary-source reviewed. It remains distinct from the ECCV 2022 paper.
 - Row 177 needs accessible primary full text establishing whether there is an in-scope image-only task; publisher identity is confirmed, scope is not.
 - Row 223 needs a dated official publication/proceedings record. The official PDF confirms authors/title and image anti-detection subject, but not the checklist year.
 - HFI and LDR-Net retain their active maintainer exclusions. Their relationships to RDD/FALCON-Net remain unverified and are recorded as version questions, not accepted merges.
 
 ## Curation and safety
 
-- All ten additions have `curation_status=needs_review`, `review_status=pending`, and all taxonomy dimensions `needs_review`. No new author–institution mappings or geocoding decisions were created.
-- Existing curated paper rows are unchanged except removal of the literal backslash-n in the Human vs. AI title (stable ID `curated:5fde2c559e029508e0c3`). Existing taxonomy rows, review history and institution files are unchanged.
-- CVWW resolves through the venue registry as `venue:computer-vision-winter-workshop`, the ID returned by the existing `scripts/venues.py` stable-ID algorithm. One source-verified venue alias was appended; the paper itself remains needs_review. The same curated venue validation rules apply.
+- Primary curation reviewed taxonomy for all ten additions and added 24 author–institution mapping rows. Seven papers are fully curated; Provenance retains an undefined affiliation superscript and publication uncertainty, while UniAIDet and SAFE retain unresolved location details. See `docs/primary_paper_curation_2026_09_08.md` for the independent review dimensions.
+- Existing curated paper rows are unchanged except removal of the literal backslash-n in the Human vs. AI title (stable ID `curated:5fde2c559e029508e0c3`) during the original reconciliation. The subsequent primary-curation audit protects all older paper, taxonomy, institution, location, mapping and review rows; only the ten additions and their new relationships change.
+- CVWW resolves through the venue registry as `venue:computer-vision-winter-workshop`, the ID returned by the existing `scripts/venues.py` stable-ID algorithm. One source-verified venue alias was appended; the paper is now primary-source reviewed. The same curated venue validation rules apply.
 - Additions passed DOI, arXiv, OpenAlex, normalized-title, acronym and bounded fuzzy-title checks against both public and curated records. Unavailable identifiers remain empty. The registry records the five nearest title candidates and decision for each addition; similarity never authorizes a merge.
 - The audit hashes the evidence registry, checks its exact original checklist snapshots, and still requires actual unambiguous bibliography membership. A decision alone cannot mark an absent paper covered.
 

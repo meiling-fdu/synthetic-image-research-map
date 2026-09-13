@@ -58,7 +58,11 @@ class FrontendMobileSummaryChartTests(unittest.TestCase):
         ]
         self.assertEqual(chart_renderers.count('<button type="button"'), 3)
         self.assertEqual(chart_renderers.count('aria-pressed="'), 3)
-        self.assertIn("refreshedControl?.focus({ preventScroll: true })", self.app)
+        # A removed chart button restores focus to the viewport's filter entry.
+        self.assertIn(
+            '(refreshedControl || (mobileFiltersMedia.matches ? mobileFiltersTrigger : keywordFilter))\n'
+            '    .focus({ preventScroll: true });', self.app,
+        )
         activation = self.app[
             self.app.index("function activateChartFilter"):
             self.app.index("function renderTaskChart")

@@ -26,6 +26,7 @@ def render():
         raise ValueError('; '.join(errors))
     papers = audit.load_json_records(audit.ROOT / audit.PREVIEW_PAPERS_JSON)
     curated = {p['paper_id']: p for p in audit.load_csv(audit.ROOT / 'data/curated/papers.csv')}
+    public_ids = {p.get('paper_id') for p in papers}
     published = sum(p['publication_type'] in {'conference', 'journal', 'book'} for p in papers)
     lines = ['# Targeted key-paper reconciliation — 2026-09-08', '',
              'Scope: the original 17 identity-review, 3 candidate-only and 26 missing checklist rows. '
@@ -36,7 +37,8 @@ def render():
              'The 17 identity cases resolve to 16 existing works and one distinct follow-up, now added under the resumed request. Nine of the 26 missing-list '
              'papers are added, nine already exist, six follow exclusion decisions, and two remain ambiguous. '
              'The candidate-only cases resolve to two existing works and one existing exclusion.', '',
-             '## Corpus impact', '', '| Metric | Before | After |', '| --- | ---: | ---: |']
+             'The tables of original decisions below preserve the addition-time adjudications. Current curation and public membership are shown in the Added papers table; primary-source curation subsequently recognized the existing Provenance, PLADA and FusionDetect exclusions. The prior 623-paper reconciliation milestone is now 620 public papers. No exclusion was restored or newly invented.', '',
+             '## Corpus impact', '', '| Metric | Before original reconciliation | Current after primary curation |', '| --- | ---: | ---: |']
     for label, before, after in [
         ('Public bibliography', 613, totals['public_papers']), ('Published-only (conference/journal/book)', 517, published),
         ('Unique mapped bibliography papers', 607, totals['unique_mapped_papers']),
@@ -49,8 +51,8 @@ def render():
         lines.append(f'| {label} | {before} | {after} |')
     lines += ['', 'The original zero exclusions was a checklist matching result, not an empty exclusion registry. '
               'Four existing active exclusions are now recognized (Reverse Engineering, HFI, LDR-Net, DeepArt). '
-              'Three new scope exclusions are appended (DBINDS, Over-coherence, Perceptual Artifacts). '
-              'Active registry exclusions increase from 47 to 50; none is removed or restored.', '']
+              'The original reconciliation appended three scope exclusions (DBINDS, Over-coherence, Perceptual Artifacts), increasing active registry exclusions from 47 to 50. '
+              'Primary curation subsequently recognized three more pre-existing exclusions through verified OpenAlex IDs: Provenance, PLADA and FusionDetect. Active registry exclusions remain 50, while excluded checklist entries are now 10. None was removed or restored.', '']
     for status, heading in [('possible_title_match_failure', 'Identity review — 17 cases'), ('candidate_only', 'Candidate-only — 3 cases'), ('missing_from_candidate_pool', 'Missing checklist — 26 cases')]:
         lines += ['## ' + heading, '', '| Row | Checklist title | Classification | Canonical/current title | IDs and venue/year | Action and evidence |', '| ---: | --- | --- | --- | --- | --- |']
         for d in decisions:
@@ -64,16 +66,16 @@ def render():
             lines.append('| ' + ' | '.join(map(cell, [d['checklist_row'], d['checklist']['title'], d['classification'], p.get('title') or identity['title'], ids, d['action'] + ': ' + d['reason']])) + ' ' + links + ' |')
         lines += ['']
     lines += ['## Added papers', '',
-              'All ten records remain `needs_review` with `pending` review and no inferred affiliations. '
+              'All ten authoritative curated records remain auditable. Seven are public; Provenance, PLADA and FusionDetect are CURATED_BUT_EXCLUDED. Their reviewed evidence is retained. '
               'Empty DOI fields follow the existing schema: arXiv-issued DOIs are represented by the arXiv ID, '
               'not treated as formal publication DOIs. Unavailable OpenAlex IDs are not invented.', '',
-              '| Canonical title | Internal ID | DOI | arXiv | OpenAlex | Year | Venue | Review state |',
-              '| --- | --- | --- | --- | --- | ---: | --- | --- |']
+              '| Canonical title | Internal ID | DOI | arXiv | OpenAlex | Year | Venue | Review state | Public membership |',
+              '| --- | --- | --- | --- | --- | ---: | --- | --- | --- |']
     for d in decisions:
         if d['action'] != 'added_needs_review':
             continue
         p = curated[d['matched_record']['paper_id']]
-        lines.append('| ' + ' | '.join(cell(p[k]) for k in ('title', 'paper_id', 'doi', 'arxiv_id', 'openalex_url', 'year', 'venue', 'curation_status')) + ' |')
+        lines.append('| ' + ' | '.join(cell(p[k]) for k in ('title', 'paper_id', 'doi', 'arxiv_id', 'openalex_url', 'year', 'venue', 'curation_status')) + ' | ' + ('CURATED_AND_PUBLIC' if p['paper_id'] in public_ids else 'CURATED_BUT_EXCLUDED') + ' |')
     lines += ['', '## Identity details and conflicts', '']
     for d in decisions:
         if d['baseline_status'] != 'possible_title_match_failure':
@@ -91,7 +93,7 @@ def render():
               'linkage. Markers share the formal DOI and resolve to one bibliography paper. Preserve raw source IDs '
               'rather than inventing a single OpenAlex source identity; no duplicate or institution merge is needed.', '',
               '## Pending decisions', '',
-              '- Row 73 is a verified distinct 2023 follow-up (arXiv 2311.00962), now added as MISSING_ADD under the resumed request. It remains needs_review and is not merged into the ECCV 2022 paper.',
+              '- Row 73 is a verified distinct 2023 follow-up (arXiv 2311.00962), added as MISSING_ADD during reconciliation and now primary-source reviewed. It remains distinct from the ECCV 2022 paper.',
               '- Row 177 needs accessible primary full text establishing whether there is an in-scope image-only task; '
               'publisher identity is confirmed, scope is not.',
               '- Row 223 needs a dated official publication/proceedings record. The official PDF confirms authors/title '
@@ -99,13 +101,12 @@ def render():
               '- HFI and LDR-Net retain their active maintainer exclusions. Their relationships to RDD/FALCON-Net remain '
               'unverified and are recorded as version questions, not accepted merges.', '',
               '## Curation and safety', '',
-              '- All ten additions have `curation_status=needs_review`, `review_status=pending`, and all taxonomy '
-              'dimensions `needs_review`. No new author–institution mappings or geocoding decisions were created.',
+              '- Primary curation reviewed taxonomy for all ten additions and added 24 author–institution mapping rows. Seven papers are fully curated; Provenance retains an undefined affiliation superscript and publication uncertainty, while UniAIDet and SAFE retain unresolved location details. See `docs/primary_paper_curation_2026_09_08.md` for the independent review dimensions.',
               '- Existing curated paper rows are unchanged except removal of the literal backslash-n in the Human vs. AI '
-              'title (stable ID `curated:5fde2c559e029508e0c3`). Existing taxonomy rows, review history and institution files are unchanged.',
+              'title (stable ID `curated:5fde2c559e029508e0c3`) during the original reconciliation. The subsequent primary-curation audit protects all older paper, taxonomy, institution, location, mapping and review rows; only the ten additions and their new relationships change.',
               '- CVWW resolves through the venue registry as `venue:computer-vision-winter-workshop`, the ID returned '
               'by the existing `scripts/venues.py` stable-ID algorithm. One source-verified venue alias was appended; '
-              'the paper itself remains needs_review. The same curated venue validation rules apply.',
+              'the paper is now primary-source reviewed. The same curated venue validation rules apply.',
               '- Additions passed DOI, arXiv, OpenAlex, normalized-title, acronym and bounded fuzzy-title checks against '
               'both public and curated records. Unavailable identifiers remain empty. The registry records the five '
               'nearest title candidates and decision for each addition; similarity never authorizes a merge.',

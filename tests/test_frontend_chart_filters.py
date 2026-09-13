@@ -212,7 +212,9 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
         )
         self.assertIn('count.toLocaleString("en-US")', render)
         self.assertIn('`${count.toLocaleString("en-US")} ${resultNoun}${count === 1 ? "" : "s"}`', render)
-        self.assertIn('`No matching ${resultNoun}s`', render)
+        # Frozen recovery delegates contextual copy; the live count stays numeric.
+        self.assertIn('renderNoResultsState(resultNoun);', render)
+        self.assertIn('`0 ${resultsView === "papers" ? "papers" : "institution records"}`', render)
         self.assertIn("renderNoResultsState(resultNoun);", render)
 
     def test_overview_metrics_are_semantic_non_input_pills(self):

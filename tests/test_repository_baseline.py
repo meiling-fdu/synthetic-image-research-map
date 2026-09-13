@@ -12,7 +12,7 @@ from tests.baseline_expectations import (
     CANONICAL_INSTITUTION_STATUS_TOTALS,
     CANONICAL_INSTITUTION_TYPE_TOTALS,
     CURRENT_REPOSITORY_BASELINE,
-    RECONCILIATION_PENDING_PAPERS,
+    CURATED_PAPERS_AWAITING_COORDINATES,
     INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS,
     PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS,
     PUBLICATION_TYPE_TOTALS,
@@ -255,7 +255,7 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
         self.assert_current("public_papers_without_map", len(papers_without_map))
         self.assertEqual(
             {paper["title"] for paper in papers_without_map},
-            set(PUBLIC_PAPERS_WITHOUT_MAP) | RECONCILIATION_PENDING_PAPERS,
+            set(PUBLIC_PAPERS_WITHOUT_MAP) | CURATED_PAPERS_AWAITING_COORDINATES,
         )
         with (ROOT / "data/manual/paper_marker_blocker_report.csv").open(
             encoding="utf-8-sig", newline=""
@@ -267,9 +267,10 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
             }
         self.assertEqual(blockers, PUBLIC_PAPERS_WITHOUT_MAP)
         for paper in papers_without_map:
-            if paper["title"] in RECONCILIATION_PENDING_PAPERS:
+            if paper["title"] in CURATED_PAPERS_AWAITING_COORDINATES:
                 self.assertEqual(paper["curation_status"], "needs_review")
-                self.assertTrue(paper["missing_affiliation"])
+                self.assertFalse(paper["missing_affiliation"])
+                self.assertTrue(paper["missing_coordinates"])
                 self.assertFalse(paper["has_map_location"])
 
     def test_public_institutions_are_exactly_active_canonicals(self):

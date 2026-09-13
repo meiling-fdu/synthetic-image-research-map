@@ -18,6 +18,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
 
     def test_renamed_public_filter_labels_and_title_case(self):
         for expected in (
+            "Publication Status",
             "Research Type",
             "Publication Type",
             "Publication Venue",
@@ -44,7 +45,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         self.assertNotIn(">Institution records</button>", self.html)
         self.assertNotIn(">Unique papers</button>", self.html)
         self.assertNotRegex(self.html, r">All (?:Tasks|Paper Types|Publication Types|Venues|Countries|Institution Types|Records)<")
-        self.assertEqual(self.html.count('<option value="all">All</option>'), 8)
+        self.assertEqual(self.html.count('<option value="all">All</option>'), 9)
 
     def test_record_version_is_independent_of_publication_type(self):
         self.assertIn('value="has-arxiv"', self.html)
@@ -73,10 +74,12 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             ordered_ids.index("venue-type-filter") + 1,
             ordered_ids.index("venue-filter"),
         )
+        # Frozen primary filters precede the More filters disclosure.
         expected = [
-            "keyword-filter", "task-filter", "image-scope-filter", "research-type-filter", "venue-type-filter",
-            "venue-filter", "country-filter", "institution-type-filter", "preprint-filter",
-            "min-year-filter", "max-year-filter",
+            "keyword-filter", "task-filter", "image-scope-filter", "research-type-filter",
+            "published-only-filter", "min-year-filter", "max-year-filter",
+            "venue-type-filter", "venue-filter", "country-filter",
+            "institution-type-filter", "preprint-filter",
         ]
         positions = [ordered_ids.index(identifier) for identifier in expected]
         self.assertEqual(positions, sorted(positions))
@@ -97,7 +100,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
 
     def test_all_select_filters_use_one_custom_dropdown_controller(self):
         dropdown_ids = (
-            "sort-control",
+            "sort-control", "published-only-filter",
             "task-filter", "image-scope-filter", "research-type-filter", "venue-type-filter",
             "venue-filter", "country-filter", "institution-type-filter",
             "preprint-filter",
@@ -110,6 +113,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         for dropdown_id in dropdown_ids:
             variable = {
                 "sort-control": "sortControl",
+                "published-only-filter": "publishedOnlyFilter",
                 "task-filter": "taskFilter",
                 "image-scope-filter": "imageScopeFilter",
                 "research-type-filter": "entryTypeFilter",
@@ -155,8 +159,9 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             self.assertIn(task, task_chart)
 
     def test_compact_filter_geometry_and_overview_responsive_grid(self):
+        # The public freeze tightened the filter grid to 7px (1e850da).
         self.assertIn(".sidebar .panel {\n  padding: 12px;", self.css)
-        self.assertIn(".filter-grid {\n  display: grid;\n  gap: 8px;", self.css)
+        self.assertIn(".filter-grid {\n  display: grid;\n  gap: 7px;", self.css)
         self.assertIn(".filter-grid label {\n  gap: 4px;", self.css)
         self.assertIn('.filter-grid input:not([type="range"])', self.css)
         self.assertIn(".filter-dropdown-button {\n  display: flex;", self.css)
@@ -210,19 +215,20 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         filter_grid = self.css[
             self.css.index(".filter-grid {"):self.css.index(".visually-hidden {")
         ]
-        self.assertIn("gap: 8px", filter_grid)
+        self.assertIn("gap: 7px", filter_grid)
 
         results_heading = self.css[
             self.css.index(".results-heading-row {"):
             self.css.index(".results-heading-group {")
         ]
-        self.assertIn("gap: 8px 12px", results_heading)
-        self.assertIn("margin-bottom: 8px", results_heading)
+        # The frozen sticky toolbar has its own 8px/10px spacing rhythm.
+        self.assertIn("gap: 8px 10px", results_heading)
+        self.assertIn("margin-bottom: 10px", results_heading)
 
         result_card = self.css[
             self.css.index(".result-card {"):self.css.index(".result-title {")
         ]
-        self.assertIn("padding: 12px", result_card)
+        self.assertIn("padding: 13px 12px 12px", result_card)
 
         legend = self.css[
             self.css.index(".map-encoding-legend {"):

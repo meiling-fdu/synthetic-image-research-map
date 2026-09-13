@@ -1,0 +1,42 @@
+........................................................................ [  4%]
+........................................................................ [  9%]
+........................................................................ [ 14%]
+........................................................................ [ 19%]
+........................................................................ [ 24%]
+........................................................................ [ 29%]
+........................................................................ [ 34%]
+........................................................................ [ 39%]
+........................................................................ [ 44%]
+........................................................................ [ 49%]
+........................................................................ [ 54%]
+........................................................................ [ 59%]
+........................................................................ [ 64%]
+........................................................................ [ 69%]
+........................................................................ [ 74%]
+........................................................................ [ 79%]
+........................................................................ [ 84%]
+........................................................................ [ 89%]
+........................................................................ [ 94%]
+..........F............................................................. [ 99%]
+..........                                                               [100%]
+=================================== FAILURES ===================================
+_________ test_report_and_statistics_reproduce_from_canonical_registry _________
+
+    def test_report_and_statistics_reproduce_from_canonical_registry():
+        data = rows()
+        stats = audit.accounting(data)
+>       assert audit.REPORT.read_text() == audit.render(data, stats, audit.CANONICAL)
+E       AssertionError: assert '# Systematic... discarded.\n' == '# Systematic... discarded.\n'
+E         
+E         Skipping 5098 identical leading characters in diff, use -v to show
+E           merated.
+E           
+E         + “Unique evaluated” means assigned a reconciliation/scope outcome, including explicit uncertainty. It does not mean every work received full-text manual review. The primary-abstract column distinguishes usable title-matched paper evidence from bibliography/index-only evidence. Existing identities retain corpus decisions; explicit unrelated target tasks are screened out; uncertain forensic crossover cases remain open. Rule-assisted screening and explicit adjudications are preserved separately ...
+E         
+E         ...Full output truncated (1017 lines hidden), use '-vv' to show
+
+tests/test_systematic_literature_audit.py:85: AssertionError
+- generated xml file: /Users/meilinger/Desktop/synthetic-image-research-map/data/processed/systematic_literature_2026_09/full_suite.xml -
+=========================== short test summary info ============================
+FAILED tests/test_systematic_literature_audit.py::test_report_and_statistics_reproduce_from_canonical_registry
+1 failed, 1449 passed in 258.17s (0:04:18)

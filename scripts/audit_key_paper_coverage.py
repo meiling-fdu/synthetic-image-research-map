@@ -18,10 +18,10 @@ from pathlib import Path
 
 try:
     from .key_paper_reconciliation import apply_decisions, REVIEW_CLASSIFICATIONS
-    from .paper_exclusions import active_exclusions, matching_exclusion_rows, read_exclusion_rows, all_identity_keys
+    from .paper_exclusions import active_exclusions, matching_exclusion_rows, read_exclusion_rows, all_identity_keys, exclusions_with_curated_identities
 except ImportError:
     from key_paper_reconciliation import apply_decisions, REVIEW_CLASSIFICATIONS
-    from paper_exclusions import active_exclusions, matching_exclusion_rows, read_exclusion_rows, all_identity_keys
+    from paper_exclusions import active_exclusions, matching_exclusion_rows, read_exclusion_rows, all_identity_keys, exclusions_with_curated_identities
 
 ROOT = Path(__file__).resolve().parent.parent
 KEY_PATH = Path("data/manual/key_papers.csv")
@@ -30,10 +30,11 @@ CANDIDATE_JSON = Path("web/data/openalex_candidate_map_data.json")
 PREVIEW_JSON = Path("web/data/public_preview_map_data.json")
 PREVIEW_PAPERS_JSON = Path("web/data/public_preview_papers.json")
 EXCLUSIONS_PATH = Path("data/curated/paper_exclusions.csv")
+CURATED_PAPERS_PATH = Path("data/curated/papers.csv")
 RECONCILIATION_PATH = Path("data/manual/key_paper_reconciliation.json")
 OUT_PATH = Path("data/manual/key_paper_coverage_report.csv")
 MARKDOWN_PATH = Path("docs/key_paper_coverage_report.md")
-INPUT_PATHS = (KEY_PATH, OA_PATH, CANDIDATE_JSON, PREVIEW_JSON, PREVIEW_PAPERS_JSON, EXCLUSIONS_PATH, RECONCILIATION_PATH)
+INPUT_PATHS = (KEY_PATH, OA_PATH, CANDIDATE_JSON, PREVIEW_JSON, PREVIEW_PAPERS_JSON, EXCLUSIONS_PATH, RECONCILIATION_PATH, CURATED_PAPERS_PATH)
 ALLOWED_STATUSES = {
     "covered_as_map_marker", "covered_in_public_preview_paper_list",
     "candidate_only", "missing_from_candidate_pool", "possible_title_match_failure", "excluded",
@@ -288,7 +289,9 @@ def expected_artifacts(root=ROOT):
     rows, summary, errors = compute_audit(
         load_csv(root / KEY_PATH), load_csv(root / OA_PATH), load_json_records(root / CANDIDATE_JSON),
         load_json_records(root / PREVIEW_PAPERS_JSON), load_json_records(root / PREVIEW_JSON),
-        read_exclusion_rows(root / EXCLUSIONS_PATH), load_json_records(root / RECONCILIATION_PATH))
+        exclusions_with_curated_identities(read_exclusion_rows(root / EXCLUSIONS_PATH),
+                                           load_csv(root / CURATED_PAPERS_PATH)),
+        load_json_records(root / RECONCILIATION_PATH))
     return {OUT_PATH: render_csv(rows), MARKDOWN_PATH: render_markdown(rows, summary, digest.hexdigest(), errors)}, summary, errors
 
 

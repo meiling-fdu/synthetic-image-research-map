@@ -1,0 +1,75 @@
+[
+  {
+    "reason": "Declared task is generated-text detection, text provenance, or LLM fingerprinting; no image-level forensic contribution.",
+    "titles": [
+      "Advancing Machine-Generated Text Detection from an Easy to Hard Supervision Perspective",
+      "Beyond Raw Detection Scores: Markov-Informed Calibration for Boosting Machine-Generated Text Detection",
+      "Bileve: Securing Text Provenance in Large Language Models Against Spoofing with Bi-level Signature",
+      "BiScope: AI-generated Text Detection by Checking Memorization of Preceding Tokens",
+      "Can LLM-Generated Misinformation Be Detected?",
+      "D&R: Recovery-based AI-Generated Text Detection via a Single Black-box LLM Call",
+      "Deep Kernel Relative Test for Machine-generated Text Detection",
+      "DetectRL: Benchmarking LLM-Generated Text Detection in Real-World Scenarios",
+      "DPIC: Decoupling Prompt and Intrinsic Characteristics for LLM Generated Text Detection",
+      "Glimpse: Enabling White-Box Methods to Use Proprietary Models for Zero-Shot LLM-Generated Text Detection",
+      "HaloScope: Harnessing Unlabeled LLM Generations for Hallucination Detection",
+      "HLD: Approximate Hierarchical Linguistic Distribution Modeling for LLM-Generated Text Detection",
+      "IPAD: Inverse Prompt for AI Detection - A Robust and Interpretable LLM-Generated Text Detector",
+      "Learning From Dictionary: Enhancing Robustness of Machine-Generated Text Detection in Zero-Shot Language via Adversarial Training",
+      "Multilingual AI-Generated Text Detection in Arabic, English, and Turkish Using a Hybrid Transformer–Graph Convolutional Network",
+      "Position: On the Possibilities of AI-Generated Text Detection",
+      "Raidar: geneRative AI Detection viA Rewriting",
+      "Scalable Fingerprinting of Large Language Models",
+      "Ten Words Only Still Help: Improving Black-Box AI-Generated Text Detection via Proxy-Guided Efficient Re-Sampling",
+      "The Power of LLM-Generated Synthetic Data for Stance Detection in Online Political Discussions",
+      "Token-Specific Watermarking with Enhanced Detectability and Semantic Coherence for Large Language Models",
+      "Training-free LLM-generated Text Detection by Mining Token Probability Sequences"
+    ]
+  },
+  {
+    "reason": "Declared task is downstream perception, captioning, physical-scene recognition, or image restoration; synthetic/generative methods are tools, not the object of forensic inference.",
+    "titles": [
+      "CLIP-BEVFormer: Enhancing Multi-View Image-Based BEV Detector with Ground Truth Flow",
+      "Describe Anything: Detailed Localized Image and Video Captioning",
+      "DiffMatter: Different frequency fusion for trimap-free image matting via edge detection",
+      "Dual-Mode Learning for Multi-Dataset X-Ray Security Image Detection",
+      "EvRT-DETR: Latent Space Adaptation of Image Detectors for Event-based Vision",
+      "Fast Single Image Defogging With Robust Sky Detection",
+      "FineMatch: Aspect-based Fine-grained Image and Text Mismatch Detection and Correction",
+      "FlowSteer: Guiding Few-Step Image Synthesis with Authentic Trajectories",
+      "Generative Agents for Multimodal Controversy Detection",
+      "Hierarchical Contrastive Learning for Pattern-Generalizable Image Corruption Detection",
+      "Hyperbolic Learning with Synthetic Captions for Open-World Detection",
+      "Multi-Prior Fusion Transfer Plugin for Adapting In-Air Models to Underwater Image Enhancement and Detection",
+      "Prompt-Free Unknown Label Generation for Open World Detection in Remote Sensing",
+      "RAUCA: A Novel Physical Adversarial Attack on Vehicle Detectors via Robust and Accurate Camouflage Generation",
+      "Revolutionize the Oceanic Drone RGB Imagery With Pioneering Sun Glint Detection and Removal Techniques",
+      "SpaceDet: A Large-scale Space-based Image Dataset and RSO Detection for Space Situational Awareness",
+      "Symmetry Strikes Back: From Single-Image Symmetry Detection to 3D Generation"
+    ]
+  },
+  {
+    "reason": "Declared contribution is training-data copying, memorization, copyright authentication or human/physical provenance, not attribution of generated images to a source generator.",
+    "titles": [
+      "CDI: Copyrighted Data Identification in Diffusion Models",
+      "CGI-DM: Digital Copyright Authentication for Diffusion Models via Contrasting Gradient Inversion",
+      "Diffusion art or digital forgery? investigating data replication in diffusion models",
+      "Diffusion-Based Authentication of Copy Detection Patterns: A Multimodal Framework with Printer Signature Conditioning",
+      "Forensic identification using skin bacterial communities",
+      "Image Copy Detection for Diffusion Models",
+      "Image-level Memorization Detection via Inversion-based Inference Perturbation",
+      "Pattern-Expandable Image Copy Detection",
+      "Relational Self-Supervised Distillation with Compact Descriptors for Image Copy Detection"
+    ]
+  },
+  {
+    "reason": "Explicit audio-visual/temporal localization endpoint; the available primary summary does not establish a separate image-level contribution.",
+    "titles": [
+      "A-V Representation Learning via Audio Shift Prediction for Multimodal Deepfake Detection and Temporal Localization",
+      "On Learning Multi-Modal Forgery Representation for Diffusion Generated Video Detection",
+      "Lips Are Lying: Spotting the Temporal Inconsistency between Audio and Visual in Lip-Syncing DeepFakes",
+      "Do you really mean that? Content driven audio-visual deepfake dataset and multimodal method for temporal forgery localization",
+      "UMMAFormer: A Universal Multimodal-adaptive Transformer Framework for Temporal Forgery Localization"
+    ]
+  }
+]

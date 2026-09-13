@@ -33,24 +33,24 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
 
     def test_registry_covers_the_reconciled_public_corpus_not_papers_csv(self):
         self.assertEqual(433, len(self.curated_papers))
-        self.assertEqual(623, len(self.registry))
-        self.assertEqual(623, len(self.public))
-        self.assertEqual(425, sum(bool(row["paper_id"]) for row in self.registry))
+        self.assertEqual(620, len(self.registry))
+        self.assertEqual(620, len(self.public))
+        self.assertEqual(422, sum(bool(row["paper_id"]) for row in self.registry))
         self.assertEqual(198, sum(not row["paper_id"] for row in self.registry))
         summary = apply_paper_taxonomy_registry(
             [dict(row) for row in self.public],
             [dict(row) for row in self.markers],
             self.registry,
         )
-        self.assertEqual(623, summary["public_papers_matched"])
+        self.assertEqual(620, summary["public_papers_matched"])
         # The reviewed institution cleanup adds 22 located relationships.
-        self.assertEqual(1425, summary["map_records_matched"])
+        self.assertEqual(1438, summary["map_records_matched"])
 
     def test_curated_only_exclusions_do_not_enter_registry(self):
         public_ids = {row.get("paper_id") for row in self.public if row.get("paper_id")}
         curated_ids = {row["paper_id"] for row in self.curated_papers}
         curated_only = curated_ids - public_ids
-        self.assertEqual(8, len(curated_only))
+        self.assertEqual(11, len(curated_only))
         self.assertTrue(curated_only.isdisjoint({row["paper_id"] for row in self.registry}))
 
     def test_focused_scope_exclusions_leave_public_and_taxonomy_outputs(self):
@@ -99,7 +99,7 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
 
     def test_generative_editing_has_source_modification_evidence(self):
         edited = [row for row in self.registry if "generative_editing" in row["image_scopes"].split(";")]
-        self.assertEqual(28, len(edited))
+        self.assertEqual(29, len(edited))
         for row in edited:
             evidence = row["image_scopes_evidence_excerpt"].casefold()
             self.assertTrue(
@@ -109,21 +109,21 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
 
     def test_expected_counts_and_review_counts(self):
         expected = {
-            "tasks": Counter(detection=587, source_attribution=77, localization=21),
-            "image_scopes": Counter(fully_generated=529, generative_editing=28, deepfake=162, traditional_manipulation=13),
-            "research_types": Counter(method=535, dataset=114, benchmark=73, survey=23, analysis_study=58),
+            "tasks": Counter(detection=584, source_attribution=77, localization=21),
+            "image_scopes": Counter(fully_generated=526, generative_editing=29, deepfake=166, traditional_manipulation=14),
+            "research_types": Counter(method=532, dataset=116, benchmark=73, survey=23, analysis_study=60),
         }
         for field, counts in expected.items():
             actual = Counter(value for row in self.registry for value in row[field].split(";") if value)
             self.assertEqual(counts, actual)
         self.assertEqual(
-            {"tasks": 10, "image_scopes": 10, "research_types": 10},
+            {"tasks": 0, "image_scopes": 0, "research_types": 0},
             {
                 field: sum(row[f"{field}_status"] == "needs_review" for row in self.registry)
                 for field in ("tasks", "image_scopes", "research_types")
             },
         )
-        self.assertEqual(10, sum(row["taxonomy_status"] == "needs_review" for row in self.registry))
+        self.assertEqual(0, sum(row["taxonomy_status"] == "needs_review" for row in self.registry))
 
     def test_registry_is_authoritative_on_rerun_including_reviewed_empty_values(self):
         rebuilt = build_registry(

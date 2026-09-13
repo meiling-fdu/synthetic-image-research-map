@@ -1,0 +1,775 @@
+{
+  "DeCLIP: Decoding CLIP Representations for Deepfake Localization": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "localization",
+    "proposed_image_scope": "generative_editing",
+    "proposed_research_type": "method",
+    "scope_evidence": "Primary WACV 2025 abstract explicitly evaluates localization of partial generative manipulations, including latent diffusion. This is a core editing-localization contribution.",
+    "rationale": "Primary WACV 2025 abstract explicitly evaluates localization of partial generative manipulations, including latent diffusion. This is a core editing-localization contribution.",
+    "venue": "WACV"
+  },
+  "Weakly-Supervised Deepfake Localization in Diffusion-Generated Images": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "localization",
+    "proposed_image_scope": "generative_editing",
+    "proposed_research_type": "method | dataset | analysis_study",
+    "scope_evidence": "Primary WACV abstract constructs partially manipulated diffusion-image datasets and compares weakly supervised localization methods with explicit evaluation.",
+    "rationale": "Primary WACV abstract constructs partially manipulated diffusion-image datasets and compares weakly supervised localization methods with explicit evaluation."
+  },
+  "Detective SAM: Adaptive AI-Image Forgery Localization": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "localization",
+    "proposed_image_scope": "generative_editing",
+    "proposed_research_type": "method | dataset",
+    "scope_evidence": "Primary ICLR paper evaluates forgery-mask localization and introduces AutoEditForge, a diffusion-edit data pipeline. It reports localization results on seven datasets.",
+    "rationale": "Primary ICLR paper evaluates forgery-mask localization and introduces AutoEditForge, a diffusion-edit data pipeline. It reports localization results on seven datasets."
+  },
+  "DiffusionFF: A Diffusion-based Framework for Joint Face Forgery Detection and Fine-Grained Artifact Localization": {
+    "final_status": "CANDIDATE_ADD_NEEDS_SCOPE_REVIEW",
+    "proposed_forensic_task": "detection | localization",
+    "proposed_image_scope": "deepfake",
+    "proposed_research_type": "method",
+    "scope_evidence": "Primary CVPR abstract establishes image-level face-forgery detection and evaluated artifact localization. Review historical deepfake inclusion precedent; this is not evidence of a core fully-generated-image gap.",
+    "rationale": "Primary CVPR abstract establishes image-level face-forgery detection and evaluated artifact localization. Review historical deepfake inclusion precedent; this is not evidence of a core fully-generated-image gap."
+  },
+  "Efficient Zero-Shot AI-Generated Image Detection": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "detection",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method",
+    "scope_evidence": "Primary arXiv abstract defines a training-free image-authenticity detector based on sensitivity to frequency perturbations and evaluates generated-image benchmarks.",
+    "rationale": "Primary arXiv abstract defines a training-free image-authenticity detector based on sensitivity to frequency perturbations and evaluates generated-image benchmarks."
+  },
+  "FUSE: Unifying Spectral and Semantic Cues for Robust AI-Generated Image Detection": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "detection",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method",
+    "scope_evidence": "Primary arXiv abstract describes spectral/CLIP feature fusion and detection evaluation on GenImage, WildFake, DiTFake, GPT-ImgEval and Chameleon.",
+    "rationale": "Primary arXiv abstract describes spectral/CLIP feature fusion and detection evaluation on GenImage, WildFake, DiTFake, GPT-ImgEval and Chameleon."
+  },
+  "Interpretable and reliable detection of ai-generated images via grounded reasoning in mllms": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "detection | localization",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method | dataset",
+    "scope_evidence": "Primary arXiv abstract describes a bounding-box/caption artifact dataset and explicitly evaluates generated-image detection and visual-flaw localization, beyond merely displaying heatmaps.",
+    "rationale": "Primary arXiv abstract describes a bounding-box/caption artifact dataset and explicitly evaluates generated-image detection and visual-flaw localization, beyond merely displaying heatmaps."
+  },
+  "SPECTRA-Net: Scalable Pipeline for Explainable Cross-domain Tensor Representations for AI-generated Images Detection": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "detection",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method",
+    "scope_evidence": "Primary arXiv abstract evaluates synthetic-image detection on WildFake, Chameleon and RRDataset. Localization is not proposed: the abstract's explainability claim does not establish evaluated forensic localization.",
+    "rationale": "Primary arXiv abstract evaluates synthetic-image detection on WildFake, Chameleon and RRDataset. Localization is not proposed: the abstract's explainability claim does not establish evaluated forensic localization."
+  },
+  "NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "detection",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "dataset | benchmark",
+    "scope_evidence": "Primary CVPR workshop report introduces a 42-generator image-detection challenge and transformed-image evaluation. This is a foundational challenge report, not an ordinary dataset user.",
+    "rationale": "Primary CVPR workshop report introduces a 42-generator image-detection challenge and transformed-image evaluation. This is a foundational challenge report, not an ordinary dataset user.",
+    "identity_evidence": "No DOI/arXiv/OpenAlex, exact title, reviewed alias or acronym match in the 620-paper corpus or exclusions. The fuzzy MIRAGE suggestion is a different titled benchmark; this primary report defines its own challenge and participant evaluation."
+  },
+  "Enabling Your Forensic Detector Know How Well It Performs on Distorted Samples": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "detection",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method | analysis_study",
+    "scope_evidence": "Primary ICLR abstract defines and evaluates distortion-aware confidence for AI-generated-image detectors, including selective abstention and detector routing; it is not generic image-quality assessment.",
+    "rationale": "Primary ICLR abstract defines and evaluates distortion-aware confidence for AI-generated-image detectors, including selective abstention and detector routing; it is not generic image-quality assessment."
+  },
+  "NeuroRenderedFake: A Challenging Benchmark to Detect Fake Images Generated by Advanced Neural Rendering Methods": {
+    "final_status": "CANDIDATE_ADD_NEEDS_SCOPE_REVIEW",
+    "proposed_forensic_task": "detection",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "dataset | benchmark | analysis_study",
+    "scope_evidence": "Primary NeurIPS abstract establishes image-level forensic evaluation on neural-rendered and generative fake images. Review whether the neural-rendering expansion fits the current synthetic-image scope.",
+    "rationale": "Primary NeurIPS abstract establishes image-level forensic evaluation on neural-rendered and generative fake images. Review whether the neural-rendering expansion fits the current synthetic-image scope."
+  },
+  "Exploring the Collaborative Advantage of Low-level Information on Generalizable AI-Generated Image Detection": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "detection",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method",
+    "scope_evidence": "Primary arXiv abstract introduces ALEI and evaluates generalization from ProGAN training to unseen GAN and diffusion image generators.",
+    "rationale": "Primary arXiv abstract introduces ALEI and evaluates generalization from ProGAN training to unseen GAN and diffusion image generators."
+  },
+  "Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "detection",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method | analysis_study",
+    "scope_evidence": "Primary arXiv abstract analyzes real/synthetic signal discrepancies and evaluates a fractal-based generated-image detector.",
+    "rationale": "Primary arXiv abstract analyzes real/synthetic signal discrepancies and evaluates a fractal-based generated-image detector."
+  },
+  "Rethinking the Use of Vision Transformers for AI-Generated Image Detection": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "detection",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method | analysis_study",
+    "scope_evidence": "Primary arXiv abstract introduces MoLD, analyzes ViT layers, and evaluates image detection across GAN and diffusion generators.",
+    "rationale": "Primary arXiv abstract introduces MoLD, analyzes ViT layers, and evaluates image detection across GAN and diffusion generators."
+  },
+  "ThinkFake: Reasoning in Multimodal Large Language Models for AI-Generated Image Detection": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "detection",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method",
+    "scope_evidence": "Primary arXiv abstract defines a GRPO-trained reasoning detector and evaluates image detection on GenImage and LOKI.",
+    "rationale": "Primary arXiv abstract defines a GRPO-trained reasoning detector and evaluates image detection on GenImage and LOKI."
+  },
+  "Forenx: Towards explainable ai-generated image detection with multimodal large language models": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "detection",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method | dataset",
+    "scope_evidence": "Primary arXiv paper introduces ForenX detection and the ForgReason explanation dataset. No localization label is proposed.",
+    "rationale": "Primary arXiv paper introduces ForenX detection and the ForgReason explanation dataset. No localization label is proposed.",
+    "identity_evidence": "Verified arXiv 2508.01402 and Tan/Wang/Ming/Tao/Wei/Zhao/Lu authors. Fuzzy neighbor curated:911d693997183535a4ac is Ji et al., arXiv 2504.14245, a distinct six-prompt framework; AIGI-Holmes is also a different identified paper. All strong IDs, exact/alternate titles and exclusions checked."
+  },
+  "Forensic analysis of synthetically generated western blot images": {
+    "year": "2022",
+    "venue": "IEEE Access (2021 arXiv preprint)",
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "detection",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method | dataset | analysis_study",
+    "scope_evidence": "Primary arXiv abstract introduces real/synthetic western-blot datasets and evaluates detection and post-processing robustness. Existing 2024 Western Blot Source Attribution is a different later paper with different title and contribution.",
+    "rationale": "Primary arXiv abstract introduces real/synthetic western-blot datasets and evaluates detection and post-processing robustness. Existing 2024 Western Blot Source Attribution is a different later paper with different title and contribution."
+  },
+  "What makes fake images detectable? Understanding properties that generalize": {
+    "final_status": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "proposed_forensic_task": "detection",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "analysis_study",
+    "scope_evidence": "Primary ECCV publisher abstract explicitly studies generalizable artifacts for real/fake image discrimination. No matching identity or title is present in the frozen corpus.",
+    "rationale": "Primary ECCV publisher abstract explicitly studies generalizable artifacts for real/fake image discrimination. No matching identity or title is present in the frozen corpus."
+  },
+  "Attributing image generative models using latent fingerprints": {
+    "final_status": "CANDIDATE_ADD_NEEDS_SCOPE_REVIEW",
+    "proposed_forensic_task": "detection | source_attribution",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method",
+    "scope_evidence": "Primary evidence establishes generated-image detection/source attribution through intentionally embedded fingerprints. Review the project's active-fingerprinting inclusion precedent; do not treat it as a passive-attribution coverage gap.",
+    "rationale": "Primary evidence establishes generated-image detection/source attribution through intentionally embedded fingerprints. Review the project's active-fingerprinting inclusion precedent; do not treat it as a passive-attribution coverage gap."
+  },
+  "Artificial fingerprinting for generative models: Rooting deepfake attribution in training data": {
+    "final_status": "CANDIDATE_ADD_NEEDS_SCOPE_REVIEW",
+    "proposed_forensic_task": "detection | source_attribution",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method",
+    "scope_evidence": "Primary evidence establishes generated-image detection/source attribution through intentionally embedded fingerprints. Review the project's active-fingerprinting inclusion precedent; do not treat it as a passive-attribution coverage gap.",
+    "rationale": "Primary evidence establishes generated-image detection/source attribution through intentionally embedded fingerprints. Review the project's active-fingerprinting inclusion precedent; do not treat it as a passive-attribution coverage gap."
+  },
+  "Responsible disclosure of generative models using scalable fingerprinting": {
+    "final_status": "CANDIDATE_ADD_NEEDS_SCOPE_REVIEW",
+    "proposed_forensic_task": "detection | source_attribution",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method",
+    "scope_evidence": "Primary evidence establishes generated-image detection/source attribution through intentionally embedded fingerprints. Review the project's active-fingerprinting inclusion precedent; do not treat it as a passive-attribution coverage gap.",
+    "rationale": "Primary evidence establishes generated-image detection/source attribution through intentionally embedded fingerprints. Review the project's active-fingerprinting inclusion precedent; do not treat it as a passive-attribution coverage gap."
+  },
+  "Riemannian-Geometric Fingerprints of Generative Models": {
+    "final_status": "CANDIDATE_ADD_NEEDS_SCOPE_REVIEW",
+    "proposed_forensic_task": "source_attribution",
+    "proposed_image_scope": "fully_generated",
+    "proposed_research_type": "method | analysis_study",
+    "scope_evidence": "Primary ICCV abstract studies geometric generative-model fingerprints and attribution. Confirm that its evaluated endpoint is source attribution from generated images, rather than only model-level authentication, under the existing scope boundary.",
+    "rationale": "Primary ICCV abstract studies geometric generative-model fingerprints and attribution. Confirm that its evaluated endpoint is source attribution from generated images, rather than only model-level authentication, under the existing scope boundary."
+  },
+  "Forensic-Friendly Image Manipulation via Controllable Latent Diffusion": {
+    "final_status": "CANDIDATE_ADD_NEEDS_SCOPE_REVIEW",
+    "proposed_forensic_task": "detection | localization",
+    "proposed_image_scope": "generative_editing",
+    "proposed_research_type": "method",
+    "scope_evidence": "Primary CVPR abstract evaluates editing that facilitates passive detection/localization, but the main method changes the generator. Review whether this substantive proactive forensic contribution meets existing precedent.",
+    "rationale": "Primary CVPR abstract evaluates editing that facilitates passive detection/localization, but the main method changes the generator. Review whether this substantive proactive forensic contribution meets existing precedent."
+  },
+  "A Synthetic Dataset for Personal Attribute Inference": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Aegis: Automated Error Generation and Attribution for Multi-Agent Systems": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Apply Hierarchical-Chain-of-Generation to Complex Attributes Text-to-3D Generation": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "AttriHuman-3D: Editable 3D Human Avatar Generation with Attribute Decomposition and Indexing": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "BrainACTIV: Identifying visuo-semantic properties driving cortical selectivity using diffusion-based image manipulation": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "CheckMate! Watermarking Graph Diffusion Models in Polynomial Time": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "CodeGenGuard: A Watermark for Code Generation Models": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Defense against Model Extraction Attack by Bayesian Active Watermarking": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Detecting Adversarial Data Using Perturbation Forgery": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Distributionally Generative Augmentation for Fair Facial Attribute Classification": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Do You Steal My Model? Signature Diffusion Embedded Dual-Verification Watermarking for Protecting Intellectual Property of Hyperspectral Image Classification Models": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "DomainGallery: Few-shot Domain-driven Image Generation by Attribute-centric Finetuning": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Efficient 3D-Aware Facial Image Editing via Attribute-Specific Prompt Learning": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Enhancing LLM Watermark Resilience Against Both Scrubbing and Spoofing Attacks": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "EntropyMark: Towards More Harmless Backdoor Watermark via Entropy-based Constraint for Open-source Dataset Copyright Protection": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "FedGMark: Certifiably Robust Watermarking for Federated Graph Learning": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "FedXDS: Leveraging Model Attribution Methods to counteract Data Heterogeneity in Federated Learning": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Fingerprinting Deep Image Restoration Models": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Fingerprinting Deep Neural Networks for Ownership Protection: An Analytical Approach": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Forensic Iris Image-Based Post-Mortem Interval Estimation": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "GDGB: A Benchmark for Generative Dynamic Text-Attributed Graph Learning": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "HeavyWater and SimplexWater: Distortion-free LLM Watermarks for Low-Entropy Distributions": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Hey, That's My Model! Introducing Chain & Hash, An LLM Fingerprinting Technique": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "I Can Hear You: Selective Robust Training for Deepfake Audio Detection": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Improving the Trade-off Between Watermark Strength and Speculative Sampling Efficiency for Language Models": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Inevitable Trade-off between Watermark Strength and Speculative Sampling Efficiency for Language Models": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "InstructG2I: Synthesizing Images from Multimodal Attributed Graphs": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Intersecting-Boundary-Sensitive Fingerprinting for Tampering Detection of DNN Models": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Invisible Watermarks, Visible Gains: Steering Machine Unlearning with Bi-Level Watermarking Design": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "IrisFP: Adversarial-Example-based Model Fingerprinting with Enhanced Uniqueness and Robustness": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "KGMark: A Diffusion Watermark for Knowledge Graphs": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Learning from Synthetic Data via Provenance-Based Input Gradient Guidance": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "LiteGuard: Efficient Task-Agnostic Model Fingerprinting with Enhanced Generalization": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "LLM Fingerprinting via Semantically Conditioned Watermarks": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Long-horizon Visual Instruction Generation with Logic and Attribute Self-reflection": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Maximum Coverage in Turnstile Streams with Applications to Fingerprinting Measures": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Misclassification-driven Fingerprinting for DNNs Using Frequency-aware GANs": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "MMSearch-Plus: Benchmarking Provenance-Aware Search for Multimodal Browsing Agents": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "MUSE: Model-Agnostic Tabular Watermarking via Multi-Sample Selection": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Nearest Neighbor Speculative Decoding for LLM Generation and Attribution": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "No Free Lunch in LLM Watermarking: Trade-offs in Watermarking Design Choices": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "PEGASUS: Personalized Generative 3D Avatars with Composable Attributes": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Proactive Detection of Voice Cloning with Localized Watermarking": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "ProReGen: Progressive Residual Generation under Attribute Correlations": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Protecting NeRFs' Copyright via Plug-And-Play Watermarking Base Model": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Provable Robust Watermarking for AI-Generated Text": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Provable Watermarking for Data Poisoning Attacks": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "ProvNeRF: Modeling per Point Provenance in NeRFs as a Stochastic Field": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "ReLaSH: Reconstructing Joint Latent Spaces for Efficient Generation of Synthetic Hypergraphs with Hyperlink Attributes": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Remotely Detectable Robot Policy Watermarking": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Rethinking Removal Attack and Fingerprinting Defense for Model Intellectual Property Protection: A Frequency Perspective": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Robust Distortion-Free Watermark for Autoregressive Audio Generation Models": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "SDBF: Steep-Decision-Boundary Fingerprinting for Hard-Label Tampering Detection of DNN Models": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "SIGMA: Selective-Interleaved Generation with Multi-Attribute Tokens": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "STAMP Your Content: Proving Dataset Membership via Watermarked Rephrasings": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "SUB: Benchmarking CBM Generalization via Synthetic Attribute Substitutions": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "TabWak: A Watermark for Tabular Diffusion Models": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "The Case for Learned Provenance-based System Behavior Baseline": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Theoretically Grounded Framework for LLM Watermarking: A Distribution-Adaptive Approach": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "TimeWak: Temporal Chained-Hashing Watermark for Time Series Data": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "TokenLight: Precise Lighting Control in Images using Attribute Tokens": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Towards Codable Watermarking for Injecting Multi-Bits Information to LLMs": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Towards Faithful XAI Evaluation via Generalization-Limited Backdoor Watermark": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Towards the Resistance of Neural Network Fingerprinting to Fine-tuning": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Traceable Black-Box Watermarks For Federated Learning": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Tracing the Origin of Adversarial Attack for Forensic Investigation and Deterrence": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "United We Stand, Divided We Fall: Fingerprinting Deep Neural Networks via Adversarial Trajectories": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Vector Database Watermarking": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "Ward: Provable RAG Dataset Inference via LLM Watermarks": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "WaterDrum: Watermark-based Data-centric Unlearning Metric": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "WaterMax: breaking the LLM watermark detectability-robustness-quality trade-off": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  },
+  "ZeroMark: Towards Dataset Ownership Verification without Disclosing Watermark": {
+    "final_status": "OUT_OF_SCOPE",
+    "proposed_forensic_task": "",
+    "proposed_image_scope": "",
+    "proposed_research_type": "",
+    "scope_evidence": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task.",
+    "rationale": "Semantic review of the declared target and available primary summary: this work addresses non-image modality, model/dataset ownership, generic attribution, or downstream generation/recognition, rather than an image-level forensic task."
+  }
+}

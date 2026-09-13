@@ -30,6 +30,7 @@ try:
         PaperIdentityCache,
         PaperIdentityIndex,
         enforce_affiliation_source_precedence,
+        has_explicit_primary_review,
         integrate_curated_records,
         load_curated_mappings,
         load_curated_papers,
@@ -80,6 +81,7 @@ try:
     from .institution_types import classify_institution_type, resolve_public_institution_type
     from .country_normalization import normalize_country_region, public_location_display
     from .paper_exclusions import (
+        exclusions_with_curated_identities,
         DEFAULT_EXCLUSIONS_PATH,
         PaperExclusionError,
         build_active_exclusion_index,
@@ -142,6 +144,7 @@ except ImportError:  # Direct execution from the scripts directory.
         PaperIdentityCache,
         PaperIdentityIndex,
         enforce_affiliation_source_precedence,
+        has_explicit_primary_review,
         integrate_curated_records,
         load_curated_mappings,
         load_curated_papers,
@@ -192,6 +195,7 @@ except ImportError:  # Direct execution from the scripts directory.
     from institution_types import classify_institution_type, resolve_public_institution_type
     from country_normalization import normalize_country_region, public_location_display
     from paper_exclusions import (
+        exclusions_with_curated_identities,
         DEFAULT_EXCLUSIONS_PATH,
         PaperExclusionError,
         build_active_exclusion_index,
@@ -3218,7 +3222,7 @@ def preserve_existing_curation_status(
     for record in records:
         key = clean_text(record.get("id") or record.get("paper_id") or identity_key(record))
         prior = prior_by_id.get(key)
-        if prior and "curation_status" in prior:
+        if prior and "curation_status" in prior and not has_explicit_primary_review(record):
             record["curation_status"] = prior["curation_status"]
 
 
@@ -4523,7 +4527,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             if args.paper_output.exists()
             else []
         )
-        exclusion_rows = read_exclusion_rows(args.paper_exclusions)
+        curated_papers = load_curated_papers(args.curated_papers)
+        exclusion_rows = exclusions_with_curated_identities(
+            read_exclusion_rows(args.paper_exclusions), curated_papers
+        )
         version_merge_rows = read_paper_version_merges(
             args.paper_version_merges
         )
@@ -4600,7 +4607,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 paper_payload["records"],
                 map_records=False,
             )
-        curated_papers = load_curated_papers(args.curated_papers)
         location_review_rows = load_location_review_queue(
             args.location_review
         )

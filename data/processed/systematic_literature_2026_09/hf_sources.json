@@ -1,0 +1,36 @@
+[
+  {
+    "channel": "A",
+    "kind": "hf_search",
+    "seed": "Hugging Face bounded paper search",
+    "url": "https://huggingface.co/papers",
+    "query": "AI generated image localization attribution",
+    "retrieval_bound": 30,
+    "command": "hf papers search 'AI generated image localization attribution' --limit 30 --format json",
+    "status": "CLI_SUCCESS",
+    "http_status": null,
+    "cli_exit_code": 0,
+    "retrieved_at": "2026-09-12T14:23:40.780090+00:00",
+    "raw_path": "data/raw/systematic_literature_2026_09/hf_papers_supplement_2026_09_12.json",
+    "sha256": "e759db5a81494ffac27ec7e8e949d32c8dd5690d9581d89a6ee3df6c1e0daa60",
+    "enumeration_level": "BOUNDED_SEARCH",
+    "discovery_pass": 3
+  },
+  {
+    "channel": "A",
+    "kind": "hf_search",
+    "seed": "Hugging Face bounded paper search",
+    "url": "https://huggingface.co/papers",
+    "query": "AI generated image detection",
+    "retrieval_bound": 40,
+    "command": "hf papers search 'AI generated image detection' --limit 40 --format json",
+    "status": "CLI_SUCCESS",
+    "http_status": null,
+    "cli_exit_code": 0,
+    "retrieved_at": "2026-09-12T14:47:26.733862+00:00",
+    "raw_path": "data/raw/systematic_literature_2026_09/hf_detection_validation_pass7.json",
+    "sha256": "922403e3a230890e533fc518a44376f2f477428c35d7d5fb34a45ec4ea8f8193",
+    "enumeration_level": "BOUNDED_SEARCH",
+    "discovery_pass": 7
+  }
+]

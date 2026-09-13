@@ -139,8 +139,36 @@ class WorkshopVenueTests(unittest.TestCase):
 
 
 class WorkshopArtifactTests(unittest.TestCase):
-    def test_full_dataset_before_after_and_source_preservation(self):
+    def test_source_snapshots_ignore_os_metadata_but_protect_research_bytes(self):
+        import hashlib
         from scripts.audit_workshop_venues import source_hashes
+
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            expected = {}
+            for area in ("raw", "manual", "curated"):
+                base = root / "data" / area
+                base.mkdir(parents=True)
+                for name in ("paper.json", ".evidence.json", "nested/paper.csv"):
+                    path = base / name
+                    path.parent.mkdir(exist_ok=True)
+                    path.write_bytes(b"research evidence")
+                    expected[str(path.relative_to(root))] = hashlib.sha256(path.read_bytes()).hexdigest()
+                for name in (".DS_Store", "nested/.DS_Store", "Thumbs.db",
+                             "desktop.ini", "._paper.json", "__MACOSX/metadata"):
+                    path = base / name
+                    path.parent.mkdir(exist_ok=True)
+                    path.write_bytes(b"incidental metadata")
+            self.assertEqual(source_hashes(root), expected)
+            (root / "data/raw/paper.json").write_bytes(b"changed evidence")
+            changed = source_hashes(root)
+            self.assertNotEqual(changed["data/raw/paper.json"], expected["data/raw/paper.json"])
+            del changed["data/raw/paper.json"]
+            del expected["data/raw/paper.json"]
+            self.assertEqual(changed, expected)
+
+    def test_full_dataset_before_after_and_source_preservation(self):
+        from scripts.audit_workshop_venues import source_hashes, is_research_source_path
         baseline = json.loads((ROOT / "data/processed/workshop_venue_baseline.json").read_text())
         records = json.loads((ROOT / "data/processed/venue_normalized_papers.json").read_text())["records"]
         prior = {p["title"]: p for p in baseline["papers"]}
@@ -157,7 +185,8 @@ class WorkshopArtifactTests(unittest.TestCase):
         historical_raw_hashes = {
             path: digest
             for path, digest in baseline["source_hashes"].items()
-            if path.startswith("data/raw/")
+            # Keep the historical manifest intact; OS metadata is not evidence.
+            if path.startswith("data/raw/") and is_research_source_path(path)
         }
         self.assertEqual(
             {path: current_hashes.get(path) for path in historical_raw_hashes},

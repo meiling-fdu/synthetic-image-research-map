@@ -61,23 +61,25 @@ const marker = {{id: 'marker:x'}};
 const resultsRenderGeneration = 7;
 const resultsPipeline = {{displayedResults: [{{paper: 'paper:one'}}]}};
 const visibleMarkerEntryByInstitutionKey = new Map([[
-  'institution:x', {{records: [{{paper: 'paper:one'}}], record: {{paper: 'paper:one'}}, marker}},
+  'institution:x', {{records: [{{paper: 'paper:one', institution: 'institution:x'}}], record: {{paper: 'paper:one'}}, marker}},
 ]]);
 function paperIdentity(record) {{ return record.paper; }}
+function institutionIdentity(record) {{ return record.institution; }}
 {helper}
 const selected = resultInstitutionSelection(button);
-console.log(JSON.stringify({{
-  identity: selected.identity,
-  institutionKey: selected.institutionKey,
-  marker: selected.marker.id,
-  scope: selected.resultScope,
-}}));
+// Selection stores paper/context identity, not a duplicate marker object.
+const missing = resultInstitutionSelection({{...button, dataset: {{focusInstitution: 'missing'}}}});
+item.dataset.resultGeneration = '6';
+const stale = resultInstitutionSelection(button);
+console.log(JSON.stringify({{selected, missing, stale}}));
 """)
         self.assertEqual(result, {
-            "identity": "paper:one",
-            "institutionKey": "institution:x",
-            "marker": "marker:x",
-            "scope": "paper",
+            "selected": {
+                "identity": "paper:one",
+                "contextualInstitutionId": "institution:x",
+                "source": "institution-record",
+            },
+            "missing": None, "stale": None,
         })
 
     def test_marker_selection_maps_to_all_corresponding_result_indexes(self):

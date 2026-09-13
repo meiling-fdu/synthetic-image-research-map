@@ -1,0 +1,244 @@
+[
+  {
+    "associated_method": "GenDet (arXiv 2312.08880), linked by the author repository, is present in the corpus.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:9c21b43f9681feb53a21",
+    "expanded_version": "GenImage++: Breaking Latent Prior Bias in Detectors for Generalizable AIGC Image Detection; present in corpus.",
+    "family": "GenImage",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "GenImage: A Million-Scale Benchmark for Detecting AI-Generated Image",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=GenImage&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://arxiv.org/abs/2306.08571",
+      "https://arxiv.org/abs/2506.00874",
+      "https://github.com/GenImage-Dataset/GenImage",
+      "https://huggingface.co/datasets/Lunahera/genimagepp"
+    ]
+  },
+  {
+    "associated_method": "No separate foundational method established; ordinary dataset users are not lineage additions.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:7cfe39b3bc63f5b55f51",
+    "expanded_version": "Distinct expansion of GenImage; represented by the associated Breaking Latent Prior Bias paper.",
+    "family": "GenImage++",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "Breaking Latent Prior Bias in Detectors for Generalizable AIGC Image Detection",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://arxiv.org/abs/2506.00874",
+      "https://huggingface.co/datasets/Lunahera/genimagepp"
+    ]
+  },
+  {
+    "associated_method": "No separate foundational method established; ordinary dataset users are not lineage additions.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:307e0f132bd89ed90298",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "Community Forensics",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "Community Forensics: Using Thousands of Generators to Train Fake Image Detectors",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=Community+Forensics&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://doi.org/10.1109/cvpr52734.2025.00772"
+    ]
+  },
+  {
+    "associated_method": "No separate foundational method established; ordinary dataset users are not lineage additions.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:946d44174eaedb61b7ef",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "FakeBench",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "FakeBench: Probing Explainable Fake Image Detection via Large Multimodal Models",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=FakeBench&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://arxiv.org/abs/2404.13306"
+    ]
+  },
+  {
+    "associated_method": "Earlier IMDL-BenCo is a distinct benchmark/codebase in Tier 2; traditional-manipulation scope requires review.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:4c4e9ffacf08b5eb2355",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "ForensicHub",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=ForensicHub&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://arxiv.org/abs/2505.11003"
+    ]
+  },
+  {
+    "associated_method": "GIMFormer is introduced in the same existing dataset/benchmark paper, not a second missing work.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:1750a9eae0bc7ad94628",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "GIM",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "GIM: A Million-Scale Benchmark for Generative Image Manipulation Detection and Localization",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=GIM+generative+image+manipulation&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://arxiv.org/abs/2406.16531"
+    ]
+  },
+  {
+    "associated_method": "No separate foundational method established; ordinary dataset users are not lineage additions.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:ffa24185c2c870a44bde",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "OpenFake",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "OpenFake: An Open Dataset and Platform Toward Real-World Deepfake Detection",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=OpenFake&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://arxiv.org/abs/2509.09495"
+    ]
+  },
+  {
+    "associated_method": "No separate foundational method established; ordinary dataset users are not lineage additions.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:0e0f70c0146b624226ca",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "UniAIDet",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "UniAIDet: A Unified and Universal Benchmark for AI-Generated Image Content Detection and Localization",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=UniAIDet&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://arxiv.org/abs/2510.23023"
+    ]
+  },
+  {
+    "associated_method": "No separate foundational method established; ordinary dataset users are not lineage additions.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:61211bdca508937e8a4f",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "WildFake",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "WildFake: A Large-Scale and Hierarchical Dataset for AI-Generated Images Detection",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=WildFake&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://arxiv.org/abs/2402.11843"
+    ]
+  },
+  {
+    "associated_method": "No separate foundational method established; ordinary dataset users are not lineage additions.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:b75682820c5af85396c1",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "Semi-Truths",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "Semi-Truths: A Large-Scale Dataset of AI-Augmented Images for Evaluating Robustness of AI-Generated Image Detectors",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=Semi-Truths&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://doi.org/10.52202/079017-3748"
+    ]
+  },
+  {
+    "associated_method": "No separate foundational method established; ordinary dataset users are not lineage additions.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "https://openalex.org/W4386590429",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "Artifact",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "Artifact: A Large-Scale Dataset With Artificial And Factual Images For Generalizable And Robust Synthetic Image Detection",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=Artifact+synthetic+image&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://arxiv.org/abs/2302.11970"
+    ]
+  },
+  {
+    "associated_method": "No separate foundational method established; ordinary dataset users are not lineage additions.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:aaf9b7c69d384a3c3140",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "Synthbuster",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "Synthbuster: Towards Detection of Diffusion Model Generated Images",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=Synthbuster&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://doi.org/10.1109/ojsp.2023.3337714"
+    ]
+  },
+  {
+    "associated_method": "No separate foundational method established; ordinary dataset users are not lineage additions.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:d59bffe554500b241a3e",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "ImageAttributionBench",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "ImageAttributionBench: How Far Are We from Generalizable Attribution?",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=ImageAttributionBench&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://arxiv.org/abs/2605.12967"
+    ]
+  },
+  {
+    "associated_method": "SAFE-FORGE and challenge evaluation are covered by the same previously curated SAFE challenge paper.",
+    "benchmark_challenge": "Same existing paper",
+    "corpus_id": "curated:f0a62826c32151c731c7",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "SAFE",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "The SAFE Image Authenticity Challenge: Detecting and Localizing Partial and Fully Synthetic Manipulations",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=SAFE+Image+Authenticity&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://doi.org/10.1109/wacvw68408.2026.00103"
+    ]
+  },
+  {
+    "associated_method": "No separate foundational method established; ordinary dataset users are not lineage additions.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:14ed0d4ac86e7938e5cb",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "ForenSynths",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "CNN-Generated Images Are Surprisingly Easy to Spot\u2026 for Now",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=ForenSynths&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://doi.org/10.1109/cvpr42600.2020.00872"
+    ]
+  },
+  {
+    "associated_method": "No separate foundational method established; ordinary dataset users are not lineage additions.",
+    "benchmark_challenge": "Benchmark represented in the existing family paper; no separate challenge established.",
+    "corpus_id": "curated:f9eac1aa13a606c6ec88",
+    "expanded_version": "No separate expansion established in this bounded review.",
+    "family": "Chameleon",
+    "limitation": "Bounded family queries and available primary/curated evidence; not an exhaustive history of every dataset user.",
+    "original_dataset_or_benchmark": "A Sanity Check for AI-Generated Image Detection",
+    "presence": "EXISTING_CURRENT",
+    "sources": [
+      "https://api.openalex.org/works?search=Chameleon+AI+image&filter=to_publication_date%3A2026-09-12&per-page=15",
+      "https://arxiv.org/abs/2406.19435"
+    ]
+  },
+  {
+    "associated_method": "Team solution papers are not automatically counted as foundational gaps.",
+    "benchmark_challenge": "Missing foundational 2026 challenge report; distinct from the face-deepfake challenge.",
+    "candidate_id": "audit:d7a0be175acdedc4",
+    "corpus_id": "",
+    "expanded_version": "No separate expansion established.",
+    "family": "NTIRE AI-generated image detection",
+    "limitation": "Found through A; lineage classification does not manufacture a separate C discovery.",
+    "original_dataset_or_benchmark": "NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild",
+    "presence": "CANDIDATE_ADD_HIGH_CONFIDENCE",
+    "sources": [
+      "https://arxiv.org/abs/2604.11487",
+      "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/html/Gushchin_NTIRE_2026_Challenge_on_Robust_AI-Generated_Image_Detection_in_the_CVPRW_2026_paper.html"
+    ]
+  }
+]

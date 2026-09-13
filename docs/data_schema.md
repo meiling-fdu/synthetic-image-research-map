@@ -670,6 +670,23 @@ In-scope work must combine explicit AI-generated/synthetic image context with de
 
 ## Manual Review and Automatic Labels
 
+Explicit `metadata_source` values beginning `Primary-source review ` identify
+inspected field-level curation. These curated fields take precedence during
+merging, and prior generated snapshots cannot replace their independently
+chosen `curation_status` and `review_status`; this does not automatically confirm them.
+The ten-paper 2026-09-08 evidence ledger and audit keep bibliography, taxonomy,
+author affiliations and location readiness separate. Prior reconciliation
+reports describe their historical addition-time state.
+
+The publication exclusion gate also resolves existing exclusions through strong
+identifiers in authoritative curated rows. This in-memory identity bridge lets
+a stable paper ID in an older preview inherit an exclusion matched by a newly
+verified DOI or OpenAlex ID. It uses no fuzzy/title-only join and never rewrites
+the exclusion CSV. The 2026-09-08 curation found three such previously missed
+exclusions; the papers remain curated but leave the public-only taxonomy registry.
+Export does not promote a pending paper-specific location-review decision merely
+because the canonical institution has a known location.
+
 ### Reviewed author affiliation status
 
 The existing append-only `data/curated/institution_audit_log.csv` also stores
