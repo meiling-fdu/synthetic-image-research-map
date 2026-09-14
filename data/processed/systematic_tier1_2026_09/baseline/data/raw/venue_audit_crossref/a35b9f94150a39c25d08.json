@@ -1,0 +1,842 @@
+{
+  "doi": "10.1016/j.inffus.2024.102578",
+  "source_url": "https://api.crossref.org/works/10.1016%2Fj.inffus.2024.102578",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            3
+          ]
+        ],
+        "date-time": "2026-08-03T05:21:56Z",
+        "timestamp": 1785734516719,
+        "version": "3.56.0"
+      },
+      "reference-count": 57,
+      "publisher": "Elsevier BV",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                12,
+                1
+              ]
+            ],
+            "date-time": "2024-12-01T00:00:00Z",
+            "timestamp": 1733011200000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                12,
+                1
+              ]
+            ],
+            "date-time": "2024-12-01T00:00:00Z",
+            "timestamp": 1733011200000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/legal/tdmrep-license"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                12,
+                1
+              ]
+            ],
+            "date-time": "2024-12-01T00:00:00Z",
+            "timestamp": 1733011200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-017"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                12,
+                1
+              ]
+            ],
+            "date-time": "2024-12-01T00:00:00Z",
+            "timestamp": 1733011200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                12,
+                1
+              ]
+            ],
+            "date-time": "2024-12-01T00:00:00Z",
+            "timestamp": 1733011200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-012"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                12,
+                1
+              ]
+            ],
+            "date-time": "2024-12-01T00:00:00Z",
+            "timestamp": 1733011200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                12,
+                1
+              ]
+            ],
+            "date-time": "2024-12-01T00:00:00Z",
+            "timestamp": 1733011200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-004"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "elsevier.com",
+          "sciencedirect.com"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "Information Fusion"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            12
+          ]
+        ]
+      },
+      "DOI": "10.1016/j.inffus.2024.102578",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2024,
+            7,
+            14
+          ]
+        ],
+        "date-time": "2024-07-14T11:10:21Z",
+        "timestamp": 1720955421000
+      },
+      "page": "102578",
+      "update-policy": "https://doi.org/10.1016/elsevier_cm_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 7,
+      "special_numbering": "C",
+      "title": [
+        "Detecting Artificial Intelligence-Generated images via deep trace representations and interactive feature fusion"
+      ],
+      "prefix": "10.1016",
+      "volume": "112",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-8750-7036",
+          "authenticated-orcid": false,
+          "given": "Qiang",
+          "family": "Xu",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Xinghao",
+          "family": "Jiang",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Tanfeng",
+          "family": "Sun",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Hao",
+          "family": "Wang",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Laijin",
+          "family": "Meng",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Hong",
+          "family": "Yan",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "78",
+      "reference": [
+        {
+          "issue": "11",
+          "key": "10.1016/j.inffus.2024.102578_b1",
+          "doi-asserted-by": "crossref",
+          "first-page": "139",
+          "DOI": "10.1145/3422622",
+          "article-title": "Generative adversarial networks",
+          "volume": "63",
+          "author": "Goodfellow",
+          "year": "2020",
+          "journal-title": "Commun. ACM"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "R. Rombach, A. Blattmann, D. Lorenz, P. Esser, B. Ommer, High-resolution image synthesis with latent diffusion models, in: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2022, pp. 10684–10695.",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b3",
+          "series-title": "2023 IEEE International Conference on Systems, Man, and Cybernetics",
+          "first-page": "3696",
+          "article-title": "Exposing computer-generated images via amplified texture differences learning",
+          "author": "Xu",
+          "year": "2023"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b4",
+          "article-title": "MDTL-NET: Computer-generated image detection based on multi-scale deep texture learning",
+          "author": "Xu",
+          "year": "2024",
+          "journal-title": "Expert Syst. Appl."
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b5",
+          "doi-asserted-by": "crossref",
+          "first-page": "323",
+          "DOI": "10.1016/j.inffus.2021.06.008",
+          "article-title": "Image fusion meets deep learning: A survey and perspective",
+          "volume": "76",
+          "author": "Zhang",
+          "year": "2021",
+          "journal-title": "Inf. Fusion"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b6",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.inffus.2023.101804",
+          "article-title": "Artificial intelligence for cybersecurity: Literature review and future research directions",
+          "volume": "97",
+          "author": "Kaur",
+          "year": "2023",
+          "journal-title": "Inf. Fusion"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b7",
+          "doi-asserted-by": "crossref",
+          "unstructured": "T.-T. Ng, S.-F. Chang, J. Hsu, L. Xie, M.-P. Tsui, Physics-motivated features for distinguishing photographic images and computer graphics, in: Proceedings of the 13th Annual ACM International Conference on Multimedia, 2005, pp. 239–248.",
+          "DOI": "10.1145/1101149.1101192"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b8",
+          "series-title": "Digital Forensics and Watermarking: 10th International Workshop, IWDW 2011, Atlantic City, NY, October 23-26, 2011, Revised Selected Papers 10",
+          "first-page": "292",
+          "article-title": "Distinguishing photographic images and photorealistic computer graphics using visual vocabulary on local image edges",
+          "author": "Zhang",
+          "year": "2012"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b9",
+          "series-title": "International Conference on Image Processing",
+          "first-page": "2313",
+          "article-title": "Digital image forensics for identifying computer generated and digital camera images",
+          "author": "Dehnie",
+          "year": "2006"
+        },
+        {
+          "issue": "2",
+          "key": "10.1016/j.inffus.2024.102578_b10",
+          "doi-asserted-by": "crossref",
+          "first-page": "111",
+          "DOI": "10.1016/j.diin.2014.04.002",
+          "article-title": "Discriminating natural images and computer generated graphics based on the impact of CFA interpolation on the correlation of PRNU",
+          "volume": "11",
+          "author": "Peng",
+          "year": "2014",
+          "journal-title": "Digit. Investig."
+        },
+        {
+          "issue": "2",
+          "key": "10.1016/j.inffus.2024.102578_b11",
+          "doi-asserted-by": "crossref",
+          "first-page": "435",
+          "DOI": "10.1111/1556-4029.12680",
+          "article-title": "Identification of natural images and computer-generated graphics based on statistical and textural features",
+          "volume": "60",
+          "author": "Peng",
+          "year": "2015",
+          "journal-title": "J. Forensic Sci."
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b12",
+          "doi-asserted-by": "crossref",
+          "first-page": "72",
+          "DOI": "10.1016/j.aeue.2016.11.009",
+          "article-title": "Discrimination of natural images and computer generated graphics based on multi-fractal and regression analysis",
+          "volume": "71",
+          "author": "Peng",
+          "year": "2017",
+          "journal-title": "AEU-Int. J. Electron. Commun."
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b13",
+          "first-page": "329",
+          "article-title": "Discriminating between photorealistic computer graphics and natural images using fractal geometry",
+          "volume": "52",
+          "author": "Pan",
+          "year": "2009",
+          "journal-title": "Sci. China Ser. F: Inf. Sci."
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b14",
+          "series-title": "International Workshop on Digital Watermarking",
+          "first-page": "228",
+          "article-title": "Distinguishing computer graphics from photographic images using local binary patterns",
+          "author": "Li",
+          "year": "2012"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b15",
+          "series-title": "2003 Conference on Computer Vision and Pattern Recognition Workshop",
+          "first-page": "94",
+          "article-title": "Higher-order wavelet statistics and their application to digital forensics",
+          "volume": "Vol. 8",
+          "author": "Farid",
+          "year": "2003"
+        },
+        {
+          "issue": "22",
+          "key": "10.1016/j.inffus.2024.102578_b16",
+          "doi-asserted-by": "crossref",
+          "first-page": "23721",
+          "DOI": "10.1007/s11042-016-4153-0",
+          "article-title": "Forensics feature analysis in quaternion wavelet domain for distinguishing photographic images and computer graphics",
+          "volume": "76",
+          "author": "Wang",
+          "year": "2017",
+          "journal-title": "Multimedia Tools Appl."
+        },
+        {
+          "issue": "4",
+          "key": "10.1016/j.inffus.2024.102578_b17",
+          "doi-asserted-by": "crossref",
+          "first-page": "1418",
+          "DOI": "10.1109/TIFS.2011.2162830",
+          "article-title": "Differentiating between images using wavelet-based transforms: a comparative study",
+          "volume": "6",
+          "author": "Ozparlak",
+          "year": "2011",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b18",
+          "series-title": "2017 IEEE Workshop on Information Forensics and Security",
+          "first-page": "1",
+          "article-title": "Distinguishing computer graphics from natural images using convolution neural networks",
+          "author": "Rahmouni",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b19",
+          "doi-asserted-by": "crossref",
+          "first-page": "8439",
+          "DOI": "10.1109/TIP.2021.3114989",
+          "article-title": "Robust texture-aware computer-generated image forensic: Benchmark and algorithm",
+          "volume": "30",
+          "author": "Bai",
+          "year": "2021",
+          "journal-title": "IEEE Trans. Image Process."
+        },
+        {
+          "issue": "4",
+          "key": "10.1016/j.inffus.2024.102578_b20",
+          "doi-asserted-by": "crossref",
+          "first-page": "1296",
+          "DOI": "10.3390/s18041296",
+          "article-title": "Distinguishing computer-generated graphics from natural images based on sensor pattern noise and deep learning",
+          "volume": "18",
+          "author": "Yao",
+          "year": "2018",
+          "journal-title": "Sensors"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b21",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.image.2022.116692",
+          "article-title": "CGNet: Detecting computer-generated images based on transfer learning with attention module",
+          "volume": "105",
+          "author": "Yao",
+          "year": "2022",
+          "journal-title": "Signal Process., Image Commun."
+        },
+        {
+          "issue": "3",
+          "key": "10.1016/j.inffus.2024.102578_b22",
+          "doi-asserted-by": "crossref",
+          "first-page": "592",
+          "DOI": "10.1007/s11390-020-0216-9",
+          "article-title": "Distinguishing computer-generated images from natural images using channel and pixel correlation",
+          "volume": "35",
+          "author": "Zhang",
+          "year": "2020",
+          "journal-title": "J. Comput. Sci. Tech."
+        },
+        {
+          "issue": "11",
+          "key": "10.1016/j.inffus.2024.102578_b23",
+          "doi-asserted-by": "crossref",
+          "first-page": "2772",
+          "DOI": "10.1109/TIFS.2018.2834147",
+          "article-title": "Distinguishing between natural and computer-generated images using convolutional neural networks",
+          "volume": "13",
+          "author": "Quan",
+          "year": "2018",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b24",
+          "doi-asserted-by": "crossref",
+          "unstructured": "H. Mo, B. Chen, W. Luo, Fake faces identification via convolutional neural network, in: Proceedings of the 6th ACM Workshop on Information Hiding and Multimedia Security, 2018, pp. 43–47.",
+          "DOI": "10.1145/3206004.3206009"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b25",
+          "doi-asserted-by": "crossref",
+          "unstructured": "S.-Y. Wang, O. Wang, R. Zhang, A. Owens, A.A. Efros, CNN-generated images are surprisingly easy to spot... for now, in: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2020, pp. 8695–8704.",
+          "DOI": "10.1109/CVPR42600.2020.00872"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b26",
+          "series-title": "Computer Vision–ECCV 2020: 16th European Conference, Glasgow, UK, August 23–28, 2020, Proceedings, Part XXVI 16",
+          "first-page": "103",
+          "article-title": "What makes fake images detectable? understanding properties that generalize",
+          "author": "Chai",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b27",
+          "doi-asserted-by": "crossref",
+          "first-page": "862",
+          "DOI": "10.1109/LSP.2021.3130525",
+          "article-title": "Detection of GAN-generated images by estimating artifact similarity",
+          "volume": "29",
+          "author": "Li",
+          "year": "2021",
+          "journal-title": "IEEE Signal Process. Lett."
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b28",
+          "doi-asserted-by": "crossref",
+          "unstructured": "K. Shiohara, T. Yamasaki, Detecting deepfakes with self-blended images, in: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2022, pp. 18720–18729.",
+          "DOI": "10.1109/CVPR52688.2022.01816"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b29",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Z. Liu, X. Qi, P.H. Torr, Global texture enhancement for fake face detection in the wild, in: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2020, pp. 8060–8069.",
+          "DOI": "10.1109/CVPR42600.2020.00808"
+        },
+        {
+          "issue": "6",
+          "key": "10.1016/j.inffus.2024.102578_b30",
+          "doi-asserted-by": "crossref",
+          "first-page": "3527",
+          "DOI": "10.1109/TCSVT.2021.3116679",
+          "article-title": "A robust GAN-generated face detection method based on dual-color spaces and an improved Xception",
+          "volume": "32",
+          "author": "Chen",
+          "year": "2021",
+          "journal-title": "IEEE Trans. Circuits Syst. Video Technol."
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b31",
+          "series-title": "2019 IEEE International Workshop on Information Forensics and Security",
+          "first-page": "1",
+          "article-title": "Detecting and simulating artifacts in gan fake images",
+          "author": "Zhang",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b32",
+          "series-title": "An image is worth 16x16 words: Transformers for image recognition at scale",
+          "author": "Dosovitskiy",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b33",
+          "doi-asserted-by": "crossref",
+          "first-page": "76",
+          "DOI": "10.1016/j.patrec.2023.10.021",
+          "article-title": "Exposing fake images generated by text-to-image diffusion models",
+          "volume": "176",
+          "author": "Xu",
+          "year": "2023",
+          "journal-title": "Pattern Recognit. Lett."
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b34",
+          "series-title": "DIRE for diffusion-generated image detection",
+          "author": "Wang",
+          "year": "2023"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b35",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Z. Sha, Z. Li, N. Yu, Y. Zhang, De-fake: Detection and attribution of fake images generated by text-to-image generation models, in: Proceedings of the 2023 ACM SIGSAC Conference on Computer and Communications Security, 2023, pp. 3418–3432.",
+          "DOI": "10.1145/3576915.3616588"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b36",
+          "article-title": "Distinguishing natural and computer generated images using Multi-Colorspace fused EfficientNet",
+          "volume": "68",
+          "author": "Gangan",
+          "year": "2022",
+          "journal-title": "J. Inf. Secur. Appl."
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b37",
+          "article-title": "CGFormer: ViT-based network for identifying computer-generated images with token labeling",
+          "author": "Quan",
+          "year": "2023",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b38",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.inffus.2024.102293",
+          "article-title": "Spatiotemporal Fusion Transformer for large-scale traffic forecasting",
+          "volume": "107",
+          "author": "Wang",
+          "year": "2024",
+          "journal-title": "Inf. Fusion"
+        },
+        {
+          "issue": "2",
+          "key": "10.1016/j.inffus.2024.102578_b39",
+          "doi-asserted-by": "crossref",
+          "first-page": "652",
+          "DOI": "10.1109/TPAMI.2019.2938758",
+          "article-title": "Res2net: A new multi-scale backbone architecture",
+          "volume": "43",
+          "author": "Gao",
+          "year": "2019",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell."
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b40",
+          "doi-asserted-by": "crossref",
+          "unstructured": "S. Woo, J. Park, J.-Y. Lee, I.S. Kweon, Cbam: Convolutional block attention module, in: Proceedings of the European Conference on Computer Vision, ECCV, 2018, pp. 3–19.",
+          "DOI": "10.1007/978-3-030-01234-2_1"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b41",
+          "doi-asserted-by": "crossref",
+          "unstructured": "M. Sandler, A. Howard, M. Zhu, A. Zhmoginov, L.-C. Chen, Mobilenetv2: Inverted residuals and linear bottlenecks, in: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2018, pp. 4510–4520.",
+          "DOI": "10.1109/CVPR.2018.00474"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b42",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.inffus.2024.102495",
+          "article-title": "Individual entity induced label concept set for classification: An information fusion viewpoint",
+          "volume": "111",
+          "author": "Liu",
+          "year": "2024",
+          "journal-title": "Inf. Fusion"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b43",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/JSAIT.2020.2981538",
+          "article-title": "An information-theoretic approach to unsupervised feature selection for high-dimensional data",
+          "author": "Huang",
+          "year": "2020",
+          "journal-title": "IEEE J. Sel. Areas Inf. Theory"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b44",
+          "series-title": "Machine Learning for Multimodal Healthcare Data",
+          "first-page": "64",
+          "article-title": "Exploiting partial common information microstructure for multi-modal brain tumor segmentation",
+          "author": "Mei",
+          "year": "2024"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b45",
+          "doi-asserted-by": "crossref",
+          "unstructured": "T. Jin, S. Huang, Y. Li, Z. Zhang, Dual low-rank multimodal fusion, in: Findings of the Association for Computational Linguistics: EMNLP 2020, 2020, pp. 377–387.",
+          "DOI": "10.18653/v1/2020.findings-emnlp.35"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b46",
+          "doi-asserted-by": "crossref",
+          "unstructured": "T. Karras, S. Laine, M. Aittala, J. Hellsten, J. Lehtinen, T. Aila, Analyzing and improving the image quality of stylegan, in: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2020, pp. 8110–8119.",
+          "DOI": "10.1109/CVPR42600.2020.00813"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b47",
+          "series-title": "Progressive growing of gans for improved quality, stability, and variation",
+          "author": "Karras",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b48",
+          "series-title": "Large scale GAN training for high fidelity natural image synthesis",
+          "author": "Brock",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b49",
+          "unstructured": "R. Rombach, A. Blattmann, D. Lorenz, P. Esser, B. Ommer, Stable diffusion, Available: https://github.com/CompVis/stable-diffusion."
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b50",
+          "series-title": "Dall e mini",
+          "author": "Dayma",
+          "year": "2021"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b51",
+          "series-title": "Columbia Photographic Images and Photorealistic Computer Graphics Dataset",
+          "first-page": "205",
+          "author": "Ng",
+          "year": "2005"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b52",
+          "doi-asserted-by": "crossref",
+          "unstructured": "D.-T. Dang-Nguyen, C. Pasquini, V. Conotter, G. Boato, RAISE: A raw images dataset for digital image forensics, in: Proceedings of the 6th ACM Multimedia Systems Conference, 2015, pp. 219–224.",
+          "DOI": "10.1145/2713168.2713194"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b53",
+          "series-title": "Lsun: Construction of a large-scale image dataset using deep learning with humans in the loop",
+          "author": "Yu",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b54",
+          "series-title": "Information Hiding: 13th International Conference, IH 2011, Prague, Czech Republic, May 18-20, 2011, Revised Selected Papers 13",
+          "first-page": "59",
+          "article-title": "” Break our steganographic system”: the ins and outs of organizing BOSS",
+          "author": "Bas",
+          "year": "2011"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b55",
+          "series-title": "Pytorch 1.11.0",
+          "author": "Pytorch",
+          "year": "2022"
+        },
+        {
+          "key": "10.1016/j.inffus.2024.102578_b56",
+          "series-title": "Adam: A method for stochastic optimization",
+          "author": "Kingma",
+          "year": "2014"
+        },
+        {
+          "issue": "8",
+          "key": "10.1016/j.inffus.2024.102578_b57",
+          "doi-asserted-by": "crossref",
+          "first-page": "1276",
+          "DOI": "10.1016/j.jvcir.2013.08.009",
+          "article-title": "Computer generated images vs. digital photographs: A synergetic feature and classifier combination approach",
+          "volume": "24",
+          "author": "Tokuda",
+          "year": "2013",
+          "journal-title": "J. Vis. Commun. Image Represent."
+        }
+      ],
+      "container-title": [
+        "Information Fusion"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S1566253524003567?httpAccept=text/xml",
+          "content-type": "text/xml",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S1566253524003567?httpAccept=text/plain",
+          "content-type": "text/plain",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2024,
+            11,
+            24
+          ]
+        ],
+        "date-time": "2024-11-24T02:53:51Z",
+        "timestamp": 1732416831000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://linkinghub.elsevier.com/retrieve/pii/S1566253524003567"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2024,
+            12
+          ]
+        ]
+      },
+      "references-count": 57,
+      "alternative-id": [
+        "S1566253524003567"
+      ],
+      "URL": "https://doi.org/10.1016/j.inffus.2024.102578",
+      "relation": {},
+      "ISSN": [
+        "1566-2535"
+      ],
+      "issn-type": [
+        {
+          "value": "1566-2535",
+          "type": "print"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            12
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "Elsevier",
+          "name": "publisher",
+          "label": "This article is maintained by"
+        },
+        {
+          "value": "Detecting Artificial Intelligence-Generated images via deep trace representations and interactive feature fusion",
+          "name": "articletitle",
+          "label": "Article Title"
+        },
+        {
+          "value": "Information Fusion",
+          "name": "journaltitle",
+          "label": "Journal Title"
+        },
+        {
+          "value": "https://doi.org/10.1016/j.inffus.2024.102578",
+          "name": "articlelink",
+          "label": "CrossRef DOI link to publisher maintained version"
+        },
+        {
+          "value": "article",
+          "name": "content_type",
+          "label": "Content Type"
+        },
+        {
+          "value": "© 2024 Elsevier B.V. All rights are reserved, including those for text and data mining, AI training, and similar technologies.",
+          "name": "copyright",
+          "label": "Copyright"
+        }
+      ],
+      "article-number": "102578"
+    }
+  }
+}

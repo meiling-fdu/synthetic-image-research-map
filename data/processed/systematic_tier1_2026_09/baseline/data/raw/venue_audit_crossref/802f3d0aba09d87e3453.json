@@ -1,0 +1,693 @@
+{
+  "doi": "10.1038/s41598-023-34629-3",
+  "source_url": "https://api.crossref.org/works/10.1038%2Fs41598-023-34629-3",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            28
+          ]
+        ],
+        "date-time": "2026-08-28T05:23:12Z",
+        "timestamp": 1787894592043,
+        "version": "build-2784847793"
+      },
+      "reference-count": 53,
+      "publisher": "Springer Science and Business Media LLC",
+      "issue": "1",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                5,
+                8
+              ]
+            ],
+            "date-time": "2023-05-08T00:00:00Z",
+            "timestamp": 1683504000000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                5,
+                8
+              ]
+            ],
+            "date-time": "2023-05-08T00:00:00Z",
+            "timestamp": 1683504000000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "link.springer.com"
+        ],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "Sci Rep"
+      ],
+      "abstract": "<jats:title>Abstract</jats:title><jats:p>Due to the wide availability of easy-to-access content on social media, along with the advanced tools and inexpensive computing infrastructure, has made it very easy for people to produce deep fakes that can cause to spread disinformation and hoaxes. This rapid advancement can cause panic and chaos as anyone can easily create propaganda using these technologies. Hence, a robust system to differentiate between real and fake content has become crucial in this age of social media. This paper proposes an automated method to classify deep fake images by employing Deep Learning and Machine Learning based methodologies. Traditional Machine Learning (ML) based systems employing handcrafted feature extraction fail to capture more complex patterns that are poorly understood or easily represented using simple features. These systems cannot generalize well to unseen data. Moreover, these systems are sensitive to noise or variations in the data, which can reduce their performance. Hence, these problems can limit their usefulness in real-world applications where the data constantly evolves. The proposed framework initially performs an Error Level Analysis of the image to determine if the image has been modified. This image is then supplied to Convolutional Neural Networks for deep feature extraction. The resultant feature vectors are then classified via Support Vector Machines and K-Nearest Neighbors by performing hyper-parameter optimization. The proposed method achieved the highest accuracy of 89.5% via Residual Network and K-Nearest Neighbor. The results prove the efficiency and robustness of the proposed technique; hence, it can be used to detect deep fake images and reduce the potential threat of slander and propaganda.</jats:p>",
+      "DOI": "10.1038/s41598-023-34629-3",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2023,
+            5,
+            8
+          ]
+        ],
+        "date-time": "2023-05-08T10:02:58Z",
+        "timestamp": 1683540178000
+      },
+      "update-policy": "https://doi.org/10.1007/springer_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 141,
+      "title": [
+        "Deep fake detection and classification using error-level analysis and deep learning"
+      ],
+      "prefix": "10.1038",
+      "volume": "13",
+      "author": [
+        {
+          "given": "Rimsha",
+          "family": "Rafique",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Rahma",
+          "family": "Gantassi",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Rashid",
+          "family": "Amin",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jaroslav",
+          "family": "Frnda",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Aida",
+          "family": "Mustapha",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Asma Hassan",
+          "family": "Alshehri",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "published-online": {
+        "date-parts": [
+          [
+            2023,
+            5,
+            8
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "34629_CR1",
+          "volume-title": "Will Deep-Fake Technology Destroy Democracy",
+          "author": "JF Boylan",
+          "year": "2018",
+          "unstructured": "Boylan, J. F. Will Deep-Fake Technology Destroy Democracy (The New York Times, 2018)."
+        },
+        {
+          "key": "34629_CR2",
+          "first-page": "12",
+          "volume": "31",
+          "author": "D Harwell",
+          "year": "2018",
+          "unstructured": "Harwell, D. Scarlett Johansson on fake AI-generated sex videos:‘Nothing can stop someone from cutting and pasting my image’. J. Washigton Post 31, 12 (2018).",
+          "journal-title": "J. Washigton Post"
+        },
+        {
+          "key": "34629_CR3",
+          "first-page": "1",
+          "volume": "53",
+          "author": "M Masood",
+          "year": "2022",
+          "unstructured": "Masood, M. et al. Deepfakes generation and detection: State-of-the-art, open challenges, countermeasures, and way forward. Appl. Intell. 53, 1–53 (2022).",
+          "journal-title": "Appl. Intell."
+        },
+        {
+          "key": "34629_CR4",
+          "doi-asserted-by": "publisher",
+          "first-page": "98523",
+          "DOI": "10.1109/ACCESS.2021.3095312",
+          "volume": "9",
+          "author": "R Amin",
+          "year": "2021",
+          "unstructured": "Amin, R., Al Ghamdi, M. A., Almotiri, S. H. & Alruily, M. Healthcare techniques through deep learning: Issues, challenges and opportunities. IEEE Access 9, 98523–98541 (2021).",
+          "journal-title": "IEEE Access"
+        },
+        {
+          "key": "34629_CR5",
+          "unstructured": "Turek, M.J. Defense Advanced Research Projects Agency. https://www.darpa.mil/program/media-forensics. Media Forensics (MediFor). Vol. 10 (2019)."
+        },
+        {
+          "key": "34629_CR6",
+          "first-page": "263",
+          "volume": "5",
+          "author": "MJF Schroepfer",
+          "year": "2019",
+          "unstructured": "Schroepfer, M. J. F. Creating a data set and a challenge for deepfakes. Artif. Intell. 5, 263 (2019).",
+          "journal-title": "Artif. Intell."
+        },
+        {
+          "key": "34629_CR7",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kibriya, H. et al. A Novel and Effective Brain Tumor Classification Model Using Deep Feature Fusion and Famous Machine Learning Classifiers. Vol. 2022 (2022).",
+          "DOI": "10.1155/2022/7897669"
+        },
+        {
+          "key": "34629_CR8",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rafique, R., Nawaz, M., Kibriya, H. & Masood, M. DeepFake detection using error level analysis and deep learning. in 2021 4th International Conference on Computing & Information Sciences (ICCIS). 1–4 (IEEE, 2021).",
+          "DOI": "10.1109/ICCIS54243.2021.9676375"
+        },
+        {
+          "key": "34629_CR9",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Güera, D. & Delp, E.J. Deepfake video detection using recurrent neural networks. in 2018 15th IEEE International Conference on Advanced Video and Signal Based Surveillance (AVSS). 1–6 (IEEE, 2018).",
+          "DOI": "10.1109/AVSS.2018.8639163"
+        },
+        {
+          "issue": "7",
+          "key": "34629_CR10",
+          "doi-asserted-by": "publisher",
+          "first-page": "1111",
+          "DOI": "10.3390/electronics11071111",
+          "volume": "11",
+          "author": "S Aleem",
+          "year": "2022",
+          "unstructured": "Aleem, S. et al. Machine learning algorithms for depression: Diagnosis, insights, and research directions. Electronics 11(7), 1111 (2022).",
+          "journal-title": "Electronics"
+        },
+        {
+          "issue": "1",
+          "key": "34629_CR11",
+          "doi-asserted-by": "publisher",
+          "first-page": "1",
+          "DOI": "10.1007/s13735-020-00196-w",
+          "volume": "10",
+          "author": "M Pavan Kumar",
+          "year": "2021",
+          "unstructured": "Pavan Kumar, M. & Jayagopal, P. Generative adversarial networks: A survey on applications and challenges. Int. J. Multimed. Inf. 10(1), 1–24 (2021).",
+          "journal-title": "Int. J. Multimed. Inf."
+        },
+        {
+          "issue": "11",
+          "key": "34629_CR12",
+          "doi-asserted-by": "publisher",
+          "first-page": "15491",
+          "DOI": "10.1007/s11042-022-12113-w",
+          "volume": "81",
+          "author": "M Mansoor",
+          "year": "2022",
+          "unstructured": "Mansoor, M. et al. A machine learning approach for non-invasive fall detection using Kinect. Multimed. Tools Appl. 81(11), 15491–15519 (2022).",
+          "journal-title": "Multimed. Tools Appl."
+        },
+        {
+          "key": "34629_CR13",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Thies, J., Zollhofer, M., Stamminger, M., Theobalt, C. & Nießner, M. Face2face: Real-time face capture and reenactment of rgb videos. in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2387–2395 (2016).",
+          "DOI": "10.1109/CVPR.2016.262"
+        },
+        {
+          "key": "34629_CR14",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Shad, H.S. et al. Comparative Analysis of Deepfake Image Detection Method Using Convolutional Neural Network. Vol. 2021 (2021).",
+          "DOI": "10.1155/2021/3111676"
+        },
+        {
+          "key": "34629_CR15",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Matern, F., Riess, C. & Stamminger, M. Exploiting visual artifacts to expose deepfakes and face manipulations. in 2019 IEEE Winter Applications of Computer Vision Workshops (WACVW). 83–92 (IEEE, 2019).",
+          "DOI": "10.1109/WACVW.2019.00020"
+        },
+        {
+          "key": "34629_CR16",
+          "unstructured": "Agarwal, S., Farid, H., Gu, Y., He, M., Nagano, K. & Li, H. Protecting world leaders against deep fakes. in CVPR Workshops. Vol. 1. 38 (2019)."
+        },
+        {
+          "key": "34629_CR17",
+          "volume-title": "Fakecatcher: Detection of Synthetic Portrait Videos Using Biological Signals",
+          "author": "UA Ciftci",
+          "year": "2021",
+          "unstructured": "Ciftci, U. A., Demir, I. & Yin, L. Fakecatcher: Detection of Synthetic Portrait Videos Using Biological Signals (Google Patents, 2021)."
+        },
+        {
+          "key": "34629_CR18",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yang, X., Li, Y. & Lyu, S. Exposing deep fakes using inconsistent head poses. in ICASSP 2019–2019 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) 8261–8265. (IEEE, 2019).",
+          "DOI": "10.1109/ICASSP.2019.8683164"
+        },
+        {
+          "key": "34629_CR19",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rossler, A., Cozzolino, D., Verdoliva, L., Riess, C., Thies, J. & Nießner, M. Faceforensics++: Learning to detect manipulated facial images. in Proceedings of the IEEE/CVF International Conference on Computer Vision. 1–11 (2019).",
+          "DOI": "10.1109/ICCV.2019.00009"
+        },
+        {
+          "key": "34629_CR20",
+          "doi-asserted-by": "crossref",
+          "unstructured": "McCloskey, S. & Albright, M. Detecting GAN-generated imagery using saturation cues. in 2019 IEEE International Conference on Image Processing (ICIP). 4584–4588. (IEEE, 2019).",
+          "DOI": "10.1109/ICIP.2019.8803661"
+        },
+        {
+          "key": "34629_CR21",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Abd Elaziz, M., Dahou, A., Orabi, D.A., Alshathri, S., Soliman, E.M. & Ewees, A.A.J.M. A Hybrid Multitask Learning Framework with a Fire Hawk Optimizer for Arabic Fake News Detection. Vol. 11(2). 258 (2023).",
+          "DOI": "10.3390/math11020258"
+        },
+        {
+          "key": "34629_CR22",
+          "unstructured": "Wodajo, D. & Atnafu, S.J.A.P.A. Deepfake Video Detection Using Convolutional Vision Transformer (2021)."
+        },
+        {
+          "key": "34629_CR23",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Guarnera, L., Giudice, O. & Battiato, S. Deepfake detection by analyzing convolutional traces. in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops. 666–667 (2020).",
+          "DOI": "10.1109/CVPRW50498.2020.00341"
+        },
+        {
+          "key": "34629_CR24",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Nguyen, H.H., Fang, F., Yamagishi, J. & Echizen, I. Multi-task learning for detecting and segmenting manipulated facial images and videos. in 2019 IEEE 10th International Conference on Biometrics Theory, Applications and Systems (BTAS). 1–8. (IEEE, 2019).",
+          "DOI": "10.1109/BTAS46853.2019.9185974"
+        },
+        {
+          "key": "34629_CR25",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Khalil, S.S., Youssef, S.M. & Saleh, S.N.J.F.I. iCaps-Dfake: An Integrated Capsule-Based Model for Deepfake Image and Video Detection. Vol. 13(4). 93 (2021).",
+          "DOI": "10.3390/fi13040093"
+        },
+        {
+          "key": "34629_CR26",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Afchar, D., Nozick, V., Yamagishi, J. & Echizen, I. Mesonet: A compact facial video forgery detection network. in 2018 IEEE International Workshop on Information Forensics and Security (WIFS). 1–7 (IEEE, 2018).",
+          "DOI": "10.1109/WIFS.2018.8630761"
+        },
+        {
+          "key": "34629_CR27",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang, Y. & Dantcheva, A. A video is worth more than 1000 lies. Comparing 3DCNN approaches for detecting deepfakes. in 2020 15th IEEE International Conference on Automatic Face and Gesture Recognition (FG 2020). 515–519. (IEEE, 2020).",
+          "DOI": "10.1109/FG47880.2020.00089"
+        },
+        {
+          "key": "34629_CR28",
+          "unstructured": "Cozzolino, D., Thies, J., Rössler, A., Riess, C., Nießner, M. & Verdoliva, L.J.A.P.A. Forensictransfer: Weakly-Supervised Domain Adaptation for Forgery Detection (2018)."
+        },
+        {
+          "key": "34629_CR29",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Huang, G., Liu, Z., Van Der Maaten, L., & Weinberger, K.Q. Densely connected convolutional networks. in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 4700–4708 (2017).",
+          "DOI": "10.1109/CVPR.2017.243"
+        },
+        {
+          "issue": "7553",
+          "key": "34629_CR30",
+          "doi-asserted-by": "publisher",
+          "first-page": "436",
+          "DOI": "10.1038/nature14539",
+          "volume": "521",
+          "author": "Y LeCun",
+          "year": "2015",
+          "unstructured": "LeCun, Y., Bengio, Y. & Hinton, G. Deep learning. Nature 521(7553), 436–444 (2015).",
+          "journal-title": "Nature"
+        },
+        {
+          "key": "34629_CR31",
+          "doi-asserted-by": "crossref",
+          "unstructured": "He, K., Zhang, X., Ren, S. & Sun, J. Deep residual learning for image recognition. in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 770–778 (2016).",
+          "DOI": "10.1109/CVPR.2016.90"
+        },
+        {
+          "key": "34629_CR32",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Nida, N., Irtaza, A. & Ilyas, N. Forged face detection using ELA and deep learning techniques. in 2021 International Bhurban Conference on Applied Sciences and Technologies (IBCAST). 271–275 (IEEE, 2021).",
+          "DOI": "10.1109/IBCAST51254.2021.9393234"
+        },
+        {
+          "key": "34629_CR33",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kibriya, H., Masood, M., Nawaz, M., Rafique, R. & Rehman, S. Multiclass brain tumor classification using convolutional neural network and support vector machine. in 2021 Mohammad Ali Jinnah University International Conference on Computing (MAJICC). 1–4 (IEEE, 2021).",
+          "DOI": "10.1109/MAJICC53071.2021.9526262"
+        },
+        {
+          "key": "34629_CR34",
+          "doi-asserted-by": "publisher",
+          "first-page": "1",
+          "DOI": "10.1007/s11042-022-12977-y",
+          "volume": "81",
+          "author": "H Kibriya",
+          "year": "2022",
+          "unstructured": "Kibriya, H., Masood, M., Nawaz, M. & Nazir, T. J. M. T. Multiclass classification of brain tumors using a novel CNN architecture. Multimed. Tool Appl. 81, 1–17 (2022).",
+          "journal-title": "Multimed. Tool Appl."
+        },
+        {
+          "issue": "3",
+          "key": "34629_CR35",
+          "first-page": "1",
+          "volume": "6",
+          "author": "FM Salman",
+          "year": "2022",
+          "unstructured": "Salman, F. M. & Abu-Naser, S. S. Classification of real and fake human faces using deep learning. IJAER 6(3), 1–14 (2022).",
+          "journal-title": "IJAER"
+        },
+        {
+          "issue": "1",
+          "key": "34629_CR36",
+          "first-page": "63",
+          "volume": "39",
+          "author": "AK Anaraki",
+          "year": "2019",
+          "unstructured": "Anaraki, A. K., Ayati, M. & Kazemi, F. J. Magnetic resonance imaging-based brain tumor grades classification and grading via convolutional neural networks and genetic algorithms. Information 39(1), 63–74 (2019).",
+          "journal-title": "Information"
+        },
+        {
+          "key": "34629_CR37",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Albawi, S., Mohammed, T.A. & Al-Zawi, S. Understanding of a convolutional neural network. in 2017 International Conference on Engineering and Technology (ICET). 1–6 (IEEE, 2017).",
+          "DOI": "10.1109/ICEngTechnol.2017.8308186"
+        },
+        {
+          "key": "34629_CR38",
+          "unstructured": "O'Shea, K. & Nash, R. J. An Introduction to Convolutional Neural Networks (2015)."
+        },
+        {
+          "key": "34629_CR39",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Szegedy, C. et al. Going deeper with convolutions. in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 1–9 (2015).",
+          "DOI": "10.1109/CVPR.2015.7298594"
+        },
+        {
+          "key": "34629_CR40",
+          "unstructured": "Iandola, F.N., Han, S., Moskewicz, M.W., Ashraf, K., Dally, W.J. & Keutzer, K.J. SqueezeNet: AlexNet-Level Accuracy with 50× Fewer Parameters and< 0.5 MB Model Size (2016)."
+        },
+        {
+          "key": "34629_CR41",
+          "doi-asserted-by": "crossref",
+          "unstructured": "He, K., Zhang, X., Ren, S. & Sun, J. Deep residual learning for image recognition. in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, Las Vegas, USA. 770–778 (2016).",
+          "DOI": "10.1109/CVPR.2016.90"
+        },
+        {
+          "key": "34629_CR42",
+          "unstructured": "Introduction to Residual Networks. https://www.geeksforgeeks.org/introduction-to-residual-networks/ (2020)."
+        },
+        {
+          "issue": "5",
+          "key": "34629_CR43",
+          "doi-asserted-by": "publisher",
+          "first-page": "1688",
+          "DOI": "10.3390/s21051688",
+          "volume": "21",
+          "author": "L Ali",
+          "year": "2021",
+          "unstructured": "Ali, L. et al. Performance evaluation of deep CNN-based crack detection and localization techniques for concrete structures. Sensors 21(5), 1688 (2021).",
+          "journal-title": "Sensors"
+        },
+        {
+          "issue": "2",
+          "key": "34629_CR44",
+          "doi-asserted-by": "publisher",
+          "first-page": "1",
+          "DOI": "10.1007/s10916-019-1475-2",
+          "volume": "44",
+          "author": "F Ramzan",
+          "year": "2020",
+          "unstructured": "Ramzan, F. et al. A deep learning approach for automated diagnosis and multi-class classification of Alzheimer’s disease stages using resting-state fMRI and residual neural networks. J. Med. Syst. 44(2), 1–16 (2020).",
+          "journal-title": "J. Med. Syst."
+        },
+        {
+          "key": "34629_CR45",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mancini, M., Costante, G., Valigi, P. & Ciarfuglia, T.A. Fast robust monocular depth estimation for obstacle detection with fully convolutional networks. in 2016 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS). 4296–4303 (IEEE, 2016).",
+          "DOI": "10.1109/IROS.2016.7759632"
+        },
+        {
+          "issue": "2",
+          "key": "34629_CR46",
+          "doi-asserted-by": "publisher",
+          "first-page": "476",
+          "DOI": "10.11591/ijeecs.v12.i2.pp476-481",
+          "volume": "12",
+          "author": "N Kasim",
+          "year": "2018",
+          "unstructured": "Kasim, N., Rahman, N., Ibrahim, Z. & Mangshor, N. A. Celebrity face recognition using deep learning. Indonesian J. Electr. Eng. Comput. Sci. 12(2), 476–481 (2018).",
+          "journal-title": "Indonesian J. Electr. Eng. Comput. Sci."
+        },
+        {
+          "key": "34629_CR47",
+          "doi-asserted-by": "publisher",
+          "first-page": "S94",
+          "DOI": "10.1002/tee.22241",
+          "volume": "11",
+          "author": "D Rezgui",
+          "year": "2016",
+          "unstructured": "Rezgui, D. & Lachiri, Z. ECG biometric recognition using SVM-based approach. IEEJ Trans. Electr. Electron. Eng. 11, S94–S100 (2016).",
+          "journal-title": "IEEJ Trans. Electr. Electron. Eng."
+        },
+        {
+          "key": "34629_CR48",
+          "unstructured": "Y. U. Computational Intelligence and Photography Lab. Real-and-Fake-Face-Detection (2019)."
+        },
+        {
+          "key": "34629_CR49",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tolosana, R., Romero-Tapiador, S., Fierrez, J. & Vera-Rodriguez, R. Deepfakes evolution: Analysis of facial regions and fake detection performance. in International Conference on Pattern Recognition. 442–456 (Springer, 2016).",
+          "DOI": "10.1007/978-3-030-68821-9_38"
+        },
+        {
+          "key": "34629_CR50",
+          "volume-title": "Deepfake Detection Using Capsule Networks with Long Short-Term Memory Networks",
+          "author": "A Mehra",
+          "year": "2020",
+          "unstructured": "Mehra, A. Deepfake Detection Using Capsule Networks with Long Short-Term Memory Networks (University of Twente, 2020)."
+        },
+        {
+          "key": "34629_CR51",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mittal, H., Saraswat, M., Bansal, J.C. & Nagar, A. Fake-face image classification using improved quantum-inspired evolutionary-based feature selection method. in 2020 IEEE Symposium Series on Computational Intelligence (SSCI). 989–995 (IEEE, 2020).",
+          "DOI": "10.1109/SSCI47803.2020.9308337"
+        },
+        {
+          "key": "34629_CR52",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chandani, K. & Arora, M. Automatic facial forgery detection using deep neural networks. in Advances in Interdisciplinary Engineering. 205–214 (Springer, 2021).",
+          "DOI": "10.1007/978-981-15-9956-9_21"
+        },
+        {
+          "key": "34629_CR53",
+          "doi-asserted-by": "publisher",
+          "first-page": "107256",
+          "DOI": "10.1016/j.asoc.2021.107256",
+          "volume": "105",
+          "author": "S Lee",
+          "year": "2021",
+          "unstructured": "Lee, S., Tariq, S., Shin, Y. & Woo, S. S. Detecting handcrafted facial image manipulations and GAN-generated facial images using Shallow-FakeFaceNet. Appl. Soft Comput. 105, 107256 (2021).",
+          "journal-title": "Appl. Soft Comput."
+        }
+      ],
+      "container-title": [
+        "Scientific Reports"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://www.nature.com/articles/s41598-023-34629-3.pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://www.nature.com/articles/s41598-023-34629-3",
+          "content-type": "text/html",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://www.nature.com/articles/s41598-023-34629-3.pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2024,
+            10,
+            19
+          ]
+        ],
+        "date-time": "2024-10-19T23:47:47Z",
+        "timestamp": 1729381667000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://www.nature.com/articles/s41598-023-34629-3"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2023,
+            5,
+            8
+          ]
+        ]
+      },
+      "references-count": 53,
+      "journal-issue": {
+        "issue": "1",
+        "published-online": {
+          "date-parts": [
+            [
+              2023,
+              12
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "34629"
+      ],
+      "URL": "https://doi.org/10.1038/s41598-023-34629-3",
+      "relation": {},
+      "ISSN": [
+        "2045-2322"
+      ],
+      "issn-type": [
+        {
+          "value": "2045-2322",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2023,
+            5,
+            8
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "26 December 2022",
+          "order": 1,
+          "name": "received",
+          "label": "Received",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "4 May 2023",
+          "order": 2,
+          "name": "accepted",
+          "label": "Accepted",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "8 May 2023",
+          "order": 3,
+          "name": "first_online",
+          "label": "First Online",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "The authors declare no competing interests.",
+          "order": 1,
+          "name": "Ethics",
+          "group": {
+            "name": "EthicsHeading",
+            "label": "Competing interests"
+          }
+        }
+      ],
+      "article-number": "7422"
+    }
+  }
+}

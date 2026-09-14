@@ -1,0 +1,750 @@
+PAGE 1
+SPECTRA-Net: Scalable Pipeline for Explainable Cross-domain
+      Tensor Representations for AI-generated Images Detection
+
+                    Sarra Arab1, Anfal Achouri1, and Seif Eddine Bouziane1,*
+
+                1The National School of Artificial Intelligence, Algiers, Algeria
+                *Corresponding author:seifeddine.bouziane@ensia.edu.dz
+
+
+
+
+                                                    Abstract
+          The rapid proliferation of AI-generated images (AIGI) presents a significant challenge to
+       digital information integrity. While human observers and existing detection models struggle
+       to keep pace with the increasing sophistication of generative models, the need for robust,
+       real-time detection systems has become critical. This paper introduces SPECTRA-Net, a
+       scalable pipeline for explainable, cross-domain tensor representations for AIGI detection.
+       Our approach leverages a multi-view representation of images, combining global semantic
+       features from a Vision Foundation Model (VFM), spectral analysis, local patch-based
+       anomaly detection, and statistical descriptors. By fusing these complementary data streams,
+       SPECTRA-Net achieves state-of-the-art performance in both in-domain and cross-domain
+       settings, demonstrating high accuracy and generalization capabilities across a wide range
+       of challenging datasets, including WildFake, Chameleon, and RRDataset.  The proposed
+       pipeline not only provides a robust solution for AIGI detection but also offers explainability
+       through artifact localization, paving the way for more trustworthy and reliable content
+      verification in real-world applications.
+
+Keywords:AI-generated image detection; multi-view representations; diffusion models; social
+media forensics; cross-domain generalization
+Main contributions.
+
+    •Multi-view framework integrating semantic, frequency-domain, statistical, and patch-level
+       representations.
+
+    •Robust detection pipeline resilient to real-world degradations, including JPEG compression
+       and Gaussian blur.
+
+    •Patch-wise explainability enabling localized artifact detection and spatial interpretability.
+
+1   Introduction
+
+Recent advances in generative models have led to an incredible growth in highly realistic AI-
+generated images.  Modern diffusion models [13] and large-scale generative frameworks are
+now capable of producing visual content that is often indistinguishable from real photographs,
+accelerating their adoption across industries and social media platforms; however, this rapid
+progressalsoraisesseriousconcernsregardingimageauthenticityandmisinformation, motivating
+the need for reliable AI-generated image detection systems.
+    Early detection approaches primarily focused on identifying low-level artifacts introduced
+by GAN-based generators, such as color inconsistencies, checkerboard patterns, or spectral
+irregularities [7]. These artifact-driven methods are mainly effective against early-generation
+models but struggle with diffusion-based synthesis, which relies on iterative denoising processes
+
+                                                         1
+
+PAGE 2
+that leave fewer explicit traces [4], leading to significant performance degradation when detectors
+trained under GAN assumptions are exposed to modern generative models.
+    More recent learning-based approaches leverage deep convolutional networks, transformers,
+or vision foundation models to learn discriminative representations directly from image data.
+Foundation-model-based detectors, such as DINO-Detect, demonstrate strong robustness to
+degradations like motion blur by distilling semantic knowledge from frozen DINO backbones
+[21].   However, such methods primarily emphasize high-level semantics and may overlook
+complementary low-level cues that remain informative under real-world distortions. Similarly,
+lightweight and real-time architectures, including SAPN [8] and binary neural network–based
+detectors [15], prioritize efficiency and deployability but often exhibit limited cross-dataset
+generalization or sensitivity to domain shifts.
+    Another line of work explores frequency-domain and texture-based representations, moti-
+vated by the observation that generative models struggle to reproduce natural spectral statistics.
+Frequency-aware detectors [6] and hybrid RGB–FFT pipelines [15] have shown promising results,
+particularly under controlled settings.  Recent advances in dual-domain processing, such as
+wavelet-based diffusion models for blind image separation [9], demonstrate the effectiveness of
+combining frequency and spatial features for artifact removal. Complementarily, patch-based and
+pixel-level approaches such as LaDeDa [2] and PatchCraft [26] highlight the importance of local-
+ized texture inconsistencies and enable spatial explainability through anomaly heatmaps. While
+effective, these methods often rely on a single representation domain—either frequency, spatial
+texture, or semantic features—which limits robustness under diverse real-world transformations
+such as JPEG compression, Gaussian blur, and platform re-encoding, where single-modality
+detectorsmayfailwhentheirspecificcuesaredegraded. Recentmulti-levelfeaturerepresentation
+approaches [24] have shown promise by combining CNNs with vision transformers for enhanced
+forensic analysis, yet the integration of global semantic knowledge with complementary spectral
+and patch-level cues remains underexplored.
+    To address these challenges, we introduce SPECTRA-Net, a multi-view detection framework
+designedforrobustandexplainableAIGIdetectionunderrealistic,in-the-wildconditions. Rather
+than relying on a single cue, SPECTRA-Net integrates complementary semantic, frequency-
+domain, statistical, and patch-level representations to improve generalization and resilience to
+real-world degradations. By combining global semantic understanding with spectral analysis
+and localized anomaly detection, the proposed framework bridges the gap between accuracy,
+robustness, and interpretability.
+
+2   Methodology
+
+2.1   Training Dataset
+We leverage WildFake [14], a large-scale dataset designed for AI-generated image detection in
+wild, real-world conditions rather than controlled, lab-curated settings. Reflecting the diversity
+and variability of images shared on social media platforms, WildFake contains over 3.7 million
+images generated by state-of-the-art models, including GANs and diffusion-based systems such
+as Stable Diffusion and Midjourney.  For our baseline SPECTRA-Net training, we focus on
+diffusion-based subsets, excluding GAN content to target contemporary generative artifacts. Its
+scale and natural, in-the-wild distribution enable the model to learn robust and generalizable
+representations beyond idealized laboratory benchmarks.
+
+2.2   Finetuning Dataset
+We use RRDataset [16], containing 10,000 real and 10,000 AI-generated images across seven
+scenarios (six high-risk + everyday life), all subjected to 2–6 rounds of internet transmission
+
+
+
+                                                        2
+
+PAGE 3
+across eight platforms and four re-digitization processes (scanning, printing, photographing,
+screen capture).
+    The baseline SPECTRA-Net was first evaluated on all splits (train, validation, test) to
+establish reference performance.  We then fine-tuned it on the training and validation splits,
+testing the fine-tuned model exclusively on the RRDataset test split (original, re-digitized, and
+transfer variants) to measure generalization to unseen, challenging content.
+
+2.3   Overview
+Our proposed framework, SPECTRA-Net, moves beyond conventional binary detection of lab-
+curated synthetic image media by addressing the more challenging problem of distinguishing
+AI-generated images from real content curated on social media platforms. The framework is
+explicitly designed to operate under realistic in-the-wild degradations, including severe JPEG
+compression and blur, thereby closely mimicking the conditions encountered in real-world
+deployments while maintaining robust detection performance.
+    Beyond robustness, SPECTRA-Net delivers explainable predictions through a patch-wise
+scoring strategy that produces interpretable spatial heatmaps, revealing the regions that most
+strongly influence the final decision.
+    To jointly meet the requirements of robustness, explainability, and efficient inference across
+diverse visual domains, SPECTRA-Net adopts a multi-stage pipeline comprising two principal
+components: (i) an offline pre-processing unit for constructing multi-view image representations,
+and (ii) a training unit dedicated to learning discriminative generative patterns.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 1: SPECTRA-Net architecture with patch-wise explainability and cross-domain feature
+fusion.
+
+
+
+                                                         3
+
+PAGE 4
+    As illustrated in Fig. 1, the pre-processing unit transforms raw input images into a stan-
+dardized multi-view tensor representation. This representation is subsequently utilized by the
+trainingunittolearndiscriminativecuesthatdifferentiaterealimagesfromAI-generatedcontent,
+enabling efficient and interpretable inference at deployment time.
+
+2.4   Pre-processing Stage: Multi-view Representation
+Given an input RGB imageI       ∈R  H0×W   0×3  , we construct a comprehensive multi-view representa-
+tion that jointly captures semantic, frequency-domain, statistical, and spatial characteristics.
+The representation combines four complementary feature types: (1) global semantic descriptors
+(768D), (2) frequency-domain statistics (9D), (3) image statistics (8D), and (4) local spatial
+patches (49×243D). This combined representation enables robust detection of diffusion-model-
+generated artifacts across multiple levels of abstraction.
+
+2.4.1   Image Normalization and Preprocessing
+Each image is first resized to a fixed resolution of H =W = 448 pixels and normalized using
+ImageNet statistics  [3, 5]:
+                                                   X=   I/255−µσ      ,                                                        (1)
+
+where µ = [0.485,0.456,0.406] and σ = [0.229,0.224,0.225] are per-channel ImageNet mean and
+standard deviation. The normalized tensor is denotedX∈R                       448×448×3            .
+
+2.4.2   Feature Extraction: Global Semantic Representation (768D)
+High-level semantic features are extracted using a DINOv3 Vision Transformer backbone (ViT-
+Base-16) [22, 5], which encodes the normalized image as:
+                                            F= ViT(X)∈R                      (1+N)×768         ,                                                (2)
+
+where N = (448/16)2 = 784 denotes the number of patch tokens and 768 is the embedding
+dimension of the base model. We retain only the class token, which serves as a compact global
+image descriptor:
+                                               fglobal =F[0,:]∈R                 768.                                                   (3)
+
+2.4.3   Feature Extraction: Frequency-Domain Representation (9D)
+Diffusion-generated images exhibit characteristic high-frequency patterns distinct from natural
+images [6, 7]. We extract frequency-domain statistics via 2D Fast Fourier Transform (FFT), a
+standard tool for analyzing spectral artifacts in synthetic imagery [10]. For each RGB channel
+c∈{R,G,B}:
+                                                   H−1X  W−1X
+                                     Fc(u,v) =                 Xc(x,y)
+                                                    x=0   y=0                                                          (4)
+                                                                    ux
+                                                   ·exp    −j2π      H + vyW        ,
+
+    The magnitude and phase representations are computed as:
+
+                                             Mc =|F   c|,  Φ  c =∠F      c,                                                  (5)
+
+    Log-compressed magnitudes emphasize high-frequency components characteristic of diffusion
+artifacts [18]:                                       ˜Mc = log(1+M   c),                                                      (6)
+
+
+
+
+                                                            4
+
+PAGE 5
+    For each channel, spatial-domain magnitude statistics are extracted:
+                                                                q
+                                      µc =E[      ˜Mc],    σ c =   E[(   ˜Mc−µ   c)2],                                        (7)
+
+    Phase entropy measures the randomness and structural coherence of phase information [23]:
+                                                 vuut " Φc+π                 2#
+
+                                          ηc =      E         2π     −0.5        ,                                             (8)
+
+
+    Thecomplete frequency-domainfeaturevectorcombinesthese statisticsacross threechannels:
+
+                               ffft = [µ R,σR,ηR,µG,σG,ηG,µB,σB,ηB]T ∈R   9,                                (9)
+
+2.4.4   Feature Extraction: Statistical Descriptors (8D)
+To capture spatial-domain intensity statistics complementary to the frequency-domain represen-
+tation, we compute eight descriptors from the normalized image channels [11]. LetX      c∈R  H×W
+be the pixel intensities of channelc∈{R,G,B}inX. The statistical feature vector is then:
+
+                                  fstat = [µ′R,σ′R,µ′G,σ′G,µ′B,σ′B,γ,κ]  T ∈R   8,                                  (10)
+
+    where the per-channel mean and standard deviation are given by:
+                                                                q
+                                      µ′c =E[X       c],    σ ′c = E(X c−µ  ′c)2,                                      (11)
+
+    and the global skewness and excess kurtosis, computed over all spatial locations and channels,
+are defined as:
+                                 γ=  E(X−µ      ′)3(σ ′)3      ,    κ=  E(X−µ      ′)4(σ ′)4      −3,                                 (12)
+
+withµ      ′ andσ     ′ denoting the global mean and standard deviation ofX.
+
+2.4.5   Feature Extraction: Local Spatial Representation (49×243D)
+Fine-grained spatial information is preserved by extracting non-overlapping 9×9 patches from
+the normalized image. Using 2D unfold operation with kernel size 9×9 and stride 9:
+                           P= unfold(X,kernel = 9×9,stride = 9)∈R                                        2401×243       ,                         (13)
+
+ForaninputimagewithH =W = 448,usingkernelsizeandstride9yieldsNp = ⌊H−9                                      9  ⌋+12 =
+492 = 2401 non-overlapping patches arranged on a 49×49 grid. Each 9×9×3 patch is vectorized
+into a 243-dimensional feature, producingP        ∈R   2401×243         via the unfold operation, which can be
+reshaped into a structured 49×49 grid for spatial reasoning. Such patch-based representations
+preserve local structure [20] and provide the foundation for patch-wise anomaly detection.
+
+2.4.6   Multi-view Representation Summary
+The complete multi-view representation is:
+                        Rpre ={f     global,f fft,f stat,P}∈R        768×R   9×R   8×R   2401×243       ,                      (14)
+
+2.5   Training Stage: Neural Feature Encoding and Classification
+The training stage receives the multi-view representationRpre (14) from the pre-processing stage
+and learns to encode these features through specialized neural network modules with GELU [12]
+activation functions.
+
+                                                             5
+
+PAGE 6
+2.5.1   Global Semantic Feature Encoding
+The 768-dimensional global semantic featuresf               global (3) are encoded through a Global Semantic
+Encoder (MLP: 768→512→256) to produce task-aware semantic embeddings:
+
+                              f′global =W   2·GELU(W                1fglobal+b   1)+b   2∈R   256                              (15)
+
+where intermediate dimension is 512, with Dropout(0.3) applied between layers.
+
+2.5.2   Spectral Feature Encoding
+The 9-dimensional frequency-domain featuresf                fft (9) are encoded through a Spectral Artifact
+Encoder (MLP: 9 → 32 → 16) that expands then compresses to capture frequency-space
+anomalies:
+                                  f′fft =W  ′2·GELU(W           ′1ffft+b  ′1)+b  ′2∈R   16                                   (16)
+where the intermediate expansion to 32 dimensions allows cross-channel interactions before
+compression to 16 dimensions.
+
+2.5.3   Statistical Feature Encoding
+The 8-dimensional statistical descriptorsf                     stat (10) are encoded through a Distribution Modeling
+Block (MLP: 8→16→8):
+
+                                 f′stat =W  ′′2·GELU(W           ′′1fstat+b  ′′1)+b  ′′2∈R   8                                 (17)
+
+2.5.4   Spatial Patch Feature Encoding and Anomaly Scoring
+Each of the 2401 spatial patches is individually scored for anomalies.  Each 243-dimensional
+patch is processed through a Per-patch Anomaly Scorer (MLP: 243→64→1):
+
+                     si =W   (p)2  ·GELU(W                (p)1  Pi+b   (p)1  )+b   (p)2  ∈R,    i= 1,...,2401                  (18)
+
+with Dropout(0.2) in the hidden layer. The scores{s  1,...,s2401} can be reshaped into a 49×49
+spatial heatmap for explainability.  The multi-scale spatial reasoning block computes spatial
+correlations via depthwise convolutions with kernel sizes (3×3,5×5,7×7).
+
+2.5.5   Cross-Domain Feature Fusion and Final Classification
+The encoded features from all four domains are concatenated to form a fused representation:
+
+                         ffused = [f ′global;f ′fft;f ′stat;f ′spatial;p mean;p max]∈R    Dfused                        (19)
+
+This fused representation is passed through the final authenticity classification head (MLP:
+Dfused→256→128→1) which outputs a logit:
+
+                z=W     clf,3   ·GELU     Wclf,2   ·GELU(W                clf,1   ffused+b   clf,1   )+b   clf,2+b   clf,3                (20)
+
+    The predicted probability is computed via the sigmoid function:
+
+                                             ˆy=σ(z) =                 11+e  −z  ∈[0,1]                                               (21)
+
+
+
+
+
+
+                                                              6
+
+PAGE 7
+2.5.6   Optimization and Loss
+Training uses the AdamW optimizer [17] with learning rate η = 2×10−4  , momentum parameters
+β1 = 0.9 and β2 = 0.999, and batch size 128. The loss function is Binary Cross-Entropy with
+Logits:
+                                      BX
+                          L=−      1B     [y ilog(σ(z     i))+(1−y       i)log(1−σ(z           i))]                            (22)
+                                     i=1
+where yi∈{0,1} is the ground truth label (0 = real, 1 = AI-generated) and zi is the predicted
+logit.
+
+2.5.7   Explainability via Patch-wise Heatmaps
+A key contribution of SPECTRA-Net is the generation of explainable predictions through
+patch-wise scoring. The 49×49 spatial heatmap can be visualized to show which image regions
+most strongly contribute to the final authenticity prediction, providing interpretability and
+localization of AI-generated artifacts (see Fig. 2).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              (a) Ground-truth: Real                                     (b) Ground-truth: Fake
+
+Figure 2: Patch-wise explainability examples. Input images and corresponding 49×49 spatial
+heatmaps for (a) a real image and (b) an AI-generated image.
+3   Experimental Results
+
+3.1   Evaluation Metrics
+Weevaluatedetectionperformanceusingfourcomplementarymetricstoprovideacomprehensive
+assessment of model robustness and generalization:
+
+3.1.1   Accuracy and AUC
+Accuracy (ACC) measures overall prediction correctness, while Area Under the Receiver Oper-
+ating Characteristic Curve (AUC) provides threshold-independent discrimination assessment,
+particularly suitable for imbalanced datasets.
+
+3.1.2   Real Accuracy (Real-Acc) and Fake Accuracy (Fake-Acc)
+Real-Acc and Fake-Acc separately evaluate class-specific performance, essential for identifying
+asymmetric biases across real and fake classes.
+
+
+
+
+
+
+
+                                                        7
+
+PAGE 8
+3.1.3   Mean Average Precision (mAP)
+is computed exclusively for the WildRF benchmark to enable direct comparison with prior
+state-of-the-art methods:                                  NX
+                                             mAP =  1N        APi,                                                    (23)
+                                                          i=1
+where APi is the average precision for classiandNis the number of classes (binary:N= 2).
+
+3.2   Benchmark Datasets
+Our evaluation encompasses four diverse benchmarks covering laboratory-controlled and real-
+world scenarios:
+
+3.2.1   Chameleon
+Chameleon is a large-scale, manually curated benchmark containing approximately 26,000 test
+imagesspanningdiverseobjectcategoriesandscenecompositions [25]. Designedasasanitycheck
+for contemporary detection methods, Chameleon emphasizes deceptive realism and challenges
+models with high-quality, difficult-to-detect synthetic content across varied visual domains.
+
+3.2.2   WildRF
+WildRF contains 5,351 images (train:  2,712 images; val:  398 images; test:  2,241 images)
+sourced from multiple internet platforms [2], capturing real-world variability in image resolution,
+compression formats, post-processing edits, and generation techniques. This dataset reflects
+authentic distribution shifts encountered in practical forensic applications.
+
+3.2.3   Balanced Real vs. Recent AIGI Testing Dataset
+From AI-GenBench [19], which contains 180,000 images generated by 36 models spanning
+2018–2024, we select 20,000 images from the five most recent generators: FLUX 1 Dev, FLUX 1
+Schnell, DALL-E 3, Stable Diffusion XL 1.0, and Midjourney, capturing contemporary generative
+content.
+    From BM-Real [1], a collection of 28,393 high-resolution real images (192px–9,550px) on
+Hugging Face1, we randomly sample 20,000 images to match the synthetic subset.
+    Mergingthesetwosubsets,weobtaina40,000-imagetestingdatasetwithequalrepresentation
+of real and synthetic images, enabling robust evaluation of detection performance across diverse
+content.
+
+3.2.4   RRDataset
+RRDataset [16]contains10,000real+10,000syntheticimagesacrosssevenscenarios(6high-risk
++ everyday life). All content undergoes multi-round internet transmission (2–6 cycles across
+8 platforms) and re-digitization such as scanning and printing.  Test splits include original,
+re-digitized, and transfer variants, simulating practical deployment challenges.
+
+3.3   Baseline Results: SPECTRA-Net on Standard Benchmarks
+Table 1 presents the performance comparison on Chameleon and the balanced dataset.
+SN= SPECTRA-Net achieves +19.93% accuracy on Chameleon with balanced performance (vs.
+SOTA: 95% real, 26% fake). On recent generators (FLUX, DALL-E 3, SDXL): 92.11% ACC,
+97.48% AUC.
+
+   1https://huggingface.co/datasets/bitmind/bm-real
+
+
+                                                       8
+
+PAGE 9
+                        Table 1: Performance on Chameleon and Balanced Dataset.
+
+                             Dataset       Method    ACC    AUC    Real Acc    Fake Acc
+                                                           (%)                      (%)             (%)
+                             Chameleon     SOTA          65.77         –             95.06              25.8SN            85.70    0.94682.51   89.95
+
+                             Balanced        SOTA             –            –                –                   –SN            92.11    0.975        95.2            89.0
+
+
+     WildRF dataset results comparing SPECTRA-Net against SOTA baselines are detailed in
+Table 2.
+                                    Table 2: Performance on WildRF Dataset.
+
+                       Method                                   ACC    AUC    R-Acc    F-Acc    mAP
+                                                              (%)                    (%)        (%)       (%)
+                       SOTA (trained ProGAN)               68.3          –             –              –           79.9
+                       SOTA (trained WildRF)                85.7          –             –              –           93.7
+                       SPECTRA-Net (zero-shot)    75.85    0.94152.8297.78     94.85
+
+Without any WildRF training,SPECTRA-NETsurpasses SOTA trained on ProGAN (+7.55%
+ACC, +14.95 mAP) and achieves competitive performance vs. in-domain SOTA (93.7 vs. 94.85
+mAP).
+     RRDataset test split results are shown in Table 3, while performance train and validation
+splits is reported in Table 4.
+
+                                 Table 3: Performance on RRDataset test splits.
+
+                        Split                        Method    Fake Acc    Real Acc    ACC    AUC
+                                                                  (%)             (%)         (%)
+                        Original (17K)              SOTA           95.52             91.18         89.59         –SN        76.74             91.18         83.96     0.902
+
+                        Redigitalized (17K)       SOTA           96.22             89.48         89.59         –SN        45.36             89.48         67.42     0.706
+
+                        Transfer (17K)              SOTA           95.09             85.81         89.59         –SN        56.53             85.81         71.17     0.703
+
+
+                     Table 4: Performance on RRDataset train and validation splits.
+
+                       Evaluated on        Fake Acc (%)    Real Acc (%)    ACC (%)    AUC
+                       Train split (2.5K)             79.76                     91.04                 85.40          0.919
+                       Val split (1.5K)     82.00                 92.00               87.0        0.914
+
+Extreme degradations severely impact fake detection: 76.74% (original) drops to 45.36% (redig-
+italized) for SN, while SOTA maintains 95–96% but with unknown overall accuracy.  Real
+accuracy remains stable (85–92%). Train/Val evaluation: 87.0% ACC on validation split.
+
+3.4   Ablation Study: JPEG Compression and Gaussian Blur
+Real-world images undergo compression and blur from platform transmission. We conduct pro-
+gressive fine-tuning on RRDataset with five degradation levels (experiments):No degradation
+(σ = 0.0, Q = 100),Light degradation(           σ = 0.5, Q = 90),Moderate degradation(                         σ = 1.5,
+Q = 75),Heavy degradation(                          σ = 2.5, Q = 50), andExtreme degradation(                          σ = 4.0,
+Q= 30), whereσis the Gaussian blur radius andQis the JPEG quality factor.
+     Eachstagetrains50epochs(AdamW,lr=1×10−5  ,batch=16)ondegradeddata,cumulatively
+buildingfrompreviousstageweights. Thisprogressivehardeningpreventscatastrophicforgetting
+while adapting to real world distortions the tables below present the results.
+     Table5evaluatestheimpactofprogressivedegradationtrainingontheChameleonbenchmark.
+
+
+                                                                 9
+
+PAGE 10
+                  Table 5: Performance on Chameleon dataset across the five levels
+
+                       Degradation Level   ACC   AUC   R-Acc   F-Acc
+                                                       (%)     (%)      (%)       (%)
+                       Level 1                          89.36     95.23      92.32      85.43
+                       Level 2                          88.08     94.20      93.68      80.63
+                       Level 3                          88.42     94.77      92.06      83.57
+                       Level 4                          89.07     95.62      90.3587.37
+                       Level 5                    90.04   96.18    94.2884.40
+
+
+    Extreme degradation training achieves the highest AUC (96.18%) and accuracy (90.04%),
+with real detection improving monotonically (92.32%→94.28%) while fake detection remains
+stable (80.63–87.37%). Heavy augmentation forces reliance on robust multi-view features over
+fragile high-frequency artifacts. Table 6 shows degradation training impact on WildRF.
+
+                    Table 6: Performance on WildRF dataset across the five levels.
+
+                 Degradation Level   ACC   AUC   R-Acc   F-Acc   mAP
+                                                 (%)     (%)      (%)       (%)      (%)
+                 Level 1                          86.13     93.57      88.31      84.06     94.61
+                 Level 2                          86.84     93.7890.8083.08     94.89
+                 Level 3                    86.96   94.5284.2189.57    95.54
+                 Level 4                          85.93     94.60      79.92      91.65     95.42
+                 Level 5                          86.26     93.54      90.00      82.71     94.68
+
+Moderate degradation (Level 3) achieves optimal performance (mAP 95.54%, AUC 94.52%).
+Unlike Chameleon, extreme augmentation proves counterproductive on WildRF, as the dataset’s
+inherent real-world variability provides sufficient regularization without additional aggressive
+degradations. Table 7 shows progressive degradation impact on the Balanced dataset.
+
+                   Table 7: Performance on Balanced Dataset across the five levels.
+
+                   Degradation Level   ACC   AUC   Real Acc   Fake Acc
+                                                   (%)       (%)           (%)              (%)
+                   Level 1                          92.03     97.2796.18  87.87
+                   Level 2                          92.78     97.10        94.74            90.82
+                   Level 3                          91.04     97.69        86.65            95.43
+                   Level 4                          90.49     98.10        84.34  96.65
+                   Level 5                    94.33   98.2295.85            92.82
+
+Extreme degradation (Level 5) achieves superior performance (94.33% ACC, 98.22% AUC) with
+balanced class accuracy (95.85% real, 92.82% fake).  Levels 3-4 favor fake detection (95.43–
+96.65%) at the cost of real accuracy, while extreme augmentation optimally balances both
+classes.
+    The tables below evaluate the impact of the progressive degradation training on the 4 splits
+of the RRdataset
+    Table 8 presents the Validation split results while table 9 presents the test split results.
+Clean splits (Validation, Original) achieve optimal performance at Level 2 with 94.00% and
+93.24%ACCrespectively,demonstratingthatlightdegradation(σ=0.5,Q=90)providessufficient
+regularization. Beyond Level 2, accuracy degrades as excessive augmentation introduces artifacts
+that hinder detection on pristine test data, with Level 4 showing 4–5% ACC drops.
+
+
+
+                                                           10
+
+PAGE 11
+                   Table 8: Performance on RR validation split across the five levels.
+
+                Degradation   ACC (%)   AUC (%)   R-Acc (%)   F-Acc (%)
+                Level 1                   93.60            97.97    94.40    92.80
+                Level 2              94.00          98.80    90.80     97.20
+                Level 3                   92.40            98.86              86.40              98.40
+                Level 4                   90.00            98.66              82.00              98.00
+                Level 5                   92.00            98.52              86.40              97.60
+
+                    Table 9: Performance on RR original split across the five levels.
+
+                Degradation   ACC (%)   AUC (%)   R-Acc (%)   F-Acc (%)
+                Level 1                   92.21            97.82    93.55    90.87
+                Level 2              93.24          98.58    90.39     96.08
+                Level 3                   90.38            98.56              82.88              97.88
+                Level 4                   88.26            98.28              78.40              98.13
+                Level 5                   89.05            98.04              81.01              97.08
+
+
+    Table 10 reports performance on the Redigitalized split, while Table 11 reports performance
+on the Transfer split.
+
+                Table 10: Performance on RR redigitalized split across the five levels.
+
+                Degradation   ACC (%)   AUC (%)   R-Acc (%)   F-Acc (%)
+                Level 1                   73.26            85.97    96.16    50.35
+                Level 2                   78.72            87.47              90.02              67.41
+                Level 3                   83.33            91.53              83.63              83.02
+                Level 4                   84.41            92.62              82.14     86.68
+                Level 5              84.85          92.99    86.76              82.94
+
+
+                   Table 11: Performance on RR transfer split across the five levels.
+
+                Degradation   ACC (%)   AUC (%)   R-Acc (%)   F-Acc (%)
+                Level 1                   69.59            89.39    99.11    40.08
+                Level 2                   80.21            93.86              97.48              62.94
+                Level 3                   89.72            96.69              94.31              85.13
+                Level 4              90.61          97.09    93.32     87.89
+                Level 5                   89.14            96.76              95.07              83.21
+
+The degradedsplits require aggressive augmentation. Fake detection collapses atLevel 1(40.08%,
+50.35% F-Acc) but recovers with progressive hardening:  Redigitalized reaches 84.85% ACC
+at Level 5 (+11.59%), Transfer peaks at Level 4 (90.61%, +21.02%).  Training on extreme
+degradations (σ=2.5–4.0, Q=30–50) is essential for real-world robustness.
+
+4   Conclusion
+
+This work introduces SPECTRA-Net, a scalable, explainable pipeline for AI-generated image
+detection under realistic, in-the-wild conditions. By leveraging multi-view tensor representations
+combining semantic, frequency-domain, statistical, and spatial cues, SPECTRA-Net achieves
+robust detection across diverse benchmarks (Chameleon, WildRF, AI-GenBench, bm-real) and
+demonstrates substantial robustness gains through finetuning on RRDataset. Our systematic
+
+                                                             11
+
+PAGE 12
+ablationstudiesonJPEGcompressionandGaussianblurrevealthecriticalimportanceoftraining
+on degraded data and provide actionable insights for forensic practitioners. The introduction of
+patch-wise explainability enhances interpretability for high-stakes forensic and legal applications.
+Future work will explore adaptation to emerging generative models and integration with content
+verification workflows on social media platforms.
+
+References
+
+ [1] Bitmind real images dataset.   https://huggingface.co/datasets/bitmind/real_images.  Ac-
+     cessed: 2026-02-07.
+
+ [2] Bar Cavia, Eliahu Horwitz, Tal Reiss, and Yedid Hoshen.  Real-time deepfake detection in the
+     real-world.arXiv preprint arXiv:2406.09398, 2024. doi: 10.48550/arXiv.2406.09398. URL             https:
+     //arxiv.org/abs/2406.09398.
+
+ [3] Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei.  Imagenet: A large-scale
+     hierarchical image database.Proceedings of the IEEE Conference on Computer Vision and Pattern
+     Recognition (CVPR), 2009.
+
+ [4] Prafulla Dhariwal and Alex Nichol. Diffusion models beat gans on image synthesis.arXiv preprint
+     arXiv:2105.05233, 2021.  doi:  10.48550/arXiv.2105.05233.  URL                               https://arxiv.org/abs/2105.
+     05233.
+
+ [5] Alexey et al. Dosovitskiy. An image is worth 16x16 words: Transformers for image recognition at
+     scale.International Conference on Learning Representations (ICLR), 2021.
+
+ [6] RicardDurall, MargretKeuper, andJanisKeuper. Watchyourup-convolution: Cnnbasedgenerative
+     deep neural networks are failing to reproduce spectral distributions, 2020. URL https://arxiv.
+     org/abs/2003.01826.
+
+ [7] Joel Frank, Thorsten Eisenhofer, Lea Sch¨onherr, Asja Fischer, Dorothea Kolossa, and Thorsten Holz.
+     Leveraging frequency analysis for deep fake image recognition.arXiv preprint arXiv:2003.08685,
+     2020. doi: 10.48550/arXiv.2003.08685. URLhttps://arxiv.org/abs/2003.08685.
+
+ [8] Baby Sree Gangarapu, Rama Muni Reddy Yanamala, Archana Pallakonda, Hindupur Raghavender
+     Vardhan, and Rayappa David Amar Raj.  Lightweight spatial attention pyramid network-based
+     image forgery detection optimized for real-time edge tpu deployment.Computers and Electrical
+     Engineering, 128:110645, 12 2025.  doi:  10.1016/j.compeleceng.2025.110645.  URL          https://www.
+     sciencedirect.com/science/article/abs/pii/S0045790625005889.
+
+ [9] Jiaxin Gong, Jindong Xu, and Haoqin Sun. Dbidm: Implementing blind image separation through
+     a dual branch interactive diffusion model.Pattern Recognition Letters, 200:44–51, 2 2026.  doi:
+     10.1016/j.patrec.2025.11.038. URLhttps://doi.org/10.1016/j.patrec.2025.11.038.
+
+[10] Rafael C. Gonzalez and Richard E. Woods.Digital Image Processing. Prentice Hall, 2008.
+
+[11] Robert M. Haralick, K. Shanmugam, and Its’Hak Dinstein. Textural features for image classification.
+     IEEE Transactions on Systems, Man, and Cybernetics, SMC-3(6):610–621, 1973.  doi:  10.1109/
+     TSMC.1973.4309314.
+
+[12] Dan Hendrycks and Kevin Gimpel. Gaussian error linear units (gelus), 2023. URL https://arxiv.
+     org/abs/1606.08415.
+
+[13] Catherine F. Higham, Desmond J. Higham, and Peter Grindrod. Diffusion models for generative
+     artificial intelligence: An introduction for applied mathematicians.arXiv preprint arXiv:2312.14977,
+     12 2023. URL https://arxiv.org/abs/2312.14977. Version v1 (21 Dec 2023). License: CC BY
+     4.0.
+
+[14] Yan Hong and Jianfu Zhang. Wildfake: A large-scale challenging dataset for ai-generated images
+     detection, 2024. URLhttps://arxiv.org/abs/2402.11843.
+
+
+                                                           12
+
+PAGE 13
+[15] Romeo  Lanzino,  Federico  Fontana,  Anxhelo  Diko,  Marco  Raoul  Marini,  and  Luigi  Cinque.
+     Faster  than  lies:   Real-time  deepfake  detection  using  binary  neural  networks.Proceedings
+     of  the  IEEE/CVF  Conference  on  Computer  Vision  and  Pattern  Recognition  (CVPR)  Work-
+     shops,  pages  3771–3780,  6  2024.     doi:    10.1109/CVPRW63382.2024.00381.     URL           https:
+     //openaccess.thecvf.com/content/CVPR2024W/DFAD/html/Lanzino_Faster_Than_Lies_
+     Real-time_Deepfake_Detection_using_Binary_Neural_Networks_CVPRW_2024_paper.html.
+
+[16] Chunxiao Li, Xiaoxiao Wang, Meiling Li, Boming Miao, Peng Sun, Yunjian Zhang, Xiangyang Ji,
+     and Yao Zhu. Bridging the gap between ideal and real-world evaluation: Benchmarking ai-generated
+     image detection in challenging scenarios, 2025. URLhttps://arxiv.org/abs/2509.09172.
+
+[17] Ilya Loshchilov and Frank Hutter.  Decoupled weight decay regularization, 2019.  URL https:
+     //arxiv.org/abs/1711.05101.
+
+[18] Scott McCloskey and Michael Albright. Detecting gan-generated imagery using color cues, 2018.
+     URLhttps://arxiv.org/abs/1812.08247.
+
+[19] Lorenzo Pellegrini, Davide Cozzolino, Serafino Pandolfini, Davide Maltoni, Matteo Ferrara, Luisa
+     Verdoliva, Marco Prati, and Marco Ramilli. Ai-genbench: A new ongoing benchmark for ai-generated
+     image detection. In2025 International Joint Conference on Neural Networks (IJCNN), page 1–9.
+     IEEE, June 2025.  doi:  10.1109/ijcnn64981.2025.11228377.  URL http://dx.doi.org/10.1109/
+     IJCNN64981.2025.11228377.
+
+[20] Lam Phan, Hiep Thi Hong Nguyen, Harikrishna Warrier, and Yogesh Gupta. Patch embedding as
+     local features: Unifying deep local and global features via vision transformer for image retrieval. In
+     Lei Wang, Juergen Gall, Tat-Jun Chin, Imari Sato, and Rama Chellappa, editors,Computer Vision –
+     ACCV 2022, pages 204–221, Cham, 2023. Springer Nature Switzerland. ISBN 978-3-031-26284-5.
+
+[21] JialiangShen,JiyangZheng,YunqiXue,HuajieChen,YuYao,HuiKang,RuiqiLiu,HelinGong,Yang
+     Yang,DadongWang,andTongliangLiu. Dino-detect: Asimpleyeteffectiveframeworkforblur-robust
+     ai-generatedimagedetection.arXiv preprint arXiv:2511.12511,2025. doi: 10.48550/arXiv.2511.12511.
+     URLhttps://arxiv.org/abs/2511.12511.
+
+[22] Oriane Sim´eoni, Huy V. Vo, Maximilian Seitzer, Federico Baldassarre, Maxime Oquab, Cijo Jose,
+     Vasil Khalidov, Marc Szafraniec, Seungeun Yi, Micha¨el Ramamonjisoa, Francisco Massa, Daniel
+     Haziza, Luca Wehrstedt, Jianyuan Wang, Timoth´ee Darcet, Th´eo Moutakanni, Leonel Sentana,
+     Claire Roberts, Andrea Vedaldi, Jamie Tolan, John Brandt, Camille Couprie, Julien Mairal, Herv´e
+     J´egou, Patrick Labatut, and Piotr Bojanowski. Dinov3, 2025.
+
+[23] Sheng-Yu Wang, Oliver Wang, Richard Zhang, Andrew Owens, and Alexei A. Efros. Cnn-generated
+     images are surprisingly easy to spot... for now, 2020. URLhttps://arxiv.org/abs/1912.11035.
+
+[24] Qiang Xu, Hao Wang, Laijin Meng, Zhongjie Mi, Jianye Yuan, and Hong Yan. Exposing fake images
+     generated by text-to-image diffusion models.Pattern Recognition Letters, 176:76–82, 2023. ISSN
+     0167-8655. doi: https://doi.org/10.1016/j.patrec.2023.10.021. URL https://www.sciencedirect.
+     com/science/article/pii/S0167865523002933.
+
+[25] Shilin Yan, Ouxiang Li, Jiayin Cai, Yanbin Hao, Xiaolong Jiang, Yao Hu, and Weidi Xie. A sanity
+     check for ai-generated image detection, 2025. URLhttps://arxiv.org/abs/2406.19435.
+
+[26] Nan Zhong, Yiran Xu, Sheng Li, Zhenxing Qian, and Xinpeng Zhang.  Patchcraft:  Exploring
+     texture patch for efficient ai-generated image detection.arXiv preprint arXiv:2311.12397, 2023. doi:
+     10.48550/arXiv.2311.12397. URLhttps://arxiv.org/abs/2311.12397.
+
+
+
+
+
+
+
+
+
+
+                                                          13

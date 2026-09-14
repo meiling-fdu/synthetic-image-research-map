@@ -1,0 +1,318 @@
+{
+  "doi": "10.1109/iccit60459.2023.10440990",
+  "source_url": "https://api.crossref.org/works/10.1109%2Ficcit60459.2023.10440990",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            28
+          ]
+        ],
+        "date-time": "2026-08-28T05:59:50Z",
+        "timestamp": 1787896790823,
+        "version": "build-2784847793"
+      },
+      "reference-count": 17,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                12,
+                13
+              ]
+            ],
+            "date-time": "2023-12-13T00:00:00Z",
+            "timestamp": 1702425600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                12,
+                13
+              ]
+            ],
+            "date-time": "2023-12-13T00:00:00Z",
+            "timestamp": 1702425600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2023,
+            12,
+            13
+          ]
+        ]
+      },
+      "DOI": "10.1109/iccit60459.2023.10440990",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2024,
+            2,
+            27
+          ]
+        ],
+        "date-time": "2024-02-27T18:56:25Z",
+        "timestamp": 1709060185000
+      },
+      "page": "1-6",
+      "source": "Crossref",
+      "is-referenced-by-count": 32,
+      "title": [
+        "Advancing AI-Generated Image Detection: Enhanced Accuracy through CNN and Vision Transformer Models with Explainable AI Insights"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Md. Zahid",
+          "family": "Hossain",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Ahsanullah University of Science and Technology,Department of CSE,Dhaka,Bangladesh,1208"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Farhad",
+          "family": "Uz Zaman",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Southeast University,Department of CSE,Dhaka,Bangladesh,1208"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Md. Rakibul",
+          "family": "Islam",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Ahsanullah University of Science and Technology,Department of CSE,Dhaka,Bangladesh,1208"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref1",
+          "article-title": "Generative adversarial nets",
+          "volume-title": "Advances in Neural Information Processing Systems",
+          "volume": "27",
+          "author": "Goodfellow",
+          "year": "2014"
+        },
+        {
+          "key": "ref2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "key": "ref3",
+          "article-title": "Ai images are getting harder to spot. google thinks it has a solution",
+          "author": "Vynck",
+          "year": "2023",
+          "journal-title": "The Washington Post"
+        },
+        {
+          "key": "ref4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s00521-021-06086-4"
+        },
+        {
+          "key": "ref5",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1080/13683500.2020.1738357"
+        },
+        {
+          "key": "ref6",
+          "author": "Ramesh",
+          "year": "2022",
+          "journal-title": "Hierarchical text-conditional image generation with clip latents"
+        },
+        {
+          "key": "ref7",
+          "author": "Saharia",
+          "year": "2022",
+          "journal-title": "Photorealistic text-to-image diffusion models with deep language understanding"
+        },
+        {
+          "key": "ref8",
+          "author": "Podell",
+          "year": "2023",
+          "journal-title": "Sdxl: Improving latent diffusion models for high-resolution image synthesis"
+        },
+        {
+          "key": "ref9",
+          "article-title": "‘it’s the opposite of art’: why illustrators are furious about ai",
+          "author": "Shaffi",
+          "year": "2023",
+          "journal-title": "The Guardian"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3576915.3616588"
+        },
+        {
+          "key": "ref11",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/icassp49357.2023.10095167"
+        },
+        {
+          "key": "ref12",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR46437.2021.00222"
+        },
+        {
+          "key": "ref13",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICEngTechnol.2017.8308186"
+        },
+        {
+          "key": "ref14",
+          "author": "Dosovitskiy",
+          "year": "2021",
+          "journal-title": "An image is worth 16x16 words: Transformers for image recognition at scale"
+        },
+        {
+          "key": "ref15",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11263-019-01228-7"
+        },
+        {
+          "key": "ref16",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/access.2024.3356122"
+        },
+        {
+          "key": "ref17",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1609/aaai.v36i2.20103"
+        }
+      ],
+      "event": {
+        "name": "2023 26th International Conference on Computer and Information Technology (ICCIT)",
+        "location": "Cox's Bazar, Bangladesh",
+        "start": {
+          "date-parts": [
+            [
+              2023,
+              12,
+              13
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2023,
+              12,
+              15
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2023 26th International Conference on Computer and Information Technology (ICCIT)"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx7/10440723/10440967/10440990.pdf?arnumber=10440990",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2024,
+            3,
+            1
+          ]
+        ],
+        "date-time": "2024-03-01T03:54:44Z",
+        "timestamp": 1709265284000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/10440990/"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2023,
+            12,
+            13
+          ]
+        ]
+      },
+      "references-count": 17,
+      "URL": "https://doi.org/10.1109/iccit60459.2023.10440990",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2023,
+            12,
+            13
+          ]
+        ]
+      }
+    }
+  }
+}

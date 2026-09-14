@@ -1,0 +1,664 @@
+{
+  "doi": "10.1145/3658644.3690297",
+  "source_url": "https://api.crossref.org/works/10.1145%2F3658644.3690297",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            11
+          ]
+        ],
+        "date-time": "2026-07-11T16:26:50Z",
+        "timestamp": 1783787210589,
+        "version": "3.55.0"
+      },
+      "publisher-location": "New York, NY, USA",
+      "reference-count": 53,
+      "publisher": "ACM",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                12,
+                2
+              ]
+            ],
+            "date-time": "2024-12-02T00:00:00Z",
+            "timestamp": 1733097600000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://www.acm.org/publications/policies/copyright_policy#Background"
+        }
+      ],
+      "funder": [
+        {
+          "name": "BMBF",
+          "award": [
+            "16KISAO29K"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "16KISAO29K"
+              ]
+            }
+          ]
+        },
+        {
+          "DOI": "10.13039/501100006374",
+          "name": "European Health and Digital Executive Agency",
+          "doi-asserted-by": "publisher",
+          "award": [
+            "101057917"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "101057917"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100006374",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "dl.acm.org"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            2
+          ]
+        ]
+      },
+      "DOI": "10.1145/3658644.3690297",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            9
+          ]
+        ],
+        "date-time": "2024-12-09T12:19:20Z",
+        "timestamp": 1733746760000
+      },
+      "page": "4852-4866",
+      "update-policy": "https://doi.org/10.1145/crossmark-policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 15,
+      "title": [
+        "ZeroFake: Zero-Shot Detection of Fake Images Generated and Edited by Text-to-Image Generation Models"
+      ],
+      "prefix": "10.1145",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0006-5422-0342",
+          "authenticated-orcid": false,
+          "given": "Zeyang",
+          "family": "Sha",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "CISPA Helmholtz Center for Information Security, Saarbrücken, Germany"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0009-0005-3582-2973",
+          "authenticated-orcid": false,
+          "given": "Yicong",
+          "family": "Tan",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "CISPA Helmholtz Center for Information Security, Saarbrücken, Germany"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-1588-2654",
+          "authenticated-orcid": false,
+          "given": "Mingjie",
+          "family": "Li",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "CISPA Helmholtz Center for Information Security, Saarbrücken, Germany"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-9326-6400",
+          "authenticated-orcid": false,
+          "given": "Michael",
+          "family": "Backes",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "CISPA Helmholtz Center for Information Security, Saarbrücken, Germany"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-3612-7348",
+          "authenticated-orcid": false,
+          "given": "Yang",
+          "family": "Zhang",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "CISPA Helmholtz Center for Information Security, Saarbrücken, Germany"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "320",
+      "published-online": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            9
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "e_1_3_2_1_1_1",
+          "unstructured": "https://midjourney.com/."
+        },
+        {
+          "key": "e_1_3_2_1_2_1",
+          "unstructured": "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0."
+        },
+        {
+          "key": "e_1_3_2_1_3_1",
+          "unstructured": "https://github.com/Robin-WZQ/AGFD-20K."
+        },
+        {
+          "key": "e_1_3_2_1_4_1",
+          "first-page": "689",
+          "volume-title": "Rama Chellappa. Semi-supervised FusedGAN for Conditional Image Generation. In European Conference on Computer Vision (ECCV)",
+          "author": "Bodla Navaneeth",
+          "year": "2018",
+          "unstructured": "Navaneeth Bodla, Gang Hua, and Rama Chellappa. Semi-supervised FusedGAN for Conditional Image Generation. In European Conference on Computer Vision (ECCV), pages 689--704. Springer, 2018."
+        },
+        {
+          "key": "e_1_3_2_1_5_1",
+          "volume-title": "Karen Simonyan. Large Scale GAN Training for High Fidelity Natural Image Synthesis. In International Conference on Learning Representations (ICLR)",
+          "author": "Brock Andrew",
+          "year": "2019",
+          "unstructured": "Andrew Brock, Jeff Donahue, and Karen Simonyan. Large Scale GAN Training for High Fidelity Natural Image Synthesis. In International Conference on Learning Representations (ICLR), 2019."
+        },
+        {
+          "key": "e_1_3_2_1_6_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52729.2023.01764"
+        },
+        {
+          "key": "e_1_3_2_1_7_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2018.00347"
+        },
+        {
+          "key": "e_1_3_2_1_8_1",
+          "first-page": "1520",
+          "volume-title": "Chen and Vladlen Koltun. Photographic Image Synthesis with Cascaded Refinement Networks. In IEEE International Conference on Computer Vision (ICCV)",
+          "author": "Qifeng",
+          "year": "2017",
+          "unstructured": "Qifeng Chen and Vladlen Koltun. Photographic Image Synthesis with Cascaded Refinement Networks. In IEEE International Conference on Computer Vision (ICCV), pages 1520--1529. IEEE, 2017."
+        },
+        {
+          "key": "e_1_3_2_1_9_1",
+          "first-page": "11065",
+          "volume-title": "Lei Zhang. Second-Order Attention Network for Single Image Super-Resolution. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
+          "author": "Dai Tao",
+          "year": "2019",
+          "unstructured": "Tao Dai, Jianrui Cai, Yongbing Zhang, Shu-Tao Xia, and Lei Zhang. Second-Order Attention Network for Single Image Super-Resolution. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 11065--11074. IEEE, 2019."
+        },
+        {
+          "key": "e_1_3_2_1_10_1",
+          "first-page": "19822",
+          "volume-title": "Annual Conference on Neural Information Processing Systems (NeurIPS)",
+          "author": "Ding Ming",
+          "year": "2021",
+          "unstructured": "Ming Ding, Zhuoyi Yang, Wenyi Hong, Wendi Zheng, Chang Zhou, Da Yin, Junyang Lin, Xu Zou, Zhou Shao, Hongxia Yang, and Jie Tang. CogView: Mastering Text-to-Image Generation via Transformers. In Annual Conference on Neural Information Processing Systems (NeurIPS), pages 19822--19835. NeurIPS, 2021."
+        },
+        {
+          "key": "e_1_3_2_1_11_1",
+          "volume-title": "An Image is Worth One Word: Personalizing Text-to-Image Generation using Textual Inversion. CoRR abs/2208.01618",
+          "author": "Gal Rinon",
+          "year": "2022",
+          "unstructured": "Rinon Gal, Yuval Alaluf, Yuval Atzmon, Or Patashnik, Amit H. Bermano, Gal Chechik, and Daniel Cohen-Or. An Image is Worth One Word: Personalizing Text-to-Image Generation using Textual Inversion. CoRR abs/2208.01618, 2022."
+        },
+        {
+          "key": "e_1_3_2_1_12_1",
+          "first-page": "14094",
+          "volume-title": "Abhinav Shrivastava. Towards Discovery and Attribution of Open-World GAN Generated Images. In IEEE International Conference on Computer Vision (ICCV)",
+          "author": "Girish Sharath",
+          "year": "2021",
+          "unstructured": "Sharath Girish, Saksham Suri, Sai Saketh Rambhatla, and Abhinav Shrivastava. Towards Discovery and Attribution of Open-World GAN Generated Images. In IEEE International Conference on Computer Vision (ICCV), pages 14094--14103. IEEE, 2021."
+        },
+        {
+          "key": "e_1_3_2_1_13_1",
+          "first-page": "2672",
+          "volume-title": "Yoshua Bengio. Generative Adversarial Nets. In Annual Conference on Neural Information Processing Systems (NIPS)",
+          "author": "Goodfellow Ian",
+          "year": "2014",
+          "unstructured": "Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative Adversarial Nets. In Annual Conference on Neural Information Processing Systems (NIPS), pages 2672--2680. NIPS, 2014."
+        },
+        {
+          "key": "e_1_3_2_1_14_1",
+          "volume-title": "Christian Szegedy. Explaining and Harnessing Adversarial Examples. In International Conference on Learning Representations (ICLR)",
+          "author": "Goodfellow Ian",
+          "year": "2015",
+          "unstructured": "Ian Goodfellow, Jonathon Shlens, and Christian Szegedy. Explaining and Harnessing Adversarial Examples. In International Conference on Learning Representations (ICLR), 2015."
+        },
+        {
+          "key": "e_1_3_2_1_15_1",
+          "volume-title": "Pieter Abbeel. Denoising Diffusion Probabilistic Models. In Annual Conference on Neural Information Processing Systems (NeurIPS). NeurIPS",
+          "author": "Ho Jonathan",
+          "year": "2020",
+          "unstructured": "Jonathan Ho, Ajay Jain, and Pieter Abbeel. Denoising Diffusion Probabilistic Models. In Annual Conference on Neural Information Processing Systems (NeurIPS). NeurIPS, 2020."
+        },
+        {
+          "key": "e_1_3_2_1_16_1",
+          "volume-title": "Adversarial Examples in the Physical World. CoRR abs/1607.02533",
+          "author": "Kurakin Alexey",
+          "year": "2016",
+          "unstructured": "Alexey Kurakin, Ian Goodfellow, and Samy Bengio. Adversarial Examples in the Physical World. CoRR abs/1607.02533, 2016."
+        },
+        {
+          "key": "e_1_3_2_1_17_1",
+          "first-page": "7566",
+          "volume-title": "Thomas Fevens. Dual Adversarial Inference for Text-to-Image Synthesis. In IEEE International Conference on Computer Vision (ICCV)",
+          "author": "Lao Qicheng",
+          "year": "2019",
+          "unstructured": "Qicheng Lao, Mohammad Havaei, Ahmad Pesaranghader, Francis Dutil, Lisa Di-Jorio, and Thomas Fevens. Dual Adversarial Inference for Text-to-Image Synthesis. In IEEE International Conference on Computer Vision (ICCV), pages 7566--7575. IEEE, 2019."
+        },
+        {
+          "key": "e_1_3_2_1_18_1",
+          "first-page": "28421",
+          "volume-title": "Yisen Wang. PID: Prompt-Independent Data Protection Against Latent Diffusion Models. In International Conference on Machine Learning (ICML)",
+          "author": "Li Ang",
+          "year": "2024",
+          "unstructured": "Ang Li, Yichuan Mo, Mingjie Li, and Yisen Wang. PID: Prompt-Independent Data Protection Against Latent Diffusion Models. In International Conference on Machine Learning (ICML), pages 28421--28447. PMLR, 2024."
+        },
+        {
+          "key": "e_1_3_2_1_19_1",
+          "volume-title": "BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation. CoRR abs/2201.12086",
+          "author": "Li Junnan",
+          "year": "2022",
+          "unstructured": "Junnan Li, Dongxu Li, Caiming Xiong, and Steven C. H. Hoi. BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation. CoRR abs/2201.12086, 2022."
+        },
+        {
+          "key": "e_1_3_2_1_20_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00432"
+        },
+        {
+          "key": "e_1_3_2_1_21_1",
+          "first-page": "5874",
+          "volume-title": "International Conference on Machine Learning (ICML)",
+          "author": "Li Mingjie",
+          "year": "2020",
+          "unstructured": "Mingjie Li, Lingshen He, and Zhouchen Lin. Implicit Euler Skip Connections: Enhancing Adversarial Robustness via Numerical Stability. In International Conference on Machine Learning (ICML), pages 5874--5883. PMLR, 2020."
+        },
+        {
+          "key": "e_1_3_2_1_22_1",
+          "first-page": "12998",
+          "volume-title": "International Conference on Machine Learning (ICML)",
+          "author": "Li Mingjie",
+          "year": "2022",
+          "unstructured": "Mingjie Li, Yisen Wang, and Zhouchen Lin. Cerdeq: Certifiable deep equilibrium model. In International Conference on Machine Learning (ICML), pages 12998-- 13013. PMLR, 2022."
+        },
+        {
+          "key": "e_1_3_2_1_23_1",
+          "first-page": "38767",
+          "volume-title": "Annual Conference on Neural Information Processing Systems (NeurIPS)",
+          "author": "Li Mingjie",
+          "year": "2023",
+          "unstructured": "Mingjie Li, Yisen Wang, and Zhouchen Lin. GEQ: Gaussian Kernel Inspired Equilibrium models. In Annual Conference on Neural Information Processing Systems (NeurIPS), pages 38767--38785. NeurIPS, 2023."
+        },
+        {
+          "key": "e_1_3_2_1_24_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2019.01245"
+        },
+        {
+          "key": "e_1_3_2_1_25_1",
+          "volume-title": "SDXL-Lightning: Progressive Adversarial Diffusion Distillation. CoRR abs/2402.13929",
+          "author": "Lin Shanchuan",
+          "year": "2024",
+          "unstructured": "Shanchuan Lin, Anran Wang, and Xiao Yang. SDXL-Lightning: Progressive Adversarial Diffusion Distillation. CoRR abs/2402.13929, 2024."
+        },
+        {
+          "key": "e_1_3_2_1_26_1",
+          "first-page": "740",
+          "volume-title": "Microsoft COCO: Common Objects in Context. In European Conference on Computer Vision (ECCV)",
+          "author": "Lin Tsung-Yi",
+          "year": "2014",
+          "unstructured": "Tsung-Yi Lin, Michael Maire, Serge J. Belongie, James Hays, Pietro Perona, Deva Ramanan, Piotr Dollár, and C. Lawrence Zitnick. Microsoft COCO: Common Objects in Context. In European Conference on Computer Vision (ECCV), pages 740--755. Springer, 2014."
+        },
+        {
+          "key": "e_1_3_2_1_27_1",
+          "first-page": "1",
+          "volume-title": "Liu and Lydia B. Chilton. Design Guidelines for Prompt Engineering Text-to-Image Generative Models. In Annual ACM Conference on Human Factors in Computing Systems (CHI)",
+          "author": "Vivian",
+          "year": "2022",
+          "unstructured": "Vivian Liu and Lydia B. Chilton. Design Guidelines for Prompt Engineering Text-to-Image Generative Models. In Annual ACM Conference on Human Factors in Computing Systems (CHI), pages 384:1--384:23. ACM, 2022."
+        },
+        {
+          "key": "e_1_3_2_1_28_1",
+          "first-page": "3730",
+          "volume-title": "Xiaoou Tang. Deep Learning Face Attributes in the Wild. In IEEE International Conference on Computer Vision (ICCV)",
+          "author": "Liu Ziwei",
+          "year": "2015",
+          "unstructured": "Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang. Deep Learning Face Attributes in the Wild. In IEEE International Conference on Computer Vision (ICCV), pages 3730--3738. IEEE, 2015."
+        },
+        {
+          "key": "e_1_3_2_1_29_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MIPR.2018.00084"
+        },
+        {
+          "key": "e_1_3_2_1_30_1",
+          "volume-title": "Stefano Ermon. SDEdit: Guided Image Synthesis and Editing with Stochastic Differential Equations. In International Conference on Learning Representations (ICLR)",
+          "author": "Meng Chenlin",
+          "year": "2022",
+          "unstructured": "Chenlin Meng, Yutong He, Yang Song, Jiaming Song, Jiajun Wu, Jun-Yan Zhu, and Stefano Ermon. SDEdit: Guided Image Synthesis and Editing with Stochastic Differential Equations. In International Conference on Learning Representations (ICLR), 2022."
+        },
+        {
+          "key": "e_1_3_2_1_31_1",
+          "first-page": "35892",
+          "volume-title": "Yisen Wang. TERD: A Unified Framework for Safeguarding Diffusion Models Against Backdoors. In International Conference on Machine Learning (ICML)",
+          "author": "Mo Yichuan",
+          "year": "2024",
+          "unstructured": "Yichuan Mo, Hui Huang, Mingjie Li, Ang Li, and Yisen Wang. TERD: A Unified Framework for Safeguarding Diffusion Models Against Backdoors. In International Conference on Machine Learning (ICML), pages 35892--35909. PMLR, 2024."
+        },
+        {
+          "key": "e_1_3_2_1_32_1",
+          "volume-title": "GLIDE: Towards Photorealistic Image Generation and Editing with Text-Guided Diffusion Models. CoRR abs/2112.10741",
+          "author": "Nichol Alex",
+          "year": "2021",
+          "unstructured": "Alex Nichol, Prafulla Dhariwal, Aditya Ramesh, Pranav Shyam, Pamela Mishkin, Bob McGrew, Ilya Sutskever, and Mark Chen. GLIDE: Towards Photorealistic Image Generation and Editing with Text-Guided Diffusion Models. CoRR abs/2112.10741, 2021."
+        },
+        {
+          "key": "e_1_3_2_1_33_1",
+          "volume-title": "Hierarchical Text-Conditional Image Generation with CLIP Latents. CoRR abs/2204.06125",
+          "author": "Ramesh Aditya",
+          "year": "2022",
+          "unstructured": "Aditya Ramesh, Prafulla Dhariwal, Alex Nichol, Casey Chu, and Mark Chen. Hierarchical Text-Conditional Image Generation with CLIP Latents. CoRR abs/2204.06125, 2022."
+        },
+        {
+          "key": "e_1_3_2_1_34_1",
+          "first-page": "8821",
+          "volume-title": "Ilya Sutskever. Zero-Shot Text-to-Image Generation. In International Conference on Machine Learning (ICML)",
+          "author": "Ramesh Aditya",
+          "year": "2021",
+          "unstructured": "Aditya Ramesh, Mikhail Pavlov, Gabriel Goh, Scott Gray, Chelsea Voss, Alec Radford, Mark Chen, and Ilya Sutskever. Zero-Shot Text-to-Image Generation. In International Conference on Machine Learning (ICML), pages 8821--8831. JMLR, 2021."
+        },
+        {
+          "key": "e_1_3_2_1_35_1",
+          "first-page": "1060",
+          "volume-title": "International Conference on Machine Learning (ICML)",
+          "author": "Reed Scott E.",
+          "year": "2016",
+          "unstructured": "Scott E. Reed, Zeynep Akata, Xinchen Yan, Lajanugen Logeswaran, Bernt Schiele, and Honglak Lee. Generative Adversarial Text to Image Synthesis. In International Conference on Machine Learning (ICML), pages 1060--1069. JMLR, 2016."
+        },
+        {
+          "key": "e_1_3_2_1_36_1",
+          "first-page": "10684",
+          "volume-title": "Björn Ommer. High-Resolution Image Synthesis with Latent Diffusion Models. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
+          "author": "Rombach Robin",
+          "year": "2022",
+          "unstructured": "Robin Rombach, Andreas Blattmann, Dominik Lorenz, Patrick Esser, and Björn Ommer. High-Resolution Image Synthesis with Latent Diffusion Models. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 10684-- 10695. IEEE, 2022."
+        },
+        {
+          "key": "e_1_3_2_1_37_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chitwan Saharia William Chan Saurabh Saxena Lala Li Jay Whang Emily Denton Seyed Kamyar Seyed Ghasemipour Burcu Karagol Ayan S. Sara Mahdavi Rapha Gontijo Lopes Tim Salimans Jonathan Ho David J. Fleet and Mohammad Norouzi. Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding. CoRR abs/2205.11487 2022.",
+          "DOI": "10.1145/3528233.3530757"
+        },
+        {
+          "key": "e_1_3_2_1_38_1",
+          "volume-title": "DE-FAKE: Detection and Attribution of Fake Images Generated by Text-to-Image Diffusion Models. CoRR abs/2210.06998",
+          "author": "Sha Zeyang",
+          "year": "2022",
+          "unstructured": "Zeyang Sha, Zheng Li, Ning Yu, and Yang Zhang. DE-FAKE: Detection and Attribution of Fake Images Generated by Text-to-Image Diffusion Models. CoRR abs/2210.06998, 2022."
+        },
+        {
+          "key": "e_1_3_2_1_39_1",
+          "volume-title": "Stefano Ermo. Denoising Diffusion Implicit Models. In International Conference on Learning Representations (ICLR)",
+          "author": "Song Jiaming",
+          "year": "2021",
+          "unstructured": "Jiaming Song, Chenlin Meng, and Stefano Ermo. Denoising Diffusion Implicit Models. In International Conference on Learning Representations (ICLR), 2021."
+        },
+        {
+          "key": "e_1_3_2_1_40_1",
+          "first-page": "1",
+          "volume-title": "Ruiz. Efficient Neural Architecture for Text-to-Image Synthesis. In International Joint Conference on Neural Networks (IJCNN)",
+          "author": "Souza Douglas M.",
+          "year": "2020",
+          "unstructured": "Douglas M. Souza, Jonatas Wehrmann, and Duncan D. Ruiz. Efficient Neural Architecture for Text-to-Image Synthesis. In International Joint Conference on Neural Networks (IJCNN), pages 1--8. IEEE, 2020."
+        },
+        {
+          "key": "e_1_3_2_1_41_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3450626.3459838"
+        },
+        {
+          "key": "e_1_3_2_1_42_1",
+          "volume-title": "LEDITS: Real Image Editing with DDPM Inversion and Semantic Guidance. CoRR abs/2307.00522",
+          "author": "Tsaban Linoy",
+          "year": "2023",
+          "unstructured": "Linoy Tsaban and Apolinário Passos. LEDITS: Real Image Editing with DDPM Inversion and Semantic Guidance. CoRR abs/2307.00522, 2023."
+        },
+        {
+          "key": "e_1_3_2_1_43_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00872"
+        },
+        {
+          "key": "e_1_3_2_1_44_1",
+          "first-page": "22388",
+          "volume-title": "Houqiang Li. DIRE for Diffusion-Generated Image Detection. In IEEE International Conference on Computer Vision (ICCV)",
+          "author": "Wang Zhendong",
+          "year": "2023",
+          "unstructured": "Zhendong Wang, Jianmin Bao, Wengang Zhou, Weilun Wang, Hezhen Hu, Hong Chen, and Houqiang Li. DIRE for Diffusion-Generated Image Detection. In IEEE International Conference on Computer Vision (ICCV), pages 22388--22398. IEEE, 2023."
+        },
+        {
+          "key": "e_1_3_2_1_45_1",
+          "volume-title": "Image Quality Assessment: from Error Visibility to Structural Similarity",
+          "author": "Wang Zhou",
+          "year": "2004",
+          "unstructured": "Zhou Wang, Alan C. Bovik, Hamid R. Sheikh, and Eero P. Simoncelli. Image Quality Assessment: from Error Visibility to Structural Similarity. IEEE Transactions on Image Processing, 2004."
+        },
+        {
+          "key": "e_1_3_2_1_46_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICME46284.2020.9102904"
+        },
+        {
+          "key": "e_1_3_2_1_47_1",
+          "volume-title": "Membership Inference Attacks Against Text-to-image Generation Models. CoRR abs/2210.00968",
+          "author": "Wu Yixin",
+          "year": "2022",
+          "unstructured": "Yixin Wu, Ning Yu, Zheng Li, Michael Backes, and Yang Zhang. Membership Inference Attacks Against Text-to-image Generation Models. CoRR abs/2210.00968, 2022."
+        },
+        {
+          "key": "e_1_3_2_1_48_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1162/tacl_a_00166"
+        },
+        {
+          "key": "e_1_3_2_1_49_1",
+          "unstructured": "Jiahui Yu Yuanzhong Xu Jing Yu Koh Thang Luong Gunjan Baid Zirui Wang Vijay Vasudevan Alexander Ku Yinfei Yang Burcu Karagol Ayan Ben Hutchinson Wei Han Zarana Parekh Xin Li Han Zhang Jason Baldridge and Yonghui Wu. Scaling Autoregressive Models for Content-Rich Text-to-Image Generation. CoRR abs/2206.10789 2022."
+        },
+        {
+          "key": "e_1_3_2_1_50_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00765"
+        },
+        {
+          "key": "e_1_3_2_1_51_1",
+          "first-page": "833",
+          "volume-title": "Yinfei Yang. CrossModal Contrastive Learning for Text-to-Image Generation. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
+          "author": "Zhang Han",
+          "year": "2021",
+          "unstructured": "Han Zhang, Jing Yu Koh, Jason Baldridge, Honglak Lee, and Yinfei Yang. CrossModal Contrastive Learning for Text-to-Image Generation. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pages 833--842. IEEE, 2021."
+        },
+        {
+          "key": "e_1_3_2_1_52_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2017.629"
+        },
+        {
+          "key": "e_1_3_2_1_53_1",
+          "first-page": "1",
+          "volume-title": "Shih-Fu Chang. Detecting and Simulating Artifacts in GAN Fake Images. In IEEE International Workshop on Information Forensics and Security (WIFS)",
+          "author": "Zhang Xu",
+          "year": "2019",
+          "unstructured": "Xu Zhang, Svebor Karaman, and Shih-Fu Chang. Detecting and Simulating Artifacts in GAN Fake Images. In IEEE International Workshop on Information Forensics and Security (WIFS), pages 1--6. IEEE, 2019."
+        }
+      ],
+      "event": {
+        "name": "CCS '24: ACM SIGSAC Conference on Computer and Communications Security",
+        "location": "Salt Lake City UT USA",
+        "acronym": "CCS '24",
+        "sponsor": [
+          "SIGSAC ACM Special Interest Group on Security, Audit, and Control"
+        ]
+      },
+      "container-title": [
+        "Proceedings of the 2024 on ACM SIGSAC Conference on Computer and Communications Security"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "https://dl.acm.org/doi/10.1145/3658644.3690297",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://dl.acm.org/doi/pdf/10.1145/3658644.3690297",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            8,
+            22
+          ]
+        ],
+        "date-time": "2025-08-22T05:59:40Z",
+        "timestamp": 1755842380000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://dl.acm.org/doi/10.1145/3658644.3690297"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            2
+          ]
+        ]
+      },
+      "references-count": 53,
+      "alternative-id": [
+        "10.1145/3658644.3690297",
+        "10.1145/3658644"
+      ],
+      "URL": "https://doi.org/10.1145/3658644.3690297",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            2
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "2024-12-09",
+          "order": 3,
+          "name": "published",
+          "label": "Published",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        }
+      ]
+    }
+  }
+}

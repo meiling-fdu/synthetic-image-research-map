@@ -6,19 +6,19 @@ data change and the identity and relationship invariants in
 ``test_repository_baseline.py``.
 """
 
-# Primary curation of ten additions: six gain public markers; verified IDs
-# expose three existing exclusions. Exactly those three leave the public corpus.
+# Tier 1 primary curation: sixteen additions, ten with reusable map locations.
+# Pre-existing rows and exclusions are unchanged; six additions await coordinates.
 CURRENT_REPOSITORY_BASELINE = {
-    "public_unique_papers": 620,
+    "public_unique_papers": 636,
     # Map source identities include one identity resolved to a canonical paper.
-    "public_map_source_papers": 614,
-    "public_papers_with_map": 613,
-    "public_papers_without_map": 7,
-    "total_institution_registry_rows": 703,
-    "active_canonical_institutions": 682,
+    "public_map_source_papers": 624,
+    "public_papers_with_map": 623,
+    "public_papers_without_map": 13,
+    "total_institution_registry_rows": 722,
+    "active_canonical_institutions": 701,
     "non_active_institution_registry_rows": 21,
-    # One paper–institution relationship has two markers (1438 markers total).
-    "public_paper_institution_relationships": 1437,
+    # One paper–institution relationship has two markers (1466 markers total).
+    "public_paper_institution_relationships": 1465,
     "institution_hierarchy_edges": 15,
     "institution_aliases": 120,
 }
@@ -38,7 +38,7 @@ RELEASE_REPOSITORY_BASELINE = {
     "institution_aliases": 80,
 }
 
-CANONICAL_INSTITUTION_STATUS_TOTALS = {'active': 682, 'ignored': 6, 'merged': 15}
+CANONICAL_INSTITUTION_STATUS_TOTALS = {'active': 701, 'ignored': 6, 'merged': 15}
 
 RELEASE_CANONICAL_INSTITUTION_STATUS_TOTALS = {
     "active": 650,
@@ -46,19 +46,19 @@ RELEASE_CANONICAL_INSTITUTION_STATUS_TOTALS = {
     "ignored": 6,
 }
 
-CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 511, 'company': 81, 'research_unit': 87, 'other': 24}
+CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 523, 'company': 86, 'research_unit': 89, 'other': 24}
 
-ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 503, 'company': 79, 'research_unit': 83, 'other': 17}
+ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 515, 'company': 84, 'research_unit': 85, 'other': 17}
 
-PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 588, 'research_unit': 123, 'other': 33, 'company': 121}
+PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 603, 'research_unit': 126, 'other': 33, 'company': 130}
 
 # Historical release artifacts are immutable; current effective venues have
 # changed since the 2026-08-24 checkpoint.
 RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint": 64, "book": 1}
 
-PUBLICATION_TYPE_TOTALS = {'conference': 362, 'preprint': 100, 'journal': 157, 'book': 1}
+PUBLICATION_TYPE_TOTALS = {'conference': 369, 'preprint': 108, 'journal': 158, 'book': 1}
 
-TASK_TOTALS = {'detection': 584, 'source_attribution': 77, 'localization': 21}
+TASK_TOTALS = {'detection': 598, 'source_attribution': 77, 'localization': 25}
 
 RELEASE_TASK_TOTALS = {
     "detection": 471,
@@ -96,4 +96,10 @@ INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS = {
 # Affiliation identity is reviewed; a defensible location is still pending.
 CURATED_PAPERS_AWAITING_COORDINATES = {
     'UniAIDet: A Unified and Universal Benchmark for AI-Generated Image Content Detection and Localization',
+    'Detective SAM: Adaptive AI-Image Forgery Localization',
+    'Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection',
+    'SPECTRA-Net: Scalable Pipeline for Explainable Cross-Domain Tensor Representations for AI-Generated Images Detection',
+    'DeCLIP: Decoding CLIP Representations for Deepfake Localization',
+    'FUSE: Unifying Spectral and Semantic Cues for Robust AI-Generated Image Detection',
+    'Weakly-Supervised Deepfake Localization in Diffusion-Generated Images',
 }

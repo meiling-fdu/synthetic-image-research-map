@@ -1,0 +1,391 @@
+{
+  "doi": "10.1109/qpain69676.2026.11546484",
+  "source_url": "https://api.crossref.org/works/10.1109%2Fqpain69676.2026.11546484",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            16
+          ]
+        ],
+        "date-time": "2026-07-16T06:07:57Z",
+        "timestamp": 1784182077401,
+        "version": "3.55.0"
+      },
+      "reference-count": 26,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                4,
+                16
+              ]
+            ],
+            "date-time": "2026-04-16T00:00:00Z",
+            "timestamp": 1776297600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                4,
+                16
+              ]
+            ],
+            "date-time": "2026-04-16T00:00:00Z",
+            "timestamp": 1776297600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            16
+          ]
+        ]
+      },
+      "DOI": "10.1109/qpain69676.2026.11546484",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            6,
+            11
+          ]
+        ],
+        "date-time": "2026-06-11T19:58:03Z",
+        "timestamp": 1781207883000
+      },
+      "page": "1-6",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Md Abu Sayeb",
+          "family": "Rayhan",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Comilla University,Department of Computer Science and Engineering,Cumilla,Bangladesh"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Ajoy Shutra",
+          "family": "Dhar",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Comilla University,Department of Computer Science and Engineering,Cumilla,Bangladesh"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Hustagna",
+          "family": "Hiya",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Institute of Information Technology, Jahangirnagar University,Dhaka,Bangladesh"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref1",
+          "first-page": "2672",
+          "article-title": "Generative adversarial nets",
+          "author": "Goodfellow",
+          "year": "2014",
+          "journal-title": "NeurIPS"
+        },
+        {
+          "key": "ref2",
+          "article-title": "Denoising diffusion probabilistic models",
+          "author": "Ho",
+          "year": "2020",
+          "journal-title": "NeurIPS"
+        },
+        {
+          "key": "ref3",
+          "article-title": "CNN-based fake face detection",
+          "volume-title": "ICCV Workshops",
+          "author": "Wang",
+          "year": "2020"
+        },
+        {
+          "key": "ref4",
+          "first-page": "2025",
+          "article-title": "Detecting AIsynthesized fake-face videos",
+          "volume": "17",
+          "author": "Corvi",
+          "year": "2022",
+          "journal-title": "IEEE Trans. Inf. Forensics Security"
+        },
+        {
+          "key": "ref5",
+          "first-page": "3696",
+          "article-title": "Generalizable representation learning for deepfake detection",
+          "volume": "17",
+          "author": "Li",
+          "year": "2022",
+          "journal-title": "IEEE Trans. Inf. Forensics Security"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIFS.2012.2190402"
+        },
+        {
+          "key": "ref7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/JSTSP.2020.3002101"
+        },
+        {
+          "key": "ref8",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52729.2023.02345"
+        },
+        {
+          "key": "ref9",
+          "first-page": "1740",
+          "article-title": "Detecting steganography and botnetgenerated images using an ensemble classifier",
+          "author": "Fu",
+          "year": "2007",
+          "journal-title": "IEEE ICME"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICPR48806.2021.9412944"
+        },
+        {
+          "key": "ref11",
+          "first-page": "77",
+          "article-title": "Statistical topological data analysis using persistence landscapes",
+          "volume": "16",
+          "author": "Bubenik",
+          "year": "2015",
+          "journal-title": "JMLR"
+        },
+        {
+          "key": "ref12",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3389/frai.2021.667963"
+        },
+        {
+          "key": "ref13",
+          "article-title": "A topological reading lesson: Classification of MNIST using TDA",
+          "author": "Garin",
+          "year": "2022",
+          "journal-title": "TDA Workshop"
+        },
+        {
+          "issue": "2",
+          "key": "ref14",
+          "first-page": "e1351",
+          "article-title": "Computational topology in TDA for data science",
+          "volume": "10",
+          "author": "Karaca",
+          "year": "2020",
+          "journal-title": "WIREs Data Mining Knowl. Discov."
+        },
+        {
+          "key": "ref15",
+          "first-page": "6402",
+          "article-title": "Simple and scalable predictive uncertainty estimation using deep ensembles",
+          "author": "Lakshminarayanan",
+          "year": "2017",
+          "journal-title": "NeurIPS"
+        },
+        {
+          "key": "ref16",
+          "first-page": "1321",
+          "article-title": "On calibration of modern neural networks",
+          "author": "Guo",
+          "year": "2017",
+          "journal-title": "ICML"
+        },
+        {
+          "key": "ref17",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICASSP49357.2023.10095167"
+        },
+        {
+          "key": "ref18",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.52202/075280-3398"
+        },
+        {
+          "key": "ref19",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1201/b12207"
+        },
+        {
+          "key": "ref20",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1002/9781118914564"
+        },
+        {
+          "key": "ref21",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.29172/7c2a6982-6d72-4cd8-bba6-2fccb06a7011"
+        },
+        {
+          "key": "ref22",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/2939672.2939785"
+        },
+        {
+          "key": "ref23",
+          "first-page": "1234",
+          "article-title": "Benford’s law for synthetic image detection",
+          "volume": "18",
+          "author": "Novozamsky",
+          "year": "2023",
+          "journal-title": "IEEE Trans. Inf. Forensics Security"
+        },
+        {
+          "key": "ref24",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1119/1.13295"
+        },
+        {
+          "key": "ref25",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/PROC.1981.12022"
+        },
+        {
+          "key": "ref26",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/S0893-6080(05)80023-1"
+        }
+      ],
+      "event": {
+        "name": "2026 IEEE 2nd International Conference on Quantum Photonics, Artificial Intelligence &amp; Networking (QPAIN)",
+        "location": "Chittagong, Bangladesh",
+        "start": {
+          "date-parts": [
+            [
+              2026,
+              4,
+              16
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2026,
+              4,
+              18
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2026 IEEE 2nd International Conference on Quantum Photonics, Artificial Intelligence &amp;amp; Networking (QPAIN)"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx8/11544160/11545514/11546484.pdf?arnumber=11546484",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            16
+          ]
+        ],
+        "date-time": "2026-07-16T05:32:20Z",
+        "timestamp": 1784179940000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/11546484/"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            16
+          ]
+        ]
+      },
+      "references-count": 26,
+      "URL": "https://doi.org/10.1109/qpain69676.2026.11546484",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            16
+          ]
+        ]
+      }
+    }
+  }
+}

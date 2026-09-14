@@ -1,0 +1,228 @@
+{
+  "papers.csv": {
+    "before": 344,
+    "after": 357,
+    "all_existing_rows_unchanged": true
+  },
+  "author_institution_mappings.csv": {
+    "before": 945,
+    "after": 981,
+    "all_existing_rows_unchanged": true
+  },
+  "institutions.csv": {
+    "before": 657,
+    "after": 666,
+    "all_existing_rows_unchanged": true
+  },
+  "institution_location_review.csv": {
+    "before": 572,
+    "after": 581,
+    "all_existing_rows_unchanged": true
+  },
+  "public_preview_papers.json": {
+    "before": 546,
+    "after": 559,
+    "all_existing_records_unchanged": true
+  },
+  "public_preview_map_data.json": {
+    "before": 1233,
+    "after": 1254,
+    "all_existing_records_unchanged": true
+  },
+  "duplicates": {
+    "requested": 13,
+    "added": 13,
+    "updated": 0,
+    "previously_existing": 0,
+    "new_title_doi_arxiv_url_collisions": 0
+  },
+  "tracks": {
+    "Workshop": 2,
+    "Main": 8,
+    "Findings": 2,
+    "non-CVPR journal": 1
+  },
+  "affiliations": {
+    "groups": 36,
+    "active": 25,
+    "needs_review": 11,
+    "papers_with_review": 8,
+    "new_institution_entities": 9,
+    "new_author_positions": 74
+  },
+  "frontend": {
+    "records": [
+      {
+        "number": 1,
+        "title": "A Hybrid CLIP-Diffusion Architecture for Transparent Deepfake Detection and Explainability Evaluation",
+        "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshop",
+        "track": "Workshop",
+        "author_roster_rendered": true
+      },
+      {
+        "number": 2,
+        "title": "Beyond Backbones: Degradation-Aware Prototype Fusion for Robust Deepfake Detection",
+        "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshop",
+        "track": "Workshop",
+        "author_roster_rendered": true
+      },
+      {
+        "number": 3,
+        "title": "Detecting Compressed AI-Generated Images via Phase Spectrum Robustness",
+        "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "track": "Main",
+        "author_roster_rendered": true
+      },
+      {
+        "number": 4,
+        "title": "Exploiting the Source-Asymmetry Confidence Gap for Generalizable AI-Generated Image Detection",
+        "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Findings",
+        "track": "Findings",
+        "author_roster_rendered": true
+      },
+      {
+        "number": 5,
+        "title": "CoDA: Color Distribution Probing for Efficient and Generalizable AI-Generated Image Detection",
+        "venue_label": "IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)",
+        "track": "",
+        "author_roster_rendered": true
+      },
+      {
+        "number": 6,
+        "title": "UniGenDet: A Unified Generative-Discriminative Framework for Co-Evolutionary Image Generation and Generated Image Detection",
+        "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "track": "Main",
+        "author_roster_rendered": true
+      },
+      {
+        "number": 7,
+        "title": "Diversity over Uniformity: Rethinking Representation in Generated Image Detection",
+        "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "track": "Main",
+        "author_roster_rendered": true
+      },
+      {
+        "number": 8,
+        "title": "ForenDeX: Unlocking Forensic Insights for Explainable AI-Generated Image Detection",
+        "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Findings",
+        "track": "Findings",
+        "author_roster_rendered": true
+      },
+      {
+        "number": 9,
+        "title": "ReAlign: Generalizable Image Forgery Detection via Reasoning-Aligned Representation",
+        "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "track": "Main",
+        "author_roster_rendered": true
+      },
+      {
+        "number": 10,
+        "title": "SAIDO: Generalizable Detection of AI-Generated Images via Scene-Aware and Importance-Guided Dynamic Optimization in Continual Learning",
+        "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "track": "Main",
+        "author_roster_rendered": true
+      },
+      {
+        "number": 11,
+        "title": "Editprint: General Digital Image Forensics via Editing Fingerprint with Self-Augmentation Training",
+        "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "track": "Main",
+        "author_roster_rendered": true
+      },
+      {
+        "number": 12,
+        "title": "Enabling Supervised Learning of Generative Signatures for Generalized AI-Generated Images Detection",
+        "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "track": "Main",
+        "author_roster_rendered": true
+      },
+      {
+        "number": 13,
+        "title": "PPM-CLIP: Probabilistic Prompt Modeling for Generalizable AI-Generated Image Detection",
+        "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "track": "Main",
+        "author_roster_rendered": true
+      }
+    ],
+    "venue_counts": {
+      "cvpr": {
+        "before": 56,
+        "after": 68
+      },
+      "tpami": {
+        "before": 3,
+        "after": 4
+      }
+    }
+  },
+  "admin": {
+    "live_api_metadata_records_verified": 13,
+    "pending_mapping_endpoint_verified": true,
+    "browser_visual_check": "Blocked: net::ERR_BLOCKED_BY_CLIENT on localhost; no visual claim made."
+  },
+  "manual_files_unchanged": true,
+  "staged_changes": [],
+  "tests": {
+    "summaries": {
+      "focused": "175 passed in 32.43s",
+      "title": "56 passed in 18.49s",
+      "full": "24 failed, 1237 passed in 227.56s (0:03:47)",
+      "baseline": "19 failed, 7 passed in 77.73s (0:01:17)"
+    },
+    "full_suite_failures": [
+      "tests/test_author_affiliation_evidence_repairs.py::test_final_repository_author_states_follow_formal_rosters",
+      "tests/test_author_affiliation_evidence_repairs.py::test_unindexed_roster_remains_visible_and_has_durable_review_notes",
+      "tests/test_institution_acronym_name_audit.py::InstitutionAcronymNameAuditTests::test_repository_candidates_are_fully_resolved",
+      "tests/test_institution_type_audit.py::InstitutionTypeAuditTests::test_audited_repository_counts_and_unique_ids",
+      "tests/test_institution_type_audit.py::InstitutionTypeAuditTests::test_public_outputs_share_corrected_types_and_filter_counts",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[1f939a5a9221dfb6]",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[2f2a5a5c1021efe4]",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[6ed8b18e4c077bfc]",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[70691539bab41121]",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[866f00322aa693b8]",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[96dd3389141fcf35]",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[e07792f5cf49ebda]",
+      "tests/test_manual_location_audit_20260827.py::test_final_public_textual_locations_remain_actionable_without_site_evidence[1f939a5a9221dfb6-Jing Liu-Beijing-2024]",
+      "tests/test_manual_location_audit_20260827.py::test_final_public_textual_locations_remain_actionable_without_site_evidence[2f2a5a5c1021efe4-Xiao Meng-Guangzhou-510006]",
+      "tests/test_manual_location_audit_20260827.py::test_final_public_textual_locations_remain_actionable_without_site_evidence[96dd3389141fcf35-Digvijay Pandey-Kanpur-building]",
+      "tests/test_manual_location_audit_20260827.py::test_final_public_textual_locations_remain_actionable_without_site_evidence[e07792f5cf49ebda-Arjuna Flenner-China Lake-Point Mugu]",
+      "tests/test_manual_location_audit_20260827.py::test_prior_supported_records_and_current_review_candidates_preserved",
+      "tests/test_public_relationship_location_completeness.py::test_admin_confirmed_choices_exclude_retained_candidates",
+      "tests/test_public_relationship_location_completeness.py::test_current_repository_has_zero_silent_geographic_relationships",
+      "tests/test_repository_baseline.py::CurrentRepositoryBaselineTests::test_current_repository_counts_recompute_from_authoritative_files",
+      "tests/test_repository_baseline.py::CurrentRepositoryBaselineTests::test_public_paper_map_coverage_matches_reviewed_blockers",
+      "tests/test_repository_baseline.py::CurrentRepositoryBaselineTests::test_publication_and_task_totals_use_single_label_paper_semantics",
+      "tests/test_repository_baseline.py::CurrentRepositoryBaselineTests::test_status_and_type_totals_reconcile_their_declared_populations",
+      "tests/test_workshop_venue_audit.py::WorkshopArtifactTests::test_full_dataset_before_after_and_source_preservation"
+    ],
+    "reproduced_baseline_failures": [
+      "tests/test_author_affiliation_evidence_repairs.py::test_final_repository_author_states_follow_formal_rosters",
+      "tests/test_author_affiliation_evidence_repairs.py::test_unindexed_roster_remains_visible_and_has_durable_review_notes",
+      "tests/test_institution_type_audit.py::InstitutionTypeAuditTests::test_audited_repository_counts_and_unique_ids",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[1f939a5a9221dfb6]",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[2f2a5a5c1021efe4]",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[6ed8b18e4c077bfc]",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[70691539bab41121]",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[866f00322aa693b8]",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[96dd3389141fcf35]",
+      "tests/test_manual_location_audit_20260827.py::test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable[e07792f5cf49ebda]",
+      "tests/test_manual_location_audit_20260827.py::test_final_public_textual_locations_remain_actionable_without_site_evidence[1f939a5a9221dfb6-Jing Liu-Beijing-2024]",
+      "tests/test_manual_location_audit_20260827.py::test_final_public_textual_locations_remain_actionable_without_site_evidence[2f2a5a5c1021efe4-Xiao Meng-Guangzhou-510006]",
+      "tests/test_manual_location_audit_20260827.py::test_final_public_textual_locations_remain_actionable_without_site_evidence[96dd3389141fcf35-Digvijay Pandey-Kanpur-building]",
+      "tests/test_manual_location_audit_20260827.py::test_final_public_textual_locations_remain_actionable_without_site_evidence[e07792f5cf49ebda-Arjuna Flenner-China Lake-Point Mugu]",
+      "tests/test_public_relationship_location_completeness.py::test_admin_confirmed_choices_exclude_retained_candidates",
+      "tests/test_public_relationship_location_completeness.py::test_current_repository_has_zero_silent_geographic_relationships",
+      "tests/test_repository_baseline.py::CurrentRepositoryBaselineTests::test_current_repository_counts_recompute_from_authoritative_files",
+      "tests/test_repository_baseline.py::CurrentRepositoryBaselineTests::test_public_paper_map_coverage_matches_reviewed_blockers",
+      "tests/test_repository_baseline.py::CurrentRepositoryBaselineTests::test_status_and_type_totals_reconcile_their_declared_populations"
+    ],
+    "additional_snapshot_or_review_failures": [
+      "tests/test_institution_acronym_name_audit.py::InstitutionAcronymNameAuditTests::test_repository_candidates_are_fully_resolved",
+      "tests/test_institution_type_audit.py::InstitutionTypeAuditTests::test_public_outputs_share_corrected_types_and_filter_counts",
+      "tests/test_manual_location_audit_20260827.py::test_prior_supported_records_and_current_review_candidates_preserved",
+      "tests/test_repository_baseline.py::CurrentRepositoryBaselineTests::test_publication_and_task_totals_use_single_label_paper_semantics",
+      "tests/test_workshop_venue_audit.py::WorkshopArtifactTests::test_full_dataset_before_after_and_source_preservation"
+    ]
+  },
+  "static_file_server_verified": true
+}

@@ -1,0 +1,719 @@
+{
+  "doi": "10.1109/cvprw63382.2024.00390",
+  "source_url": "https://api.crossref.org/works/10.1109%2Fcvprw63382.2024.00390",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            27
+          ]
+        ],
+        "date-time": "2026-07-27T07:39:17Z",
+        "timestamp": 1785137957982,
+        "version": "3.55.0"
+      },
+      "reference-count": 76,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                6,
+                17
+              ]
+            ],
+            "date-time": "2024-06-17T00:00:00Z",
+            "timestamp": 1718582400000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                6,
+                17
+              ]
+            ],
+            "date-time": "2024-06-17T00:00:00Z",
+            "timestamp": 1718582400000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/100018693",
+          "name": "Horizon Europe",
+          "doi-asserted-by": "publisher",
+          "id": [
+            {
+              "id": "10.13039/100018693",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            6,
+            17
+          ]
+        ]
+      },
+      "DOI": "10.1109/cvprw63382.2024.00390",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2024,
+            9,
+            27
+          ]
+        ],
+        "date-time": "2024-09-27T18:27:42Z",
+        "timestamp": 1727461662000
+      },
+      "page": "3855-3865",
+      "source": "Crossref",
+      "is-referenced-by-count": 18,
+      "title": [
+        "MaskSim: Detection of synthetic images by masked spectrum similarity analysis"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Yanhao",
+          "family": "Li",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Universit&#x00E9; Paris-Saclay, ENS Paris-Saclay, CNRS, Centre Borelli,France,91190"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Quentin",
+          "family": "Bammey",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Universit&#x00E9; Paris-Saclay, ENS Paris-Saclay, CNRS, Centre Borelli,France,91190"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Marina",
+          "family": "Gardella",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Instituto de Matem&#x00E1;tica Pura e Aplicada,Rio de Janeiro,Brazil"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Tina",
+          "family": "Nikoukhah",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Universit&#x00E9; Paris-Saclay, ENS Paris-Saclay, CNRS, Centre Borelli,France,91190"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jean-Michel",
+          "family": "Morel",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "City University of Hong Kong,Department of Mathematics,Kowloon,Hong Kong"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Miguel",
+          "family": "Colom",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Universit&#x00E9; Paris-Saclay, ENS Paris-Saclay, CNRS, Centre Borelli,France,91190"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Rafael Grompone",
+          "family": "Von Gioi",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Universit&#x00E9; Paris-Saclay, ENS Paris-Saclay, CNRS, Centre Borelli,France,91190"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-031-45382-3_19"
+        },
+        {
+          "key": "ref3",
+          "volume-title": "Positional learning for reliable aigenerated images detection",
+          "author": "Bammey",
+          "year": "2023"
+        },
+        {
+          "key": "ref4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ojsp.2023.3337714"
+        },
+        {
+          "key": "ref5",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.01420"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WACV51458.2022.00109"
+        },
+        {
+          "key": "ref7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/access.2024.3356122"
+        },
+        {
+          "key": "ref8",
+          "author": "Brock",
+          "year": "2019",
+          "journal-title": "Large scale gan training for high fidelity natural image synthesis"
+        },
+        {
+          "key": "ref9",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2011.5995413"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-030-58574-7_7"
+        },
+        {
+          "key": "ref11",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01565"
+        },
+        {
+          "key": "ref12",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPRW59228.2023.00104"
+        },
+        {
+          "key": "ref13",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICASSP49357.2023.10095167"
+        },
+        {
+          "key": "ref14",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/cvprw63382.2024.00439"
+        },
+        {
+          "key": "ref15",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/2713168.2713194"
+        },
+        {
+          "key": "ref16",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2009.5206848"
+        },
+        {
+          "key": "ref17",
+          "first-page": "8780",
+          "article-title": "Diffusion models beat gans on image synthesis",
+          "volume": "34",
+          "author": "Dhariwal",
+          "year": "2021",
+          "journal-title": "Advances in neural information processing systems"
+        },
+        {
+          "key": "ref18",
+          "first-page": "19822",
+          "article-title": "Cogview: Mastering text-to-image generation via transformers",
+          "volume": "34",
+          "author": "Ding",
+          "year": "2021",
+          "journal-title": "Advances in Neural Information Processing Systems"
+        },
+        {
+          "key": "ref19",
+          "author": "Dosovitskiy",
+          "year": "2020",
+          "journal-title": "An image is worth 16x16 words: Transformers for image recognition at scale"
+        },
+        {
+          "key": "ref20",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/cvpr52733.2024.00589"
+        },
+        {
+          "key": "ref21",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00791"
+        },
+        {
+          "key": "ref22",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIP.2014.2341928"
+        },
+        {
+          "key": "ref23",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.5201/ipol.2015.145"
+        },
+        {
+          "key": "ref24",
+          "first-page": "3022",
+          "article-title": "Fourier spectrum discrepancies in deep network generated images",
+          "volume": "33",
+          "author": "Dzanic",
+          "year": "2020",
+          "journal-title": "Advances in neural information processing systems"
+        },
+        {
+          "key": "ref25",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.5201/ipol.2019.274"
+        },
+        {
+          "key": "ref26",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCVW60793.2023.00045"
+        },
+        {
+          "key": "ref27",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-031-19784-0_6"
+        },
+        {
+          "key": "ref28",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.5201/ipol.2011.g_gapd"
+        },
+        {
+          "key": "ref29",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.5201/ipol.2011.g_zwld"
+        },
+        {
+          "key": "ref30",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.5201/ipol.2012.g-dwcs"
+        },
+        {
+          "key": "ref31",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/1774088.1774427"
+        },
+        {
+          "key": "ref32",
+          "article-title": "Generative adversarial nets",
+          "volume-title": "Advances in Neural Information Processing Systems",
+          "volume": "27",
+          "author": "Goodfellow",
+          "year": "2014"
+        },
+        {
+          "key": "ref33",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICME51207.2021.9428429"
+        },
+        {
+          "key": "ref34",
+          "article-title": "Adaptive color plan interpolation in single sensor color electronic camera",
+          "volume-title": "US Patent",
+          "author": "Hamilton",
+          "year": "1997"
+        },
+        {
+          "key": "ref35",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/2980179.2980254"
+        },
+        {
+          "key": "ref36",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2016.90"
+        },
+        {
+          "key": "ref37",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.24963/ijcai.2021/349"
+        },
+        {
+          "key": "ref38",
+          "author": "Karras",
+          "year": "2017",
+          "journal-title": "Progressive growing of gans for improved quality, stability, and variation"
+        },
+        {
+          "key": "ref39",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.48550/ARXIV.2106.12423"
+        },
+        {
+          "key": "ref40",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2019.00453"
+        },
+        {
+          "key": "ref41",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00813"
+        },
+        {
+          "key": "ref42",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICIP.2013.6738475"
+        },
+        {
+          "key": "ref43",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1117/12.2038425"
+        },
+        {
+          "key": "ref44",
+          "author": "Kingma",
+          "year": "2014",
+          "journal-title": "Adam: A method for stochastic optimization"
+        },
+        {
+          "key": "ref45",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-319-10602-1_48"
+        },
+        {
+          "key": "ref46",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-031-19781-9_6"
+        },
+        {
+          "key": "ref47",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01167"
+        },
+        {
+          "key": "ref48",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCVW60793.2023.00051"
+        },
+        {
+          "key": "ref49",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIFS.2006.873602"
+        },
+        {
+          "key": "ref50",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICIP46576.2022.9897310"
+        },
+        {
+          "key": "ref51",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICIP.2019.8803661"
+        },
+        {
+          "key": "ref52",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s10851-010-0227-1"
+        },
+        {
+          "key": "ref53",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICIP.2015.7351528"
+        },
+        {
+          "key": "ref54",
+          "author": "Nichol",
+          "year": "2022",
+          "journal-title": "Glide: Towards photorealistic image generation and editing with text-guided diffusion models"
+        },
+        {
+          "key": "ref55",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52729.2023.02345"
+        },
+        {
+          "key": "ref56",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3306305.3332370"
+        },
+        {
+          "key": "ref57",
+          "first-page": "8024",
+          "article-title": "PyTorch: An Imperative Style, High-Performance Deep Learning Library",
+          "volume-title": "Advances in Neural Information Processing Systems",
+          "volume": "32",
+          "author": "Paszke",
+          "year": "2019"
+        },
+        {
+          "key": "ref58",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICIP.2010.5654327"
+        },
+        {
+          "key": "ref59",
+          "author": "Radford",
+          "year": "2021",
+          "journal-title": "Learning transferable visual models from natural language supervision"
+        },
+        {
+          "key": "ref60",
+          "author": "Radford",
+          "year": "2015",
+          "journal-title": "Unsupervised representation learning with deep convolutional generative adversarial networks"
+        },
+        {
+          "key": "ref61",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICIP49359.2023.10222083"
+        },
+        {
+          "key": "ref62",
+          "author": "Ramesh",
+          "year": "2022",
+          "journal-title": "Hierarchical text-conditional image generation with clip latents"
+        },
+        {
+          "key": "ref63",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "key": "ref64",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/cvpr52688.2022.01042"
+        },
+        {
+          "key": "ref65",
+          "author": "Rombach",
+          "year": "2022",
+          "journal-title": "Stable diffusion"
+        },
+        {
+          "key": "ref66",
+          "first-page": "36479",
+          "article-title": "Photorealistic text-to-image diffusion models with deep language understanding",
+          "volume": "35",
+          "author": "Saharia",
+          "year": "2022",
+          "journal-title": "Advances in Neural Information Processing Systems"
+        },
+        {
+          "key": "ref67",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1117/12.525375"
+        },
+        {
+          "key": "ref68",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2017.74"
+        },
+        {
+          "key": "ref69",
+          "first-page": "2256",
+          "article-title": "Deep unsupervised learning using nonequilibrium thermodynamics",
+          "volume-title": "Proceedings of the 32nd International Conference on Machine Learning, volume 37 of Proceedings of Machine Learning Research",
+          "author": "Sohl-Dickstein"
+        },
+        {
+          "key": "ref70",
+          "first-page": "793",
+          "article-title": "Color image demosaicking via deep residual learning",
+          "volume-title": "2017 IEEE International Conference on Multimedia and Expo (ICME)",
+          "author": "Tan"
+        },
+        {
+          "key": "ref71",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.48550/ARXIV.1706.03762"
+        },
+        {
+          "key": "ref72",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00872"
+        },
+        {
+          "key": "ref73",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV51070.2023.02051"
+        },
+        {
+          "key": "ref74",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV51070.2023.02048"
+        },
+        {
+          "key": "ref75",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICIP49359.2023.10221905"
+        },
+        {
+          "key": "ref76",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIP.2017.2662206"
+        },
+        {
+          "key": "ref77",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WIFS47025.2019.9035107"
+        }
+      ],
+      "event": {
+        "name": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "location": "Seattle, WA, USA",
+        "start": {
+          "date-parts": [
+            [
+              2024,
+              6,
+              17
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2024,
+              6,
+              18
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx8/10677511/10677844/10678228.pdf?arnumber=10678228",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2024,
+            9,
+            29
+          ]
+        ],
+        "date-time": "2024-09-29T04:02:26Z",
+        "timestamp": 1727582546000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/10678228/"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2024,
+            6,
+            17
+          ]
+        ]
+      },
+      "references-count": 76,
+      "URL": "https://doi.org/10.1109/cvprw63382.2024.00390",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            6,
+            17
+          ]
+        ]
+      }
+    }
+  }
+}

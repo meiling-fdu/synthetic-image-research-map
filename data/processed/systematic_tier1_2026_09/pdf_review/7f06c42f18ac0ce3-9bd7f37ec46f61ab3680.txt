@@ -1,0 +1,588 @@
+PAGE 1
+       Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection
+
+           Wenwei Xie¹ (IEEE Member), Jie Yin²*, Lu Ma³, Xuansong Zhang⁴, Wenjing Zhang⁵
+
+                                           (1. Trend Micro Incorporated, Nanjing 210000, Jiangsu, China)
+                                              (2. Jiangsu Police Institute, Nanjing 210031, Jiangsu, China)
+                                                 (3. BASF Incorporated, Nanjing 210000, Jiangsu, China)
+                                                (4. BMW	Incorporated, Nanjing 210012, Jiangsu, China)
+                              (5. Geely	Automobile Research	Institute, Ningbo	315000, Zhejiang, China)
+
+
+
+Abstract:           AI-generated                  imagery                  has                  reached outpaced    the    development    of    reliable    detectors -
+near-photorealistic           fidelity,           yet           this           technology             making         robust         deepfake         detection         a         critical         re-
+poses       significant       threats       to       information       security                       search priority in computer vision and cybersecu-
+and            societal            trust.            Existing            deepfake            detection rity.
+methods often exhibit limited robustness in open-                                                          Early      Deepfake           detection           methods           relied           on
+world       scenarios.       To       address      this      limitation,      this                    Convolutional       Neural       Network       (CNN)       architec-
+paper investigates intrinsic discrepancies between                                                    tures              such              as XceptionNet                and                EfficientNet,
+synthetic and authentic images from a signal-level                                                    which                                        achieved                                        strong                                        performance                                        on
+perspective.    Our    analysis    reveals    that    low-corre-                                      closed-domain          benchmarks          by          exploiting          lo-
+lation signals serve as distinctive markers for dif-
+ferentiating AI-generated  imagery from real pho-                                                     cal         texture         and         artifact         cues.         However,         pure
+tographs. Building on this insight, we introduce a                                                    CNN                approaches                have                inherent                limitations:
+novel  method  for  quantifying  these  signals  based                                                they tend to overfit dataset-specific biases, re-
+on fractal theory. By analyzing the fractal charac-                                                   sulting                        in                        significant                        cross-dataset                        perfor-
+teristics of low-correlation signals, our method ef-                                                  mance          degradation              [4],               and               they               struggle               to
+fectively   captures   the   subtle   statistical   anomalies                                         generalize   to   novel   generation   techniques   en-
+inherent      to      the      synthesis      process.      Extensive      ex-                        countered in the wild.
+perimental      results      demonstrate      the      method’s      ro-
+bustness and superior detection performance. This                                                          Several                           transformative                           advances.                           Vision
+work  emphasizes  the  need  to  shift research focus                                                 Transformer  (ViT)-based  methods  emerged  as
+to a    new signal-level direction    for Deepfake    de-                                             a       leading       approach between       2024       and       2025,
+tection.                                                                                              delivering    far    superior    cross-dataset    generali-
+                                                                                                      zation   compared   to   traditional CNNs [4].   Com-
+Keywords: Fractal, AI, Deepfake detection.                                                            plementary breakthroughs include parameter-
+1. Introduction                                                                                       efficient                              methods                              such                              as                              GenD,                              which
+                                                                                                      achieves strong cross-dataset detection accu-
+    Deepfake           technology,           powered           by           advanced                  racy with only 0.03% of parameters fine-tuned
+
+                                                                                                      [1], and frequency-domain approaches such as
+generative     models     ranging     from     Generative     Ad-                                     FreqNet               realize               efficient               end-to-end               feature
+versarial   Networks   (GANs)   to   modern   Diffusion
+Models,        enables        the        creation        of        highly        realistic            learning  in  the  frequency  space,  yielding  light-
+forged                facial                content,                including                face-swapped weight                       detection                       models                       with                       outstanding
+videos        and        synthetic        talking        faces.        While        these             cross-dataset            generalization                  performance               [2].
+techniques offer creative value for media produc-                                                     The     release     of     large-scale,     multi-dimensional
+tion     and     visual     effects,     their     unregulated     misuse                             datasets                     such                     as                     MultiFF - featuring                    over
+has    in    many    contexts    become    a    serious    threat    to                               900,000      images      generated      by      80+      generation
+information   integrity,   social   trust,   and   individual                                         algorithms - has  also  established  more  realis-
+privacy.                    Deepfakes                    are                    increasingly                    used to tic           evaluation           benchmarks,           bridging           the           gap
+spread disinformation, commit identity fraud, and                                                     between  lab-controlled  testing  and real-world
+fabricate        malicious        materials.        As        generative        AI                    deployment [3].
+continues        to        evolve,        Diffusion-based        tools        now
+produce  near-indistinguishable  synthetic  content,
+and generation improvements have in many cases
+
+https://github.com/jim-xie-cn/Research-Deepfake                                                                                                                                            1
+
+PAGE 2
+    Despite   substantial   advances,   critical   chal-                                              distinguish        real        from        fake,        limiting        the        effec-
+lenges         remain         that         impede         practical         deploy-                   tiveness of current detection models.
+ment.      Content      synthesized      by      diffusion      mod-                                       This                paper                categorizes                image                signals                ac-
+els                 exhibits                 artifact                 distributions                 that                 often cording      to      their      correlation      with      the      main      ob-
+evade      detectors      trained      on      earlier      generation                                ject   into   high- and   low-correlation   groups   and
+types;    in    addition,    adversarial    attacks,     severe                                       assesses their discriminative power for distin-
+class imbalance in operational data, post-pro-                                                        guishing                   real                   from                   fake                   images.                   Based                   on
+cessing               and               compression,               and               the               require-these insights, we propose a fractal-based ap-
+ments for real-time, low-latency inference fur-                                                       proach to quantify low-correlation signals, es-
+ther complicate robust deployment.                                                                    tablishing a novel signal-level criterion for gen-
+
+2. Related Works                                                                                      erated image detection.
+
+    In        open-world        settings,        we      tested        multiple                            Figure      1      illustrates      the      complete      workflow.
+detection    models    and    found    that    their    perfor-                                       Real     and     fake     images     are     first     cropped     to     ex-
+mance    is    insufficient,    indicating    a    critical    gap                                    tract face regions, which are then analyzed us-
+between      current      methods      and      real-world      ap-                                   ing                 Principal                 Component                 Analysis                 (PCA)                 to
+plicability. The      low      detection      accuracy      arises                                    separate                   high- and                   low-correlation                   signals.
+from two main factors. On one hand, the rapid                                                         Fractal  features  are  extracted  from the  result-
+advancement  of  image  generation  techniques                                                        ing     residual     images,     culminating     in     a     final     va-
+has rendered synthetic images nearly indistin-                                                        lidity assessment.
+guishable        from        authentic        ones.        On        the        other
+hand, the primary object signals within images
+mask          the          subtle          discriminative          features          that
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                           Figure 1: Research Workflow Diagram
+
+
+
+3. Terminology                                                                                        and    exhibits    salient    features    relevant    to    com-
+    To       clarify       the       concepts       used       in       this       paper,             puter vision tasks.
+
+the following terms are defined:                                                                      Image                             Semantics:                             The                             conceptual                             infor-
+Main       Object:       The       primary       object       or       region       in                mation represented by an image, including the
+an     image     that     conveys     the     main     semantic     in-                               category and attributes of the main object and
+formation,                 attracts                 human                 visual                 attention, its  relationships  with  the  surrounding  environ-
+                                                                                                      ment or other objects.
+
+
+
+https://github.com/jim-xie-cn/Research-Deepfake                                                                                                                                             2
+
+PAGE 3
+ High-Correlation                        Signals:        Signals         strongly                        correlation signals but differ in low-correlation
+ correlated with the main object and its seman-                                                          signals,  making  the  latter  a  reliable  cue  for  AI-
+ tics,  contributing  significantly  to  object  recog-                                                  generated image detection.
+ nition or semantic understanding.                                                                       5.3 Principal Component Analysis (PCA)
+
+ Low-Correlation   Signals: Signals weakly   cor-                                                            Principal  Component  Analysis  (PCA)  is  a  di-
+ related with the main object and its semantics,                                                         mensionality reduction algorithm that projects
+ contributing minimally to object recognition or                                                         data   onto   orthogonal   principal   component   di-
+ semantic      understanding,      but      potentially      cap-                                        rections  via  a  linear  transformation,  with  each
+ turing          subtle          differences          between          generated                         component capturing the maximum variance.
+ and real images.
+ 4. Contributions                                                                                            In     this     study,     PCA     is     applied     to     analyze     the
+                                                                                                         correlation                 between                 image                 signals                 and                 the
+a) Demonstrated the high discriminative power                                                            main     object.     The     top 𝑁 principal     components
+     of       low-correlation      signals      for      distinguishing                                  represent            high-correlation            signals,            while            the
+     AI-generated images from real images.                                                               remaining                   components                   correspond                   to                   low-
+b) Proposed       a       fractal-based       method to       quan-                                      correlation        signals.        The        residual        image        is        re-
+     tify    low-correlation               signals,          establishing               a                constructed           without           the           top 𝑁   components,
+     novel signal-level criterion for generated im-                                                      emphasizing                                     low-correlation                                     signals,                                     and
+     ages detection.                                                                                     providing      a      means      to      analyze      signal-level      dif-
+                                                                                                         ferences between generated and real images.
+c) Validated   the   effectiveness   of   the   proposed                                                     Let the original image point set be 𝑥                               ∈   ℝ!×#,
+     method through extensive experiments.                                                               After PCA decomposition, the eigenvector ma-
+ 5. Methodology                                                                                          trix 𝑈     =    [𝑢$,   𝑢%,…      ,𝑢!#] is       obtained       (arranged
+                                                                                                         in          descending          order          of          eigenvalues).          The          re-
+ 5.1 Problem Formulation                                                                                 constructed      image      retaining      the top 𝑁 princi-
+                                                                                                         pal    components    is 𝑥.('),    where 𝑢*𝑥 is    the    pro-
+                                                                                                                                                                       )
+     Current            research            on generated            image            de-                 jection  coefficient  of  the  original  image  on  the
+ tection         faces         several         key         challenges.         Gener-                    𝑘  −    𝑡ℎ principal             component,             and 𝑥.(') is             the
+ ated   images   are   produced   by   diverse   sources                                                 image     vector     reconstructed     based     on     the top
+ and multiple generation models, and the main                                                            𝑁 principal components.
+ objects     within     these     images     often     vary.     In     ex-
+ isting               detection               methods,               dominant               signals                                                  N
+                                                                                                                                        x(N)=4           5uTx7u         																		(1)
+ from the main objects can mask the subtle dis-                                                                                         .                     k       k
+ crepancies            between            generated            and            real            im-                                                  k=1
+ ages,       thereby       constraining       the       generalization                                       The   residual image is 𝑅('),   representing   the
+ of detectors across different models.                                                                   residual between the original image and the re-
+ 5.2 Signal Analysis                                                                                     constructed      image      retaining      the top 𝑁 princi-
+                                                                                                         pal components.
+     Existing        generation        models,        such        as        GANs                                                            (   )                 (  )
+ and         diffusion         models,         primarily         learn         signals                                                   𝑅    '    =   𝑥   −   𝑥.  '   																				(2)
+ related       to       the       main       object       and       its       semantics                  5.4 Fractal Theory
+ during                   training,                   while                   non-main                   object                   sig-
+ nals—such       as       background       textures       and       fine-                                    Fractal        theory        is        employed        to        characterize
+ grained noise patterns—are often ignored. Ac-                                                           complex         structures         and         self-similar         patterns
+ cordingly,            image            signals            can            be            categorized      in         natural         or         artificial         images.         The         fractal         di-
+ into                                       high-correlation                                        signals,                                        which                                        are mension          (FD)          measures          the          geometric          com-
+ strongly      associated      with      the      main      object      and                              plexity                          and                          texture                          roughness                          of                          images,
+ its                    semantics,                    and                    low-correlation                    signals, providing      a      quantitative      description      of      micro-
+ which         exhibit         weak         correlation.         AI-generated                            scopic                  structural                  features.                  The                  multifractal
+ images     closely     resemble     real     images      in      high-                                  spectrum     captures     local     structural     variations
+
+
+ https://github.com/jim-xie-cn/Research-Deepfake                                                                                                                                              3
+
+PAGE 4
+at      different      scales,      revealing      heterogeneity      in                              Where:
+complex                        texture                        patterns.                        Differences                        be-Number of pixels with value 𝑥
+tween images are quantified by computing the                                                          𝑝(𝑥     )  =                                                        3			(8)
+                                                                                                            3               Total number of pixels
+fractal   dimension,   multifractal   spectrum,   and
+related  statistics  such  as  lacunarity  and  infor-                                           Multifractal Spectrum (MFS): A single Fractal
+mation entropy.                                                                                  Dimension      (FD)      can      only      describe      the overall
+Fractal          Dimension:          The            fractal            dimension 𝐷               complexity   of   an   image,   while   the   multifractal
+can be calculated by the box-counting method,                                                    spectrum can reveal the complexity of images
+where 𝑁(𝜖) represents          the          number          of          boxes                    in different local regions.
+with side length 𝜖 covering the image.                                                                Let        the        measure        of        the        image        be 𝜇.       Divide
+                                 log𝑁(𝜖)                                                         the image into boxes, with each box size 𝜖 and
+                 𝐷   =   lim                    																															(3)               the	i    −   th box  measure 𝜇3(𝜖).  When 𝜖                         →    0,  the
+                         0→2    log(1/𝜖)
+                                                                                                 relationship                        between                        the q−order fractal
+Lacunarity: Lacunarity    is    an    indicator    in    frac-                                   moment          (Partition          Function)          and          the          scale 𝜖
+tal                    analysis                    used                    to                    quantify                    the                    non-uni-satisfies       a       power       law,       where 𝜏(𝑞) is       the       mul-
+formity             of             the             spatial             distribution             of             texture tifractal index function.
+gaps    in images    and can    reflect    the    roughness
+and heterogeneity of structures in images.                                                                           χ(q,ϵ)=        4     𝜇3(ε)q      ~𝜀:(;)															(9)
+
+                                                                                                                                      3
+    Let        the        image        or        binary        image 𝐼 be        divided              𝛼    represents     local     intensity,     and 𝑓(𝛼) rep-
+into boxes of size 𝜖              ×   𝜖, where the sum of pixel                                         ;
+values             in             the 𝑖−𝑡ℎ box             is 𝑠3,             and             the             total resents the corresponding dimension.
+number          of          boxes          is 𝑁0.          Lacunarity Λ(𝜖):          the                                                  log𝜇      (𝜖)
+larger Λ(𝜖),        the        more        non-uniform        the        image                                            𝛼     =   lim           3      																				(10)
+                                                                                                                            ;       0→2       log𝜖
+and the more gaps.
+                             Var(𝑠      )                                                                                                  𝑑𝜏(𝑞)
+               Λ(𝜖)     =              3   +    1																													(4)                                            𝛼(𝑞)      =      𝑑𝑞      																								(11)
+                            [𝔼(𝑠3)]%
+    Where:                                                                                                                𝑓(𝛼)      =   𝑞𝛼    −   𝜏(𝑞)																				(12)
+
+
+                                       '!                                                        5.5 Experimental Setup
+               Var(𝑠      )  =    1   4     (𝑠    −   𝔼(𝑠     ))%										(5)
+                         3       𝑁              3            3                                        This         paper         conducts         experiments with the
+                                    0  34$                                                       dataset         1-million-fake-faces                  for           fake           images
+
+                                            '"                                                   (https://www.kaggle.com/datasets/tunguz/1-
+                       𝔼(𝑠    )  =     1  4      𝑠  																										(6)                million-fake-faces),    dataset    FFHQ    for    real    im-
+                             3        𝑁            3                                             ages          (https://www.kaggle.com/datasets/ar-
+                                        5  34$
+                                                                                                 naud58/flickrfaceshq-dataset-ffhq).                                  PCA                                  is
+Shannon                 Entropy   ：     Information                   entropy                   is applied  to  extract  low-correlation  signals,  and
+used  to  quantify  the  uncertainty  or  complexity                                             statistics   such   as   information   entropy,   fractal
+of the grayscale distribution of images. Let the                                                 dimension            (FD),         multifractal         spectrum         (MFS)
+set of pixel values of a grayscale image be 𝑋                                  =                 and       Lacunarity are       employed       to       characterize
+𝑥$,  𝑥%,   …,   𝑥6   ,                with                pixel                values                in the               range the images.
+[0,𝐿    −   1],           and           probability           distribution 𝑝(𝑥3) .                    This    study         analyzes         differences         in         classifi-
+The image information entropy 𝐻(𝑋) is:                                                           cation performance between real and fake im-
+
+                                 78$                                                             ages before and after suppressing main-object
+               𝐻(𝑋)      =    −4        𝑝  (𝑥3)log%𝑝(𝑥3)											(7)                           signals.                 The                 source                 code                 for                 these                 experi-
+                                  342                                                            ments         is         available         at https://github.com/jim-
+                                                                                                 xie-cn/Research-Deepfake.
+
+
+
+
+
+https://github.com/jim-xie-cn/Research-Deepfake                                                                                                                                   4
+
+PAGE 5
+                                                     Figure 2: Experimental Processing Workflow.
+
+
+    As shown in Figure 2, the experimental work-                                                         the         KS         test         was         used         to         assess         whether         the
+flow       starts       with       raw       face       images.       After       crop-                  distributions  of  these  features  conformed  to  a
+ping to extract the face regions, PCA is applied                                                         normal distribution. Subsequently, the KS test
+to        obtain        the        principal        components,        and        the                    was       applied       to       compare       the       feature       distribu-
+images                  are                  reconstructed                  using                  the                  top 𝑁 tions between real and fake images.
+components.      Residual      images      are      then      com-                                       6. Results
+puted,       and       various       metrics       are       extracted,       in-
+cluding         fractal         dimension,         multifractal         spec-                                From   the   cropped   face images,   the   top   1   to
+trum, lacunarity, information entropy, and sta-                                                          top      32      principal      components      were      extracted,
+tistics                  (mean                  and                  standard                  deviation).                  The and        the        corresponding        residual        images        were
+workflow consists of the following four steps:                                                           computed.     Statistical     features     were     then     cal-
+Dataset                  Construction:                  10,000                  real                  images culated          for          these          residual          images          and          com-
+and                10,000                generated                images                are                selected pared     with     those     of     the     original     cropped     face
+from               the               1-million-fake-faces               dataset.               Face      images.         The         resulting         observations         are         sum-
+regions            are            extracted            using            MTCNN            to            con-marized as follows:
+struct the experimental dataset.                                                                         Raw Image Assessment (before PCA):
+
+Residual       Image       Generation: PCA      decompo-
+sition is performed on the face images. The im-                                                              The   statistical   features   of   raw   images,   prior
+age    is    reconstructed    based    on    the top 𝑁 prin-                                             to   PCA   processing,   were   analyzed   to   evaluate
+cipal       components,       and       the       residual image is                                      their distributions and discriminative potential.
+obtained by computing the difference between                                                             Figure     3     illustrates     the     distributions     of     fractal
+the original image and the reconstruction.                                                               dimension             (FD),             information             entropy,             mean,
+                                                                                                         and         standard         deviation for        real        and        fake        im-
+Statistical              Feature        Calculation:              Fractal              di-               ages. Figure 4 illustrates the mean multifractal
+mension,                   multifractal                   spectrum,                   lacunarity,        spectrum       (MFS),       including       scaling       exponents
+information  entropy,  and  statistics  (mean  and                                                       (𝜏),    singularity    indices (𝛼),    generalized dimen-
+standard   deviation)   are   extracted   from   the   re-                                               sions          (𝑑),         and         multifractal         spectrum         (𝑓(𝑎)).
+sidual images.                                                                                           Figure   5   illustrates   the   mean   lacunarity at   dif-
+Validity          Assessment:                Differences          in          the          ex-           ferent  scales. Across  all  these  features, There
+tracted        statistical        features        between        real        and                         is   no                 clear                 discriminative                 patterns                 are                 ob-
+generated           residual           images         are            compared            to              served between real and fake images, suggest-
+evaluate their discriminative power. Kolmogo-                                                            ing that the statistical properties of raw images
+rov–Smirnov    (KS)    tests    were    conducted    to    ex-                                           alone             are             insufficient             to             differentiate             gener-
+amine                   the                   statistical                   properties                   of                   the                   ex-ated images from authentic ones.
+tracted            features—mean,            standard            deviation,
+fractal           dimension,           information           entropy,           MFS
+and lacunarity—for real and fake images. First,
+
+
+
+
+
+
+https://github.com/jim-xie-cn/Research-Deepfake                                                                                                                                                5
+
+PAGE 6
+                                                                                               Figure 5: Mean Lacunarity of Raw Images.
+
+                                                                                            As    summarized    in    Table    1,    the    KS    statistics
+   Figure 3:  Statistics Distribution of Raw Images.                                    for real images range from 0.00437 to 0.00545,
+                                                                                        with                    corresponding                    p-values                    between                    0.59
+                                                                                        and   0.84.   For   fake   images,   KS   statistics   range
+                                                                                        from  0.0037  to  0.0046,  with  p-values  between
+                                                                                        0.80       and       0.95.       These       results       indicate       that       all
+                                                                                        features approximately follow normal distribu-
+                                                                                        tions.
+
+                                                                                            When              comparing              the              distributions              of              real
+                                                                                        versus            fake            images,            the            KS            statistics            reveal
+                                                                                        significant  differences  across  all  features  (FD:
+                                                                                        0.537, entropy: 0.089, mean: 0.104, std: 0.380),
+                                                                                        with p-values approximately 0.0. This apparent
+                                                                                        contradiction     with     the     visual     similarity     shown
+                                                                                        in Figure 3 can be attributed to the dominance
+                                                                                        of high-correlation signals, which largely mask
+           Figure 4: Mean MFS of Raw Images.                                            subtle    differences    in    the    raw    images.    Despite
+                                                                                        each               feature               individually               exhibiting               approxi-
+                                                                                        mate           normality,           no           clear           discriminative           pat-
+                                                                                        terns are   apparent,   suggesting   that   subtle   dif-
+                                                                                        ferences     between     real     and     generated     images
+                                                                                        are obscured by the main-object signals.
+
+                                    Table 1: KS Test for Real and Fake Image of Raw Images
+
+  Feature                  Real vs Normality                                  Fake vs Normality                                    Real vs Fake
+                             D                  p_value                         D                     p_value                      D              p_value
+  FD                  0.004371            0.837706                    0.003700                   0.946161                   0.537356           <0.001
+  Entropy             0.005248            0.638335                    0.004563                   0.797457                   0.089238           <0.001
+  Mean                0.004933            0.713254                    0.004137                   0.004037                   0.104401           <0.001
+  Std                 0.005448            0.590825                    0.881943                   0.89902                    0.379718           <0.001
+
+
+
+Residual Image Assessment (after PCA):
+
+   Residual       images       were       generated       by       recon-               32. Figure 6 illustrates the distributions of frac-
+structing  face  images  without  the  top 𝑁princi-                                     tal dimension (FD), information entropy, mean,
+pal        components,        where 𝑁 ranged        from        24        to            and         standard         deviation         for         real         and         fake         im-
+                                                                                        ages based on these residual images
+
+
+https://github.com/jim-xie-cn/Research-Deepfake                                                                                                                  6
+
+PAGE 7
+                                             Figure 6: Statistics Distribution of Residual Images.
+
+    Figure              7 illustrates     the              mean              multifractal          more   top   principal   components   (high-correla-
+spectrum         (MFS)         of         residual         images,         with         the        tion         signals)         are         removed,         the         discriminative
+horizontal axis representing singularity indices                                                   patterns             between             real             and             fake             images             be-
+(𝛼) and the vertical axis representing multifrac-                                                  come increasingly pronounced.
+tal     spectrum 𝑓(𝑎).     It     can     be     observed     that     as
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://github.com/jim-xie-cn/Research-Deepfake                                                                                                                                       7
+
+PAGE 8
+                                                      Figure 7: Mean MFS of Residual Images.
+
+    Figure 8 illustrates the heatmap of KS statis-                                               patterns: the distinction between real and fake
+tics          for          MFS-based          features          across          different        images       strengthens       as       more       high-correlation
+scales (𝑞) and numbers of removed PCA com-                                                       components          are          suppressed,          confirming          the
+ponents.                     This                     visualization                     highlights                     clear enhanced       discriminative       power       of       low-corre-
+                                                                                                 lation signals.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                         Figure 8: KS test for MFS Statistics of Residual Images.
+
+    Figure         9 illustrates        the         mean         lacunarity         of           that it may not effectively capture subtle differ-
+residual images at different scales. Unlike FD,                                                  ences      between      real      and      generated      images      in
+entropy,    and    MFS,    lacunarity    does    not    exhibit                                  the residual domain.
+significant                          discriminative                          ability,                          indicating
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://github.com/jim-xie-cn/Research-Deepfake                                                                                                                                  8
+
+PAGE 9
+                                               Figure 9: Mean Lacunarity of Residual Images.
+    Kolmogorov–Smirnov            (KS)            tests            were            con-      statistic       mean        shows               limited               discriminative
+ducted             to             quantitatively             evaluate             the differ-power  between  real  and  fake  residual  images,
+ences     between     real     and     fake     residual     images                          likely                due                to                the                symmetric,                approximately
+(Table   3).   The   KS   statistics   for   FD   and   entropy                              normal          distributions         produced          by          generative
+consistently           exceed           0.93           across           all           residual models).   These   results   demonstrate   that   sup-
+images,             with             corresponding             p-values≈0.00,                pressing      high-correlation      signals      and      extract-
+indicating significant differences between real                                              ing low-correlation signals markedly enhances
+and                      fake                      images.                      Standard                      deviation                      also the   discriminative   power   of   the   extracted   fea-
+shows       notable       differences,       with       KS       statistics                  tures (which are consistent    with    those    shown
+close                      to                      1.000                      and                      p-values ≈0.00.                      (The in Figure 5).
+
+                                   Table 3: KS Test for Real and Fake Image of Residual Images
+
+                                            FD                             Entropy                                Mean                                 Std
+      Residual                      D            p_value                D            p_value                D            p_value                 D           p_value
+
+  24 components               0.93613           <0.001             0.98791          <0.001            0.15010            <0.001            1.0000            <0.001
+  26 components               0.95778           <0.001             0.98780          <0.001            0.13847            <0.001            1.0000            <0.001
+  28 components               0.96707           <0.001             0.98790          <0.001            0.15303            <0.001            1.0000            <0.001
+  30 components               0.97699           <0.001             0.98680          <0.001            0.13807            <0.001            1.0000            <0.001
+  32 components               0.98501           <0.001             0.98791          <0.001            0.16164            <0.001            0.9998            <0.001
+
+
+7. Conclusion
+
+    In this study, we found the role of low-corre-                                               Building on this insight, this paper proposes
+lated    signals    in    images,    revealing    their    signifi-                          a             fractal             feature             analysis             method             based             on
+cance    in    identifying    real    and    AI-generated    im-                             low-correlated signals. By analyzing the statis-
+ages, and thereby providing a new research di-                                               tical    features    of    residual    images,    this method
+rection for deep fake detection.                                                             effectively      captures      differences      between real
+                                                                                             and      AI   generated             images,             providing             a             novel
+
+
+
+
+https://github.com/jim-xie-cn/Research-Deepfake                                                                                                                            9
+
+PAGE 10
+signal-level        basis        for        AI-generated        image        de-    and           fractal           dimension are extracted           for dis-
+tection.                                                                            crimination between real and AI-generated im-
+   Theoretically,  the  proposed  approach  is  not                                 ages.
+
+limited to face images identification but can be                                    3. Detailed Analysis with MFS: The multifrac-
+applied              to all AI-generated              image              detection  tal    spectrum    is employed    to    extract    more    de-
+tasks.                In                practice,                the                extracted                low-corre-tailed                               structural                               features,                               enabling                               finer-
+lated signals       can       be       used       to       generate       finger-   grained         recognition         between         real         and         gener-
+prints      of      generative      models      for      identifying      AI-       ated images.
+generated images.                                                                       This workflow demonstrates that combining
+
+   Building          on          this          study,          a          PCA          and          fractal-PCA    with    fractal    theory    provides    a    robust    and
+based          workflow          for          real/fake          image          recogni-generalizable                           framework                           for                           distinguishing
+tion can be outlined as follows:                                                    real  and  AI-generated  images,  highlighting  the
+1.  Residual  Image  Construction: PCA is em-                                       potential     of     low-correlation     signals     as     a     pow-
+ployed to        extract        low-correlation        signals and                  erful discriminative tool.
+
+generate residual images.
+
+2.      Feature     Extraction: Statistical     features     of
+residual     images,     such     as     information     entropy
+
+References
+
+[1] A. Yermakov, J. Cech, J. Matas, and M. Fritz, “Deepfake Detection that Generalizes Across Bench-
+marks,” arXiv preprint arXiv:2508.06248v3, Nov. 2025.
+
+[2] C. Tan, Y. Zhao, S. Wei, G. Gu, P. Liu, and Y. Wei, “Frequency-Aware Deepfake Detection: Improv-
+ing Generalizability through Frequency Space Learning,” arXiv preprint arXiv:2403.07240, Mar. 2024.
+
+[3] Y. Zhang, W. Gao, C. Miao, M. Luo, J. Li, W. Deng, et al., “Inclusion 2024: Global Multimedia Deep-
+fake Detection Challenge: Towards Multi-dimensional Face Forgery Detection,” arXiv preprint
+arXiv:2412.20833v2, Dec. 2024.
+
+[4] G. Pei, J. Zhang, M. Hu, Z. Zhang, C. Wang, Y. Wu, et al., “Deepfake Generation and Detection: A
+Benchmark and Survey,” arXiv preprint arXiv:2403.17881, Mar. 2024.
+
+Authors
+
+                                 Wenwei	Xie:	IEEE Member, received a master’s degree in MBA from the
+                                 Nanjing University of Aeronautics and Astronautics (NUAA), Nanjing,
+                                 China in 2013. He is currently working toward network security in Trend
+                                 Micro Incorporated, Nanjing, China. His research interests include Cyber
+                                 security, Artificial Intelligence and Computer vision. His e-mail is
+                                 jim.xie.cn@outlook.com.
+                                 Jie	Yin:	received M.S. degree in Software Engineering from Nan- Jing Uni-
+                                 versity of Science and Technology, Nanjing, China in 2008. He is currently
+                                 a Senior Engineering with the Department of Computer Information and
+                                 Cyber Security, Jiangsu Police Institute, Nanjing, China. His recent re-
+                                 search interests include machine learning, big data, and network security.
+                                 His e-mail is yinjiejspi@163.com.
+
+
+
+
+
+
+
+https://github.com/jim-xie-cn/Research-Deepfake                                                                                                          10
+
+PAGE 11
+                          Lu	Ma:	received the master’s degree in electronic engineering from
+                          Southeast University, Nanjing, China in 2013. She is a Senior Digitalization
+                          Expert with the Digital Hub China at BASF in Nanjing, China. Her research
+                          interests include application security, network security, AI technology and
+                          computer vision. Her e-mail is hml163mail@163.com.
+                          Xuansong	Zhang:	received the master’s degree of Statistics from George
+
+                          Washington University, US in 2017. He is currently working toward the
+                          Data engineer in BMW Cooperation, Nanjing, China. His research interest
+                          includes Time Series, AI Technology, and computer vision. His e-mail is
+                          zhyzxsw@126.com.
+                          Wenjing	Zhang:	received the B.S. degree from Anhui University, Hefei,
+
+                          China. She is currently engaged in the field of Internet of Vehicles (IoV) Big
+                          Data. Her research interests include IoV big data analysis, machine learn-
+                          ing, artificial intelligence, and model security. Her e-mail is
+                          clairedyx@126.com.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://github.com/jim-xie-cn/Research-Deepfake                                                                            11

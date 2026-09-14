@@ -1,0 +1,106 @@
+{
+  "frozen_files": 653,
+  "changed_data_files": [],
+  "manifest_sha256": "ef0b63263a86177aa706732527f96d63a568d129fe8e460529589863375f66db",
+  "suites": {
+    "before-tests": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "19",
+      "skipped": "0",
+      "tests": "1439",
+      "time": "316.401",
+      "timestamp": "2026-09-09T21:55:39.545839+02:00",
+      "hostname": "MacBookPro.station"
+    },
+    "modules": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "152",
+      "time": "19.054",
+      "timestamp": "2026-09-09T22:06:08.167818+02:00",
+      "hostname": "MacBookPro.station"
+    },
+    "frontend": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "310",
+      "time": "7.572",
+      "timestamp": "2026-09-09T22:06:45.299691+02:00",
+      "hostname": "MacBookPro.station"
+    },
+    "admin": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "169",
+      "time": "57.404",
+      "timestamp": "2026-09-09T22:06:53.278927+02:00",
+      "hostname": "MacBookPro.station"
+    },
+    "public": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "271",
+      "time": "35.481",
+      "timestamp": "2026-09-09T22:07:50.958562+02:00",
+      "hostname": "MacBookPro.station"
+    },
+    "full": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "1440",
+      "time": "308.311",
+      "timestamp": "2026-09-09T22:09:16.432280+02:00",
+      "hostname": "MacBookPro.station"
+    }
+  },
+  "public_export_reproducibility": {
+    "public_preview_papers.json": {
+      "reproduced": true,
+      "sha256": "8fd68f2c487dbc8872698205db7e1a8158c886e6bb14c58245005b964a6f523d",
+      "generated": "/private/var/folders/dq/cq5bw9c57dz72ytnkl32wjr40000gn/T/pytest-of-meilinger/pytest-33/test_export_preserves_authorit0/public_preview_papers.json"
+    },
+    "public_preview_map_data.json": {
+      "reproduced": true,
+      "sha256": "4c959c175da31a6b7fe3f92591f4950d02f14f79b5a1f55fe7b6c1cfa7b81125",
+      "generated": "/private/var/folders/dq/cq5bw9c57dz72ytnkl32wjr40000gn/T/pytest-of-meilinger/pytest-33/test_export_preserves_authorit0/public_preview_map_data.json"
+    }
+  },
+  "browser": {
+    "responsive_widths": [
+      375,
+      430,
+      768,
+      1024,
+      1440
+    ],
+    "core_flows": [
+      {
+        "width": 1440,
+        "publicPapers": 620,
+        "publishedOnly": 520,
+        "markerless": "doi:10.1109/lsp.2026.3687792",
+        "hierarchyProvenance": "Matched via Observatory on Social Media \u2192\nunder\n Indiana University",
+        "pageErrors": []
+      },
+      {
+        "width": 375,
+        "publicPapers": 620,
+        "publishedOnly": 520,
+        "markerless": "doi:10.1109/lsp.2026.3687792",
+        "hierarchyProvenance": "Matched via Observatory on Social Media \u2192\nunder\n Indiana University",
+        "pageErrors": []
+      }
+    ]
+  }
+}

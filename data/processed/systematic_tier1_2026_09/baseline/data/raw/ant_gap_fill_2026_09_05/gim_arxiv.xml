@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/eqls/H9LY7OL5OgqxsM6Se0X67Y</id>
+  <title>arXiv Query: search_query=ti:"A Million-scale Benchmark for Generative Image Manipulation Detection and Localization"&amp;id_list=&amp;start=0&amp;max_results=5</title>
+  <updated>2026-09-04T22:04:34Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22A+Million-scale+Benchmark+for+Generative+Image+Manipulation+Detection+and+Localization%22&amp;start=0&amp;max_results=5&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>5</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2406.16531v2</id>
+    <title>GIM: A Million-scale Benchmark for Generative Image Manipulation Detection and Localization</title>
+    <updated>2025-01-13T14:34:40Z</updated>
+    <link href="https://arxiv.org/abs/2406.16531v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.16531v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The extraordinary ability of generative models emerges as a new trend in image editing and generating realistic images, posing a serious threat to the trustworthiness of multimedia data and driving the research of image manipulation detection and location (IMDL). However, the lack of a large-scale data foundation makes the IMDL task unattainable. In this paper, we build a local manipulation data generation pipeline that integrates the powerful capabilities of SAM, LLM, and generative models. Upon this basis, we propose the GIM dataset, which has the following advantages: 1) Large scale, GIM includes over one million pairs of AI-manipulated images and real images. 2) Rich image content, GIM encompasses a broad range of image classes. 3) Diverse generative manipulation, the images are manipulated images with state-of-the-art generators and various manipulation tasks. The aforementioned advantages allow for a more comprehensive evaluation of IMDL methods, extending their applicability to diverse images. We introduce the GIM benchmark with two settings to evaluate existing IMDL methods. In addition, we propose a novel IMDL framework, termed GIMFormer, which consists of a ShadowTracer, Frequency-Spatial block (FSB), and a Multi-Window Anomalous Modeling (MWAM) module. Extensive experiments on the GIM demonstrate that GIMFormer surpasses the previous state-of-the-art approach on two different benchmarks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-24T11:10:41Z</published>
+    <arxiv:comment>Code page: https://github.com/chenyirui/GIM</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yirui Chen</name>
+    </author>
+    <author>
+      <name>Xudong Huang</name>
+    </author>
+    <author>
+      <name>Quan Zhang</name>
+    </author>
+    <author>
+      <name>Wei Li</name>
+    </author>
+    <author>
+      <name>Mingjian Zhu</name>
+    </author>
+    <author>
+      <name>Qiangyu Yan</name>
+    </author>
+    <author>
+      <name>Simiao Li</name>
+    </author>
+    <author>
+      <name>Hanting Chen</name>
+    </author>
+    <author>
+      <name>Hailin Hu</name>
+    </author>
+    <author>
+      <name>Jie Yang</name>
+    </author>
+    <author>
+      <name>Wei Liu</name>
+    </author>
+    <author>
+      <name>Jie Hu</name>
+    </author>
+  </entry>
+</feed>

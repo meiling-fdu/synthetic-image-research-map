@@ -1,0 +1,202 @@
+{
+  "doi": "10.21203/rs.3.rs-8633550/v1",
+  "source_url": "https://api.crossref.org/works/10.21203%2Frs.3.rs-8633550%2Fv1",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "institution": [
+        {
+          "name": "Research Square"
+        }
+      ],
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            14
+          ]
+        ],
+        "date-time": "2026-04-14T01:00:15Z",
+        "timestamp": 1776128415599,
+        "version": "3.50.1"
+      },
+      "posted": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            12
+          ]
+        ]
+      },
+      "group-title": "In Review",
+      "reference-count": 0,
+      "publisher": "Springer Science and Business Media LLC",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                2,
+                12
+              ]
+            ],
+            "date-time": "2026-02-12T00:00:00Z",
+            "timestamp": 1770854400000
+          },
+          "content-version": "unspecified",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "accepted": {
+        "date-parts": [
+          [
+            2026,
+            1,
+            18
+          ]
+        ]
+      },
+      "abstract": "<title>Abstract</title>\n                <p>Generative AI has significantly transformed media creation and accessibility, enabling the rapid generation of fake content, particularly images. However, AI-generated images pose growing challenges for misinformation and biometric security, contributing to declining public trust, rising fraud, and increasing social engineering attacks.Despite progress in forensics, existing methods still face major limitations: (i) reliance on non-standardized benchmarks, (ii) inconsistent training protocols, (iii) limited evaluation metrics, (iv) weak interpretability, (v) lack of human-readable explanations, and (vi) insufficient attention to deployment and usability in real-world settings. These issues hinder fair comparison and obscure true reliability in security-critical applications.To address this, we introduce \\textbf{GReX-Bench}, the first unified benchmarking framework for reproducible evaluation of forensic, anti-forensic (AF), and explainability. We benchmark sixteen prior detectors across eight public datasets (e.g., GAN, diffusion, and low-level vision) under six AF attacks. We analyze model behavior through confidence, ROC, and explainability techniques, including model-specific, model-agnostic, and generative LLM. Our findings reveal significant generalization gaps, with many methods performing well in-distribution but degrading across datasets, particularly under AF attacks. We also examine deployment factors such as efficiency, latency, and scalability to guide practical adoption.</p>",
+      "DOI": "10.21203/rs.3.rs-8633550/v1",
+      "type": "posted-content",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            12
+          ]
+        ],
+        "date-time": "2026-02-12T14:42:12Z",
+        "timestamp": 1770907332000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 1,
+      "title": [
+        "GReX-Bench: Benchmarking Generalization, Robustness, and Explainability in AI-Generated Image Detection"
+      ],
+      "prefix": "10.21203",
+      "author": [
+        {
+          "given": "Nusrat",
+          "family": "Tasnim",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Korea Aerospace University"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "kutub",
+          "family": "Uddin",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Michigan–Flint"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Khalid",
+          "family": "Malik",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Michigan–Flint"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "container-title": [],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "https://www.researchsquare.com/article/rs-8633550/v1",
+          "content-type": "text/html",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://www.researchsquare.com/article/rs-8633550/v1.html",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            12
+          ]
+        ],
+        "date-time": "2026-02-12T14:42:22Z",
+        "timestamp": 1770907342000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://www.researchsquare.com/article/rs-8633550/v1"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            12
+          ]
+        ]
+      },
+      "references-count": 0,
+      "URL": "https://doi.org/10.21203/rs.3.rs-8633550/v1",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            12
+          ]
+        ]
+      },
+      "subtype": "preprint"
+    }
+  }
+}

@@ -1,0 +1,309 @@
+{
+  "doi": "10.17798/bitlisfen.1610300",
+  "source_url": "https://api.crossref.org/works/10.17798%2Fbitlisfen.1610300",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            13
+          ]
+        ],
+        "date-time": "2026-02-13T23:47:17Z",
+        "timestamp": 1771026437650,
+        "version": "3.50.1"
+      },
+      "reference-count": 23,
+      "publisher": "Bitlis Eren Universitesi Fen Bilimleri Dergisi",
+      "issue": "1",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "accepted": {
+        "date-parts": [
+          [
+            2025,
+            2,
+            25
+          ]
+        ]
+      },
+      "abstract": "<jats:p xml:lang=\"en\">Deepfake is a technology that employs artificial intelligence to generate fake images and videos that closely mimic real ones. The rapid growth and dissemination of digital modifications generate considerable concern in the media, politics, and social networking. Among the concerns faced include the dissemination of misinformation, reputational damage, and threats to physical security. Given these concerns, prompt and reliable identification of Deepfakes is crucial for protecting information security and mitigating its negative impacts. Therefore, the development of effective technologies for Deepfake detection is essential to counter this increasing threat. This study aims to identify Deepfake images and examine the efficiency of transfer learning algorithms in Deepfake identification. This study employed the most commonly utilized transfer learning models, including InceptionV3, EfficientNet, NASNet, ResNet, DenseNet, Xception and ConvNeXt, to perform the detection task. An extensive public dataset of 190,000 images, including both real and artificially generated, was utilized in the study. The performance of each model was assessed by using the metrics of accuracy, precision, recall, and F1-score. DenseNet was the most successful model with a test accuracy of 93%. The obtained results have shown that transfer learning models can effectively detect the Deepfake images, providing a practical approach to the challenge with reasonable performance scores.</jats:p>",
+      "DOI": "10.17798/bitlisfen.1610300",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            26
+          ]
+        ],
+        "date-time": "2025-03-26T17:58:07Z",
+        "timestamp": 1743011887000
+      },
+      "page": "546-560",
+      "source": "Crossref",
+      "is-referenced-by-count": 4,
+      "title": [
+        "Deepfake Image Detection with Transfer Learning Models"
+      ],
+      "prefix": "10.17798",
+      "volume": "14",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0006-0497-3178",
+          "authenticated-orcid": true,
+          "given": "Lutfi Emre",
+          "family": "Demir",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "KAHRAMANMARAS SUTCU IMAM UNIVERSITY"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-2316-7893",
+          "authenticated-orcid": true,
+          "given": "Yavuz",
+          "family": "Canbay",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Kahramanmaraş Sütçü İmam Üniversitesi, Mühendislik ve Mimarlık Fakültesi, Bilgisayar Mühendisliği Bölümü"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "7203",
+      "published-online": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            26
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "ref1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "M. S. Rana, M. N. Nobi, B. Murali, and A. H. Sung, \"Deepfake detection: A Systematic Literature Review,\" IEEE Access, vol. 10, pp. 25494-25513, 2022.",
+          "DOI": "10.1109/ACCESS.2022.3154404"
+        },
+        {
+          "key": "ref2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "D. Afchar, V. Nozick, J. Yamagishi, and I. Echizen, \"Mesonet: A Compact Facial Video Forgery Detection Network,\" in 2018 IEEE International Workshop on Information Forensics and Security (WIFS), 2018: IEEE, pp. 1-7.",
+          "DOI": "10.1109/WIFS.2018.8630761"
+        },
+        {
+          "key": "ref3",
+          "unstructured": "P. Prajapati and C. Pollett, \"Mri-gan: A Generalized Approach to Detect Deepfakes Using Perceptual Image Assessment,\" arXiv preprint arXiv:2203.00108, 2022."
+        },
+        {
+          "key": "ref4",
+          "doi-asserted-by": "crossref",
+          "unstructured": "C. Miao, Q. Chu, W. Li, T. Gong, W. Zhuang, and N. Yu, \"Towards Generalizable and Robust Face Manipulation Detection via Bag-Of-Local-Feature,\" arXiv preprint arXiv:2103.07915, 2021.",
+          "DOI": "10.1109/VCIP53242.2021.9675331"
+        },
+        {
+          "key": "ref5",
+          "doi-asserted-by": "crossref",
+          "unstructured": "H. Zhao, W. Zhou, D. Chen, T. Wei, W. Zhang, and N. Yu, \"Multi-attentional Deepfake Detection,\" in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2021, pp. 2185-2194.",
+          "DOI": "10.1109/CVPR46437.2021.00222"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "crossref",
+          "unstructured": "S. Kanwal, S. Tehsin, and S. Saif, \"Exposing AI Generated Deepfake Images Using Siamese Network With Triplet Loss,\" Computing and Informatics, vol. 41, no. 6, pp. 1541–1562, 2022.",
+          "DOI": "10.31577/cai_2022_6_1541"
+        },
+        {
+          "key": "ref7",
+          "doi-asserted-by": "crossref",
+          "unstructured": "R. Rafique, M. Nawaz, H. Kibriya, and M. Masood, \"Deepfake Detection Using Error Level Analysis and Deep Learning,\" in 2021 4th International Conference on Computing & Information Sciences (ICCIS), 2021: IEEE, pp. 1-4.",
+          "DOI": "10.1109/ICCIS54243.2021.9676375"
+        },
+        {
+          "key": "ref8",
+          "doi-asserted-by": "crossref",
+          "unstructured": "N. Nida, A. Irtaza, and N. Ilyas, \"Forged Face Detection Using ELA and Deep Learning Techniques,\" in 2021 International Bhurban Conference on Applied Sciences and Technologies (IBCAST), 2021: IEEE, pp. 271-275.",
+          "DOI": "10.1109/IBCAST51254.2021.9393234"
+        },
+        {
+          "key": "ref9",
+          "doi-asserted-by": "crossref",
+          "unstructured": "M. Patel, A. Gupta, S. Tanwar, and M. Obaidat, \"Trans-DF: A Transfer Learning-Based End-To-End Deepfake Detector,\" in 2020 IEEE 5th International Conference on Computing Communication And Automation (ICCCA), 2020: IEEE, pp. 796-801.",
+          "DOI": "10.1109/ICCCA49541.2020.9250803"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "crossref",
+          "unstructured": "P. Joshi and V. Nivethitha, \"Deep Fake Image Detection using Xception Architecture,\" in 2024 5th International Conference on Recent Trends in Computer Science and Technology (ICRTCST), 2024: IEEE, pp. 533-537.",
+          "DOI": "10.1109/ICRTCST61793.2024.10578398"
+        },
+        {
+          "key": "ref11",
+          "doi-asserted-by": "crossref",
+          "unstructured": "M. Liao and M. Chen, \"A New Deepfake Detection Method by Vision Transformers,\" in International Conference on Algorithms, High Performance Computing, and Artificial Intelligence (AHPCAI 2024), 2024, vol. 13403: SPIE, pp. 953-957.",
+          "DOI": "10.1117/12.3051840"
+        },
+        {
+          "key": "ref12",
+          "unstructured": "M. Karki. deepfake and real images: https://www.kaggle.com/datasets/manjilkarki/deepfake-and-real-images, (23.12.2024)."
+        },
+        {
+          "key": "ref13",
+          "doi-asserted-by": "crossref",
+          "unstructured": "C. Szegedy, V. Vanhoucke, S. Ioffe, J. Shlens, and Z. Wojna, \"Rethinking the Inception Architecture for Computer Vision,\" in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2016, pp. 2818-2826.",
+          "DOI": "10.1109/CVPR.2016.308"
+        },
+        {
+          "key": "ref14",
+          "unstructured": "M. Tan and Q. Le, \"Efficientnet: Rethinking Model Scaling for Convolutional Neural Networks,\" in International Conference on Machine Learning, 2019: PMLR, pp. 6105-6114."
+        },
+        {
+          "key": "ref15",
+          "doi-asserted-by": "crossref",
+          "unstructured": "K. He, X. Zhang, S. Ren, and J. Sun, \"Deep Residual Learning For Image Recognition,\" in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2016, pp. 770-778.",
+          "DOI": "10.1109/CVPR.2016.90"
+        },
+        {
+          "key": "ref16",
+          "doi-asserted-by": "crossref",
+          "unstructured": "G. Huang, Z. Liu, L. Van Der Maaten, and K. Q. Weinberger, \"Densely Connected Convolutional Networks,\" in Proceedings of The IEEE Conference on Computer Vision and Pattern Recognition, 2017, pp. 4700-4708.",
+          "DOI": "10.1109/CVPR.2017.243"
+        },
+        {
+          "key": "ref17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "F. Chollet, \"Xception: Deep Learning with Depthwise Separable Convolutions,\" in Proceedings of The IEEE Conference on Computer Vision and Pattern Recognition, 2017, pp. 1251-1258.",
+          "DOI": "10.1109/CVPR.2017.195"
+        },
+        {
+          "key": "ref18",
+          "doi-asserted-by": "crossref",
+          "unstructured": "B. Zoph, V. Vasudevan, J. Shlens, and Q. V. Le, \"Learning Transferable Architectures for Scalable Image Recognition,\" in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2018, pp. 8697-8710.",
+          "DOI": "10.1109/CVPR.2018.00907"
+        },
+        {
+          "key": "ref19",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Z. Liu, H. Mao, C.-Y. Wu, C. Feichtenhofer, T. Darrell, and S. Xie, \"A Convnet for the 2020s,\" in Proceedings of the Ieee/Cvf Conference On Computer Vision and Pattern Recognition, 2022, pp. 11976-11986.",
+          "DOI": "10.1109/CVPR52688.2022.01167"
+        },
+        {
+          "key": "ref20",
+          "unstructured": "D. M. Powers, \"Evaluation: From Precision, Recall and F-Measure to Roc, Informedness, Markedness and Correlation,\" Arxiv Preprint Arxiv:2010.16061, 2020."
+        },
+        {
+          "key": "ref21",
+          "doi-asserted-by": "crossref",
+          "unstructured": "A. Utku, Z. Ayaz, D. Çiftçi, and M. A. Akcayol, \"Deep Learning Based Classification for Hoverflies (Diptera: Syrphidae),\" Journal of the Entomological Research Society, Vol. 25, No. 3, Pp. 529-544, 2023.",
+          "DOI": "10.51963/jers.v25i3.2445"
+        },
+        {
+          "key": "ref22",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Y. Canbay, S. Adsiz, and P. Canbay, \"Privacy-Preserving Transfer Learning Framework for Kidney Disease Detection,\" Applied Sciences, Vol. 14, No. 19, P. 8629, 2024.",
+          "DOI": "10.3390/app14198629"
+        },
+        {
+          "key": "ref23",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Y. Kaya, Z. Yiner, M. Kaya, and F. Kuncan, \"A New Approach to Covid-19 Detection from X-Ray Images Using Angle Transformation with Googlenet and Lstm,\" Measurement Science and Technology, Vol. 33, No. 12, P. 124011, 2022.",
+          "DOI": "10.1088/1361-6501/ac8ca4"
+        }
+      ],
+      "container-title": [
+        "Bitlis Eren Üniversitesi Fen Bilimleri Dergisi"
+      ],
+      "original-title": [],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            31
+          ]
+        ],
+        "date-time": "2025-03-31T22:23:16Z",
+        "timestamp": 1743459796000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "http://dergipark.org.tr/en/doi/10.17798/bitlisfen.1610300"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            26
+          ]
+        ]
+      },
+      "references-count": 23,
+      "journal-issue": {
+        "issue": "1",
+        "published-online": {
+          "date-parts": [
+            [
+              2025,
+              3,
+              26
+            ]
+          ]
+        }
+      },
+      "URL": "https://doi.org/10.17798/bitlisfen.1610300",
+      "relation": {},
+      "ISSN": [
+        "2147-3129"
+      ],
+      "issn-type": [
+        {
+          "value": "2147-3129",
+          "type": "print"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            26
+          ]
+        ]
+      }
+    }
+  }
+}

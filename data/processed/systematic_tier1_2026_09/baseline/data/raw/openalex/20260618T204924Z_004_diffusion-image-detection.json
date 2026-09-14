@@ -1,0 +1,2802 @@
+{
+  "archive_type": "openalex_raw_candidate_pages",
+  "query": "diffusion image detection",
+  "retrieved_at": "2026-06-18T20:49:24Z",
+  "requested_urls": [
+    "https://api.openalex.org/works?search=diffusion+image+detection&per-page=3&cursor=%2A"
+  ],
+  "pages": [
+    {
+      "meta": {
+        "count": 491189,
+        "db_response_time_ms": 234,
+        "page": null,
+        "per_page": 3,
+        "next_cursor": "IlsxODM0LjM5NDIsIDY0Njc5MDQwMDAwMCwgJ2h0dHBzOi8vb3BlbmFsZXgub3JnL1cyMTUwMTM0ODUzJ10i",
+        "groups_count": null,
+        "x_query": {
+          "oql": "works where full text has (diffusion image detection)",
+          "oqo": {
+            "get_rows": "works",
+            "filter_rows": [
+              {
+                "column_id": "default.search",
+                "value": "diffusion image detection",
+                "operator": "has"
+              }
+            ],
+            "per_page": 3,
+            "cursor": "*"
+          },
+          "url": "/works?filter=default.search:diffusion image detection&per_page=3&cursor=%2A"
+        },
+        "cost_usd": 0.001
+      },
+      "results": [
+        {
+          "id": "https://openalex.org/W2146052399",
+          "doi": "https://doi.org/10.1137/0729052",
+          "title": "Image Selective Smoothing and Edge Detection by Nonlinear Diffusion. II",
+          "display_name": "Image Selective Smoothing and Edge Detection by Nonlinear Diffusion. II",
+          "relevance_score": 2249.6438,
+          "publication_year": 1992,
+          "publication_date": "1992-06-01",
+          "ids": {
+            "openalex": "https://openalex.org/W2146052399",
+            "doi": "https://doi.org/10.1137/0729052",
+            "mag": "2146052399"
+          },
+          "language": "en",
+          "primary_location": {
+            "id": "doi:10.1137/0729052",
+            "is_oa": false,
+            "landing_page_url": "https://doi.org/10.1137/0729052",
+            "pdf_url": null,
+            "source": {
+              "id": "https://openalex.org/S203348814",
+              "display_name": "SIAM Journal on Numerical Analysis",
+              "issn_l": "0036-1429",
+              "issn": [
+                "0036-1429",
+                "1095-7170"
+              ],
+              "is_oa": false,
+              "is_in_doaj": false,
+              "is_core": true,
+              "host_organization": "https://openalex.org/P4310320508",
+              "host_organization_name": "Society for Industrial and Applied Mathematics",
+              "host_organization_lineage": [
+                "https://openalex.org/P4310320508"
+              ],
+              "host_organization_lineage_names": [
+                "Society for Industrial and Applied Mathematics"
+              ],
+              "type": "journal"
+            },
+            "license": null,
+            "license_id": null,
+            "version": "publishedVersion",
+            "is_accepted": true,
+            "is_published": true,
+            "raw_source_name": "SIAM Journal on Numerical Analysis",
+            "raw_type": "journal-article"
+          },
+          "type": "article",
+          "indexed_in": [
+            "crossref"
+          ],
+          "open_access": {
+            "is_oa": false,
+            "oa_status": "closed",
+            "oa_url": null,
+            "any_repository_has_fulltext": false
+          },
+          "authorships": [
+            {
+              "author_position": "first",
+              "author": {
+                "id": "https://openalex.org/A5062208799",
+                "display_name": "Luis Álvarez",
+                "orcid": "https://orcid.org/0000-0002-6953-9587"
+              },
+              "institutions": [
+                {
+                  "id": "https://openalex.org/I119635470",
+                  "display_name": "Universidad de Las Palmas de Gran Canaria",
+                  "ror": "https://ror.org/01teme464",
+                  "country_code": "ES",
+                  "type": "education",
+                  "lineage": [
+                    "https://openalex.org/I119635470"
+                  ]
+                },
+                {
+                  "id": "https://openalex.org/I56435720",
+                  "display_name": "Université Paris Dauphine-PSL",
+                  "ror": "https://ror.org/052bz7812",
+                  "country_code": "FR",
+                  "type": "education",
+                  "lineage": [
+                    "https://openalex.org/I2746051580",
+                    "https://openalex.org/I56435720"
+                  ]
+                }
+              ],
+              "countries": [
+                "ES",
+                "FR"
+              ],
+              "is_corresponding": false,
+              "raw_author_name": "Luis Alvarez",
+              "raw_affiliation_strings": [
+                "Departamento de Informatica y Sistemas, Universidad de Las Palmas, Avenida Maritima del Sur s/n, 35016 Las Palmas, Spain",
+                "Ceremade, Universite Paris-Dauphine, Place de Lattre de Tassigny, 75775 Paris Cedex 16, France"
+              ],
+              "raw_orcid": null,
+              "affiliations": [
+                {
+                  "raw_affiliation_string": "Departamento de Informatica y Sistemas, Universidad de Las Palmas, Avenida Maritima del Sur s/n, 35016 Las Palmas, Spain",
+                  "institution_ids": [
+                    "https://openalex.org/I119635470"
+                  ]
+                },
+                {
+                  "raw_affiliation_string": "Ceremade, Universite Paris-Dauphine, Place de Lattre de Tassigny, 75775 Paris Cedex 16, France",
+                  "institution_ids": [
+                    "https://openalex.org/I56435720"
+                  ]
+                }
+              ]
+            },
+            {
+              "author_position": "middle",
+              "author": {
+                "id": "https://openalex.org/A5110164014",
+                "display_name": "Pierre-Louis Lions",
+                "orcid": null
+              },
+              "institutions": [
+                {
+                  "id": "https://openalex.org/I119635470",
+                  "display_name": "Universidad de Las Palmas de Gran Canaria",
+                  "ror": "https://ror.org/01teme464",
+                  "country_code": "ES",
+                  "type": "education",
+                  "lineage": [
+                    "https://openalex.org/I119635470"
+                  ]
+                },
+                {
+                  "id": "https://openalex.org/I56435720",
+                  "display_name": "Université Paris Dauphine-PSL",
+                  "ror": "https://ror.org/052bz7812",
+                  "country_code": "FR",
+                  "type": "education",
+                  "lineage": [
+                    "https://openalex.org/I2746051580",
+                    "https://openalex.org/I56435720"
+                  ]
+                }
+              ],
+              "countries": [
+                "ES",
+                "FR"
+              ],
+              "is_corresponding": false,
+              "raw_author_name": "Pierre-Louis Lions",
+              "raw_affiliation_strings": [
+                "Ceremade, Universite Paris-Dauphine, Place de Lattre de Tassigny, 75775 Paris Cedex 16, France",
+                "Departamento de Informatica y Sistemas, Universidad de Las Palmas, Avenida Maritima del Sur s/n, 35016 Las Palmas, Spain"
+              ],
+              "raw_orcid": null,
+              "affiliations": [
+                {
+                  "raw_affiliation_string": "Ceremade, Universite Paris-Dauphine, Place de Lattre de Tassigny, 75775 Paris Cedex 16, France",
+                  "institution_ids": [
+                    "https://openalex.org/I56435720"
+                  ]
+                },
+                {
+                  "raw_affiliation_string": "Departamento de Informatica y Sistemas, Universidad de Las Palmas, Avenida Maritima del Sur s/n, 35016 Las Palmas, Spain",
+                  "institution_ids": [
+                    "https://openalex.org/I119635470"
+                  ]
+                }
+              ]
+            },
+            {
+              "author_position": "last",
+              "author": {
+                "id": "https://openalex.org/A5057798674",
+                "display_name": "Jean‐Michel Morel",
+                "orcid": "https://orcid.org/0000-0002-6108-897X"
+              },
+              "institutions": [
+                {
+                  "id": "https://openalex.org/I119635470",
+                  "display_name": "Universidad de Las Palmas de Gran Canaria",
+                  "ror": "https://ror.org/01teme464",
+                  "country_code": "ES",
+                  "type": "education",
+                  "lineage": [
+                    "https://openalex.org/I119635470"
+                  ]
+                },
+                {
+                  "id": "https://openalex.org/I56435720",
+                  "display_name": "Université Paris Dauphine-PSL",
+                  "ror": "https://ror.org/052bz7812",
+                  "country_code": "FR",
+                  "type": "education",
+                  "lineage": [
+                    "https://openalex.org/I2746051580",
+                    "https://openalex.org/I56435720"
+                  ]
+                }
+              ],
+              "countries": [
+                "ES",
+                "FR"
+              ],
+              "is_corresponding": false,
+              "raw_author_name": "Jean-Michel Morel",
+              "raw_affiliation_strings": [
+                "Ceremade, Universite Paris-Dauphine, Place de Lattre de Tassigny, 75775 Paris Cedex 16, France",
+                "Departamento de Informatica y Sistemas, Universidad de Las Palmas, Avenida Maritima del Sur s/n, 35016 Las Palmas, Spain"
+              ],
+              "raw_orcid": null,
+              "affiliations": [
+                {
+                  "raw_affiliation_string": "Ceremade, Universite Paris-Dauphine, Place de Lattre de Tassigny, 75775 Paris Cedex 16, France",
+                  "institution_ids": [
+                    "https://openalex.org/I56435720"
+                  ]
+                },
+                {
+                  "raw_affiliation_string": "Departamento de Informatica y Sistemas, Universidad de Las Palmas, Avenida Maritima del Sur s/n, 35016 Las Palmas, Spain",
+                  "institution_ids": [
+                    "https://openalex.org/I119635470"
+                  ]
+                }
+              ]
+            }
+          ],
+          "institutions": [],
+          "countries_distinct_count": 2,
+          "institutions_distinct_count": 3,
+          "corresponding_author_ids": [],
+          "corresponding_institution_ids": [],
+          "apc_list": null,
+          "apc_paid": null,
+          "fwci": 29.0712,
+          "has_fulltext": false,
+          "cited_by_count": 2219,
+          "citation_normalized_percentile": {
+            "value": 0.9981362,
+            "is_in_top_1_percent": true,
+            "is_in_top_10_percent": true
+          },
+          "cited_by_percentile_year": {
+            "min": 99,
+            "max": 100
+          },
+          "biblio": {
+            "volume": "29",
+            "issue": "3",
+            "first_page": "845",
+            "last_page": "866"
+          },
+          "is_retracted": false,
+          "is_paratext": false,
+          "is_xpac": false,
+          "primary_topic": {
+            "id": "https://openalex.org/T10688",
+            "display_name": "Image and Signal Denoising Methods",
+            "score": 0.9918000102043152,
+            "subfield": {
+              "id": "https://openalex.org/subfields/1707",
+              "display_name": "Computer Vision and Pattern Recognition"
+            },
+            "field": {
+              "id": "https://openalex.org/fields/17",
+              "display_name": "Computer Science"
+            },
+            "domain": {
+              "id": "https://openalex.org/domains/3",
+              "display_name": "Physical Sciences"
+            }
+          },
+          "topics": [
+            {
+              "id": "https://openalex.org/T10688",
+              "display_name": "Image and Signal Denoising Methods",
+              "score": 0.9918000102043152,
+              "subfield": {
+                "id": "https://openalex.org/subfields/1707",
+                "display_name": "Computer Vision and Pattern Recognition"
+              },
+              "field": {
+                "id": "https://openalex.org/fields/17",
+                "display_name": "Computer Science"
+              },
+              "domain": {
+                "id": "https://openalex.org/domains/3",
+                "display_name": "Physical Sciences"
+              }
+            },
+            {
+              "id": "https://openalex.org/T11205",
+              "display_name": "Numerical methods in inverse problems",
+              "score": 0.9890000224113464,
+              "subfield": {
+                "id": "https://openalex.org/subfields/2610",
+                "display_name": "Mathematical Physics"
+              },
+              "field": {
+                "id": "https://openalex.org/fields/26",
+                "display_name": "Mathematics"
+              },
+              "domain": {
+                "id": "https://openalex.org/domains/3",
+                "display_name": "Physical Sciences"
+              }
+            },
+            {
+              "id": "https://openalex.org/T12100",
+              "display_name": "Advanced Mathematical Modeling in Engineering",
+              "score": 0.9883000254631042,
+              "subfield": {
+                "id": "https://openalex.org/subfields/1703",
+                "display_name": "Computational Theory and Mathematics"
+              },
+              "field": {
+                "id": "https://openalex.org/fields/17",
+                "display_name": "Computer Science"
+              },
+              "domain": {
+                "id": "https://openalex.org/domains/3",
+                "display_name": "Physical Sciences"
+              }
+            }
+          ],
+          "keywords": [
+            {
+              "id": "https://openalex.org/keywords/uniqueness",
+              "display_name": "Uniqueness",
+              "score": 0.8601387143135071
+            },
+            {
+              "id": "https://openalex.org/keywords/smoothing",
+              "display_name": "Smoothing",
+              "score": 0.8206239342689514
+            },
+            {
+              "id": "https://openalex.org/keywords/mathematics",
+              "display_name": "Mathematics",
+              "score": 0.7903976440429688
+            },
+            {
+              "id": "https://openalex.org/keywords/image",
+              "display_name": "Image (mathematics)",
+              "score": 0.5973601341247559
+            },
+            {
+              "id": "https://openalex.org/keywords/curvature",
+              "display_name": "Curvature",
+              "score": 0.5530027151107788
+            },
+            {
+              "id": "https://openalex.org/keywords/stability",
+              "display_name": "Stability (learning theory)",
+              "score": 0.5512809753417969
+            },
+            {
+              "id": "https://openalex.org/keywords/diffusion-equation",
+              "display_name": "Diffusion equation",
+              "score": 0.529977560043335
+            },
+            {
+              "id": "https://openalex.org/keywords/viscosity-solution",
+              "display_name": "Viscosity solution",
+              "score": 0.49890899658203125
+            },
+            {
+              "id": "https://openalex.org/keywords/nonlinear-system",
+              "display_name": "Nonlinear system",
+              "score": 0.4875921607017517
+            },
+            {
+              "id": "https://openalex.org/keywords/edge-detection",
+              "display_name": "Edge detection",
+              "score": 0.47621259093284607
+            },
+            {
+              "id": "https://openalex.org/keywords/diffusion",
+              "display_name": "Diffusion",
+              "score": 0.43184739351272583
+            },
+            {
+              "id": "https://openalex.org/keywords/applied-mathematics",
+              "display_name": "Applied mathematics",
+              "score": 0.43000710010528564
+            },
+            {
+              "id": "https://openalex.org/keywords/enhanced-data-rates-for-gsm-evolution",
+              "display_name": "Enhanced Data Rates for GSM Evolution",
+              "score": 0.4205642640590668
+            },
+            {
+              "id": "https://openalex.org/keywords/image-restoration",
+              "display_name": "Image restoration",
+              "score": 0.41836363077163696
+            },
+            {
+              "id": "https://openalex.org/keywords/mathematical-analysis",
+              "display_name": "Mathematical analysis",
+              "score": 0.39384618401527405
+            },
+            {
+              "id": "https://openalex.org/keywords/algorithm",
+              "display_name": "Algorithm",
+              "score": 0.3889162838459015
+            },
+            {
+              "id": "https://openalex.org/keywords/image-processing",
+              "display_name": "Image processing",
+              "score": 0.35764598846435547
+            },
+            {
+              "id": "https://openalex.org/keywords/computer-vision",
+              "display_name": "Computer vision",
+              "score": 0.23857149481773376
+            },
+            {
+              "id": "https://openalex.org/keywords/computer-science",
+              "display_name": "Computer science",
+              "score": 0.14572998881340027
+            },
+            {
+              "id": "https://openalex.org/keywords/geometry",
+              "display_name": "Geometry",
+              "score": 0.13568520545959473
+            }
+          ],
+          "concepts": [
+            {
+              "id": "https://openalex.org/C2777021972",
+              "wikidata": "https://www.wikidata.org/wiki/Q22976830",
+              "display_name": "Uniqueness",
+              "level": 2,
+              "score": 0.8601387143135071
+            },
+            {
+              "id": "https://openalex.org/C3770464",
+              "wikidata": "https://www.wikidata.org/wiki/Q775963",
+              "display_name": "Smoothing",
+              "level": 2,
+              "score": 0.8206239342689514
+            },
+            {
+              "id": "https://openalex.org/C33923547",
+              "wikidata": "https://www.wikidata.org/wiki/Q395",
+              "display_name": "Mathematics",
+              "level": 0,
+              "score": 0.7903976440429688
+            },
+            {
+              "id": "https://openalex.org/C115961682",
+              "wikidata": "https://www.wikidata.org/wiki/Q860623",
+              "display_name": "Image (mathematics)",
+              "level": 2,
+              "score": 0.5973601341247559
+            },
+            {
+              "id": "https://openalex.org/C195065555",
+              "wikidata": "https://www.wikidata.org/wiki/Q214881",
+              "display_name": "Curvature",
+              "level": 2,
+              "score": 0.5530027151107788
+            },
+            {
+              "id": "https://openalex.org/C112972136",
+              "wikidata": "https://www.wikidata.org/wiki/Q7595718",
+              "display_name": "Stability (learning theory)",
+              "level": 2,
+              "score": 0.5512809753417969
+            },
+            {
+              "id": "https://openalex.org/C571446",
+              "wikidata": "https://www.wikidata.org/wiki/Q6510183",
+              "display_name": "Diffusion equation",
+              "level": 3,
+              "score": 0.529977560043335
+            },
+            {
+              "id": "https://openalex.org/C88731125",
+              "wikidata": "https://www.wikidata.org/wiki/Q7935676",
+              "display_name": "Viscosity solution",
+              "level": 2,
+              "score": 0.49890899658203125
+            },
+            {
+              "id": "https://openalex.org/C158622935",
+              "wikidata": "https://www.wikidata.org/wiki/Q660848",
+              "display_name": "Nonlinear system",
+              "level": 2,
+              "score": 0.4875921607017517
+            },
+            {
+              "id": "https://openalex.org/C193536780",
+              "wikidata": "https://www.wikidata.org/wiki/Q1513153",
+              "display_name": "Edge detection",
+              "level": 4,
+              "score": 0.47621259093284607
+            },
+            {
+              "id": "https://openalex.org/C69357855",
+              "wikidata": "https://www.wikidata.org/wiki/Q163214",
+              "display_name": "Diffusion",
+              "level": 2,
+              "score": 0.43184739351272583
+            },
+            {
+              "id": "https://openalex.org/C28826006",
+              "wikidata": "https://www.wikidata.org/wiki/Q33521",
+              "display_name": "Applied mathematics",
+              "level": 1,
+              "score": 0.43000710010528564
+            },
+            {
+              "id": "https://openalex.org/C162307627",
+              "wikidata": "https://www.wikidata.org/wiki/Q204833",
+              "display_name": "Enhanced Data Rates for GSM Evolution",
+              "level": 2,
+              "score": 0.4205642640590668
+            },
+            {
+              "id": "https://openalex.org/C106430172",
+              "wikidata": "https://www.wikidata.org/wiki/Q6002272",
+              "display_name": "Image restoration",
+              "level": 4,
+              "score": 0.41836363077163696
+            },
+            {
+              "id": "https://openalex.org/C134306372",
+              "wikidata": "https://www.wikidata.org/wiki/Q7754",
+              "display_name": "Mathematical analysis",
+              "level": 1,
+              "score": 0.39384618401527405
+            },
+            {
+              "id": "https://openalex.org/C11413529",
+              "wikidata": "https://www.wikidata.org/wiki/Q8366",
+              "display_name": "Algorithm",
+              "level": 1,
+              "score": 0.3889162838459015
+            },
+            {
+              "id": "https://openalex.org/C9417928",
+              "wikidata": "https://www.wikidata.org/wiki/Q1070689",
+              "display_name": "Image processing",
+              "level": 3,
+              "score": 0.35764598846435547
+            },
+            {
+              "id": "https://openalex.org/C31972630",
+              "wikidata": "https://www.wikidata.org/wiki/Q844240",
+              "display_name": "Computer vision",
+              "level": 1,
+              "score": 0.23857149481773376
+            },
+            {
+              "id": "https://openalex.org/C41008148",
+              "wikidata": "https://www.wikidata.org/wiki/Q21198",
+              "display_name": "Computer science",
+              "level": 0,
+              "score": 0.14572998881340027
+            },
+            {
+              "id": "https://openalex.org/C2524010",
+              "wikidata": "https://www.wikidata.org/wiki/Q8087",
+              "display_name": "Geometry",
+              "level": 1,
+              "score": 0.13568520545959473
+            },
+            {
+              "id": "https://openalex.org/C97355855",
+              "wikidata": "https://www.wikidata.org/wiki/Q11473",
+              "display_name": "Thermodynamics",
+              "level": 1,
+              "score": 0.0
+            },
+            {
+              "id": "https://openalex.org/C136264566",
+              "wikidata": "https://www.wikidata.org/wiki/Q159810",
+              "display_name": "Economy",
+              "level": 1,
+              "score": 0.0
+            },
+            {
+              "id": "https://openalex.org/C105795698",
+              "wikidata": "https://www.wikidata.org/wiki/Q12483",
+              "display_name": "Statistics",
+              "level": 1,
+              "score": 0.0
+            },
+            {
+              "id": "https://openalex.org/C62520636",
+              "wikidata": "https://www.wikidata.org/wiki/Q944",
+              "display_name": "Quantum mechanics",
+              "level": 1,
+              "score": 0.0
+            },
+            {
+              "id": "https://openalex.org/C2780378061",
+              "wikidata": "https://www.wikidata.org/wiki/Q25351891",
+              "display_name": "Service (business)",
+              "level": 2,
+              "score": 0.0
+            },
+            {
+              "id": "https://openalex.org/C162324750",
+              "wikidata": "https://www.wikidata.org/wiki/Q8134",
+              "display_name": "Economics",
+              "level": 0,
+              "score": 0.0
+            },
+            {
+              "id": "https://openalex.org/C119857082",
+              "wikidata": "https://www.wikidata.org/wiki/Q2539",
+              "display_name": "Machine learning",
+              "level": 1,
+              "score": 0.0
+            },
+            {
+              "id": "https://openalex.org/C121332964",
+              "wikidata": "https://www.wikidata.org/wiki/Q413",
+              "display_name": "Physics",
+              "level": 0,
+              "score": 0.0
+            }
+          ],
+          "mesh": [],
+          "locations_count": 2,
+          "locations": [
+            {
+              "id": "doi:10.1137/0729052",
+              "is_oa": false,
+              "landing_page_url": "https://doi.org/10.1137/0729052",
+              "pdf_url": null,
+              "source": {
+                "id": "https://openalex.org/S203348814",
+                "display_name": "SIAM Journal on Numerical Analysis",
+                "issn_l": "0036-1429",
+                "issn": [
+                  "0036-1429",
+                  "1095-7170"
+                ],
+                "is_oa": false,
+                "is_in_doaj": false,
+                "is_core": true,
+                "host_organization": "https://openalex.org/P4310320508",
+                "host_organization_name": "Society for Industrial and Applied Mathematics",
+                "host_organization_lineage": [
+                  "https://openalex.org/P4310320508"
+                ],
+                "host_organization_lineage_names": [
+                  "Society for Industrial and Applied Mathematics"
+                ],
+                "type": "journal"
+              },
+              "license": null,
+              "license_id": null,
+              "version": "publishedVersion",
+              "is_accepted": true,
+              "is_published": true,
+              "raw_source_name": "SIAM Journal on Numerical Analysis",
+              "raw_type": "journal-article"
+            },
+            {
+              "id": "pmh:oai:accedacris.ulpgc.es:10553/46216",
+              "is_oa": false,
+              "landing_page_url": "http://hdl.handle.net/10553/46216",
+              "pdf_url": null,
+              "source": {
+                "id": "https://openalex.org/S4306400136",
+                "display_name": "Acceda (Universidad de Las Palmas de Gran Canaria)",
+                "issn_l": null,
+                "issn": null,
+                "is_oa": false,
+                "is_in_doaj": false,
+                "is_core": false,
+                "host_organization": null,
+                "host_organization_name": null,
+                "host_organization_lineage": [],
+                "host_organization_lineage_names": [],
+                "type": "repository"
+              },
+              "license": null,
+              "license_id": null,
+              "version": "submittedVersion",
+              "is_accepted": false,
+              "is_published": false,
+              "raw_source_name": "SIAM Journal on Numerical Analysis [ISSN 0036-1429], v . 29 (3), p. 845-866",
+              "raw_type": "info:eu-repo/semantics/article"
+            }
+          ],
+          "best_oa_location": null,
+          "sustainable_development_goals": [],
+          "awards": [],
+          "funders": [],
+          "has_content": {
+            "pdf": false,
+            "grobid_xml": false
+          },
+          "content_urls": null,
+          "referenced_works_count": 20,
+          "referenced_works": [
+            "https://openalex.org/W1527029459",
+            "https://openalex.org/W1532111732",
+            "https://openalex.org/W1567380046",
+            "https://openalex.org/W1756736144",
+            "https://openalex.org/W1968245656",
+            "https://openalex.org/W1983377470",
+            "https://openalex.org/W1991113069",
+            "https://openalex.org/W2002312729",
+            "https://openalex.org/W2003370853",
+            "https://openalex.org/W2022735534",
+            "https://openalex.org/W2032316144",
+            "https://openalex.org/W2057220024",
+            "https://openalex.org/W2072685235",
+            "https://openalex.org/W2109863423",
+            "https://openalex.org/W2113116398",
+            "https://openalex.org/W2150134853",
+            "https://openalex.org/W2177195156",
+            "https://openalex.org/W2599473381",
+            "https://openalex.org/W3011612142",
+            "https://openalex.org/W4248590282"
+          ],
+          "related_works": [
+            "https://openalex.org/W2383807498",
+            "https://openalex.org/W1978572805",
+            "https://openalex.org/W1997992934",
+            "https://openalex.org/W1987225439",
+            "https://openalex.org/W4238188170",
+            "https://openalex.org/W2125114371",
+            "https://openalex.org/W2149980199",
+            "https://openalex.org/W2019977573",
+            "https://openalex.org/W3125766170",
+            "https://openalex.org/W2391139946"
+          ],
+          "abstract_inverted_index": {
+            "A": [
+              0
+            ],
+            "stable": [
+              1,
+              29
+            ],
+            "algorithm": [
+              2,
+              30,
+              53
+            ],
+            "is": [
+              3,
+              31,
+              42
+            ],
+            "proposed": [
+              4
+            ],
+            "for": [
+              5
+            ],
+            "image": [
+              6,
+              64
+            ],
+            "restoration": [
+              7
+            ],
+            "based": [
+              8
+            ],
+            "on": [
+              9
+            ],
+            "the": [
+              10,
+              19,
+              23,
+              38,
+              58,
+              62
+            ],
+            "'mean": [
+              11
+            ],
+            "curvature": [
+              12
+            ],
+            "motion'": [
+              13
+            ],
+            "equation.": [
+              14
+            ],
+            "Existence": [
+              15
+            ],
+            "and": [
+              16,
+              37,
+              69
+            ],
+            "uniqueness": [
+              17,
+              68
+            ],
+            "of": [
+              18,
+              22
+            ],
+            "'viscosity'": [
+              20
+            ],
+            "solution": [
+              21
+            ],
+            "equation": [
+              24
+            ],
+            "are": [
+              25,
+              35
+            ],
+            "proved,": [
+              26
+            ],
+            "a": [
+              27
+            ],
+            "L∞": [
+              28
+            ],
+            "given,": [
+              32
+            ],
+            "experimental": [
+              33
+            ],
+            "results": [
+              34
+            ],
+            "shown,": [
+              36
+            ],
+            "subjacent": [
+              39
+            ],
+            "vision": [
+              40,
+              50
+            ],
+            "model": [
+              41
+            ],
+            "compared": [
+              43
+            ],
+            "with": [
+              44
+            ],
+            "those": [
+              45
+            ],
+            "introduced": [
+              46
+            ],
+            "recently": [
+              47
+            ],
+            "by": [
+              48
+            ],
+            "several": [
+              49
+            ],
+            "researchers.": [
+              51
+            ],
+            "The": [
+              52
+            ],
+            "presented": [
+              54
+            ],
+            "appears": [
+              55
+            ],
+            "to": [
+              56
+            ],
+            "be": [
+              57
+            ],
+            "sharpest": [
+              59
+            ],
+            "possible": [
+              60
+            ],
+            "among": [
+              61
+            ],
+            "multiscale": [
+              63
+            ],
+            "smoothing": [
+              65
+            ],
+            "methods": [
+              66
+            ],
+            "preserving": [
+              67
+            ],
+            "stability.": [
+              70
+            ]
+          },
+          "counts_by_year": [
+            {
+              "year": 2026,
+              "cited_by_count": 3
+            },
+            {
+              "year": 2025,
+              "cited_by_count": 14
+            },
+            {
+              "year": 2024,
+              "cited_by_count": 10
+            },
+            {
+              "year": 2023,
+              "cited_by_count": 16
+            },
+            {
+              "year": 2022,
+              "cited_by_count": 18
+            },
+            {
+              "year": 2021,
+              "cited_by_count": 51
+            },
+            {
+              "year": 2020,
+              "cited_by_count": 55
+            },
+            {
+              "year": 2019,
+              "cited_by_count": 71
+            },
+            {
+              "year": 2018,
+              "cited_by_count": 51
+            },
+            {
+              "year": 2017,
+              "cited_by_count": 61
+            },
+            {
+              "year": 2016,
+              "cited_by_count": 79
+            },
+            {
+              "year": 2015,
+              "cited_by_count": 97
+            },
+            {
+              "year": 2014,
+              "cited_by_count": 99
+            },
+            {
+              "year": 2013,
+              "cited_by_count": 86
+            },
+            {
+              "year": 2012,
+              "cited_by_count": 114
+            }
+          ],
+          "updated_date": "2026-06-11T09:08:48.828518",
+          "created_date": "2025-10-10T00:00:00"
+        },
+        {
+          "id": "https://openalex.org/W3011612142",
+          "doi": "https://doi.org/10.1137/0729012",
+          "title": "Image Selective Smoothing and Edge Detection by Nonlinear Diffusion",
+          "display_name": "Image Selective Smoothing and Edge Detection by Nonlinear Diffusion",
+          "relevance_score": 1924.0736,
+          "publication_year": 1992,
+          "publication_date": "1992-02-01",
+          "ids": {
+            "openalex": "https://openalex.org/W3011612142",
+            "doi": "https://doi.org/10.1137/0729012",
+            "mag": "3011612142"
+          },
+          "language": "en",
+          "primary_location": {
+            "id": "doi:10.1137/0729012",
+            "is_oa": false,
+            "landing_page_url": "https://doi.org/10.1137/0729012",
+            "pdf_url": null,
+            "source": {
+              "id": "https://openalex.org/S203348814",
+              "display_name": "SIAM Journal on Numerical Analysis",
+              "issn_l": "0036-1429",
+              "issn": [
+                "0036-1429",
+                "1095-7170"
+              ],
+              "is_oa": false,
+              "is_in_doaj": false,
+              "is_core": true,
+              "host_organization": "https://openalex.org/P4310320508",
+              "host_organization_name": "Society for Industrial and Applied Mathematics",
+              "host_organization_lineage": [
+                "https://openalex.org/P4310320508"
+              ],
+              "host_organization_lineage_names": [
+                "Society for Industrial and Applied Mathematics"
+              ],
+              "type": "journal"
+            },
+            "license": null,
+            "license_id": null,
+            "version": "publishedVersion",
+            "is_accepted": true,
+            "is_published": true,
+            "raw_source_name": "SIAM Journal on Numerical Analysis",
+            "raw_type": "journal-article"
+          },
+          "type": "article",
+          "indexed_in": [
+            "crossref"
+          ],
+          "open_access": {
+            "is_oa": false,
+            "oa_status": "closed",
+            "oa_url": null,
+            "any_repository_has_fulltext": false
+          },
+          "authorships": [
+            {
+              "author_position": "first",
+              "author": {
+                "id": "https://openalex.org/A5041731669",
+                "display_name": "Francine Catté",
+                "orcid": null
+              },
+              "institutions": [],
+              "countries": [],
+              "is_corresponding": false,
+              "raw_author_name": "Francine Catté",
+              "raw_affiliation_strings": [],
+              "raw_orcid": null,
+              "affiliations": []
+            },
+            {
+              "author_position": "middle",
+              "author": {
+                "id": "https://openalex.org/A5110164014",
+                "display_name": "Pierre-Louis Lions",
+                "orcid": null
+              },
+              "institutions": [],
+              "countries": [],
+              "is_corresponding": false,
+              "raw_author_name": "Pierre-Louis Lions",
+              "raw_affiliation_strings": [],
+              "raw_orcid": null,
+              "affiliations": []
+            },
+            {
+              "author_position": "middle",
+              "author": {
+                "id": "https://openalex.org/A5057798674",
+                "display_name": "Jean‐Michel Morel",
+                "orcid": "https://orcid.org/0000-0002-6108-897X"
+              },
+              "institutions": [],
+              "countries": [],
+              "is_corresponding": false,
+              "raw_author_name": "Jean-Michel Morel",
+              "raw_affiliation_strings": [],
+              "raw_orcid": null,
+              "affiliations": []
+            },
+            {
+              "author_position": "last",
+              "author": {
+                "id": "https://openalex.org/A5018862249",
+                "display_name": "Tomeu Coll",
+                "orcid": null
+              },
+              "institutions": [],
+              "countries": [],
+              "is_corresponding": false,
+              "raw_author_name": "Tomeu Coll",
+              "raw_affiliation_strings": [],
+              "raw_orcid": null,
+              "affiliations": []
+            }
+          ],
+          "institutions": [],
+          "countries_distinct_count": 0,
+          "institutions_distinct_count": 4,
+          "corresponding_author_ids": [],
+          "corresponding_institution_ids": [],
+          "apc_list": null,
+          "apc_paid": null,
+          "fwci": 10.4218,
+          "has_fulltext": false,
+          "cited_by_count": 1442,
+          "citation_normalized_percentile": {
+            "value": 0.98422939,
+            "is_in_top_1_percent": false,
+            "is_in_top_10_percent": true
+          },
+          "cited_by_percentile_year": {
+            "min": 99,
+            "max": 100
+          },
+          "biblio": {
+            "volume": "29",
+            "issue": "1",
+            "first_page": "182",
+            "last_page": "193"
+          },
+          "is_retracted": false,
+          "is_paratext": false,
+          "is_xpac": false,
+          "primary_topic": {
+            "id": "https://openalex.org/T10688",
+            "display_name": "Image and Signal Denoising Methods",
+            "score": 0.9987000226974487,
+            "subfield": {
+              "id": "https://openalex.org/subfields/1707",
+              "display_name": "Computer Vision and Pattern Recognition"
+            },
+            "field": {
+              "id": "https://openalex.org/fields/17",
+              "display_name": "Computer Science"
+            },
+            "domain": {
+              "id": "https://openalex.org/domains/3",
+              "display_name": "Physical Sciences"
+            }
+          },
+          "topics": [
+            {
+              "id": "https://openalex.org/T10688",
+              "display_name": "Image and Signal Denoising Methods",
+              "score": 0.9987000226974487,
+              "subfield": {
+                "id": "https://openalex.org/subfields/1707",
+                "display_name": "Computer Vision and Pattern Recognition"
+              },
+              "field": {
+                "id": "https://openalex.org/fields/17",
+                "display_name": "Computer Science"
+              },
+              "domain": {
+                "id": "https://openalex.org/domains/3",
+                "display_name": "Physical Sciences"
+              }
+            },
+            {
+              "id": "https://openalex.org/T10052",
+              "display_name": "Medical Image Segmentation Techniques",
+              "score": 0.996399998664856,
+              "subfield": {
+                "id": "https://openalex.org/subfields/1707",
+                "display_name": "Computer Vision and Pattern Recognition"
+              },
+              "field": {
+                "id": "https://openalex.org/fields/17",
+                "display_name": "Computer Science"
+              },
+              "domain": {
+                "id": "https://openalex.org/domains/3",
+                "display_name": "Physical Sciences"
+              }
+            },
+            {
+              "id": "https://openalex.org/T11659",
+              "display_name": "Advanced Image Fusion Techniques",
+              "score": 0.9950000047683716,
+              "subfield": {
+                "id": "https://openalex.org/subfields/2214",
+                "display_name": "Media Technology"
+              },
+              "field": {
+                "id": "https://openalex.org/fields/22",
+                "display_name": "Engineering"
+              },
+              "domain": {
+                "id": "https://openalex.org/domains/3",
+                "display_name": "Physical Sciences"
+              }
+            }
+          ],
+          "keywords": [
+            {
+              "id": "https://openalex.org/keywords/mathematics",
+              "display_name": "Mathematics",
+              "score": 0.7701245546340942
+            },
+            {
+              "id": "https://openalex.org/keywords/smoothing",
+              "display_name": "Smoothing",
+              "score": 0.732121467590332
+            },
+            {
+              "id": "https://openalex.org/keywords/uniqueness",
+              "display_name": "Uniqueness",
+              "score": 0.7295612096786499
+            },
+            {
+              "id": "https://openalex.org/keywords/edge-detection",
+              "display_name": "Edge detection",
+              "score": 0.6493273973464966
+            },
+            {
+              "id": "https://openalex.org/keywords/noise",
+              "display_name": "Noise (video)",
+              "score": 0.6077611446380615
+            },
+            {
+              "id": "https://openalex.org/keywords/enhanced-data-rates-for-gsm-evolution",
+              "display_name": "Enhanced Data Rates for GSM Evolution",
+              "score": 0.6024231910705566
+            },
+            {
+              "id": "https://openalex.org/keywords/nonlinear-system",
+              "display_name": "Nonlinear system",
+              "score": 0.5661600232124329
+            },
+            {
+              "id": "https://openalex.org/keywords/image",
+              "display_name": "Image (mathematics)",
+              "score": 0.5540136098861694
+            },
+            {
+              "id": "https://openalex.org/keywords/applied-mathematics",
+              "display_name": "Applied mathematics",
+              "score": 0.5163305997848511
+            },
+            {
+              "id": "https://openalex.org/keywords/algorithm",
+              "display_name": "Algorithm",
+              "score": 0.5010342597961426
+            },
+            {
+              "id": "https://openalex.org/keywords/diffusion",
+              "display_name": "Diffusion",
+              "score": 0.4787561297416687
+            },
+            {
+              "id": "https://openalex.org/keywords/image-restoration",
+              "display_name": "Image restoration",
+              "score": 0.46476635336875916
+            },
+            {
+              "id": "https://openalex.org/keywords/anisotropic-diffusion",
+              "display_name": "Anisotropic diffusion",
+              "score": 0.45263680815696716
+            },
+            {
+              "id": "https://openalex.org/keywords/image-processing",
+              "display_name": "Image processing",
+              "score": 0.4337999224662781
+            },
+            {
+              "id": "https://openalex.org/keywords/mathematical-optimization",
+              "display_name": "Mathematical optimization",
+              "score": 0.34565746784210205
+            },
+            {
+              "id": "https://openalex.org/keywords/mathematical-analysis",
+              "display_name": "Mathematical analysis",
+              "score": 0.3246191740036011
+            },
+            {
+              "id": "https://openalex.org/keywords/computer-vision",
+              "display_name": "Computer vision",
+              "score": 0.29441365599632263
+            },
+            {
+              "id": "https://openalex.org/keywords/computer-science",
+              "display_name": "Computer science",
+              "score": 0.20030656456947327
+            },
+            {
+              "id": "https://openalex.org/keywords/statistics",
+              "display_name": "Statistics",
+              "score": 0.11872091889381409
+            }
+          ],
+          "concepts": [
+            {
+              "id": "https://openalex.org/C33923547",
+              "wikidata": "https://www.wikidata.org/wiki/Q395",
+              "display_name": "Mathematics",
+              "level": 0,
+              "score": 0.7701245546340942
+            },
+            {
+              "id": "https://openalex.org/C3770464",
+              "wikidata": "https://www.wikidata.org/wiki/Q775963",
+              "display_name": "Smoothing",
+              "level": 2,
+              "score": 0.732121467590332
+            },
+            {
+              "id": "https://openalex.org/C2777021972",
+              "wikidata": "https://www.wikidata.org/wiki/Q22976830",
+              "display_name": "Uniqueness",
+              "level": 2,
+              "score": 0.7295612096786499
+            },
+            {
+              "id": "https://openalex.org/C193536780",
+              "wikidata": "https://www.wikidata.org/wiki/Q1513153",
+              "display_name": "Edge detection",
+              "level": 4,
+              "score": 0.6493273973464966
+            },
+            {
+              "id": "https://openalex.org/C99498987",
+              "wikidata": "https://www.wikidata.org/wiki/Q2210247",
+              "display_name": "Noise (video)",
+              "level": 3,
+              "score": 0.6077611446380615
+            },
+            {
+              "id": "https://openalex.org/C162307627",
+              "wikidata": "https://www.wikidata.org/wiki/Q204833",
+              "display_name": "Enhanced Data Rates for GSM Evolution",
+              "level": 2,
+              "score": 0.6024231910705566
+            },
+            {
+              "id": "https://openalex.org/C158622935",
+              "wikidata": "https://www.wikidata.org/wiki/Q660848",
+              "display_name": "Nonlinear system",
+              "level": 2,
+              "score": 0.5661600232124329
+            },
+            {
+              "id": "https://openalex.org/C115961682",
+              "wikidata": "https://www.wikidata.org/wiki/Q860623",
+              "display_name": "Image (mathematics)",
+              "level": 2,
+              "score": 0.5540136098861694
+            },
+            {
+              "id": "https://openalex.org/C28826006",
+              "wikidata": "https://www.wikidata.org/wiki/Q33521",
+              "display_name": "Applied mathematics",
+              "level": 1,
+              "score": 0.5163305997848511
+            },
+            {
+              "id": "https://openalex.org/C11413529",
+              "wikidata": "https://www.wikidata.org/wiki/Q8366",
+              "display_name": "Algorithm",
+              "level": 1,
+              "score": 0.5010342597961426
+            },
+            {
+              "id": "https://openalex.org/C69357855",
+              "wikidata": "https://www.wikidata.org/wiki/Q163214",
+              "display_name": "Diffusion",
+              "level": 2,
+              "score": 0.4787561297416687
+            },
+            {
+              "id": "https://openalex.org/C106430172",
+              "wikidata": "https://www.wikidata.org/wiki/Q6002272",
+              "display_name": "Image restoration",
+              "level": 4,
+              "score": 0.46476635336875916
+            },
+            {
+              "id": "https://openalex.org/C203504353",
+              "wikidata": "https://www.wikidata.org/wiki/Q4765461",
+              "display_name": "Anisotropic diffusion",
+              "level": 3,
+              "score": 0.45263680815696716
+            },
+            {
+              "id": "https://openalex.org/C9417928",
+              "wikidata": "https://www.wikidata.org/wiki/Q1070689",
+              "display_name": "Image processing",
+              "level": 3,
+              "score": 0.4337999224662781
+            },
+            {
+              "id": "https://openalex.org/C126255220",
+              "wikidata": "https://www.wikidata.org/wiki/Q141495",
+              "display_name": "Mathematical optimization",
+              "level": 1,
+              "score": 0.34565746784210205
+            },
+            {
+              "id": "https://openalex.org/C134306372",
+              "wikidata": "https://www.wikidata.org/wiki/Q7754",
+              "display_name": "Mathematical analysis",
+              "level": 1,
+              "score": 0.3246191740036011
+            },
+            {
+              "id": "https://openalex.org/C31972630",
+              "wikidata": "https://www.wikidata.org/wiki/Q844240",
+              "display_name": "Computer vision",
+              "level": 1,
+              "score": 0.29441365599632263
+            },
+            {
+              "id": "https://openalex.org/C41008148",
+              "wikidata": "https://www.wikidata.org/wiki/Q21198",
+              "display_name": "Computer science",
+              "level": 0,
+              "score": 0.20030656456947327
+            },
+            {
+              "id": "https://openalex.org/C105795698",
+              "wikidata": "https://www.wikidata.org/wiki/Q12483",
+              "display_name": "Statistics",
+              "level": 1,
+              "score": 0.11872091889381409
+            },
+            {
+              "id": "https://openalex.org/C62520636",
+              "wikidata": "https://www.wikidata.org/wiki/Q944",
+              "display_name": "Quantum mechanics",
+              "level": 1,
+              "score": 0.0
+            },
+            {
+              "id": "https://openalex.org/C121332964",
+              "wikidata": "https://www.wikidata.org/wiki/Q413",
+              "display_name": "Physics",
+              "level": 0,
+              "score": 0.0
+            },
+            {
+              "id": "https://openalex.org/C97355855",
+              "wikidata": "https://www.wikidata.org/wiki/Q11473",
+              "display_name": "Thermodynamics",
+              "level": 1,
+              "score": 0.0
+            }
+          ],
+          "mesh": [],
+          "locations_count": 1,
+          "locations": [
+            {
+              "id": "doi:10.1137/0729012",
+              "is_oa": false,
+              "landing_page_url": "https://doi.org/10.1137/0729012",
+              "pdf_url": null,
+              "source": {
+                "id": "https://openalex.org/S203348814",
+                "display_name": "SIAM Journal on Numerical Analysis",
+                "issn_l": "0036-1429",
+                "issn": [
+                  "0036-1429",
+                  "1095-7170"
+                ],
+                "is_oa": false,
+                "is_in_doaj": false,
+                "is_core": true,
+                "host_organization": "https://openalex.org/P4310320508",
+                "host_organization_name": "Society for Industrial and Applied Mathematics",
+                "host_organization_lineage": [
+                  "https://openalex.org/P4310320508"
+                ],
+                "host_organization_lineage_names": [
+                  "Society for Industrial and Applied Mathematics"
+                ],
+                "type": "journal"
+              },
+              "license": null,
+              "license_id": null,
+              "version": "publishedVersion",
+              "is_accepted": true,
+              "is_published": true,
+              "raw_source_name": "SIAM Journal on Numerical Analysis",
+              "raw_type": "journal-article"
+            }
+          ],
+          "best_oa_location": null,
+          "sustainable_development_goals": [
+            {
+              "display_name": "Sustainable cities and communities",
+              "id": "https://metadata.un.org/sdg/11",
+              "score": 0.5899999737739563
+            }
+          ],
+          "awards": [],
+          "funders": [],
+          "has_content": {
+            "pdf": false,
+            "grobid_xml": false
+          },
+          "content_urls": null,
+          "referenced_works_count": 7,
+          "referenced_works": [
+            "https://openalex.org/W632450127",
+            "https://openalex.org/W1527029459",
+            "https://openalex.org/W1968245656",
+            "https://openalex.org/W2002312729",
+            "https://openalex.org/W2003370853",
+            "https://openalex.org/W2113116398",
+            "https://openalex.org/W2321627168"
+          ],
+          "related_works": [
+            "https://openalex.org/W571281153",
+            "https://openalex.org/W2949403936",
+            "https://openalex.org/W3023806604",
+            "https://openalex.org/W2952139525",
+            "https://openalex.org/W2317217463",
+            "https://openalex.org/W2752697732",
+            "https://openalex.org/W2008199693",
+            "https://openalex.org/W2048492504",
+            "https://openalex.org/W2356724950",
+            "https://openalex.org/W2735701076"
+          ],
+          "abstract_inverted_index": {
+            "A": [
+              0
+            ],
+            "new": [
+              1,
+              18
+            ],
+            "version": [
+              2,
+              19
+            ],
+            "of": [
+              3,
+              24,
+              40
+            ],
+            "the": [
+              4,
+              22,
+              25
+            ],
+            "Perona": [
+              5
+            ],
+            "and": [
+              6,
+              12,
+              28,
+              44
+            ],
+            "Malik": [
+              7
+            ],
+            "theory": [
+              8
+            ],
+            "for": [
+              9
+            ],
+            "edge": [
+              10
+            ],
+            "detection": [
+              11
+            ],
+            "image": [
+              13
+            ],
+            "restoration": [
+              14
+            ],
+            "is": [
+              15,
+              33
+            ],
+            "proposed.": [
+              16
+            ],
+            "This": [
+              17
+            ],
+            "keeps": [
+              20
+            ],
+            "all": [
+              21
+            ],
+            "improvements": [
+              23
+            ],
+            "original": [
+              26
+            ],
+            "model": [
+              27
+            ],
+            "avoids": [
+              29
+            ],
+            "its": [
+              30
+            ],
+            "drawbacks:": [
+              31
+            ],
+            "it": [
+              32
+            ],
+            "proved": [
+              34
+            ],
+            "to": [
+              35
+            ],
+            "be": [
+              36
+            ],
+            "stable": [
+              37
+            ],
+            "in": [
+              38
+            ],
+            "presence": [
+              39
+            ],
+            "noise,": [
+              41
+            ],
+            "with": [
+              42
+            ],
+            "existence": [
+              43
+            ],
+            "uniqueness": [
+              45
+            ],
+            "results.": [
+              46
+            ],
+            "Numerical": [
+              47
+            ],
+            "experiments": [
+              48
+            ],
+            "on": [
+              49
+            ],
+            "natural": [
+              50
+            ],
+            "images": [
+              51
+            ],
+            "are": [
+              52
+            ],
+            "presented.": [
+              53
+            ]
+          },
+          "counts_by_year": [
+            {
+              "year": 2026,
+              "cited_by_count": 13
+            },
+            {
+              "year": 2025,
+              "cited_by_count": 23
+            },
+            {
+              "year": 2024,
+              "cited_by_count": 31
+            },
+            {
+              "year": 2023,
+              "cited_by_count": 36
+            },
+            {
+              "year": 2022,
+              "cited_by_count": 49
+            },
+            {
+              "year": 2021,
+              "cited_by_count": 50
+            },
+            {
+              "year": 2020,
+              "cited_by_count": 38
+            },
+            {
+              "year": 2019,
+              "cited_by_count": 59
+            },
+            {
+              "year": 2018,
+              "cited_by_count": 44
+            },
+            {
+              "year": 2017,
+              "cited_by_count": 46
+            },
+            {
+              "year": 2016,
+              "cited_by_count": 49
+            },
+            {
+              "year": 2015,
+              "cited_by_count": 72
+            },
+            {
+              "year": 2014,
+              "cited_by_count": 62
+            },
+            {
+              "year": 2013,
+              "cited_by_count": 57
+            },
+            {
+              "year": 2012,
+              "cited_by_count": 67
+            }
+          ],
+          "updated_date": "2026-06-17T08:01:34.144755",
+          "created_date": "2025-10-10T00:00:00"
+        },
+        {
+          "id": "https://openalex.org/W2150134853",
+          "doi": "https://doi.org/10.1109/34.56205",
+          "title": "Scale-space and edge detection using anisotropic diffusion",
+          "display_name": "Scale-space and edge detection using anisotropic diffusion",
+          "relevance_score": 1834.3942,
+          "publication_year": 1990,
+          "publication_date": "1990-07-01",
+          "ids": {
+            "openalex": "https://openalex.org/W2150134853",
+            "doi": "https://doi.org/10.1109/34.56205",
+            "mag": "2150134853"
+          },
+          "language": "en",
+          "primary_location": {
+            "id": "doi:10.1109/34.56205",
+            "is_oa": false,
+            "landing_page_url": "https://doi.org/10.1109/34.56205",
+            "pdf_url": null,
+            "source": {
+              "id": "https://openalex.org/S199944782",
+              "display_name": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+              "issn_l": "0162-8828",
+              "issn": [
+                "0162-8828",
+                "1939-3539",
+                "2160-9292"
+              ],
+              "is_oa": false,
+              "is_in_doaj": false,
+              "is_core": true,
+              "host_organization": "https://openalex.org/P4310320439",
+              "host_organization_name": "IEEE Computer Society",
+              "host_organization_lineage": [
+                "https://openalex.org/P4310320439",
+                "https://openalex.org/P4310319808"
+              ],
+              "host_organization_lineage_names": [
+                "IEEE Computer Society",
+                "Institute of Electrical and Electronics Engineers"
+              ],
+              "type": "journal"
+            },
+            "license": null,
+            "license_id": null,
+            "version": "publishedVersion",
+            "is_accepted": true,
+            "is_published": true,
+            "raw_source_name": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+            "raw_type": "journal-article"
+          },
+          "type": "article",
+          "indexed_in": [
+            "crossref"
+          ],
+          "open_access": {
+            "is_oa": false,
+            "oa_status": "closed",
+            "oa_url": null,
+            "any_repository_has_fulltext": false
+          },
+          "authorships": [
+            {
+              "author_position": "first",
+              "author": {
+                "id": "https://openalex.org/A5026825380",
+                "display_name": "Pietro Perona",
+                "orcid": "https://orcid.org/0000-0002-7583-5809"
+              },
+              "institutions": [
+                {
+                  "id": "https://openalex.org/I95457486",
+                  "display_name": "University of California, Berkeley",
+                  "ror": "https://ror.org/01an7q238",
+                  "country_code": "US",
+                  "type": "education",
+                  "lineage": [
+                    "https://openalex.org/I95457486"
+                  ]
+                }
+              ],
+              "countries": [
+                "US"
+              ],
+              "is_corresponding": false,
+              "raw_author_name": "P. Perona",
+              "raw_affiliation_strings": [
+                "Department of Electrical Engineering and Computer Science, University of California, Berkeley, CA, USA"
+              ],
+              "raw_orcid": null,
+              "affiliations": [
+                {
+                  "raw_affiliation_string": "Department of Electrical Engineering and Computer Science, University of California, Berkeley, CA, USA",
+                  "institution_ids": [
+                    "https://openalex.org/I95457486"
+                  ]
+                }
+              ]
+            },
+            {
+              "author_position": "last",
+              "author": {
+                "id": "https://openalex.org/A5001594573",
+                "display_name": "Jitendra Malik",
+                "orcid": "https://orcid.org/0000-0003-3695-1580"
+              },
+              "institutions": [
+                {
+                  "id": "https://openalex.org/I95457486",
+                  "display_name": "University of California, Berkeley",
+                  "ror": "https://ror.org/01an7q238",
+                  "country_code": "US",
+                  "type": "education",
+                  "lineage": [
+                    "https://openalex.org/I95457486"
+                  ]
+                }
+              ],
+              "countries": [
+                "US"
+              ],
+              "is_corresponding": false,
+              "raw_author_name": "J. Malik",
+              "raw_affiliation_strings": [
+                "Department of Electrical Engineering and Computer Science, University of California, Berkeley, CA, USA"
+              ],
+              "raw_orcid": null,
+              "affiliations": [
+                {
+                  "raw_affiliation_string": "Department of Electrical Engineering and Computer Science, University of California, Berkeley, CA, USA",
+                  "institution_ids": [
+                    "https://openalex.org/I95457486"
+                  ]
+                }
+              ]
+            }
+          ],
+          "institutions": [],
+          "countries_distinct_count": 1,
+          "institutions_distinct_count": 2,
+          "corresponding_author_ids": [],
+          "corresponding_institution_ids": [],
+          "apc_list": null,
+          "apc_paid": null,
+          "fwci": 53.9666,
+          "has_fulltext": false,
+          "cited_by_count": 12034,
+          "citation_normalized_percentile": {
+            "value": 0.99964158,
+            "is_in_top_1_percent": true,
+            "is_in_top_10_percent": true
+          },
+          "cited_by_percentile_year": {
+            "min": 99,
+            "max": 100
+          },
+          "biblio": {
+            "volume": "12",
+            "issue": "7",
+            "first_page": "629",
+            "last_page": "639"
+          },
+          "is_retracted": false,
+          "is_paratext": false,
+          "is_xpac": false,
+          "primary_topic": {
+            "id": "https://openalex.org/T10052",
+            "display_name": "Medical Image Segmentation Techniques",
+            "score": 0.9998999834060669,
+            "subfield": {
+              "id": "https://openalex.org/subfields/1707",
+              "display_name": "Computer Vision and Pattern Recognition"
+            },
+            "field": {
+              "id": "https://openalex.org/fields/17",
+              "display_name": "Computer Science"
+            },
+            "domain": {
+              "id": "https://openalex.org/domains/3",
+              "display_name": "Physical Sciences"
+            }
+          },
+          "topics": [
+            {
+              "id": "https://openalex.org/T10052",
+              "display_name": "Medical Image Segmentation Techniques",
+              "score": 0.9998999834060669,
+              "subfield": {
+                "id": "https://openalex.org/subfields/1707",
+                "display_name": "Computer Vision and Pattern Recognition"
+              },
+              "field": {
+                "id": "https://openalex.org/fields/17",
+                "display_name": "Computer Science"
+              },
+              "domain": {
+                "id": "https://openalex.org/domains/3",
+                "display_name": "Physical Sciences"
+              }
+            },
+            {
+              "id": "https://openalex.org/T10824",
+              "display_name": "Image Retrieval and Classification Techniques",
+              "score": 0.9991999864578247,
+              "subfield": {
+                "id": "https://openalex.org/subfields/1707",
+                "display_name": "Computer Vision and Pattern Recognition"
+              },
+              "field": {
+                "id": "https://openalex.org/fields/17",
+                "display_name": "Computer Science"
+              },
+              "domain": {
+                "id": "https://openalex.org/domains/3",
+                "display_name": "Physical Sciences"
+              }
+            },
+            {
+              "id": "https://openalex.org/T10688",
+              "display_name": "Image and Signal Denoising Methods",
+              "score": 0.9983999729156494,
+              "subfield": {
+                "id": "https://openalex.org/subfields/1707",
+                "display_name": "Computer Vision and Pattern Recognition"
+              },
+              "field": {
+                "id": "https://openalex.org/fields/17",
+                "display_name": "Computer Science"
+              },
+              "domain": {
+                "id": "https://openalex.org/domains/3",
+                "display_name": "Physical Sciences"
+              }
+            }
+          ],
+          "keywords": [
+            {
+              "id": "https://openalex.org/keywords/scale-space",
+              "display_name": "Scale space",
+              "score": 0.8246309161186218
+            },
+            {
+              "id": "https://openalex.org/keywords/smoothing",
+              "display_name": "Smoothing",
+              "score": 0.764809250831604
+            },
+            {
+              "id": "https://openalex.org/keywords/anisotropic-diffusion",
+              "display_name": "Anisotropic diffusion",
+              "score": 0.7220004796981812
+            },
+            {
+              "id": "https://openalex.org/keywords/scale",
+              "display_name": "Scale (ratio)",
+              "score": 0.5983653664588928
+            },
+            {
+              "id": "https://openalex.org/keywords/computer-science",
+              "display_name": "Computer science",
+              "score": 0.588123083114624
+            },
+            {
+              "id": "https://openalex.org/keywords/maxima-and-minima",
+              "display_name": "Maxima and minima",
+              "score": 0.5377237200737
+            },
+            {
+              "id": "https://openalex.org/keywords/diffusion",
+              "display_name": "Diffusion",
+              "score": 0.49515071511268616
+            },
+            {
+              "id": "https://openalex.org/keywords/space",
+              "display_name": "Space (punctuation)",
+              "score": 0.4832499623298645
+            },
+            {
+              "id": "https://openalex.org/keywords/class",
+              "display_name": "Class (philosophy)",
+              "score": 0.45351144671440125
+            },
+            {
+              "id": "https://openalex.org/keywords/edge-detection",
+              "display_name": "Edge detection",
+              "score": 0.4503062665462494
+            },
+            {
+              "id": "https://openalex.org/keywords/enhanced-data-rates-for-gsm-evolution",
+              "display_name": "Enhanced Data Rates for GSM Evolution",
+              "score": 0.42325711250305176
+            },
+            {
+              "id": "https://openalex.org/keywords/boundary",
+              "display_name": "Boundary (topology)",
+              "score": 0.41157734394073486
+            },
+            {
+              "id": "https://openalex.org/keywords/algorithm",
+              "display_name": "Algorithm",
+              "score": 0.40628328919410706
+            },
+            {
+              "id": "https://openalex.org/keywords/artificial-intelligence",
+              "display_name": "Artificial intelligence",
+              "score": 0.33694183826446533
+            },
+            {
+              "id": "https://openalex.org/keywords/computer-vision",
+              "display_name": "Computer vision",
+              "score": 0.3228236436843872
+            },
+            {
+              "id": "https://openalex.org/keywords/image",
+              "display_name": "Image (mathematics)",
+              "score": 0.3143462538719177
+            },
+            {
+              "id": "https://openalex.org/keywords/mathematics",
+              "display_name": "Mathematics",
+              "score": 0.30867987871170044
+            },
+            {
+              "id": "https://openalex.org/keywords/image-processing",
+              "display_name": "Image processing",
+              "score": 0.27576640248298645
+            },
+            {
+              "id": "https://openalex.org/keywords/mathematical-analysis",
+              "display_name": "Mathematical analysis",
+              "score": 0.1257149875164032
+            },
+            {
+              "id": "https://openalex.org/keywords/physics",
+              "display_name": "Physics",
+              "score": 0.10638591647148132
+            }
+          ],
+          "concepts": [
+            {
+              "id": "https://openalex.org/C99102927",
+              "wikidata": "https://www.wikidata.org/wiki/Q3058184",
+              "display_name": "Scale space",
+              "level": 4,
+              "score": 0.8246309161186218
+            },
+            {
+              "id": "https://openalex.org/C3770464",
+              "wikidata": "https://www.wikidata.org/wiki/Q775963",
+              "display_name": "Smoothing",
+              "level": 2,
+              "score": 0.764809250831604
+            },
+            {
+              "id": "https://openalex.org/C203504353",
+              "wikidata": "https://www.wikidata.org/wiki/Q4765461",
+              "display_name": "Anisotropic diffusion",
+              "level": 3,
+              "score": 0.7220004796981812
+            },
+            {
+              "id": "https://openalex.org/C2778755073",
+              "wikidata": "https://www.wikidata.org/wiki/Q10858537",
+              "display_name": "Scale (ratio)",
+              "level": 2,
+              "score": 0.5983653664588928
+            },
+            {
+              "id": "https://openalex.org/C41008148",
+              "wikidata": "https://www.wikidata.org/wiki/Q21198",
+              "display_name": "Computer science",
+              "level": 0,
+              "score": 0.588123083114624
+            },
+            {
+              "id": "https://openalex.org/C186633575",
+              "wikidata": "https://www.wikidata.org/wiki/Q845060",
+              "display_name": "Maxima and minima",
+              "level": 2,
+              "score": 0.5377237200737
+            },
+            {
+              "id": "https://openalex.org/C69357855",
+              "wikidata": "https://www.wikidata.org/wiki/Q163214",
+              "display_name": "Diffusion",
+              "level": 2,
+              "score": 0.49515071511268616
+            },
+            {
+              "id": "https://openalex.org/C2778572836",
+              "wikidata": "https://www.wikidata.org/wiki/Q380933",
+              "display_name": "Space (punctuation)",
+              "level": 2,
+              "score": 0.4832499623298645
+            },
+            {
+              "id": "https://openalex.org/C2777212361",
+              "wikidata": "https://www.wikidata.org/wiki/Q5127848",
+              "display_name": "Class (philosophy)",
+              "level": 2,
+              "score": 0.45351144671440125
+            },
+            {
+              "id": "https://openalex.org/C193536780",
+              "wikidata": "https://www.wikidata.org/wiki/Q1513153",
+              "display_name": "Edge detection",
+              "level": 4,
+              "score": 0.4503062665462494
+            },
+            {
+              "id": "https://openalex.org/C162307627",
+              "wikidata": "https://www.wikidata.org/wiki/Q204833",
+              "display_name": "Enhanced Data Rates for GSM Evolution",
+              "level": 2,
+              "score": 0.42325711250305176
+            },
+            {
+              "id": "https://openalex.org/C62354387",
+              "wikidata": "https://www.wikidata.org/wiki/Q875399",
+              "display_name": "Boundary (topology)",
+              "level": 2,
+              "score": 0.41157734394073486
+            },
+            {
+              "id": "https://openalex.org/C11413529",
+              "wikidata": "https://www.wikidata.org/wiki/Q8366",
+              "display_name": "Algorithm",
+              "level": 1,
+              "score": 0.40628328919410706
+            },
+            {
+              "id": "https://openalex.org/C154945302",
+              "wikidata": "https://www.wikidata.org/wiki/Q11660",
+              "display_name": "Artificial intelligence",
+              "level": 1,
+              "score": 0.33694183826446533
+            },
+            {
+              "id": "https://openalex.org/C31972630",
+              "wikidata": "https://www.wikidata.org/wiki/Q844240",
+              "display_name": "Computer vision",
+              "level": 1,
+              "score": 0.3228236436843872
+            },
+            {
+              "id": "https://openalex.org/C115961682",
+              "wikidata": "https://www.wikidata.org/wiki/Q860623",
+              "display_name": "Image (mathematics)",
+              "level": 2,
+              "score": 0.3143462538719177
+            },
+            {
+              "id": "https://openalex.org/C33923547",
+              "wikidata": "https://www.wikidata.org/wiki/Q395",
+              "display_name": "Mathematics",
+              "level": 0,
+              "score": 0.30867987871170044
+            },
+            {
+              "id": "https://openalex.org/C9417928",
+              "wikidata": "https://www.wikidata.org/wiki/Q1070689",
+              "display_name": "Image processing",
+              "level": 3,
+              "score": 0.27576640248298645
+            },
+            {
+              "id": "https://openalex.org/C134306372",
+              "wikidata": "https://www.wikidata.org/wiki/Q7754",
+              "display_name": "Mathematical analysis",
+              "level": 1,
+              "score": 0.1257149875164032
+            },
+            {
+              "id": "https://openalex.org/C121332964",
+              "wikidata": "https://www.wikidata.org/wiki/Q413",
+              "display_name": "Physics",
+              "level": 0,
+              "score": 0.10638591647148132
+            },
+            {
+              "id": "https://openalex.org/C111919701",
+              "wikidata": "https://www.wikidata.org/wiki/Q9135",
+              "display_name": "Operating system",
+              "level": 1,
+              "score": 0.0
+            },
+            {
+              "id": "https://openalex.org/C62520636",
+              "wikidata": "https://www.wikidata.org/wiki/Q944",
+              "display_name": "Quantum mechanics",
+              "level": 1,
+              "score": 0.0
+            },
+            {
+              "id": "https://openalex.org/C97355855",
+              "wikidata": "https://www.wikidata.org/wiki/Q11473",
+              "display_name": "Thermodynamics",
+              "level": 1,
+              "score": 0.0
+            }
+          ],
+          "mesh": [],
+          "locations_count": 5,
+          "locations": [
+            {
+              "id": "doi:10.1109/34.56205",
+              "is_oa": false,
+              "landing_page_url": "https://doi.org/10.1109/34.56205",
+              "pdf_url": null,
+              "source": {
+                "id": "https://openalex.org/S199944782",
+                "display_name": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+                "issn_l": "0162-8828",
+                "issn": [
+                  "0162-8828",
+                  "1939-3539",
+                  "2160-9292"
+                ],
+                "is_oa": false,
+                "is_in_doaj": false,
+                "is_core": true,
+                "host_organization": "https://openalex.org/P4310320439",
+                "host_organization_name": "IEEE Computer Society",
+                "host_organization_lineage": [
+                  "https://openalex.org/P4310320439",
+                  "https://openalex.org/P4310319808"
+                ],
+                "host_organization_lineage_names": [
+                  "IEEE Computer Society",
+                  "Institute of Electrical and Electronics Engineers"
+                ],
+                "type": "journal"
+              },
+              "license": null,
+              "license_id": null,
+              "version": "publishedVersion",
+              "is_accepted": true,
+              "is_published": true,
+              "raw_source_name": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+              "raw_type": "journal-article"
+            },
+            {
+              "id": "pmh:oai:authors.library.caltech.edu:6498",
+              "is_oa": false,
+              "landing_page_url": "https://resolver.caltech.edu/CaltechAUTHORS:PERieeetpami90",
+              "pdf_url": null,
+              "source": {
+                "id": "https://openalex.org/S4306402161",
+                "display_name": "CaltechAUTHORS (California Institute of Technology)",
+                "issn_l": null,
+                "issn": null,
+                "is_oa": false,
+                "is_in_doaj": false,
+                "is_core": false,
+                "host_organization": "https://openalex.org/I122411786",
+                "host_organization_name": "California Institute of Technology",
+                "host_organization_lineage": [
+                  "https://openalex.org/I122411786"
+                ],
+                "host_organization_lineage_names": [],
+                "type": "repository"
+              },
+              "license": null,
+              "license_id": null,
+              "version": "submittedVersion",
+              "is_accepted": false,
+              "is_published": false,
+              "raw_source_name": "",
+              "raw_type": "Article"
+            },
+            {
+              "id": "pmh:oai:CiteSeerX.psu:10.1.1.108.2553",
+              "is_oa": false,
+              "landing_page_url": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.108.2553",
+              "pdf_url": null,
+              "source": null,
+              "license": null,
+              "license_id": null,
+              "version": "submittedVersion",
+              "is_accepted": false,
+              "is_published": false,
+              "raw_source_name": "http://www.cs.huji.ac.il/~cheny/reading/diffusion/classic.pdf",
+              "raw_type": "text"
+            },
+            {
+              "id": "pmh:oai:CiteSeerX.psu:10.1.1.14.8454",
+              "is_oa": false,
+              "landing_page_url": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.14.8454",
+              "pdf_url": null,
+              "source": null,
+              "license": null,
+              "license_id": null,
+              "version": "submittedVersion",
+              "is_accepted": false,
+              "is_published": false,
+              "raw_source_name": "http://www.cs.berkeley.edu/~malik/papers/MP-aniso.pdf",
+              "raw_type": "text"
+            },
+            {
+              "id": "pmh:oai:berkeley.edu:13030-hb396nb42n",
+              "is_oa": false,
+              "landing_page_url": "http://techreports.lib.berkeley.edu/accessPages/CSD-88-483.html",
+              "pdf_url": null,
+              "source": {
+                "id": "https://openalex.org/S7407050879",
+                "display_name": "UC Berkeley",
+                "issn_l": null,
+                "issn": [],
+                "is_oa": false,
+                "is_in_doaj": false,
+                "is_core": false,
+                "host_organization": null,
+                "host_organization_name": null,
+                "host_organization_lineage": [],
+                "host_organization_lineage_names": [],
+                "type": "repository"
+              },
+              "license": null,
+              "license_id": null,
+              "version": "submittedVersion",
+              "is_accepted": false,
+              "is_published": false,
+              "raw_source_name": "",
+              "raw_type": "technical reports"
+            }
+          ],
+          "best_oa_location": null,
+          "sustainable_development_goals": [],
+          "awards": [],
+          "funders": [],
+          "has_content": {
+            "pdf": false,
+            "grobid_xml": false
+          },
+          "content_urls": null,
+          "referenced_works_count": 23,
+          "referenced_works": [
+            "https://openalex.org/W1589429287",
+            "https://openalex.org/W1608928078",
+            "https://openalex.org/W1968245656",
+            "https://openalex.org/W1973976434",
+            "https://openalex.org/W2002312729",
+            "https://openalex.org/W2002501536",
+            "https://openalex.org/W2020999234",
+            "https://openalex.org/W2022735534",
+            "https://openalex.org/W2034623543",
+            "https://openalex.org/W2106624082",
+            "https://openalex.org/W2109863423",
+            "https://openalex.org/W2114487471",
+            "https://openalex.org/W2133155955",
+            "https://openalex.org/W2145023731",
+            "https://openalex.org/W2150134853",
+            "https://openalex.org/W2155235736",
+            "https://openalex.org/W2169305037",
+            "https://openalex.org/W2913192828",
+            "https://openalex.org/W3111685920",
+            "https://openalex.org/W4244769743",
+            "https://openalex.org/W4292480680",
+            "https://openalex.org/W6635240104",
+            "https://openalex.org/W6650925051"
+          ],
+          "related_works": [
+            "https://openalex.org/W2036778696",
+            "https://openalex.org/W2045615376",
+            "https://openalex.org/W2164761308",
+            "https://openalex.org/W2375753147",
+            "https://openalex.org/W2763966779",
+            "https://openalex.org/W2993281142",
+            "https://openalex.org/W1527702568",
+            "https://openalex.org/W1530435555",
+            "https://openalex.org/W2806064616",
+            "https://openalex.org/W2033197514"
+          ],
+          "abstract_inverted_index": {
+            "A": [
+              0
+            ],
+            "new": [
+              1,
+              47
+            ],
+            "definition": [
+              2
+            ],
+            "of": [
+              3,
+              10,
+              56,
+              89
+            ],
+            "scale-space": [
+              4
+            ],
+            "is": [
+              5,
+              18,
+              23,
+              42,
+              60,
+              80
+            ],
+            "suggested,": [
+              6
+            ],
+            "and": [
+              7
+            ],
+            "a": [
+              8,
+              15,
+              30,
+              71,
+              87
+            ],
+            "class": [
+              9
+            ],
+            "algorithms": [
+              11
+            ],
+            "used": [
+              12
+            ],
+            "to": [
+              13,
+              25,
+              33
+            ],
+            "realize": [
+              14
+            ],
+            "diffusion": [
+              16,
+              21
+            ],
+            "process": [
+              17
+            ],
+            "introduced.": [
+              19
+            ],
+            "The": [
+              20
+            ],
+            "coefficient": [
+              22
+            ],
+            "chosen": [
+              24
+            ],
+            "vary": [
+              26
+            ],
+            "spatially": [
+              27
+            ],
+            "in": [
+              28,
+              66
+            ],
+            "such": [
+              29
+            ],
+            "way": [
+              31
+            ],
+            "as": [
+              32
+            ],
+            "encourage": [
+              34
+            ],
+            "intraregion": [
+              35
+            ],
+            "smoothing": [
+              36
+            ],
+            "rather": [
+              37
+            ],
+            "than": [
+              38
+            ],
+            "interregion": [
+              39
+            ],
+            "smoothing.": [
+              40
+            ],
+            "It": [
+              41
+            ],
+            "shown": [
+              43,
+              85
+            ],
+            "that": [
+              44
+            ],
+            "the": [
+              45,
+              63,
+              67,
+              98,
+              106
+            ],
+            "'no": [
+              46
+            ],
+            "maxima": [
+              48
+            ],
+            "should": [
+              49
+            ],
+            "be": [
+              50
+            ],
+            "generated": [
+              51
+            ],
+            "at": [
+              52
+            ],
+            "coarse": [
+              53
+            ],
+            "scales'": [
+              54
+            ],
+            "property": [
+              55
+            ],
+            "conventional": [
+              57
+            ],
+            "scale": [
+              58
+            ],
+            "space": [
+              59
+            ],
+            "preserved.": [
+              61
+            ],
+            "As": [
+              62
+            ],
+            "region": [
+              64
+            ],
+            "boundaries": [
+              65
+            ],
+            "approach": [
+              68
+            ],
+            "remain": [
+              69
+            ],
+            "sharp,": [
+              70
+            ],
+            "high-quality": [
+              72
+            ],
+            "edge": [
+              73
+            ],
+            "detector": [
+              74
+            ],
+            "which": [
+              75
+            ],
+            "successfully": [
+              76
+            ],
+            "exploits": [
+              77
+            ],
+            "global": [
+              78
+            ],
+            "information": [
+              79
+            ],
+            "obtained.": [
+              81
+            ],
+            "Experimental": [
+              82
+            ],
+            "results": [
+              83
+            ],
+            "are": [
+              84,
+              94
+            ],
+            "on": [
+              86
+            ],
+            "number": [
+              88
+            ],
+            "images.": [
+              90
+            ],
+            "Parallel": [
+              91
+            ],
+            "hardware": [
+              92
+            ],
+            "implementations": [
+              93
+            ],
+            "made": [
+              95
+            ],
+            "feasible": [
+              96
+            ],
+            "because": [
+              97
+            ],
+            "algorithm": [
+              99
+            ],
+            "involves": [
+              100
+            ],
+            "elementary,": [
+              101
+            ],
+            "local": [
+              102
+            ],
+            "operations": [
+              103
+            ],
+            "replicated": [
+              104
+            ],
+            "over": [
+              105
+            ],
+            "image.<": [
+              107
+            ],
+            "<ETX": [
+              108
+            ],
+            "xmlns:mml=\"http://www.w3.org/1998/Math/MathML\"": [
+              109
+            ],
+            "xmlns:xlink=\"http://www.w3.org/1999/xlink\">&gt;</ETX>": [
+              110
+            ]
+          },
+          "counts_by_year": [
+            {
+              "year": 2026,
+              "cited_by_count": 114
+            },
+            {
+              "year": 2025,
+              "cited_by_count": 273
+            },
+            {
+              "year": 2024,
+              "cited_by_count": 260
+            },
+            {
+              "year": 2023,
+              "cited_by_count": 354
+            },
+            {
+              "year": 2022,
+              "cited_by_count": 369
+            },
+            {
+              "year": 2021,
+              "cited_by_count": 438
+            },
+            {
+              "year": 2020,
+              "cited_by_count": 432
+            },
+            {
+              "year": 2019,
+              "cited_by_count": 541
+            },
+            {
+              "year": 2018,
+              "cited_by_count": 505
+            },
+            {
+              "year": 2017,
+              "cited_by_count": 557
+            },
+            {
+              "year": 2016,
+              "cited_by_count": 551
+            },
+            {
+              "year": 2015,
+              "cited_by_count": 590
+            },
+            {
+              "year": 2014,
+              "cited_by_count": 675
+            },
+            {
+              "year": 2013,
+              "cited_by_count": 612
+            },
+            {
+              "year": 2012,
+              "cited_by_count": 636
+            }
+          ],
+          "updated_date": "2026-06-18T10:00:31.954636",
+          "created_date": "2025-10-10T00:00:00"
+        }
+      ],
+      "group_by": []
+    }
+  ]
+}

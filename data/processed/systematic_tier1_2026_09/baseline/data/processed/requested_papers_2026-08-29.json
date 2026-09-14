@@ -1,0 +1,1415 @@
+{
+  "verified_on": "2026-08-29",
+  "source_cache": "data/raw/requested_papers_2026-08-29",
+  "notes": [
+    "Author order follows CVF citation metadata, not search snippets.",
+    "Each numbered PDF affiliation is retained; no author or institution entities merged.",
+    "UPES and MBZUAI reuse existing reviewed mappings with the same raw affiliations.",
+    "CoDA is a distinct 2026 TPAMI article; no matching CVPR 2026 publication found. Related 2025 Secret Lies in Color record is untouched.",
+    "Classification flags are retained here because the current curated paper schema has no such flag columns."
+  ],
+  "records": [
+    {
+      "number": 1,
+      "paper": {
+        "title": "A Hybrid CLIP-Diffusion Architecture for Transparent Deepfake Detection and Explainability Evaluation",
+        "year": "2026",
+        "authors": [
+          "Andreas Specker",
+          "Manjunatha Veerappa",
+          "Thomas Golda",
+          "Nadia Burkart",
+          "Dominik Alveen",
+          "Anna Wilhelm"
+        ],
+        "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_id": "venue:cvpr",
+        "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_acronym": "CVPR",
+        "venue_type": "conference",
+        "venue_track": "Workshop",
+        "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops; SAFE (Synthetic & Adversarial ForEnsics)",
+        "doi": "",
+        "arxiv_id": "",
+        "paper_url": "https://openaccess.thecvf.com/content/CVPR2026W/SAFE/html/Specker_A_Hybrid_CLIP-Diffusion_Architecture_for_Transparent_Deepfake_Detection_and_Explainability_CVPRW_2026_paper.html",
+        "publication_type": "conference",
+        "abstract": "Generative diffusion models can synthesize highly realistic images that are increasingly difficult to distinguish from real content, raising substantial risks through misuse as deepfakes. This paper studies how to build deepfake detectors that both generalize to unseen image generators and provide transparent explanations of their decisions. We first extend the SynRIS benchmark to SynRIS++, adding fakes from five recent diffusion models and carefully matched real counterparts via reverse image search, yielding over 120k images from 18 generators. Guided by recent findings, we propose a hybrid CLIP-Diffusion architecture that combines (i) a frozen CLIP backbone with a classifier operating on intermediate features and (ii) a diffusion-based reconstruction error head, fused by a learnable ensemble. To obtain a conservative estimate of cross-generator generalization, we train exclusively on real images and deepfakes from Stable Diffusion v1, while evaluating on SynRIS++, which spans a broad range of modern generators. Our method achieves state-of-the-art performance on this challenging benchmark, substantially improving AP and AUROC over prior work. Finally, we systematically evaluate five post-hoc XAI methods for deepfake detection along multiple dimensions: explanatory accuracy, stability, robustness to noise and resolution, and scalability. The findings reveal practical trade-offs between interpretability and computational cost. Project Page: https://github.com/speckean/Transparent-Deepfake-Detection",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Fraunhofer IOSB",
+          "institution_id": "",
+          "institution_authors": "Andreas Specker; Manjunatha Veerappa; Thomas Golda; Nadia Burkart",
+          "author_order": "1; 2; 3; 4",
+          "raw_affiliation": "Fraunhofer IOSB, Karlsruhe, Germany",
+          "institution_city": "Karlsruhe",
+          "institution_country": "Germany",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026W/SAFE/papers/Specker_A_Hybrid_CLIP-Diffusion_Architecture_for_Transparent_Deepfake_Detection_and_Explainability_CVPRW_2026_paper.pdf#page=1 | New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "review_reason": "New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "pdf_affiliation_number": 1,
+          "author_positions": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "institution": "BSI",
+          "institution_id": "",
+          "institution_authors": "Dominik Alveen; Anna Wilhelm",
+          "author_order": "5; 6",
+          "raw_affiliation": "BSI, Saarbrücken, Germany",
+          "institution_city": "Saarbrücken",
+          "institution_country": "Germany",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026W/SAFE/papers/Specker_A_Hybrid_CLIP-Diffusion_Architecture_for_Transparent_Deepfake_Detection_and_Explainability_CVPRW_2026_paper.pdf#page=1 | New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "review_reason": "New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "pdf_affiliation_number": 2,
+          "author_positions": [
+            5,
+            6
+          ]
+        },
+        {
+          "institution": "Fraunhofer Center for Machine Learning",
+          "institution_id": "",
+          "institution_authors": "Andreas Specker; Manjunatha Veerappa; Thomas Golda; Nadia Burkart",
+          "author_order": "1; 2; 3; 4",
+          "raw_affiliation": "Fraunhofer Center for Machine Learning",
+          "institution_city": "",
+          "institution_country": "",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026W/SAFE/papers/Specker_A_Hybrid_CLIP-Diffusion_Architecture_for_Transparent_Deepfake_Detection_and_Explainability_CVPRW_2026_paper.pdf#page=1 | New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "review_reason": "New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "pdf_affiliation_number": 3,
+          "author_positions": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
+      "evidence": [
+        "https://openaccess.thecvf.com/content/CVPR2026W/SAFE/html/Specker_A_Hybrid_CLIP-Diffusion_Architecture_for_Transparent_Deepfake_Detection_and_Explainability_CVPRW_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026W/SAFE/papers/Specker_A_Hybrid_CLIP-Diffusion_Architecture_for_Transparent_Deepfake_Detection_and_Explainability_CVPRW_2026_paper.pdf"
+      ],
+      "doi_status": "Not found in CVF metadata or exact normalized-title Crossref search; left empty (not proof no DOI exists).",
+      "classification": {
+        "is_deepfake_related": true,
+        "is_image_editing_related": false,
+        "manual_review": false,
+        "reason": "Image detection; face synthesis/deepfake separately flagged where applicable."
+      },
+      "arxiv_status": "No verified arXiv match; field empty",
+      "pre_insertion_matches": [],
+      "paper_id": "curated:4f53748fb43c13e3fc32",
+      "action": "Added",
+      "mapping_ids": [
+        "mapping:065db4c4c6efa576d90e",
+        "mapping:8d3fa7d98587fd34883d",
+        "mapping:a1c2c1da4b160df0c2a9"
+      ]
+    },
+    {
+      "number": 2,
+      "paper": {
+        "title": "Beyond Backbones: Degradation-Aware Prototype Fusion for Robust Deepfake Detection",
+        "year": "2026",
+        "authors": [
+          "Aashish Negi",
+          "Hardik Sharma",
+          "Prateek Shaily",
+          "Jayant Kumar",
+          "Sachin Chaudhary",
+          "Akshay Dudhane",
+          "Praful Hambarde",
+          "Amit Shukla"
+        ],
+        "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_id": "venue:cvpr",
+        "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_acronym": "CVPR",
+        "venue_type": "conference",
+        "venue_track": "Workshop",
+        "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops; NTIRE (New Trends in Image Restoration and Enhancement)",
+        "doi": "",
+        "arxiv_id": "",
+        "paper_url": "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/html/Negi_Beyond_Backbones_Degradation-Aware_Prototype_Fusion_for_Robust_Deepfake_Detection_CVPRW_2026_paper.html",
+        "publication_type": "conference",
+        "abstract": "Deepfake detectors that perform well on clean images often fail under real-world degradations such as compression, blur, and noise, exposing critical robustness gaps. We address this challenge with a degradation-aware dual-backbone framework that leverages complementary strengths of semantic (CLIP) and structural (DINOv3) representations. The CLIP branch is adapted with LoRA and enhanced via Generator-Aware Prototype Learning (GAPL), while the DINOv3 branch incorporates anomaly-aware local pooling for fine-grained artifact detection. To enforce robustness, we introduce dual-view consistency training across clean and degraded samples, extending corruption diversity from 12 to 26 types. A lightweight fusion module conditioned on image-level degradation descriptors integrates both streams, with rank-based calibration for stable prediction. Our method trains fewer than 3M parameters on frozen backbones and attains 84.3 AUC on the NTIRE 2026 face forgery benchmark, demonstrating strong performance under realistic degradations.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Indian Institute of Technology Mandi",
+          "institution_id": "institution:0c014e2f36e84d1b",
+          "institution_authors": "Aashish Negi; Hardik Sharma; Praful Hambarde; Amit Shukla",
+          "author_order": "1; 2; 7; 8",
+          "raw_affiliation": "Indian Institute of Technology Mandi, India",
+          "institution_city": "Mandi",
+          "institution_country": "India",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Negi_Beyond_Backbones_Degradation-Aware_Prototype_Fusion_for_Robust_Deepfake_Detection_CVPRW_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 1,
+          "author_positions": [
+            1,
+            2,
+            7,
+            8
+          ]
+        },
+        {
+          "institution": "Reagvis Labs Pvt. Ltd.",
+          "institution_id": "institution:d526409d3c10f4a6",
+          "institution_authors": "Prateek Shaily; Jayant Kumar",
+          "author_order": "3; 4",
+          "raw_affiliation": "Reagvis Labs Pvt. Ltd., India",
+          "institution_city": "",
+          "institution_country": "India",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Negi_Beyond_Backbones_Degradation-Aware_Prototype_Fusion_for_Robust_Deepfake_Detection_CVPRW_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 2,
+          "author_positions": [
+            3,
+            4
+          ]
+        },
+        {
+          "institution": "University of Petroleum and Energy Studies",
+          "institution_id": "institution:018c503420feda75",
+          "institution_authors": "Sachin Chaudhary",
+          "author_order": "5",
+          "raw_affiliation": "COE:AI, School of Computer Science, UPES Dehradun, India",
+          "institution_city": "Dehradun",
+          "institution_country": "India",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Negi_Beyond_Backbones_Degradation-Aware_Prototype_Fusion_for_Robust_Deepfake_Detection_CVPRW_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 3,
+          "author_positions": [
+            5
+          ]
+        },
+        {
+          "institution": "Mohamed bin Zayed University of Artificial Intelligence",
+          "institution_id": "institution:f04b96a9716ab2f4",
+          "institution_authors": "Akshay Dudhane",
+          "author_order": "6",
+          "raw_affiliation": "MBZUAI, Abu Dhabi",
+          "institution_city": "Abu Dhabi",
+          "institution_country": "United Arab Emirates",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Negi_Beyond_Backbones_Degradation-Aware_Prototype_Fusion_for_Robust_Deepfake_Detection_CVPRW_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 4,
+          "author_positions": [
+            6
+          ]
+        }
+      ],
+      "evidence": [
+        "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/html/Negi_Beyond_Backbones_Degradation-Aware_Prototype_Fusion_for_Robust_Deepfake_Detection_CVPRW_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Negi_Beyond_Backbones_Degradation-Aware_Prototype_Fusion_for_Robust_Deepfake_Detection_CVPRW_2026_paper.pdf"
+      ],
+      "doi_status": "Not found in CVF metadata or exact normalized-title Crossref search; left empty (not proof no DOI exists).",
+      "classification": {
+        "is_deepfake_related": true,
+        "is_image_editing_related": false,
+        "manual_review": false,
+        "reason": "Image detection; face synthesis/deepfake separately flagged where applicable."
+      },
+      "arxiv_status": "No verified arXiv match; field empty",
+      "pre_insertion_matches": [],
+      "paper_id": "curated:ce21a7aa219b08d1b81a",
+      "action": "Added",
+      "mapping_ids": [
+        "mapping:4f0b22f248adde107b2a",
+        "mapping:e55e0428d7112c4ad4ed",
+        "mapping:383d02b6476b0835d2ed",
+        "mapping:9adc0cdbbbbfc1eba4d4"
+      ]
+    },
+    {
+      "number": 3,
+      "paper": {
+        "title": "Detecting Compressed AI-Generated Images via Phase Spectrum Robustness",
+        "year": "2026",
+        "authors": [
+          "Kai Li",
+          "Wenqi Ren",
+          "Wei Wang",
+          "Xiaochun Cao"
+        ],
+        "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_id": "venue:cvpr",
+        "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_acronym": "CVPR",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "doi": "",
+        "arxiv_id": "",
+        "paper_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Li_Detecting_Compressed_AI-Generated_Images_via_Phase_Spectrum_Robustness_CVPR_2026_paper.html",
+        "publication_type": "conference",
+        "abstract": "This paper aims to present a robust AI-generated image detection framework designed to address performance degradation caused by image compression in online social networks. The key challenges are twofold: 1) compression destroys fragile artifacts that are crucial to existing methods, and 2) it introduces new compression artifacts that interfere with detection. Existing methods typically enhance the compression robustness by collecting original-compression pairs and compression labels. However, the collection and annotation process is highly resource-intensive. To address these issues, we propose a Compression-Robust Phase-Harmonized Transformer, motivated by the observation that phase spectrum remains stable under compression. The framework consists of a phase-harmonized cross-modal interaction module that leverages phase spectrum information for feature fusion, enhancing compression robustness, and a multi-domain modulation adapter that further refines fused features while enabling parameter-efficient fine-tuning. In particular, the framework operates without requiring compression-original data pairs and compression labels. When limited compression labels are available, we introduce a difficulty-aware consistency loss to maximize their utility by prioritizing hard compressed samples during training, further boosting robustness. Extensive experiments demonstrate that our method significantly outperforms state-of-the-art approaches, exhibiting superior robustness against image compression.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Shenzhen Campus of Sun Yat-sen University",
+          "institution_id": "institution:9ab7959736f7be0d",
+          "institution_authors": "Kai Li; Wenqi Ren; Wei Wang; Xiaochun Cao",
+          "author_order": "1; 2; 3; 4",
+          "raw_affiliation": "Shenzhen Campus of Sun Yat-sen University",
+          "institution_city": "Shenzhen",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Detecting_Compressed_AI-Generated_Images_via_Phase_Spectrum_Robustness_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 1,
+          "author_positions": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "institution": "Guangdong Key Laboratory of Information Security Technology",
+          "institution_id": "",
+          "institution_authors": "Wenqi Ren",
+          "author_order": "2",
+          "raw_affiliation": "Guangdong Key Laboratory of Information Security Technology",
+          "institution_city": "",
+          "institution_country": "",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Detecting_Compressed_AI-Generated_Images_via_Phase_Spectrum_Robustness_CVPR_2026_paper.pdf#page=1 | New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "review_reason": "New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "pdf_affiliation_number": 2,
+          "author_positions": [
+            2
+          ]
+        },
+        {
+          "institution": "Shenzhen Key Laboratory of Adversarial Artificial Intelligence",
+          "institution_id": "",
+          "institution_authors": "Wenqi Ren; Xiaochun Cao",
+          "author_order": "2; 4",
+          "raw_affiliation": "Shenzhen Key Laboratory of Adversarial Artificial Intelligence",
+          "institution_city": "Shenzhen",
+          "institution_country": "China",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Detecting_Compressed_AI-Generated_Images_via_Phase_Spectrum_Robustness_CVPR_2026_paper.pdf#page=1 | New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "review_reason": "New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "pdf_affiliation_number": 3,
+          "author_positions": [
+            2,
+            4
+          ]
+        }
+      ],
+      "evidence": [
+        "https://openaccess.thecvf.com/content/CVPR2026/html/Li_Detecting_Compressed_AI-Generated_Images_via_Phase_Spectrum_Robustness_CVPR_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Detecting_Compressed_AI-Generated_Images_via_Phase_Spectrum_Robustness_CVPR_2026_paper.pdf"
+      ],
+      "doi_status": "Not found in CVF metadata or exact normalized-title Crossref search; left empty (not proof no DOI exists).",
+      "classification": {
+        "is_deepfake_related": false,
+        "is_image_editing_related": false,
+        "manual_review": false,
+        "reason": "Image detection; face synthesis/deepfake separately flagged where applicable."
+      },
+      "arxiv_status": "No verified arXiv match; field empty",
+      "pre_insertion_matches": [],
+      "paper_id": "curated:417b1f4f681de2a47dbf",
+      "action": "Added",
+      "mapping_ids": [
+        "mapping:7866183f28f536eb0ec7",
+        "mapping:6ad527e368b2d4dbbebd",
+        "mapping:0f4731bd4fa10c31b76b"
+      ]
+    },
+    {
+      "number": 4,
+      "paper": {
+        "title": "Exploiting the Source-Asymmetry Confidence Gap for Generalizable AI-Generated Image Detection",
+        "year": "2026",
+        "authors": [
+          "Ziyang Zheng",
+          "Weiyan Chen",
+          "Yao Xiao",
+          "Zijie Cao",
+          "Dongyu Zhang",
+          "Pengxu Wei"
+        ],
+        "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_id": "venue:cvpr",
+        "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_acronym": "CVPR",
+        "venue_type": "conference",
+        "venue_track": "Findings",
+        "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings",
+        "doi": "",
+        "arxiv_id": "",
+        "paper_url": "https://openaccess.thecvf.com/content/CVPR2026F/html/Zheng_Exploiting_the_Source-Asymmetry_Confidence_Gap_for_Generalizable_AI-Generated_Image_Detection_CVPRF_2026_paper.html",
+        "publication_type": "conference",
+        "abstract": "Existing AI-generated image (AIGI) detection methods are trained on images synthesized by only a few generators, resulting in poor generalization to the ever-evolving domain of unseen generative models. In response to this limitation, recent work leverages large Vision Foundation Models (VFMs) to obtain more robust representations, yet typically relies on computationally expensive strategies, e.g., introducing additional large-scale synthetic datasets or employing complex training pipelines. In this paper, we devise a lightweight VFM-based strategy for generalized AIGI detection. Our key insight is a source asymmetry phenomenon: during training, models are exposed to diverse real data, while the fake images are synthesized by only a few generators. We verify that this class-diversity asymmetry causes a fine-tuned VFM to learn a more generalizable representation for the real class. This mechanism yields our key finding: the Source-Asymmetry Confidence Gap (SACG), a consistent and exploitable separation in predictive confidence where unseen real images yield systematically higher confidence than unseen fakes. Leveraging this insight, we introduce a lightweight, post-hoc strategy that employs a specialized confidence metric (GEN score) to amplify this gap and applies a conditional decision rule calibrated only on the real images for stable detection. On the Community Forensics benchmark (21 distinct generative models), our method achieves state-of-the-art results, surpassing the next-best baseline by +6.82% in accuracy.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Sun Yat-sen University",
+          "institution_id": "institution:5c85faa51cc57a24",
+          "institution_authors": "Ziyang Zheng; Weiyan Chen; Yao Xiao; Zijie Cao; Dongyu Zhang; Pengxu Wei",
+          "author_order": "1; 2; 3; 4; 5; 6",
+          "raw_affiliation": "School of Computer Science and Engineering, Sun Yat-Sen University",
+          "institution_city": "",
+          "institution_country": "China",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026F/papers/Zheng_Exploiting_the_Source-Asymmetry_Confidence_Gap_for_Generalizable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf#page=1 | PDF does not specify a campus; do not use the existing Guangzhou default without campus evidence.",
+          "review_reason": "PDF does not specify a campus; do not use the existing Guangzhou default without campus evidence.",
+          "pdf_affiliation_number": 1,
+          "author_positions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "evidence": [
+        "https://openaccess.thecvf.com/content/CVPR2026F/html/Zheng_Exploiting_the_Source-Asymmetry_Confidence_Gap_for_Generalizable_AI-Generated_Image_Detection_CVPRF_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026F/papers/Zheng_Exploiting_the_Source-Asymmetry_Confidence_Gap_for_Generalizable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf"
+      ],
+      "doi_status": "Not found in CVF metadata or exact normalized-title Crossref search; left empty (not proof no DOI exists).",
+      "classification": {
+        "is_deepfake_related": false,
+        "is_image_editing_related": false,
+        "manual_review": false,
+        "reason": "Image detection; face synthesis/deepfake separately flagged where applicable."
+      },
+      "arxiv_status": "No verified arXiv match; field empty",
+      "pre_insertion_matches": [],
+      "paper_id": "curated:10b24e1d35ca792385ac",
+      "action": "Added",
+      "mapping_ids": [
+        "mapping:ad7ec6d5da53fec58ef8"
+      ]
+    },
+    {
+      "number": 5,
+      "paper": {
+        "title": "CoDA: Color Distribution Probing for Efficient and Generalizable AI-Generated Image Detection",
+        "year": "2026",
+        "authors": [
+          "Zexi Jia",
+          "Zhiqiang Yuan",
+          "Xiaoyue Duan",
+          "Jinchao Zhang",
+          "Jie Zhou",
+          "Anil K. Jain"
+        ],
+        "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+        "venue_id": "venue:ieee-transactions-on-pattern-analysis-and-machine-intelligence",
+        "venue_name": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+        "venue_acronym": "TPAMI",
+        "venue_type": "journal",
+        "venue_track": "",
+        "raw_venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+        "doi": "10.1109/tpami.2026.3696399",
+        "arxiv_id": "2605.24306",
+        "paper_url": "https://ieeexplore.ieee.org/document/11535584/",
+        "publication_type": "journal",
+        "abstract": "AI-generated image detection faces a persistent trade-off between generalization and efficiency: lightweight artifact-based methods often degrade on unseen generators or domains, whereas more robust large-scale models are computationally expensive. Meanwhile, existing benchmarks mainly focus on cross-model evaluation in photorealistic settings, leaving cross-domain robustness underexplored. To address this gap, we introduce FakeForm, a large-scale benchmark with approximately 370,000 images across 62 diverse domains for both cross-model and cross-domain evaluation. Motivated by this broader setting, we revisit color-distribution probing as an efficient complementary cue for AI-generated image detection. We observe that, especially for photographic content, real photographs tend to exhibit smoother and more stable color patterns, whereas synthetic images often show characteristic color imbalances introduced by neural generation. Based on this observation, we propose CoDA, a compact 1.48M-parameter detector built on a Noise-Quantization Probe, together with a theoretical analysis linking probe responses to color non-uniformity. Experiments show that CoDA achieves state-of-the-art performance on standard benchmarks and the best results on the challenging cross-domain evaluation of FakeForm, while remaining highly competitive in cross-model photorealistic settings. These results suggest that persistent generative artifacts can provide a practical foundation for efficient and robust AI-generated image detection. The models and FakeForm benchmark will be made publicly available.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "paper_categories": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Tencent WeChat AI",
+          "institution_id": "",
+          "institution_authors": "Zexi Jia; Zhiqiang Yuan; Xiaoyue Duan; Jinchao Zhang; Jie Zhou",
+          "author_order": "1; 2; 3; 4; 5",
+          "raw_affiliation": "Tencent WeChat AI, Beijing, China",
+          "institution_city": "Beijing",
+          "institution_country": "China",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://api.crossref.org/works/10.1109/tpami.2026.3696399 | New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "review_reason": "New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "pdf_affiliation_number": 1,
+          "author_positions": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "institution": "Michigan State University",
+          "institution_id": "institution:cd887bf808040e61",
+          "institution_authors": "Anil K. Jain",
+          "author_order": "6",
+          "raw_affiliation": "Department of Computer Science and Engineering, Michigan State University, East Lansing, MI, USA",
+          "institution_city": "East Lansing",
+          "institution_country": "United States",
+          "mapping_status": "active",
+          "provenance_source": "https://api.crossref.org/works/10.1109/tpami.2026.3696399",
+          "review_reason": "",
+          "pdf_affiliation_number": 2,
+          "author_positions": [
+            6
+          ]
+        }
+      ],
+      "evidence": [
+        "https://api.crossref.org/works/10.1109/tpami.2026.3696399",
+        "https://ieeexplore.ieee.org/document/11535584/",
+        "https://arxiv.org/abs/2605.24306"
+      ],
+      "doi_status": "Verified IEEE-deposited Crossref DOI",
+      "classification": {
+        "is_deepfake_related": false,
+        "is_image_editing_related": false,
+        "manual_review": false,
+        "reason": "Image detection; face synthesis/deepfake separately flagged where applicable."
+      },
+      "arxiv_status": "Verified source link",
+      "pre_insertion_matches": [],
+      "paper_id": "curated:e29203ef9599b73d8733",
+      "action": "Added",
+      "mapping_ids": [
+        "mapping:e935f7693377562589aa",
+        "mapping:33e7664e25ae21f3ccc9"
+      ]
+    },
+    {
+      "number": 6,
+      "paper": {
+        "title": "UniGenDet: A Unified Generative-Discriminative Framework for Co-Evolutionary Image Generation and Generated Image Detection",
+        "year": "2026",
+        "authors": [
+          "Yanran Zhang",
+          "Wenzhao Zheng",
+          "Yifei Li",
+          "Bingyao Yu",
+          "Yu Zheng",
+          "Lei Chen",
+          "Jiwen Lu",
+          "Jie Zhou"
+        ],
+        "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_id": "venue:cvpr",
+        "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_acronym": "CVPR",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "doi": "",
+        "arxiv_id": "2604.21904",
+        "paper_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_UniGenDet_A_Unified_Generative-Discriminative_Framework_for_Co-Evolutionary_Image_Generation_and_CVPR_2026_paper.html",
+        "publication_type": "conference",
+        "abstract": "In recent years, significant progress has been made in both image generation and generated image detection. Despite their rapid, yet largely independent, development, these two fields have evolved distinct architectural paradigms: the former predominantly relies on generative networks, while the latter favors discriminative frameworks. A recent trend in both domains is the use of adversarial information to enhance performance, revealing potential for synergy. However, the significant architectural divergence between them presents considerable challenges. Departing from previous approaches, we propose **UniGenDet**: a **Uni**fied generative-discriminative framework for co-evolutionary image **Gen**eration and generated image **Det**ection. To bridge the task gap, we design a symbiotic multimodal self-attention mechanism and a unified fine-tuning algorithm. This synergy allows the generation task to improve the interpretability of authenticity identification, while authenticity criteria guide the creation of higher-fidelity images. Furthermore, we introduce a detector-informed generative alignment mechanism to facilitate seamless information exchange. Extensive experiments on multiple datasets demonstrate that our method achieves state-of-the-art performance. Code: https://github.com/Zhangyr2022/UniGenDet.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Tsinghua University",
+          "institution_id": "institution:4ae45b121fe12e9c",
+          "institution_authors": "Yanran Zhang; Wenzhao Zheng; Yifei Li; Bingyao Yu; Yu Zheng; Lei Chen; Jiwen Lu; Jie Zhou",
+          "author_order": "1; 2; 3; 4; 5; 6; 7; 8",
+          "raw_affiliation": "Department of Automation, Tsinghua University, China",
+          "institution_city": "",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Zhang_UniGenDet_A_Unified_Generative-Discriminative_Framework_for_Co-Evolutionary_Image_Generation_and_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 1,
+          "author_positions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        }
+      ],
+      "evidence": [
+        "https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_UniGenDet_A_Unified_Generative-Discriminative_Framework_for_Co-Evolutionary_Image_Generation_and_CVPR_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Zhang_UniGenDet_A_Unified_Generative-Discriminative_Framework_for_Co-Evolutionary_Image_Generation_and_CVPR_2026_paper.pdf"
+      ],
+      "doi_status": "Not found in CVF metadata or exact normalized-title Crossref search; left empty (not proof no DOI exists).",
+      "classification": {
+        "is_deepfake_related": false,
+        "is_image_editing_related": false,
+        "manual_review": false,
+        "reason": "Image detection; face synthesis/deepfake separately flagged where applicable."
+      },
+      "arxiv_status": "Verified source link",
+      "pre_insertion_matches": [],
+      "paper_id": "curated:1babf622ee5d19e20e1a",
+      "action": "Added",
+      "mapping_ids": [
+        "mapping:e2dde8c0e167fbfd1d2e"
+      ]
+    },
+    {
+      "number": 7,
+      "paper": {
+        "title": "Diversity over Uniformity: Rethinking Representation in Generated Image Detection",
+        "year": "2026",
+        "authors": [
+          "Qinghui He",
+          "Haifeng Zhang",
+          "Qiao Qin",
+          "Bo Liu",
+          "Xiuli Bi",
+          "Bin Xiao"
+        ],
+        "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_id": "venue:cvpr",
+        "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_acronym": "CVPR",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "doi": "",
+        "arxiv_id": "2603.00717",
+        "paper_url": "https://openaccess.thecvf.com/content/CVPR2026/html/He_Diversity_over_Uniformity_Rethinking_Representation_in_Generated_Image_Detection_CVPR_2026_paper.html",
+        "publication_type": "conference",
+        "abstract": "With the rapid advancement of generative models, generated image detection has become an important task in visual forensics. Although existing methods have achieved remarkable progress, they often rely, after training, on only a small subset of highly salient forgery cues, which limits their ability to generalize to unseen generative mechanisms. We argue that reliably generated image detection should not depend on a single decision path but should preserve multiple judgment perspectives, enabling the model to understand the differences between real and generated images from diverse viewpoints. Based on this idea, we propose an anti-feature-collapse learning framework that filters task-irrelevant components and suppresses excessive overlap among different forgery cues in the representation space, preventing discriminative information from collapsing into a few dominant feature directions. This design maintains diverse and complementary evidence within the model, reduces reliance on a small set of salient cues, and enhances robustness under unseen generative settings. Extensive experiments on multiple public benchmarks demonstrate that the proposed method significantly outperforms the state-of-the-art approaches in cross-model scenarios, achieving an accuracy improvement of 5.02% and exhibiting superior generalization and detection reliability. The source code is available at https://github.com/Yanmou-Hui/DoU.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Chongqing University of Posts and Telecommunications",
+          "institution_id": "institution:7e10613327a4e264",
+          "institution_authors": "Qinghui He; Haifeng Zhang; Qiao Qin; Bo Liu; Xiuli Bi; Bin Xiao",
+          "author_order": "1; 2; 3; 4; 5; 6",
+          "raw_affiliation": "Chongqing Key Laboratory of Image Cognition, Chongqing University of Posts and Telecommunications, Chongqing, China",
+          "institution_city": "Chongqing",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/He_Diversity_over_Uniformity_Rethinking_Representation_in_Generated_Image_Detection_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 1,
+          "author_positions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "institution": "Chongqing University of Posts and Telecommunications",
+          "institution_id": "institution:7e10613327a4e264",
+          "institution_authors": "Qinghui He; Haifeng Zhang; Qiao Qin",
+          "author_order": "1; 2; 3",
+          "raw_affiliation": "School of Computer Science and Technology",
+          "institution_city": "Chongqing",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/He_Diversity_over_Uniformity_Rethinking_Representation_in_Generated_Image_Detection_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 2,
+          "author_positions": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "institution": "Chongqing University of Posts and Telecommunications",
+          "institution_id": "institution:7e10613327a4e264",
+          "institution_authors": "Bo Liu; Xiuli Bi",
+          "author_order": "4; 5",
+          "raw_affiliation": "School of Artificial Intelligence",
+          "institution_city": "Chongqing",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/He_Diversity_over_Uniformity_Rethinking_Representation_in_Generated_Image_Detection_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 3,
+          "author_positions": [
+            4,
+            5
+          ]
+        },
+        {
+          "institution": "Jinan Inspur Data Technology Co., Ltd.",
+          "institution_id": "",
+          "institution_authors": "Bin Xiao",
+          "author_order": "6",
+          "raw_affiliation": "Jinan Inspur Data Technology Co., Ltd., Jinan, China",
+          "institution_city": "Jinan",
+          "institution_country": "China",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/He_Diversity_over_Uniformity_Rethinking_Representation_in_Generated_Image_Detection_CVPR_2026_paper.pdf#page=1 | New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "review_reason": "New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "pdf_affiliation_number": 4,
+          "author_positions": [
+            6
+          ]
+        }
+      ],
+      "evidence": [
+        "https://openaccess.thecvf.com/content/CVPR2026/html/He_Diversity_over_Uniformity_Rethinking_Representation_in_Generated_Image_Detection_CVPR_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/He_Diversity_over_Uniformity_Rethinking_Representation_in_Generated_Image_Detection_CVPR_2026_paper.pdf"
+      ],
+      "doi_status": "Not found in CVF metadata or exact normalized-title Crossref search; left empty (not proof no DOI exists).",
+      "classification": {
+        "is_deepfake_related": false,
+        "is_image_editing_related": false,
+        "manual_review": false,
+        "reason": "Image detection; face synthesis/deepfake separately flagged where applicable."
+      },
+      "arxiv_status": "Verified source link",
+      "pre_insertion_matches": [],
+      "paper_id": "curated:a1926ecb09e1e945bbad",
+      "action": "Added",
+      "mapping_ids": [
+        "mapping:4d86c9a59dea37ca8dd6",
+        "mapping:571224433853b7800557",
+        "mapping:39bb1981f7700fd03f49",
+        "mapping:393bc402801b7bc0dac6"
+      ]
+    },
+    {
+      "number": 8,
+      "paper": {
+        "title": "ForenDeX: Unlocking Forensic Insights for Explainable AI-Generated Image Detection",
+        "year": "2026",
+        "authors": [
+          "Chuangchuang Tan",
+          "Jinglu Wang",
+          "Xiang Ming",
+          "Renshuai Tao",
+          "Yunchao Wei",
+          "Yao Zhao",
+          "Yan Lu"
+        ],
+        "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_id": "venue:cvpr",
+        "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_acronym": "CVPR",
+        "venue_type": "conference",
+        "venue_track": "Findings",
+        "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings",
+        "doi": "",
+        "arxiv_id": "",
+        "paper_url": "https://openaccess.thecvf.com/content/CVPR2026F/html/Tan_ForenDeX_Unlocking_Forensic_Insights_for_Explainable_AI-Generated_Image_Detection_CVPRF_2026_paper.html",
+        "publication_type": "conference",
+        "abstract": "Recent advances in generative models have led to AI-generated images that are visually indistinguishable from authentic ones. While numerous methods have been proposed to detect AI-generated images, these techniques often struggle to provide explanations that align with human cognitive forensic analysis. A significant limitation of existing methods is the reliance on generic features that do not fully capture the authenticity cues inherent in image content. We introduce ForenDeX, a novel framework that addresses this gap by extracting forensic information directly from image content, which is then integrated into a large language model (LLM) as an additional input. Unlike traditional detection methods, which primarily rely on artifact-based features, ForenDeX identifies critical authenticity-related cues such as unnatural textures, lighting inconsistencies, and spatial anomalies, which are often overlooked by current LLM-based approaches. By integrating these contentbased forensic insights, ForenDeX improves both the detection accuracy and the explainability of the model's predictions. Additionally, we introduce ForgReason, a dataset containing AI-generated images annotated with descriptions of authenticity-related features. This dataset, curated through collaboration between human annotators and an LLM-based agent, enables ForenDeX to finetune its ability to detect and explain forgeries, significantly improving the model's performance. Our experiments demonstrate that even limited manual annotations can substantially enhance the quality of the explanations generated by the model. We evaluate ForenDeX on two major benchmarks and show that it outperforms existing detection methods in both accuracy and explainability. Comprehensive evaluations confirm that ForenDeX provides human-understandable explanations by integrating forensic information directly into the model's analysis process.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "paper_categories": [
+          "method",
+          "dataset"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Beijing Jiaotong University",
+          "institution_id": "institution:bf6195b78f6dc951",
+          "institution_authors": "Chuangchuang Tan; Renshuai Tao; Yunchao Wei; Yao Zhao",
+          "author_order": "1; 4; 5; 6",
+          "raw_affiliation": "Institute of Information Science, Beijing Jiaotong University",
+          "institution_city": "",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026F/papers/Tan_ForenDeX_Unlocking_Forensic_Insights_for_Explainable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 1,
+          "author_positions": [
+            1,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "institution": "Visual Intellgence +X International Cooperation Joint Laboratory of MOE",
+          "institution_id": "",
+          "institution_authors": "Chuangchuang Tan; Renshuai Tao; Yunchao Wei; Yao Zhao",
+          "author_order": "1; 4; 5; 6",
+          "raw_affiliation": "Visual Intellgence +X International Cooperation Joint Laboratory of MOE",
+          "institution_city": "",
+          "institution_country": "",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026F/papers/Tan_ForenDeX_Unlocking_Forensic_Insights_for_Explainable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf#page=1 | New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "review_reason": "New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "pdf_affiliation_number": 2,
+          "author_positions": [
+            1,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "institution": "Microsoft Research Asia",
+          "institution_id": "institution:7b971ad17fd639eb",
+          "institution_authors": "Chuangchuang Tan; Jinglu Wang; Xiang Ming; Yan Lu",
+          "author_order": "1; 2; 3; 7",
+          "raw_affiliation": "Microsoft Research Asia",
+          "institution_city": "",
+          "institution_country": "",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026F/papers/Tan_ForenDeX_Unlocking_Forensic_Insights_for_Explainable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 3,
+          "author_positions": [
+            1,
+            2,
+            3,
+            7
+          ]
+        }
+      ],
+      "evidence": [
+        "https://openaccess.thecvf.com/content/CVPR2026F/html/Tan_ForenDeX_Unlocking_Forensic_Insights_for_Explainable_AI-Generated_Image_Detection_CVPRF_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026F/papers/Tan_ForenDeX_Unlocking_Forensic_Insights_for_Explainable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf"
+      ],
+      "doi_status": "Not found in CVF metadata or exact normalized-title Crossref search; left empty (not proof no DOI exists).",
+      "classification": {
+        "is_deepfake_related": false,
+        "is_image_editing_related": false,
+        "manual_review": false,
+        "reason": "Image detection; face synthesis/deepfake separately flagged where applicable."
+      },
+      "arxiv_status": "No verified arXiv match; field empty",
+      "pre_insertion_matches": [],
+      "paper_id": "curated:b8a42f43802c4fbb3cad",
+      "action": "Added",
+      "mapping_ids": [
+        "mapping:3a224e41ade34f2762ab",
+        "mapping:47ebcf6d2f04436c400c",
+        "mapping:c68da7382959b583e394"
+      ]
+    },
+    {
+      "number": 9,
+      "paper": {
+        "title": "ReAlign: Generalizable Image Forgery Detection via Reasoning-Aligned Representation",
+        "year": "2026",
+        "authors": [
+          "Qing Huang",
+          "Zhipei Xu",
+          "Xuanyu Zhang",
+          "Xiangyu Yu",
+          "Jian Zhang"
+        ],
+        "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_id": "venue:cvpr",
+        "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_acronym": "CVPR",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "doi": "",
+        "arxiv_id": "2605.16080",
+        "paper_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Huang_ReAlign_Generalizable_Image_Forgery_Detection_via_Reasoning-Aligned_Representation_CVPR_2026_paper.html",
+        "publication_type": "conference",
+        "abstract": "The rise of AI-generated images (AIGIs) poses growing challenges for digital authenticity, prompting the need for efficient, generalizable image forgery detection systems. Existing methods, whether non-LLM-based or LLM-based, exhibit distinct advantages and limitations. While non-LLM-based models offer efficient low-level artifact detection, they often lack semantic understanding. Conversely, LLM-based methods provide strong semantic reasoning and explainability but are computationally intensive and less sensitive to subtle visual artifacts. Moreover, the true contribution of explanatory reasoning texts to forgery detection performance remains unclear. In this work, we investigate the intrinsic value and potential of LLM-generated reasoning texts, considering it a source of generalization and semantic-error sensitivity. Based on these findings, we propose ReAlign, a novel framework that distills high-quality reasoning texts generated by a GRPO-optimized LLM into a lightweight AIGI detector via contrastive learning. ReAlign effectively inherits the generalization ability and semantic sensitivity capability of reasoning textual representations, while remaining efficient and lightweight for deployment. Moreover, ReAlign adopts a tailored joint optimization strategy that integrates contrastive loss for image-text alignment and classification loss for accurate forgery discrimination. Experimental results on AIGCDetectBenchmark, AIGI-Holmes, and our newly constructed UltraSynth-10k demonstrate that ReAlign consistently outperforms existing state-of-the-art detectors in both accuracy and generalization, particularly when facing complex, high-fidelity forgeries from modern generative models.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "paper_categories": [
+          "method",
+          "dataset"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Peking University",
+          "institution_id": "institution:46e4866d3b2954ab",
+          "institution_authors": "Qing Huang; Zhipei Xu; Xuanyu Zhang; Jian Zhang",
+          "author_order": "1; 2; 3; 5",
+          "raw_affiliation": "School of Electronic and Computer Engineering, Peking University",
+          "institution_city": "",
+          "institution_country": "China",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Huang_ReAlign_Generalizable_Image_Forgery_Detection_via_Reasoning-Aligned_Representation_CVPR_2026_paper.pdf#page=1 | School/campus not resolved by PDF; do not map this school to the existing Beijing default.",
+          "review_reason": "School/campus not resolved by PDF; do not map this school to the existing Beijing default.",
+          "pdf_affiliation_number": 1,
+          "author_positions": [
+            1,
+            2,
+            3,
+            5
+          ]
+        },
+        {
+          "institution": "South China University of Technology",
+          "institution_id": "institution:3e9b289ae248f660",
+          "institution_authors": "Qing Huang",
+          "author_order": "1",
+          "raw_affiliation": "School of Future Technology, South China University of Technology",
+          "institution_city": "",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Huang_ReAlign_Generalizable_Image_Forgery_Detection_via_Reasoning-Aligned_Representation_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 2,
+          "author_positions": [
+            1
+          ]
+        },
+        {
+          "institution": "South China University of Technology",
+          "institution_id": "institution:3e9b289ae248f660",
+          "institution_authors": "Xiangyu Yu",
+          "author_order": "4",
+          "raw_affiliation": "School of Electronic and Information Engineering, South China University of Technology",
+          "institution_city": "",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Huang_ReAlign_Generalizable_Image_Forgery_Detection_via_Reasoning-Aligned_Representation_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 3,
+          "author_positions": [
+            4
+          ]
+        },
+        {
+          "institution": "Peking University Shenzhen Graduate School",
+          "institution_id": "institution:6346b1a9c3b5ccd7",
+          "institution_authors": "Jian Zhang",
+          "author_order": "5",
+          "raw_affiliation": "Guangdong Provincial Key Laboratory of Ultra High Definition Immersive Media Technology, Shenzhen Graduate School, Peking University",
+          "institution_city": "Shenzhen",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Huang_ReAlign_Generalizable_Image_Forgery_Detection_via_Reasoning-Aligned_Representation_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 4,
+          "author_positions": [
+            5
+          ]
+        }
+      ],
+      "evidence": [
+        "https://openaccess.thecvf.com/content/CVPR2026/html/Huang_ReAlign_Generalizable_Image_Forgery_Detection_via_Reasoning-Aligned_Representation_CVPR_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Huang_ReAlign_Generalizable_Image_Forgery_Detection_via_Reasoning-Aligned_Representation_CVPR_2026_paper.pdf"
+      ],
+      "doi_status": "Not found in CVF metadata or exact normalized-title Crossref search; left empty (not proof no DOI exists).",
+      "classification": {
+        "is_deepfake_related": false,
+        "is_image_editing_related": false,
+        "manual_review": false,
+        "reason": "Image detection; face synthesis/deepfake separately flagged where applicable."
+      },
+      "arxiv_status": "Verified source link",
+      "pre_insertion_matches": [],
+      "paper_id": "curated:ce36039d47fbcb9e4e7b",
+      "action": "Added",
+      "mapping_ids": [
+        "mapping:495827ef2ecac5603830",
+        "mapping:53eea943b8bec86d8b01",
+        "mapping:cb6bbcc17d500dd8a300",
+        "mapping:5d23fba32506a7a93dea"
+      ]
+    },
+    {
+      "number": 10,
+      "paper": {
+        "title": "SAIDO: Generalizable Detection of AI-Generated Images via Scene-Aware and Importance-Guided Dynamic Optimization in Continual Learning",
+        "year": "2026",
+        "authors": [
+          "Yongkang Hu",
+          "Yu Cheng",
+          "Yushuo Zhang",
+          "Yuan Xie",
+          "Zhaoxia Yin"
+        ],
+        "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_id": "venue:cvpr",
+        "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_acronym": "CVPR",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "doi": "",
+        "arxiv_id": "2512.00539",
+        "paper_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Hu_SAIDO_Generalizable_Detection_of_AI-Generated_Images_via_Scene-Aware_and_Importance-Guided_CVPR_2026_paper.html",
+        "publication_type": "conference",
+        "abstract": "The widespread misuse of image generation technologies has raised security concerns, driving the development of AI-generated image detection methods. However, generalization has become a key challenge and open problem: existing approaches struggle to adapt to emerging generative methods and content types in real-world scenarios. To address this issue, we propose a Scene-Aware and Importance-Guided Dynamic Optimization detection framework with continual learning (SAIDO). Specifically, we design Scene-Awareness-Based Expert Module (SAEM) that dynamically identifies and incorporates new scenes using VLLMs. For each scene, independent expert modules are dynamically allocated, enabling the framework to capture scene-specific forgery features better and enhance cross-scene generalization. To achieve an effective balance between model plasticity and stability when learning from multiple image generative methods, we introduce Importance-Guided Dynamic Optimization Mechanism (IDOM), which optimizes each neuron through an importance-guided gradient projection strategy, thereby achieving an effective balance between model plasticity and stability. Extensive experiments on continual learning tasks demonstrate that our method outperforms the current SOTA method in both stability and plasticity, achieving 44.22% and 40.57% relative reductions in average detection error rate and forgetting rate, respectively. On open-world datasets, it improves the average detection accuracy by 9.47% compared to the current SOTA method.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "East China Normal University",
+          "institution_id": "institution:a8d8c5fe60be3e65",
+          "institution_authors": "Yongkang Hu; Yu Cheng; Yushuo Zhang; Yuan Xie; Zhaoxia Yin",
+          "author_order": "1; 2; 3; 4; 5",
+          "raw_affiliation": "East China Normal University, Shanghai, China",
+          "institution_city": "Shanghai",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Hu_SAIDO_Generalizable_Detection_of_AI-Generated_Images_via_Scene-Aware_and_Importance-Guided_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 1,
+          "author_positions": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "institution": "Shanghai Innovation Institute",
+          "institution_id": "institution:9a0d85eff850f04a",
+          "institution_authors": "Yu Cheng; Yuan Xie",
+          "author_order": "2; 4",
+          "raw_affiliation": "Shanghai Innovation Institute, Shanghai, China",
+          "institution_city": "Shanghai",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Hu_SAIDO_Generalizable_Detection_of_AI-Generated_Images_via_Scene-Aware_and_Importance-Guided_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 2,
+          "author_positions": [
+            2,
+            4
+          ]
+        }
+      ],
+      "evidence": [
+        "https://openaccess.thecvf.com/content/CVPR2026/html/Hu_SAIDO_Generalizable_Detection_of_AI-Generated_Images_via_Scene-Aware_and_Importance-Guided_CVPR_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Hu_SAIDO_Generalizable_Detection_of_AI-Generated_Images_via_Scene-Aware_and_Importance-Guided_CVPR_2026_paper.pdf"
+      ],
+      "doi_status": "Not found in CVF metadata or exact normalized-title Crossref search; left empty (not proof no DOI exists).",
+      "classification": {
+        "is_deepfake_related": false,
+        "is_image_editing_related": false,
+        "manual_review": false,
+        "reason": "Image detection; face synthesis/deepfake separately flagged where applicable."
+      },
+      "arxiv_status": "Verified source link",
+      "pre_insertion_matches": [],
+      "paper_id": "curated:e239bf15b520c1f8c9e9",
+      "action": "Added",
+      "mapping_ids": [
+        "mapping:ab0af640471ad744f380",
+        "mapping:840af7a92b579fe424ee"
+      ]
+    },
+    {
+      "number": 11,
+      "paper": {
+        "title": "Editprint: General Digital Image Forensics via Editing Fingerprint with Self-Augmentation Training",
+        "year": "2026",
+        "authors": [
+          "Haiwei Wu",
+          "Kemou Li",
+          "Yuanman Li",
+          "Jiantao Zhou"
+        ],
+        "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_id": "venue:cvpr",
+        "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_acronym": "CVPR",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "doi": "",
+        "arxiv_id": "",
+        "paper_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Wu_Editprint_General_Digital_Image_Forensics_via_Editing_Fingerprint_with_Self-Augmentation_CVPR_2026_paper.html",
+        "publication_type": "conference",
+        "abstract": "Digital image forensics can ensure information credibility in tasks like camera source identification (CSI), synthetic image detection (SID), and social network provenance (SNP). These tasks typically rely on image processing history clues left by in-camera operations, post-capture editing, or synthetic generation. However, most existing forensic methods have obvious limitations: 1) they often only focus on camera-specific traces (e.g., the well-known PRNU), and 2) they demand a substantial amount of annotated training data. To address these constraints, we propose Editprint, a novel general forensic feature that captures highly diverse in- and out-camera processing history clues with minimal unlabeled training data. Ideally, we expect that any images undergoing the same imaging, editing, and transmission processes would yield identical Editprints, and vice versa. To model the in- and out-camera operations, we devise an online editing pool based on self-augmentation strategies. Requiring only minimal (e.g., 10) training data, the editing pool can simulate massive (e.g., 10^\\text 7 ) editing chains and traces arising from the in-camera processing and the subsequent out-camera operations. To ensure that Editprint exhibits high discriminative capabilities across various editing chains, we propose using textual descriptions of these chains as labels and supervising their Editprints through language-guided contrastive learning. Extensive experiments show Editprint outperforms existing self-supervised forensics, particularly in non-camera applications such as SNP and SID. We hope that Editprint would inspire the forensic community and serve as a novel benchmark for self-supervised forensics.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "University of Electronic Science and Technology of China",
+          "institution_id": "institution:5fc8d686887fa82a",
+          "institution_authors": "Haiwei Wu",
+          "author_order": "1",
+          "raw_affiliation": "School of Computer Science and Engineering, University of Electronic Science and Technology of China",
+          "institution_city": "",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Wu_Editprint_General_Digital_Image_Forensics_via_Editing_Fingerprint_with_Self-Augmentation_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 1,
+          "author_positions": [
+            1
+          ]
+        },
+        {
+          "institution": "University of Macau",
+          "institution_id": "institution:53e6219d595780e3",
+          "institution_authors": "Kemou Li; Jiantao Zhou",
+          "author_order": "2; 4",
+          "raw_affiliation": "State Key Laboratory of Internet of Things for Smart City, University of Macau",
+          "institution_city": "Macau",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Wu_Editprint_General_Digital_Image_Forensics_via_Editing_Fingerprint_with_Self-Augmentation_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 2,
+          "author_positions": [
+            2,
+            4
+          ]
+        },
+        {
+          "institution": "Shenzhen University",
+          "institution_id": "institution:ad9c8964d01f80d8",
+          "institution_authors": "Yuanman Li",
+          "author_order": "3",
+          "raw_affiliation": "Guangdong Key Laboratory of Intelligent Information Processing, Shenzhen University",
+          "institution_city": "Shenzhen",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Wu_Editprint_General_Digital_Image_Forensics_via_Editing_Fingerprint_with_Self-Augmentation_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 3,
+          "author_positions": [
+            3
+          ]
+        }
+      ],
+      "evidence": [
+        "https://openaccess.thecvf.com/content/CVPR2026/html/Wu_Editprint_General_Digital_Image_Forensics_via_Editing_Fingerprint_with_Self-Augmentation_CVPR_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Wu_Editprint_General_Digital_Image_Forensics_via_Editing_Fingerprint_with_Self-Augmentation_CVPR_2026_paper.pdf"
+      ],
+      "doi_status": "Not found in CVF metadata or exact normalized-title Crossref search; left empty (not proof no DOI exists).",
+      "classification": {
+        "is_deepfake_related": false,
+        "is_image_editing_related": true,
+        "manual_review": true,
+        "reason": "Synthetic image detection is in scope; editing/camera/social-network forensics are separately flagged, not synthetic-generator attribution."
+      },
+      "arxiv_status": "No verified arXiv match; field empty",
+      "pre_insertion_matches": [],
+      "paper_id": "curated:69dbedc9fd032cbd190b",
+      "action": "Added",
+      "mapping_ids": [
+        "mapping:2543062a3b3408b772ec",
+        "mapping:462d64a46b2b70ef0ad9",
+        "mapping:861a5d0d7f70edadc406"
+      ]
+    },
+    {
+      "number": 12,
+      "paper": {
+        "title": "Enabling Supervised Learning of Generative Signatures for Generalized AI-Generated Images Detection",
+        "year": "2026",
+        "authors": [
+          "Jianwei Fei",
+          "Yunshu Dai",
+          "Xiaoyu Zhou",
+          "Zhihua Xia",
+          "Alessandro Piva"
+        ],
+        "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_id": "venue:cvpr",
+        "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_acronym": "CVPR",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "doi": "",
+        "arxiv_id": "",
+        "paper_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Fei_Enabling_Supervised_Learning_of_Generative_Signatures_for_Generalized_AI-Generated_Images_CVPR_2026_paper.html",
+        "publication_type": "conference",
+        "abstract": "Extracting reliable generative traces in generated images is critical for AI-generated images (AIGIs) detection. However, a fundamental challenge exists: AIGIs inherently contain generative traces with no trace-free counterpart available, making supervised extraction of these artifacts infeasible. In this work, we overcome this through a surrogate supervision framework. We design a dynamic reconstructor that simulates diverse generative traces on real images through stochastically varied architectures and parameters. The reconstruction residuals serve as supervision to train an extractor that learns to isolate traces, i.e., generative signatures (GenSign). A detector then fuses extracted GenSign with RGB features to distinguish real images from AIGIs. Our key insight is that sufficient architectural diversity in simulation enables effective transfer to real-world generators, resolving the absence of ground truth GenSign. Extensive experiments across four benchmarks demonstrate state-of-the-art generalization, confirming that our simulation-based learning paradigm is capable of extracting general and transferable forensic features.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "University of Florence",
+          "institution_id": "institution:42fcf4ae44e1a706",
+          "institution_authors": "Jianwei Fei; Alessandro Piva",
+          "author_order": "1; 5",
+          "raw_affiliation": "Department of Information Engineering, University of Florence, Florence, Italy",
+          "institution_city": "Florence",
+          "institution_country": "Italy",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Fei_Enabling_Supervised_Learning_of_Generative_Signatures_for_Generalized_AI-Generated_Images_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 1,
+          "author_positions": [
+            1,
+            5
+          ]
+        },
+        {
+          "institution": "Shenzhen Campus of Sun Yat-sen University",
+          "institution_id": "institution:9ab7959736f7be0d",
+          "institution_authors": "Yunshu Dai",
+          "author_order": "2",
+          "raw_affiliation": "School of Cyber Science and Technology, Sun Yat-sen University, Shenzhen, China",
+          "institution_city": "Shenzhen",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Fei_Enabling_Supervised_Learning_of_Generative_Signatures_for_Generalized_AI-Generated_Images_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 2,
+          "author_positions": [
+            2
+          ]
+        },
+        {
+          "institution": "Jinan University",
+          "institution_id": "institution:8632718a2c1444c6",
+          "institution_authors": "Xiaoyu Zhou; Zhihua Xia",
+          "author_order": "3; 4",
+          "raw_affiliation": "College of Cyber Security, Jinan University, Guangzhou, China",
+          "institution_city": "Guangzhou",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Fei_Enabling_Supervised_Learning_of_Generative_Signatures_for_Generalized_AI-Generated_Images_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 3,
+          "author_positions": [
+            3,
+            4
+          ]
+        }
+      ],
+      "evidence": [
+        "https://openaccess.thecvf.com/content/CVPR2026/html/Fei_Enabling_Supervised_Learning_of_Generative_Signatures_for_Generalized_AI-Generated_Images_CVPR_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Fei_Enabling_Supervised_Learning_of_Generative_Signatures_for_Generalized_AI-Generated_Images_CVPR_2026_paper.pdf"
+      ],
+      "doi_status": "Not found in CVF metadata or exact normalized-title Crossref search; left empty (not proof no DOI exists).",
+      "classification": {
+        "is_deepfake_related": false,
+        "is_image_editing_related": false,
+        "manual_review": false,
+        "reason": "Image detection; face synthesis/deepfake separately flagged where applicable."
+      },
+      "arxiv_status": "No verified arXiv match; field empty",
+      "pre_insertion_matches": [],
+      "paper_id": "curated:adf8025bbe37e5e601cd",
+      "action": "Added",
+      "mapping_ids": [
+        "mapping:5ce06dc81f3ad8a04dab",
+        "mapping:ffeab28710cca78f5ee0",
+        "mapping:3ce09e5fe7f2e9e0fd11"
+      ]
+    },
+    {
+      "number": 13,
+      "paper": {
+        "title": "PPM-CLIP: Probabilistic Prompt Modeling for Generalizable AI-Generated Image Detection",
+        "year": "2026",
+        "authors": [
+          "Xinyuan Wang",
+          "Yingxin Lai",
+          "Zhiming Luo",
+          "Zhihui Liu"
+        ],
+        "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_id": "venue:cvpr",
+        "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "venue_acronym": "CVPR",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "doi": "",
+        "arxiv_id": "",
+        "paper_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Wang_PPM-CLIP_Probabilistic_Prompt_Modeling_for_Generalizable_AI-Generated_Image_Detection_CVPR_2026_paper.html",
+        "publication_type": "conference",
+        "abstract": "The rapid rise of highly realistic AI-generated images necessitates reliable and generalizable detection methods. However, existing methods are constrained by their discriminative nature: by learning a single static decision boundary, they tend to memorize generator-specific artifacts and consequently fail to generalize to the unseen distributions of new generative models. To overcome this limitation, we propose PPM-CLIP, a new framework that shifts from static classification to conditional generative modeling based on the CLIP vision-language model. Instead of learning a fixed decision boundary, a Probabilistic Prompt Modeling (PPM) module is used as a generator that produces an adaptive distribution of prompts according to the input image. This allows the model to flexibly capture novel artifacts, rather than matching them against fixed templates. In addition, to enhance the visual encoder's sensitivity to subtle artifacts, a Patch-Wise Contrastive Learning (PWCL) strategy is introduced. Extensive experiments on Ojha, GenImage, and DRCT benchmarks demonstrate that our generative paradigm significantly outperforms state-of-the-art methods, especially in cross-domain detection.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Xiamen University",
+          "institution_id": "institution:929ddef9540ec1e7",
+          "institution_authors": "Xinyuan Wang; Yingxin Lai; Zhiming Luo",
+          "author_order": "1; 2; 3",
+          "raw_affiliation": "Department of Artificial Intelligence, Xiamen University, Xiamen, China",
+          "institution_city": "Xiamen",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Wang_PPM-CLIP_Probabilistic_Prompt_Modeling_for_Generalizable_AI-Generated_Image_Detection_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 1,
+          "author_positions": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "institution": "Xiamen University",
+          "institution_id": "institution:929ddef9540ec1e7",
+          "institution_authors": "Zhiming Luo",
+          "author_order": "3",
+          "raw_affiliation": "Key Laboratory of Multimedia Trusted Perception and Efficient Computing, Ministry of Education of China, Xiamen University, Xiamen, China",
+          "institution_city": "Xiamen",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Wang_PPM-CLIP_Probabilistic_Prompt_Modeling_for_Generalizable_AI-Generated_Image_Detection_CVPR_2026_paper.pdf#page=1",
+          "review_reason": "",
+          "pdf_affiliation_number": 2,
+          "author_positions": [
+            3
+          ]
+        },
+        {
+          "institution": "Truesight Technology Co. Ltd",
+          "institution_id": "",
+          "institution_authors": "Zhihui Liu",
+          "author_order": "4",
+          "raw_affiliation": "Truesight Technology Co. Ltd, Xiamen, China",
+          "institution_city": "Xiamen",
+          "institution_country": "China",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://openaccess.thecvf.com/content/CVPR2026/papers/Wang_PPM-CLIP_Probabilistic_Prompt_Modeling_for_Generalizable_AI-Generated_Image_Detection_CVPR_2026_paper.pdf#page=1 | New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "review_reason": "New institution/lab identity and coordinates require Admin review; no parent-organization merge or location inferred.",
+          "pdf_affiliation_number": 3,
+          "author_positions": [
+            4
+          ]
+        }
+      ],
+      "evidence": [
+        "https://openaccess.thecvf.com/content/CVPR2026/html/Wang_PPM-CLIP_Probabilistic_Prompt_Modeling_for_Generalizable_AI-Generated_Image_Detection_CVPR_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Wang_PPM-CLIP_Probabilistic_Prompt_Modeling_for_Generalizable_AI-Generated_Image_Detection_CVPR_2026_paper.pdf"
+      ],
+      "doi_status": "Not found in CVF metadata or exact normalized-title Crossref search; left empty (not proof no DOI exists).",
+      "classification": {
+        "is_deepfake_related": false,
+        "is_image_editing_related": false,
+        "manual_review": false,
+        "reason": "Image detection; face synthesis/deepfake separately flagged where applicable."
+      },
+      "arxiv_status": "No verified arXiv match; field empty",
+      "pre_insertion_matches": [],
+      "paper_id": "curated:985a663b6aa851a89f6c",
+      "action": "Added",
+      "mapping_ids": [
+        "mapping:67b94bb18ca8239c9bbb",
+        "mapping:73fa24d4a95b514614ac",
+        "mapping:a983e21a5b6818a7d5de"
+      ]
+    }
+  ]
+}

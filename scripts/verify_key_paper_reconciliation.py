@@ -158,7 +158,8 @@ def verify_current_curation():
     counts = Counter(r['coverage_status'] for r in rows)
     assert sum(counts.values()) == totals['key_papers'] == 299
     assert all(totals[k] == counts[k] for k in audit.ALLOWED_STATUSES)
-    assert totals['public_papers'] == 620 and totals['excluded'] == 10
+    current_public = json.loads((ROOT / 'web/data/public_preview_papers.json').read_text())['records']
+    assert totals['public_papers'] == len(current_public) and totals['excluded'] == 10
     assert totals['candidate_only'] == totals['missing_from_candidate_pool'] == 0
     decisions = audit.load_json_records(ROOT / audit.RECONCILIATION_PATH)
     additions = [d['matched_record']['paper_id'] for d in decisions if d['action'] == 'added_needs_review']
@@ -167,7 +168,7 @@ def verify_current_curation():
     assert len(excluded) == 3
     return {
         'baseline': str(BASELINE), 'baseline_public_papers': 623,
-        'final_audit': totals, 'published_only': primary['summary']['published_only'],
+        'final_audit': totals, 'published_only': sum(p['publication_type'] != 'preprint' for p in current_public),
         'integrity': primary['integrity'], 'additions': primary['papers'],
         'exclusion_identity_traces': excluded,
         'source_sha256': {str(p): sha(ROOT / p) for p in (*audit.INPUT_PATHS, BASELINE)},

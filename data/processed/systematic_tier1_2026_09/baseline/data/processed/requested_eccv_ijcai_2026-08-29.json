@@ -1,0 +1,823 @@
+{
+  "verified_on": "2026-08-29",
+  "records": [
+    {
+      "number": 1,
+      "key": "prior",
+      "paper": {
+        "title": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-generated Image Detection",
+        "authors": [
+          "Shashank Kotyan",
+          "Makoto Shing",
+          "Yuki Imajuku",
+          "Rujikorn Charakorn",
+          "Tarin Clanuwat"
+        ],
+        "year": "2026",
+        "doi": "10.48550/arXiv.2608.18523",
+        "arxiv_id": "2608.18523",
+        "paper_url": "https://arxiv.org/abs/2608.18523",
+        "venue": "European Conference on Computer Vision",
+        "venue_id": "venue:eccv",
+        "venue_name": "European Conference on Computer Vision",
+        "venue_acronym": "ECCV",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "ECCV 2026",
+        "publication_type": "conference",
+        "abstract": "Diffusion-based generators have made synthetic images ubiquitous, but detectors often fail under simultaneous shifts in generator, prompt/style, and source-domain. We study AI-generated image detection as a transfer system described by training prior, frozen encoder feature space, and decision rule, and ask when classifier head training adds value beyond what is already separable in modern features. As a controlled diagnostic, we fit a prior-conditioned Gaussian discriminant ladder: closed-form heads built from first- and second-order feature statistics under nested covariance assumptions. On Percept-Lens, a unified protocol over 39 public datasets (7.1 million images), the best rung is frequently competitive with, and sometimes exceeds, released AI-generated image detector heads when matched on both prior and encoder. We further quantify strong sensitivity to the training prior, data-efficiency of moment-based heads, and representation dependence of Gaussian shift metrics, motivating (prior, encoder, head)-level reporting and stronger analytical baselines for AIGI transfer.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "arxiv",
+        "metadata_source": "arxiv",
+        "curation_status": "needs_review",
+        "review_status": "pending",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Sakana AI",
+          "institution_id": "institution:ac123e56b0168ec2",
+          "institution_authors": "Shashank Kotyan; Makoto Shing; Yuki Imajuku; Rujikorn Charakorn; Tarin Clanuwat",
+          "author_order": "1; 2; 3; 4; 5",
+          "affiliation_order": "1",
+          "raw_affiliation": "Sakana AI, Tokyo, Japan",
+          "institution_city": "Tokyo",
+          "institution_country": "Japan",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://arxiv.org/pdf/2608.18523v1#page=1 | New canonical institution; location/coordinates require Admin review. No campus or coordinates guessed.",
+          "review_reason": "New canonical institution; location/coordinates require Admin review. No campus or coordinates guessed.",
+          "author_positions": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "pdf_affiliation_number": 1
+        }
+      ],
+      "evidence": [
+        "https://arxiv.org/abs/2608.18523",
+        "https://arxiv.org/pdf/2608.18523v1"
+      ],
+      "pdf_sha256": "7f965b39f97f2e518d4fab892a4c5ba43c7f5dcc56def368e69ecbc6612a350f",
+      "venue_issue": "",
+      "doi_status": "Verified arXiv repository DOI; no publisher DOI established.",
+      "classification": {
+        "is_deepfake_related": false,
+        "manual_review": true,
+        "reason": "All newly ingested papers require human review; deepfake/face-synthesis relevance retained separately from image detection task."
+      },
+      "paper_id": "curated:b460935b64c35e1d074a",
+      "mapping_ids": [
+        "mapping:aba049b98048703fe58f"
+      ],
+      "action": "Added",
+      "pre_insertion_matches": [],
+      "canonical_title": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection"
+    },
+    {
+      "number": 2,
+      "key": "lorc",
+      "paper": {
+        "title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+        "authors": [
+          "Haozhen Yan",
+          "Ruoxin Chen",
+          "Jiahui Zhan",
+          "Bo Wang",
+          "Youchang Xiao",
+          "Shouhong Ding",
+          "Liqing Zhang",
+          "Taiping Yao",
+          "Jianfu Zhang"
+        ],
+        "year": "2026",
+        "doi": "10.48550/arXiv.2608.20882",
+        "arxiv_id": "2608.20882",
+        "paper_url": "https://arxiv.org/abs/2608.20882",
+        "venue": "European Conference on Computer Vision",
+        "venue_id": "venue:eccv",
+        "venue_name": "European Conference on Computer Vision",
+        "venue_acronym": "ECCV",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "ECCV 2026 Spotlight",
+        "publication_type": "conference",
+        "abstract": "Modern generators faithfully model macroscopic semantics, producing synthetic images that appear highly realistic. Consequently, decisive forensic cues reside in subtle non-semantic visual discrepancies. To reveal these cues, we revisit AIGI detection from a geometric perspective and identify an architecture-agnostic signature. Specifically, modern generators exhibit low-rank collapse (\\textit{i.e.}, rank degeneracy) in the semantic-residual orthogonal subspace while largely preserving the dominant semantic direction. This structural flattening consistently emerges during the final decoding stage, forming a shared bottleneck across diverse generator architectures. Motivated by this signature, we propose \\textbf{LoRC}, a framework that decouples semantic dominance to capture the collapsed residual geometry induced by the generative decoding bottleneck. Our method improves accuracy by an average of 7.0\\% across multiple benchmarks and achieves 97.0\\% accuracy on 39 unseen generators. These results demonstrate strong cross-model generalization and robustness, making LoRC a reliable approach for AIGI detection in complex real-world environments.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "arxiv",
+        "metadata_source": "arxiv",
+        "curation_status": "needs_review",
+        "review_status": "pending",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Shanghai Jiao Tong University",
+          "institution_id": "institution:fccd5d0ac9cc52f9",
+          "institution_authors": "Haozhen Yan; Jiahui Zhan; Liqing Zhang; Jianfu Zhang",
+          "author_order": "1; 3; 7; 9",
+          "affiliation_order": "1",
+          "raw_affiliation": "Shanghai Jiao Tong University, China",
+          "institution_city": "",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://arxiv.org/pdf/2608.20882v1#page=1",
+          "review_reason": "",
+          "author_positions": [
+            1,
+            3,
+            7,
+            9
+          ],
+          "pdf_affiliation_number": 1
+        },
+        {
+          "institution": "Tencent Youtu Lab",
+          "institution_id": "institution:3e78e883c14f8bb8",
+          "institution_authors": "Ruoxin Chen; Bo Wang; Youchang Xiao; Shouhong Ding; Taiping Yao",
+          "author_order": "2; 4; 5; 6; 8",
+          "affiliation_order": "2",
+          "raw_affiliation": "Tencent Youtu Lab, China",
+          "institution_city": "",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://arxiv.org/pdf/2608.20882v1#page=1",
+          "review_reason": "",
+          "author_positions": [
+            2,
+            4,
+            5,
+            6,
+            8
+          ],
+          "pdf_affiliation_number": 2
+        }
+      ],
+      "evidence": [
+        "https://arxiv.org/abs/2608.20882",
+        "https://arxiv.org/pdf/2608.20882v1"
+      ],
+      "pdf_sha256": "794bbedc7050d2a79dd5820e7de279e7ea894d7c4f55f8c0272f767b3cde57d8",
+      "venue_issue": "",
+      "doi_status": "Verified arXiv repository DOI; no publisher DOI established.",
+      "classification": {
+        "is_deepfake_related": false,
+        "manual_review": true,
+        "reason": "All newly ingested papers require human review; deepfake/face-synthesis relevance retained separately from image detection task."
+      },
+      "paper_id": "curated:7a5ce57b121b69752867",
+      "mapping_ids": [
+        "mapping:3b62a7b4795fac96b5e6",
+        "mapping:5a2936f0c2d808fc1962"
+      ],
+      "action": "Added",
+      "pre_insertion_matches": [],
+      "canonical_title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals"
+    },
+    {
+      "number": 3,
+      "key": "reveal",
+      "paper": {
+        "title": "REVEAL: Reasoning-Enhanced Forensic Evidence Analysis for Explainable AI-Generated Image Detection",
+        "authors": [
+          "Huangsen Cao",
+          "Qin Mei",
+          "Zhiheng Li",
+          "Yuxi Li",
+          "Zhan Meng",
+          "Ying Zhang",
+          "Chen Li",
+          "Zhimeng Zhang",
+          "Xin Ding",
+          "Yongwei Wang",
+          "Jing Lyu",
+          "Fei Wu"
+        ],
+        "year": "2025",
+        "doi": "10.48550/arXiv.2511.23158",
+        "arxiv_id": "2511.23158",
+        "paper_url": "https://arxiv.org/abs/2511.23158",
+        "venue": "arXiv",
+        "venue_id": "venue:arxiv",
+        "venue_name": "arXiv",
+        "venue_acronym": "",
+        "venue_type": "preprint",
+        "venue_track": "",
+        "raw_venue": "arXiv",
+        "publication_type": "preprint",
+        "abstract": "The rapid progress of visual generative models has made AI-generated images increasingly difficult to distinguish from authentic ones, posing growing risks to social trust and information integrity. This motivates detectors that are not only accurate but also forensically explainable. While recent multimodal approaches improve interpretability, many rely on post-hoc rationalizations or coarse visual cues, without constructing verifiable chains of evidence, thus often leading to poor generalization. We introduce REVEAL-Bench, a reasoning-enhanced multimodal benchmark for AI-generated image forensics, structured around explicit chains of forensic evidence derived from lightweight expert models and consolidated into step-by-step chain-of-evidence traces. Based on this benchmark, we propose REVEAL (\\underline{R}easoning-\\underline{e}nhanced Forensic E\\underline{v}id\\underline{e}nce \\underline{A}na\\underline{l}ysis), an explainable forensic framework trained with expert-grounded reinforcement learning. Our reward design jointly promotes detection accuracy, evidence-grounded reasoning stability, and explanation faithfulness. Extensive experiments demonstrate significantly improved cross-domain generalization and more faithful explanations to baseline detectors. All data and codes will be released.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "arxiv",
+        "metadata_source": "arxiv",
+        "curation_status": "needs_review",
+        "review_status": "pending",
+        "paper_categories": [
+          "method",
+          "benchmark"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Zhejiang University",
+          "institution_id": "institution:e433baf78e80004b",
+          "institution_authors": "Huangsen Cao; Qin Mei; Zhiheng Li; Zhan Meng; Zhimeng Zhang; Yongwei Wang; Fei Wu",
+          "author_order": "1; 2; 3; 5; 8; 10; 12",
+          "affiliation_order": "1",
+          "raw_affiliation": "Zhejiang University",
+          "institution_city": "",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://arxiv.org/pdf/2511.23158v2#page=1",
+          "review_reason": "",
+          "author_positions": [
+            1,
+            2,
+            3,
+            5,
+            8,
+            10,
+            12
+          ],
+          "pdf_affiliation_number": 1
+        },
+        {
+          "institution": "Tencent Inc.",
+          "institution_id": "institution:aa542458d996a5d3",
+          "institution_authors": "Yuxi Li; Ying Zhang; Chen Li; Jing Lyu",
+          "author_order": "4; 6; 7; 11",
+          "affiliation_order": "2",
+          "raw_affiliation": "WeChat Vision, Tencent Inc",
+          "institution_city": "",
+          "institution_country": "China",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://arxiv.org/pdf/2511.23158v2#page=1 | PDF identifies WeChat Vision, Tencent Inc, but not its city. Reuse parent canonical identity; do not infer Shenzhen from company default.",
+          "review_reason": "PDF identifies WeChat Vision, Tencent Inc, but not its city. Reuse parent canonical identity; do not infer Shenzhen from company default.",
+          "author_positions": [
+            4,
+            6,
+            7,
+            11
+          ],
+          "pdf_affiliation_number": 2
+        },
+        {
+          "institution": "Nanjing University of Information Science and Technology",
+          "institution_id": "institution:0af8b0b3be8e7963",
+          "institution_authors": "Xin Ding",
+          "author_order": "9",
+          "affiliation_order": "3",
+          "raw_affiliation": "Nanjing University of Information Science and Technology",
+          "institution_city": "",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://arxiv.org/pdf/2511.23158v2#page=1",
+          "review_reason": "",
+          "author_positions": [
+            9
+          ],
+          "pdf_affiliation_number": 3
+        }
+      ],
+      "evidence": [
+        "https://arxiv.org/abs/2511.23158",
+        "https://arxiv.org/pdf/2511.23158v2"
+      ],
+      "pdf_sha256": "8e3494b96624775ec81b04ceeb0347d720660e0c6aeba5614ee95df8d4ccc2e1",
+      "venue_issue": "Expected ECCV 2026 is unverified: current arXiv v2 (2026-04-08), PDF, and exact-title searches contain no acceptance evidence. Preserve first-publication year 2025 and arXiv preprint until reviewed.",
+      "doi_status": "Verified arXiv repository DOI; no publisher DOI established.",
+      "classification": {
+        "is_deepfake_related": false,
+        "manual_review": true,
+        "reason": "All newly ingested papers require human review; deepfake/face-synthesis relevance retained separately from image detection task."
+      },
+      "paper_id": "curated:24bcb339c197bcb56bb7",
+      "mapping_ids": [
+        "mapping:0bb5e583da6600f375c9",
+        "mapping:d328a328f00b1ea19e93",
+        "mapping:b64187a3960f85dc5023"
+      ],
+      "action": "Added",
+      "pre_insertion_matches": [],
+      "canonical_title": "REVEAL: Reasoning-Enhanced Forensic Evidence Analysis for Explainable AI-Generated Image Detection"
+    },
+    {
+      "number": 4,
+      "key": "fair",
+      "paper": {
+        "title": "FAIR: Feature-Augmented Implicit Regularization for AI-generated Fake Image Detection",
+        "authors": [
+          "Md Redwanul Haque",
+          "Manzur Murshed",
+          "Manoranjan Paul",
+          "Tsz-Kwan Lee"
+        ],
+        "year": "2026",
+        "doi": "10.48550/arXiv.2607.22087",
+        "arxiv_id": "2607.22087",
+        "paper_url": "https://arxiv.org/abs/2607.22087",
+        "venue": "European Conference on Computer Vision",
+        "venue_id": "venue:eccv",
+        "venue_name": "European Conference on Computer Vision",
+        "venue_acronym": "ECCV",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "ECCV 2026",
+        "publication_type": "conference",
+        "abstract": "Generalization remains a critical bottleneck in AI-generated image detection. Because many modern generators are proprietary or adversarially modified, existing detectors overfit to the low-level textural patterns of accessible training data, resulting in severe failures on unseen domains. Conventional regularization techniques (e.g., $L_1$/$L_2$ norms, Dropout) apply indiscriminate parametric constraints and fail to provide the domain-invariant structure necessary for cross-generator robustness. To address this, we propose Feature-Augmented Implicit Regularization (FAIR). FAIR introduces an orthogonal, macro-structural prior, specifically, Scene Composition Structure (SCS), during training to geometrically constrain the model's optimization trajectory. By augmenting the primary feature space with domain-invariant SCS features, FAIR explicitly penalizes texture-biased shortcut learning. Crucially, this structural prior is entirely discarded at inference, yielding a smoothed, generalized decision boundary with zero architectural or computational overhead. Extensive evaluations across five massive benchmarks demonstrate that integrating FAIR into state-of-the-art detectors significantly improves cross-generator generalization, boosting accuracy by up to 8.04% and establishing new state-of-the-art robustness in zero-shot transfer scenarios.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "arxiv",
+        "metadata_source": "arxiv",
+        "curation_status": "needs_review",
+        "review_status": "pending",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Deakin University",
+          "institution_id": "institution:30e93da233b7eeef",
+          "institution_authors": "Md Redwanul Haque; Manzur Murshed; Tsz-Kwan Lee",
+          "author_order": "1; 2; 4",
+          "affiliation_order": "1",
+          "raw_affiliation": "Deakin University, Burwood, VIC, Australia",
+          "institution_city": "Burwood",
+          "institution_country": "Australia",
+          "mapping_status": "active",
+          "provenance_source": "https://arxiv.org/pdf/2607.22087v1#page=1",
+          "review_reason": "",
+          "author_positions": [
+            1,
+            2,
+            4
+          ],
+          "pdf_affiliation_number": 1,
+          "location_id": "location:c33d30d49f30b6f50b13"
+        },
+        {
+          "institution": "Charles Sturt University",
+          "institution_id": "institution:eed925f6c3049512",
+          "institution_authors": "Manoranjan Paul",
+          "author_order": "3",
+          "affiliation_order": "2",
+          "raw_affiliation": "Charles Sturt University, Bathurst, NSW, Australia",
+          "institution_city": "Bathurst",
+          "institution_country": "Australia",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://arxiv.org/pdf/2607.22087v1#page=1 | New canonical institution; location/coordinates require Admin review. No campus or coordinates guessed.",
+          "review_reason": "New canonical institution; location/coordinates require Admin review. No campus or coordinates guessed.",
+          "author_positions": [
+            3
+          ],
+          "pdf_affiliation_number": 2
+        }
+      ],
+      "evidence": [
+        "https://arxiv.org/abs/2607.22087",
+        "https://arxiv.org/pdf/2607.22087v1"
+      ],
+      "pdf_sha256": "f6e1538672d1e20cde210df11a94206748c029086b7d623d5f855a9787252e6b",
+      "venue_issue": "",
+      "doi_status": "Verified arXiv repository DOI; no publisher DOI established.",
+      "classification": {
+        "is_deepfake_related": false,
+        "manual_review": true,
+        "reason": "All newly ingested papers require human review; deepfake/face-synthesis relevance retained separately from image detection task."
+      },
+      "paper_id": "curated:8503e319e1f4890c2e28",
+      "mapping_ids": [
+        "mapping:28b4d5190874fc2fb9a6",
+        "mapping:594b79d7d8e2f3d82eb2"
+      ],
+      "action": "Added",
+      "pre_insertion_matches": [],
+      "canonical_title": "FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection"
+    },
+    {
+      "number": 5,
+      "key": "bcnet",
+      "paper": {
+        "title": "Revisiting Deepfake Detection: BCNet for Robust Generalization Beyond Semantic Dependence",
+        "authors": [
+          "Jian Yang",
+          "Shibo Yao",
+          "Renshuai Tao",
+          "Chuangchuang Tan",
+          "Yao Zhao"
+        ],
+        "year": "2026",
+        "doi": "",
+        "arxiv_id": "",
+        "paper_url": "https://github.com/zwhyyyy/BCNet",
+        "venue": "European Conference on Computer Vision",
+        "venue_id": "venue:eccv",
+        "venue_name": "European Conference on Computer Vision",
+        "venue_acronym": "ECCV",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "ECCV 2026",
+        "publication_type": "conference",
+        "abstract": "",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "needs_review",
+        "review_status": "pending",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Beijing Jiaotong University",
+          "institution_id": "institution:bf6195b78f6dc951",
+          "institution_authors": "Jian Yang; Shibo Yao; Renshuai Tao; Chuangchuang Tan; Yao Zhao",
+          "author_order": "1; 2; 3; 4; 5",
+          "affiliation_order": "1",
+          "raw_affiliation": "Institute of Information Science, Beijing Jiaotong University, China",
+          "institution_city": "",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://rstao-bjtu.github.io/assets/pdf/ECCV2026_JianYang.pdf#page=1",
+          "review_reason": "",
+          "author_positions": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "pdf_affiliation_number": 1
+        }
+      ],
+      "evidence": [
+        "https://rstao-bjtu.github.io/",
+        "https://rstao-bjtu.github.io/assets/pdf/ECCV2026_JianYang.pdf",
+        "https://github.com/zwhyyyy/BCNet"
+      ],
+      "pdf_sha256": "e270e1cb56484736094bf5dd03faf1f5cd1125ddf5a806d31871bc0872ce7c68",
+      "venue_issue": "",
+      "doi_status": "No DOI or arXiv ID established in authoritative sources; left empty.",
+      "classification": {
+        "is_deepfake_related": true,
+        "manual_review": true,
+        "reason": "All newly ingested papers require human review; deepfake/face-synthesis relevance retained separately from image detection task."
+      },
+      "paper_id": "curated:27627323cfb3f8a48640",
+      "mapping_ids": [
+        "mapping:150140cf48f0c6395c64"
+      ],
+      "action": "Added",
+      "pre_insertion_matches": [],
+      "canonical_title": "Revisiting Deepfake Detection: BCNet for Robust Generalization Beyond Semantic Dependence"
+    },
+    {
+      "number": 6,
+      "key": "ucvlm",
+      "paper": {
+        "title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+        "authors": [
+          "Lei Tan",
+          "Shuwei Li",
+          "Mohan Kankanhalli",
+          "Robby T. Tan"
+        ],
+        "year": "2026",
+        "doi": "10.48550/arXiv.2608.15238",
+        "arxiv_id": "2608.15238",
+        "paper_url": "https://arxiv.org/abs/2608.15238",
+        "venue": "European Conference on Computer Vision",
+        "venue_id": "venue:eccv",
+        "venue_name": "European Conference on Computer Vision",
+        "venue_acronym": "ECCV",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "ECCV 2026",
+        "publication_type": "conference",
+        "abstract": "Vision-Language Large Models (VLLMs) are promising for AI-generated image (AIGI) detection because they can produce both a prediction and a natural-language output. However, most existing VLLM-based detectors primarily fine-tune the language side while giving limited attention to low-level visual forensic cues. They also often depend on manually crafted prompts or human-annotated rationales, which limits this http URL present UC-VLM, a unified multi-stage framework for AIGI detection that relies solely on binary supervision. UC-VLM first identifies effective instruction variants automatically. It then reuses the same binary label within a multi-stage training framework: (i) a visual discrimination objective that strengthens sensitivity to non-semantic forensic cues, and (ii) a label-conditioned generation objective that uses the binary label to supervise textual outputs. This design turns weak binary supervision into a shared supervision signal for both the visual pathway and the language output. Our key novelty is a unified multi-stage binary-supervised framework that consistently reuses the same authenticity labels for visual adaptation and label-conditioned text generation, while leveraging automatically optimized instructions to reduce prompt sensitivity without requiring human-written rationales or hand-crafted this http URL show that UC-VLM achieves 96.1% average accuracy on GenImage, exceeding the strongest prior result by 4.6%, and obtains 69.6% / 77.9% accuracy on Chameleon under ProGAN / SDV1.4 training, surpassing the best baseline by 11.2% / 15.3%, respectively.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "arxiv",
+        "metadata_source": "arxiv",
+        "curation_status": "needs_review",
+        "review_status": "pending",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "National University of Singapore",
+          "institution_id": "institution:70ccb485197bbb6c",
+          "institution_authors": "Lei Tan; Shuwei Li; Mohan Kankanhalli; Robby T. Tan",
+          "author_order": "1; 2; 3; 4",
+          "affiliation_order": "1",
+          "raw_affiliation": "National University of Singapore, Singapore",
+          "institution_city": "Singapore",
+          "institution_country": "Singapore",
+          "mapping_status": "active",
+          "provenance_source": "https://arxiv.org/pdf/2608.15238v1#page=1",
+          "review_reason": "",
+          "author_positions": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "pdf_affiliation_number": 1
+        }
+      ],
+      "evidence": [
+        "https://arxiv.org/abs/2608.15238",
+        "https://arxiv.org/pdf/2608.15238v1"
+      ],
+      "pdf_sha256": "63ef068afa9fe99b47a5846243573f53de98bdc3fec87e60250f98531aef4096",
+      "venue_issue": "",
+      "doi_status": "Verified arXiv repository DOI; no publisher DOI established.",
+      "classification": {
+        "is_deepfake_related": false,
+        "manual_review": true,
+        "reason": "All newly ingested papers require human review; deepfake/face-synthesis relevance retained separately from image detection task."
+      },
+      "paper_id": "curated:55bc4360e3d312e696b7",
+      "mapping_ids": [
+        "mapping:79a97fd359ad1ec7f801"
+      ],
+      "action": "Added",
+      "pre_insertion_matches": [],
+      "canonical_title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models"
+    },
+    {
+      "number": 7,
+      "key": "gfre",
+      "paper": {
+        "title": "Fast and Generalizable AI-Generated Image Detection via Model-Agnostic Feature Reconstruction",
+        "authors": [
+          "Qinghui He",
+          "Haifeng Zhang",
+          "Bo Liu",
+          "Yang Wei"
+        ],
+        "year": "2026",
+        "doi": "",
+        "arxiv_id": "",
+        "paper_url": "https://ijcai-preprints.s3.us-west-1.amazonaws.com/2026/1359.pdf",
+        "venue": "International Joint Conference on Artificial Intelligence",
+        "venue_id": "venue:ijcai",
+        "venue_name": "International Joint Conference on Artificial Intelligence",
+        "venue_acronym": "IJCAI",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "IJCAI 2026",
+        "publication_type": "conference",
+        "abstract": "Generative models continue to advance rapidly in both fidelity and diversity, posing increasing challenges for reliably distinguishing generated images from real ones. Existing reconstruction-based detection methods often rely on assumptions tied to specific generative models, which leads to limited cross-model generalization and substantial computational overhead. In this paper, we propose General Feature Reconstruction Error (GFRE), a fast and generalizable detection paradigm that leverages reconstruction behavior in a general-purpose representation space. Our key insight is that real and generated images exhibit consistently different reconstruction stability when projected into universal visual representations. Instead of tracing generator-specific artifacts, GFRE employs a lightweight autoencoder to model the reconstructability of image representations, producing a reconstruction signal that is inherently generator-agnostic and transferable across diverse generative processes. Extensive experiments on images synthesized by 18 different generative models demonstrate that GFRE consistently outperforms existing state-of-the-art methods, achieving a 4.70% improvement in detection accuracy and an 8.20% gain in cross-model generalization. Moreover, by avoiding costly generator inversion and diffusion-based reconstruction, GFRE reduces reconstruction error extraction time by up to 150x, enabling efficient and scalable deployment.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "needs_review",
+        "review_status": "pending",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Chongqing University of Posts and Telecommunications",
+          "institution_id": "institution:7e10613327a4e264",
+          "institution_authors": "Qinghui He; Haifeng Zhang; Bo Liu; Yang Wei",
+          "author_order": "1; 2; 3; 4",
+          "affiliation_order": "1",
+          "raw_affiliation": "Chongqing Key Laboratory of Image Cognition, Chongqing University of Posts and Telecommunications, Chongqing, China",
+          "institution_city": "Chongqing",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://ijcai-preprints.s3.us-west-1.amazonaws.com/2026/1359.pdf#page=1",
+          "review_reason": "",
+          "author_positions": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "pdf_affiliation_number": 1
+        },
+        {
+          "institution": "Chongqing University of Posts and Telecommunications",
+          "institution_id": "institution:7e10613327a4e264",
+          "institution_authors": "Qinghui He; Haifeng Zhang",
+          "author_order": "1; 2",
+          "affiliation_order": "2",
+          "raw_affiliation": "School of Computer Science and Technology",
+          "institution_city": "Chongqing",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://ijcai-preprints.s3.us-west-1.amazonaws.com/2026/1359.pdf#page=1",
+          "review_reason": "",
+          "author_positions": [
+            1,
+            2
+          ],
+          "pdf_affiliation_number": 2
+        },
+        {
+          "institution": "Chongqing University of Posts and Telecommunications",
+          "institution_id": "institution:7e10613327a4e264",
+          "institution_authors": "Bo Liu; Yang Wei",
+          "author_order": "3; 4",
+          "affiliation_order": "3",
+          "raw_affiliation": "School of Artificial Intelligence",
+          "institution_city": "Chongqing",
+          "institution_country": "China",
+          "mapping_status": "active",
+          "provenance_source": "https://ijcai-preprints.s3.us-west-1.amazonaws.com/2026/1359.pdf#page=1",
+          "review_reason": "",
+          "author_positions": [
+            3,
+            4
+          ],
+          "pdf_affiliation_number": 3
+        }
+      ],
+      "evidence": [
+        "https://2026.ijcai.org/accepted-papers/?ijtrack=main-track",
+        "https://ijcai-preprints.s3.us-west-1.amazonaws.com/2026/1359.pdf"
+      ],
+      "pdf_sha256": "c2018df18830903210985017a3c6afcf833e296789062824e384489a44b12df2",
+      "venue_issue": "",
+      "doi_status": "No DOI or arXiv ID established in authoritative sources; left empty.",
+      "classification": {
+        "is_deepfake_related": false,
+        "manual_review": true,
+        "reason": "All newly ingested papers require human review; deepfake/face-synthesis relevance retained separately from image detection task."
+      },
+      "paper_id": "curated:773aa77291d6869eaad8",
+      "mapping_ids": [
+        "mapping:1064d4d634d01f5fdfa8",
+        "mapping:927a3942da7c7afc60ec",
+        "mapping:6368f4c9a24d3c4f1814"
+      ],
+      "action": "Added",
+      "pre_insertion_matches": [],
+      "canonical_title": "Fast and Generalizable AI-Generated Image Detection via Model-Agnostic Feature Reconstruction"
+    },
+    {
+      "number": 8,
+      "key": "pure",
+      "paper": {
+        "title": "PURE: Purging Unrelated Representations for Content-Agnostic Forgery Detection",
+        "authors": [
+          "Xinyu Wu",
+          "Dong Li",
+          "Minglai Shao",
+          "Xintao Wu",
+          "Zhong Chen",
+          "Chen Zhao"
+        ],
+        "year": "2026",
+        "doi": "",
+        "arxiv_id": "",
+        "paper_url": "https://ijcai-preprints.s3.us-west-1.amazonaws.com/2026/2613.pdf",
+        "venue": "International Joint Conference on Artificial Intelligence",
+        "venue_id": "venue:ijcai",
+        "venue_name": "International Joint Conference on Artificial Intelligence",
+        "venue_acronym": "IJCAI",
+        "venue_type": "conference",
+        "venue_track": "Main",
+        "raw_venue": "IJCAI 2026",
+        "publication_type": "conference",
+        "abstract": "Existing AI-generated image (AIGI) detectors perform well in-domain but degrade severely under distribution shift. We observe that this failure is mainly caused by content shortcuts, where detectors spuriously couple forgery artifacts with semantic content, such as object categories or demographic attributes, learning content–label correlations instead of generalizable forgery patterns. To address this issue, we propose PURE (Purging Unrelated Representations for Content-Agnostic Forgery Detection), which achieves content-agnostic detection through two complementary components: a Causal Semantic Generative (CSG) mechanism that disentangles semantic representations from forgery-irrelevant nuisance factors, and a Gaussian Mixture Model (GMM)-based prototype alignment module that suppresses category-specific content bias. Extensive experiments on CIFAKE, GenImage, and AlFace show that PURE achieves superior generalization under spurious correlation reversal. The code is available at https://github.com/wuxinyu519/PURE.",
+        "task": "detection",
+        "scope_status": "in_scope",
+        "source_database": "manual",
+        "metadata_source": "manual",
+        "curation_status": "needs_review",
+        "review_status": "pending",
+        "paper_categories": [
+          "method"
+        ],
+        "replace_raw_venue": true
+      },
+      "mappings": [
+        {
+          "institution": "Baylor University",
+          "institution_id": "institution:9a09450f0dd87db7",
+          "institution_authors": "Xinyu Wu; Dong Li; Chen Zhao",
+          "author_order": "1; 2; 6",
+          "affiliation_order": "1",
+          "raw_affiliation": "Department of Computer Science, Baylor University",
+          "institution_city": "",
+          "institution_country": "",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://ijcai-preprints.s3.us-west-1.amazonaws.com/2026/2613.pdf#page=1 | New canonical institution; location/coordinates require Admin review. No campus or coordinates guessed.",
+          "review_reason": "New canonical institution; location/coordinates require Admin review. No campus or coordinates guessed.",
+          "author_positions": [
+            1,
+            2,
+            6
+          ],
+          "pdf_affiliation_number": 1
+        },
+        {
+          "institution": "Tianjin University",
+          "institution_id": "institution:9ed23c2db75b5eee",
+          "institution_authors": "Minglai Shao",
+          "author_order": "3",
+          "affiliation_order": "2",
+          "raw_affiliation": "School of Computer Science and Technology, Tianjin University",
+          "institution_city": "",
+          "institution_country": "",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://ijcai-preprints.s3.us-west-1.amazonaws.com/2026/2613.pdf#page=1 | Existing canonical institution has no confirmed location; location review required.",
+          "review_reason": "Existing canonical institution has no confirmed location; location review required.",
+          "author_positions": [
+            3
+          ],
+          "pdf_affiliation_number": 2
+        },
+        {
+          "institution": "University of Arkansas",
+          "institution_id": "institution:97cd630784a77fa2",
+          "institution_authors": "Xintao Wu",
+          "author_order": "4",
+          "affiliation_order": "3",
+          "raw_affiliation": "Department of Electrical Engineering and Computer Science, University of Arkansas",
+          "institution_city": "",
+          "institution_country": "",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://ijcai-preprints.s3.us-west-1.amazonaws.com/2026/2613.pdf#page=1 | New canonical institution; location/coordinates require Admin review. No campus or coordinates guessed.",
+          "review_reason": "New canonical institution; location/coordinates require Admin review. No campus or coordinates guessed.",
+          "author_positions": [
+            4
+          ],
+          "pdf_affiliation_number": 3
+        },
+        {
+          "institution": "Southern Illinois University",
+          "institution_id": "institution:db8c104cf01b1e84",
+          "institution_authors": "Zhong Chen",
+          "author_order": "5",
+          "affiliation_order": "4",
+          "raw_affiliation": "School of Computing, Southern Illinois University",
+          "institution_city": "",
+          "institution_country": "",
+          "mapping_status": "needs_review",
+          "provenance_source": "https://ijcai-preprints.s3.us-west-1.amazonaws.com/2026/2613.pdf#page=1 | New canonical institution; location/coordinates require Admin review. No campus or coordinates guessed.",
+          "review_reason": "New canonical institution; location/coordinates require Admin review. No campus or coordinates guessed.",
+          "author_positions": [
+            5
+          ],
+          "pdf_affiliation_number": 4
+        }
+      ],
+      "evidence": [
+        "https://2026.ijcai.org/accepted-papers/?ijtrack=main-track",
+        "https://ijcai-preprints.s3.us-west-1.amazonaws.com/2026/2613.pdf",
+        "https://github.com/wuxinyu519/PURE"
+      ],
+      "pdf_sha256": "60153b707f25fcf34ad4d05ee135edf53f109d30ca3254789558be7557e27b56",
+      "venue_issue": "",
+      "doi_status": "No DOI or arXiv ID established in authoritative sources; left empty.",
+      "classification": {
+        "is_deepfake_related": true,
+        "manual_review": true,
+        "reason": "All newly ingested papers require human review; deepfake/face-synthesis relevance retained separately from image detection task."
+      },
+      "paper_id": "curated:6084dd31e74901dd4700",
+      "mapping_ids": [
+        "mapping:b5edc2679f839e343466",
+        "mapping:5c6bdc0ef72acadb603a",
+        "mapping:908ae7440bb559423e4e",
+        "mapping:de40a49aec4c27e8e529"
+      ],
+      "action": "Added",
+      "pre_insertion_matches": [],
+      "canonical_title": "PURE: Purging Unrelated Representations for Content-Agnostic Forgery Detection"
+    }
+  ],
+  "notes": [
+    "Source titles and ordered authors preserved from current primary metadata and PDFs.",
+    "IJCAI submission tracks checked using the official Main Track filter.",
+    "No department/lab/address variant institutions created. Numbered affiliations remain distinct mappings to canonical parents.",
+    "arXiv DOI identifies repository version, not proceedings DOI.",
+    "Every new paper needs_review regardless of mapping completeness."
+  ]
+}

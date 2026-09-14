@@ -1,0 +1,2367 @@
+{
+  "doi": "10.1145/3770916",
+  "source_url": "https://api.crossref.org/works/10.1145%2F3770916",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            1
+          ]
+        ],
+        "date-time": "2026-08-01T00:20:35Z",
+        "timestamp": 1785543635436,
+        "version": "3.56.0"
+      },
+      "reference-count": 285,
+      "publisher": "Association for Computing Machinery (ACM)",
+      "issue": "5",
+      "funder": [
+        {
+          "DOI": "10.13039/501100012166",
+          "name": "National Key Research and Development Program of China",
+          "doi-asserted-by": "publisher",
+          "award": [
+            "2023YFB3107401"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "2023YFB3107401"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100012166",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        },
+        {
+          "DOI": "10.13039/501100001809",
+          "name": "National Natural Science Foundation of China",
+          "doi-asserted-by": "publisher",
+          "award": [
+            "T2341003, 62376210, 62161160337, 62132011, U24B20185, U21B2018, 62206217, 62406240, U244120060"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "T2341003, 62376210, 62161160337, 62132011, U24B20185, U21B2018, 62206217, 62406240, U244120060"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100001809",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        },
+        {
+          "name": "Shaanxi Province Key Industry Innovation Program",
+          "award": [
+            "2023-ZDLGY-38"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "2023-ZDLGY-38"
+              ]
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "dl.acm.org"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "ACM Comput. Surv."
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            30
+          ]
+        ]
+      },
+      "abstract": "<jats:p>Deep generative models have demonstrated impressive performance in various computer vision applications, including image synthesis, video generation, and medical analysis. Despite their significant advancements, these models may be used for malicious purposes, such as misinformation, deception, and copyright violation. In this article, we provide a systematic and timely review of research efforts on defenses against AI-generated visual media, covering detection, disruption, and authentication. We review existing methods and summarize the mainstream defense-related tasks within a unified passive and proactive framework. Moreover, we survey the derivative tasks concerning the trustworthiness of defenses, such as their robustness and fairness. For each defense strategy, we formulate its general pipeline and propose a multidimensional taxonomy applicable across defense tasks, based on methodological strategies. Additionally, we summarize the commonly used evaluation datasets, criteria, and metrics. Finally, by analyzing the reviewed studies, we provide insights into current research challenges and suggest possible directions for future research.</jats:p>",
+      "DOI": "10.1145/3770916",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            4
+          ]
+        ],
+        "date-time": "2025-10-04T10:50:03Z",
+        "timestamp": 1759575003000
+      },
+      "page": "1-35",
+      "update-policy": "https://doi.org/10.1145/crossmark-policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 13,
+      "title": [
+        "A Survey of Defenses Against AI-Generated Visual Media: Detection, Disruption, and Authentication"
+      ],
+      "prefix": "10.1145",
+      "volume": "58",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0001-2709-9173",
+          "authenticated-orcid": false,
+          "given": "Jingyi",
+          "family": "Deng",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "School of Cyber Science and Engineering, Xi'an Jiaotong University",
+              "place": [
+                "Xi'an, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-6265-7345",
+          "authenticated-orcid": false,
+          "given": "Chenhao",
+          "family": "Lin",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "School of Cyber Science and Engineering, Xi'an Jiaotong University",
+              "place": [
+                "Xi'an, China"
+              ]
+            },
+            {
+              "name": "Research Center of Frontier science and technology, Xi'an Jiaotong University",
+              "place": [
+                "Xi'an, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-0745-4294",
+          "authenticated-orcid": false,
+          "given": "Zhengyu",
+          "family": "Zhao",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "School of Cyber Science and Engineering, Xi'an Jiaotong University",
+              "place": [
+                "Xi'an, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-0327-6729",
+          "authenticated-orcid": false,
+          "given": "Shuai",
+          "family": "Liu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "School of Software Engineering, Xi'an Jiaotong University",
+              "place": [
+                "Xi'an, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-6674-1640",
+          "authenticated-orcid": false,
+          "given": "Zhe",
+          "family": "Peng",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Industrial and Systems Engineering, The Hong Kong Polytechnic University",
+              "place": [
+                "Hong Kong, Hong Kong"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-8967-8525",
+          "authenticated-orcid": false,
+          "given": "Qian",
+          "family": "Wang",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "School of Cyber Science and Engineering, Wuhan University",
+              "place": [
+                "Wuhan, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-6959-0569",
+          "authenticated-orcid": false,
+          "given": "Chao",
+          "family": "Shen",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "School of Cyber Science and Engineering, Xi'an Jiaotong University",
+              "place": [
+                "Xi'an, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "320",
+      "published-online": {
+        "date-parts": [
+          [
+            2025,
+            11,
+            20
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "e_1_3_1_2_2",
+          "unstructured": "2017. FaceSwap. Retrieved from https://github.com/deepfakes/faceswap. (2017)."
+        },
+        {
+          "key": "e_1_3_1_3_2",
+          "first-page": "3667",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Ambati Rahul",
+          "year": "2023",
+          "unstructured": "Rahul Ambati, Naveed Akhtar, Ajmal Mian, and Yogesh S Rawat. 2023. Prat: Profiling adversarial a ttacks. In Proceedings of the ICCV. 3667–3676."
+        },
+        {
+          "key": "e_1_3_1_4_2",
+          "first-page": "0",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Amerini Irene",
+          "year": "2019",
+          "unstructured": "Irene Amerini, Leonardo Galteri, Roberto Caldelli, and Alberto Del Bimbo. 2019. Deepfake video detection through optical flow based cnn. In Proceedings of the ICCV. 0–0."
+        },
+        {
+          "key": "e_1_3_1_5_2",
+          "unstructured": "Bang An Mucong Ding Tahseen Rabbani Aakriti Agrawal Yuancheng Xu Chenghao Deng Sicheng Zhu Abdirisak Mohamed Yuxin Wen Tom Goldstein and others. 2024. WAVES: benchmarking the robustness of image watermarks. Proc. ICML 235 (2024)."
+        },
+        {
+          "key": "e_1_3_1_6_2",
+          "first-page": "58",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Aneja Shivangi",
+          "year": "2022",
+          "unstructured": "Shivangi Aneja, Lev Markhasin, and Matthias Nießner. 2022. TAFIM: Targeted adversarial attacks against facial image manipulations. In Proceedings of the ECCV. 58–75."
+        },
+        {
+          "key": "e_1_3_1_7_2",
+          "first-page": "15386",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Asnani Vishal",
+          "year": "2022",
+          "unstructured": "Vishal Asnani, Xi Yin, Tal Hassner, Sijia Liu, and Xiaoming Liu. 2022. Proactive image manipulation detection. In Proceedings of the CVPR. 15386–15395."
+        },
+        {
+          "key": "e_1_3_1_8_2",
+          "first-page": "12343",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Asnani Vishal",
+          "year": "2023",
+          "unstructured": "Vishal Asnani, Xi Yin, Tal Hassner, and Xiaoming Liu. 2023. Malp: Manipulation localization using a proactive scheme. In Proceedings of the CVPR. 12343–12352."
+        },
+        {
+          "key": "e_1_3_1_9_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Vishal Asnani Xi Yin Tal Hassner and Xiaoming Liu. 2023. Reverse engineering of generative models: Inferring model hyperparameters from generated images. IEEE Trans. Pattern Anal. Mach. Intell 45 12 (2023) 15477–15493.",
+          "DOI": "10.1109/TPAMI.2023.3301451"
+        },
+        {
+          "key": "e_1_3_1_10_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Jianfa Bai Man Lin Gang Cao and Zijie Lou. 2024. Ai-generated video detection via spatial-temporal anomaly learning. In Proc. PRCV. 460–470.",
+          "DOI": "10.1007/978-981-97-8792-0_32"
+        },
+        {
+          "key": "e_1_3_1_11_2",
+          "first-page": "24709",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Bai Weiming",
+          "year": "2023",
+          "unstructured": "Weiming Bai, Yufan Liu, Zhipeng Zhang, Bing Li, and Weiming Hu. 2023. AUNet: Learning relations between action units for face forgery detection. In Proceedings of the CVPR. 24709–24719."
+        },
+        {
+          "key": "e_1_3_1_12_2",
+          "first-page": "393",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Beuve Nicolas",
+          "year": "2023",
+          "unstructured": "Nicolas Beuve, Wassim Hamidouche, and Olivier Déforges. 2023. Waterlo: Protect images from deepfakes using localized semi-fragile watermark. In Proceedings of the ICCV. 393–402."
+        },
+        {
+          "key": "e_1_3_1_13_2",
+          "unstructured": "Andrew Brock Jeff Donahue and Karen Simonyan. 2019. Large scale GAN training for high fidelity natural image synthesis. In Proc. ICLR."
+        },
+        {
+          "key": "e_1_3_1_14_2",
+          "first-page": "146",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Bui Tu",
+          "year": "2022",
+          "unstructured": "Tu Bui, Ning Yu, and John Collomosse. 2022. Repmix: Representation mixing for robust attribution of synthesized images. In Proceedings of the ECCV. 146–163."
+        },
+        {
+          "key": "e_1_3_1_15_2",
+          "first-page": "7414",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "Cai Zhixi",
+          "year": "2024",
+          "unstructured": "Zhixi Cai, Shreya Ghosh, Aman Pankaj Adatia, Munawar Hayat, Abhinav Dhall, Tom Gedeon, and Kalin Stefanov. 2024. AV-Deepfake1M: A large-scale LLM-driven audio-visual deepfake dataset. In Proceedings of the ACM MM. 7414–7423."
+        },
+        {
+          "key": "e_1_3_1_16_2",
+          "first-page": "1",
+          "volume-title": "Proceedings of the DICTA",
+          "author": "Cai Zhixi",
+          "year": "2022",
+          "unstructured": "Zhixi Cai, Kalin Stefanov, Abhinav Dhall, and Munawar Hayat. 2022. Do you really mean that? Content driven audio-visual deepfake dataset and multimodal method for temporal forgery localization. In Proceedings of the DICTA. IEEE, 1–10."
+        },
+        {
+          "key": "e_1_3_1_17_2",
+          "first-page": "4113",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Cao Junyi",
+          "year": "2022",
+          "unstructured": "Junyi Cao, Chao Ma, Taiping Yao, Shen Chen, Shouhong Ding, and Xiaokang Yang. 2022. End-to-end reconstruction-classification learning for face forgery detection. In Proceedings of the CVPR. 4113–4122."
+        },
+        {
+          "key": "e_1_3_1_18_2",
+          "first-page": "67",
+          "volume-title": "Proceedings of the IEEE International Conference on Automatic Face and Gesture Recognition (FG)",
+          "author": "Cao Qiong",
+          "year": "2018",
+          "unstructured": "Qiong Cao, Li Shen, Weidi Xie, Omkar M Parkhi, and Andrew Zisserman. 2018. Vggface2: A dataset for recognising faces across pose and age. In Proceedings of the IEEE International Conference on Automatic Face and Gesture Recognition (FG). IEEE, 67–74."
+        },
+        {
+          "key": "e_1_3_1_19_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "João Phillipe Cardenuto Jing Yang Rafael Padilha Renjie Wan Daniel Moreira Haoliang Li Shiqi Wang Fernanda Andaló Sébastien Marcel and Anderson Rocha. 2023. The age of synthetic realities: challenges and opportunities. APSIPA Trans. Signal Inf. Process. 12 1 (2023).",
+          "DOI": "10.1561/116.00000138"
+        },
+        {
+          "key": "e_1_3_1_20_2",
+          "first-page": "658",
+          "volume-title": "Proceedings of the CVPRW",
+          "author": "Carlini Nicholas",
+          "year": "2020",
+          "unstructured": "Nicholas Carlini and Hany Farid. 2020. Evading deepfake-image detectors with white-and black-box attacks. In Proceedings of the CVPRW. 658–659."
+        },
+        {
+          "key": "e_1_3_1_21_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2017.502"
+        },
+        {
+          "key": "e_1_3_1_22_2",
+          "first-page": "103",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Chai Lucy",
+          "year": "2020",
+          "unstructured": "Lucy Chai, David Bau, Ser-Nam Lim, and Phillip Isola. 2020. What makes fake images detectable? understanding properties that generalize. In Proceedings of the ECCV. 103–120."
+        },
+        {
+          "key": "e_1_3_1_23_2",
+          "first-page": "839",
+          "volume-title": "Proceedings of the WACV",
+          "author": "Chattopadhay Aditya",
+          "year": "2018",
+          "unstructured": "Aditya Chattopadhay, Anirban Sarkar, Prantik Howlader, and Vineeth N. Balasubramanian. 2018. Grad-cam++: Generalized gradient-based visual explanations for deep convolutional networks. In Proceedings of the WACV. IEEE, 839–847."
+        },
+        {
+          "key": "e_1_3_1_24_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Lingjuan Lyu. 2023. A Pathway Towards Responsible AI generated content. In Proc. IJCAI. 7033–7038.",
+          "DOI": "10.24963/ijcai.2023/803"
+        },
+        {
+          "key": "e_1_3_1_25_2",
+          "unstructured": "Chuan Chen Zhenpeng Wu Yanyi Lai Wenlin Ou Tianchi Liao and Zibin Zheng. 2023. Challenges and remedies to privacy and security in aigc: Exploring the potential of privacy computing blockchain and beyond. arXiv:2306.00419. Retrieved from https://arxiv.org/abs/arXiv:2306.00419 (2023)."
+        },
+        {
+          "key": "e_1_3_1_26_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Guan-Lin Chen and Chih-Chung Hsu. 2023. Jointly defending DeepFake manipulation and adversarial attack using decoy mechanism. IEEE Transactions on Pattern Analysis and Machine Intelligence 45 8 (2023) 9922–9931.",
+          "DOI": "10.1109/TPAMI.2023.3253390"
+        },
+        {
+          "key": "e_1_3_1_27_2",
+          "unstructured": "Haoxing Chen Yan Hong Zizheng Huang Zhuoer Xu Zhangxuan Gu Yaohui Li Jun Lan Huijia Zhu Jianfu Zhang Weiqiang Wang et al. 2024. DeMamba: AI-generated video detection on million-scale genvideo benchmark. arXiv:2405.19707. Retrieved from https://arxiv.org/abs/arXiv:2405.19707 (2024)."
+        },
+        {
+          "key": "e_1_3_1_28_2",
+          "first-page": "18710",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Chen Liang",
+          "year": "2022",
+          "unstructured": "Liang Chen, Yong Zhang, Yibing Song, Lingqiao Liu, and Jue Wang. 2022. Self-supervised learning of adversarial example: Towards good generalizations for deepfake detection. In Proceedings of the CVPR. 18710–18719."
+        },
+        {
+          "key": "e_1_3_1_29_2",
+          "unstructured": "Liang Chen Yong Zhang Yibing Song Jue Wang and Lingqiao Liu. 2022. Ost: Improving generalization of deepfake detection via one-shot test-time training. Proceedings of the NeurIPS 35 (2022) 24597–24610."
+        },
+        {
+          "key": "e_1_3_1_30_2",
+          "first-page": "1081",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "35",
+          "author": "Chen Shen",
+          "year": "2021",
+          "unstructured": "Shen Chen, Taiping Yao, Yang Chen, Shouhong Ding, Jilin Li, and Rongrong Ji. 2021. Local relation learning for face forgery detection. In Proceedings of the AAAI, Vol. 35. 1081–1088."
+        },
+        {
+          "key": "e_1_3_1_31_2",
+          "first-page": "8789",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Choi Yunjey",
+          "year": "2018",
+          "unstructured": "Yunjey Choi, Minje Choi, Munyoung Kim, Jung-Woo Ha, Sunghun Kim, and Jaegul Choo. 2018. Stargan: Unified generative adversarial networks for multi-domain image-to-image translation. In Proceedings of the CVPR. 8789–8797."
+        },
+        {
+          "key": "e_1_3_1_32_2",
+          "first-page": "1251",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Chollet François",
+          "year": "2017",
+          "unstructured": "François Chollet. 2017. Xception: Deep learning with depthwise separable convolutions. In Proceedings of the CVPR. 1251–1258."
+        },
+        {
+          "key": "e_1_3_1_33_2",
+          "first-page": "973",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Corvi Riccardo",
+          "year": "2023",
+          "unstructured": "Riccardo Corvi, Davide Cozzolino, Giovanni Poggi, Koki Nagano, and Luisa Verdoliva. 2023. Intriguing properties of synthetic images: From generative adversarial networks to diffusion models. In Proceedings of the CVPR. 973–982."
+        },
+        {
+          "key": "e_1_3_1_34_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yingqian Cui Jie Ren Yuping Lin Han Xu Pengfei He Yue Xing Lingjuan Lyu Wenqi Fan Hui Liu and Jiliang Tang. 2025. Ft-shield: A watermark against unauthorized fine-tuning in text-to-image diffusion models. ACM SIGKDD Explorations Newslellter 26 2 (2025) 76–88.",
+          "DOI": "10.1145/3715073.3715080"
+        },
+        {
+          "key": "e_1_3_1_35_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yingqian Cui Jie Ren Han Xu Pengfei He Hui Liu Lichao Sun and Jiliang Tang. 2023. Diffusionshield: A watermark for copyright protection against generative diffusion models. Proc. NeurIPS Workshop on Diffusion Models 26 2 (2023) 60–75.",
+          "DOI": "10.1145/3715073.3715079"
+        },
+        {
+          "key": "e_1_3_1_36_2",
+          "first-page": "5781",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Dang Hao",
+          "year": "2020",
+          "unstructured": "Hao Dang, Feng Liu, Joel Stehouwer, Xiaoming Liu, and Anil K Jain. 2020. On the detection of digital face manipulation. In Proceedings of the CVPR. 5781–5790."
+        },
+        {
+          "key": "e_1_3_1_37_2",
+          "first-page": "3776",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Das Sowmen",
+          "year": "2021",
+          "unstructured": "Sowmen Das, Selim Seferbekov, Arup Datta, Md Saiful Islam, and Md Ruhul Amin. 2021. Towards solving the deepfake problem: An analysis on improving deepfake detection using dynamic face augmentation. In Proceedings of the ICCV. 3776–3785."
+        },
+        {
+          "key": "e_1_3_1_38_2",
+          "first-page": "32",
+          "volume-title": "Proceedings of the Companion Publ. Int. Conf. Multimod. Interact. (ICMI Companion)",
+          "author": "Daza Roberto",
+          "year": "2020",
+          "unstructured": "Roberto Daza, Aythami Morales, Julian Fierrez, and Ruben Tolosana. 2020. MEBAL: A multimodal database for eye blink detection and attention level estimation. In Proceedings of the Companion Publ. Int. Conf. Multimod. Interact. (ICMI Companion). 32–36."
+        },
+        {
+          "key": "e_1_3_1_39_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Jingyi Deng Chenhao Lin Pengbin Hu Chao Shen Qian Wang Qi Li and Qiming Li. 2024. Towards benchmarking and evaluating deepfake detection. IEEE Trans. Dependable Secur. Comput. 21 6 (2024) 5112–5127.",
+          "DOI": "10.1109/TDSC.2024.3369711"
+        },
+        {
+          "key": "e_1_3_1_40_2",
+          "unstructured": "Yunfeng Diao Naixin Zhai Changtao Miao Zitong Yu Xingxing Wei Xun Yang and Meng Wang. 2024. Vulnerabilities in ai-generated image detection: The challenge of adversarial attacks. arXiv:2407.20836. Retrieved from https://arxiv.org/abs/arXiv:2407.20836 (2024)."
+        },
+        {
+          "key": "e_1_3_1_41_2",
+          "unstructured": "Brian Dolhansky Joanna Bitton Ben Pflaum Jikuo Lu Russ Howes Menglin Wang and Cristian Canton Ferrer. 2020. The deepfake detection challenge dataset. arXiv:2006.07397. Retrieved from https://arxiv.org/abs/arXiv:2006.07397 (2020)."
+        },
+        {
+          "key": "e_1_3_1_42_2",
+          "unstructured": "Brian Dolhansky Russ Howes Ben Pflaum Nicole Baram and Cristian Canton Ferrer. 2019. The deepfake detection challenge (DFDC) preview dataset. arXiv:1910.08854. Retrieved from https://arxiv.org/abs/arXiv:1910.08854 (2019)."
+        },
+        {
+          "key": "e_1_3_1_43_2",
+          "first-page": "7865",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Dong Chengdong",
+          "year": "2022",
+          "unstructured": "Chengdong Dong, Ajay Kumar, and Eryun Liu. 2022. Think twice before detecting gan-generated fake images from their spectral domain imprints. In Proceedings of the CVPR. 7865–7874."
+        },
+        {
+          "key": "e_1_3_1_44_2",
+          "first-page": "3994",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Dong Shichao",
+          "year": "2023",
+          "unstructured": "Shichao Dong, Jin Wang, Renhe Ji, Jiajun Liang, Haoqiang Fan, and Zheng Ge. 2023. Implicit Identity Leakage: The Stumbling Block to Improving Deepfake Detection Generalization. In Proceedings of the CVPR. 3994–4004."
+        },
+        {
+          "key": "e_1_3_1_45_2",
+          "first-page": "18",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Dong Shichao",
+          "year": "2022",
+          "unstructured": "Shichao Dong, Jin Wang, Jiajun Liang, Haoqiang Fan, and Renhe Ji. 2022. Explaining deepfake detection by analysing image matching. In Proceedings of the ECCV. 18–35."
+        },
+        {
+          "key": "e_1_3_1_46_2",
+          "first-page": "9468",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Dong Xiaoyi",
+          "year": "2022",
+          "unstructured": "Xiaoyi Dong, Jianmin Bao, Dongdong Chen, Ting Zhang, Weiming Zhang, Nenghai Yu, Dong Chen, Fang Wen, and Baining Guo. 2022. Protecting celebrities from deepfake with identity consistency transformer. In Proceedings of the CVPR. 9468–9478."
+        },
+        {
+          "key": "e_1_3_1_47_2",
+          "unstructured": "Alexey Dosovitskiy Lucas Beyer Alexander Kolesnikov Dirk Weissenborn Xiaohua Zhai Thomas Unterthiner Mostafa Dehghani Matthias Minderer Georg Heigold Sylvain Gelly et al. 2021. An image is worth 16x16 words: Transformers for image recognition at scale. Proceedings of the ICLR (2021)."
+        },
+        {
+          "key": "e_1_3_1_48_2",
+          "unstructured": "Google Research Nick Dufour and Jigsaw Andrew Gully. 2019. Deep fake detection dataset. Retrieved from https://research.google/blog/contributing-data-to-deepfake-detection-research/. (2019)."
+        },
+        {
+          "key": "e_1_3_1_49_2",
+          "unstructured": "Nicholas Dufour Andrew Gully Per Karlsson Alexey Victor Vorbyov Thomas Leung Jeremiah Childs and Christoph Bregler. 2019. DeepFakes detection dataset by Google & JigSaw. Retrieved from https://blog.research.google/2019/09/contributing-data-to-deepfake-detection.html"
+        },
+        {
+          "key": "e_1_3_1_50_2",
+          "first-page": "7890",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Durall Ricard",
+          "year": "2020",
+          "unstructured": "Ricard Durall, Margret Keuper, and Janis Keuper. 2020. Watch your up-convolution: Cnn based generative deep neural networks are failing to reproduce spectral distributions. In Proceedings of the CVPR. 7890–7899."
+        },
+        {
+          "key": "e_1_3_1_51_2",
+          "first-page": "382",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Epstein David C.",
+          "year": "2023",
+          "unstructured": "David C. Epstein, Ishan Jain, Oliver Wang, and Richard Zhang. 2023. Online detection of ai-generated images. In Proceedings of the ICCV. 382–392."
+        },
+        {
+          "key": "e_1_3_1_52_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR46437.2021.01268"
+        },
+        {
+          "key": "e_1_3_1_53_2",
+          "first-page": "20270",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Fei Jianwei",
+          "year": "2022",
+          "unstructured": "Jianwei Fei, Yunshu Dai, Peipeng Yu, Tianrun Shen, Zhihua Xia, and Jian Weng. 2022. Learning second order local anomaly for general face forgery detection. In Proceedings of the CVPR. 20270–20280."
+        },
+        {
+          "key": "e_1_3_1_54_2",
+          "first-page": "10491",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Feng Chao",
+          "year": "2023",
+          "unstructured": "Chao Feng, Ziyang Chen, and Andrew Owens. 2023. Self-supervised video forensics by audio-visual anomaly detection. In Proceedings of the CVPR. 10491–10503."
+        },
+        {
+          "key": "e_1_3_1_55_2",
+          "first-page": "22466",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Fernandez Pierre",
+          "year": "2023",
+          "unstructured": "Pierre Fernandez, Guillaume Couairon, Hervé Jégou, Matthijs Douze, and Teddy Furon. 2023. The stable signature: Rooting watermarks in latent diffusion models. In Proceedings of the ICCV. 22466–22477."
+        },
+        {
+          "key": "e_1_3_1_56_2",
+          "first-page": "3247",
+          "volume-title": "Proceedings of the ICML",
+          "author": "Frank Joel",
+          "year": "2020",
+          "unstructured": "Joel Frank, Thorsten Eisenhofer, Lea Schönherr, Asja Fischer, Dorothea Kolossa, and Thorsten Holz. 2020. Leveraging frequency analysis for deep fake image recognition. In Proceedings of the ICML. PMLR, 3247–3258."
+        },
+        {
+          "key": "e_1_3_1_57_2",
+          "volume-title": "Proceedings of the ICLR",
+          "author": "Gal Rinon",
+          "year": "2023",
+          "unstructured": "Rinon Gal, Yuval Alaluf, Yuval Atzmon, Or Patashnik, Amit Haim Bermano, Gal Chechik, and Daniel Cohen-or. 2023. An image is worth one word: Personalizing text-to-image generation using textual inversion. In Proceedings of the ICLR. Retrieved from https://openreview.net/forum?id=NAQvF08TcyG"
+        },
+        {
+          "key": "e_1_3_1_58_2",
+          "unstructured": "Kristian Georgiev Joshua Vendrow Hadi Salman Sung Min Park and Aleksander Madry. 2023. The journey not the destination: How data guides diffusion models. arXiv preprint arXiv:2312.06205 (2023)."
+        },
+        {
+          "key": "e_1_3_1_59_2",
+          "first-page": "14094",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Girish Sharath",
+          "year": "2021",
+          "unstructured": "Sharath Girish, Saksham Suri, Sai Saketh Rambhatla, and Abhinav Shrivastava. 2021. Towards discovery and attribution of open-world gan generated images. In Proceedings of the ICCV. 14094–14103."
+        },
+        {
+          "key": "e_1_3_1_60_2",
+          "unstructured": "Ian J. Goodfellow Jean Pouget-Abadie Mehdi Mirza Bing Xu David Warde-Farley Sherjil Ozair Aaron Courville and Yoshua Bengio. 2014. Generative adversarial nets. In Proc. NeurIPS - Volume 2 2672–2680."
+        },
+        {
+          "key": "e_1_3_1_61_2",
+          "unstructured": "Albert Gu and Tri Dao. 2024. Mamba: Linear-Time sequence modeling with selective state spaces. In Proc. COLM."
+        },
+        {
+          "key": "e_1_3_1_62_2",
+          "first-page": "735",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "36",
+          "author": "Gu Qiqi",
+          "year": "2022",
+          "unstructured": "Qiqi Gu, Shen Chen, Taiping Yao, Yang Chen, Shouhong Ding, and Ran Yi. 2022. Exploiting fine-grained face forgery clues via progressive enhancement learning. In Proceedings of the AAAI, Vol. 36. 735–743."
+        },
+        {
+          "key": "e_1_3_1_63_2",
+          "first-page": "3473",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "Gu Zhihao",
+          "year": "2021",
+          "unstructured": "Zhihao Gu, Yang Chen, Taiping Yao, Shouhong Ding, Jilin Li, Feiyue Huang, and Lizhuang Ma. 2021. Spatiotemporal inconsistency learning for deepfake video detection. In Proceedings of the ACM MM. 3473–3481."
+        },
+        {
+          "key": "e_1_3_1_64_2",
+          "first-page": "744",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "36",
+          "author": "Gu Zhihao",
+          "year": "2022",
+          "unstructured": "Zhihao Gu, Yang Chen, Taiping Yao, Shouhong Ding, Jilin Li, and Lizhuang Ma. 2022. Delving into the local: Dynamic inconsistency learning for deepfake video detection. In Proceedings of the AAAI, Vol. 36. 744–752."
+        },
+        {
+          "key": "e_1_3_1_65_2",
+          "first-page": "596",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Gu Zhihao",
+          "year": "2022",
+          "unstructured": "Zhihao Gu, Taiping Yao, Yang Chen, Shouhong Ding, and Lizhuang Ma. 2022. Hierarchical contrastive inconsistency learning for deepfake video detection. In Proceedings of the ECCV. 596–613."
+        },
+        {
+          "key": "e_1_3_1_66_2",
+          "first-page": "118",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "38",
+          "author": "Guan Jiazhi",
+          "year": "2024",
+          "unstructured": "Jiazhi Guan, Yi Zhao, Zhuoer Xu, Changhua Meng, Ke Xu, and Youjian Zhao. 2024. Adversarial robust safeguard for evading deep facial manipulation. In Proceedings of the AAAI, Vol. 38. 118–126."
+        },
+        {
+          "key": "e_1_3_1_67_2",
+          "unstructured": "Jiazhi Guan Hang Zhou Zhibin Hong Errui Ding Jingdong Wang Chengbin Quan and Youjian Zhao. 2022. Delving into sequential patches for deepfake detection. Proceedings of the NeurIPS 35 (2022) 4517–4530."
+        },
+        {
+          "key": "e_1_3_1_68_2",
+          "first-page": "61",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Guarnera Luca",
+          "year": "2022",
+          "unstructured": "Luca Guarnera, Oliver Giudice, Matthias Nießner, and Sebastiano Battiato. 2022. On the exploitation of deepfake model recognition. In Proceedings of the CVPR. 61–70."
+        },
+        {
+          "key": "e_1_3_1_69_2",
+          "first-page": "20606",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Guillaro Fabrizio",
+          "year": "2023",
+          "unstructured": "Fabrizio Guillaro, Davide Cozzolino, Avneesh Sud, Nicholas Dufour, and Luisa Verdoliva. 2023. TruFor: Leveraging all-round clues for trustworthy image forgery detection and localization. In Proceedings of the CVPR. 20606–20615."
+        },
+        {
+          "key": "e_1_3_1_70_2",
+          "unstructured": "Lauriane Guilloux. 2018. FakeApp. Retrieved from https://www.malavida.com/en/soft/fakeapp. (2018)."
+        },
+        {
+          "key": "e_1_3_1_71_2",
+          "first-page": "3155",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Guo Xiao",
+          "year": "2023",
+          "unstructured": "Xiao Guo, Xiaohong Liu, Zhiyuan Ren, Steven Grosz, Iacopo Masi, and Xiaoming Liu. 2023. Hierarchical fine-grained image forgery detection and localization. In Proceedings of the CVPR. 3155–3165."
+        },
+        {
+          "key": "e_1_3_1_72_2",
+          "first-page": "4822",
+          "volume-title": "Proceedings of the ACM CCS",
+          "author": "Ha Anna Yoo Jeong",
+          "year": "2024",
+          "unstructured": "Anna Yoo Jeong Ha, Josephine Passananti, Ronik Bhaskar, Shawn Shan, Reid Southen, Haitao Zheng, and Ben Y Zhao. 2024. Organic or diffused: Can we distinguish human art from ai-generated images?. In Proceedings of the ACM CCS. 4822–4836."
+        },
+        {
+          "key": "e_1_3_1_73_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Thilo Hagendorff. 2024. Mapping the ethics of generative AI: A comprehensive scoping review. Minds and Machines 34 4 (2024) 39.",
+          "DOI": "10.1007/s11023-024-09694-w"
+        },
+        {
+          "key": "e_1_3_1_74_2",
+          "first-page": "14950",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Haliassos Alexandros",
+          "year": "2022",
+          "unstructured": "Alexandros Haliassos, Rodrigo Mira, Stavros Petridis, and Maja Pantic. 2022. Leveraging real talking faces via self-supervision for robust forgery detection. In Proceedings of the CVPR. 14950–14962."
+        },
+        {
+          "key": "e_1_3_1_75_2",
+          "first-page": "5039",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Haliassos Alexandros",
+          "year": "2021",
+          "unstructured": "Alexandros Haliassos, Konstantinos Vougioukas, Stavros Petridis, and Maja Pantic. 2021. Lips don’t lie: A generalisable and robust approach to face forgery detection. In Proceedings of the CVPR. 5039–5049."
+        },
+        {
+          "key": "e_1_3_1_76_2",
+          "first-page": "3154",
+          "volume-title": "Proceedings of the ICCVW",
+          "author": "Hara Kensho",
+          "year": "2017",
+          "unstructured": "Kensho Hara, Hirokatsu Kataoka, and Yutaka Satoh. 2017. Learning spatio-temporal features with 3d residual networks for action recognition. In Proceedings of the ICCVW. 3154–3160."
+        },
+        {
+          "key": "e_1_3_1_77_2",
+          "first-page": "20555",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Hataya Ryuichiro",
+          "year": "2023",
+          "unstructured": "Ryuichiro Hataya, Han Bao, and Hiromi Arai. 2023. Will large-scale generative models corrupt future datasets?. In Proceedings of the ICCV. 20555–20565."
+        },
+        {
+          "key": "e_1_3_1_78_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Caner Hazirbas Joanna Bitton Brian Dolhansky Jacqueline Pan Albert Gordo and Cristian Canton Ferrer. 2021. Towards measuring fairness in ai: The casual conversations dataset. IEEE Transactions on Biometrics Behavior and Identity Science 4 3 (2021) 324–332.",
+          "DOI": "10.1109/TBIOM.2021.3132237"
+        },
+        {
+          "key": "e_1_3_1_79_2",
+          "first-page": "770",
+          "volume-title": "Proceedings of the ICASSP",
+          "author": "He Kaiming",
+          "year": "2016",
+          "unstructured": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. 2016. Deep residual learning for image recognition. In Proceedings of the ICASSP. 770–778."
+        },
+        {
+          "key": "e_1_3_1_80_2",
+          "first-page": "4360",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "He Yinan",
+          "year": "2021",
+          "unstructured": "Yinan He, Bei Gan, Siyu Chen, Yichun Zhou, Guojun Yin, Luchuan Song, Lu Sheng, Jing Shao, and Ziwei Liu. 2021. Forgerynet: A versatile benchmark for comprehensive forgery analysis. In Proceedings of the CVPR. 4360–4369."
+        },
+        {
+          "key": "e_1_3_1_81_2",
+          "first-page": "2534",
+          "volume-title": "Proceedings of the IJCAI",
+          "author": "He Yang",
+          "year": "2021",
+          "unstructured": "Yang He, Ning Yu, Margret Keuper, and Mario Fritz. 2021. Beyond the spectrum: Detecting Deepfakes via re-synthesis. In Proceedings of the IJCAI. 2534–2541."
+        },
+        {
+          "key": "e_1_3_1_82_2",
+          "first-page": "2464",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "He Ziwen",
+          "year": "2022",
+          "unstructured": "Ziwen He, Wei Wang, Weinan Guan, Jing Dong, and Tieniu Tan. 2022. Defeating deepfakes via adversarial visual reconstruction. In Proceedings of the ACM MM. 2464–2472."
+        },
+        {
+          "key": "e_1_3_1_83_2",
+          "first-page": "3812",
+          "volume-title": "Proceedings of the WACV",
+          "author": "Hooda Ashish",
+          "year": "2024",
+          "unstructured": "Ashish Hooda, Neal Mangaokar, Ryan Feng, Kassem Fawaz, Somesh Jha, and Atul Prakash. 2024. D4: Detection of adversarial diffusion deepfakes using disjoint ensembles. In Proceedings of the WACV. 3812–3822."
+        },
+        {
+          "key": "e_1_3_1_84_2",
+          "first-page": "12271",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Hou Yang",
+          "year": "2023",
+          "unstructured": "Yang Hou, Qing Guo, Yihao Huang, Xiaofei Xie, Lei Ma, and Jianjun Zhao. 2023. Evading DeepFake detectors via adversarial statistical consistency. In Proceedings of the CVPR. 12271–12280."
+        },
+        {
+          "key": "e_1_3_1_85_2",
+          "first-page": "951",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "36",
+          "author": "Hu Juan",
+          "year": "2022",
+          "unstructured": "Juan Hu, Xin Liao, Jinwen Liang, Wenbo Zhou, and Zheng Qin. 2022. Finfer: Frame inference-based deepfake detection for high-visual-quality videos. In Proceedings of the AAAI, Vol. 36. 951–959."
+        },
+        {
+          "key": "e_1_3_1_86_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.24963/ijcai.2021/102"
+        },
+        {
+          "key": "e_1_3_1_87_2",
+          "first-page": "4490",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Huang Baojin",
+          "year": "2023",
+          "unstructured": "Baojin Huang, Zhongyuan Wang, Jifan Yang, Jiaxin Ai, Qin Zou, Qian Wang, and Dengpan Ye. 2023. Implicit identity driven Deepfake face swapping detection. In Proceedings of the CVPR. 4490–4499."
+        },
+        {
+          "key": "e_1_3_1_88_2",
+          "first-page": "4700",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Huang Gao",
+          "year": "2017",
+          "unstructured": "Gao Huang, Zhuang Liu, Laurens Van Der Maaten, and Kilian Q. Weinberger. 2017. Densely connected convolutional networks. In Proceedings of the CVPR. 4700–4708."
+        },
+        {
+          "key": "e_1_3_1_89_2",
+          "first-page": "989",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "36",
+          "author": "Huang Hao",
+          "year": "2022",
+          "unstructured": "Hao Huang, Yongtao Wang, Zhaoyu Chen, Yuze Zhang, Yuheng Li, Zhi Tang, Wei Chu, Jingdong Chen, Weisi Lin, and Kai-Kuang Ma. 2022. Cmua-watermark: A cross-model universal adversarial watermark for combating deepfakes. In Proceedings of the AAAI, Vol. 36. 989–997."
+        },
+        {
+          "key": "e_1_3_1_90_2",
+          "first-page": "1619",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "35",
+          "author": "Huang Qidong",
+          "year": "2021",
+          "unstructured": "Qidong Huang, Jie Zhang, Wenbo Zhou, Weiming Zhang, and Nenghai Yu. 2021. Initiative defense against facial manipulation. In Proceedings of the AAAI, Vol. 35. 1619–1627."
+        },
+        {
+          "key": "e_1_3_1_91_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yihao Huang Felix Juefei-Xu Qing Guo Yang Liu and Geguang Pu. 2022. Fakelocator: Robust localization of gan-based face manipulations. IEEE Transactions on Information Forensics and Security 17 (2022) 2657–2672.",
+          "DOI": "10.1109/TIFS.2022.3141262"
+        },
+        {
+          "key": "e_1_3_1_92_2",
+          "first-page": "1217",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "Huang Yihao",
+          "year": "2020",
+          "unstructured": "Yihao Huang, Felix Juefei-Xu, Run Wang, Qing Guo, Lei Ma, Xiaofei Xie, Jianwen Li, Weikai Miao, Yang Liu, and Geguang Pu. 2020. Fakepolisher: Making Deepfakes more detection-evasive by shallow reconstruction. In Proceedings of the ACM MM. 1217–1226."
+        },
+        {
+          "key": "e_1_3_1_93_2",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Huang Ziqi",
+          "year": "2024",
+          "unstructured": "Ziqi Huang, Yinan He, Jiashuo Yu, Fan Zhang, Chenyang Si, Yuming Jiang, Yuanhan Zhang, Tianxing Wu, Qingyang Jin, Nattapol Chanpaisit, et al. 2024. VBench: Comprehensive benchmark suite for video generative models. In Proceedings of the CVPR."
+        },
+        {
+          "key": "e_1_3_1_94_2",
+          "first-page": "5009",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Huang Ziheng",
+          "year": "2023",
+          "unstructured": "Ziheng Huang, Boheng Li, Yan Cai, Run Wang, Shangwei Guo, Liming Fang, Jing Chen, and Lina Wang. 2023. What can discriminator do? towards box-free ownership verification of generative adversarial networks. In Proceedings of the ICCV. 5009–5019."
+        },
+        {
+          "key": "e_1_3_1_95_2",
+          "first-page": "1060",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "36",
+          "author": "Jeong Yonghyun",
+          "year": "2022",
+          "unstructured": "Yonghyun Jeong, Doyeon Kim, Youngmin Ro, and Jongwon Choi. 2022. FrePGAN: Robust Deepfake detection using frequency-level perturbations. In Proceedings of the AAAI, Vol. 36. 1060–1068."
+        },
+        {
+          "key": "e_1_3_1_96_2",
+          "first-page": "76",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Jeong Yonghyun",
+          "year": "2022",
+          "unstructured": "Yonghyun Jeong, Doyeon Kim, Youngmin Ro, Pyounggeon Kim, and Jongwon Choi. 2022. Fingerprintnet: Synthesized fingerprints for generated image detection. In Proceedings of the ECCV. 76–94."
+        },
+        {
+          "key": "e_1_3_1_97_2",
+          "unstructured": "Lichuan Ji Yingqi Lin Zhenhua Huang Yan Han Xiaogang Xu Jiafei Wu Chong Wang and Zhe Liu. 2024. Distinguish any fake videos: Unleashing the power of large-scale data and motion features. arXiv:2405.15343. Retrieved from https://arxiv.org/abs/arXiv:2405.15343 (2024)."
+        },
+        {
+          "key": "e_1_3_1_98_2",
+          "first-page": "893",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Jia Shan",
+          "year": "2023",
+          "unstructured": "Shan Jia, Mingzhen Huang, Zhou Zhou, Yan Ju, Jialing Cai, and Siwei Lyu. 2023. Autosplice: A text-prompt manipulated image dataset for media forensics. In Proceedings of the CVPR. 893–903."
+        },
+        {
+          "key": "e_1_3_1_99_2",
+          "first-page": "4103",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Jia Shuai",
+          "year": "2022",
+          "unstructured": "Shuai Jia, Chao Ma, Taiping Yao, Bangjie Yin, Shouhong Ding, and Xiaokang Yang. 2022. Exploring frequency adversarial attacks for face forgery detection. In Proceedings of the CVPR. 4103–4112."
+        },
+        {
+          "key": "e_1_3_1_100_2",
+          "first-page": "2889",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Jiang Liming",
+          "year": "2020",
+          "unstructured": "Liming Jiang, Ren Li, Wayne Wu, Chen Qian, and Chen Change Loy. 2020. Deeperforensics-1.0: A large-scale dataset for real-world face forgery detection. In Proceedings of the CVPR. 2889–2898."
+        },
+        {
+          "key": "e_1_3_1_101_2",
+          "first-page": "1168",
+          "volume-title": "Proceedings of the ACM CCS",
+          "author": "Jiang Zhengyuan",
+          "year": "2023",
+          "unstructured": "Zhengyuan Jiang, Jinghuai Zhang, and Neil Zhenqiang Gong. 2023. Evading watermark based detection of AI-generated content. In Proceedings of the ACM CCS. 1168–1181."
+        },
+        {
+          "key": "e_1_3_1_102_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Longlong Jing and Yingli Tian. 2020. Self-supervised visual feature learning with deep neural networks: A survey. IEEE Transactions on Pattern Analysis and Machine Intelligence 43 11 (2020) 4037–4058.",
+          "DOI": "10.1109/TPAMI.2020.2992393"
+        },
+        {
+          "key": "e_1_3_1_103_2",
+          "first-page": "4655",
+          "volume-title": "Proceedings of the WACV",
+          "author": "Ju Yan",
+          "year": "2024",
+          "unstructured": "Yan Ju, Shu Hu, Shan Jia, George H. Chen, and Siwei Lyu. 2024. Improving fairness in deepfake detection. In Proceedings of the WACV. 4655–4665."
+        },
+        {
+          "key": "e_1_3_1_104_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Felix Juefei-Xu Run Wang Yihao Huang Qing Guo Lei Ma and Yang Liu. 2022. Countering malicious deepfakes: Survey battleground and horizon. International Journal of Computer Vision 130 7 (2022) 1678–1734.",
+          "DOI": "10.1007/s11263-022-01606-8"
+        },
+        {
+          "key": "e_1_3_1_105_2",
+          "volume-title": "Proceedings of the ICLR",
+          "author": "Karras Tero",
+          "year": "2018",
+          "unstructured": "Tero Karras, Timo Aila, Samuli Laine, and Jaakko Lehtinen. 2018. Progressive growing of GANs for improved quality, stability, and variation. In Proceedings of the ICLR. Retrieved from https://openreview.net/forum?id=Hk99zCeAb"
+        },
+        {
+          "key": "e_1_3_1_106_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2019.00453"
+        },
+        {
+          "key": "e_1_3_1_107_2",
+          "first-page": "8110",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Karras Tero",
+          "year": "2020",
+          "unstructured": "Tero Karras, Samuli Laine, Miika Aittala, Janne Hellsten, Jaakko Lehtinen, and Timo Aila. 2020. Analyzing and improving the image quality of stylegan. In Proceedings of the CVPR. 8110–8119."
+        },
+        {
+          "key": "e_1_3_1_108_2",
+          "unstructured": "Makena Kelly. 2010. Meta Google and OpenAI promise the White House they’ll develop AI responsibly. Retrieved from https://www.theverge.com/2023/7/21/23802274/artificial-intelligence-meta-google-openai-white-house-security-safety. (2010)."
+        },
+        {
+          "key": "e_1_3_1_109_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Nils Kemmerzell Annika Schreiner Haroon Khalid Michael Schalk and Letizia Bordoli. 2025. Towards a better understanding of evaluating trustworthiness in AI systems. ACM Computing Surveys 57 9 (2025) 1–38.",
+          "DOI": "10.1145/3721976"
+        },
+        {
+          "key": "e_1_3_1_110_2",
+          "unstructured": "Hasam Khalid Shahroz Tariq Minha Kim and Simon S. Woo. 2021. FakeAVCeleb: A novel audio-video multimodal deepfake dataset. arXiv preprint arXiv:2108.05080 (2021)."
+        },
+        {
+          "key": "e_1_3_1_111_2",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "32",
+          "author": "Khurana Udayan",
+          "year": "2018",
+          "unstructured": "Udayan Khurana, Horst Samulowitz, and Deepak Turaga. 2018. Feature engineering for predictive modeling using reinforcement learning. In Proceedings of the AAAI, Vol. 32."
+        },
+        {
+          "key": "e_1_3_1_112_2",
+          "first-page": "8974",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Kim Changhoon",
+          "year": "2024",
+          "unstructured": "Changhoon Kim, Kyle Min, Maitreya Patel, Sheng Cheng, and Yezhou Yang. 2024. Wouaf: Weight modulation for user attribution and fingerprinting in text-to-image diffusion models. In Proceedings of the CVPR. 8974–8983."
+        },
+        {
+          "key": "e_1_3_1_113_2",
+          "first-page": "1001",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Kim Minha",
+          "year": "2021",
+          "unstructured": "Minha Kim, Shahroz Tariq, and Simon S. Woo. 2021. Fretal: Generalizing Deepfake detection using knowledge distillation and representation learning. In Proceedings of the CVPR. 1001–1012."
+        },
+        {
+          "key": "e_1_3_1_114_2",
+          "unstructured": "Diederik P. Kingma and Max Welling. 2013. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114 (2013)."
+        },
+        {
+          "key": "e_1_3_1_115_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Maxim Kolomeets Han Wu Lei Shi and Aad van Moorsel. 2025. The face of deception: The impact of AI-generated photos on malicious social bots. IEEE Trans. Comput. Soc. Syst. 12 3 (2025) 1080–1091.",
+          "DOI": "10.1109/TCSS.2024.3461328"
+        },
+        {
+          "key": "e_1_3_1_116_2",
+          "unstructured": "Pavel Korshunov and Sébastien Marcel. 2018. Deepfakes: A new threat to face recognition? assessment and detection. arXiv:1812.08685. Retrieved from https://arxiv.org/abs/arXiv:1812.08685 (2018)."
+        },
+        {
+          "key": "e_1_3_1_117_2",
+          "unstructured": "Alex Krizhevsky Geoffrey Hinton et al. 2009. Learning multiple layers of features from tiny images. (2009)."
+        },
+        {
+          "key": "e_1_3_1_118_2",
+          "first-page": "10744",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Kwon Patrick",
+          "year": "2021",
+          "unstructured": "Patrick Kwon, Jaeseong You, Gyuhyeon Nam, Sungwoo Park, and Gyeongsu Chae. 2021. Kodf: A large-scale korean deepfake detection dataset. In Proceedings of the ICCV. 10744–10753."
+        },
+        {
+          "key": "e_1_3_1_119_2",
+          "first-page": "10117",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Le Trung-Nghia",
+          "year": "2021",
+          "unstructured": "Trung-Nghia Le, Huy H. Nguyen, Junichi Yamagishi, and Isao Echizen. 2021. Openforensics: Large-scale challenging dataset for multi-face forgery detection and segmentation in-the-wild. In Proceedings of the ICCV. 10117–10127."
+        },
+        {
+          "key": "e_1_3_1_120_2",
+          "first-page": "5789",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Li Dongze",
+          "year": "2021",
+          "unstructured": "Dongze Li, Wei Wang, Hongxing Fan, and Jing Dong. 2021. Exploring adversarial fake images on face manifold. In Proceedings of the CVPR. 5789–5798."
+        },
+        {
+          "key": "e_1_3_1_121_2",
+          "first-page": "12888",
+          "volume-title": "Proceedings of the ICML",
+          "author": "Li Junnan",
+          "year": "2022",
+          "unstructured": "Junnan Li, Dongxu Li, Caiming Xiong, and Steven Hoi. 2022. Blip: Bootstrapping language-image pre-training for unified vision-language understanding and generation. In Proceedings of the ICML. PMLR, 12888–12900."
+        },
+        {
+          "key": "e_1_3_1_122_2",
+          "first-page": "6458",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Li Jiaming",
+          "year": "2021",
+          "unstructured": "Jiaming Li, Hongtao Xie, Jiahong Li, Zhongyuan Wang, and Yongdong Zhang. 2021. Frequency-aware discriminative feature learning supervised by single-center loss for face forgery detection. In Proceedings of the CVPR. 6458–6467."
+        },
+        {
+          "key": "e_1_3_1_123_2",
+          "first-page": "5001",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Li Lingzhi",
+          "year": "2020",
+          "unstructured": "Lingzhi Li, Jianmin Bao, Ting Zhang, Hao Yang, Dong Chen, Fang Wen, and Baining Guo. 2020. Face x-ray for more general face forgery detection. In Proceedings of the CVPR. 5001–5010."
+        },
+        {
+          "key": "e_1_3_1_124_2",
+          "unstructured": "Tianhong Li Qinyi Sun Lijie Fan and Kaiming He. 2025. Fractal generative models. arXiv:2502.17437. Retrieved from https://arxiv.org/abs/arXiv:2502.17437 (2025)."
+        },
+        {
+          "key": "e_1_3_1_125_2",
+          "unstructured": "Yuezun Li Ming-Ching Chang and Siwei Lyu. 2018. In ictu oculi: Exposing AI generated fake face videos by detecting eye blinking. In Proceedings of the WIFS."
+        },
+        {
+          "key": "e_1_3_1_126_2",
+          "first-page": "328",
+          "volume-title": "Proceedings of the SPAC",
+          "author": "Li Yuhang",
+          "year": "2014",
+          "unstructured": "Yuhang Li and Ling Du. 2014. Semi-fragile watermarking for image tamper localization and self-recovery. In Proceedings of the SPAC. IEEE, 328–333."
+        },
+        {
+          "key": "e_1_3_1_127_2",
+          "volume-title": "Proceedings of the CVPRW",
+          "author": "Li Yuezun",
+          "year": "2019",
+          "unstructured": "Yuezun Li and Siwei Lyu. 2019. Exposing DeepFake videos by detecting face warping artifacts. In Proceedings of the CVPRW."
+        },
+        {
+          "key": "e_1_3_1_128_2",
+          "first-page": "3207",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Li Yuezun",
+          "year": "2020",
+          "unstructured": "Yuezun Li, Xin Yang, Pu Sun, Honggang Qi, and Siwei Lyu. 2020. Celeb-df: A large-scale challenging dataset for deepfake forensics. In Proceedings of the CVPR. 3207–3216."
+        },
+        {
+          "key": "e_1_3_1_129_2",
+          "unstructured": "Chumeng Liang and Xiaoyu Wu. 2023. Mist: Towards improved adversarial examples for diffusion models. arXiv:2305.12683. Retrieved from https://arxiv.org/abs/arXiv:2305.12683 (2023)."
+        },
+        {
+          "key": "e_1_3_1_130_2",
+          "unstructured": "Chumeng Liang Xiaoyu Wu Yang Hua Jiaru Zhang Yiming Xue Tao Song Zhengui Xue Ruhui Ma and Haibing Guan. 2023. Adversarial example does good: preventing painting imitation from diffusion models via adversarial examples. In Proc. ICML. 20763–20786."
+        },
+        {
+          "key": "e_1_3_1_131_2",
+          "unstructured": "Jiawei Liang Siyuan Liang Aishan Liu Xiaojun Jia Junhao Kuang and Xiaochun Cao. 2024. Poisoned forgery face: Towards backdoor attacks on face forgery detection. Proceedings of the ICLR (2024)."
+        },
+        {
+          "key": "e_1_3_1_132_2",
+          "first-page": "128",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Liang Jiahao",
+          "year": "2022",
+          "unstructured": "Jiahao Liang, Huafeng Shi, and Weihong Deng. 2022. Exploring disentangled content information for face forgery detection. In Proceedings of the ECCV. 128–145."
+        },
+        {
+          "key": "e_1_3_1_133_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li Lin Neeraj Gupta Yue Zhang Hainan Ren Chun-Hao Liu Feng Ding Xin Wang Xin Li Luisa Verdoliva and Shu Hu. 2024. Detecting multimedia generated by large AI models: A survey. arXiv:2402.00045. Retrieved from https://arxiv.org/abs/arXiv:2402.00045 (2024).",
+          "DOI": "10.36227/techrxiv.170723324.44685515/v1"
+        },
+        {
+          "key": "e_1_3_1_134_2",
+          "first-page": "16815",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Lin Li",
+          "year": "2024",
+          "unstructured": "Li Lin, Xinan He, Yan Ju, Xin Wang, Feng Ding, and Shu Hu. 2024. Preserving fairness generalization in deepfake detection. In Proceedings of the CVPR. 16815–16825."
+        },
+        {
+          "key": "e_1_3_1_135_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00399"
+        },
+        {
+          "key": "e_1_3_1_136_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-030-01225-0_1"
+        },
+        {
+          "key": "e_1_3_1_137_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-319-10602-1_48"
+        },
+        {
+          "key": "e_1_3_1_138_2",
+          "first-page": "95",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Liu Bo",
+          "year": "2022",
+          "unstructured": "Bo Liu, Fan Yang, Xiuli Bi, Bin Xiao, Weisheng Li, and Xinbo Gao. 2022. Detecting generated images by real images. In Proceedings of the ECCV. 95–110."
+        },
+        {
+          "key": "e_1_3_1_139_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chi Liu Huajie Chen Tianqing Zhu Jun Zhang and Wanlei Zhou. 2023. Making DeepFakes more spurious: evading deep face forgery detection via trace removal attack. IEEE Trans. Dependable Secur. Comput. 20 6 (2023) 5182–5196.",
+          "DOI": "10.1109/TDSC.2023.3241604"
+        },
+        {
+          "key": "e_1_3_1_140_2",
+          "first-page": "772",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Liu Honggu",
+          "year": "2021",
+          "unstructured": "Honggu Liu, Xiaodan Li, Wenbo Zhou, Yuefeng Chen, Yuan He, Hui Xue, Weiming Zhang, and Nenghai Yu. 2021. Spatial-phase shallow learning: Rethinking face forgery detection in frequency domain. In Proceedings of the CVPR. 772–781."
+        },
+        {
+          "key": "e_1_3_1_141_2",
+          "first-page": "10770",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Liu Huan",
+          "year": "2024",
+          "unstructured": "Huan Liu, Zichang Tan, Chuangchuang Tan, Yunchao Wei, Jingdong Wang, and Yao Zhao. 2024. Forgery-aware adaptive transformer for generalizable synthetic image detection. In Proceedings of the CVPR. 10770–10780."
+        },
+        {
+          "key": "e_1_3_1_142_2",
+          "first-page": "24219",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Liu Yixin",
+          "year": "2024",
+          "unstructured": "Yixin Liu, Chenrui Fan, Yutong Dai, Xun Chen, Pan Zhou, and Lichao Sun. 2024. MetaCloak: Preventing unauthorized subject-driven text-to-image diffusion-based synthesis via meta-learning. In Proceedings of the CVPR. 24219–24228."
+        },
+        {
+          "key": "e_1_3_1_143_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2015.425"
+        },
+        {
+          "key": "e_1_3_1_144_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.00320"
+        },
+        {
+          "key": "e_1_3_1_145_2",
+          "first-page": "8060",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Liu Zhengzhe",
+          "year": "2020",
+          "unstructured": "Zhengzhe Liu, Xiaojuan Qi, and Philip H. S. Torr. 2020. Global texture enhancement for fake face detection in the wild. In Proceedings of the CVPR. 8060–8069."
+        },
+        {
+          "key": "e_1_3_1_146_2",
+          "unstructured": "Nils Lukas Abdulrahman Diaa Lucas Fenaux and Florian Kerschbaum. 2024. Leveraging optimization for adaptive attacks on image watermarks. Proceedings of the ICLR (2024)."
+        },
+        {
+          "key": "e_1_3_1_147_2",
+          "first-page": "2241",
+          "volume-title": "Proceedings of the USENIX Security",
+          "author": "Lukas Nils",
+          "year": "2023",
+          "unstructured": "Nils Lukas and Florian Kerschbaum. 2023. PTW: Pivotal tuning watermarking for pre-trained image generators. In Proceedings of the USENIX Security. 2241–2258."
+        },
+        {
+          "key": "e_1_3_1_148_2",
+          "first-page": "16317",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Luo Yuchen",
+          "year": "2021",
+          "unstructured": "Yuchen Luo, Yong Zhang, Junchi Yan, and Wei Liu. 2021. Generalizing face forgery detection with high-frequency features. In Proceedings of the CVPR. 16317–16326."
+        },
+        {
+          "key": "e_1_3_1_149_2",
+          "unstructured": "Ruipeng Ma Jinhao Duan Fei Kong Xiaoshuang Shi and Kaidi Xu. 2023. Exposing the fake: Effective diffusion-generated images detection. Proceedings of the ICMLW (2023)."
+        },
+        {
+          "key": "e_1_3_1_150_2",
+          "unstructured": "Yihan Ma Zhengyu Zhao Xinlei He Zheng Li Michael Backes and Yang Zhang. 2023. Generative watermarking against unauthorized subject-driven image synthesis. arXiv:2306.07754. Retrieved from https://arxiv.org/abs/arXiv:2306.07754 (2023)."
+        },
+        {
+          "key": "e_1_3_1_151_2",
+          "first-page": "6319",
+          "volume-title": "Proceedings of the ICASSP",
+          "author": "Martinez Brais",
+          "year": "2020",
+          "unstructured": "Brais Martinez, Pingchuan Ma, Stavros Petridis, and Maja Pantic. 2020. Lipreading using temporal convolutional networks. In Proceedings of the ICASSP. IEEE, 6319–6323."
+        },
+        {
+          "key": "e_1_3_1_152_2",
+          "first-page": "667",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Masi Iacopo",
+          "year": "2020",
+          "unstructured": "Iacopo Masi, Aditya Killekar, Royston Marian Mascarenhas, Shenoy Pratik Gurudatt, and Wael AbdAlmageed. 2020. Two-branch recurrent network for isolating deepfakes in videos. In Proceedings of the ECCV. 667–684."
+        },
+        {
+          "key": "e_1_3_1_153_2",
+          "first-page": "83",
+          "volume-title": "Proceedings of the WACV",
+          "author": "Matern Falko",
+          "year": "2019",
+          "unstructured": "Falko Matern, Christian Riess, and Marc Stamminger. 2019. Exploiting visual artifacts to expose deepfakes and face manipulations. In Proceedings of the WACV. IEEE, 83–92."
+        },
+        {
+          "key": "e_1_3_1_154_2",
+          "unstructured": "Scott McCloskey and Michael Albright. 2018. Detecting gan-generated imagery using color cues. arXiv:1812.08247. Retrieved from https://arxiv.org/abs/arXiv:1812.08247 (2018)."
+        },
+        {
+          "key": "e_1_3_1_155_2",
+          "unstructured": "Chenlin Meng Yutong He Yang Song Jiaming Song Jiajun Wu Jun-Yan Zhu and Stefano Ermon. 2022. SDEdit: Guided image synthesis and editing with stochastic differential equations. In Proc. ICLR."
+        },
+        {
+          "key": "e_1_3_1_156_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yisroel Mirsky and Wenke Lee. 2021. The creation and detection of deepfakes: A survey. ACM Computing Surveys 54 1 (2021) 1–41.",
+          "DOI": "10.1145/3425780"
+        },
+        {
+          "key": "e_1_3_1_157_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mekhail Mustak Joni Salminen Matti Mäntymäki Arafat Rahman and Yogesh K. Dwivedi. 2023. Deepfakes: Deceptions mitigations and opportunities. Journal of Business Research 154 (2023) 113368.",
+          "DOI": "10.1016/j.jbusres.2022.113368"
+        },
+        {
+          "key": "e_1_3_1_158_2",
+          "first-page": "320",
+          "volume-title": "Proceedings of the ICPR",
+          "author": "Nadimpalli Aakash Varma",
+          "year": "2022",
+          "unstructured": "Aakash Varma Nadimpalli and Ajita Rattani. 2022. GBDF: Gender balanced deepfake dataset towards fair deepfake detection. In Proceedings of the ICPR. Springer, 320–337."
+        },
+        {
+          "key": "e_1_3_1_159_2",
+          "first-page": "91",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Nadimpalli Aakash Varma",
+          "year": "2022",
+          "unstructured": "Aakash Varma Nadimpalli and Ajita Rattani. 2022. On improving cross-dataset generalization of deepfake detectors. In Proceedings of the CVPR. 91–99."
+        },
+        {
+          "key": "e_1_3_1_160_2",
+          "first-page": "9739",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Narayan Kartik",
+          "year": "2023",
+          "unstructured": "Kartik Narayan, Harsh Agarwal, Kartik Thakral, Surbhi Mittal, Mayank Vatsa, and Richa Singh. 2023. DF-Platter: Multi-face heterogeneous Deepfake dataset. In Proceedings of the CVPR. 9739–9748."
+        },
+        {
+          "key": "e_1_3_1_161_2",
+          "unstructured": "Lakshmanan Nataraj Tajuddin Manhar Mohammed Shivkumar Chandrasekaran Arjuna Flenner Jawadul H. Bappy Amit K. Roy-Chowdhury and B. S. Manjunath. 2019. Detecting GAN generated fake images using co-occurrence matrices. arXiv:1903.06836. Retrieved from https://arxiv.org/abs/arXiv:1903.06836 (2019)."
+        },
+        {
+          "key": "e_1_3_1_162_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Paarth Neekhara Shehzeen Hussain Xinqiao Zhang Ke Huang Julian McAuley and Farinaz Koushanfar. 2022. FaceSigns: semi-fragile neural watermarks for media authentication and countering deepfakes. ACM Trans. Multim. Comput. Commun. Appl. 20 11 (2022).",
+          "DOI": "10.1145/3640466"
+        },
+        {
+          "key": "e_1_3_1_163_2",
+          "unstructured": "K Nichol. 2016. WikiArt Dataset. Retrieved from https://www.wikiart.org/ (2016)."
+        },
+        {
+          "key": "e_1_3_1_164_2",
+          "first-page": "7184",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Nirkin Yuval",
+          "year": "2019",
+          "unstructured": "Yuval Nirkin, Yosi Keller, and Tal Hassner. 2019. Fsgan: Subject agnostic face swapping and reenactment. In Proceedings of the ICCV. 7184–7193."
+        },
+        {
+          "key": "e_1_3_1_165_2",
+          "first-page": "24480",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Ojha Utkarsh",
+          "year": "2023",
+          "unstructured": "Utkarsh Ojha, Yuheng Li, and Yong Jae Lee. 2023. Towards universal fake image detectors that generalize across generative models. In Proceedings of the CVPR. 24480–24489."
+        },
+        {
+          "key": "e_1_3_1_166_2",
+          "unstructured": "Aaron van den Oord Yazhe Li and Oriol Vinyals. 2018. Representation learning with contrastive predictive coding. arXiv:1807.03748. Retrieved from https://arxiv.org/abs/arXiv:1807.03748 (2018)."
+        },
+        {
+          "key": "e_1_3_1_167_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3524846.3527337"
+        },
+        {
+          "key": "e_1_3_1_168_2",
+          "first-page": "4318",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "Qi Hua",
+          "year": "2020",
+          "unstructured": "Hua Qi, Qing Guo, Felix Juefei-Xu, Xiaofei Xie, Lei Ma, Wei Feng, Yang Liu, and Jianjun Zhao. 2020. Deeprhythm: Exposing deepfakes with attentional visual heartbeat rhythms. In Proceedings of the ACM MM. 4318–4327."
+        },
+        {
+          "key": "e_1_3_1_169_2",
+          "first-page": "86",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Qian Yuyang",
+          "year": "2020",
+          "unstructured": "Yuyang Qian, Guojun Yin, Lu Sheng, Zixuan Chen, and Jing Shao. 2020. Thinking in frequency: Face forgery detection by mining frequency-aware clues. In Proceedings of the ECCV. 86–103."
+        },
+        {
+          "key": "e_1_3_1_170_2",
+          "first-page": "8748",
+          "volume-title": "Proceedings of the ICML",
+          "author": "Radford Alec",
+          "year": "2021",
+          "unstructured": "Alec Radford, Jong Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh, Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark, et al. 2021. Learning transferable visual models from natural language supervision. In Proceedings of the ICML. PMLR, 8748–8763."
+        },
+        {
+          "key": "e_1_3_1_171_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Md Shohel Rana Mohammad Nur Nobi Beddhu Murali and Andrew H Sung. 2022. Deepfake detection: A systematic literature review. IEEE Access 10 (2022) 25494–25513.",
+          "DOI": "10.1109/ACCESS.2022.3154404"
+        },
+        {
+          "key": "e_1_3_1_172_2",
+          "unstructured": "Suman Ravuri and Oriol Vinyals. 2019. Classification accuracy score for conditional generative models. Proc. NeurIPS (2019) 12268–12279."
+        },
+        {
+          "key": "e_1_3_1_173_2",
+          "first-page": "1530",
+          "volume-title": "Proceedings of the ICML",
+          "author": "Rezende Danilo",
+          "year": "2015",
+          "unstructured": "Danilo Rezende and Shakir Mohamed. 2015. Variational inference with normalizing flows. In Proceedings of the ICML. PMLR, 1530–1538."
+        },
+        {
+          "key": "e_1_3_1_174_2",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Richardson Elad",
+          "year": "2021",
+          "unstructured": "Elad Richardson, Yuval Alaluf, Or Patashnik, Yotam Nitzan, Yaniv Azar, Stav Shapiro, and Daniel Cohen-Or. 2021. Encoding in style: A stylegan encoder for image-to-image translation. In Proceedings of the CVPR."
+        },
+        {
+          "key": "e_1_3_1_175_2",
+          "first-page": "9130",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Ricker Jonas",
+          "year": "2024",
+          "unstructured": "Jonas Ricker, Denis Lukovnikov, and Asja Fischer. 2024. AEROBLADE: Training-free detection of latent diffusion images using autoencoder reconstruction error. In Proceedings of the CVPR. 9130–9140."
+        },
+        {
+          "key": "e_1_3_1_176_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "key": "e_1_3_1_177_2",
+          "first-page": "1",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Rossler Andreas",
+          "year": "2019",
+          "unstructured": "Andreas Rossler, Davide Cozzolino, Luisa Verdoliva, Christian Riess, Justus Thies, and Matthias Nießner. 2019. Faceforensics++: Learning to detect manipulated facial images. In Proceedings of the ICCV. 1–11."
+        },
+        {
+          "key": "e_1_3_1_178_2",
+          "first-page": "236",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Ruiz Nataniel",
+          "year": "2020",
+          "unstructured": "Nataniel Ruiz, Sarah Adel Bargal, and Stan Sclaroff. 2020. Disrupting deepfakes: Adversarial attacks against conditional image translation networks and facial manipulation systems. In Proceedings of the ECCV. 236–251."
+        },
+        {
+          "key": "e_1_3_1_179_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52729.2023.02155"
+        },
+        {
+          "key": "e_1_3_1_180_2",
+          "first-page": "962",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Sabel Johan",
+          "year": "2021",
+          "unstructured": "Johan Sabel and Fredrik Johansson. 2021. On the robustness and generalizability of face synthesis detection methods. In Proceedings of the CVPR. 962–971."
+        },
+        {
+          "key": "e_1_3_1_181_2",
+          "unstructured": "Mehrdad Saberi Vinu Sankar Sadasivan Keivan Rezaei Aounon Kumar Atoosa Chegini Wenxiao Wang and Soheil Feizi. 2024. Robustness of ai-image detectors: Fundamental limits and practical attacks. Proceedings of the ICLR (2024)."
+        },
+        {
+          "key": "e_1_3_1_182_2",
+          "unstructured": "Chitwan Saharia Jonathan Ho William Chan Tim Salimans David J. Fleet and Mohammad Norouzi. 2022. Image super-resolution via iterative refinement. IEEE Transactions on Pattern Analysis and Machine Intelligence 45 4 (2022) 4713–4726."
+        },
+        {
+          "key": "e_1_3_1_183_2",
+          "unstructured": "Hadi Salman Alaa Khaddaj Guillaume Leclerc Andrew Ilyas and Aleksander Madry. 2023. Raising the cost of malicious ai-powered image editing. Proc. ICML (2023) 29894–29918."
+        },
+        {
+          "key": "e_1_3_1_184_2",
+          "unstructured": "Christoph Schuhmann Romain Beaumont Richard Vencu Cade Gordon Ross Wightman Mehdi Cherti Theo Coombes Aarush Katta Clayton Mullis Mitchell Wortsman et al. 2022. Laion-5b: An open large-scale dataset for training next generation image-text models. Proceedings of the NeurIPS 35 (2022) 25278–25294."
+        },
+        {
+          "key": "e_1_3_1_185_2",
+          "unstructured": "Christoph Schuhmann Richard Vencu Romain Beaumont Robert Kaczmarczyk Clayton Mullis Aarush Katta Theo Coombes Jenia Jitsev and Aran Komatsuzaki. 2021. Laion-400m: Open dataset of clip-filtered 400 million image-text pairs. arXiv:2111.02114. Retrieved from https://arxiv.org/abs/arXiv:2111.02114 (2021)."
+        },
+        {
+          "key": "e_1_3_1_186_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2017.74"
+        },
+        {
+          "key": "e_1_3_1_187_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Jia Wen Seow Mei Kuan Lim Raphael C. W. Phan and Joseph K. Liu. 2022. A comprehensive overview of Deepfake: Generation detection datasets and opportunities. Neurocomputing 513 (2022) 351–371.",
+          "DOI": "10.1016/j.neucom.2022.09.135"
+        },
+        {
+          "key": "e_1_3_1_188_2",
+          "first-page": "3418",
+          "volume-title": "Proceedings of the ACM CCS",
+          "author": "Sha Zeyang",
+          "year": "2023",
+          "unstructured": "Zeyang Sha, Zheng Li, Ning Yu, and Yang Zhang. 2023. De-fake: Detection and attribution of fake images generated by text-to-image generation models. In Proceedings of the ACM CCS. 3418–3432."
+        },
+        {
+          "key": "e_1_3_1_189_2",
+          "first-page": "16469",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Shamshad Fahad",
+          "year": "2023",
+          "unstructured": "Fahad Shamshad, Koushik Srivatsan, and Karthik Nandakumar. 2023. Evading forensic classifiers with attribute-conditioned adversarial faces. In Proceedings of the CVPR. 16469–16478."
+        },
+        {
+          "key": "e_1_3_1_190_2",
+          "first-page": "712",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Shao Rui",
+          "year": "2022",
+          "unstructured": "Rui Shao, Tianxing Wu, and Ziwei Liu. 2022. Detecting and recovering sequential deepfake manipulation. In Proceedings of the ECCV. 712–728."
+        },
+        {
+          "key": "e_1_3_1_191_2",
+          "first-page": "18720",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Shiohara Kaede",
+          "year": "2022",
+          "unstructured": "Kaede Shiohara and Toshihiko Yamasaki. 2022. Detecting deepfakes with self-blended images. In Proceedings of the CVPR. 18720–18729."
+        },
+        {
+          "key": "e_1_3_1_192_2",
+          "unstructured": "Uriel Singer Adam Polyak Thomas Hayes Xi Yin Jie An Songyang Zhang Qiyuan Hu Harry Yang Oron Ashual Oran Gafni et al. 2023. Make-a-video: Text-to-video generation without text-video data. Proceedings of the ICLR (2023)."
+        },
+        {
+          "key": "e_1_3_1_193_2",
+          "first-page": "6048",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Somepalli Gowthami",
+          "year": "2023",
+          "unstructured": "Gowthami Somepalli, Vasu Singla, Micah Goldblum, Jonas Geiping, and Tom Goldstein. 2023. Diffusion art or digital forgery? investigating data replication in diffusion models. In Proceedings of the CVPR. 6048–6058."
+        },
+        {
+          "key": "e_1_3_1_194_2",
+          "first-page": "10791",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Song Hae Jin",
+          "year": "2024",
+          "unstructured": "Hae Jin Song, Mahyar Khayatkhoei, and Wael AbdAlmageed. 2024. ManiFPT: Defining and analyzing fingerprints of generative models. In Proceedings of the CVPR. 10791–10801."
+        },
+        {
+          "key": "e_1_3_1_195_2",
+          "first-page": "467",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Song Luchuan",
+          "year": "2022",
+          "unstructured": "Luchuan Song, Zheng Fang, Xiaodan Li, Xiaoyi Dong, Zhenchao Jin, Yuefeng Chen, and Siwei Lyu. 2022. Adaptive face forgery detection in cross domain. In Proceedings of the ECCV. 467–484."
+        },
+        {
+          "key": "e_1_3_1_196_2",
+          "first-page": "4102",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "Song Luchuan",
+          "year": "2022",
+          "unstructured": "Luchuan Song, Xiaodan Li, Zheng Fang, Zhenchao Jin, YueFeng Chen, and Chenliang Xu. 2022. Face forgery detection via symmetric transformer. In Proceedings of the ACM MM. 4102–4111."
+        },
+        {
+          "key": "e_1_3_1_197_2",
+          "first-page": "111",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Sun Ke",
+          "year": "2022",
+          "unstructured": "Ke Sun, Hong Liu, Taiping Yao, Xiaoshuai Sun, Shen Chen, Shouhong Ding, and Rongrong Ji. 2022. An information theoretic approach for attention-driven face forgery detection. In Proceedings of the ECCV. 111–127."
+        },
+        {
+          "key": "e_1_3_1_198_2",
+          "first-page": "2638",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "35",
+          "author": "Sun Ke",
+          "year": "2021",
+          "unstructured": "Ke Sun, Hong Liu, Qixiang Ye, Yue Gao, Jianzhuang Liu, Ling Shao, and Rongrong Ji. 2021. Domain general face forgery detection by learning to weight. In Proceedings of the AAAI, Vol. 35. 2638–2646."
+        },
+        {
+          "key": "e_1_3_1_199_2",
+          "first-page": "5693",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Sun Ke",
+          "year": "2019",
+          "unstructured": "Ke Sun, Bin Xiao, Dong Liu, and Jingdong Wang. 2019. Deep high-resolution representation learning for human pose estimation. In Proceedings of the CVPR. 5693–5703."
+        },
+        {
+          "key": "e_1_3_1_200_2",
+          "first-page": "2316",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "36",
+          "author": "Sun Ke",
+          "year": "2022",
+          "unstructured": "Ke Sun, Taiping Yao, Shen Chen, Shouhong Ding, Jilin Li, and Rongrong Ji. 2022. Dual contrastive learning for general face forgery detection. In Proceedings of the AAAI, Vol. 36. 2316–2324."
+        },
+        {
+          "key": "e_1_3_1_201_2",
+          "first-page": "20882",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Sun Zhimin",
+          "year": "2023",
+          "unstructured": "Zhimin Sun, Shen Chen, Taiping Yao, Bangjie Yin, Ran Yi, Shouhong Ding, and Lizhuang Ma. 2023. Contrastive pseudo learning for open-world deepfake attribution. In Proceedings of the ICCV. 20882–20892."
+        },
+        {
+          "key": "e_1_3_1_202_2",
+          "first-page": "3609",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Sun Zekun",
+          "year": "2021",
+          "unstructured": "Zekun Sun, Yujie Han, Zeyu Hua, Na Ruan, and Weijia Jia. 2021. Improving the efficiency and robustness of deepfakes detection through precise geometric features. In Proceedings of the CVPR. 3609–3618."
+        },
+        {
+          "key": "e_1_3_1_203_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kalaivani Sundararajan and Damon L. Woodard. 2018. Deep learning for biometrics: A survey. ACM Computing Surveys 51 3 (2018) 1–34.",
+          "DOI": "10.1145/3190618"
+        },
+        {
+          "key": "e_1_3_1_204_2",
+          "first-page": "28130",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Tan Chuangchuang",
+          "year": "2024",
+          "unstructured": "Chuangchuang Tan, Yao Zhao, Shikui Wei, Guanghua Gu, Ping Liu, and Yunchao Wei. 2024. Rethinking the up-sampling operations in cnn-based generative network for generalizable deepfake detection. In Proceedings of the CVPR. 28130–28139."
+        },
+        {
+          "key": "e_1_3_1_205_2",
+          "first-page": "12105",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Tan Chuangchuang",
+          "year": "2023",
+          "unstructured": "Chuangchuang Tan, Yao Zhao, Shikui Wei, Guanghua Gu, and Yunchao Wei. 2023. Learning on gradients: Generalized artifacts representation for GAN-generated images detection. In Proceedings of the CVPR. 12105–12114."
+        },
+        {
+          "key": "e_1_3_1_206_2",
+          "first-page": "6105",
+          "volume-title": "Proceedings of the ICML",
+          "author": "Tan Mingxing",
+          "year": "2019",
+          "unstructured": "Mingxing Tan and Quoc Le. 2019. Efficientnet: Rethinking model scaling for convolutional neural networks. In Proceedings of the ICML. PMLR, 6105–6114."
+        },
+        {
+          "key": "e_1_3_1_207_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Diangarti Tariang Riccardo Corvi Davide Cozzolino Giovanni Poggi Koki Nagano and Luisa Verdoliva. 2024. Synthetic image verification in the era of generative artificial intelligence: What works and what Isn’t there yet. IEEE Secur. Priv. 22 03 (2024) 37–49.",
+          "DOI": "10.1109/MSEC.2024.3376637"
+        },
+        {
+          "key": "e_1_3_1_208_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Fadi Thabtah Suhel Hammoud Firuz Kamalov and Amanda Gonsalves. 2020. Data imbalance in classification: Experimental evaluation. Inf. Sci. 513 C (2020) 429–441.",
+          "DOI": "10.1016/j.ins.2019.11.004"
+        },
+        {
+          "key": "e_1_3_1_209_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ruben Tolosana Ruben Vera-Rodriguez Julian Fierrez Aythami Morales and Javier Ortega-Garcia. 2020. Deepfakes and beyond: A survey of face manipulation and fake detection. Information Sciences Fusion 64 (2020) 131–148.",
+          "DOI": "10.1016/j.inffus.2020.06.014"
+        },
+        {
+          "key": "e_1_3_1_210_2",
+          "first-page": "5552",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Tran Du",
+          "year": "2019",
+          "unstructured": "Du Tran, Heng Wang, Lorenzo Torresani, and Matt Feiszli. 2019. Video classification with channel-separated convolutional networks. In Proceedings of the ICCV. 5552–5561."
+        },
+        {
+          "key": "e_1_3_1_211_2",
+          "first-page": "567",
+          "volume-title": "Proceedings of the IJCAI",
+          "author": "Trinh Loc",
+          "year": "2021",
+          "unstructured": "Loc Trinh and Yan Liu. 2021. An examination of fairness of AI models for deepfake detection. In Proceedings of the IJCAI. 567–574. Main Track."
+        },
+        {
+          "key": "e_1_3_1_212_2",
+          "unstructured": "Laurens van der Maaten and Geoffrey Hinton. 2008. Visualizing Data using t-SNE. J. Mach. Learn. Res. 9 86 (2008) 2579–2605."
+        },
+        {
+          "key": "e_1_3_1_213_2",
+          "first-page": "2116",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Le Thanh Van",
+          "year": "2023",
+          "unstructured": "Thanh Van Le, Hao Phung, Thuan Hoang Nguyen, Quan Dao, Ngoc N. Tran, and Anh Tran. 2023. Anti-DreamBooth: Protecting users from personalized text-to-image synthesis. In Proceedings of the ICCV. 2116–2127."
+        },
+        {
+          "key": "e_1_3_1_214_2",
+          "first-page": "14923",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Wang Chengrui",
+          "year": "2021",
+          "unstructured": "Chengrui Wang and Weihong Deng. 2021. Representative forgery mining for fake face detection. In Proceedings of the CVPR. 14923–14932."
+        },
+        {
+          "key": "e_1_3_1_215_2",
+          "first-page": "12047",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Wang Feifei",
+          "year": "2024",
+          "unstructured": "Feifei Wang, Zhentao Tan, Tianyi Wei, Yue Wu, and Qidong Huang. 2024. SimAC: A simple anti-customization method for protecting face privacy against text-to-image synthesis of diffusion models. In Proceedings of the CVPR. 12047–12056."
+        },
+        {
+          "key": "e_1_3_1_216_2",
+          "doi-asserted-by": "crossref",
+          "first-page": "615",
+          "DOI": "10.2737/FPL-GTR-290",
+          "volume-title": "Proceedings of the ICMR",
+          "author": "Wang Junke",
+          "year": "2022",
+          "unstructured": "Junke Wang, Zuxuan Wu, Wenhao Ouyang, Xintong Han, Jingjing Chen, Yu-Gang Jiang, and Ser-Nam Li. 2022. M2tr: Multi-modal multi-scale transformers for deepfake detection. In Proceedings of the ICMR. 615–623."
+        },
+        {
+          "key": "e_1_3_1_217_2",
+          "first-page": "3546",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "Wang Run",
+          "year": "2021",
+          "unstructured": "Run Wang, Felix Juefei-Xu, Meng Luo, Yang Liu, and Lina Wang. 2021. Faketagger: Robust safeguards against deepfake dissemination via provenance tracking. In Proceedings of the ACM MM. 3546–3555."
+        },
+        {
+          "key": "e_1_3_1_218_2",
+          "first-page": "7192",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Wang Sheng-Yu",
+          "year": "2023",
+          "unstructured": "Sheng-Yu Wang, Alexei A. Efros, Jun-Yan Zhu, and Richard Zhang. 2023. Evaluating data attribution for text-to-image models. In Proceedings of the ICCV. 7192–7203."
+        },
+        {
+          "key": "e_1_3_1_219_2",
+          "first-page": "8695",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Wang Sheng-Yu",
+          "year": "2020",
+          "unstructured": "Sheng-Yu Wang, Oliver Wang, Richard Zhang, Andrew Owens, and Alexei A Efros. 2020. CNN-generated images are surprisingly easy to spot... for now. In Proceedings of the CVPR. 8695–8704."
+        },
+        {
+          "key": "e_1_3_1_220_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tao Wang Yushu Zhang Shuren Qi Ruoyu Zhao Zhihua Xia and Jian Weng. 2024. Security and privacy on generative data in AIGC: A survey. ACM Comput. Surv. 57 4 (2024).",
+          "DOI": "10.1145/3703626"
+        },
+        {
+          "key": "e_1_3_1_221_2",
+          "doi-asserted-by": "crossref",
+          "first-page": "14920",
+          "DOI": "10.2737/FPL-GTR-290",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Wang Xueyu",
+          "year": "2022",
+          "unstructured": "Xueyu Wang, Jiajun Huang, Siqi Ma, Surya Nepal, and Chang Xu. 2022. Deepfake disrupter: The detector of deepfake is my friend. In Proceedings of the CVPR. 14920–14929."
+        },
+        {
+          "key": "e_1_3_1_222_2",
+          "first-page": "7278",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Wang Yuan",
+          "year": "2023",
+          "unstructured": "Yuan Wang, Kun Yu, Chen Chen, Xiyuan Hu, and Silong Peng. 2023. Dynamic graph learning with content-guided spatial-frequency relation reasoning for deepfake detection. In Proceedings of the CVPR. 7278–7287."
+        },
+        {
+          "key": "e_1_3_1_223_2",
+          "first-page": "22445",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Wang Zhendong",
+          "year": "2023",
+          "unstructured": "Zhendong Wang, Jianmin Bao, Wengang Zhou, Weilun Wang, Hezhen Hu, Hong Chen, and Houqiang Li. 2023. Dire for diffusion-generated image detection. In Proceedings of the ICCV. 22445–22455."
+        },
+        {
+          "key": "e_1_3_1_224_2",
+          "first-page": "4129",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Wang Zhendong",
+          "year": "2023",
+          "unstructured": "Zhendong Wang, Jianmin Bao, Wengang Zhou, Weilun Wang, and Houqiang Li. 2023. Altfreezing for more general video face forgery detection. In Proceedings of the CVPR. 4129–4138."
+        },
+        {
+          "key": "e_1_3_1_225_2",
+          "first-page": "6813",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "Wei Yiluo",
+          "year": "2024",
+          "unstructured": "Yiluo Wei and Gareth Tyson. 2024. Understanding the impact of AI-generated content on social media: The pixiv case. In Proceedings of the ACM MM. 6813–6822."
+        },
+        {
+          "key": "e_1_3_1_226_2",
+          "unstructured": "Yuxin Wen John Kirchenbauer Jonas Geiping and Tom Goldstein. 2023. Tree-rings watermarks: invisible fingerprints for diffusion images. Proc. NeurIPS (2023) 58047–58063."
+        },
+        {
+          "key": "e_1_3_1_227_2",
+          "first-page": "122",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "36",
+          "author": "Woo Simon",
+          "year": "2022",
+          "unstructured": "Simon Woo et al. 2022. Add: Frequency attention and multi-view based knowledge distillation to detect low-quality compressed deepfake images. In Proceedings of the AAAI, Vol. 36. 122–130."
+        },
+        {
+          "key": "e_1_3_1_228_2",
+          "first-page": "19965",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "38",
+          "author": "Wu Mengjie",
+          "year": "2024",
+          "unstructured": "Mengjie Wu, Jingui Ma, Run Wang, Sidan Zhang, Ziyou Liang, Boheng Li, Chenhao Lin, Liming Fang, and Lina Wang. 2024. TraceEvader: Making deepfakes more untraceable via evading the forgery model attribution. In Proceedings of the AAAI, Vol. 38. 19965–19973."
+        },
+        {
+          "key": "e_1_3_1_229_2",
+          "first-page": "1190",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "Wu Xiaoshuai",
+          "year": "2023",
+          "unstructured": "Xiaoshuai Wu, Xin Liao, and Bo Ou. 2023. Sepmark: Deep separable watermarking for unified source tracing and deepfake detection. In Proceedings of the ACM MM. 1190–1201."
+        },
+        {
+          "key": "e_1_3_1_230_2",
+          "first-page": "6089",
+          "volume-title": "Proceedings of the IJCAI",
+          "author": "Wu Xiaoshuai",
+          "year": "2024",
+          "unstructured": "Xiaoshuai Wu, Xin Liao, Bo Ou, Yuling Liu, and Zheng Qin. 2024. Are watermarks bugs for deepfake detectors? rethinking proactive forensics. In Proceedings of the IJCAI. 6089–6097. Main Track."
+        },
+        {
+          "key": "e_1_3_1_231_2",
+          "first-page": "650",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Wyatt Julian",
+          "year": "2022",
+          "unstructured": "Julian Wyatt, Adam Leach, Sebastian M. Schmon, and Chris G. Willcocks. 2022. Anoddpm: Anomaly detection with denoising diffusion probabilistic models using simplex noise. In Proceedings of the CVPR. 650–656."
+        },
+        {
+          "key": "e_1_3_1_232_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ruiyang Xia Decheng Liu Jie Li Lin Yuan Nannan Wang and Xinbo Gao. 2024. MMNet: Multi-collaboration and multi-supervision network for sequential deepfake detection. IEEE Trans. Inf. Forensics Secur. 19 (2024) 3409–3422.",
+          "DOI": "10.1109/TIFS.2024.3361151"
+        },
+        {
+          "key": "e_1_3_1_233_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ruiyang Xia Dawei Zhou Decheng Liu Jie Li Lin Yuan Nannan Wang and Xinbo Gao. 2024. Inspector for face forgery detection: Defending against adversarial attacks from coarse to fine. IEEE Trans. Image Process. 33 (2024) 4432–4443.",
+          "DOI": "10.1109/TIP.2024.3434388"
+        },
+        {
+          "key": "e_1_3_1_234_2",
+          "first-page": "1668",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "Xiong Cheng",
+          "year": "2023",
+          "unstructured": "Cheng Xiong, Chuan Qin, Guorui Feng, and Xinpeng Zhang. 2023. Flexible and secure watermarking for latent diffusion model. In Proceedings of the ACM MM. 1668–1676."
+        },
+        {
+          "key": "e_1_3_1_235_2",
+          "first-page": "9291",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "Xu Danni",
+          "year": "2023",
+          "unstructured": "Danni Xu, Shaojing Fan, and Mohan Kankanhalli. 2023. Combating misinformation in the era of generative AI models. In Proceedings of the ACM MM. 9291–9298."
+        },
+        {
+          "key": "e_1_3_1_236_2",
+          "first-page": "24534",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Xu Jingyao",
+          "year": "2024",
+          "unstructured": "Jingyao Xu, Yuetong Lu, Yandong Li, Siyang Lu, Dongdong Wang, and Xiang Wei. 2024. Perturbing attention gives you more bang for the buck: Subtle imaging perturbations that efficiently fool customized diffusion models. In Proceedings of the CVPR. 24534–24543."
+        },
+        {
+          "key": "e_1_3_1_237_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mingle Xu Sook Yoon Alvaro Fuentes and Dong Sun Park. 2023. A comprehensive survey of image augmentation techniques for deep learning. Pattern Recognit. 137 (2023) 109347.",
+          "DOI": "10.1016/j.patcog.2023.109347"
+        },
+        {
+          "key": "e_1_3_1_238_2",
+          "unstructured": "Haotian Xue and Yongxin Chen. 2024. Pixel is a barrier: Diffusion models are more adversarially robust than we think. arXiv:2404.13320. Retrieved from https://arxiv.org/abs/arXiv:2404.13320 (2024)."
+        },
+        {
+          "key": "e_1_3_1_239_2",
+          "volume-title": "Proceedings of the ICLR",
+          "author": "Xue Haotian",
+          "year": "2024",
+          "unstructured": "Haotian Xue, Chumeng Liang, Xiaoyu Wu, and Yongxin Chen. 2024. Toward effective protection against diffusion-based mimicry through score distillation. In Proceedings of the ICLR."
+        },
+        {
+          "key": "e_1_3_1_240_2",
+          "unstructured": "Zhiyuan Yan Yong Zhang Xinhang Yuan Siwei Lyu and Baoyuan Wu. 2023. DeepfakeBench: A comprehensive benchmark of deepfake detection. In Proc. NeurIPS Datasets Benchmarks Track."
+        },
+        {
+          "key": "e_1_3_1_241_2",
+          "first-page": "4662",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "36",
+          "author": "Yang Tianyun",
+          "year": "2022",
+          "unstructured": "Tianyun Yang, Ziyao Huang, Juan Cao, Lei Li, and Xirong Li. 2022. Deepfake network architecture attribution. In Proceedings of the AAAI, Vol. 36. 4662–4670."
+        },
+        {
+          "key": "e_1_3_1_242_2",
+          "first-page": "15856",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Yang Tianyun",
+          "year": "2023",
+          "unstructured": "Tianyun Yang, Danding Wang, Fan Tang, Xinying Zhao, Juan Cao, and Sheng Tang. 2023. Progressive open space expansion for open-set model attribution. In Proceedings of the CVPR. 15856–15865."
+        },
+        {
+          "key": "e_1_3_1_243_2",
+          "first-page": "8261",
+          "volume-title": "Proceedings of the ICASSP",
+          "author": "Yang Xin",
+          "year": "2019",
+          "unstructured": "Xin Yang, Yuezun Li, and Siwei Lyu. 2019. Exposing deep fakes using inconsistent head poses. In Proceedings of the ICASSP. IEEE, 8261–8265."
+        },
+        {
+          "key": "e_1_3_1_244_2",
+          "volume-title": "Proceedings of the ICLRW",
+          "author": "Ye Xiaoyu",
+          "year": "2024",
+          "unstructured": "Xiaoyu Ye, Hao Huang, Jiaqi An, and Yongtao Wang. 2024. DUAW: Data-free universal adversarial watermark against stable diffusion customization. In Proceedings of the ICLRW."
+        },
+        {
+          "key": "e_1_3_1_245_2",
+          "first-page": "16188",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Yeh Chin-Yuan",
+          "year": "2021",
+          "unstructured": "Chin-Yuan Yeh, Hsi-Wen Chen, Hong-Han Shuai, De-Nian Yang, and Ming-Syan Chen. 2021. Attack as the best defense: Nullifying image-to-image translation gans via limit-aware adversarial attack. In Proceedings of the ICCV. 16188–16197."
+        },
+        {
+          "key": "e_1_3_1_246_2",
+          "first-page": "53",
+          "volume-title": "Proceedings of the WACVW",
+          "author": "Yeh Chin-Yuan",
+          "year": "2020",
+          "unstructured": "Chin-Yuan Yeh, Hsi-Wen Chen, Shang-Lun Tsai, and Sheng-De Wang. 2020. Disrupting image-translation-based deepfake algorithms with adversarial attacks. In Proceedings of the WACVW. 53–62."
+        },
+        {
+          "key": "e_1_3_1_247_2",
+          "unstructured": "Fisher Yu Ari Seff Yinda Zhang Shuran Song Thomas Funkhouser and Jianxiong Xiao. 2015. Lsun: Construction of a large-scale image dataset using deep learning with humans in the loop. arXiv:2404.13320. Retrieved from https://arxiv.org/abs/arXiv:2404.13320 (2015)."
+        },
+        {
+          "key": "e_1_3_1_248_2",
+          "first-page": "6791",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "38",
+          "author": "Yu Hongwei",
+          "year": "2024",
+          "unstructured": "Hongwei Yu, Jiansheng Chen, Xinlong Ding, Yudong Zhang, Ting Tang, and Huimin Ma. 2024. Step vulnerability guided mean fluctuation adversarial attack against conditional diffusion models. In Proceedings of the AAAI, Vol. 38. 6791–6799."
+        },
+        {
+          "key": "e_1_3_1_249_2",
+          "first-page": "7556",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Yu Ning",
+          "year": "2019",
+          "unstructured": "Ning Yu, Larry S. Davis, and Mario Fritz. 2019. Attributing fake images to gans: Learning and analyzing gan fingerprints. In Proceedings of the ICCV. 7556–7566."
+        },
+        {
+          "key": "e_1_3_1_250_2",
+          "first-page": "14448",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Yu Ning",
+          "year": "2021",
+          "unstructured": "Ning Yu, Vladislav Skripniuk, Sahar Abdelnabi, and Mario Fritz. 2021. Artificial fingerprinting for generative models: Rooting deepfake attribution in training data. In Proceedings of the ICCV. 14448–14457."
+        },
+        {
+          "key": "e_1_3_1_251_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Peipeng Yu Zhihua Xia Jianwei Fei and Yujiang Lu. 2021. A survey on deepfake video detection. IET Biom. 10 6 (2021) 607–624.",
+          "DOI": "10.1049/bme2.12031"
+        },
+        {
+          "key": "e_1_3_1_252_2",
+          "unstructured": "Yu Zeng Mo Zhou Yuan Xue and Vishal M Patel. 2023. Securing deep generative models with universal adversarial signature. arXiv:2305.16310. Retrieved from https://arxiv.org/abs/arXiv:2305.16310 (2023)."
+        },
+        {
+          "key": "e_1_3_1_253_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mingliang Zhai Xuezhi Xiang Ning Lv and Xiangdong Kong. 2021. Optical flow and scene flow estimation: A survey. Pattern Recognit. 114 (2021) 107861.",
+          "DOI": "10.1016/j.patcog.2021.107861"
+        },
+        {
+          "key": "e_1_3_1_254_2",
+          "first-page": "3243",
+          "volume-title": "Proceedings of the AAAI",
+          "volume": "36",
+          "author": "Zhang Baogen",
+          "year": "2022",
+          "unstructured": "Baogen Zhang, Sheng Li, Guorui Feng, Zhenxing Qian, and Xinpeng Zhang. 2022. Patch diffusion: A general module for face manipulation detection. In Proceedings of the AAAI, Vol. 36. 3243–3251."
+        },
+        {
+          "key": "e_1_3_1_255_2",
+          "first-page": "1288",
+          "volume-title": "Proceedings of the IJCAI",
+          "author": "Zhang Daichi",
+          "year": "2021",
+          "unstructured": "Daichi Zhang, Chenyu Li, Fanzhao Lin, Dan Zeng, and Shiming Ge. 2021. Detecting deepfake videos with temporal dropout 3DCNN. In Proceedings of the IJCAI. 1288–1294."
+        },
+        {
+          "key": "e_1_3_1_256_2",
+          "first-page": "5833",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "Zhang Daichi",
+          "year": "2022",
+          "unstructured": "Daichi Zhang, Fanzhao Lin, Yingying Hua, Pengju Wang, Dan Zeng, and Shiming Ge. 2022. Deepfake video detection with spatiotemporal dropout transformer. In Proceedings of the ACM MM. 5833–5841."
+        },
+        {
+          "key": "e_1_3_1_257_2",
+          "first-page": "7354",
+          "volume-title": "Proceedings of the ICML",
+          "author": "Zhang Han",
+          "year": "2019",
+          "unstructured": "Han Zhang, Ian Goodfellow, Dimitris Metaxas, and Augustus Odena. 2019. Self-attention generative adversarial networks. In Proceedings of the ICML. PMLR, 7354–7363."
+        },
+        {
+          "key": "e_1_3_1_258_2",
+          "unstructured": "Jianping Zhang Zhuoer Xu Shiwen Cui Changhua Meng Weibin Wu and Michael R. Lyu. 2023. On the robustness of latent diffusion models. arXiv:2306.08257. Retrieved from https://arxiv.org/abs/arXiv:2306.08257 (2023)."
+        },
+        {
+          "key": "e_1_3_1_259_2",
+          "first-page": "7579",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Zhang Lingzhi",
+          "year": "2023",
+          "unstructured": "Lingzhi Zhang, Zhengjie Xu, Connelly Barnes, Yuqian Zhou, Qing Liu, He Zhang, Sohrab Amirghodsi, Zhe Lin, Eli Shechtman, and Jianbo Shi. 2023. Perceptual artifacts localization for image synthesis tasks. In Proceedings of the ICCV. 7579–7590."
+        },
+        {
+          "key": "e_1_3_1_260_2",
+          "first-page": "146",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Zhang Lingzhi",
+          "year": "2022",
+          "unstructured": "Lingzhi Zhang, Yuqian Zhou, Connelly Barnes, Sohrab Amirghodsi, Zhe Lin, Eli Shechtman, and Jianbo Shi. 2022. Perceptual artifacts localization for inpainting. In Proceedings of the ECCV. 146–164."
+        },
+        {
+          "key": "e_1_3_1_261_2",
+          "first-page": "8749",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "Zhang Rui",
+          "year": "2023",
+          "unstructured": "Rui Zhang, Hongxia Wang, Mingshan Du, Hanqing Liu, Yang Zhou, and Qiang Zeng. 2023. UMMAFormer: A universal multimodal-adaptive transformer framework for temporal forgery localization. In Proceedings of the ACM MM. 8749–8759."
+        },
+        {
+          "key": "e_1_3_1_262_2",
+          "first-page": "1",
+          "volume-title": "Proceedings of the WIFS",
+          "author": "Zhang Xu",
+          "year": "2019",
+          "unstructured": "Xu Zhang, Svebor Karaman, and Shih-Fu Chang. 2019. Detecting and simulating artifacts in gan fake images. In Proceedings of the WIFS. IEEE, 1–6."
+        },
+        {
+          "key": "e_1_3_1_263_2",
+          "first-page": "11964",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Zhang Xuanyu",
+          "year": "2024",
+          "unstructured": "Xuanyu Zhang, Runyi Li, Jiwen Yu, Youmin Xu, Weiqi Li, and Jian Zhang. 2024. Editguard: Versatile image watermarking for tamper localization and copyright protection. In Proceedings of the CVPR. 11964–11974."
+        },
+        {
+          "key": "e_1_3_1_264_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yu Zhang and Qiang Yang. 2021. A survey on multi-task learning. IEEE Transactions on Knowledge and Data Engineering 34 12 (2021) 5586–5609.",
+          "DOI": "10.1109/TKDE.2021.3070203"
+        },
+        {
+          "key": "e_1_3_1_265_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR46437.2021.00222"
+        },
+        {
+          "key": "e_1_3_1_266_2",
+          "first-page": "15023",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Zhao Tianchen",
+          "year": "2021",
+          "unstructured": "Tianchen Zhao, Xiang Xu, Mingze Xu, Hui Ding, Yuanjun Xiong, and Wei Xia. 2021. Learning self-consistency for deepfake detection. In Proceedings of the ICCV. 15023–15033."
+        },
+        {
+          "key": "e_1_3_1_267_2",
+          "volume-title": "Proceedings of the NeurIPS",
+          "author": "Zhao Xuandong",
+          "year": "2024",
+          "unstructured": "Xuandong Zhao, Kexun Zhang, Zihao Su, Saastha Vasan, Ilya Grishchenko, Christopher Kruegel, Giovanni Vigna, Yu-Xiang Wang, and Lei Li. 2024. Invisible image watermarks are provably removable using generative AI. In Proceedings of the NeurIPS."
+        },
+        {
+          "key": "e_1_3_1_268_2",
+          "first-page": "4602",
+          "volume-title": "Proceedings of the WACV",
+          "author": "Zhao Yuan",
+          "year": "2023",
+          "unstructured": "Yuan Zhao, Bo Liu, Ming Ding, Baoping Liu, Tianqing Zhu, and Xin Yu. 2023. Proactive deepfake defence via identity watermarking. In Proceedings of the WACV. 4602–4611."
+        },
+        {
+          "key": "e_1_3_1_269_2",
+          "unstructured": "Zhengyue Zhao Jinhao Duan Xing Hu Kaidi Xu Chenan Wang Rui Zhang Zidong Du Qi Guo and Yunji Chen. 2024. Unlearnable examples for diffusion models: Protect data from unauthorized exploitation. Proceedings of the ICLRW (2024)."
+        },
+        {
+          "key": "e_1_3_1_270_2",
+          "first-page": "24398",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Zhao Zhengyue",
+          "year": "2024",
+          "unstructured": "Zhengyue Zhao, Jinhao Duan, Kaidi Xu, Chenan Wang, Rui Zhang, Zidong Du, Qi Guo, and Xing Hu. 2024. Can protective perturbation safeguard personal data from being exploited by stable diffusion?. In Proceedings of the CVPR. 24398–24407."
+        },
+        {
+          "key": "e_1_3_1_271_2",
+          "unstructured": "Boyang Zheng Chumeng Liang Xiaoyu Wu and Yan Liu. 2024. Understanding and improving adversarial attacks on latent diffusion model. Proceedings of the ICLR (2024)."
+        },
+        {
+          "key": "e_1_3_1_272_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chende Zheng Chenhao Lin Zhengyu Zhao Hang Wang Xu Guo Shuai Liu and Chao Shen. 2024. Breaking semantic artifacts for generalized ai-generated image detection. Proceedings of the NeurIPS 37 (2024) 59570–59596.",
+          "DOI": "10.52202/079017-1903"
+        },
+        {
+          "key": "e_1_3_1_273_2",
+          "unstructured": "Xiaosen Zheng Tianyu Pang Chao Du Jing Jiang and Min Lin. 2023. Intriguing properties of data attribution on diffusion models. Proceedings of the ICLR (2023)."
+        },
+        {
+          "key": "e_1_3_1_274_2",
+          "first-page": "15044",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Zheng Yinglin",
+          "year": "2021",
+          "unstructured": "Yinglin Zheng, Jianmin Bao, Dong Chen, Ming Zeng, and Fang Wen. 2021. Exploring temporal coherence for more general video face forgery detection. In Proceedings of the ICCV. 15044–15054."
+        },
+        {
+          "key": "e_1_3_1_275_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bolei Zhou Agata Lapedriza Aditya Khosla Aude Oliva and Antonio Torralba. 2017. Places: A 10 million image database for scene recognition. IEEE Transactions on Pattern Analysis and Machine Intelligence 40 6 (2017) 1452–1464.",
+          "DOI": "10.1109/TPAMI.2017.2723009"
+        },
+        {
+          "key": "e_1_3_1_276_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR46437.2021.00416"
+        },
+        {
+          "key": "e_1_3_1_277_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Jiaran Zhou Yuezun Li Baoyuan Wu Bin Li Junyu Dong et al. 2024. FreqBlender: Enhancing deepfake detection by blending frequency knowledge. Proceedings of the NeurIPS 37 (2024) 44965–44988.",
+          "DOI": "10.52202/079017-1429"
+        },
+        {
+          "key": "e_1_3_1_278_2",
+          "first-page": "1831",
+          "volume-title": "Proceedings of the CVPRW",
+          "author": "Zhou Peng",
+          "year": "2017",
+          "unstructured": "Peng Zhou, Xintong Han, Vlad I. Morariu, and Larry S. Davis. 2017. Two-stream neural networks for tampered face detection. In Proceedings of the CVPRW. IEEE, 1831–1839."
+        },
+        {
+          "key": "e_1_3_1_279_2",
+          "first-page": "5778",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Zhou Tianfei",
+          "year": "2021",
+          "unstructured": "Tianfei Zhou, Wenguan Wang, Zhiyuan Liang, and Jianbing Shen. 2021. Face forensics in the wild. In Proceedings of the CVPR. 5778–5788."
+        },
+        {
+          "key": "e_1_3_1_280_2",
+          "first-page": "14800",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Zhou Yipin",
+          "year": "2021",
+          "unstructured": "Yipin Zhou and Ser-Nam Lim. 2021. Joint audio-visual deepfake detection. In Proceedings of the ICCV. 14800–14809."
+        },
+        {
+          "key": "e_1_3_1_281_2",
+          "unstructured": "Mingjian Zhu Hanting Chen Qiangyu Yan Xudong Huang Guanyu Lin Wei Li Zhijun Tu Hailin Hu Jie Hu and Yunhe Wang. 2023. GenImage: A million-scale benchmark for detecting AI-generated image. In Proc. NeurIPS. 77771–77782."
+        },
+        {
+          "key": "e_1_3_1_282_2",
+          "first-page": "4315",
+          "volume-title": "Proceedings of the ICCV",
+          "author": "Zhu Peifei",
+          "year": "2023",
+          "unstructured": "Peifei Zhu, Genki Osada, Hirokatsu Kataoka, and Tsubasa Takahashi. 2023. Frequency-aware GAN for adversarial manipulation generation. In Proceedings of the ICCV. 4315–4324."
+        },
+        {
+          "key": "e_1_3_1_283_2",
+          "first-page": "24420",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Zhu Peifei",
+          "year": "2024",
+          "unstructured": "Peifei Zhu, Tsubasa Takahashi, and Hirokatsu Kataoka. 2024. Watermark-embedded adversarial examples for copyright protection against diffusion models. In Proceedings of the CVPR. 24420–24430."
+        },
+        {
+          "key": "e_1_3_1_284_2",
+          "first-page": "2929",
+          "volume-title": "Proceedings of the CVPR",
+          "author": "Zhu Xiangyu",
+          "year": "2021",
+          "unstructured": "Xiangyu Zhu, Hao Wang, Hongyan Fei, Zhen Lei, and Stan Z. Li. 2021. Face forgery detection by 3d decomposition. In Proceedings of the CVPR. 2929–2939."
+        },
+        {
+          "key": "e_1_3_1_285_2",
+          "first-page": "391",
+          "volume-title": "Proceedings of the ECCV",
+          "author": "Zhuang Wanyi",
+          "year": "2022",
+          "unstructured": "Wanyi Zhuang, Qi Chu, Zhentao Tan, Qiankun Liu, Haojie Yuan, Changtao Miao, Zixiang Luo, and Nenghai Yu. 2022. UIA-ViT: Unsupervised inconsistency-aware method based on vision transformer for face forgery detection. In Proceedings of the ECCV. 391–407."
+        },
+        {
+          "key": "e_1_3_1_286_2",
+          "first-page": "2382",
+          "volume-title": "Proceedings of the ACM MM",
+          "author": "Zi Bojia",
+          "year": "2020",
+          "unstructured": "Bojia Zi, Minghao Chang, Jingjing Chen, Xingjun Ma, and Yu-Gang Jiang. 2020. Wilddeepfake: A challenging real-world dataset for deepfake detection. In Proceedings of the ACM MM. 2382–2390."
+        }
+      ],
+      "container-title": [
+        "ACM Computing Surveys"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://dl.acm.org/doi/pdf/10.1145/3770916",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            11,
+            20
+          ]
+        ],
+        "date-time": "2025-11-20T13:34:28Z",
+        "timestamp": 1763645668000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://dl.acm.org/doi/10.1145/3770916"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2025,
+            11,
+            20
+          ]
+        ]
+      },
+      "references-count": 285,
+      "journal-issue": {
+        "issue": "5",
+        "published-print": {
+          "date-parts": [
+            [
+              2026,
+              4,
+              30
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "10.1145/3770916"
+      ],
+      "URL": "https://doi.org/10.1145/3770916",
+      "relation": {},
+      "ISSN": [
+        "0360-0300",
+        "1557-7341"
+      ],
+      "issn-type": [
+        {
+          "value": "0360-0300",
+          "type": "print"
+        },
+        {
+          "value": "1557-7341",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            11,
+            20
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "2024-09-02",
+          "order": 0,
+          "name": "received",
+          "label": "Received",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        },
+        {
+          "value": "2025-07-24",
+          "order": 2,
+          "name": "accepted",
+          "label": "Accepted",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        },
+        {
+          "value": "2025-11-20",
+          "order": 3,
+          "name": "published",
+          "label": "Published",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        }
+      ]
+    }
+  }
+}

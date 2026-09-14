@@ -1,0 +1,1068 @@
+PAGE 1
+   NTIRE2026 Challenge onRobustAI-Generated ImageDetection inthe Wild
+
+
+        Aleksandr Gushchin *        Khaled Abud         Ekaterina Shumitskaya         Artem Filippov
+        Georgii Bychkov         Sergey Lavrushkin         Mikhail Erofeev         Anastasia Antsiferova
+   Changsheng Chen        Shunquan Tan        Radu Timofte        Dmitry Vatolin        Chuanbiao Song
+     Zijian Yu        Hao Tan        Jun Lan        Zhiqiang Yang        Yongwei Tang        Zhiqiang Wu
+          Jia Wen Seow         Hong Vin Koay         Haodong Ren         Feng Xu         Shuai Chen
+      Ruiyang Xia        Qi Zhang        Yaowen Xu        Zhaofan Zou        Hao Sun        Dagong Lu
+     Mufeng Yao        Xinlei Xu        Fei Wu        Fengjun Guo        Cong Luo        Hardik Sharma
+   Aashish Negi        Prateek Shaily        Jayant Kumar        Sachin Chaudhary        Akshay Dudhane
+         Praful Hambarde         Amit Shukla         Zhilin Tu         Fengpeng Li         Jiamin Zhang
+   Jianwei Fei        Kemou Li        Haiwei Wu        Bilel Benjdira        Anas M. Ali        Wadii Boulila
+                                                 Chenfan Qu                 Junchi Li
+                                               alexander.gushchin@graphics.cs.msu.ru
+
+                            Abstract                                       1. Introduction
+
+This paper presents an overview of the NTIRE 2026 Chal-                    The emergence of generative AI has made the synthesis
+lengeonRobustAI-GeneratedImageDetectionintheWild,                          of photorealistic images increasingly accessible.  Modern
+held in conjunction with the NTIRE workshop at CVPR                        generative models — including diffusion-based architec-
+2026. The goal of this challenge was to develop detection                  tures [64], generative adversarial networks [22], and au-
+models capable of distinguishing real images from gener-                   toregressive image generators [39] — are capable of pro-
+atedonesinrealisticscenarios: theimagesareoftentrans-                      ducing images that are visually indistinguishable from real
+formed (cropped, resized, compressed, blurred) for prac-                   photographs.   The widespread availability of such mod-
+tical usage, and therefore, the detection models should be                 els through consumer-facing applications has led to an un-
+robust to such transformations. The challenge is based on                  precedentedvolumeofAI-generatedimageryincirculation,
+a novel dataset consisting of 108,750 real and 185,750 AI-                 raisingseriousconcernsintheareasofmediaintegrity,mis-
+generated images from 42 generators comprising a large                     information, digital forensics, and content authentication.
+varietyofopen-sourceandclosed-sourcemodelsofvarious                            In recent years, the research community has developed
+architectures, augmented with 36 image transformations.                    a variety of methods for detecting AI-generated images.
+Methods were evaluated using ROC AUC on the full test                      Early approaches [78] exploited generator-specific artifacts
+set,includingbothtransformedanduntransformedimages.                        such as spectral periodicities characteristic of GAN up-
+A total of 511 participants registered, with 20 teams sub-                 sampling  [19]  and  checkerboard  patterns  introduced  by
+mittingvalidfinalsolutions. Thisreportprovidesacompre-                     transposed convolutions [71].   More recent methods tar-
+hensive overview of the challenge, describes the proposed                  get  the  residual  artifacts  of  diffusion  model  denoising
+solutions, and can be used as a valuable reference for re-                 pipelines [81], or leverage large pretrained vision encoders
+searchers and practitioners in increasing the robustness of                fine-tuned on real/fake corpora [55].
+the detection models to real-world transformations.                            Several prior works and competitions have contributed
+                                                                           datasets and benchmarks for AI-generated image detec-
+                                                                           tion [30,87,92]. Despite notable progress, a fundamental
+                                                                           and persistent limitation of existing detectors is their lack
+                                                                           of robustness to real-world image transformations. In prac-
+   *A.  Gushchin  (alexander.gushchin@graphics.cs.msu.ru),  K.  Abud,      tical deployment scenarios, images are routinely cropped,
+E. Shumitskaya, A. Filippov, G. Bychkov, M. Erofeev, S. Lavrushkin,        resized, recompressed, and blurred before they are encoun-
+M. Erofeev, A. Antsiferova, D. Vatolin, C. Chen, S. Tan and R. Timofte     tered by a detector — operations that can substantially
+were the challenge organizers, while the other authors participated in the degrade detection performance [37].   However,  existing
+challenge. Sec.7containstheauthors’teamsandaffiliations. NTIRE2026
+webpage:https://cvlai.net/ntire/2026/                                      benchmarkstypicallyeithercoveralimitednumberofgen-
+
+PAGE 2
+erators or do not systematically account for real-world im-                    2. Challenge
+age transformations, or evaluate both aspects in isolation.                    Our challenge is dedicated to the task of distinguishing AI-
+Therefore,  the creation of modern detectors that are ro-                      generated images produced in Text-to-Image setting from
+bust to such transformations remains a serious gap in AI-                      real imagery. We focus on the most general image domain,
+generated image detection.                                                     without confining to particular subdomains such as faces,
+   This paper presents the NTIRE 2026 Challenge on Ro-                         humans,orspecificobjectclasses. Thegoalsofthiscompe-
+bustAI-GeneratedImageDetectionintheWild,whichaims                              titionisthreefold: 1)AssessthecurrentstateofAI-powered
+to explore and enhance the robustness of detectors to real-                    image generation and its differentiability from the real im-
+world image transformations, including operations that can                     ages; 2) Evaluate the detection robustness under complex
+substantially disrupt detectors trained on clean data.  The                    imagedegradationpipelines;3)Appraisethegeneralization
+challenge is built around a novel large-scale dataset com-                     capabilities of the modern detectors to unseen generators.
+prising 108,750 real images and 185,750 AI-generated im-
+ages sourced from 42 generators that span a wide range of                      2.1. Dataset
+open-source and closed-source architectures. Crucially, the                    For this challenge, we introduce our novel dataset contain-
+dataset incorporates 36 image transformation types reflect-                    ing both high-quality real-world imagery and AI-generated
+ingrealisticpost-processinganddistributionconditions,en-                       images sourced from a diverse set of generators, ranging
+abling a principled assessment of detector robustness.                         from older Stable Diffusion [64] models up to the most re-
+   Thispaperprovidesanoverviewofthemethodssubmit-                              centmodelstodate(e.g.,NanoBanana2[53],SeeDream5
+ted to the challenge and reports on their performance. The                     Lite [54]).
+ideas proposedin this challengecan be usedto enhance the                           Real subset.To construct a diverse and comprehen-
+robustnessofthedetectorstoreal-worldtransformations,in                         sive set of real images that represent “in-the-wild” content,
+addition to increasing the detection accuracy that is impor-                   we collect them from 3 large-scale web-sourced image-text
+tant in critical spheres.                                                      datasets: CC12M[9],CommonPool[21]andRedCaps[15].
+   This  challenge  is  one  of  the  challenges  associated                   After initial filtering for explicit and inappropriate content
+with the NTIRE 2026 Workshop  1  on:  deepfake detec-                          and data availability check, a total of∼12M images were
+tion [31], high-resolution depth [89], multi-exposure im-                      selected.  To increase data quality, we employed series of
+age fusion [61], AI flash portrait [26], professional image                    additional filtering stages, ranging from resolution thresh-
+quality assessment [59], light field super-resolution [80],                    oldingandCLIP-deduplicationtocomplexVLM-basedim-
+3Dcontentsuper-resolution[77],bitstream-corruptedvideo                         agecategorizationandscoring,furtherreducingthenumber
+restoration [93], X-AIGC quality assessment [44], shadow                       of suitable images by 90%.   Finally, we sample 100,000
+removal [74], ambient lighting normalization [73], control-                    unique real images from our filtered set for the training
+lable Bokeh rendering [65], rip current detection and seg-                     stage, and∼9k in total for validation and test splits.
+mentation [16], low light image enhancement [12], high                             Generated subset.To produce generated images, we
+FPS  video  frame  interpolation  [13],  Night-time  dehaz-                    utilize42open-sourceandproprietaryText-to-Imagegener-
+ing  [2, 3],  learned  ISP  with  unpaired  data  [58],  short-                atorsreleasedbetween2022and2026. Generationprompts
+form UGC video restoration [40],  raindrop removal for                         forthissubsetarecollectedfromthecorrespondingrealim-
+dual-focusedimages[41],imagesuper-resolution(x4)[10],                          ages:  we first employ a Large Vision-Language model to
+photography  retouching  transfer  [17],  mobile  real-word                    produce detailed image captions and then rewrite them into
+super-resolution   [38],   remote   sensing   infrared   super-                concise and structured prompts using LLM. By “pairing”
+resolution [42], AI-Generated image detection [27], cross-                     generated images with their real counterparts, we ensure
+domain few-shot object detection [60],  financial receipt                      thatbothsubsetsreflectsimilarsemanticsandcontentdistri-
+restoration  and  reasoning  [25],  real-world  face  restora-                 bution, which should help detectors learn content-agnostic
+tion [76], reflection removal [6], anomaly detection of face                   features. To further minimize potential biases in generated
+enhancement [91], video saliency prediction [49], efficient                    imagery,wealsoalignitsdistributionsofresolutions,aspect
+super-resolution [63], 3d restoration and reconstruction in                    ratios, JPEG compression quality factors, and other statis-
+adverse conditions [43], image denoising [67], blind com-                      tics to those of the real subset.  For the training split, for
+putationalaberrationcorrection[69],event-basedimagede-                         each real image (out of 100k), we randomly select from 1
+blurring[68],efficientburstHDRandrestoration[57],low-                          to3generatorstoproducecorrespondinggeneratedimages,
+light enhancement:  ‘twilight cowboy’ [34], and efficient                      resulting in∼177k samples.  The training split covers 20
+low light image enhancement [85].                                              open-source generators in total, with the most recent mod-
+                                                                               els including Flux Kontext (dev) [36], DeepFloyd-IF [50],
+                                                                               and Ovis-image [75].   Most of the top-performing open-
+   1https://www.cvlai.net/ntire/2026/                                          source models (e.g.  Qwen-Image [83], HiDream [7], etc.)
+
+PAGE 3
+as well as proprietary generators (Nano Banana [52], Grok                    3. Challenge Methods and Teams
+Imagine [51], etc.)  were reserved for validation and test                   3.1. MICV
+splits, with each consecutive split containing progressively
+larger share of state-of-the-art models.  For validation and                 3.1.1. Technical Details
+test splits, we use only unique images without its paired                    OverviewIn this work, we propose a robust ensemble-
+counterpart to avoid potential advantage from selecting be-                  basedframeworkforAI-generatedimagedetection,specifi-
+tweenmultiplesimilarimages. Moredetailsonthecontents                         callydesignedtoaddressthechallengesofdomaingeneral-
+of each split can be found in Appendix in Tables 3 and 4.                    ization and cross-platform detection. Our approach centers
+   Robust detection track.Our competition includes a                         on three core pillars:
+specialtrackdesignedtoevaluatedetectors’performancein                        •Hierarchical  Data  Strategy:   We  curate  a  large-scale,
+a more challenging scenario where input images might be                        multi-source training corpus that integrates open-source
+significantly distorted to conceal its nature.  This track re-                 academic benchmarks,  synthetic images from cutting-
+flects various image corruptions and artifacts which might                     edge generative models, and high-fidelity samples from
+be encountered in real-world detector deployment. To this                      closed-sourcecommercialAPIs,ensuringcomprehensive
+purpose, we employed an image degradation pipeline in-                         coverage of diverse generative artifacts.
+spired by [1].    Each image is transformed with 1 to 5                      •Ensemble-based Architecture:  We utilize the powerful
+randomly sampled consecutive distortions from different                        representation  capabilities  of  multiple  DINOv3  back-
+groups (e.g., noise, compression, blur, etc.).  Each trans-                    bones, organized into two distinct model committees. By
+formation has multiple magnitude levels, which are sam-                        employing a late-fusion strategy that averages the de-
+pledindependentlyoneachapplication. Intherobustdetec-                          tection probabilities derived from these ensembles, we
+tiontrack,bothrealandgeneratedimagesundergothesame                             achieve a more holistic and discriminative signature of
+degradation pipeline. To avoid detector tuning for specific                    AI-generated content.
+distortion types, we employed different sets of distortions                  •Robust Augmentation:   To enhance robustness against
+in each dataset split and progressively complicated them in                    “in-the-wild” degradations,  we implement a hierarchi-
+the last stages of the challenge. To identify the most chal-                   cal, difficulty-aware data augmentation pipeline.  Com-
+lenging distortion types, we utilized our pre-trained detec-                   binedwithaFocalLoss-drivenoptimizationandStochas-
+tors and analyzed their performance on degraded images.                        tic Weight Averaging (SWA), our approach effectively
+Intotal,weemploy36differenttransformationtypesacross                           bridges the distribution gap between laboratory bench-
+the challenge stages, ranging from simple transforms like                      marks and real-world unconstrained imagery.
+Gaussian blur and white noise, up to complex techniques
+like invisible image watermarking  [84] , neural compres-
+sion[4,11]andwatermark-erasingadversarialattacks[66].                        Data  CollectionHigh-quality,  large-scale,  and  diverse
+FulllistofthetransformationscanbefoundinTables3and                           datasets are fundamental to the robustness and generaliz-
+4. Invalidationandtestsplits,halfoftherealandgenerated                       abilityofAI-GeneratedImagedetection. Toeffectivelyem-
+images are selected for the robust track and distorted with                  ulate the complex, “in-the-wild” distribution of generative
+the aforementioned pipeline.                                                 artifacts, we curate a comprehensive training corpus com-
+                                                                             prisingmillionsofsamples. Ourdataacquisitionstrategyis
+                                                                             hierarchical, categorized into four primary tiers:
+2.2. Evaluation metrics                                                      •Open-SourceDatasets: Toestablishasolidfoundationfor
+•Primary metric – Robust ROC AUC, computed over all                            cross-domain generalization, we integrate a diverse ar-
+  distorted images in the set.   It measures the detector’s                    ray of open-source resources, ranging from established
+  global discriminative ability under complex postprocess-                     academic benchmarks to large-scale repositories hosted
+  ing pipelines.                                                               on platforms like HuggingFace. This collection includes,
+•Secondary metric – Clean ROC AUC, computed over all                           but is not limited to, GenImage, WildFake, AIGIBench,
+  non-distorted images in the set. It measures detector per-                   CommunityForensics, and So-Fake-Set, along with rep-
+  formance in a clear setting, disregarding potential image                    resentative datasets sourced from open-source communi-
+  transformations.                                                             ties.  By aggregating these heterogeneous data sources,
+                                                                               we ensure that our model is exposed to a wide spectrum
+ROCAUCismeasuredbetweenbinarylabels(0/1),where1                                of generation paradigms and realworld artifacts, signifi-
+indicatesafakeimage,andtheconfidencescoressubmitted                            cantly enhancing the scalability and effectiveness of our
+by the participants. We selected ROC AUC over Accuracy                         model.
+or F1 score, as it does not require quantizing participants’                 •Open-Source Generative Models: To align with the rapid
+predictions to binary scores with a predefined threshold.                      evolution  of  generative  architectures,  we  construct  a
+
+PAGE 4
+  substantial synthetic dataset using state-of-the-art open-
+  source  models.     Our  pipeline  encompasses  a  multi-
+  faceted  range  of  generation  tasks,  including  Text-to-
+  Image(T2I),Image-to-Image(I2I),imageeditingandin-
+  painting,leveragingrepresentativemodelssuchasQwen-
+  Image, Z-Image, and the FLUX series to capture the dis-
+  tinct artifacts inherent in contemporary architectures.
+•Closed-Source Commercial Models:  Given the preva-
+  lence of closedsource platforms in real-world applica-
+  tions, we supplement our corpus with high-fidelity sam-
+  ples obtained via official APIs.  By integrating outputs                  Figure1. MICVmethodscheme. DINOv3-baseddetectionframe-
+  from industry-leading engines such as Seedream, Kling,                    work.
+  GPT-Image, and Nano-banana-pro, we effectively miti-
+  gate the distribution shift between open-source research
+  models and proprietary commercial systems, thereby en-                    chicalaugmentationpipeline. Duringinference,imagesare
+  hancing the detector’s practical deployment efficacy.                     directly resized to 512 × 512 to preserve the global spatial
+•Challenge-SpecificDatasets: Tofurtherexpandoursetof                        context. The model is trained on 32 NVIDIA A100 GPUs
+  trainingsamples,weutilizedtheimagesamplesprovided                         for 10 epochs, with the entire procedure completing in ap-
+  by the competition organizers.                                            proximately 8 hours.
+                                                                            •Objective Function:  We employ Focal Loss as our pri-
+MethodologyAs illustrated in Figure1,we propose a                              mary objective function to address the potential imbal-
+featurefusionarchitectureforAIgeneratedimagedetection.                         ance in sample difficulty and to mitigate the dominance
+Our approach leverages the powerful feature representation                     of easy-negative samples.  The focus parameterγis set
+capabilities of DINOv3 backbones by employing two dis-                         to 2.0, and the balance parameterαis empirically set to
+tinct subnetworks, each designed to process image features                     0.5, to ensure that the model focuses on hard-to-classify
+through an ensemble of pretrained backbones.                                   generative artifacts.
+   Specifically,thearchitecturecomprisestwoindependent                      •Optimization Strategy: We utilize the AdamW optimizer
+streams:  the first stream aggregates feature maps from a                      with a weight decay of 0.02. The learning rate is initial-
+committee of four DINOv3 backbones, while the second                           izedat1×10-5. Toensuretrainingstability,weimplement
+streamintegratesfeaturesfromaseparatecommitteeoftwo                            a linear warmup strategy over the first epoch, followed
+DINOv3 backbones.  Within each sub-network, the aggre-                         by a Cosine Annealing schedule to gradually decay the
+gated backbone features are processed through a dedicated                      learningratefortheremainderofthetrainingprocess. We
+projection layer to map them into a latent space, followed                     employ Stochastic Weight Averaging (SWA) over the fi-
+by a multi-layer perceptron (MLP) head that produces the                       nal epochs to aggregate model weights. This refinement
+detection probability. To derive the final prediction, we av-                  yields a more stable and generalized weight configura-
+erage output probabilities from both streams.                                  tion, which serves as our final inference model.
+   To  bridge  the  distribution  shift  between  controlled                •Evaluation and Refinement:  We evaluate model perfor-
+benchmarks and challenging “in-the-wild” imagery, we de-                       mance  using  the  Area  Under  the  Receiver  Operating
+sign a hierarchical, stochastic data augmentation pipeline                     Characteristic curve (ROC AUC) on a dedicated valida-
+structuredbydifficultylevels. Ourpipelineprogressesfrom                        tion set, which is curated by sampling 10,000 labelbal-
+simple,  individual transformations to complex combina-                        anced imagesfrom theofficial trainingcorpus. To ensure
+torial perturbations.   While the former applies individual                    arobustassessmentunderchallengingconditions,weap-
+degradations such as blur, noise, geometric shifts or com-                     ply a static version of the hierarchical data augmentation
+pression, the latter employs multi-stage pipelines that sim-                   pipeline to this validation set to assess robustness.
+ulate complex degradations.  This hierarchical and multi-
+faceted augmentation strategy effectively narrows the do-                   AcknowledgmentsWe sincerely thank the open-source
+main gap, ensuring superior detection performance even in                   community, whose contributions have been instrumental to
+highly unconstrained and degraded environments.                             thedevelopmentofthisframework. Weareespeciallygrate-
+                                                                            ful to the creators of various AIGC detection benchmarks
+ImplementationDetailsWeinitializeourframeworkus-                            for providing the foundation of our study, and to the re-
+ing pretrained DINOv3 backbones and perform end-to-end                      search teams behind state-of-the-art generative models for
+fine-tuning. During training, images are randomly cropped                   open-sourcing the architectures and tools that enabled our
+andresizedto512×512pixels,supplementedbyourhierar-                          high-quality data synthesis.
+
+PAGE 5
+                                                                               Toimproverobustness,weapplyafour-levelofflineaug-
+                                                                           mentation pipeline:
+                                                                           •Level 1 (Clean):original images.
+                                                                           •Level2(Mild):1–3randomdistortions,severitysampled
+                                                                              with mean 0 and std 2.5.
+                                                                           •Level 3 (Moderate):3–6 random distortions, mean 2.5
+                                                                              and std 2.0.
+                                                                           •Level 4 (Heavy):fixed 6 distortions, mean 3.5, std 1.0.
+                                                                           3.2.3. Backbone Selection
+                                                                           We evaluated several large-scale vision backbones (eva02-
+                                                                           large,eva-giant,siglip2-giant,DINOv3-7B). Experiments
+                                                                           showed strong scaling behavior: larger models and higher
+                                                                           input resolutions consistently improved performance and
+                                                                           generalization. Therefore, we selectedDINOv3-7Bas the
+                                                                           base architecture.
+                                                                           3.2.4. Dual-Expert Ensemble Architecture
+                                                                           Ourfinalmodelisadual-expertensembleconsistingoftwo
+                                                                           independently fine-tunedDINOv3-7Bmodels (total 14B
+                                                                           parameters).  Given an input image, both experts produce
+                                                                           detection scores, which are aggregated into a final robust
+                                                                           prediction.   Both experts are trained with full-parameter
+                                                                           fine-tuning on NVIDIA B200 GPUs.
+                                                                           3.2.5. Expert Training Strategy
+                                                                           Expert 1: High-Resolution Specialist
+                                                                           •Data:Levels 2, 3, and 4 only.
+                                                                           •Pooling:attention             pooling.
+           Figure 2. Ant International method scheme.                      •Input resolution:512×512.
+                                                                           •Online augmentation:random horizontal flip (p= 0.5)
+3.2. Ant International                                                        + AugMix (m6-w3-d1).
+                                                                           •Training setup:1 epoch, learning rate1×10                  −6  , Model
+3.2.1. Introduction                                                           EMA, AMP, no dropout.
+The rapid progress of text-to-image (T2I) generation has
+made synthetic images increasingly photorealistic, creating                Expert 2: Robustness-Focused Specialist
+a pressing need for robust AI-generated image detection.                   •Data:Levels 1, 2, 3, and 4.
+OursolutionfortheNTIRE2026RobustAI-GeneratedIm-                            •Pooling:first          token     pooling.
+age Detection Challenge is guided by three principles:                     •Input resolution:288×288.
+•Massive  and  diverse  data:large-scale  multi-source                     •Training duration:10 epochs.
+  training set with extensive augmentations.                               3.2.6. Inference
+•Model scaling:leveraging very large vision backbones                      Inference consists of two steps:
+  for improved generalization.
+•Expert ensemble:combining two complementary spe-                          1.Test-timeaugmentation(TTA):eachexpertpredictson
+  cialists trained with different strategies.                                  multiple augmented variants of each test image.
+3.2.2. Data Preparation and Augmentation                                   2.Weighted ensembling:TTA outputs are aggregated per
+                                                                               expert,thencombinedviaweightedaveragingacrossex-
+Our training set contains approximately 1 million images                       perts.
+from three sources:                                                        On a single NVIDIA A100 GPU, the full pipeline runs at
+•Official NTIRE 2026 challenge training set.                               approximately2.21images/swith78.25GBVRAMusage.
+•Self-generatedsyntheticimagesfromLongCat-Image,Z-                         3.2.7. Conclusion
+  Image,Qwen-Image, andQwen-Image-2512.
+•Open-source detection datasets:DragonandUniGen-                           Our NTIRE 2026 solution shows that robust AI-generated
+  Bench.                                                                   image detection benefits strongly from:
+
+PAGE 6
+•model scaling (DINOv3-7B),
+•large and diverse augmented data,
+•and complementary dual-expert ensembling.
+Bycombiningahigh-resolutionspecialistandarobustness-
+focused specialist, we achieve strong generalization under
+real-world image transformations.
+3.3.TeleAI-TeleGuard. TeleAIStrategyforRobust                                  Figure3. TeleAI-TeleGuardmethodscheme.PipelineofLPT.To
+       AI-Generated Image Detection in the Wild                                achieve robust detection, the framework includes distortion simu-
+                                                                               lation, foundation-model fine-tuning, and pairwise optimization.
+3.3.1. Proposed Method
+We propose a LoRA-based Pairwise Training (LPT) strat-
+egy to achieve robust detection of AI-generated images
+(AIGI).AsshowninFigure3,thisstrategyconsistsofthree
+components: foundation-model fine-tuning, distortion sim-
+ulation, and pairwise optimization.
+   In addition to the distortions provided by the organizer,
+after inspecting the validation set we introduce three extra
+distortion types—Speckle Noise,Color Cast, andOrganic
+Moire—which better match the target data distribution. We                                       Figure 4. INTSIG method scheme.
+also increase distortion severity by setting the mean of the
+Gaussian distribution to 3.
+   The foundation model in LPT is EVA-CLIP [70].  Fol-                         high-resolution branch (448×448). Model 5 replaces the
+lowing LoRA-style fine-tuning [32], we adapt the linear                        backbone with MetaCLIP2 Giant and applies partial fine-
+layers in the multi-head self-attention (MHSA) and feed-                       tuning. This design balances in-domain accuracy and OOD
+forward network (FFN) of each visual transformer block.                        robustness.
+   To improve robustness without degrading clean-sample
+performance,  we adopt pairwise optimization by jointly                        Model1: Baseline.Model1usesDINOv3-Hugewithan
+feedingcleanimagesandtheircorrespondingdistortedver-                           MLP head:
+sions in each batch.  Features extracted from distorted im-
+ages are corrected by an additional feed-forward network.                                    1280→256               ReLU+Dropout(0−−−−−−−−−−−−−→2..1)(2)
+The overall training loss is:
+ L=L      CE(x,y)+α·L             KL(x,    ˆx)+β·L        MSE(f x,f ′ˆx ),(1)  We use AdamW (betas(0.9,0.999)) with separate parame-
+                                                                               ter groups: backbone lr= 2×10      −5  , weight decay= 0.05;
+wherex,            ˆx,f   x,andf     ′ˆx  denotecleansamples,distortedsam-     head lr= 5×10      −4  , weight decay= 0.01.  The learning-
+ples, clean-sample features, and corrected distorted-sample                    rate schedule is 10% warmup followed by cosine anneal-
+features, respectively. L CE,L KL, andL     MSE are cross-                     ing, stepped per batch.  Cross-entropy is used as the train-
+entropy,KLdivergence,andmeansquarederrorlosses. We                             ing objective,  and class imbalance is handled by a dis-
+setα= 0.5andβ= 0.25.                                                           tributed weighted sampler.  Training data includes the of-
+   Experiments  are  conducted  on  eight  NVIDIA  A800                        ficial training set, SoFake-OOD, and RRDataset (10% val-
+GPUs for 5 epochs.  We use AdamW [48] with an initial                          idation split).   Inputs are preprocessed with random re-
+learning rate of2×10      −4    and a cosine annealing sched-                  sized crop (256×256,  bicubic,  scale(0.08,1.0),  ratio
+uler [47].  To further improve generalization, we addition-                    (0.75,1.3333)),  random horizontal flip,  and color jitter.
+ally include the So-Fake [33] and Chameleon [86] datasets                      Distortionaugmentationisenabledwithprobability0.5(up
+during training.                                                               to 3 distortions, 3 levels).  Training runs for 20 epochs on
+                                                                               8×H800 (DDP), with per-GPU batch size 16/8 (train/val).
+3.4. INTSIG
+3.4.1. Model Training Strategies                                               Model 2: Incremental training with dataset expansion.
+Overview.  We develop five complementary detectors in                          Starting from Model 1, we reduce learning rates (backbone
+a staged pipeline.   Model 1 is a full fine-tuning baseline                    5×10    −6  , head5×10          −5  ) and expand training data to:
+on DINOv3-Huge.   Model 2 continues training with ex-                          official set + SoFake-OOD + RRDataset + Chameleon +
+panded data.   Model 3 further increases robustness with                       50% GenImage        val + AIGIBench        test.  Other settings are
+stronger distortion augmentation.   Model 4 introduces a                       unchanged.
+
+PAGE 7
+  Model   Input     Core change                                    Weight          Dimension       Technical solution             Effect
+  M1  256      2      DINOv3-Huge baseline                  0.3675                 GPU              5   independent   CUDA        Full model overlap
+  M2  256      2      Incremental data expansion            0.0735                 parallelism      streams
+  M3  256      2      Stronger distortion                     0.0490               Compute          AMP for M1–M4∼30%    throughput
+                      augmentation                                                 precision                                      gain
+  M4  448      2      High-resolution branch                   0.2100              Data loading    Async I/O + prefetch=4    Reduced wait time
+  M5  378      2      MetaCLIP2 Giant backbone           0.3000                    Pipeline           CPU/GPU overlap            Higher utilization
+
+   Table 1. Summary of training paths and ensemble weights.                              Table 2. Inference-time engineering optimizations.
+
+
+Model 3: Incremental training with enhanced augmen-
+tation.Model3continuesfromModel2whileincreasing
+distortion intensity to 5 distortions and 5 levels (augmenta-
+tionprobabilityremains0.5). Othersettingsareunchanged.
+
+Model4: High-resolutionpath.Model4uses448×448
+inputs to capture finer artifacts.  AdamW is retained with
+5% warmup and cosine annealing. Learning rates are set to
+5×10    −5   (backbone)and1×10        −3   (head). Trainingdatais                                Figure 5. Vincentlc method scheme.
+the official set only, with a 1% validation split. Preprocess-
+ing follows the same policy as Model 1 but at448×448
+resolution.   Distortion augmentation uses probability 0.5,                      the fused output has the opposite direction.  We then shift
+with up to 3 distortions and 5 levels.                                           the final logit by 2.5 toward the M4/M5 direction.Gate-2
+                                                                                 (anomaly suppression)is triggered when at least 3 models
+Model5: Backbonereplacement.Model5adoptsMeta-                                    in{M1,M2,M3,M5}agree while M4 disagrees; M4 is
+CLIP2 Giant. We partially fine-tune all LayerNorm param-                         excluded and remaining weights are renormalized.
+eters and the full parameters of the last two layers.  The                       3.4.3. Engineering Optimization
+classifier is:
+                                                                                 Parallel  inference.Inference  runs  with  one  CUDA
+                  MLP1:1664→2048→512,                                            stream per model, CPU-side multi-threaded preprocessing,
+                  MLP2:512→256→2.                                     (3)        and AMP for M1–M4.
+
+Training uses the official set, learning rate10    −4  , and Fo-                 I/O  and  overlap.We  use  asynchronous  data  load-
+calLoss. Inputs are resized to378×378; training includes                         ing (num     workers=4) and prefetching (prefetch=4),
+random flip, random rotation, and random augmentation.                           overlapping CPU preprocessing with GPU inference to re-
+Distortionaugmentationislighter(probability0.2,3distor-                          duce idle time.
+tions, 3 levels).
+3.4.2. Model Ensemble Strategy                                                   3.5. Vincentlc.   Robust AI-Generated Image De-
+                                                                                         tection via SigLIP2-Giant and Perturbation-
+Weighted hierarchical fusion.The final logit is com-                                     Aware Training
+puted as:                                                                        3.5.1. Overview
+                          h                                                      We propose a simple yet effective framework for detecting
+  Final   Logit = 0.7      0.7(0.75M1+0.15M2+0.1M3)
+                                 i                                               AI-generated images in the wild.   Our method combines
+                     +0.3M4         +0.3M5.                           (4)        a pre-trained vision–language backbone with a lightweight
+                                                                                 linear classification head. To improve robustness under se-
+Horizontal-flip TTA is applied to M3 and M4.                                     vere real-world distribution shifts, we explicitly integrate
+                                                                                 the official image distortion pipeline used in challenging
+Dual-gating  correction.We  define  directional  confi-                          evaluation protocols [37] into training, forcing the network
+dence:                                                                           to learn perturbation-invariant representations.
+                      diff = logit1−logit   0.                        (5)        3.5.2. Model Architecture
+Gate-1(strongconsensuscorrection)istriggered whenM4                              Backbone  Feature  Extractor.  We  experimented  with
+and M5 strongly agree (|M4      diff| ≥8,|M5            diff| ≥3), but           multiple scales of the SigLIP2 family and found that the
+
+PAGE 8
+                                          Open Test                                   Hidden Test                                    Average
+          MethodROC AUC    Rob. ROC AUC    ROC AUC    Rob. ROC AUC    ROC AUC    Rob. ROC AUC
+           MICV      0.9978               0.9738    0.9969                                   0.9707               0.9974               0.9723
+    Ant International        0.9973                  0.9731              0.9971               0.9711    0.9972                        0.9721
+    TeleAI-TeleGuard       0.9762               0.9215               0.9809               0.9286               0.9786               0.9251
+          INTSIG               0.9810               0.9090               0.9895               0.9171               0.9897               0.9130
+         vincentlc               0.9497               0.8633               0.9557               0.8828               0.9527               0.8730
+          UESTC                0.9693               0.8558               0.9764               0.8800               0.9729               0.8679
+       Reagvis Labs           0.9423               0.8474               0.9481               0.8733               0.9452               0.8603
+            PSU                  0.9132               0.8334               0.9322               0.8483               0.9227               0.8408
+       Shallow Real           0.9954               0.8302               0.9951               0.8370               0.9953               0.8336
+
+Table3. Finalresultsandrankingsofthetop-9teams. PerformanceisreportedontheopenandhiddentestsetsusingbothcleanROC-AUC
+and Robust ROC-AUC. The final ranking is determined by the average Robust ROC-AUC across both splits.
+
+largestvariant,siglip2-giant-opt-patch16-384,                                   For completeness, we also report the average clean ROC-
+achievesthestrongestperformance. Fordownstreambinary                            AUC, as well as all individual metrics, including clean and
+classification,weextractthepatch-tokensequencefromthe                           robust ROC-AUC on both dataset splits.
+final hidden layer of the pre-trained SigLIP2 encoder [23].                        Overall,thetop-performingmethodsachieveROCAUC
+                                                                                values exceeding 0.99.   TheMICVteam ranks first ac-
+FeatureAggregationandClassificationHead.Weeval-                                 cording to the primary metric, achieving the highest aver-
+uated several aggregation strategies, including CLS-token                       age Robust ROC-AUC of 0.9723.  Their method also de-
+extraction, attention pooling, and multi-layer feature con-                     livers the best average clean ROC-AUC (0.9974), indicat-
+catenation.   Empirically, global average pooling over all                      ingstrongperformanceunderbothstandardandrobustness-
+final-layer patch tokens yields the most robust and stable                      aware evaluations.Ant Internationalclosely follows in
+results. The pooled feature vector is then fed into a single                    secondplace,achievingthebestperformanceonthehidden
+linear layer to produce real/fake logits.                                       test set for both clean and robust ROC-AUC (0.9971 and
+                                                                                0.9711, respectively). This demonstrates excellent general-
+3.5.3. Robust Data Augmentation                                                 ization to unseen data. The small margin between the top-
+SpatialTransforms(“Squish”Strategy).Insteadofran-                               2 teams suggests that both approaches are competitive and
+dom resized cropping (which may remove localized foren-                         approach the upper bound of performance on this bench-
+sic cues), we apply a “squish” strategy: all images are di-                     mark.  A clear performance gap is observed between the
+rectlyresizedto384×384(ignoringaspectratio),followed                            top-2 teams and the remaining participants. Methods such
+by random horizontal flipping.  This preserves full image                       asTeleAI-TeleGuardandINTSIGachieve strong clean
+content while maintaining training efficiency.                                  ROC AUC scores (around 0.98–0.99), but show noticeably
+                                                                                lower robustness, with Robust ROC-AUC dropping to ap-
+                                                                                proximately 0.91–0.93. This indicates increased sensitivity
+Competition-Specific  Distortions.We  wrap  the  offi-                          tochallengingconditionsandhighlightsrobustnessasakey
+cialdistort        imagesfunction into the PyTorch trans-                       differentiatingfactor. Thelower-rankedmethods,including
+form pipeline.   In our best run, we setdistortion                     -        vincentlcandUESTC, exhibit further degradation in both
+prob=1.0,soeverytrainingimageisdistorted,withupto                               clean and robust metrics, particularly in the robustness set-
+three random post-processing operations sampled at multi-                       ting, where performance falls below 0.88.
+pleseveritylevels(num         levels=5). Thisaggressiveaug-
+mentation acts as a strong regularizer and is a key driver of                   5. Conclusion
+our Robust ROC AUC improvements.
+                                                                                In the NTIRE 2026 Robust AI-Generated Image Detec-
+4. Results                                                                      tion in the Wild, 500+ registeres participants competed to
+                                                                                develop state-of-the-art deepfake detection methods for a
+Table3presents the final scores and rankings of the top-9                       noveldatasetof250,000+images. Mostfinalsolutionsused
+participating teams.  All submissions were verified by re-                      Expert-base architecture with several different models and
+running the provided models in the official evaluation envi-                    use Transformer-based architectures.  The results suggest
+ronment to ensure consistency with the public leaderboard.                      that, although performance has improved substantially, the
+   ThefinalrankingisdeterminedbasedontheaverageRo-                              problem is not yet solved, and there remains room for ad-
+bust ROC-AUC across the open and hidden test datasets.                          vances in design, training strategies and data curation.
+
+PAGE 9
+6. Acknowledgments                                                         Zhiqiang Wu1 (1753940858@qq.com),
+The work of Aleksandr Gushchin, Khaled Abud, Ekate-                        Jia Wen Seow1 (sscarlettss0111@gmail.com),
+rina Shumitskaya,  Georgii Bychkov,  Sergey Lavrushkin,                    Hong Vin Koay1 (koayhv@gmail.com),
+Anastasia Antsiferova, and Dmitry Vatolin was financially                  Haodong Ren1 (renhaodong.rhd@ant-intl.com),
+supported  by  the  Institute  for  Artificial  Intelligence  of           Feng Xu1 (fuyu.xf@ant-intl.com),
+Lomonosov  Moscow  State  University.    The  evaluation                   Shuai Chen1 (shuai.cs@ant-intl.com)
+was carried out using the MSU-270 supercomputer of the                     Affiliations:
+                                                                           1 Ant International, Singapore
+Lomonosov Moscow State University.   Future subjective
+evaluations of artifact visibility will be conducted using                 7.4. TeleAI-TeleGuard
+Yandex.Tasks.  The submission system was partially sup-                    Members:
+ported by the Humboldt Foundation, OPPO, Kuaishou, and                     Ruiyang Xia1 (ryon@stu.xidian.edu.cn),
+the University of Wurzburg (Computer Vision Lab).                          Qi Zhang1 (zhangq139@chinatelecom.cn),
+7. Teams and Affiliations                                                  Yaowen Xu1 (xuyw1@chinatelecom.cn),
+                                                                           Zhaofan Zou1 (zouzhf41@chinatelecom.cn),
+7.1. NTIRE 2026 Challenge Organizing team                                  Hao Sun1 (sunh10@chinatelecom.cn)
+Members:                                                                   Affiliations:
+                                                                           1 TeleAI-TeleGuard, China
+Aleksandr                        Gushchin1                        (alexan-
+der.gushchin@graphics.cs.msu.ru),                                          7.5. INTSIG
+Khaled Abud1 (khaled.abud@graphics.cs.msu.ru),                             Members:Fei Wu                  1,2   (wufei@sjtu.edu.cn),
+Ekaterina                      Shumitskaya1                       (ekate-  Dagong Lu1 (dagong       lu@intsig.net),
+rina.shumitskaya@graphics.cs.msu.ru),                                      Mufeng Yao1 (mufeng        yao@intsig.net),
+Artem Filippov2 (artyom.filippov@graphics.cs.msu.ru),                      Xinlei Xu1 (xinlei    xu@intsig.net),
+Georgii Bychkov1 (georgy.bychkov@graphics.cs.msu.ru),                      Fengjun Guo1 (fengjun       guo@intsig.net)
+SergeyLavrushkin1(sergey.lavrushkin@graphics.cs.msu.ru),                   Affiliations:
+Mikhail Erofeev5 (mikhail@erofeev.pw),                                     1 IntSig Information Co. Ltd, Shanghai, China
+Anastasia                    Antsiferova1                    (Aantsifer-   2 Shanghai Jiao Tong University, Shanghai, China
+ova@graphics.cs.msu.ru),
+Changsheng Chen3 (cschen@smbu.edu.cn),                                     7.6. Vincentlc
+Shunquan Tan3 (tansq@smbu.edu.cn),
+Radu Timofte4 (radu.timofte@uni-wuerzburg.de),                             Members:
+Dmitry Vatolin1 (dmitriy@graphics.cs.msu.ru)                               Cong Luo (1486891983@qq.com)
+Affiliations:
+1 MSU Institute for Artificial Intelligence
+2 Lomonosov Moscow State University                                        7.7. Reagvis Labs
+
+3 Shenzhen MSU-BIT University                                              Members:
+4 University of W¨urzburg                                                  Hardik Sharma1 (d25092@students.iitmandi.ac.in),
+5 Independent Researcher                                                   Aashish Negi1 (dd25011@students.iitmandi.ac.in),
+                                                                           Prateek Shaily1 (prateekshaily820@gmail.com),
+7.2. MICV                                                                  Jayant Kumar1 (aryanjay2k05@gmail.com),
+                                                                           Sachin Chaudhary1 (sachin.chaudhary@ddn.upes.ac.in),
+Members:                                                                   Akshay Dudhane1 (akshay.dudhane@mbzuai.ac.ae),
+Chuanbiao Song1 (songchuanbiao.scb@antgroup.com),                          Praful Hambarde1 (praful@iitmandi.ac.in),
+Zijian Yu1 (yuzijian.yzj@antgroup.com),                                    Amit Shukla1 (amitshukla@iitmandi.ac.in)
+Hao Tan1 (tanhao2023@ia.ac.cn),                                            Affiliations:
+Jun Lan1 (yelan.lj@antgroup.com)                                           1 IIT Mandi, Reagvis Labs, Mandi, India
+Affiliations:                                                              7.8. UESTC
+1 Ant Group, China
+7.3. Ant International                                                     Members:
+                                                                           Zhilin Tu1 (202521080234@std.uestc.edu.cn),
+Members:                                                                   Fengpeng Li1 (fengpeng.li@connect.umac.mo),
+Zhiqiang Yang1 (874125760@qq.com),                                         Jiamin Zhang1 (18482160071@163.com),
+Yongwei Tang1 (1598521844@qq.com),                                         Jianwei Fei1 (fei   jianwei@163.com),
+
+PAGE 10
+Kemou Li1 (yc47912@umac.mo),
+Haiwei Wu1 (haiweiwu@uestc.edu.cn)
+Affiliations:
+1  University  of  Electronic  Science  and  Technology  of
+China, China
+7.9. PSU
+Members:
+Bilel Benjdira1 (bbenjdira@psu.edu.sa),
+Anas M. Ali1 (aaboessa@psu.edu.sa),
+Wadii Boulila1 (wboulila@psu.edu.sa)
+Affiliations:                                                                 Figure6. ReagvisLabsmethodscheme. OverviewofRAPIDwith
+1 PrinceSultanUniversity,RoboticsandInternet-of-Things                        staged logit fusion.
+Laboratory, Riyadh, Saudi Arabia
+7.10. ShallowReal                                                             8.1.2. Logit-Space Cascade Fusion
+Members:                                                                      All branches output probabilities in[0,1].   We combine
+Chenfan Qu1 (202221012612@mail.scut.edu.cn),                                  them in logit space, where additive mixing is better cali-
+Junchi Li2 (hongge568@126.com)                                                brated than direct probability averaging.
+Affiliations:
+1SouthChinaUniversityofTechnology,Guangzhou,China
+2 Zhejiang University, Hangzhou, China                                                                 ℓ(p) = log        p1−p    .                (6)
+
+8. Challenge Methods and Teams (Continued)                                               s1a  =σ(0.50L              G4   +0.35L       S +0.15L       R),
+8.1. Reagvis Labs.  RAPID: Robust AI-Generated                                              b=σ(0.80L                 1a  +0.20L       E),,      (7)
+       Prototype Image Detection                                                          s2 =σ  0.85L       b+0.15L       Ef
+WeproposeRAPID,acascadedsix-modelensembleforro-                                            f=σ(0.89L                 2+0.11L       G4v2     ).
+bust AI-generated image detection under realistic degrada-                    Here,L         G4    =ℓ(G4),L              S  =ℓ(SigLIP),L                    R  =ℓ(SRM),
+tions. The system combines four complementary represen-                       LE  =ℓ(EVA02),L                Ef  =ℓ(EVA02         fixed),L  1a   =ℓ(s       1a ),
+tation families: CLIP [62], SigLIP [90], SRM-style foren-                     Lb =ℓ(b),L           2 =ℓ(s       2), andL       G4v2      =ℓ(G4             v2).
+sicresidualmodeling[20],andEVA-02masked-imagepre-
+training [18].   Each branch is fine-tuned with parameter-                        This cascade was built incrementally through validation
+efficient adaptation (mainly LoRA [32]), and final predic-                    ablations;eachstagewasretainedonlyifitimprovedrobust
+tionisobtainedbystagedlogit-spacefusion. Tokeepmem-                           AUC.
+orylow,modelsareexecutedsequentially;peakVRAMre-                              8.1.3. Inference-Time Robustness
+mains below 4GB.                                                              We  apply  8-view  TTA  per  model,   mixing  geometric
+8.1.1. Architecture                                                           and degradation-aware transforms (flip, multi-scale center
+RAPID uses six detectors in a progressive refinement cas-                     crops, corner crops, blur, and JPEG perturbation). For sig-
+cade.  The main semantic branch (G4) is CLIP ViT-L/14                         moid heads, we average logits across views and then apply
+with LoRA on attention and MLP projections, followed by                       sigmoid; for softmax heads, we average class probabilities.
+aGAPLprototype-attentionheadthatcomparesnormalized                            SigLIPusesresolution-matched384pxvariantsofthesame
+embeddings against learned forensic prototypes.  A high-                      views,whileSRMusesbicubicresizingonraw[0,1]inputs.
+resolution SigLIP-v2 branch (384×384) shares the same                         8.1.4. Training Protocol
+GAPL idea and improves sensitivity to fine local artifacts.
+In parallel, an SRM+Bayar ForensicCNN branch processes                        All branches are trained on the official NTIRE 2026 data
+raw pixel inputs without normalization, explicitly model-                     usingAdamWwithcosinedecayandwarmup,EMAcheck-
+ing residual-domain inconsistencies.  Two EVA-02 check-                       pointing,andmixedprecisionwherestable. Augmentations
+points provide complementary MIM-based cues: the origi-                       include random crop/flip, JPEG recompression, Gaussian
+nal LoRA model and a retrained fixed-initialization variant                   blur/noise, and random resizing. Transformer branches use
+with improved calibration under degradation. Finally, G4              -       LoRA (typicallyr= 32), while G4              v2 is obtained by low-
+v2 (continued training from G4 EMA) performs last-step                        LR continuation from the G4 EMA checkpoint with SAM
+correction on difficult modern generations.                                   and CutMix for harder-sample generalization.
+
+PAGE 11
+ Model                   Time(ms) PeakVRAM(GB)         Fine-tuning             Backbone  selection.To  identify  suitable  feature  ex-
+ G4(CLIP+GAPL)∼37              2.6          LoRAr=32(attn+MLP)                 tractors,  we  conduct  a  large-scale  empirical  study  over
+ SigLIP-v2    ∼26              1.8            LoRAr=32(384px)                  diverse  backbones,  including  CLIP  [62],  SigLIP  [90],
+ SRMForensicCNN∼5              0.1             fulltraining(FP32)
+ EVA-02(original)∼25              1.3           LoRAr=32+SwiGLU                MoCo  [28],  Swin  Transformer  [45],  ConvNeXt  [46],
+ EVA-02(fixed)      ∼25              1.3             LoRAr=32retrain           DINO [8], CoCa [88], and BEiT [5].   We compare rep-
+ G4 v2(CLIP+GAPL)∼37              2.6             LoRAcontinuation             resentation quality, computational efficiency, and robust-
+Table 4. Per-branch inference cost and memory. Sequential load-                ness to synthetic artifacts.  Empirically, CLIP and SigLIP
+ing keeps total peak memory below 4GB.                                         provide the best trade-off between discriminative capabil-
+                                                                               ityandcross-domaingeneralization,andthereforeformthe
+                                                                               basis of the final system.
+
+                                                                               Data strategy.  We improve robustness through two com-
+                                                                               plementary components:  training-set expansion and com-
+                                                                               prehensive degradation modeling. First, we expand the of-
+                                                                               ficialtrainingsetwithdiversesynthesispipelines,including
+                                                                               state-of-the-art diffusion generators [29,64],  reconstruc-
+                                                                               tion pipelines, domain-transfer methods, and targeted ad-
+                                                                               versarial attacks.  This expansion introduces both realistic
+                                                                               AI-generated samples and challenging hard negatives, ex-
+                                                                               posing the detector to broader failure modes and emerging
+                                                                               forgery artifacts.  Second, we extend the official augmen-
+                                                                               tation scripts with a wider array of degradation operators,
+                                                                               covering complex blurs, noise patterns, compression arti-
+                                                                               facts,andadvancedoptical/digitaldistortions. Theserealis-
+                 Figure 7. UESTC method scheme.                                tic perturbations encourage degradation-invariant represen-
+                                                                               tations and significantly improve robustness under distribu-
+                                                                               tion shifts caused by imaging conditions, transmission er-
+8.1.5. Runtime and Memory                                                      rors, and post-processing pipelines.
+Table4reportsper-modellatencyandmemoryonanH100.
+8.1.6. Design Rationale                                                        Trainingparadigm.Wetreatdeepfakedetectionasmore
+                                                                               than a vanilla binary classification task and adopt a two-
+RAPID  is  built  around  complementarity:   semantic  and                     stagetrainingstrategy. InStage1,eachmodelistrainedfor
+language-aligned features (CLIP/SigLIP), residual forensic                     twoepochswithastandardbinaryobjective(realvs.gener-
+cues(SRM),andMIM-drivenrepresentations(EVA-02)fail                             ated). InStage2,weintroducefeature-levelself-distillation
+on different samples, making staged logit blending consis-                     withdensesupervision: intermediatefeaturemapsfromthe
+tently stronger than any single branch. Prototype-attention                    epoch-2checkpointareusedasdensetargets,andthemodel
+heads improve interpretability by comparing each image to                      is explicitly optimized to align current representations with
+learnedreal/fakeforensicanchors,whiledegradation-aware                         these distilled features.  This dense alignment regularizes
+TTA stabilizes predictions under compression,  blur,  and                      featuregeometry,reducesoverfittingtothecompetitiondis-
+scale shifts commonly observed in the wild.                                    tribution,andimprovesgeneralizationtounseengeneration
+                                                                               methods and real-world domains.
+8.2. UESTC
+Overview.  Our final detector is a multi-expert ensem-                         Inference.At inference time, we average the predicted
+ble composed of four Vision Transformer backbones: two                         probabilities from four independently trained experts (two
+CLIP  ViT-L/14  models  [62]  and  two  SigLIP  So400M                         CLIPvariantsandtwoSigLIPvariants)toproducethefinal
+Patch14-384 models [90]. For each backbone, we attach a                        robust prediction.
+lightweight classification head that maps high-dimensional                     8.3. PSU. PRISM: Paradigm-diverse Representa-
+feature representations to binary predictions.  Because the                            tion Integration for Synthesis-artifact Mani-
+backbones have different native input configurations, we                               fold Detection
+usebackbone-specificpreprocessingandstandardizeinputs                          8.3.1. Method Description
+to 224×224       for CLIP and     384×384       for SigLIP. Despite
+using four experts, inference remains efficient, with a peak                   PRISMis  a  heterogeneous  ensemble  detector  for  AI-
+GPU memory footprint of approximately 10GB.                                    generated  images,  designed  for  robustness  under  JPEG
+
+PAGE 12
+                                                                                 Table 5.   PRISM encoder pool.d:   feature dimension.   LN:
+                                                                                 LayerNorm-only tuning. F: frozen encoder.
+
+                                                                                   Encoder                 Paradigm d   Tune     Head
+                                                                                   CLIP ViT-L/14       VL-Contrastive    1024    LN    MLP-512
+                                                                                   SigLIP ViT-L/16     VL-Contrastive    1024    LN    MLP-512
+                                                                                   EVA02-Large          VL-Contrastive    1024    LN    MLP-512
+                                                                                   DINOv2 ViT-L/14  Self-Supervised    1024     F        Linear
+                                                                                   ConvNeXt-Large    Supervised CNN  1536     F     MLP-512
+                   Figure 8. PSU method scheme.                                    EfficientNet-V2-L  Supervised CNN  1280     F     MLP-512
+                                                                                   CLIP ViT-B/16       VL-Contrastive     512     LN    MLP-256
+
+compression, blur, noise, rescaling, and cropping. Our core
+hypothesis is that no single pre-training objective encodes
+the full forensic artifact manifold [14,78]: contrastive ob-
+jectives capture semantic inconsistencies;  self-supervised
+patchobjectivespreservetexturediscontinuities;supervised
+CNNs encode low-frequency spectral anomalies.   Robust
+detection therefore requiresexplicit paradigm diversity.
+
+Priorwork.Wangetal.[78]showedCNNdetectorsgen-
+eralize across GAN generators with augmentation, yet col-
+lapse under JPEG re-compression [24].   Ojhaet al.[55]
+froze CLIP and trained a linear probe,  achieving strong                         Figure 9.  Shallow Real method scheme.  Overall pipeline of the
+cross-generator  generalization.    PRISM  extends  this  by                     proposed model.
+(i) covering three paradigms beyond CLIP, (ii) paradigm-
+specific fine-tuning,  and (iii) weighting byrobustAUC
+rather than clean accuracy.                                                      robust AUCA      robk   . Normalized weights
+
+Encoder pool.We instantiateK=7encoders{ϕ                                                  k}Kk=1             wk =    ArobkP
+acrossthreeparadigms(Table5). Forvision-language(VL)                                                                    jArobj
+encoders (CLIP [62], SigLIP [90], EVA02 [18]), features                          drivetheensemble. Thefinalpredictionwithhorizontal-flip
+areℓ     2-normalized onto the unit hypersphere [79]:                            TTA is
+
+                       ˆz  k =   zk                                                                "X                                           #
+                              ∥z  k∥2 ∈Sdk−1  ,                                            ˆp=     1      wkpk(x)+ X           wkpk(F(x))         .     (8)
+preserving the contrastive geometry.  DINOv2 [56], Con-                                          2     k                   k
+
+vNeXt [46], and EfficientNet-V2 [72] remain frozen; their                        Early stopping maximizes
+features are passed directly to the classification head.
+                                                                                                      M= 0.7A              rob+0.3A       clean.
+Paradigm-aware tuning.  VL encoders undergoLayer-                                8.4. Shallow Real
+Norm  tuning[82]:   only  LayerNorm  scale/shift  (about
+0.03%ofweights)areupdated,preventingcatastrophicfor-                             8.4.1. Method Description
+gettingwhileadaptinginternalnormalizationtotheforensic                           As shown in Fig.9, we formulate robust AI-generated im-
+domain. All models use EMA (α=0.9995) for checkpoint                             agedetectionasabinaryclassificationtask. Ourmodeluses
+stabilization and calibrated posteriors.  VL heads are two-                      a DINOv3-Large backbone (following the DINO line of
+layer MLPs (h=512); DINOv2 uses a linear probe. Train-                           self-supervisedvisualencoders[56]),fine-tunedwithLow-
+inguseslabel-smoothedBCE(ε=0.05),AdamW(λ=0.01),                                  Rank Adaptation (LoRA) [32] using rankr= 32and scal-
+cosine LR schedule, and fp16.                                                    ing factorα= 64.
+                                                                                     Final prediction is produced by a Multi-Aspect Classifi-
+Robustensemble.Eachmodelisscoredonheld-outvali-                                  cation (MAC) head operating on DINOv3 features. Specif-
+dation data under all degradation types, yielding per-model                      ically,  the  head  aggregates:   (i)  one[CLS]token,  (ii)
+
+PAGE 13
+four[REG]tokens, and (iii) one[AVG]token computed                                       puter Vision and Pattern Recognition (CVPR) Workshops,
+as the average of the remaining patch tokens.  These six                                2026.2
+1024-dimensional vectors are concatenated into a 6144-                             [7]Qi Cai, Jingwen Chen, Yang Chen, Yehao Li, Fuchen Long,
+dimensional representation and passed to a two-layer MLP                                Yingwei Pan, Zhaofan Qiu, Yiheng Zhang, Fengbin Gao,
+with an intermediate ReLU activation to output the binary                               Peihan Xu, et al.  Hidream-i1: A high-efficient image gen-
+score.                                                                                  erative foundation model with sparse diffusion transformer.
+   During training, we use three key techniques:                                        arXiv preprint arXiv:2505.22705, 2025.2
+1.Dynamic resolution.Input images are resized to ran-                              [8]Mathilde Caron, Hugo Touvron, Ishan Misra, Herv    ´e J´egou,
+   dom resolutions, where both height and width are sam-                                JulienMairal,PiotrBojanowski,andArmandJoulin. Emerg-
+   pled from[384,1152](multiples of patch size 16), with                                ing properties in self-supervised vision transformers.    In
+   a randomly selected interpolation method.                                            ICCV, pages 9650–9660, 2021.11
+2.Deep supervision.Auxiliary classification heads are                              [9]Soravit Changpinyo, Piyush Sharma, Nan Ding, and Radu
+   attached to the last four layers of the DINOv3 back-                                 Soricut.Conceptual12m: Pushingweb-scaleimage-textpre-
+                                                                                        training to recognize long-tail visual concepts.  InProceed-
+   bone. Training loss is computed for each auxiliary out-                              ings of the IEEE/CVF conference on computer vision and
+   put,whileonlythefinal-layeroutputisusedatinference                                   pattern recognition, pages 3558–3568, 2021.2
+   time. Each auxiliary head uses dropout with rate 0.2 in                       [10]Zheng Chen, Kai Liu, Jingkai Wang, Xianglong Yan, Jianze
+   its fully connected layer.                                                           Li,  Ziqing  Zhang,  Jue  Gong,  Jiatong  Li,  Lei  Sun,  Xi-
+3.Metric learning objective.A supervised contrastive                                    aoyang Liu, Radu Timofte, Yulun Zhang, et al.  The Fourth
+   loss [35] is added as an auxiliary objective alongside                               Challenge on Image Super-Resolution (×4) at NTIRE 2026:
+   theprimarybinarycross-entropyloss,improvingfeature                                   Benchmark Results and Method Overview . InProceedings
+   discrimination.                                                                      of the IEEE/CVF Conference on Computer Vision and Pat-
+   The model is trained for 10 epochs using AdamW [48]                                  tern Recognition (CVPR) Workshops, 2026.2
+with a linear learning-rate decay from10      −4   to0. Training                 [11]Zhengxue Cheng, Heming Sun, Masaru Takeuchi, and Jiro
+usestheunionoftheofficialtrainingsetandtheCommuni-                                      Katto. Learnedimagecompressionwithdiscretizedgaussian
+tyForensicsdataset,withbatchsize32andtheofficialdata-                                   mixture likelihoods and attention modules.  InProceedings
+augmentation pipeline.                                                                  of CVPR, pages 7939–7948, 2020.3
+                                                                                 [12]George Ciubotariu, Sharif S M A, Abdur Rehman, Fayaz
+References                                                                              Ali Dharejo, Rizwan Ali Naqvi, Marcos Conde, Radu Tim-
+                                                                                        ofte, et al.    Low Light Image Enhancement Challenge at
+ [1]Lorenzo Agnolucci, Leonardo Galteri, Marco Bertini, and                             NTIRE 2026 . InProceedings of the IEEE/CVF Conference
+      Alberto Del Bimbo.    Arniqa:   Learning distortion mani-                         on Computer Vision and Pattern Recognition (CVPR) Work-
+      fold for image quality assessment.   InProceedings of the                         shops, 2026.2
+      IEEE/CVF Winter Conference on Applications of Computer                     [13]George Ciubotariu, Zhuyun Zhou, Yeying Jin, Zongwei Wu,
+      Vision, pages 189–198, 2024.3                                                     Radu Timofte, et al.   High FPS Video Frame Interpolation
+ [2]Radu  Ancuti,  Codruta  Ancuti,  Radu  Timofte,  and  Cos-                          ChallengeatNTIRE2026. InProceedingsoftheIEEE/CVF
+      min Ancuti.     NT-HAZE: A Benchmark Dataset for Re-                              Conference on Computer Vision and Pattern Recognition
+      alistic  Night-time  Image  Dehazing  .    InProceedings  of                      (CVPR) Workshops, 2026.2
+      the IEEE/CVF Conference on Computer Vision and Pattern                     [14]Riccardo Corvi, Davide Cozzolino, Guido Zingarini, Gio-
+      Recognition (CVPR) Workshops, 2026.2                                              vanniPoggi,KazuhiroNagano,andLuisaVerdoliva. Onthe
+ [3]Radu Ancuti, Alexandru Brateanu, Florin Vasluianu, Raul                             detectionofsyntheticimagesgeneratedbydiffusionmodels.
+      Balmez,CiprianOrhei,CodrutaAncuti,RaduTimofte,Cos-                                InICASSP, pages 1–5, 2023.12
+      min Ancuti, et al.  NTIRE 2026 Nighttime Image Dehazing                    [15]Karan Desai, Gaurav Kaul, Zubin Aysola, and Justin John-
+      ChallengeReport. InProceedingsoftheIEEE/CVFConfer-                                son.  Redcaps: Web-curated image-text data created by the
+      ence on Computer Vision and Pattern Recognition (CVPR)                            people, for the people.arXiv preprint arXiv:2111.11431,
+      Workshops, 2026.2                                                                 2021.2
+ [4]Jo    ˜ao Ascenso, Elena Alshina, and Touradj Ebrahimi.  The                 [16]Andrei Dumitriu, Aakash Ralhan, Florin Miron, Florin Ta-
+      jpeg ai standard: Providing efficient human and machine vi-                       tui, Radu Tudor Ionescu, Radu Timofte, et al.  NTIRE 2026
+      sual data consumption.IEEE MultiMedia, 30(1):100–111,                             Rip Current Detection and Segmentation (RipDetSeg) Chal-
+      2023.3                                                                            lenge Report . InProceedings of the IEEE/CVF Conference
+ [5]HangboBao,LiDong,andFuruWei. Beit: Bertpre-training                                 on Computer Vision and Pattern Recognition (CVPR) Work-
+      of image transformers.arXiv preprint arXiv:2106.08254,                            shops, 2026.2
+      2021.11                                                                    [17]Omar  Elezabi,  Marcos  V.  Conde,  Zongwei  Wu,  Yeying
+ [6]JieCai,KangningYang,ZhiyuanLi,FlorinVasluianu,Radu                                  Jin, Radu Timofte, et al.    Photography Retouching Trans-
+      Timofte,etal.  NTIRE2026ChallengeonSingleImageRe-                                 fer, NTIRE 2026 Challenge:  Report .   InProceedings of
+      flection Removal in the Wild: Datasets, Results, and Meth-                        the IEEE/CVF Conference on Computer Vision and Pattern
+      ods . InProceedings of the IEEE/CVF Conference on Com-                            Recognition (CVPR) Workshops, 2026.2
+
+PAGE 14
+[18]Yuxin Fang, Wenhai Wang, Binhui Xie, Quan Sun, Ledell                          [29]Jonathan Ho, Ajay Jain, and Pieter Abbeel.  Denoising dif-
+      Wu,XinggangWang,YueCao,etal. Eva-02: Avisualrepre-                                  fusion probabilistic models. InNeurIPS, pages 6840–6851,
+      sentationforneongenesis. InProceedingsoftheIEEE/CVF                                 2020.11
+      Conference on Computer Vision and Pattern Recognition                        [30]Yan Hong, Jianming Feng, Haoxing Chen, Jun Lan, Huijia
+      (CVPR), 2024.10,12                                                                  Zhu, Weiqiang Wang, and Jianfu Zhang. Wildfake: A large-
+[19]Joel Frank, Thorsten Eisenhofer, Lea Sch      ¨onherr, Asja Fis-                      scale and hierarchical dataset for ai-generated images detec-
+      cher, Dorothea Kolossa, and Thorsten Holz. Leveraging fre-                          tion.  InProceedings of the AAAI Conference on Artificial
+      quency analysis for deep fake image recognition.  InInter-                          Intelligence, pages 3500–3508, 2025.1
+      nationalconferenceonmachinelearning,pages3247–3258.                          [31]Benedikt Hopf, Radu Timofte, et al.   Robust Deepfake De-
+      PMLR, 2020.1                                                                        tection, NTIRE 2026 Challenge: Report . InProceedings of
+[20]Jessica Fridrich and Jan Kodovsk      ´y.   Rich models for ste-                      the IEEE/CVF Conference on Computer Vision and Pattern
+      ganalysis of digital images.IEEE Transactions on Informa-                           Recognition (CVPR) Workshops, 2026.2
+      tion Forensics and Security, 7(3):868–882, 2012.10                           [32]Edward J Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-
+[21]Samir Yitzhak Gadre, Gabriel Ilharco, Alex Fang, Jonathan                             Zhu, Yuanzhi Li, Shean Wang, Liang Wang, and Weizhu
+      Hayase,  Georgios Smyrnis,  Thao Nguyen,  Ryan Marten,                              Chen.  Lora:  Low-rank adaptation of large language mod-
+      Mitchell Wortsman, Dhruba Ghosh, Jieyu Zhang, et al. Dat-                           els.   InInternational Conference on Learning Representa-
+      acomp:   In  search  of  the  next  generation  of  multimodal                      tions (ICLR), 2022.6,10,12
+      datasets.Advances in Neural Information Processing Sys-                      [33]Zhenglin Huang, Tianxiao Li, Xiangtai Li, Haiquan Wen,
+      tems, 36:27092–27112, 2023.2                                                        Yiwei He, Jiangning Zhang, Hao Fei, Xi Yang, Xiaowei
+[22]Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing                                 Huang,BeiPeng,etal. So-fake: Benchmarkingandexplain-
+      Xu,DavidWarde-Farley,SherjilOzair,AaronCourville,and                                ing social media image forgery detection.arXiv preprint
+      Yoshua Bengio.  Generative adversarial networks.Commu-                              arXiv:2505.18660, 2025.6
+      nications of the ACM, 63(11):139–144, 2020.1                                 [34]Aleksei Khalin, Egor Ershov, Artem Panshin, Sergey Ko-
+[23]Google.   Siglip 2:  Multilingual vision-language encoders                            rchagin, Georgiy Lobarev, Arseniy Terekhin, Sofiia Doro-
+      with  improved  semantic  understanding,  localization,  and                        gova,   Amir  Shamsutdinov,   Yasin  Mamedov,   Bakhtiyar
+      densefeatures.https://huggingface.co/google/                                        Khalfin,  Bogdan  Sheludko,  Emil  Zilyaev,  Nikola  Bani´c,
+      siglip2-giant-opt-patch16-384, 2025.  Model                                         Georgy Perevozchikov, Radu Timofte, et al.   NTIRE 2026
+      card / release page, accessed: 2026-03-20.8                                         Low-light Enhancement:  Twilight Cowboy Challenge .  In
+[24]Diego Gragnaniello, Davide Cozzolino, Francesco Marra,                                Proceedings of the IEEE/CVF Conference on Computer Vi-
+      GiovanniPoggi,andLuisaVerdoliva. Aregangeneratedim-                                 sion and Pattern Recognition (CVPR) Workshops, 2026.2
+      ageseasytodetect? acriticalanalysisofthestate-of-the-art.                    [35]Prannay Khosla, Piotr Teterwak, Chen Wang, Aaron Sarna,
+      InICME, pages 1–6, 2021.12                                                          Yonglong Tian, Phillip Isola, Aaron Maschinot, Ce Liu, and
+[25]Bochen Guan, Jinlong Li, Kangning Yang, Chuang Ke, Jie                                DilipKrishnan. Supervisedcontrastivelearning. InNeurIPS,
+      Cai, Florin Vasluianu, Radu Timofte, et al.    NTIRE 2026                           pages 18661–18673, 2020.13
+      Challenge on End-to-End Financial Receipt Restoration and                    [36]Black Forest Labs,  Stephen Batifol,  Andreas Blattmann,
+      Reasoning from Degraded Images:  Datasets, Methods and                              Frederic Boesel, Saksham Consul, Cyril Diagne, Tim Dock-
+      Results .  InProceedings of the IEEE/CVF Conference on                              horn, Jack English, Zion English, Patrick Esser, et al. Flux.
+      Computer Vision and Pattern Recognition (CVPR) Work-                                1 kontext:  Flow matching for in-context image generation
+      shops, 2026.2                                                                       andeditinginlatentspace.arXivpreprintarXiv:2506.15742,
+                                                                                          2025.2
+[26]Ya-nan Guan, Shaonan Zhang, Hang Guo, Yawen Wang,                              [37]Chunxiao Li, Xiaoxiao Wang, Meiling Li, Boming Miao,
+      Xinying Fan, Jie Liang, Hui Zeng, Guanyi Qin, Lishen Qu,                            Peng  Sun,  Yunjian  Zhang,  Xiangyang  Ji,  and  Yao  Zhu.
+      Tao Dai,  Shu-Tao Xia,  Lei Zhang,  Radu Timofte,  et al.                           Bridging the gap between ideal and real-world evaluation:
+      NTIRE 2026 The 3rd Restore Any Image Model (RAIM)                                   Benchmarking ai-generated image detection in challenging
+      Challenge: AI Flash Portrait (Track 3) .  InProceedings of                          scenarios.   InProceedings of the IEEE/CVF International
+      the IEEE/CVF Conference on Computer Vision and Pattern                              Conference on Computer Vision, pages 20379–20389, 2025.
+      Recognition (CVPR) Workshops, 2026.2                                                1,7
+[27]Aleksandr Gushchin, Khaled Abud, Ekaterina Shumitskaya,                        [38]JiatongLi,ZhengChen,KaiLiu,JingkaiWang,ZihanZhou,
+      Artem  Filippov,   Georgii  Bychkov,   Sergey  Lavrushkin,                          Xiaoyang Liu, Libo Zhu, Radu Timofte, Yulun Zhang, et al.
+      Mikhail Erofeev, Anastasia Antsiferova, Changsheng Chen,                            The First Challenge on Mobile Real-World Image Super-
+      ShunquanTan,RaduTimofte,DmitriyVatolin,etal. NTIRE                                  ResolutionatNTIRE2026: BenchmarkResultsandMethod
+      2026 Challenge on Robust AI-Generated Image Detection                               Overview .   InProceedings of the IEEE/CVF Conference
+      in the Wild .  InProceedings of the IEEE/CVF Conference                             on Computer Vision and Pattern Recognition (CVPR) Work-
+      on Computer Vision and Pattern Recognition (CVPR) Work-                             shops, 2026.2
+      shops, 2026.2                                                                [39]Tianhong Li, Yonglong Tian, He Li, Mingyang Deng, and
+[28]Kaiming He, Haoqi Fan, Yuxin Wu, Saining Xie, and Ross                                Kaiming He. Autoregressive image generation without vec-
+      Girshick.  Momentum contrast for unsupervised visual rep-                           torquantization.AdvancesinNeuralInformationProcessing
+      resentation learning. InCVPR, pages 9729–9738, 2020.11                              Systems, 37:56424–56445, 2024.1
+
+PAGE 15
+[40]XinLi,JiachaoGong,XijunWang,ShiyaoXiong,Bingchen                                   https://github.com/deep-floyd/IF,  .    Ac-
+      Li, Suhang Yao, Chao Zhou, Zhibo Chen, Radu Timofte,                             cessed: 2026-03-22.2
+      et al.    NTIRE 2026 Challenge on Short-form UGC Video                     [51]none.    Grok imagine image generation model from xai.
+      Restoration in the Wild with Generative Models: Datasets,                        https://grok.com/imagine, .  Accessed: 2026-03-
+      MethodsandResults. InProceedingsoftheIEEE/CVFCon-                                22.3
+      ferenceonComputerVisionandPatternRecognition(CVPR)                         [52]none.        Nano   banana   image   generation   model   from
+      Workshops, 2026.2                                                                google.https://blog.google/products-and-
+[41]Xin Li, Yeying Jin, Suhang Yao, Beibei Lin, Zhaoxin Fan,                           platforms/products/gemini/updated-image-
+      Wending Yan, Xin Jin, Zongwei Wu, Bingchen Li, Peishu                            editing-model/, . Accessed: 2026-03-22.3
+      Shi,YufeiYang,YuLi,ZhiboChen,BihanWen,RobbyTan,                            [53]none. Nano banana 2 image generation model from google.
+      RaduTimofte,etal.  NTIRE2026TheSecondChallengeon                                 https://blog.google/innovation-and-ai/
+      DayandNightRaindropRemovalforDual-FocusedImages:                                 technology/ai/nano-banana-2/,  .    Accessed:
+      MethodsandResults. InProceedingsoftheIEEE/CVFCon-                                2026-03-22.2
+      ferenceonComputerVisionandPatternRecognition(CVPR)                         [54]none.     Seedream  5  lite  image  generation  model  from
+      Workshops, 2026.2                                                                bytedance.https://seed.bytedance.com/en/
+[42]KaiLiu,HaoyangYue,ZeliLin,ZhengChen,JingkaiWang,                                   seedream5_0_lite, . Accessed: 2026-03-22.2
+      JueGong,RaduTimofte,YulunZhang,etal. TheFirstChal-                         [55]Utkarsh Ojha, Yuheng Li, and Yong Jae Lee.  Towards uni-
+      lenge on Remote Sensing Infrared Image Super-Resolution                          versal fake image detectors that generalize across genera-
+      at NTIRE 2026: Benchmark Results and Method Overview                             tive models.   InProceedings of the IEEE/CVF conference
+      . InProceedings of the IEEE/CVF Conference on Computer                           on computer vision and pattern recognition, pages 24480–
+      Vision and Pattern Recognition (CVPR) Workshops, 2026.2                          24489, 2023.1,12
+[43]Shuhong Liu, Ziteng Cui, Chenyu Bao, Xuangeng Chu, Lin                       [56]MaximeOquab,Timoth      ´eeDarcet,Th´eoMoutakanni,HuyV.
+      Gu, Bin Ren, Radu Timofte, Marcos V. Conde, et al.    3D                         Vo, Wiktor Szafraniec, Vasil Khalidov, Pierre Fernandez,
+      Restoration and Reconstruction in Adverse Conditions: Re-                        Daniel Haziza, Francisco Massa, Alaa El-Nouby, Mahmoud
+      alX3DChallengeResults. InProceedingsoftheIEEE/CVF                                Assran, Nicolas Ballas, Wojciech Galuba, Russell Howes,
+      Conference on Computer Vision and Pattern Recognition                            Po-Yao Huang, Shang-Wen Li, Ishan Misra, Michael Rab-
+      (CVPR) Workshops, 2026.2                                                         bat, Vasu Sharma, Gabriel Synnaeve, Hu Xu, Herv´e J´egou,
+[44]Xiaohong Liu, Xiongkuo Min, Guangtao Zhai, Qiang Hu,                               JulienMairal,PatrickLabatut,ArmandJoulin,andPiotrBo-
+      Jiezhang Cao, Yu Zhou, Wei Sun, Farong Wen, Zitong Xu,                           janowski.  Dinov2: Learning robust visual features without
+      Yingjie Zhou, Huiyu Duan, Lu Liu, Jiarui Wang, Siqi Luo,                         supervision.arXiv preprint arXiv:2304.07193, 2023.12
+      Chunyi Li, Li Xu, Zicheng Zhang, Yue Shi, Yubo Wang,                       [57]Hyunhee Park, Eunpil Park, Sangmin Lee, Radu Timofte,
+      Minghong Zhang,  Chunchao Guo,  Zhichao Hu,  Mingtao                             et al.   NTIRE 2026 Challenge on Efficient Burst HDR and
+      Chen, Xiele Wu, Xin Ma, Zhaohe Lv, Yuanhao Xue, Jiaqi                            Restoration: Datasets, Methods, and Results .  InProceed-
+      Wang, Xinxing Sha, Radu Timofte, et al.   NTIRE 2026 X-                          ings of the IEEE/CVF Conference on Computer Vision and
+      AIGC Quality Assessment Challenge: Methods and Results                           Pattern Recognition (CVPR) Workshops, 2026.2
+      . InProceedings of the IEEE/CVF Conference on Computer                     [58]Georgy Perevozchikov, Daniil Vladimirov, Radu Timofte,
+      Vision and Pattern Recognition (CVPR) Workshops, 2026.2                          et al.   NTIRE 2026 Challenge on Learned Smartphone ISP
+[45]Ze Liu, Yutong Lin, Yue Cao, Han Hu, Yixuan Wei, Zheng                             with Unpaired Data: Methods and Results . InProceedings
+      Zhang, Stephen Lin, and Baining Guo.  Swin transformer:                          of the IEEE/CVF Conference on Computer Vision and Pat-
+      Hierarchical vision transformer using shifted windows.  In                       tern Recognition (CVPR) Workshops, 2026.2
+      ICCV, pages 10012–10022, 2021.11                                           [59]Guanyi Qin, Jie Liang, Bingbing Zhang, Lishen Qu, Ya-nan
+[46]Zhuang Liu, Hanzi Mao, Chao-Yuan Wu, Christoph Feicht-                             Guan, Hui Zeng, Lei Zhang, Radu Timofte, et al.   NTIRE
+      enhofer, Trevor Darrell, and Saining Xie. A convnet for the                      2026The3rdRestoreAnyImageModel(RAIM)Challenge:
+      2020s. InCVPR, pages 11976–11986, 2022.11,12                                     Professional Image Quality Assessment (Track 1) .  InPro-
+[47]Ilya  Loshchilov  and  Frank  Hutter.       Sgdr:    Stochas-                      ceedings of the IEEE/CVF Conference on Computer Vision
+      tic  gradient  descent  with  warm  restarts.arXiv  preprint                     and Pattern Recognition (CVPR) Workshops, 2026.2
+      arXiv:1608.03983, 2016.6                                                   [60]Xingyu Qiu, Yuqian Fu, Jiawei Geng, Bin Ren, Jiancheng
+[48]Ilya Loshchilov and Frank Hutter. Decoupled weight decay                           Pan,  Zongwei  Wu,  Hao  Tang,  Yanwei  Fu,  Radu  Timo-
+      regularization.arXiv preprint arXiv:1711.05101, 2017.6,                          fte, Nicu Sebe, Mohamed Elhoseiny, et al.     The Second
+      13                                                                               Challenge on Cross-Domain Few-Shot Object Detection at
+[49]Andrey Moskalenko, Alexey Bryncev, Ivan Kosmynin, Kira                             NTIRE 2026:  Methods and Results .   InProceedings of
+      Shilovskaya, Mikhail Erofeev, Dmitry Vatolin, Radu Timo-                         the IEEE/CVF Conference on Computer Vision and Pattern
+      fte,etal.  NTIRE2026ChallengeonVideoSaliencyPredic-                              Recognition (CVPR) Workshops, 2026.2
+      tion: MethodsandResults. InProceedingsoftheIEEE/CVF                        [61]Lishen Qu, Yao Liu, Jie Liang, Hui Zeng, Wen Dai, Ya-nan
+      Conference on Computer Vision and Pattern Recognition                            Guan, Guanyi Qin, Shihao Zhou, Jufeng Yang, Lei Zhang,
+      (CVPR) Workshops, 2026.2                                                         Radu Timofte, et al.    NTIRE 2026 The 3rd Restore Any
+[50]none.     If  image  generation  model  from  deepfloyd  lab.                      Image Model (RAIM) Challenge:  Multi-Exposure Image
+
+PAGE 16
+      Fusion in Dynamic Scenes (Track2) .   InProceedings of                      [71]Chuangchuang Tan, Yao Zhao, Shikui Wei, Guanghua Gu,
+      the IEEE/CVF Conference on Computer Vision and Pattern                             PingLiu,andYunchaoWei. Rethinkingtheup-samplingop-
+      Recognition (CVPR) Workshops, 2026.2                                               erations in cnn-based generative network for generalizable
+[62]Alec  Radford,  Jong  Wook  Kim,  Chris  Hallacy,  Aditya                            deepfake detection.  InProceedings of the IEEE/CVF con-
+      Ramesh,  Gabriel  Goh,  Sandhini  Agarwal,  Girish  Sastry,                        ference on computer vision and pattern recognition, pages
+      Amanda  Askell,  Pamela  Mishkin,  Jack  Clark,  Gretchen                          28130–28139, 2024.1
+      Krueger,  and  Ilya  Sutskever.     Learning  transferable  vi-             [72]MingxingTanandQuocV.Le. Efficientnetv2: Smallermod-
+      sual models from natural language supervision.   InInter-                          els and faster training. InICML, pages 10096–10106, 2021.
+      national Conference on Machine Learning (ICML), pages                              12
+      8748–8763, 2021.10,11,12                                                    [73]Florin-Alexandru Vasluianu, Tim Seizinger, Jeffrey Chen,
+[63]BinRen,HangGuo,YanShu,JiaqiMa,ZitengCui,Shuhong                                      ZhuyunZhou,ZongweiWu,RaduTimofte,etal.  Learning-
+      Liu, Guofeng Mei, Lei Sun, Zongwei Wu, Fahad Shahbaz                               BasedAmbientLightingNormalization: NTIRE2026Chal-
+      Khan, Salman Khan, Radu Timofte, Yawei Li, et al.    The                           lenge  Results  and  Findings  .      InProceedings  of  the
+      EleventhNTIRE2026EfficientSuper-ResolutionChallenge                                IEEE/CVF  Conference  on  Computer  Vision  and  Pattern
+      Report .   InProceedings of the IEEE/CVF Conference on                             Recognition (CVPR) Workshops, 2026.2
+      Computer Vision and Pattern Recognition (CVPR) Work-                        [74]Florin-Alexandru Vasluianu, Tim Seizinger, Zhuyun Zhou,
+      shops, 2026.2                                                                      Zongwei Wu, Radu Timofte, et al.    Advances in Single-
+[64]Robin  Rombach,  Andreas  Blattmann,  Dominik  Lorenz,                               Image Shadow Removal:  Results from the NTIRE 2026
+      Patrick Esser, and Bj¨orn Ommer.   High-resolution image                           Challenge .   InProceedings of the IEEE/CVF Conference
+      synthesis with latent diffusion models.   InProceedings of                         on Computer Vision and Pattern Recognition (CVPR) Work-
+      the IEEE/CVF conference on computer vision and pattern                             shops, 2026.2
+      recognition, pages 10684–10695, 2022.1,2,11                                 [75]Guo-Hua Wang, Liangfu Cao, Tianyu Cui, Minghao Fu, Xi-
+[65]Tim  Seizinger,   Florin-Alexandru  Vasluianu,   Marcos  V.                          aohao Chen, Pengxin Zhan, Jianshan Zhao, Lan Li, Bowen
+      Conde,  Jeffrey Chen,  Zhuyun Zhou,  Zongwei Wu,  Radu                             Fu, Jiaqi Liu, and Qing-Guo Chen.   Ovis-image technical
+      Timofte, et al.     The First Controllable Bokeh Rendering                         report.arXiv preprint arXiv:2511.22982, 2025.2
+      ChallengeatNTIRE2026. InProceedingsoftheIEEE/CVF                            [76]Jingkai Wang, Jue Gong, Zheng Chen, Kai Liu, Jiatong Li,
+      Conference on Computer Vision and Pattern Recognition                              Yulun Zhang, Radu Timofte, et al.   The Second Challenge
+      (CVPR) Workshops, 2026.2                                                           on Real-World Face Restoration at NTIRE 2026: Methods
+[66]Tom      ´aˇs Souˇcek, Sylvestre-Alvise Rebuffi, Pierre Fernandez,                   and Results .  InProceedings of the IEEE/CVF Conference
+      Nikola Jovanovi´c,  Hady Elsahar,  Valeriu Lacatusu,  Tuan                         on Computer Vision and Pattern Recognition (CVPR) Work-
+      Tran, and Alexandre Mourachko.   Transferable black-box                            shops, 2026.2
+      one-shot forging of watermarks via image preference mod-                    [77]Longguang Wang, Yulan Guo, Yingqian Wang, Juncheng
+      els. InAdvances in Neural Information Processing Systems,                          Li, Sida Peng, Ye Zhang, Radu Timofte, Minglin Chen, Yi
+      2025.3                                                                             Wang, Qibin Hu, Wenjie Lei, et al.  NTIRE 2026 Challenge
+[67]LeiSun,HangGuo,BinRen,ShaolinSu,XianWang,Danda                                       on 3D Content Super-Resolution: Methods and Results . In
+      Pani Paudel, Luc Van Gool, Radu Timofte, Yawei Li, et al.                          Proceedings of the IEEE/CVF Conference on Computer Vi-
+      The Third Challenge on Image Denoising at NTIRE 2026:                              sion and Pattern Recognition (CVPR) Workshops, 2026.2
+      MethodsandResults. InProceedingsoftheIEEE/CVFCon-                           [78]Sheng-Yu  Wang,  Oliver  Wang,  Richard  Zhang,  Andrew
+      ferenceonComputerVisionandPatternRecognition(CVPR)                                 Owens,  and Alexei A Efros.    Cnn-generated images are
+      Workshops, 2026.2                                                                  surprisingly  easy  to  spot...  for  now.    InProceedings  of
+                                                                                         the IEEE/CVF conference on computer vision and pattern
+[68]Lei  Sun,  Weilun  Li,  Xian  Wang,  Zhendong  Li,  Letian                           recognition, pages 8695–8704, 2020.1,12
+      Shi, Dannong Xu, Deheng Zhang, Mengshun Hu, Shuang                          [79]TongzhouWangandPhillipIsola. Understandingcontrastive
+      Guo, Shaolin Su, Radu Timofte, Danda Pani Paudel, Luc                              representationlearningthroughalignmentanduniformityon
+      Van Gool, et al.    The Second Challenge on Event-Based                            thehypersphere.arXivpreprintarXiv:2005.10242,2020.12
+      Image Deblurring at NTIRE 2026:  Methods and Results .                      [80]YingqianWang,ZhengyuLiang,FengyuanZhang,Wending
+      InProceedings of the IEEE/CVF Conference on Computer                               Zhao, Longguang Wang, Juncheng Li, Jungang Yang, Radu
+      Vision and Pattern Recognition (CVPR) Workshops, 2026.2                            Timofte,YulanGuo,etal.  NTIRE2026ChallengeonLight
+[69]Lei  Sun,   Xiaolong  Qian,   Qi  Jiang,   Xian  Wang,   Yao                         Field Image Super-Resolution:  Methods and Results .   In
+      Gao,  Kailun Yang,  Kaiwei Wang,  Radu Timofte,  Danda                             Proceedings of the IEEE/CVF Conference on Computer Vi-
+      Pani Paudel, Luc Van Gool, et al.   NTIRE 2026 The First                           sion and Pattern Recognition (CVPR) Workshops, 2026.2
+      Challenge on Blind Computational Aberration Correction:                     [81]Zhendong  Wang,  Jianmin  Bao,  Wengang  Zhou,  Weilun
+      MethodsandResults. InProceedingsoftheIEEE/CVFCon-                                  Wang, Hezhen Hu, Hong Chen, and Houqiang Li.  Dire for
+      ferenceonComputerVisionandPatternRecognition(CVPR)                                 diffusion-generated image detection.  InProceedings of the
+      Workshops, 2026.2                                                                  IEEE/CVF International Conference on Computer Vision,
+[70]Quan Sun, Yuxin Fang, Ledell Wu, Xinlong Wang, and Yue                               pages 22445–22455, 2023.1
+      Cao. Eva-clip: Improvedtrainingtechniquesforclipatscale.                    [82]Mitchell Wortsman, Gabriel Ilharco, Mike Li, Jong Wook
+      arXiv preprint arXiv:2303.15389, 2023.6                                            Kim,    Hannaneh   Hajishirzi,    Ali   Farhadi,    Hongseok
+
+PAGE 17
+      Namkoong,  and  Ludwig  Schmidt.      Robust  fine-tuning                         ence on Computer Vision and Pattern Recognition (CVPR)
+      of  zero-shot  models.arXiv  preprint  arXiv:2109.01903,                          Workshops, 2026.2
+      2022.12
+[83]ChenfeiWu,JiahaoLi,JingrenZhou,JunyangLin,Kaiyuan
+      Gao, Kun Yan, Sheng-ming Yin, Shuai Bai, Xiao Xu, Yilei
+      Chen, et al.  Qwen-image technical report.arXiv preprint
+      arXiv:2508.02324, 2025.2
+[84]A  Yakushev,  A  Akimenkov,  K  Abud,  D  Obydenkov,  I
+      Serzhenko,K Aistov,E Kovalev,S Fomin,AAntsiferova, K
+      Lukianov, et al.  Wibe:  Watermarks for generated images-
+      benchmarking & evaluation.   InProceedings of the 40th
+      IEEE/ACM  International  Conference  on  Automated  Soft-
+      ware Engineering, 2025.3
+[85]Jiebin Yan, Chenyu Tu, Qinghua Lin, Zongwei WU, Weixia
+      Zhang, Zhihua Wang, Peibei Cao, Yuming Fang, Xiaoning
+      Liu,ZhuyunZhou,RaduTimofte,etal.  EfficientLowLight
+      Image Enhancement:  NTIRE 2026 Challenge Report .  In
+      Proceedings of the IEEE/CVF Conference on Computer Vi-
+      sion and Pattern Recognition (CVPR) Workshops, 2026.2
+[86]Shilin  Yan,  Ouxiang  Li,  Jiayin  Cai,  Yanbin  Hao,  Xi-
+      aolong  Jiang,   Yao  Hu,   and  Weidi  Xie.       A  sanity
+      check  for  ai-generated  image  detection.arXiv  preprint
+      arXiv:2406.19435, 2024.6
+[87]Zhiyuan  Yan,  Taiping  Yao,  Shen  Chen,  Yandan  Zhao,
+      Xinghe Fu,  Junwei Zhu,  Donghao Luo,  Chengjie Wang,
+      Shouhong Ding, Yunsheng Wu, et al.  Df40: Toward next-
+      generationdeepfakedetection.AdvancesinNeuralInforma-
+      tion Processing Systems, 37:29387–29434, 2024.1
+[88]Jiahui Yu, Wenhu Wang, Vijay Vasudevan, Leung Yeung,
+      MojtabaSeyedhosseini,andYonghuiWu. Coca: Contrastive
+      captioners are image-text foundation models.Transactions
+      on Machine Learning Research, 2022.11
+[89]PierluigiZamaRamirez,FabioTosi,LuigiDiStefano,Radu
+      Timofte,AlexCostanzino,MatteoPoggi,SamueleSalti,Ste-
+      fano Mattoccia, et al.    NTIRE 2026 Challenge on High-
+      Resolution Depth of non-Lambertian Surfaces . InProceed-
+      ings of the IEEE/CVF Conference on Computer Vision and
+      Pattern Recognition (CVPR) Workshops, 2026.2
+[90]Xiaohua Zhai, Basil Mustafa, Alexander Kolesnikov, and
+      Lucas Beyer. Sigmoid loss for language image pre-training.
+      InProceedings of the IEEE/CVF International Conference
+      on Computer Vision (ICCV), pages 11975–11986, 2023.10,
+      11,12
+[91]Yan Zhong, Qiufang Ma, Zhen Wang, Tingting Jiang, Radu
+      Timofte, et al.  NTIRE 2026 Challenge Report on Anomaly
+      Detection of Face Enhancement for UGC Images .  InPro-
+      ceedings of the IEEE/CVF Conference on Computer Vision
+      and Pattern Recognition (CVPR) Workshops, 2026.2
+[92]MingjianZhu,HantingChen,QiangyuYan,XudongHuang,
+      Guanyu Lin, Wei Li, Zhijun Tu, Hailin Hu, Jie Hu, and
+      YunheWang. Genimage: Amillion-scalebenchmarkforde-
+      tecting ai-generated image.Advances in neural information
+      processing systems, 36:77771–77782, 2023.1
+[93]WenbinZou,TianyiLiu,KejunWu,HuipingZhuang,Zong-
+      wei Wu, Zhuyun Zhou, Radu Timofte, et al.   NTIRE 2026
+      ChallengeonBitstream-CorruptedVideoRestoration: Meth-
+      ods and Results .  InProceedings of the IEEE/CVF Confer-
+
+PAGE 18
+Split                # of Real/Fake         Labels
+               Images        Ratio        Provided                        Generator Models                                         Transformations
+Train  ∼277K∼1:1.77            Yes                                                         20 Models:                    12 Transformations:
+                                                          •YOSO  PixArt-                Diffusion 2.1              (Provided as distortion pipeline)
+                                                            512                       •Stable                •Gaussian Blur                Increase
+                                                          •PixArt-α                     Diffusion    XL      •Lens Blur                  •Brightness
+                                                          •PixArt-Σ                     1.0                  •Color Shift                  Decrease
+                                                          •Kandinsky 2                •SDXL                  •ColorSaturation            •Color Jitter
+                                                          •Kandinsky 3                  Lightning            •JPEGCompression            •ColorQuantization
+                                                          •Kolors                     •SDXL Turbo            •WhiteNoise                 •Linear Contrast
+                                                          •OmniGen                    •Janus Pro 7B          •Impulse Noise                Change
+                                                          •OmniGen 2                  •Infinity 2B           •Brightness
+                                                          •Stable                     •Infinity 8B
+                                                            Diffusion 1.4             •Ovis Image
+                                                          •Stable                     •DeepFloyd IF
+                                                            Diffusion 1.5             •FLUX.1
+                                                          •Stable                       Kontext Dev
+                                              Yes
+Validation10K            1:1                 (After                         9 Models:                                    19 Transformations:
+                                         Completion)      •FLUX.1                     •Qwen Image
+                                                            Kontext Dev               •Stable                •Gaussian Blur              •Linear Contrast
+                                                          •SDXL Turbo                   Diffusion        3   •Lens Blur                    Change
+                                                          •FLUX.1 Dev                   Medium               •Color Shift                •Motion Blur
+                                                          •Playground                 •Ideogram      v3      •ColorSaturation            •Multiplicative
+                                                            v2.5                        Turbo†               •JPEGCompression              Noise
+                                                          •Lumina  Image              •ImageGen-4            •White Noise                •Pixelation
+                                                            2.0                         Fast†                •Impulse Noise              •RGB   Channel
+                                                                                                             •Brightness                   Shift
+                                                                                                               Increase                  •Random Crop
+                                                                                                             •Brightness                 •Random
+                                                                                                               Decrease                    Aspect Crop
+                                                                                                             •Color Jitter               •Downscale
+                                                                                                             •ColorQuantization
+Validation                                    Yes
+   Hard         2.5K           1:1           (After                         7 Models:                                    19 Transformations:
+                                         Completion)      •Playground                 •Stable
+                                                            v2.5                        Diffusion     3.5    •Gaussian Blur                Curve
+                                                          •SDXL Turbo                   Large Turbo          •Lens Blur                  •CLAHE
+                                                          •HiDream                    •Nano Banana  †        •JPEGCompression            •ISO Noise
+                                                          •FLUX.1                     •Seedream 4  †         •White Noise                •Perspective
+                                                            Schnell                                          •ImpulseNoise                 Transform
+                                                                                                             •ColorQuantization          •Multiple
+                                                                                                             •Multiplicative               Compressions
+                                                                                                               Noise                       (JPEG)
+                                                                                                             •RGB   Channel              •Multiple
+                                                                                                               Shift                       Compressions
+                                                                                                             •Random Crop                  (JPEG + JPEG
+                                                                                                             •Random                       AI)
+                                                                                                               Aspect Crop               •Watermark
+                                                                                                             •Neural    Image              Attack     (Adv.
+                                                                                                               Compression                 Embedding,
+                                                                                                               (JPEG AI)                   CLIP/ResNet)
+                                                                                                             •Random   Tone              •Downscale
+
+Table 6. Detailed information on Train, Validation, and Validation Hard dataset splits.  † denotes a proprietary generation model used via
+API.
+
+PAGE 19
+Split             # of  Real/Fake         Labels
+             Images        Ratio        Provided     Generator Models                                         Transformations
+  Test                                      Yes
+(Public)      2.5K           1:1          (After                         10 Models:                                    22 Transformations:
+                                       Completion)     •HiDream                       Pro†
+                                                       •FLUX.1                      •FLUX-2 Max  †         •ColorSaturation               (JPEG)
+                                                          Schnell                   •ImageGen-4            •Brightness                 •Multiple
+                                                       •StableDiffusion               Ultra†                  Increase                    Compressions
+                                                          3.5 Large                 •Seedream        5     •Lens Blur                     (JPEG  +  JPEG
+                                                       •FLUX Krea                     Lite†                •JPEGCompression               AI)
+                                                       •Z-Image Turbo               •Grok    Imagine       •Impulse Noise              •Watermark
+                                                       •Nano     Banana               Image†               •RGB    Channel                Attack      (Adv.
+                                                                                                              Shift                       Embedding,
+                                                                                                           •Random Crop                   CLIP/ResNet)
+                                                                                                           •Random Aspect              •JPEG 2000
+                                                                                                              Crop                     •Watermark
+                                                                                                           •Neural     Image              Attack
+                                                                                                              Compression                 (WMForger)
+                                                                                                              (JPEG AI)                •Neural     Image
+                                                                                                           •Random    Tone                Compression
+                                                                                                              Curve                       (Cheng2020)
+                                                                                                           •CLAHE                      •Shot Noise
+                                                                                                           •ISO Noise                  •Downscale
+                                                                                                           •Perspective                •Invisible
+                                                                                                              Transform                   Watermark
+                                                                                                           •Multiple                      Insertion  (1  of
+                                                                                                              Compressions                6 algorithms)
+  Test                                                                                                                 24 Transformations:
+(Private)     2.5K ∼1:1               No                                              10 Models:
+                                                       •HiDream                     •GPTImage1.5  †        •ColorSaturation               (JPEG  +  JPEG
+                                                       •StableDiffusion             •ImageGen-4            •Brightness                    AI)
+                                                          3.5 Large Turbo             Ultra†                  Increase                 •Multiple
+                                                       •FLUX.1      Dev             •Seedream        5     •Lens Blur                     Compressions
+                                                          SRPO                        Lite†                •JPEGCompression               (JPEG  +  JPEG
+                                                       •Z-Image Turbo               •Grok    Imagine       •Impulse Noise                 2000)
+                                                       •Kandinsky 5                   Image†               •RGB    Channel             •Watermark
+                                                       •NanoBanana2  †                                        Shift                       Attack      (Adv.
+
+                                                                                                           •Random Crop                   Embedding,
+                                                                                                           •Random Aspect                 CLIP/ResNet)
+                                                                                                              Crop                     •JPEG 2000
+                                                                                                           •Neural     Image           •Watermark
+                                                                                                              Compression                 Attack
+                                                                                                              (JPEG AI)                   (WMForger)
+                                                                                                           •Random    Tone             •Neural     Image
+                                                                                                              Curve                       Compression
+                                                                                                           •CLAHE                         (Cheng2020)
+                                                                                                           •ISO Noise                  •Shot Noise
+                                                                                                           •Perspective                •Glass Blur
+                                                                                                              Transform                •Downscale
+                                                                                                           •Multiple                   •Invisible
+                                                                                                              Compressions                Watermark
+                                                                                                              (JPEG)                      Insertion  (1  of
+                                                                                                           •Multiple                      7 algorithms)
+                                                                                                              Compressions
+
+  Table 7. Detailed information on Test (public) and Test (private) dataset splits. † denotes a proprietary generation model used via API.

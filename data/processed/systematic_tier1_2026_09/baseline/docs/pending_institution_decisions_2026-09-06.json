@@ -1,0 +1,772 @@
+[
+  {
+    "institution_id": "institution:17e74be5c06de398",
+    "original_name": "Hong Kong Baptist University",
+    "decision": "CONFIRM",
+    "target_id": "institution:17e74be5c06de398",
+    "evidence_urls": [
+      "https://www.hkbu.edu.hk/en/quick-links/campus-map.html",
+      "https://www.comp.hkbu.edu.hk/v1/?page=contact",
+      "https://www.comp.hkbu.edu.hk/~ymc/papers/conference/ICML24-publication-version-Article1968.pdf"
+    ],
+    "reason": "TMLR/CS affiliation and official CS contact establish Shaw Campus, Kowloon Tong. Aggregate relation 15525646 spans separate campuses and returns Sha Tin/New Territories. Use only Shaw campus geometry; retain municipal Hong Kong / China conventions.",
+    "provider_decision": "REJECT aggregate; ACCEPT independently verified Shaw polygon",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/hkbu-osm-relation.json",
+    "provider_index": 0,
+    "city": "Hong Kong",
+    "region": "Hong Kong",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "22.337924",
+    "lon": "114.1826302",
+    "coordinate_method": "Area centroid inside specific campus outer polygon",
+    "osm_way": 236995988,
+    "coordinate_url": "https://www.openstreetmap.org/way/236995988",
+    "original_queue_ids": [
+      "location-review:c762ba0546569ab7637a",
+      "location-review:429f0858c794a734429c"
+    ],
+    "raw_sha256": "b72694a3e2a8fa8952af95076297048d788b446bef0b9700b054a3df1ca1526e",
+    "location_id": "location:c821aa2e07386a336f84"
+  },
+  {
+    "institution_id": "institution:221b70d58647b878",
+    "original_name": "The University of Melbourne",
+    "decision": "CONFIRM",
+    "target_id": "institution:221b70d58647b878",
+    "evidence_urls": [
+      "https://www.unimelb.edu.au/contact"
+    ],
+    "reason": "Official main Parkville campus, Grattan Street; representative institutional location, not a claim that every author worked at that campus. Reject schools, future Fishermans Bend campus, and separate Carlton offices.",
+    "provider_decision": "ACCEPT verified Parkville main polygon",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/melbourne-parkville-osm.json",
+    "provider_index": 0,
+    "city": "Melbourne",
+    "region": "Victoria",
+    "country": "Australia",
+    "country_code": "AU",
+    "lat": "-37.7962068",
+    "lon": "144.9614326",
+    "coordinate_method": "Area centroid inside specific campus outer polygon",
+    "osm_way": 1156270658,
+    "coordinate_url": "https://www.openstreetmap.org/way/1156270658",
+    "original_queue_ids": [
+      "location-review:6587661c0282df632ea4"
+    ],
+    "raw_sha256": "529f0fb71a129c39f7cc01aadae89e6dfbabaa98dc61000d90469550860ad21a",
+    "location_id": "location:60c2d349a6b0328581ce"
+  },
+  {
+    "institution_id": "institution:d3507cb626f07264",
+    "original_name": "Beijing Technology and Business University",
+    "decision": "CONFIRM",
+    "target_id": "institution:d3507cb626f07264",
+    "evidence_urls": [
+      "https://english.btbu.edu.cn/BTBUCampus/18314bc81f4c4c7a9590e9afaa72cbe6.htm"
+    ],
+    "reason": "Official Liangxiang main campus; distinguish Fucheng Road campus.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/btbu-liangxiang.json",
+    "provider_index": 0,
+    "city": "Beijing",
+    "region": "Beijing",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "39.7176067",
+    "lon": "116.1607449",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/node/5526909811",
+    "provider_display_name": "北京工商大学（良乡）, 阳光南大街, Gongchen, Fangshan District, Beijing, 102488, China",
+    "original_queue_ids": [
+      "location-review:14f1a8a18f9d03017c72"
+    ],
+    "raw_sha256": "3242543affee4e3bdfc3a0bf3a7932fb02422ab5ce8618f9698cabc32ed88f33",
+    "location_id": "location:77f6c11bab8d151b336e"
+  },
+  {
+    "institution_id": "institution:045829d79923883d",
+    "original_name": "London School of Economics and Political Science",
+    "decision": "CONFIRM",
+    "target_id": "institution:045829d79923883d",
+    "evidence_urls": [
+      "https://www.lse.ac.uk/lse-information/contact-us"
+    ],
+    "reason": "Houghton Street main institution site.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/045829d79923883d.json",
+    "provider_index": 0,
+    "city": "London",
+    "region": "England",
+    "country": "United Kingdom",
+    "country_code": "GB",
+    "lat": "51.5146063",
+    "lon": "-0.1164509",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/relation/4124110",
+    "provider_display_name": "London School of Economics and Political Science, Houghton Street, St Clement Danes, Covent Garden, City of Westminster, Greater London, England, WC2A 2AE, United Kingdom",
+    "original_queue_ids": [
+      "location-review:82b1a86a43982962fb00"
+    ],
+    "raw_sha256": "f9a4128880b4640067570e15e1752d5c680f1fb68a2ff266ce78fd9e23ce9564",
+    "location_id": "location:53db7d013a951f019b93"
+  },
+  {
+    "institution_id": "institution:4704f9ebf0e00413",
+    "original_name": "University of Birmingham",
+    "decision": "CONFIRM",
+    "target_id": "institution:4704f9ebf0e00413",
+    "evidence_urls": [
+      "https://www.birmingham.ac.uk/contact/directions"
+    ],
+    "reason": "Official Edgbaston campus; reject Alabama namesake.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/4704f9ebf0e00413.json",
+    "provider_index": 0,
+    "city": "Birmingham",
+    "region": "England",
+    "country": "United Kingdom",
+    "country_code": "GB",
+    "lat": "52.4504333",
+    "lon": "-1.9320033",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/relation/1972822",
+    "provider_display_name": "University of Birmingham Edgbaston Campus, Aston Webb Boulevard, Bournbrook, Metchley, Birmingham, West Midlands, England, B29 6FY, United Kingdom",
+    "original_queue_ids": [
+      "location-review:ac224c0698e1a4ae14d6"
+    ],
+    "raw_sha256": "ee90d28bc11be835fb896125fd71ce1dae96fe6e329f139a7d98be2065f2bfb7",
+    "location_id": "location:782658639ab48664b8f6"
+  },
+  {
+    "institution_id": "institution:2e48331de223c439",
+    "original_name": "University of California, Merced",
+    "decision": "CONFIRM",
+    "target_id": "institution:2e48331de223c439",
+    "evidence_urls": [
+      "https://www.ucmerced.edu/contact"
+    ],
+    "reason": "Official 5200 North Lake Road main campus.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/2e48331de223c439.json",
+    "provider_index": 0,
+    "city": "Merced",
+    "region": "California",
+    "country": "United States",
+    "country_code": "US",
+    "lat": "37.365182",
+    "lon": "-120.4225275",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/way/170555864",
+    "provider_display_name": "University of California, Merced, 5200, Bellevue Road, Merced, Merced County, California, 95343, United States",
+    "original_queue_ids": [
+      "location-review:fadbf8311c223e4c07d7"
+    ],
+    "raw_sha256": "23fe86914a623c0ee9aa0cc60da7bca279435f5bb1670f881931c2f6d06c19c6",
+    "location_id": "location:c8de5e21be7f933b04ec"
+  },
+  {
+    "institution_id": "institution:323e7eabc230aa6a",
+    "original_name": "Nanjing University",
+    "decision": "CONFIRM",
+    "target_id": "institution:323e7eabc230aa6a",
+    "evidence_urls": [
+      "https://www.nju.edu.cn/en/Campus/Campus_Scenery/Campus_Scenery.htm",
+      "https://cs.nju.edu.cn/ywguo/webs/contact.html"
+    ],
+    "reason": "Official Xianlin campus, 163 Xianlin Avenue; distinguish Gulou campus.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/nanjing-xianlin.json",
+    "provider_index": 0,
+    "city": "Nanjing",
+    "region": "Jiangsu",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "32.119739",
+    "lon": "118.9509277",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/way/89910837",
+    "provider_display_name": "Nanjing University (Xianlin Campus), 163, Xianlin Avenue, Xianlin, Qixia District, Nanjing City, Jiangsu, 210023, China",
+    "original_queue_ids": [
+      "location-review:a801cc756e31c85b4db1"
+    ],
+    "raw_sha256": "050cef306a5c837ebc632fdbc688ebf34f0f05444211374e2488fc2ca773a1c7",
+    "location_id": "location:b2156fd15624c19e080e"
+  },
+  {
+    "institution_id": "institution:53d273918ea2f452",
+    "original_name": "Ningxia University",
+    "decision": "CONFIRM",
+    "target_id": "institution:53d273918ea2f452",
+    "evidence_urls": [
+      "https://www.nxu.edu.cn/"
+    ],
+    "reason": "Helanshan campus, 489 Helanshan West Road; reject Ningxia Medical University and Beifang namesakes.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/ningxia.json",
+    "provider_index": 1,
+    "city": "Yinchuan",
+    "region": "Ningxia",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "38.500433",
+    "lon": "106.1357174",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/node/13172731275",
+    "provider_display_name": "宁大贺兰山校区, 贺兰山西路, Huaiyuanlu Subdistrict, Xixia District, Yinchuan City, Ningxia, 750021, China",
+    "original_queue_ids": [
+      "location-review:78f6c86218a41d1d36a8"
+    ],
+    "raw_sha256": "222b8d8dbee7e033a0ff233e1b3f4fdb586a5deba7d69dcf40ecb5f0791cb017",
+    "location_id": "location:f626b10e163306d2c36f"
+  },
+  {
+    "institution_id": "institution:42b6283b6bf994bb",
+    "original_name": "Jilin University",
+    "decision": "CONFIRM",
+    "target_id": "institution:42b6283b6bf994bb",
+    "evidence_urls": [
+      "https://en.jlu.edu.cn/Academics.htm",
+      "https://nasa.jlu.edu.cn/english/Contact_Us.htm"
+    ],
+    "reason": "Official Qianwei South main campus, 2699 Qianjin Street. Both pending rows share one canonical location.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/42b6283b6bf994bb.json",
+    "provider_index": 0,
+    "city": "Changchun",
+    "region": "Jilin",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "43.8206879",
+    "lon": "125.2711103",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/way/298032902",
+    "provider_display_name": "Jilin University (Qianwei South Campus), 2699, Qianjin Avenue, 科苑社区, Shuangde, Changchun High-Tech Industrial Development Zone, Chaoyang District, Changchun City, Luyuan, Jilin, 130012, China",
+    "original_queue_ids": [
+      "location-review:297c9f512e7b7386166e",
+      "location-review:6b11c217a87a6f64494d"
+    ],
+    "raw_sha256": "1110d0ac411a53663da9517246980c786c8778d085dcfd664f11d92ad1cb1fcc",
+    "location_id": "location:74569edd8c20e6eba29d"
+  },
+  {
+    "institution_id": "institution:40d467e43a1c023c",
+    "original_name": "Sanming University",
+    "decision": "CONFIRM",
+    "target_id": "institution:40d467e43a1c023c",
+    "evidence_urls": [
+      "https://www.fjsmu.edu.cn/main.htm"
+    ],
+    "reason": "Official 25 Jingdong Road site.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/40d467e43a1c023c.json",
+    "provider_index": 0,
+    "city": "Sanming",
+    "region": "Fujian",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "26.1994098",
+    "lon": "117.5601131",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/way/885074286",
+    "provider_display_name": "Sanming University, 534国道, Jingxi Subdistrict, Sanyuan, Sanyuan District, Sanming City, Fujian, 365001, China",
+    "original_queue_ids": [
+      "location-review:51409c787ea13ae2fa8e"
+    ],
+    "raw_sha256": "793e980a9155bf1c331574c69a00cf191299a54dbdf1c2cd127f9fdc597b7574",
+    "location_id": "location:28c9d8accd456566fd54"
+  },
+  {
+    "institution_id": "institution:9e6d6f80d1bebc7f",
+    "original_name": "The 27th Research Institute of China Electronics Technology Group Corporation",
+    "decision": "CONFIRM",
+    "target_id": "institution:9e6d6f80d1bebc7f",
+    "evidence_urls": [
+      "https://27.cetc.com.cn/"
+    ],
+    "reason": "Official 36 Boxue Road, Zhengdong site. Preserve distinct 27th institute identity, not CETC parent coordinates.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/cetc27.json",
+    "provider_index": 0,
+    "city": "Zhengzhou",
+    "region": "Henan",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "34.7480124",
+    "lon": "113.7831614",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/way/1389751105",
+    "provider_display_name": "CETC 27th Institute, 博学路, Shangdulu Subdistrict, Guancheng Hui District, Zhengzhou, Henan, 450046, China",
+    "original_queue_ids": [
+      "location-review:75574abc794b0cc0e3ab"
+    ],
+    "raw_sha256": "2c4ade216e72cbd118df5d914cbeeb5e5d6529688c6c31bf760a7170555cfe11",
+    "location_id": "location:467fbae6e6f73dfe3932"
+  },
+  {
+    "institution_id": "institution:6e3493399ce76a7d",
+    "original_name": "University of Notre Dame",
+    "decision": "CONFIRM",
+    "target_id": "institution:6e3493399ce76a7d",
+    "evidence_urls": [
+      "https://www.nd.edu/about/visit/?nojs=true"
+    ],
+    "reason": "Official Notre Dame Indiana main campus; reject overseas branches.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/6e3493399ce76a7d.json",
+    "provider_index": 0,
+    "city": "Notre Dame",
+    "region": "Indiana",
+    "country": "United States",
+    "country_code": "US",
+    "lat": "41.7045677",
+    "lon": "-86.2382203",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/relation/16066037",
+    "provider_display_name": "University of Notre Dame du Lac, Welbeck Place, University Edge, Notre Dame, Saint Joseph County, Indiana, 46556, United States",
+    "original_queue_ids": [
+      "location-review:8e9ba01bd6d6d1e39bc2"
+    ],
+    "raw_sha256": "191a93d5451fe73262ece7fdb4a1c31ea2fdd9bf2dc33549f8666233dfc73061",
+    "location_id": "location:f6487533b41c83ca7700"
+  },
+  {
+    "institution_id": "institution:f4f6e3e00ec23f4e",
+    "original_name": "Stony Brook University",
+    "decision": "CONFIRM",
+    "target_id": "institution:f4f6e3e00ec23f4e",
+    "evidence_urls": [
+      "https://www.stonybrook.edu/maps-and-directions/"
+    ],
+    "reason": "Official 100 Nicolls Road main campus.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/f4f6e3e00ec23f4e.json",
+    "provider_index": 0,
+    "city": "Stony Brook",
+    "region": "New York",
+    "country": "United States",
+    "country_code": "US",
+    "lat": "40.9090809",
+    "lon": "-73.1205518",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/relation/14321838",
+    "provider_display_name": "Stony Brook University, 100, Nicolls Road, Stony Brook, Town of Brookhaven, Suffolk County, New York, 11794, United States",
+    "original_queue_ids": [
+      "location-review:3fefda46d1b36f652b6c"
+    ],
+    "raw_sha256": "3675edac54409275353c1c04e579d0556c1f989715412891e626f6ec5cf26ea5",
+    "location_id": "location:0f04cd4e61ddd0bd471c"
+  },
+  {
+    "institution_id": "institution:e85010a013a925f6",
+    "original_name": "Shenzhen Loop Area Institute",
+    "decision": "CONFIRM",
+    "target_id": "institution:e85010a013a925f6",
+    "evidence_urls": [
+      "https://www.slai.edu.cn/page/109"
+    ],
+    "reason": "Official 6 Hongmian Road, Futian campus; exact Chinese institute match.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/slai.json",
+    "provider_index": 0,
+    "city": "Shenzhen",
+    "region": "Guangdong",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "22.5068542",
+    "lon": "114.0534688",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/way/1253197500",
+    "provider_display_name": "深圳河套学院, 6, Hongmian Road, Futian Bonded Area, Fubao, Fubao Sub-district, Futian District, Shenzhen, Guangdong, 518000, China",
+    "original_queue_ids": [
+      "location-review:d111ad288717e5c8326c"
+    ],
+    "raw_sha256": "66d4e7093006cb355aed3e525dc86b35ac021d7a0fde84a8e343518e8dc8566b",
+    "location_id": "location:162bdfe1978a7589f48d"
+  },
+  {
+    "institution_id": "institution:2251558d3f3716fa",
+    "original_name": "Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences",
+    "decision": "CONFIRM",
+    "target_id": "institution:2251558d3f3716fa",
+    "evidence_urls": [
+      "https://english.siat.ac.cn/cu/"
+    ],
+    "reason": "Official 1068 Xueyuan Avenue. Keep existing institute ID distinct from CAS; reject dormitory/school search results.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/siat-main.json",
+    "provider_index": 0,
+    "city": "Shenzhen",
+    "region": "Guangdong",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "22.5977588",
+    "lon": "113.9859982",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/relation/15626533",
+    "provider_display_name": "Shenzhen Institutes of Advanced Technology, China Academy of Sciences, 1068, Xueyuan Boulevard, Tanglang, Taoyuan Sub-District, Nanshan District, Shenzhen, Guangdong, 518000, China",
+    "original_queue_ids": [
+      "location-review:843c4fd29ac4f8478e9b"
+    ],
+    "raw_sha256": "2dfcd319867f635c92dada414ad5e141c8548e949e1a3ffcdb2f467b7b825252",
+    "location_id": "location:ebba99d2c8c9b6ca78ea"
+  },
+  {
+    "institution_id": "institution:8ae1417559ceffc9",
+    "original_name": "University of Barcelona",
+    "decision": "CONFIRM",
+    "target_id": "institution:8ae1417559ceffc9",
+    "evidence_urls": [
+      "https://web.ub.edu/es/contacto"
+    ],
+    "reason": "Official historic main university building at Gran Via 585.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/8ae1417559ceffc9.json",
+    "provider_index": 0,
+    "city": "Barcelona",
+    "region": "Catalonia",
+    "country": "Spain",
+    "country_code": "ES",
+    "lat": "41.3868595",
+    "lon": "2.1634784",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/way/9405721",
+    "provider_display_name": "University of Barcelona, Carrer de Balmes, l'Antiga Esquerra de l'Eixample, l'Eixample, Barcelona, Barcelonès, Barcelona, Catalonia, 08007, Spain",
+    "original_queue_ids": [
+      "location-review:817ac3aa8c9438dc9726"
+    ],
+    "raw_sha256": "e23b31984462b00efc107085e40b476a7e2cb9fc381a01e96f488c4054c2c5d0",
+    "location_id": "location:de63ec613191894eb60e"
+  },
+  {
+    "institution_id": "institution:3af74fdb75d74590",
+    "original_name": "Hangzhou Institute for Advanced Study, University of Chinese Academy of Sciences",
+    "decision": "ALIAS",
+    "target_id": "institution:fe6f0cc7c1924a6a",
+    "evidence_urls": [
+      "https://admission.ucas.ac.cn/info/ZhaoshengDanweiDetail/0C5EE6E2-3029-4855-BB6A-8C0E6C43CC74/8021632026",
+      "https://people.ucas.edu.cn/~xuchangliang",
+      "https://news-en.ucas.ac.cn/index.php/lastnews/3234-ic-ucas-holds-the-2025-spring-school"
+    ],
+    "reason": "Official HIAS/UCAS relationship and identical Yunyi campus establish same entity as existing child institute. Reuse existing canonical location and UCAS hierarchy; discard the new redundant location from this cleanup.",
+    "provider_decision": "NOT USED; reuse existing curated target location",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/hias-main.json",
+    "provider_index": 0,
+    "city": "Hangzhou",
+    "region": "Zhejiang",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "30.13664",
+    "lon": "120.06937",
+    "coordinate_method": "Retained existing curated canonical location; no geocoder replacement",
+    "provider_display_name": "国科大杭州高等研究院(云艺园区), 1, 云艺路, Zhuantang, Xihu District, Hangzhou City, Zhejiang, 310024, China",
+    "original_queue_ids": [
+      "location-review:1066917745728bb8988f"
+    ],
+    "raw_sha256": "cbc174752ce4b78cb82aea9bcc4944d1fef6dabb88f058603d9aed69c62d1c6f",
+    "location_id": "location:e682908d6bbc201471e9"
+  },
+  {
+    "institution_id": "institution:b2c25fee5de5d09d",
+    "original_name": "Beijing Institute of Technology, Zhuhai",
+    "decision": "CONFIRM",
+    "target_id": "institution:b2c25fee5de5d09d",
+    "evidence_urls": [
+      "https://zh.bit.edu.cn/"
+    ],
+    "reason": "Official Zhuhai campus, 6 Jinfeng Road. Preserve distinct Zhuhai entity.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/b2c25fee5de5d09d.json",
+    "provider_index": 0,
+    "city": "Zhuhai",
+    "region": "Guangdong",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "22.3661833",
+    "lon": "113.5374055",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/way/664106590",
+    "provider_display_name": "Beijing Institute of Technology, Zhuhai, 6号, Jinfeng Road, Jinding, Tangjiawan, Xiangzhou, Zhuhai, Guangdong, 519088, China",
+    "original_queue_ids": [
+      "location-review:b7e638f6322b391a3c2c"
+    ],
+    "raw_sha256": "e8aa89f9b692dc27ef7f6845c94d96907c9431e3a001ae6da7e45a2742fc8eb3",
+    "location_id": "location:d565602dd6e76b669234"
+  },
+  {
+    "institution_id": "institution:e0d679f0dfc6759b",
+    "original_name": "St Paul's School, London",
+    "decision": "CONFIRM",
+    "target_id": "institution:e0d679f0dfc6759b",
+    "evidence_urls": [
+      "https://www.stpaulsschool.org.uk/contact-us/"
+    ],
+    "reason": "Official Lonsdale Road, Barnes site; reject historic City of London site. Valid school affiliation.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/e0d679f0dfc6759b.json",
+    "provider_index": 0,
+    "city": "London",
+    "region": "England",
+    "country": "United Kingdom",
+    "country_code": "GB",
+    "lat": "51.4869364",
+    "lon": "-0.2406305",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/way/313367313",
+    "provider_display_name": "St Paul's School, Lonsdale Road, Mortlake, Barnes, Greater London, England, SW13 9JT, United Kingdom",
+    "original_queue_ids": [
+      "location-review:a1e7862ef7f584b20046"
+    ],
+    "raw_sha256": "2796031e7887783c66266ea0b320a0520824eb052fead52780febfd80fa5a943",
+    "location_id": "location:da88ae6d6707281fa60a"
+  },
+  {
+    "institution_id": "institution:07d62a903f84afcd",
+    "original_name": "Hangzhou Dianzi University",
+    "decision": "CONFIRM",
+    "target_id": "institution:07d62a903f84afcd",
+    "evidence_urls": [
+      "https://sie.hdu.edu.cn/3882/list.htm",
+      "https://sie.hdu.edu.cn/2024/0322/c3871a262352/page.htm"
+    ],
+    "reason": "Official Xiasha MAIN campus, 1158 No. 2 Street; reject separate East campus. Resolves derived queue row.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/hdu-main.json",
+    "provider_index": 2,
+    "city": "Hangzhou",
+    "region": "Zhejiang",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "30.3150075",
+    "lon": "120.3391622",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/relation/9347156",
+    "provider_display_name": "Hangzhou Dianzi University - Xiasha Campus, 1158号, No.2 Street, Baiyang, Qiantang District, Hangzhou City, Zhejiang, 310018, China",
+    "original_queue_ids": [
+      "location-review:5de1cb229c6f3f741005"
+    ],
+    "raw_sha256": "cb0eb88cce6b6170bfdefec975be1c9268f6bded4036877e25d4693ca01d1f81",
+    "location_id": "location:2ff25ab48f6e105d25f7"
+  },
+  {
+    "institution_id": "institution:f68896817b1b2d6b",
+    "original_name": "University of Technology Sydney",
+    "decision": "CONFIRM",
+    "target_id": "institution:f68896817b1b2d6b",
+    "evidence_urls": [
+      "https://www.uts.edu.au/contact-us",
+      "https://maps.uts.edu.au/overview.cfm"
+    ],
+    "reason": "Official City campus, 15 Broadway Ultimo; resolves derived queue row.",
+    "provider_decision": "ACCEPT specific verified site",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/f68896817b1b2d6b.json",
+    "provider_index": 0,
+    "city": "Sydney",
+    "region": "New South Wales",
+    "country": "Australia",
+    "country_code": "AU",
+    "lat": "-33.8832536",
+    "lon": "151.2003294",
+    "coordinate_method": "Nominatim representative point of verified campus/site",
+    "coordinate_url": "https://www.openstreetmap.org/relation/10306702",
+    "provider_display_name": "University of Technology Sydney, MacArthur Street, Ultimo, Sydney, New South Wales, 2007, Australia",
+    "original_queue_ids": [
+      "location-review:d4c1269315a3b6e2fa7f"
+    ],
+    "raw_sha256": "4a5eff9bc39fe932b40c9075c76a9f4edf0e419fb7fa185f765ae904dfbccaa2",
+    "location_id": "location:92e19bd3fd1ac3f9dee0"
+  },
+  {
+    "institution_id": "institution:854c71a79ec65bd3",
+    "original_name": "The University of Texas at Dallas",
+    "decision": "ALIAS",
+    "target_id": "institution:a55a77635edc8711",
+    "evidence_urls": [
+      "https://www.utdallas.edu/about-us/contact-location/"
+    ],
+    "reason": "Official name with/without The is same university. Reuse established Richardson location; do not relocate to Dallas city centre.",
+    "provider_decision": "NOT USED; reuse curated target location",
+    "raw_file": "",
+    "provider_index": null,
+    "original_queue_ids": [
+      "location-review:c18d0c54d582418963ba"
+    ],
+    "location_id": "location:a55a77635edc8711d002",
+    "city": "Richardson",
+    "region": "Texas",
+    "country": "United States",
+    "country_code": "US",
+    "lat": "32.9858",
+    "lon": "-96.7501"
+  },
+  {
+    "institution_id": "institution:68dd2453bf814610",
+    "original_name": "Sangfor Technologies",
+    "decision": "ALIAS",
+    "target_id": "institution:a86e3c911036d069",
+    "evidence_urls": [
+      "https://www.sangfor.com/about-us/global-offices/china-office-headquarters",
+      "https://www.sangfor.com/sites/default/files/download/SANGFORHCIv610User%20Manual.pdf"
+    ],
+    "reason": "Same company with/without Inc.; both review rows merge. Preserve existing canonical coordinates at historical Xueyuan site, not replace with newer Xiandong headquarters; paper office unspecified.",
+    "provider_decision": "NOT USED; reuse curated target location",
+    "raw_file": "",
+    "provider_index": null,
+    "original_queue_ids": [
+      "location-review:f9a995a82a35224532d4",
+      "location-review:2e509d7c2c1b3add4a14"
+    ],
+    "location_id": "location:a86e3c911036d0693e59",
+    "city": "Shenzhen",
+    "region": "Guangdong",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "22.5903",
+    "lon": "113.9608"
+  },
+  {
+    "institution_id": "institution:98abf3034205f177",
+    "original_name": "Friedrich-Alexander-Universitaet Erlangen-Nuernberg",
+    "decision": "ALIAS",
+    "target_id": "institution:73bb0fe265f6e090",
+    "evidence_urls": [
+      "https://www.fau.eu/contact/"
+    ],
+    "reason": "ASCII transliteration of exact official German name, same FAU. Reuse existing Erlangen location and preserve identity/aliases.",
+    "provider_decision": "NOT USED; reuse curated target location",
+    "raw_file": "",
+    "provider_index": null,
+    "original_queue_ids": [
+      "location-review:b730ba5abcb6c5f81eb5"
+    ],
+    "location_id": "location:73bb0fe265f6e09054a8",
+    "city": "Erlangen",
+    "region": "Bavaria",
+    "country": "Germany",
+    "country_code": "DE",
+    "lat": "49.5739",
+    "lon": "11.0285"
+  },
+  {
+    "institution_id": "institution:918f246246753b6a",
+    "original_name": "Institute of Forensic Science, Ministry of Public Security",
+    "decision": "REMAIN PENDING",
+    "target_id": "institution:918f246246753b6a",
+    "evidence_urls": [
+      "https://www.ccgp.gov.cn/cggg/zygg/gkzb/202508/t20250811_25138527.htm"
+    ],
+    "reason": "Official institute address 17 Muxidi Nanli, Beijing established, but no verified building/campus coordinates. Reject unrelated Taiwan road match. Do not merge with public security university.",
+    "provider_decision": "REJECT insufficient specific location evidence",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/forensic-main.json",
+    "provider_index": 0,
+    "original_queue_ids": [
+      "location-review:497db8e5b629563802e3"
+    ],
+    "raw_sha256": "09a8f01bc412be2423fe72600f99927e8d5ed8648acd9df73a65e401856729a6",
+    "location_id": "",
+    "city": "",
+    "region": "",
+    "country": "",
+    "country_code": "",
+    "lat": "",
+    "lon": ""
+  },
+  {
+    "institution_id": "institution:389eaebc72eadb77",
+    "original_name": "China Mobile Financial Technology Co., Ltd.",
+    "decision": "REMAIN PENDING",
+    "target_id": "institution:389eaebc72eadb77",
+    "evidence_urls": [
+      "https://doc.irasia.com/listco/hk/chinamobile/annual/2021/2021_20f.pdf"
+    ],
+    "reason": "Legal address 31 Fuchengmenwai, Beijing established, but no exact building coordinates; street centroid insufficient.",
+    "provider_decision": "REJECT insufficient specific location evidence",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/cmft.json",
+    "provider_index": 0,
+    "original_queue_ids": [
+      "location-review:cf14a02a73d941904cd4"
+    ],
+    "raw_sha256": "3d0c4fd4ffc8f0d8a84a8cc7e256bd2ee31d831619e97253635c683614ab0d91",
+    "location_id": "",
+    "city": "",
+    "region": "",
+    "country": "",
+    "country_code": "",
+    "lat": "",
+    "lon": ""
+  },
+  {
+    "institution_id": "institution:0c92239da7fc047a",
+    "original_name": "Hong Kong Institute of Science and Innovation, Chinese Academy of Sciences",
+    "decision": "ALIAS",
+    "target_id": "institution:9dd7b58a09f6962c",
+    "evidence_urls": [
+      "https://www.hkstp.org/en/directory/information-communications-technology/hong-kong-institute-of-science--innovation-chinese-academy-of-sciences",
+      "https://www.cair-cas.org.hk/contact",
+      "https://www.cair-cas.org.hk/article/661"
+    ],
+    "reason": "Official expansion of HKISI identifies exact same CAS institute. Reuse existing canonical institute/location and CAS hierarchy. Reject newly inferred 17W subcentre coordinate; no overwrite of existing curated location.",
+    "provider_decision": "NOT USED; reuse existing curated target location",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/hkisi.json",
+    "provider_index": 0,
+    "original_queue_ids": [
+      "location-review:34264d7f300fb0de9a67"
+    ],
+    "raw_sha256": "8b5dd5993edcd73fbca334bc40ee7a72aebc2c6a45bb127940b4c6c11bfe652e",
+    "location_id": "location:9dd7b58a09f6962c8d77",
+    "city": "Hong Kong",
+    "region": "Hong Kong",
+    "country": "China",
+    "country_code": "CN",
+    "lat": "22.4267",
+    "lon": "114.2119",
+    "coordinate_method": "Retained existing curated canonical location; no geocoder replacement"
+  },
+  {
+    "institution_id": "institution:65dbbdeb262c1ec7",
+    "original_name": "Google Cloud AI",
+    "decision": "REMAIN PENDING",
+    "target_id": "institution:65dbbdeb262c1ec7",
+    "evidence_urls": [
+      "https://arxiv.org/html/2606.08634v1"
+    ],
+    "reason": "Google Cloud AI affiliation specifies no office. Work done at KAIST is not evidence of Google office. Need author-specific or unit-specific office; do not default to Mountain View or Google Research.",
+    "provider_decision": "REJECT insufficient specific location evidence",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/65dbbdeb262c1ec7.json",
+    "provider_index": 0,
+    "original_queue_ids": [
+      "location-review:87acea52960ba06fccfa"
+    ],
+    "raw_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "location_id": "",
+    "city": "",
+    "region": "",
+    "country": "",
+    "country_code": "",
+    "lat": "",
+    "lon": ""
+  },
+  {
+    "institution_id": "institution:6272eff10972e8cc",
+    "original_name": "Taobao & Tmall Group",
+    "decision": "REMAIN PENDING",
+    "target_id": "institution:6272eff10972e8cc",
+    "evidence_urls": [
+      "https://govt.chinadaily.com.cn/s/202405/14/WS665827aa498ed2d7b7eaedaf/alibabas-global-headquarters-opens.html"
+    ],
+    "reason": "Official government report identifies Xixi Area A for Taobao/Tmall, but cached generic Xixi campus points do not establish Area A. Need precise Area A geometry/address cross-reference, not parent headquarters coordinates.",
+    "provider_decision": "REJECT insufficient specific location evidence",
+    "raw_file": "data/raw/pending_institution_resolution_2026-09-06/alibaba-xixi.json",
+    "provider_index": 0,
+    "original_queue_ids": [
+      "location-review:97546312079d759a8e7d"
+    ],
+    "raw_sha256": "7978b0770c1abeb2112dbe0aea61fc89a4cb3bd927cbd1b9fd4052e045e516d8",
+    "location_id": "",
+    "city": "",
+    "region": "",
+    "country": "",
+    "country_code": "",
+    "lat": "",
+    "lon": ""
+  }
+]

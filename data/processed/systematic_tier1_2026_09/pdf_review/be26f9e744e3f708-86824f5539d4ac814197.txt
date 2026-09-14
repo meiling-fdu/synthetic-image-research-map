@@ -1,0 +1,1261 @@
+PAGE 1
+Interpretable and Reliable Detection of AI-Generated
+          Images via Grounded Reasoning in MLLMs
+
+
+
+
+              Yikun Ji                   Hong Yan         Jun Lan         Huijia Zhu       Weiqiang Wang
+  Shanghai Jiao Tong University          Ant Group       Ant Group        Ant Group            Ant Group
+
+                           Qi Fan                                        Liqing Zhang
+             Shanghai Jiao Tong University                      Shanghai Jiao Tong University
+
+                                                Jianfu Zhang
+                                       Shanghai Jiao Tong University
+                                     {da-kun,c.sis}@sjtu.edu.cn
+
+
+                                                  Abstract
+
+          Therapidadvancementofimagegenerationtechnologiesintensifiesthedemand
+          forinterpretableandrobustdetectionmethods. Althoughexistingapproachesoften
+          attainhighaccuracy,theytypicallyoperateasblackboxeswithoutprovidinghuman-
+          understandable justifications. Multi-modal Large Language Models (MLLMs),
+          while not originally intended for forgery detection, exhibit strong analytical and
+          reasoning capabilities. When properly fine-tuned, they can effectively identify AI-
+          generatedimagesandoffermeaningfulexplanations. However,existingMLLMs
+          still strugglewith hallucination and oftenfail to align theirvisual interpretations
+          with actualimage content andhuman reasoning. To bridge thisgap, we construct
+          a dataset ofAI-generated images annotated withbounding boxes and descriptive
+          captions that highlight synthesis artifacts, establishing a foundation for human-
+          aligned visual-textual grounded reasoning.  We then finetune MLLMs through
+          a multi-stage optimization strategy that progressively balances the objectives of
+          accurate detection, visual localization, and coherent textual explanation.  The
+          resulting model achieves superior performance in both detecting AI-generated
+          imagesandlocalizingvisualflaws,significantlyoutperformingbaselinemethods.
+
+
+1   Introduction
+
+The past decade has witnessed rapid progress in text-to-image generation, evolving from Generative
+Adversarial Networks to Diffusion Models, which are now capable of producing images nearly
+indistinguishablefromrealphotographs[16,38]. Theseadvanceshaveledtoanexplosionofhighly
+realisticAI-generatedcontent,raisingpressingconcernsaboutmisinformation,authenticity,andtrust
+in digital media. Most existing detection methods cast this task as a binary classification problem,
+leveraging convolutional neural networks or vision transformers [62, 32, 37].  However, binary
+authenticity labels offer limited insight into why an image is classified as AI-generated.  In real-
+world applications, especially those involving legal, journalistic, or ethical implications, explainable
+detection is essential.  An effective detection system should not only identify whether an image
+is AI-generated but also pinpoint the specific visual cues or logical inconsistencies that betray its
+syntheticorigin. Suchexplainabilitypromotesusertrust,supportsverificationworkflows,andenables
+more informed decision-making.
+
+
+Preprint. Under review.
+
+PAGE 2
+                                   Figure 1: An overview of our method.
+
+
+The rise of Multi-modal Large Language Models (MLLMs) has enabled cross-modal inference,
+allowing models to generate human-readable reasoning about AI-generated images [8, 39, 50].
+Recent efforts [27, 67] have advanced interpretable textual explanations using MLLMs. However,
+without visual grounding, it remains uncertain whether these rationales accurately reflect image
+content or derive from hallucinations. To enhance alignment and reduce hallucinations, fine-grained
+visual-textualsupervision, suchas region-level boundingboxesand detailedcaptions, iscrucial. Yet,
+the scarcity of such datasets presents a key obstacle to developing trustworthy and interpretable
+MLLM-based image detection.
+In this paper, we introduce the FakeXplained dataset, comprising high-quality AI-generated images,
+along with an MLLM fine-tuning pipeline that achieves state-of-the-art detection accuracy and
+grounding capability. Our approach provides comprehensive rationales for fake image detection
+that demonstrate performance comparable to human annotators, inaugurating a new paradigm in
+human-interpretable AI-generated image detection. Our major contributions are threefold:
+
+• FakeXplained dataset:  We curate a human-annotated dataset of 8,772 AI-generated images
+  sourcedfromadiverserangeofstate-of-the-artgenerativemodels,annotatingthemwithbounding
+  boxeshighlightingvisualanomaliesorillogicaldetails,alongwithconcisecaptionsexplainingthe
+  nature of each flaw. To the best of our knowledge,FakeXplained is the firstdataset to provide
+  localized, textual explanations specifically for AI-generated image detection.
+• Two-stage MLLM fine-tuning: We fine-tuneQwen-2.5-VL (32B) on the FakeXplained dataset to
+  build an end-to-end system capable of both detecting and explaining AI-generated images. Given
+  aninputimage,themodelproduces(i)abinaryauthenticitydecision(realorAI-generated),and
+  (ii)forfakeimages,asetofpredictedboundingboxespairedwithnaturallanguagejustifications
+  foreachidentifiedregion. Afterfine-tuning,themodelachievesstate-of-the-artperformanceacross
+  both classification and localization metrics.
+• Grounded reasoning: Beyond quantitative improvements, we demonstrate that fine-tuning on
+  FakeXplained enables MLLMs to perform fine-grained visual reasoning and clearly articulate
+  theirobservations. Themodelis capableof answeringnotonly “isit fake?” butalso “whereand
+  why does this image look fake?”, producing interpretable, grounded explanations aligned with
+  human judgment.
+
+2   Related works
+
+Detection of AI-generated and manipulated images.   Detecting AI-generated images has gained
+prominence with the improving fidelity of synthetic images from GANs [16, 14], autoregressive
+
+
+                                                         2
+
+PAGE 3
+transformers [58], diffusion-based models [44, 13, 52, 21, 18, 47] and DiTs [38, 7]. Early research
+focused on artifact detection in spatial and frequency domains, targeting inconsistencies like up-
+samplingartifacts[15],texturesynthesismismatches[28],orlimitedhigh-frequencydecay[12]to
+expose fakes, even imperceptible ones.
+Beyondartifact-basedapproaches,deeplearningmethodssuchasResNetsandVisionTransformers
+trained on real and synthetic data [62, 55, 37, 4] leverage strong feature extraction to learn discrimi-
+nativepatterns. However, generalization to unseenmodels remains challenging DefakeByReals, and
+many approaches are vulnerable to domain-specific biases such as JPEG compression artifacts [17].
+Asgenerationtechniquesevolve,artifact-basedcuesalonebecomeincreasinglyunreliable. Acom-
+plementary research direction focuses onmodel explainability, as mostdetectors offer only binary
+classification without indicating how or where synthetic cues are found.  Recent efforts towards
+fine-grained or localized detection include measuring reconstruction errors [43], using multi-branch
+systems for multi-level labels [1], computing local intrinsic dimensionalities [29], or integrating
+text-imagecontrastivelearning[54,51,48]. BenchmarkssuchasFakeBench[27]andA-Bench[67]
+aim to promote human-understandable textual explanations through a visual question answering
+(VQA)-style interface. However, without corresponding visual grounding, these explanations remain
+difficulttoverifyortrust. Itisoftenunclearwhetherthetextualrationalereferstoanyactualregion
+in the image, and users are unable to determine whether the explanation is factually correct. This
+raises concerns about the factual alignment, interpretability, and credibility of such explanations.
+
+Training & fine-tuning reasoning-capable MLLMs   Enhancing the reasoning capabilities of
+MLLMsiscrucialfortasksrequiringnuancedunderstanding. Initialstrategiesinvolvedconverting
+images into formalized textual representations to enable structured, language-driven reasoning [66].
+Subsequentresearchhasfocusedoninstillingdeepercognitiveabilities,includingself-verification,
+self-correction, developing “slow-thinking” capabilities [59], and managing reasoning depth to
+address phenomena like “overthinking” [64].  Efforts also explore capturing human-like insight,
+or the “aha moment,” even in compact models [69], and constructing high-quality multi-modal
+Chain-of-Thought (CoT) datasets [22] to guide reasoning processes.
+ReinforcementLearning(RL)hasbecomepivotalintheseadvancements,withmanysophisticated
+reasoning developments relying on RL methodologies. Fine-tuning methods such as Generative
+RewardPolicyOptimization(GRPO)[49],introducedforMLLMsinworksuchasR1-V[8],have
+spurredsignificantinterestinRL-basedmulti-modalreasoning. RL,particularlywhencombinedwith
+structuredrewardfunctions—forinstance,using Intersection overUnion (IoU)fortasksinvolving
+image grounding [50]—markedly improves multi-modal alignment, visual reasoning, and human-
+interpretabledecision-making. Thishasenabledprogressacrossdiversevision-languageapplications,
+fromgeneratinginterpretableanalysesofmedicalimages[36]andenhancingtext-to-imagegeneration
+quality[24],to endowingsmallerMLLMswith robustreasoningcapacitiesthroughinnovative RL
+frameworks [39]. These approaches demonstrate RL’s capability of advancing model performance in
+complex vision-language tasks.
+
+3   FakeXplained dataset
+
+To address the hallucination problem andimprove alignment between visual perception and human
+reasoning,weaimtotrainMLLMsnotonlytodetectAI-generatedimagesbutalsotoarticulatewhy
+theyarefakeinareliableandhuman-understandablemanner. Thisnecessitatesadatasetthatsupports
+both visual grounding and textual reasoning.
+We introduce the FakeXplained dataset, designed for interpretable and trustworthy detection of
+AI-generatedimages. Itconsistsofhigh-qualitysyntheticimagespairedwithfine-grained,human-
+alignedannotationsthatindicatetheunderlyingflawsandartifactsresponsiblefortheirdetectionas
+fake.
+
+3.1   Image generation
+
+To ensure data diversity, we generated images across 1,000 ImageNet categories using 28 different
+text-to-image generation models, as shown in Table 2.  All generated images underwent manual
+quality screening. Each image was independently rated by three volunteers, and the top-rated 8,772
+AI-generated images were selected for subsequent annotation.
+
+
+                                                         3
+
+PAGE 4
+3.2   Image annotation
+
+To support interpretable reasoning and help models understand what constitutes an AI-generated
+image, we provide detailed annotations for synthetic images. Real images are not annotated because
+they lack synthesis flaws.
+
+
+Fakeregionsandexplanations.   Preciseregionalannotationsandcorrespondingtextualdescrip-
+tions are essential for visual grounding and interpretability. We recruited 23 trained annotators to
+label the high-qualityAI-generated images selected from the previous stage. Their primary task was
+to identify and describe all regions within each image that exhibited signs of being fake. Prior to
+annotation, all participants underwent standardized training focused on identifying visual cues of
+AI-generatedcontent. Thetrainingemphasizedtheidentificationoffakeregions,whicharedefinedas
+areaswithinanimage thateitherviolatecommonsenseor exhibitnoticeableAI-generatedartifacts.
+Examples of common sense violations include anomalies such as “a flamingo with three legs” or
+“bird feathers with a metallic appearance”. Common AIGC artifacts include “repetitive patterns on a
+blanket” or “blurred or illegible text”.
+Annotatorswerealsointroducedtoastructuredannotationrubrictoensureconsistencyandalignment
+withthedataset’sobjectives. Eachannotationconsistsofoneormorefakeregions,whereeachregion
+is represented by a tuple(Ri,Ti), whereRi denotes a rectangular bounding box encapsulating the
+region, andTi provides a textual description of the identified anomaly or artifact. On average, an
+annotatedimageinthedatasetcontains5.42such(Ri,Ti) pairs,whichserveasthefoundationfor
+grounding and reasoning in downstream model training.
+
+
+Image-level tagging.   In addition to region-level annotation, annotators were asked to tag images
+based on broader perceptual attributes.  These attributes include texture quality, overall realism,
+correctness of attributes (e.g., whether depicted objects adhere to expected characteristics), recogniz-
+abilityofobjects,andthepresenceofothersignificantdefectsnotexplicitlylisted(e.g.,theoccurrence
+of multiple sub-images within a single image). These tagsCi are mutually independent, allowing
+annotators to assign zero or multiple tags to each image as appropriate. This tagging framework
+allows the dataset to capture holistic image quality assessments, particularly in cases where visually
+realistic AI-generated images may lack distinct localized flaws.
+
+
+Quality control.    To ensure the reliability of the annotations, we implemented a quality control
+protocolinvolvingboth manualinspectionand algorithmicvalidation. Asubsetof annotationswas
+compared against a reference set of fake region annotations curated by the research team. Given
+the inherently subjective nature of visual interpretation, we adopted a tolerant validation criterion
+to accommodate diverse perspectives among annotators. Specifically, a minimum Intersection over
+Union (IoU) threshold of 20.0% was applied for bounding box overlap, and an accuracy threshold of
+33.3%wasusedforimage-leveltaggings. Thesemetricswereassessedonavalidationsetcomprising
+5% of the annotated images.
+The IoU metric is used to assess the spatial agreement between annotated and reference bounding
+boxes. LetRv representtherectangularboundingboxannotatedbyavolunteer,andRr representthe
+correspondingreferenceboundingboxfromthereferenceset. TheIntersectionoverUnion(IoU)is
+computed as:
+
+
+                                          IoU(Rv,Rr) = |Rv∩Rr||Rv∪Rr|,
+
+
+where|Rv∩Rr| denotes the areaof the intersection betweenRv andRr, and|Rv∪Rr| denotes the
+areaoftheirunion. TheIoUvaluerangesfrom0to1,withhighervaluesindicatingstrongeralignment.
+This quality control procedure ensures a baseline level of annotation fidelity while preserving the
+diversityofhumaninterpretations. Theresultingdataset,enrichedwithbothregion-levelannotations
+(R,T) and image-level tagsC, offers a robust foundation for analyzing the semantic inconsistencies
+and perceptual flaws of AI-generated images.
+
+
+                                                          4
+
+PAGE 5
+4   Methodologies
+
+4.1   Overview of the fine-tuning strategy
+
+Our goal is to fully leverage the constructed dataset to train MLLMs to not only determine whether
+animageisAI-generated,butalsotolocalizetherelevantregionsandexplaintherationalebehind
+its prediction. The training pipeline follows a progressive optimization paradigm [49], beginning
+withsupervisedfine-tuning(SFT)[35]toestablishformattingcomplianceandenablebasicreasoning
+abilities, followed by Reinforcement Learning from Human Feedback (RLHF) implemented via
+progressive Group Relative Policy Optimization (GRPO).
+Beforetraining,eachimage’sannotationsarereformattedintoanend-to-enddialoguebetweenauser
+and an assistant, using a prompt structure designed for bounding-box-aware fine-tuning. Inspired by
+recentstudiesinreasoning-augmentedlanguagemodels[23,19],weadoptastructuredoutputformat
+that separates intermediate reasoning from finalpredictions. Region-level annotations(Ri,Ti) are
+enclosed within<think> markers, image-level tagsCi within<tag> markers, and the final verdict
+is wrapped in<verdict>markers.
+
+4.2   Cold start with supervised fine-tuning
+
+The cold start phase of fine-tuning uses SFT to establish a stable foundation before proceeding to RL.
+Duringthisphase,alllinearlayersofthevisionencoder,projector,andlanguagemodelcomponents
+in the MLLM are fine-tuned based on the supervision signals from the data. This initial fine-tuning
+is crucial for stabilizing the model prior to full-scale reinforcement learning training, preventing
+instabilities that might arise from pure RL-based updates [19].
+The SFT process focuses on teaching the model to produce coherent reasoning patterns with clear
+structure. Thetrainingemphasizestheconsistentuseofthedesignatedmarkerformatwith<think>,
+<tag>, and<verdict> fields, ensuringclarity and robustness in themodel’s reasoning outputs. This
+structured Chain-of-Thought format reduces errors and improves explainability, providing a solid
+foundation for subsequentGRPO stages that willrefine the model’s performance on specific metrics.
+
+4.3   Design of reward functions
+
+RewarddesignisacriticalcomponentofRLHF,guidingtheMLLMstolearnnotonlyhowtodetect
+fake images, but also how to localize relevant regions and provide coherent reasoning. Leto denote
+the textual output of the MLLM. We define three core reward functions for this purpose.
+
+Classification accuracy (Label).   To ensure the model produces the correct verdict, we extract the
+classification decision from within theverdictmarker and compare it with the ground-truth label:
+                                                    1,       ifV(o) =y,
+                                       RC(o) =       −1,    o.w.
+
+whereV(o) isaregexmatchfortheverdict,andy isthegroundtruthlabelofwhethertheimageis
+real or generated.
+
+Groundingaccuracy(RelaxedIoU).   Torewardalignmentbetweenmodel-predictedandhuman-
+annotatedregions, weusearelaxedversionofthe IntersectionoverUnion (IoU).Thisaccountsfor
+slight discrepancies between human annotations while still rewarding correct grounding:
+
+                              RG(o) = IoU×η = min            1,η|R(o)∪Ry||R(o)∩Ry| ,
+
+whereR(o)istheregionextractionfunctionthatparsestextualoutputotoboundingboxes,Ry isthe
+annotatedregion,andη isarelaxingconstant. Thisrelaxationrewardensuresfullcredittothemodel
+when the regions annotated by models are in good correlation with human-annotated ones.
+
+Output format validity (Format).   To ensure the model understands the structural requirements of
+thetask,we introduceaformatrewardthatencouragesoutputs conformingtotheexpected syntax.
+A valid output must include correctly structured<think>,<tag> and<verdict> markers, as well
+
+
+                                                         5
+
+PAGE 6
+                                Table 1: Weights for different GRPO
+                                stages used in the training pipeline.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                Figure 3:  Accuracy, IoU metric (upper), loss and reward
+                                 Figure 2: Human preference matrix.             curves (lower) of the model during the training process.
+
+
+
+                                as bounding boxes and captions that are syntactically well-formed and can be parsed using regular
+                                expressions. Formally, the reward is defined as:
+                                                                     1,       ifV(o),R(o),T(o),C(o) are all parsable,
+                                                       RF(o) =        −1,    o.w.
+
+
+                                whereT(o) andC(o) extracts the caption of regions and image-level tags fromo.
+
+                                4.4   RLHF stages with group relative policy optimization
+
+                                AfterSFT,themodelwillcontinuetogothroughthreedifferentGRPOstageswithvariably-weighted
+                                reward functions. GRPO progressively aligns the MLLM with our objectives of interpretable and
+                                reliable fake image detection by combining structured supervision from the dataset with targeted
+                                rewardsignals. Thefinal reward functioncan bewrittenasR =rbase+ωGRG+ωCRC +ωFRF,
+                                where rbase is a stage-dependent base reward that ensures stable training dynamics across stages.
+                                (rbase,ωG,ωC,ωR) varies with stage; their exact values are provided in Table 1. It is worth noting
+                                thatforRC (Label)andRF (Format),wemayapplyasymmetricweightingforpositiveandnegative
+                                outcomes (e.g., +2/–1), allowing finer control over the reinforcement signal strength.
+
+                                Stageα.   The first stage prioritizes correct formatting by assigning it a higher reward weight. It
+                                maintainsa balanced weightingforIoU andlabelaccuracy(using+1/-1 rewards). Thisphaseaimsto
+                                solidify the model’s ability to adhere to the required output structure established during SFT.
+
+                                Stageβ.   This phase shifts focus towards improving the model’s core detection and localization
+                                performance. The reward weighting for IoU is increased (1.5x), and the reward for correct labeling
+                                is doubled. This stage penalizes wrong predictions and wrong formats, focusing on improving the
+                                detection capabilities of the model.
+
+                                Stageγ.   Thisstage further refinesthe localizationaccuracy byincreasing theIoU reward weight
+                                (2.0x). The rewardsfor labeling andformatting are adjustedagain (both 0.5/-1) tomaintain balance.
+                                In this stage, giving a correct prediction of label and format will lead to a reward of 0, which
+                                consequently challenges the MLLM’s visual grounding capabilities to identify the actual artifacts
+                                present in the images.
+
+
+                                                                                           6
+
+GRPOStages      α          β           γ
+Base                  0           -0.5          -1
+IoU×1.1RG      1.0×       1.5×       2.0×
+LabelRC       +1/−1    +2/−2    0.5/−1
+FormatRF      +2/−1   +1/−1.5   0.5/−1
+
+PAGE 7
+                                          Table 2: Experimental result for current AI-generated image detectors and our MLLM-based method
+                                          across different image generation methods.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                          Table 3: The accuracy of different detection methods on unseen image categories.  All enlisted
+                                          methods are trained on FakeXplained.
+
+
+
+
+                                          5   Experiments
+
+                                          5.1   Experimental setup
+
+                                          Weadopt Qwen2.5-VL-32B-Instruct[40,61]asourbaseMLLMdue to itsbalancebetweenmodel
+                                          sizeandperformance,aswellasitsstrongpre-trainedgroundingcapabilities. WetrainedourMLLMs
+                                          on 8x NVIDIA A100 GPUs. All baseline methods are trained on one NVIDIA A100 GPU. The SFT
+                                          periodrunsforthreeepochs,duringwhichthetraininglossconverges;eachGRPOstagelastsone
+                                          epoch. More experimental details are provided in thesupplementary materials.
+                                          For baseline comparisons, we use the same training data as the MLLM setup.  We adapt Seg-
+                                          Former [65]and ObjectFormer[60]to amultitasksetting usingourdataset. Boundingboxannota-
+                                          tions are converted into binary masks for segmentation supervision, with real/synthetic classification
+                                          employed as a parallel classification task.  For classification-only methods, including NPR [32],
+                                          DMD [10], ComFor [37],AfPr [4], andDIRE [63],only image-levellabels areused duringtraining.
+
+                                          5.2   Overall performance
+
+
+                          Ours       ObjectFormer[60]  SegFormer[65]  NPR[32]  DMD.[10]  ComFor.[37]  AfPr.[4]  AEROB.[43]  DIRE[63]To ensure robustness and mitigate dataset bias, all models are evaluated using four-fold cross-
+    Generators       Acc.    IoU    Acc.      IoU      Acc.    IoU      Acc.        Acc.          Acc.         Acc.         Acc.          Acc.validation. Duringtraining,thedetectionmodelisexposedto75%ofimagesfromtheFakeXplained
+  DALL·E2[41]     0.986  0.360  0.957     0.251     0.942   0.285     0.907       0.934         0.877        0.892        0.823         0.916dataset along with an equal number of real samples. Evaluation is conducted on the remaining 25%
+  DALL·E3[33]     0.991  0.365  0.949     0.258     0.950   0.292     0.912       0.942         0.872        0.907        0.821         0.923DDIM[52]       0.974  0.345  0.954     0.285     0.945   0.280     0.917       0.928         0.879        0.915        0.839         0.912of syntheticimages, againpaired with thesame numberof realimages. We report bothclassification
+
+    DDPM[21]      0.979  0.350  0.951     0.293     0.947   0.288     0.903       0.931         0.876        0.898        0.836         0.917accuracy and localization performance using the IoU metric. Note that IoU is computed only on
+ FLUX.1-dev[26]    0.988  0.362  0.958     0.299     0.940   0.295     0.922       0.937         0.874        0.779        0.843         0.919FLUX.1-schnell    0.972  0.343  0.953     0.287     0.943   0.283     0.926       0.929         0.882        0.805        0.827         0.913synthetic images, as real images do not include annotated fake regions.
+
+Midjourneyv4[30]   0.990  0.364  0.956     0.296     0.949   0.294     0.908       0.939         0.869        0.878        0.814         0.925GLIDE[31]      0.970  0.340  0.950     0.289     0.946   0.286     0.913       0.935         0.873        0.661        0.822         0.922
+
+  Midjourneyv5     0.992  0.366  0.959     0.273     0.941   0.297     0.902       0.943         0.871        0.851        0.718         0.927SD1.4[45]      0.968  0.338  0.952     0.286     0.944   0.282     0.921       0.970         0.880        0.852        0.951         0.909
+      SD1.5         0.975  0.347  0.955     0.294     0.948   0.290     0.916       0.949         0.875        0.866        0.966         0.9157
+ SD3.5Large[13]   0.991  0.365  0.954     0.294     0.945   0.293     0.904       0.944         0.870        0.934        0.830         0.924SD2.1[44]      0.980  0.352  0.951     0.291     0.942   0.287     0.911       0.938         0.872        0.881        0.833         0.918
+
+SD3.5LargeTurbo  0.993  0.368  0.957     0.312     0.950   0.296     0.906       0.947         0.868        0.927        0.837         0.928VQDM[18]      0.973  0.342  0.953     0.288     0.943   0.284     0.927       0.932         0.877        0.938        0.932         0.914
+     DiffusionSources               Ours   ObjectFormer   SegFormer    NPR    DMD   ComFor    AfPr    AEROBLADE   DIRE0.9830.3560.9540.2870.9450.2900.9130.9410.8740.8640.8420.920
+OpenAI4oPreference[42]   0.803        0.513           0.538      0.790   0.735     0.636     0.597         0.458BigGAN[2]      0.965  0.335  0.950     0.280     0.941   0.278     0.918       0.892         0.903        0.933        0.861         0.8870.793
+   FaceForensics++[46]      0.879        0.598           0.716GALIP[56]      0.882  0.353  0.941     0.279     0.941   0.289     0.882       0.882         0.941        0.353        0.706         0.8820.861   0.562     0.429     0.746         0.681         0.850
+StyleGAN-XL[25]   0.960  0.330  0.951     0.278     0.940   0.275     0.914       0.884         0.980        0.928        0.939         0.879VQGAN[14]     0.967  0.337  0.954     0.282     0.943   0.280     0.907       0.889         0.908        0.921        0.932         0.885
+
+       GAN            0.955   0.337   0.950     0.280     0.941    0.279      0.912        0.890         0.916         0.866        0.860         0.885
+  PixArtAlpha[7]    0.987  0.357  0.956     0.295     0.947   0.291     0.908       0.912         0.891        0.934        0.927         0.903PixArtDelta[6]    0.984  0.354  0.953     0.292     0.943   0.289     0.921       0.909         0.893        0.939        0.922         0.899
+
+  PixArtSigma[5]    0.989  0.360  0.957     0.296     0.949   0.293     0.919       0.915         0.889        0.924        0.931         0.905DiT[38]        0.978  0.349  0.952     0.290     0.942   0.287     0.913       0.907         0.896        0.928        0.938         0.897
+
+        DiT           0.983   0.354   0.954     0.293     0.945    0.289      0.914        0.910         0.893         0.931        0.931         0.900
+    Infinity[20]      0.974  0.344  0.951     0.289     0.941   0.286     0.914       0.897         0.899        0.938        0.924         0.883VAR[57]       0.976  0.346  0.954     0.287     0.945   0.283     0.928       0.893         0.901        0.934        0.927         0.889
+
+  LlamaGen[53]     0.980  0.351  0.953     0.429     0.944   0.289     0.923       0.899         0.897        0.929        0.938         0.892MaskGIT[3]      0.972  0.342  0.955     0.288     0.948   0.284     0.909       0.895         0.904        0.923        0.933         0.886
+
+      Others          0.978   0.348   0.953     0.369     0.944    0.287      0.920        0.898         0.898         0.931        0.933         0.889
+ RealImages[11]    0.985     -     0.956       -       0.946     -       0.918       0.903         0.882        0.934        0.854         0.896
+      Overall         0.981   0.352   0.954     0.299     0.945    0.289      0.914        0.928         0.882         0.887        0.873         0.911
+
+PAGE 8
+           Figure 4: A sample user query and the corresponding model output (visualized).
+
+
+
+Effects of different training stages   To analyze the impact of each training stage, we report both
+accuracyandIoUmetricsacrosstheentiretrainingprocessinFigure3. WithoutGRPO,SFTalone
+yieldsonlymarginalimprovementsoverthebasemodel. Asthetrainingprogresses,eachGRPOstage
+strategically adjusts the reward weights to highlight different aspects of model behavior. Notably,
+GRPOβ introduces a significant boost in both accuracy and IoU, owing to the increased emphasis
+onclassification(ωC)andgrounding(ωG)rewards. Themodelreachesitsbestoverallperformance
+after completing GRPOγ, demonstrating the cumulative benefit of the progressive reward design.
+
+
+Humanpreferenceevaluation.   WhileIoUandclassificationaccuracyprovideobjectivemetricsfor
+detectionperformance,theydonotfullycapturethequalitativeaspectsofregion-captionalignment.
+In fact, the model may, in some instances, generate annotations that surpass those of the original
+humanannotators. Tocomprehensivelyassessthequalityandrelevanceofthegeneratedexplanations,
+weconductedahumanpreferencestudyinvolvinganindependentgroupofevaluators. Inthisstudy,
+participants were shown pairs of outputs for the same image, each with different bounding box
+annotationsandassociatedcaptions. Notagsormetadatawereprovided. Evaluatorswereaskedto
+choose theannotation that demonstratedbetter alignmentbetween the regionand caption, aswell as
+higher overall annotation quality. If no clear preference emerged, a neutral option was available.
+After removing neutral responses, we obtained 1,525 valid preference votes. The comparative results
+are shown in Figure 2.  The “Humans” category represents annotations from theFakeXplained
+dataset. Whencompareddirectly,humanannotationswerepreferredin52.9%ofcases,indicatingthat
+our modelachieves near-parity withhuman annotatorsin producingregion-grounded explanations,
+demonstrating the effectiveness of our framework in generating high-quality and explainable visual-
+textual reasoning.
+
+
+Qualitativeexamples.   Figure4presentstworepresentativeexamplesofthemodel’soutput. Inthe
+upperexample,theMLLMsuccessfullyidentifiesanomalousvisualattributes,accuratelylocalizes
+the flawed regions, and generates a coherent explanation, concluding with a correct verdict that the
+image is AI-generated. In the lower example, the model finds no obvious errors or artifacts in the
+image, reaching a verdictthat the image is real. Additionalqualitative examples will be providedin
+the supplementary materials.
+
+
+Comparing to other methods.   Quantitative results arepresented in Table 2. Our best-performing
+model achieves an overall classification accuracy of98.1%, demonstrating strong robustness and
+consistentperformanceacrossdifferentimagegenerators. Forlocalization,themodelachievesanIoU
+scoreof37.8%,outperformingallsegmentation-basedbaselines,includingObjectFormer[60]and
+SegFormer [65]. This highlights the model’s ability to identify fake regions that are more consistent
+with human annotations.
+
+
+                                                         8
+
+PAGE 9
+                                      Table 4: Comparisons of model performance when trained with different configurations.
+
+
+
+
+
+
+
+                               Out-of-distribution (OoD) evaluation.   We also evaluated the models on two OoD datasets,
+                               FaceForensics++ [46] and images generated by ChatGPT-4o [34, 42]. As shown in Table 3, our
+                               model consistently outperforms all other methods across both datasets, demonstrating superior
+                               generalization to unseen generation domains.
+
+                               5.3   Ablation studies
+
+                               EachvariantinTable4isolatesonetrainingcomponenttoassessitsindividualcontributiontooverall
+                               model performance.
+
+                               Without FakeXplained/fine-tuning.   Withoutanyfine-tuning onFakeXplained (No-FT),Qwen-
+                               2.5-VL-32B-Instruct achievesamodestaccuracyof73.4%,indicatinginadequatetask-specificperfor-
+                               manceinitsoriginalstate. TheSFTstagealoneimprovestheaccuracyto89.3%,andincorporating
+                               RLHF further improves it to 98.1%. These results demonstrate the substantial performance gains
+                               enabled by our two-stage fine-tuning pipeline and underscore the necessity of theFakeXplained
+                               dataset for enabling explainable and reliable fake image detection.
+
+                               Partial data.   Our dataset consists of three essential components: image-level tags, region-level
+                               annotations with bounding boxes and captions, and binary real/fake labels. We conduct ablations
+                               byremovingeachcomponent inturn toevaluateits impact. Allablation variants aretrainedusing
+                               ourcompletetwo-stagepipeline(SFT+RLHF).Ifacomponentismissing,itisexcludedfromboth
+                               the SFTphase and thecorresponding reward termsin RLHF.Specifically, whenbounding boxes are
+                               unavailable, theRG reward is disabled, while other rewards remain active.
+                               Using only binary labels (label-only) results in the lowest accuracy among partial data variants at
+                               93.5%. Thishighlightstheimportanceofstructuredreasoninginformation(i.e.,tags,regions,and
+                               captions)inimprovingdetectionaccuracy. Nonetheless,thisscoreisstillconsiderablyhigherthan
+                               theno-fine-tuningbaseline(73.4%)andalsosurpassesthebestimage-onlydetectorDMD(92.8%),
+                               showcasing the strong adaptability of MLLMs with two-stage fine-tuning for this task.
+                               Whenboundingboxannotationsandthecorrespondingcaptionsareremoved(no-bbox),theaccuracy
+                               droppedby2.5%. IoUisnotcomputedinthissetting. Thisperformancedegradationdemonstratesthe
+                               valueofgroundingsupervisionduringtraining,whichhelpsthemodelfocusattentiononsemantically
+                               meaningful regions and enhances its decision-making process.
+                               Removingcaptions(no-caption)resultsinaslightaccuracydropsimilartotheno-bbox variant,but
+                               causesa significantdecrease inIoU to26.1%. Thisindicates thattextual descriptionsplay acrucial
+                               roleinsupportingaccurateregion-levellocalization. Captionsalsohelpthemodelarticulatewhya
+                               region is fake, thus improving both interpretability and grounding precision.
+                               Excludingtags(no-tags)yieldsamarginaldropinboththeclassificationaccuracyandtheIoU.Tags
+                               capture perceptual attributes of the images, and their removal slightly degrades the model’s holistic
+                               understandingofimagequality,thoughtheimpactislessseverethanremovingboundingboxesor
+                               captions.
+
+                               Trainingstrategies.    Weevaluatetheimportance ofdynamicrewardweightingbycomparingour
+                               progressiveGRPOstrategyagainstfixed-weightconfigurations(GRPOα,GRPOβ,andGRPOγ)with
+                               the same total number of training steps. As shown in the corresponding columns, all fixed-weight
+                               variantsunderperformcomparedtoourfullprogressiveGRPOpipeline. Notably,GRPOγ producesa
+                               higherIoUthanourbestmodelduetoitsspecializedrewarddesign,butthiscomesattheexpenseof
+                               classificationaccuracy. Figure2alsoshowsthatthesemodelsareinferiortothebestmodel,receiving
+                               no more than 30% of non-neutral votes when compared to human-annotated data.
+
+
+                                                                                         9
+
+
+Metric    Best    No-FT                        PartialData                                    TrainingStrategy
+                         no-bbox   no-caption   no-tags   label-only  SFT    GRPOα   GRPOβ   GRPOγ
+Acc.    0.981    0.734      0.956        0.958       0.977       0.935      0.893     0.954      0.966      0.947
+ IoU     0.378       -            -           0.261       0.375          -         0.043     0.309      0.296      0.401
+
+PAGE 10
+The complete pipeline delivers the most balanced performanceacross all evaluation criteria, demon-
+strating that dynamic weighting of rewards is essential for simultaneously optimizing output format-
+ting, classification accuracy, localization precision, and region-caption correlation.
+
+6   Conclusion
+
+OurresearchpresentsanexplainableAI-generatedimagedetectionapproachutilizingMLLMsthat
+transcends binary classification by providing human-interpretable explanations alongside accurate
+detectionresults. ThroughanovelprogressiveGRPOparadigm,thesystemachievessuperiorperfor-
+mance metrics (98.1% accuracy, 37.8% IoU, sound human preference) compared to conventional
+methods. The work addressesthe criticalneed for transparent detection systems that augmenthuman
+judgmentin anera ofadvancing generative technologies,establishing afoundationfor explainable
+visual media authentication that articulates the rationale behind algorithmic decisions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                         10
+
+PAGE 11
+Appendix
+
+A   Additional experimental details
+
+A.1   Chat templates
+
+AnnotatedimagesarepreprocessedintoconversationalformatsbeforebeingusedtotrainMLLMs. A
+chat template specifies how the input components are organized to generate a trainable conversation
+Ti. Formally:
+
+                         T(image,regions,captions,tags,is_real)→Ti,
+
+To address potential overfitting, we developed nine distinct chat templates: three for real images
+and six for generated images, randomly selected during pre-processing. Figure 5 illustrates sample
+conversations derived from a single annotated image using different templates. Although system
+promptsanduserqueriesvary,themodelresponsesdonotchangesignificantlyinordertomaintaina
+consistent structure, ensuring the output parser remains independent of the user query. The impact of
+the number of chat templates is discussed in Appendix E.3.
+
+A.2   Training details
+
+Two-stage training.   We use ms-swift [68] for fine-tuning Qwen-2.5-VL models.
+IntheLoRASFT stage,wenoticedthatfreezingeitherthe projector orthevisionencoderleadsto
+marginal improvement over thebase model withouttraining. To achieve optimal SFTperformance,
+both modules must be fine-tuned jointly.
+After the SFT stage, we use GRPO instead of PPO. As noted in [49], GRPO obviates the need
+for additional value function approximation as in PPO, and instead uses the average reward of
+multiplesampledoutputs. Foreachqueryq,GRPOsamplesGoutputs{o1,o2,...,oG}fromtheold
+policymodelπθold,andusestherelativeadvantagetooptimizetheMLLM,makingitparticularly
+well-suited for multi-modal reasoning tasks where absolute reward calibration is challenging.
+We set the initial learning rate to10−4 for the SFT stage and10−5 for the RLHF stage. As shown
+in Figure 3 of the main paper, despite a few loss spikes occurring at random steps during the SFT
+training process, the whole SFT process is relatively stable. Reward signals fluctuated early in each
+GRPOstage but quicklyconverged asthemodel adapted,confirmingthe effectivenessof ourreward
+design and training strategy.
+
+Computationalresources.    Thefulltrainingproceduretook41.0hourson8xNVIDIAA100(80G)
+GPUs, among which 16.5 hours (40.2%) were spent on the SFT stage.
+Atinferencetime,theend-to-endpipelinethattakesanimageasinput,givingaverdictandgrounding
+information(iftheimageisdeemedAI-generated)takesanaverageof7.8secondson2xNVIDIA
+A100 (80G) GPUs.
+
+B   Annotation details of FakeXplained
+
+Annotatorqualificationandtraining.   Allrecruitedannotatorshavepriorexperienceinphotog-
+raphy, have seen AI-generated images before, possess a fundamental photographic literacy under-
+standing, and arefamiliar with related conceptssuch as “saturation,” “shadow,” “perspective,” and
+“noise.”
+
+Instructions on fake regions.    The rule for annotating fake regions is, if through observation of
+theselectedregionsofinterest,humansshouldbeabletoclearlydeterminethattheimageisnotan
+authenticphotograph. Fakeregionsprimarilyshowobjectsthatdonotfollowthenaturalphysicslaws,
+orcontradictcommonsense. Commonimagegenerationartifactsarealsoencouragedtobeannotated.
+After selecting a local area in the image, it is necessary to describe the reason for identifying it as
+a generated image.  The descriptive sentence must start with a noun, followed by one or several
+adjective phrases or short clauses, and must exclusively describe content that appears in the region.
+
+
+                                                       11
+
+PAGE 12
+ Figure 5: An example showing two different chat templates branched from one annotation entry.
+
+
+Definition of tags.   We refer to the most prominent depicted object in the non-background portion
+oftheimageastheimagesubject. Thereareexactlyfivedifferenttagsthatannotatorscanattachto
+an image. Their definitions are listed below.
+
+• Perspectiveerrors: Indicatesthattheimagehasanunnaturalviewingangle,orerrorsinperspective,
+  vanishing points. Incorrect occlusionand shadow errors donot constituteperspectiveerrors, but
+  can be considered as fake regions instead.
+• Artistic styles: If the overall image presents any artistic style, including but not limited to oil
+  painting,ink painting,or mangastyle, then selectthe “ArtisticStyle” tag. Ifonly acertain partof
+  the image contains content in an artistic style, this tag should not be selected.
+• Unknown objects:  Indicates that the subject of the image does not exist in the world, or is
+  obviouslyunreasonable. Theremaybeunusualinsectsandfurniturewithstrongdesignelements.
+  Judgment should be based on intuition; unfamiliar or rare subjects do not necessarily indicate
+  unreasonable or non-existent objects.
+• Structure/attribute errors: Indicates that thesubjectof the image has a structure thatis inconsis-
+  tent withcommon knowledge, orhas attributesinconsistent with common knowledge. Examples
+  includegreen flowerpetals, pinkelephants, bentironspoon handles,humans with morethan two
+  legs, and asymmetrical shapes. For erroneous attributes that only occupy a small portion of the
+  image subject, such as an incorrect number of fingers on a human hand, fake regions should be
+  marked as well.
+• Texture errors: If obvious texture errors appear in the image, this tag needs to be selected. For
+  example,thetextureoftheentireimageisblurry,oraportionofanobjecthasarepetitive,tilted,or
+  distortedtexture. Unreadabletextdoesnotqualifyasatextureerrorandshouldbelabeledasafake
+  region instead. If “Artistic Style” has already been marked, this tag is usually omitted.
+• Other anomalies: If there arevery obvious globalerrors in the imagethat do not belong toany of
+  theabovecategories,checkthisitem. Thistagcanalsobemarkedevenifothertagshavealready
+  been chosen.
+
+C   More examples
+
+Figure 6 presents more annotated AI-generated images from FakeXplained. The left column displays
+thehuman annotationsof FakeXplained. The rightcolumn shows theinference resultsof ourbest
+
+
+                                                         12
+
+PAGE 13
+                                   Table5: Comparative performanceanalysisunder compressionartifacts, spatialtransformations,and
+                                   resolution changes.
+
+
+
+
+
+
+
+
+
+
+
+
+                                   model. The center bar indicates the proportion of human preference votes from our user study. Note
+                                   thatsincethe“neutral”optionwasallowed,althoughthethirdannotatedimagereceived46.2%ofthe
+                                   votes, the human annotator is still rated higher than our model response. Our model demonstrates the
+                                   abilitytogenerateclearer,moredescriptivecaptionsforfakeregionsandreliablyidentifiescontent
+                                   thatcontradicts commonsense. Forinstance, inthelock-and-keyholeexample (row5), themodel
+                                   successfullydetects that the keyis notinserted intothe correctkeyhole. In thevolcano example (row
+                                   2), in addition to identifying the “broken mountain body” as in the human annotation, the model
+                                   also detects a subtle issue: the disconnection of the lava flow, highlighting its fine-grained visual
+                                   reasoning capabilities.
+
+                                   D   Robustness against image perturbations
+
+                                   To evaluate the practical applicability of our approach, we conduct a comprehensive robustness
+                                   evaluationundercommonimagedegradationsthatarefrequentlyencounteredinreal-worldscenarios.
+                                   Table 5 presents a comparative performance analysis across three perturbation categories: JPEG
+                                   compression, random cropping, and downsampling.
+                                   Our method demonstrates exceptional resilience to JPEG compression artifacts, achieving low
+                                   performancedegradationsofmerely0.3%and0.8%fromtheuncompressedbaseline,significantly
+                                   outperforming current state-of-the-art methods. all of which experience at least a3% degradation.
+                                   Notably,SegFormerandObjectFormershowmorestabilitythanimage-onlyclassificationmodels,
+                                   indicating that grounding enhances robustness, although they still fall short of our method.  For
+                                   downsampling, we scaled the input images to 50% of their original width and height. In random
+                                   cropping and downsampling experiments, our approach maintains the original accuracy of 0.981,
+                                   indicating robust performance across different resolution scales. Meanwhile, downsampling does
+                                   not severely affect the IoU score, which suggests that our grounded reasoning approach effectively
+                                   captures semantic-level artifacts that remain detectable even at reduced resolutions, unlike methods
+                                   thatmayrelyonpixel-levelfeaturesmoresusceptibletoresolutionchanges. Sincerandomcropping
+                                   modifies the overall image layout, this action can remove certain fake regions from an image
+                                   entirely, leading to lower IoU across all methods.  Interestingly, we observe a slight increase in
+                                   IoUafterdownsampling. Wehypothesizethatthisisbecauseourgroundingmodelfocusesonthe
+                                   dominant artifact region, which remains visible at lower resolutions, while noisy fine details are
+                                   suppressed,leadingtomorepreciseandfocusedlocalization. Overall,theconsistentperformance
+                                   across perturbation types demonstrates that our model captures underlying semantic artifacts in
+                                   AI-generated content, enabling robust detection even under challenging image conditions.
+
+                                   E   Additional ablation studies
+
+                                   E.1   Out-of-distribution performance
+
+                                   WeevaluategeneralizationcapabilitiesoftheablationmodelsinSection5.3(Table4)ofthemain
+                                   paper on two OoD datasets: 4o [42] and FaceForensics++ [46]. Table 6 shows that our complete
+                                   pipeline achieves accuracies of 0.803 and 0.879 respectively, compared to 0.412 and 0.565 for the
+                                   base model without fine-tuning.
+
+
+
+  Degradation&Metric     Ours   ObjectF.[60]   SegF.[65]   NPR[32]   DMD.[10]   ComFor.[37]   AfPr.[4]   AEROB.[43]   DIRE[63]13
+JPEGCompression    Acc.   0.978       0.940         0.927       0.820        0.908          0.840         0.871         0.842          0.884
+  (80%Quality)     IoU   0.350       0.284         0.231          -             -               -              -              -               -
+JPEGCompression    Acc.   0.973       0.926         0.915       0.781        0.897          0.784         0.856         0.814          0.879
+  (30%Quality)     IoU   0.322       0.267         0.198          -             -               -              -              -               -
+RandomCropping   Acc.   0.981       0.943         0.934       0.903        0.915          0.829         0.879         0.858          0.891IoU   0.289       0.217         0.176          -             -               -              -              -               -
+
+ Downsampling      Acc.   0.981       0.929         0.931       0.899        0.912          0.853         0.875         0.841          0.894
+     (0.5x)        IoU   0.370       0.259         0.254          -             -               -              -              -               -
+    Original       Acc.   0.981       0.954         0.945       0.914        0.928          0.882         0.887         0.873          0.911
+     Images        IoU   0.352       0.299         0.289          -             -               -              -              -               -
+
+PAGE 14
+Figure 6: More annotation examples from FakeXplained and model response visualized from the
+fine-tuned MLLM. The ratio in the center shows the human preference score.
+
+
+
+
+                                                        14
+
+PAGE 15
+                                Table 6: Out-of-distribution performance evaluation across different datasets when trained with
+                                various configurations mentioned in the paper.
+
+
+
+
+
+
+
+                                Among partial data ablations, the label-only configuration performs poorly, achieving accuracies
+                                similartothenon-fine-tunedbaseline(45.6%vs41.2%on4o),confirmingthatspatialgroundingis
+                                essential for generalization.
+                                TheSFT stagealoneyields moderateperformance(0.587 on4o,0.678 onFF++). Subsequent GRPO
+                                stagesimproveresults,withGRPOβ performingbestamongthevariants. Thisresultisconsistentwith
+                                findings discussed in our main paper, as the RLHF stages give more performance boost than the SFT
+                                stage. The consistent improvements across both datasets suggest our approach learns generalizable
+                                features for AI-generated content detection rather than dataset-specific patterns.
+
+                                E.2   Disabling LoRA
+
+                                We employ LoRA during training to reduce computational cost and memory usage.  While full-
+                                parameterfine-tuningistechnicallypossible,ourresultsshowthatitdoesnotimproveaccuracyor
+                                IoU. In fact, performance slightly degrades on the FakeXplained test set, likely due to the limited
+                                amount of annotated data (see “No-LoRA”). This suggests that LoRA provides a more efficient and
+                                suitabletraining strategyundercurrent dataconstraints. With significantly moretrainingdata, full
+                                fine-tuning may yield better results.
+
+                                E.3   Number of chat templates
+
+                                When some of these templates are absent from the training data, the detection accuracy does not
+                                changesignificantly,whilethelocalizationcapabilitiesdeclineslightly. However,whenevaluatingon
+                                theOoDdataset,alargerperformancegapisfoundbetweenmodelstrainedwithfewerchattemplates,
+                                witha3.3%accuracydropforthe3+2groupand2.7%forthe1+1groupontheFaceForensics++[46]
+                                dataset, indicating that generalization capabilities can be improved with more chat templates.
+
+                                E.4   Model size variants
+
+                                We evaluate the 3Band 7B variants ofQwen-2.5-VL and observe thattheybehave quite differently
+                                fromthe32Bmodel. Whenfine-tuningtheselightervariants,bothmodelsshowmarginalperformance
+                                improvement with their correspondingbase models. These results confirmthat small modelslack the
+                                capacitytosupportthecomplexvisualreasoningandgroundingrequiredforthistask,reinforcingthe
+                                necessity of large-scale models.
+
+                                E.5   Other base models
+
+                                While InternVL-2.5 [9] also supports visual grounding, when trained using the same pipeline,
+                                InternVL-2.5stillsuffersfromhallucinationissues,producinganon-negligibleproportion(13.7%)of
+                                responses that cannot be parsed. This occurs primarily due to the absence of grounding information
+                                intheresponses,despitefine-tuningandcarefullydesigneduserpromptsintendedtoguidethemodel
+                                toward providing such information.
+
+                                F   Limitations & future works
+
+                                Despite promising results, ourapproach stillhas limitations. TheQwen-2.5-VL-32B-Instruct model
+                                incurs substantial computational costs, which may limit deployment in resource-constrained envi-
+                                ronments. Our evaluation does not sufficiently cover domain-specific or real-world image types,
+                                such as medical, industrial, or artistic imagery.  Future work should enhance robustness through
+
+
+                                                                                          15
+
+
+ Dataset      Best    No-FT                          PartialData                                       TrainingStrategy
+                                no-bbox   no-caption   no-tags   label-only      SFT    GRPOα    GRPOβ    GRPOγ
+ 4o[42]      0.803    0.412      0.765         0.780        0.797        0.456       0.587     0.756       0.788       0.758
+FF++[46]   0.879    0.565      0.834         0.833        0.831        0.680       0.678     0.828       0.831       0.829
+
+PAGE 16
+                                     Table 7: More results from different training parameters, number of chat templates and models
+                                     variants.
+
+
+
+
+
+
+
+                                     domain-adaptivefine-tuning,dataaugmentation,andpre-processingpipelinesthataccountforquality
+                                     degradation and layout variations.
+
+                                     G   Broader impact
+
+                                    WhileoursystemimprovesinterpretabilityindetectingAI-generatedcontent,itmayalsointroduce
+                                     risks. Thedetailedexplanationsofdetectionrationalecouldinadvertentlyassistmaliciousadversaries
+                                     in developing more sophisticated evasion techniques, potentially contributing to an adversarial “arms
+                                     race.” The deployment ofsuch systems without carefulconsideration could leadto over-censorship
+                                     oflegitimatecontent,particularlyaffectingartistsandcreatorswhouseAItoolsethically. Tomitigate
+                                     theserisks,werecommendresponsibledeploymentframeworks,ongoingmonitoringforbiasand
+                                     fairness,andcollaborativedevelopmentwithstakeholderstoensurethetechnologyservesthepublic
+                                     interest while preserving legitimate creative expression.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                       16
+
+
+  Dataset      Metric   Best   No-LoRA  ChatTemplates                   ModelSize                                  InternVL2.5
+                                         1+1     3+2     3B(No-FT)    3B    7B(No-FT)    7B      8B(No-FT)    8B    26B(No-FT)   26B
+FakeXplained   Acc.   0.981     0.976     0.978   0.982      0.710      0.715      0.725      0.823      0.525      0.762      0.603      0.805IoU    0.378     0.342     0.374   0.369         -        0.127        -        0.137        -        0.121         -         0.148
+
+ FF++[46]     Acc.   0.879     0.854     0.858   0.846      0.488      0.574      0.595      0.678      0.410      0.391      0.412      0.6394o[42]       Acc.   0.803     0.806     0.786   0.795      0.407      0.625      0.434      0.690      0.295      0.385      0.317      0.581
+
+PAGE 17
+References
+ [1]  Xiuli Bi, Bo Liu, Fan Yang, Bin Xiao, Weisheng Li, Gao Huang, and Pamela C. Cosman.
+      Detecting generated images by real images only, 2023.
+
+ [2]  Andrew Brock, Jeff Donahue, and Karen Simonyan. Large scale gan training for high fidelity
+      natural image synthesis. InInternational Conference on Learning Representations, 2018.
+
+ [3]  Huiwen Chang, Han Zhang, Lu Jiang, Ce Liu, and William T Freeman.  Maskgit: Masked
+      generative image transformer. In Proceedings of the IEEE/CVF conference on computer vision
+      and pattern recognition, pages 11315–11325, 2022.
+
+ [4]  You-Ming Chang, Chen Yeh, Wei-Chen Chiu, and Ning Yu. Antifakeprompt: Prompt-tuned
+      vision-language models are fake image detectors. arXiv preprint arXiv:2310.17419, 2023.
+
+ [5]  Junsong Chen,Chongjian Ge, EnzeXie, Yue Wu, LeweiYao, Xiaozhe Ren,Zhongdao Wang,
+      Ping Luo, Huchuan Lu, and Zhenguo Li.   Pixart-σ:  Weak-to-strong training of diffusion
+      transformer for 4k text-to-image generation.  In European Conference on Computer Vision,
+      pages 74–91. Springer, 2024.
+
+ [6]  JunsongChen,YueWu,SimianLuo,EnzeXie,SayakPaul,PingLuo,HangZhao,andZhenguo
+      Li.  Pixart-δ: Fast and controllable image generation with latent consistency models.  arXiv
+      preprint arXiv:2401.05252, 2024.
+
+ [7]  Junsong Chen, Jincheng Yu, Chongjian Ge, Lewei Yao, Enze Xie, Yue Wu, Zhongdao Wang,
+      James Kwok, PingLuo, Huchuan Lu, et al. Pixart-α: Fast training of diffusion transformerfor
+      photorealistic text-to-image synthesis. arXiv preprint arXiv:2310.00426, 2023.
+
+ [8]  Liang Chen, Lei Li, Haozhe Zhao, Yifan Song, and Vinci. R1-v: Reinforcing super generaliza-
+      tionabilityinvision-languagemodelswithlessthan$3.https://github.com/Deep-Agent/
+      R1-V, 2025. Accessed: 2025-02-02.
+
+ [9]  Zhe Chen, Weiyun Wang, Yue Cao, Yangzhou Liu, Zhangwei Gao, Erfei Cui, Jinguo Zhu,
+      Shenglong Ye, Hao Tian, Zhaoyang Liu, Lixin Gu, Xuehui Wang, Qingyun Li, Yimin Ren,
+      Zixuan Chen, Jiapeng Luo, Jiahao Wang, Tan Jiang, Bo Wang, Conghui He, Botian Shi,
+      XingchengZhang,Han Lv, YiWang, Wenqi Shao,PeiChu,ZhongyingTu, Tong He,Zhiyong
+      Wu, Huipeng Deng, Jiaye Ge, Kai Chen, Kaipeng Zhang, Limin Wang, Min Dou, Lewei
+      Lu, Xizhou Zhu, Tong Lu, Dahua Lin, Yu Qiao, Jifeng Dai, and Wenhai Wang. Expanding
+      performance boundaries of open-source multimodal models with model, data, and test-time
+      scaling, 2025.
+
+[10] Riccardo Corvi, Davide Cozzolino, GiadaZingarini, Giovanni Poggi, Koki Nagano, and Luisa
+      Verdoliva.  On the detection of synthetic images generated by diffusion models.  In IEEE
+      International Conference on Acoustics, Speech and Signal Processing (ICASSP), pages 1–5,
+      2023.
+
+[11] Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, K. Li, and Li Fei-Fei.  Imagenet: A large-
+      scale hierarchical image database. 2009 IEEE Conference on Computer Vision and Pattern
+      Recognition, pages 248–255, 2009.
+
+[12] TarikDzanic,KaranShah,andFreddieD.Witherden. Fourierspectrumdiscrepanciesindeep
+      network generated images.  In Proceedings of the 34th International Conference on Neural
+      InformationProcessingSystems,NIPS’20,RedHook,NY,USA,2020.CurranAssociatesInc.
+
+[13] Patrick Esser, Sumith Kulal, Andreas Blattmann, Rahim Entezari, Jonas Müller, Harry Saini,
+     Yam Levi, Dominik Lorenz, Axel Sauer, Frederic Boesel, Dustin Podell, Tim Dockhorn, Zion
+      English, Kyle Lacey, Alex Goodwin, Yannik Marek, and Robin Rombach. Scaling rectified
+      flow transformers for high-resolution image synthesis, 2024.
+
+[14] Patrick Esser, Robin Rombach, and Bjorn Ommer. Taming transformers for high-resolution
+      imagesynthesis. InProceedingsoftheIEEE/CVFconferenceoncomputervisionandpattern
+      recognition, pages 12873–12883, 2021.
+
+
+                                                       17
+
+PAGE 18
+[15] JoelFrank, ThorstenEisenhofer,LeaSchönherr,Asja Fischer,Dorothea Kolossa, andThorsten
+      Holz. Leveragingfrequencyanalysisfordeepfakeimagerecognition. InProceedingsofthe
+     37th International Conference on Machine Learning, ICML’20. JMLR.org, 2020.
+[16] Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil
+      Ozair,AaronCourville,andY.Bengio. Generativeadversarialnetworks. AdvancesinNeural
+      Information Processing Systems, 3, 06 2014.
+[17] PatrickGrommelt,LouisWeiss,Franz-JosefPfreundt,andJanisKeuper. Fakeorjpeg? revealing
+      common biases in generated image detection datasets. ArXiv, abs/2403.17608, 2024.
+[18] Shuyang Gu, Dong Chen, Jianmin Bao, Fang Wen, Bo Zhang, Dongdong Chen, Lu Yuan, and
+      Baining Guo. Vector quantized diffusion model for text-to-image synthesis. In Proceedings of
+      the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pages 10696–10706,
+      2022.
+[19] Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Ruoyu Zhang, Runxin Xu, Qihao Zhu,
+      Shirong Ma, Peiyi Wang, Xiao Bi, et al. Deepseek-r1: Incentivizing reasoning capability in
+      llms via reinforcement learning. arXiv preprint arXiv:2501.12948, 2025.
+[20] JianHan,JinlaiLiu,YiJiang,BinYan,YuqiZhang,ZehuanYuan,BingyuePeng,andXiaobing
+      Liu.  Infinity: Scaling bitwise autoregressive modeling for high-resolution image synthesis.
+      arXiv preprint arXiv:2412.04431, 2024.
+[21] Jonathan Ho, Ajay Jain, and P. Abbeel.  Denoising diffusion probabilistic models.  ArXiv,
+      abs/2006.11239, 2020.
+[22] WenxuanHuang,BohanJia, ZijieZhai,ShaoshengCao,ZheyuYe,FeiZhao,ZheXu,YaoHu,
+      andShaohuiLin. Vision-r1: Incentivizingreasoningcapabilityinmultimodallargelanguage
+      models. arXiv preprint arXiv:2503.06749, 2025.
+[23] AaronJaech,AdamKalai,AdamLerer,AdamRichardson,AhmedEl-Kishky,AidenLow,Alec
+      Helyar, Aleksander Madry, Alex Beutel, Alex Carney, et al. Openai o1 system card. arXiv
+      preprint arXiv:2412.16720, 2024.
+[24] DongzhiJiang,ZiyuGuo,RenruiZhang,ZhuofanZong,HaoLi,LeZhuo,ShilinYan,Pheng-
+      Ann Heng, and Hongsheng Li.   T2i-r1:  Reinforcing image generation with collaborative
+      semantic-level and token-level cot. arXiv preprint arXiv:2505.00703, 2025.
+[25] TeroKarras,SamuliLaine,andTimoAila. Astyle-basedgeneratorarchitectureforgenerative
+      adversarialnetworks. 2019IEEE/CVFConferenceonComputerVisionandPatternRecognition
+     (CVPR), pages 4396–4405, 2018.
+[26]Black Forest Labs. Flux.       https://github.com/black-forest-labs/flux, 2024.
+[27] Yixuan Li, XuelinLiu, Xiaoyang Wang, Shiqi Wang, and Weisi Lin. Fakebench: Uncover the
+      achilles’ heels of fake images with large multimodal models.ArXiv, abs/2404.13306, 2024.
+[28] Zhengzhe Liu, Xiaojuan Qi, and Philip H.S. Torr.   Global texture enhancement for fake
+      face detection in the wild. In 2020 IEEE/CVF Conference on Computer Vision and Pattern
+      Recognition (CVPR), pages 8057–8066, 2020.
+[29] PeterLorenz,RicardDurall,andJanisKeuper. Detectingimagesgeneratedbydeepdiffusion
+      models using their local intrinsic dimensionality. 2023 IEEE/CVF International Conference on
+      Computer Vision Workshops (ICCVW), pages 448–459, 2023.
+[30]Midjourney. Midjourney, 2023.
+[31] AlexNichol,PrafullaDhariwal,AdityaRamesh,PranavShyam,PamelaMishkin,BobMcGrew,
+      Ilya Sutskever, and Mark Chen. Glide: Towards photorealistic image generation and editing
+      with text-guided diffusion models. arXiv preprint arXiv:2112.10741, 2021.
+[32] Utkarsh Ojha, Yuheng Li, and Yong Jae Lee.  Towards universal fake image detectors that
+      generalize across generative models.  2023 IEEE/CVF Conference on Computer Vision and
+      Pattern Recognition (CVPR), pages 24480–24489, 2023.
+
+
+                                                      18
+
+PAGE 19
+[33]OpenAI. Dall·e 3 system card, 2023.
+
+[34]OpenAI. Introducing 4o image generation, Mar 2025.
+[35] Long Ouyang, Jeffrey Wu, Xu Jiang, Diogo Almeida, Carroll Wainwright, Pamela Mishkin,
+      ChongZhang,SandhiniAgarwal,KatarinaSlama,AlexRay,etal. Traininglanguagemodelsto
+      followinstructionswithhuman feedback. Advancesinneuralinformation processing systems,
+      35:27730–27744, 2022.
+[36] Jiazhen Pan, Che Liu, Junde Wu, Fenglin Liu, Jiayuan Zhu, Hongwei Bran Li, Chen Chen,
+      ChengOuyang,andDanielRueckert. Medvlm-r1: Incentivizingmedicalreasoningcapability
+      ofvision-languagemodels(vlms)viareinforcementlearning. arXivpreprintarXiv:2502.19634,
+      2025.
+
+[37] Jeongsoo Park and Andrew Owens. Community forensics: Using thousands of generators to
+      train fake image detectors, 2024.
+[38] WilliamPeeblesandSainingXie. Scalablediffusionmodelswithtransformers. InProceedings
+      of the IEEE/CVF international conference on computer vision, pages 4195–4205, 2023.
+[39] Yingzhe Peng, Gongrui Zhang, Miaosen Zhang, Zhiyuan You, Jie Liu, Qipeng Zhu, Kai Yang,
+      XingzhongXu,XinGeng,andXuYang. Lmm-r1: Empowering3blmmswithstrongreasoning
+      abilities through two-stage rule-based rl. arXiv preprint arXiv:2503.07536, 2025.
+
+[40]Qwen Team. Qwen2.5-vl, January 2025.
+[41] Aditya Ramesh, Prafulla Dhariwal, Alex Nichol, Casey Chu, and Mark Chen. Hierarchical
+      text-conditionalimagegenerationwithcliplatents. arXivpreprintarXiv:2204.06125,1(2):3,
+      2022.
+[42]Rapidata. Rapidata openai 4o preference, Mar 2025.
+
+[43] Jonas Ricker, Denis Lukovnikov, and Asja Fischer.  Aeroblade: Training-free detection of
+      latent diffusion images using autoencoder reconstruction error. 2024 IEEE/CVF Conference on
+      Computer Vision and Pattern Recognition (CVPR), pages 9130–9140, 2024.
+
+[44] Robin Rombach, Andreas Blattmann, Dominik Lorenz, Patrick Esser, and Björn Ommer. High-
+      resolution image synthesis with latent diffusion models.  In Proceedings of the IEEE/CVF
+      ConferenceonComputerVisionandPatternRecognition(CVPR),pages10684–10695,June
+      2022.
+[45] Robin Rombach, Andreas Blattmann, Dominik Lorenz, Patrick Esser, and Björn Ommer. High-
+      resolution image synthesis with latent diffusion models.  In Proceedings of the IEEE/CVF
+      ConferenceonComputerVisionandPatternRecognition(CVPR),pages10684–10695,June
+      2022.
+[46] AndreasRössler,DavideCozzolino,LuisaVerdoliva,ChristianRiess,JustusThies,andMatthias
+      Nießner.  FaceForensics++: Learning to detect manipulated facial images.  In International
+      Conference on Computer Vision (ICCV), 2019.
+[47] Chitwan Saharia, William Chan, Saurabh Saxena, Lala Li, Jay Whang, Emily L Denton,
+      Kamyar Ghasemipour, Raphael Gontijo Lopes, Burcu Karagol Ayan, Tim Salimans, et al.
+      Photorealistic text-to-imagediffusion models withdeep language understanding. Advances in
+      Neural Information Processing Systems, 35:36479–36494, 2022.
+
+[48] Ramprasaath R. Selvaraju, Michael Cogswell, Abhishek Das, Ramakrishna Vedantam, Devi
+      Parikh, and Dhruv Batra.  Grad-cam: Visual explanations from deep networks via gradient-
+      based localization. In 2017 IEEEInternational Conference on ComputerVision(ICCV), pages
+      618–626, 2017.
+
+[49] ZhihongShao,PeiyiWang,QihaoZhu,RunxinXu,Jun-MeiSong,MingchuanZhang,Y.K.Li,
+     Yu Wu, and Daya Guo. Deepseekmath: Pushing the limits of mathematical reasoning in open
+      language models. ArXiv, abs/2402.03300, 2024.
+
+
+                                                      19
+
+PAGE 20
+[50] HaozhanShen,PengLiu,JingchengLi,ChunxinFang,YiboMa,JiajiaLiao,QiaoliShen,Zilun
+      Zhang,KangjiaZhao,QianqianZhang,RuochenXu,andTianchengZhao. Vlm-r1: Astable
+      andgeneralizabler1-stylelargevision-languagemodel. arXivpreprintarXiv:2504.07615,2025.
+
+[51] KarenSimonyan,AndreaVedaldi,andAndrewZisserman. Deepinsideconvolutionalnetworks:
+     Visualising image classification models and saliency maps. CoRR, abs/1312.6034, 2013.
+
+[52] Jiaming Song, Chenlin Meng, and Stefano Ermon. Denoising diffusion implicit models. ArXiv,
+      abs/2010.02502, 2020.
+
+[53] Peize Sun, Yi Jiang, Shoufa Chen, ShilongZhang, Bingyue Peng, Ping Luo, andZehuan Yuan.
+     Autoregressive model beats diffusion: Llama for scalable image generation. arXiv preprint
+      arXiv:2406.06525, 2024.
+
+[54] Mukund Sundararajan,Ankur Taly, andQiqi Yan. Axiomaticattribution for deepnetworks. In
+     Proceedings of the 34th International Conference on Machine Learning - Volume 70, ICML’17,
+      page 3319–3328. JMLR.org, 2017.
+
+[55] MingxingTanandQuocV.Le. Efficientnet: Rethinkingmodelscalingforconvolutionalneural
+      networks. ArXiv, abs/1905.11946, 2019.
+
+[56] MingTao,Bing-KunBao,HaoTang,andChangshengXu. Galip: Generativeadversarialclips
+      fortext-to-imagesynthesis. InProceedingsoftheIEEE/CVFConferenceonComputerVision
+      and Pattern Recognition, pages 14214–14223, 2023.
+
+[57] Keyu Tian, Yi Jiang, Zehuan Yuan, Bingyue Peng, and Liwei Wang.  Visual autoregressive
+      modeling: Scalableimagegenerationvianext-scaleprediction. Advancesinneuralinformation
+      processing systems, 37:84839–84865, 2024.
+
+[58] AaronVanDenOord,OriolVinyals,etal. Neuraldiscreterepresentationlearning. Advancesin
+      neural information processing systems, 30, 2017.
+
+[59] Haozhe Wang, Chao Qu, Zuming Huang, Wei Chu, Fangzhen Lin, and Wenhu Chen.  Vl-
+      rethinker: Incentivizingself-reflectionofvision-languagemodelswithreinforcementlearning.
+      arXiv preprint arXiv:2504.08837, 2025.
+
+[60] JunkeWang,ZuxuanWu,JingjingChen,XintongHan,AbhinavShrivastava,Ser-NamLim,and
+     Yu-GangJiang. Objectformerforimagemanipulationdetectionandlocalization. InProceedings
+      of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2022.
+
+[61] Peng Wang, Shuai Bai, Sinan Tan, Shijie Wang, Zhihao Fan, Jinze Bai, Keqin Chen, Xuejing
+      Liu, Jialin Wang, Wenbin Ge, Yang Fan, Kai Dang, Mengfei Du, Xuancheng Ren, Rui Men,
+      Dayiheng Liu, Chang Zhou, Jingren Zhou, and Junyang Lin. Qwen2-vl: Enhancing vision-
+      languagemodel’sperceptionoftheworldatanyresolution.arXivpreprintarXiv:2409.12191,
+      2024.
+
+[62] Sheng-Yu Wang, Oliver Wang, Richard Zhang, Andrew Owens, and Alexei A Efros.  Cnn-
+      generated images are surprisingly easy to spot... for now.  In Proceedings of the IEEE/CVF
+      conference on computer vision and pattern recognition, pages 8695–8704, 2020.
+
+[63] Zhendong Wang, Jianmin Bao, Wengang Zhou, Weilun Wang, Hezhen Hu, Hong Chen, and
+      HouqiangLi. Direfordiffusion-generatedimagedetection. InProceedings oftheIEEE/CVF
+      International Conference on Computer Vision, pages 22445–22455, 2023.
+
+[64] Wenyi Xiao,LeileiGan,WeilongDai,WangguiHe,ZiweiHuang, HaoyuanLi,Fangxun Shu,
+      Zhelun Yu, PengZhang, Hao Jiang, et al. Fast-slowthinking for large vision-languagemodel
+      reasoning. arXiv preprint arXiv:2504.18458, 2025.
+
+[65] Enze Xie, Wenhai Wang, Zhiding Yu, Anima Anandkumar, Jose M Alvarez, and Ping Luo.
+      Segformer: Simple andefficientdesignfor semanticsegmentation withtransformers. InNeural
+      Information Processing Systems (NeurIPS), 2021.
+
+
+                                                      20
+
+PAGE 21
+[66] Yi Yang, Xiaoxuan He, Hongkun Pan, Xiyan Jiang, Yan Deng, Xingtao Yang, Haoyu Lu,
+     Dacheng Yin, Fengyun Rao, Minfeng Zhu, et al.   R1-onevision:  Advancing generalized
+     multimodalreasoningthroughcross-modalformalization. arXivpreprintarXiv:2503.10615,
+     2025.
+[67] ZichengZhang, HaoningWu, ChunyiLi,Yingjie Zhou,WeiSun, XiongkuoMin, ZijianChen,
+     Xiaohong Liu, Weisi Lin, and Guangtao Zhai.  A-bench:  Are lmms masters at evaluating
+     ai-generated images? arXiv preprint arXiv:2406.03070, 2024.
+[68] Yuze Zhao, Jintao Huang, Jinghan Hu, Xingjun Wang, Yunlin Mao, Daoze Zhang, Zeyinzi
+     Jiang,ZhikaiWu,BaoleAi,AngWang,etal. Swift: ascalablelightweightinfrastructurefor
+     fine-tuning. InProceedingsoftheAAAIConferenceonArtificialIntelligence,volume39,pages
+     29733–29735, 2025.
+[69] Hengguang Zhou, Xirui Li, Ruochen Wang, Minhao Cheng, Tianyi Zhou, and Cho-Jui
+     Hsieh.  R1-zero’s" aha moment" in visual reasoning on a 2b non-sft model. arXiv preprint
+     arXiv:2503.05132, 2025.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                     21

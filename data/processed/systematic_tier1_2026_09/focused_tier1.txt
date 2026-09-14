@@ -1,0 +1,31 @@
+..F................................F.....                                [100%]
+=================================== FAILURES ===================================
+___________ test_dacom_complete_author_order_and_seventh_affiliation ___________
+
+    def test_dacom_complete_author_order_and_seventh_affiliation():
+>       p = next(p for p in proposals() if 'DACOM' in p['title'])
+E       StopIteration
+
+tests/test_systematic_tier1.py:30: StopIteration
+_ FrontendPublishedOnlyFilterTests.test_canonical_dataset_has_only_resolved_publication_types _
+
+self = <test_frontend_published_only_filter.FrontendPublishedOnlyFilterTests testMethod=test_canonical_dataset_has_only_resolved_publication_types>
+
+    def test_canonical_dataset_has_only_resolved_publication_types(self):
+        counts = {}
+        for paper in self.public_papers:
+            publication_type = paper.get("publication_type", "")
+            counts[publication_type] = counts.get(publication_type, 0) + 1
+        self.assertEqual(
+            counts,
+            # Tier 1 adds seven conferences, one journal and eight preprints.
+            {"conference": 369, "journal": 158, "preprint": 108, "book": 1},
+        )
+>       self.assertEqual(counts["preprint"], 108)
+E       AssertionError: 108 != 100
+
+tests/test_frontend_published_only_filter.py:64: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_systematic_tier1.py::test_dacom_complete_author_order_and_seventh_affiliation
+FAILED tests/test_frontend_published_only_filter.py::FrontendPublishedOnlyFilterTests::test_canonical_dataset_has_only_resolved_publication_types
+2 failed, 39 passed in 61.57s (0:01:01)

@@ -11,7 +11,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-09-09T15:06:52Z |
+| public_preview_generated_at | 2026-09-13T20:28:47Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1438 |
-| Unique mapped papers | 613 |
-| Unique institutions | 632 |
+| Map records | 1466 |
+| Unique mapped papers | 623 |
+| Unique institutions | 633 |
 | Countries | 52 |
-| arXiv/preprint records | 739 |
-| Records with DOI | 1182 |
-| Records with venue | 1434 |
+| arXiv/preprint records | 764 |
+| Records with DOI | 1188 |
+| Records with venue | 1462 |
 | Records missing venue | 4 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -36,21 +36,21 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Task | Records |
 | --- | ---: |
-| detection | 577 |
+| detection | 587 |
 | source_attribution | 76 |
-| localization | 20 |
+| localization | 21 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 209 |
-| 2025 | 171 |
+| 2026 | 212 |
+| 2025 | 176 |
 | 2024 | 112 |
 | 2023 | 49 |
-| 2022 | 22 |
+| 2022 | 23 |
 | 2021 | 23 |
-| 2020 | 15 |
+| 2020 | 16 |
 | 2019 | 10 |
 | 2018 | 2 |
 
@@ -62,23 +62,23 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | AAAI Conference on Artificial Intelligence (AAAI) | 24 |
 | Advances in Neural Information Processing Systems (NeurIPS) | 19 |
 | International Conference on Machine Learning (ICML) | 18 |
-| European Conference on Computer Vision (ECCV) | 15 |
-| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshop | 14 |
+| European Conference on Computer Vision (ECCV) | 16 |
+| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshop | 15 |
 | IEEE/CVF International Conference on Computer Vision (ICCV) | 13 |
+| International Conference on Learning Representations (ICLR) | 13 |
 | ACM International Conference on Multimedia (ACM MM) | 12 |
-| International Conference on Learning Representations (ICLR) | 12 |
 | IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) | 11 |
 
 ## Top Countries
 
 | Country | Records |
 | --- | ---: |
-| China | 700 |
-| United States | 184 |
-| Italy | 99 |
-| India | 67 |
+| China | 717 |
+| United States | 188 |
+| Italy | 101 |
+| India | 68 |
 | Germany | 46 |
-| South Korea | 41 |
+| South Korea | 42 |
 | United Kingdom | 35 |
 | Singapore | 32 |
 | Australia | 28 |
@@ -88,22 +88,22 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Institution | Records |
 | --- | ---: |
-| Shanghai Jiao Tong University | 27 |
+| Shanghai Jiao Tong University | 29 |
 | University of Chinese Academy of Sciences | 23 |
+| Beijing Jiaotong University | 21 |
 | Institute of Automation, Chinese Academy of Sciences | 21 |
-| Beijing Jiaotong University | 20 |
-| University of Naples Federico II | 19 |
-| Shenzhen University | 18 |
+| University of Naples Federico II | 20 |
+| Shenzhen University | 19 |
+| Zhejiang University | 19 |
 | University of Science and Technology of China | 18 |
-| Zhejiang University | 18 |
 | Tsinghua University | 17 |
-| Peking University | 15 |
+| Ant Group | 15 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1346 |
+| high | 1374 |
 | medium | 92 |
 
 ## Potential quality issues

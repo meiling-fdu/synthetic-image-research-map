@@ -100,7 +100,11 @@ def test_index_download_is_not_claimed_as_full_semantic_enumeration():
 def test_frozen_pre_audit_files_are_byte_identical():
     baseline = json.loads((PROCESSED / 'baseline_sha256.json').read_text())
     assert len(baseline) == 670
-    assert [path for path, sha in baseline.items() if hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != sha] == []
+    # The completed audit is historical once its Tier 1 follow-up changes the
+    # corpus. Check its original frozen inputs, not the later curated corpus.
+    followup = ROOT / 'data/processed/systematic_tier1_2026_09'
+    frozen = followup / 'baseline' if (followup / 'insertion.json').exists() else ROOT
+    assert [path for path, sha in baseline.items() if hashlib.sha256((frozen / path).read_bytes()).hexdigest() != sha] == []
 
 
 def test_successful_cache_responses_have_verified_checksums():

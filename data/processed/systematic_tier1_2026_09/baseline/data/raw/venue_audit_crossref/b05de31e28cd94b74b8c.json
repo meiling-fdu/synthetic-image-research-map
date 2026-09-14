@@ -1,0 +1,630 @@
+{
+  "doi": "10.1109/avss61716.2024.10672612",
+  "source_url": "https://api.crossref.org/works/10.1109%2Favss61716.2024.10672612",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            5
+          ]
+        ],
+        "date-time": "2026-02-05T09:35:49Z",
+        "timestamp": 1770284149015,
+        "version": "3.49.0"
+      },
+      "reference-count": 60,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                7,
+                15
+              ]
+            ],
+            "date-time": "2024-07-15T00:00:00Z",
+            "timestamp": 1721001600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                7,
+                15
+              ]
+            ],
+            "date-time": "2024-07-15T00:00:00Z",
+            "timestamp": 1721001600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/100000001",
+          "name": "National Science Foundation",
+          "doi-asserted-by": "publisher",
+          "id": [
+            {
+              "id": "10.13039/100000001",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            7,
+            15
+          ]
+        ]
+      },
+      "DOI": "10.1109/avss61716.2024.10672612",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2024,
+            9,
+            18
+          ]
+        ],
+        "date-time": "2024-09-18T17:51:42Z",
+        "timestamp": 1726681902000
+      },
+      "page": "1-7",
+      "source": "Crossref",
+      "is-referenced-by-count": 7,
+      "title": [
+        "Robust CLIP-Based Detector for Exposing Diffusion Model-Generated Images"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "family": "Santosh",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Purdue University"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Li",
+          "family": "Lin",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Purdue University"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Irene",
+          "family": "Amerini",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Sapienza University of Rome"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Xin",
+          "family": "Wang",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University at Albany, State University of New York"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Shu",
+          "family": "Hu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Purdue University"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref1",
+          "article-title": "Denoising diffusion probabilistic models",
+          "volume": "33",
+          "author": "Ho",
+          "year": "2020",
+          "journal-title": "neurips"
+        },
+        {
+          "key": "ref2",
+          "volume-title": "Score-based generative modeling through stochastic differential equations",
+          "author": "Song",
+          "year": "2020"
+        },
+        {
+          "key": "ref3",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/JBHI.2024.3385504"
+        },
+        {
+          "key": "ref4",
+          "article-title": "Varun Jampani, and Shubham Tulsiani. Mvd-fusion: Single-view 3d via depth-consistent multiview generation",
+          "author": "Hu",
+          "year": "2024",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref5",
+          "article-title": "Segmentation-guided knee radiograph generation using conditional diffusion models",
+          "author": "Mei",
+          "year": "2024",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref6",
+          "article-title": "Yin Jun Phua, and Tsuyoshi Murata. Future-proofing class incremental learning",
+          "author": "Jodelet",
+          "year": "2024",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52733.2024.01030"
+        },
+        {
+          "key": "ref8",
+          "article-title": "Comat: Aligning text-to-image diffusion model with image-to-text concept matching",
+          "author": "Jiang",
+          "year": "2024",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref9",
+          "article-title": "Lcm-lookahead for encoder-based text-to-image personalization",
+          "author": "Gal",
+          "year": "2024",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref10",
+          "article-title": "Raising the bar of ai-generated image detection with clip",
+          "author": "Cozzolino",
+          "year": "2023",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref11",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3576915.3616588"
+        },
+        {
+          "key": "ref12",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3652027"
+        },
+        {
+          "key": "ref13",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICMEW46912.2020.9105991"
+        },
+        {
+          "key": "ref14",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00009"
+        },
+        {
+          "key": "ref15",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MIPR.2018.00084"
+        },
+        {
+          "key": "ref16",
+          "article-title": "Bilora: A vision-language approach for synthetic image detection",
+          "author": "Keita",
+          "year": "2024",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref17",
+          "article-title": "Lare2: Latent reconstruction error based method for diffusion-generated image detection",
+          "author": "Shen",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref18",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3652583.3658035"
+        },
+        {
+          "key": "ref19",
+          "article-title": "Towards the detection of ai-synthesized human face images",
+          "author": "Lu",
+          "year": "2024",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref20",
+          "article-title": "Lighting (in)consistency of paint by text",
+          "author": "Farid",
+          "year": "2022",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref21",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MIPR54900.2022.00047"
+        },
+        {
+          "key": "ref22",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICASSP43922.2022.9746597"
+        },
+        {
+          "key": "ref23",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICASSP39728.2021.9414582"
+        },
+        {
+          "key": "ref24",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/JBHI.2024.3385504"
+        },
+        {
+          "key": "ref25",
+          "article-title": "Detecting multimedia generated by large ai models: A survey",
+          "author": "Lin",
+          "year": "2024",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref26",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICASSP48485.2024.10447611"
+        },
+        {
+          "key": "ref27",
+          "article-title": "X-transfer: A transfer learning-based framework for robust gan-generated fake image detection",
+          "author": "Zhang",
+          "year": "2023",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref28",
+          "article-title": "Improving cross-dataset deepfake detection with deep information decomposition",
+          "author": "Yang",
+          "year": "2023",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref29",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MIPR59079.2023.00035"
+        },
+        {
+          "key": "ref30",
+          "article-title": "Gan-generated faces detection: A survey and new perspectives",
+          "author": "Wang",
+          "year": "2022",
+          "journal-title": "ECAI"
+        },
+        {
+          "key": "ref31",
+          "article-title": "Learning transferable visual models from natural language supervision",
+          "author": "Radford",
+          "year": "2021"
+        },
+        {
+          "key": "ref32",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "key": "ref33",
+          "article-title": "Hierarchical text-conditional image generation with clip latents",
+          "author": "Ramesh",
+          "year": "2022",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref34",
+          "article-title": "Photorealistic text-to-image diffusion models with deep language understanding. neurips",
+          "author": "Saharia",
+          "year": "2022"
+        },
+        {
+          "key": "ref35",
+          "article-title": "Diffusion models beat gans on image synthesis",
+          "author": "Dhariwal",
+          "year": "2021",
+          "journal-title": "neurips"
+        },
+        {
+          "key": "ref36",
+          "article-title": "Improved denoising diffusion probabilistic models",
+          "author": "Nichol",
+          "year": "2021"
+        },
+        {
+          "key": "ref38",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.imavis.2023.104771"
+        },
+        {
+          "key": "ref39",
+          "article-title": "Perspective (in) consistency of paint by text",
+          "author": "Farid",
+          "year": "2022",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref40",
+          "article-title": "Deep image fingerprint: Towards low budget synthetic image detection",
+          "author": "Sinitsa",
+          "year": "2023",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref41",
+          "article-title": "Exposing the fake: Effective diffusion-generated images detection",
+          "author": "Ma",
+          "year": "2023",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref42",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2017.243"
+        },
+        {
+          "key": "ref43",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2016.308"
+        },
+        {
+          "key": "ref44",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2017.195"
+        },
+        {
+          "key": "ref45",
+          "article-title": "Robust covid-19 detection in ct images with clip",
+          "author": "Lin",
+          "year": "2024",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref46",
+          "article-title": "Robust light-weight facial affective behavior recognition with clip",
+          "author": "Lin",
+          "year": "2024",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref47",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52733.2024.01591"
+        },
+        {
+          "key": "ref48",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WACV57701.2024.00459"
+        },
+        {
+          "key": "ref49",
+          "article-title": "Outlier robust adversarial training",
+          "author": "Hu",
+          "year": "2024",
+          "journal-title": "ACML"
+        },
+        {
+          "key": "ref50",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2023.3296062"
+        },
+        {
+          "key": "ref51",
+          "article-title": "Distributionally robust survival analysis: A novel fairness loss without demographics",
+          "author": "Hu",
+          "year": "2022",
+          "journal-title": "Machine Learning for Health"
+        },
+        {
+          "key": "ref52",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV48922.2021.00755"
+        },
+        {
+          "key": "ref53",
+          "article-title": "Sum of ranked range loss for supervised learning",
+          "author": "Hu",
+          "year": "2022",
+          "journal-title": "Journal of Machine Learning Research"
+        },
+        {
+          "key": "ref54",
+          "article-title": "Learning by minimizing the sum of ranked range",
+          "author": "Hu",
+          "year": "2020",
+          "journal-title": "neurips"
+        },
+        {
+          "key": "ref55",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.patcog.2022.108832"
+        },
+        {
+          "key": "ref56",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ACCESS.2022.3157297"
+        },
+        {
+          "key": "ref57",
+          "article-title": "Sharpness-aware minimization for efficiently improving generalization",
+          "author": "Foret",
+          "year": "2020",
+          "journal-title": "ICLR"
+        },
+        {
+          "key": "ref58",
+          "article-title": "Diffusion-generated deepfake detection datase"
+        },
+        {
+          "key": "ref59",
+          "article-title": "Laion-400m: Open dataset of clip-filtered 400 million image-text pairs",
+          "author": "Schuhmann",
+          "year": "2021",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "ref60",
+          "article-title": "Stable diffusion xl: Enhancing the resolution and quality of ai-generated images",
+          "author": "Chen",
+          "year": "2023",
+          "journal-title": "Journal of Artificial Intelligence Research"
+        },
+        {
+          "key": "ref61",
+          "article-title": "Deepfloyd-if: A novel image forensics method for identifying deepfake images",
+          "author": "Floyd",
+          "year": "2023",
+          "journal-title": "Journal of Digital Forensics, Security and Law"
+        }
+      ],
+      "event": {
+        "name": "2024 IEEE International Conference on Advanced Video and Signal Based Surveillance (AVSS)",
+        "location": "Niagara Falls, ON, Canada",
+        "start": {
+          "date-parts": [
+            [
+              2024,
+              7,
+              15
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2024,
+              7,
+              16
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2024 IEEE International Conference on Advanced Video and Signal Based Surveillance (AVSS)"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx8/10672516/10672563/10672612.pdf?arnumber=10672612",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2024,
+            9,
+            19
+          ]
+        ],
+        "date-time": "2024-09-19T06:17:03Z",
+        "timestamp": 1726726623000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/10672612/"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2024,
+            7,
+            15
+          ]
+        ]
+      },
+      "references-count": 60,
+      "URL": "https://doi.org/10.1109/avss61716.2024.10672612",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            7,
+            15
+          ]
+        ]
+      }
+    }
+  }
+}

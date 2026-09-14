@@ -1,0 +1,678 @@
+[
+  {
+    "candidate_id": "audit:d2f5890b11ab48bf",
+    "versions": [
+      {
+        "earlier_title": "DeCLIP: Decoding CLIP representations for deepfake localization",
+        "earlier_authors": [
+          "Stefan Smeu",
+          "Elisabeta Oneata",
+          "Dan Oneata"
+        ],
+        "later_title": "DeCLIP: Decoding CLIP Representations for Deepfake Localization",
+        "later_authors": [
+          "Stefan Smeu",
+          "Elisabeta Oneata",
+          "Dan Oneata"
+        ],
+        "author_overlap_normalized": [
+          "danoneata",
+          "elisabetaoneata",
+          "stefansmeu"
+        ],
+        "arxiv_version_history": "https://arxiv.org/abs/2409.08849",
+        "earlier_date": [
+          "2024/09/12"
+        ],
+        "venue_chronology": "arXiv → WACV 2025",
+        "method_identity": "2024 arXiv 2409.08849 and WACV 2025 are the same work; use final WACV metadata.",
+        "final_corpus_decision": "One canonical work: curated:f7adf12bdae80860a18f"
+      }
+    ],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:76f06867c0e6b17e",
+    "versions": [
+      {
+        "earlier_title": "Detective SAM: Adapting SAM to Localize Diffusion-based Forgeries via Embedding Artifacts",
+        "later_title": "Detective SAM: Adaptive AI-Image Forgery Localization",
+        "earlier_authors": [
+          "Gert Lek",
+          "Chaoyi Zhu",
+          "Pin-Yu Chen",
+          "Robert Birke",
+          "Lydia Y. Chen"
+        ],
+        "later_authors": [
+          "Gert Lek",
+          "Nicolas Van Schaik",
+          "Chaoyi Zhu",
+          "Pin-Yu Chen",
+          "Robert Birke",
+          "Lydia Y. Chen"
+        ],
+        "author_overlap_normalized": [
+          "chaoyizhu",
+          "gertlek",
+          "lydiaychen",
+          "pinyuchen",
+          "robertbirke"
+        ],
+        "arxiv_version_history": "No verified arXiv or DOI shared identifier; OpenReview workshop GPpFTmGLgT, final ICLR proceedings 262dd62fd1bbb30d6a6b4d578f5e65ff.",
+        "venue_chronology": "ICML DIG-BUG workshop, July 19 2025 → ICLR 2026",
+        "method_identity": "Continuous Detective SAM method: perturbation/blur forensic embeddings, learned prompts and lightweight SAM adaptation. Final version adds Nicolas van Schaik, SAM2/adaptive extensions and AutoEditForge. Author publication history explicitly calls it the full paper extending Detective SAM.",
+        "evidence": [
+          "https://iris.unito.it/handle/2318/2088015",
+          "https://gertlek.com/",
+          "https://proceedings.iclr.cc/paper_files/paper/2026/file/262dd62fd1bbb30d6a6b4d578f5e65ff-Paper-Conference.pdf"
+        ],
+        "final_corpus_decision": "One expanded canonical ICLR work: curated:9a208cddb21ddfe2317a"
+      }
+    ],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:eff7c9e8b0961396",
+    "versions": [],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:708c69744d1ea0ed",
+    "versions": [],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:8a11b03cd7f7267b",
+    "versions": [
+      {
+        "earlier_title": "Exploring the Collaborative Advantage of Low-level Information on Generalizable AI-Generated Image Detection",
+        "earlier_authors": [
+          "Ziyin Zhou",
+          "Ke Sun",
+          "Zhongxi Chen",
+          "Xianming Lin",
+          "Yunpeng Luo",
+          "Ke Yan",
+          "Shouhong Ding",
+          "Xiaoshuai Sun"
+        ],
+        "later_title": "Exploring the Collaborative Advantage of Low-level Information on Generalizable AI-Generated Image Detection",
+        "later_authors": [
+          "Ziyin Zhou",
+          "Ke Sun",
+          "Zhongxi Chen",
+          "Xianming Lin",
+          "Yunpeng Luo",
+          "Ke Yan",
+          "Shouhong Ding",
+          "Xiaoshuai Sun"
+        ],
+        "author_overlap_normalized": [
+          "kesun",
+          "keyan",
+          "shouhongding",
+          "xianminglin",
+          "xiaoshuaisun",
+          "yunpengluo",
+          "zhongxichen",
+          "ziyinzhou"
+        ],
+        "arxiv_version_history": "https://arxiv.org/abs/2504.00463",
+        "earlier_date": [
+          "2025/04/01"
+        ],
+        "venue_chronology": "arXiv only; no verified final publication",
+        "method_identity": "Same title, authors and method in the cached primary metadata and reviewed manuscript.",
+        "final_corpus_decision": "One canonical work: curated:aeef1407856fae4547e6"
+      }
+    ],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:08beb6425ead6689",
+    "versions": [
+      {
+        "earlier_title": "Forensic Analysis of Synthetically Generated Western Blot Images",
+        "earlier_authors": [
+          "Sara Mandelli",
+          "Davide Cozzolino",
+          "Edoardo D. Cannas",
+          "Joao P. Cardenuto",
+          "Daniel Moreira",
+          "Paolo Bestagini",
+          "Walter J. Scheirer",
+          "Anderson Rocha",
+          "Luisa Verdoliva",
+          "Stefano Tubaro",
+          "Edward J. Delp"
+        ],
+        "later_title": "Forensic Analysis of Synthetically Generated Western Blot Images",
+        "later_authors": [
+          "Sara Mandelli",
+          "Davide Cozzolino",
+          "Edoardo Daniele Cannas",
+          "João Phillipe Cardenuto",
+          "Daniel Moreira",
+          "Paolo Bestagini",
+          "Walter Scheirer",
+          "Anderson Rocha",
+          "Luisa Verdoliva",
+          "Stefano Tubaro",
+          "Edward J. Delp"
+        ],
+        "author_overlap_normalized": [
+          "andersonrocha",
+          "danielmoreira",
+          "davidecozzolino",
+          "edwardjdelp",
+          "luisaverdoliva",
+          "paolobestagini",
+          "saramandelli",
+          "stefanotubaro"
+        ],
+        "arxiv_version_history": "https://arxiv.org/abs/2112.08739",
+        "earlier_date": [
+          "2021/12/16"
+        ],
+        "venue_chronology": "arXiv → IEEE Access 2022",
+        "method_identity": "2021 arXiv is the preprint of the 2022 IEEE Access paper. Distinct from the existing 2024 Explainable Artifacts for Synthetic Western Blot Source Attribution. PDF corrects Sara Mandelli and expands middle names.",
+        "final_corpus_decision": "One canonical work: curated:d9ecbce63bbd80b54180"
+      }
+    ],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:98e7bf0da8264d5f",
+    "versions": [
+      {
+        "earlier_title": "ForenX: Towards Explainable AI-Generated Image Detection with Multimodal Large Language Models",
+        "earlier_authors": [
+          "Chuangchuang Tan",
+          "Jinglu Wang",
+          "Xiang Ming",
+          "Renshuai Tao",
+          "Yunchao Wei",
+          "Yao Zhao",
+          "Yan Lu"
+        ],
+        "later_title": "ForenX: Towards Explainable AI-Generated Image Detection with Multimodal Large Language Models",
+        "later_authors": [
+          "Chuangchuang Tan",
+          "Jinglu Wang",
+          "Xiang Ming",
+          "Renshuai Tao",
+          "Yunchao Wei",
+          "Yao Zhao",
+          "Yan Lu"
+        ],
+        "author_overlap_normalized": [
+          "chuangchuangtan",
+          "jingluwang",
+          "renshuaitao",
+          "xiangming",
+          "yanlu",
+          "yaozhao",
+          "yunchaowei"
+        ],
+        "arxiv_version_history": "https://arxiv.org/abs/2508.01402",
+        "earlier_date": [
+          "2025/08/02"
+        ],
+        "venue_chronology": "arXiv only; no verified final publication",
+        "method_identity": "Tan et al. ForenX/ForgReason is distinct from Ji et al. similarly worded explainable detection and grounded-reasoning papers; authors, arXiv and methods differ.",
+        "final_corpus_decision": "One canonical work: curated:39550f4a3a14a255684a"
+      }
+    ],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:7f06c42f18ac0ce3",
+    "versions": [
+      {
+        "earlier_title": "Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection",
+        "earlier_authors": [
+          "Wenwei Xie",
+          "Jie Yin",
+          "Lu Ma",
+          "Xuansong Zhang",
+          "Wenjing Zhang"
+        ],
+        "later_title": "Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection",
+        "later_authors": [
+          "Wenwei Xie",
+          "Jie Yin",
+          "Lu Ma",
+          "Xuansong Zhang",
+          "Wenjing Zhang"
+        ],
+        "author_overlap_normalized": [
+          "jieyin",
+          "luma",
+          "wenjingzhang",
+          "wenweixie",
+          "xuansongzhang"
+        ],
+        "arxiv_version_history": "https://arxiv.org/abs/2604.17268",
+        "earlier_date": [
+          "2026/04/19"
+        ],
+        "venue_chronology": "arXiv only; no verified final publication",
+        "method_identity": "Same title, authors and method in the cached primary metadata and reviewed manuscript.",
+        "final_corpus_decision": "One canonical work: curated:eb04aa0a684bdc34b406"
+      }
+    ],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:745a864cbd6a6efc",
+    "versions": [],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:be26f9e744e3f708",
+    "versions": [
+      {
+        "earlier_title": "Interpretable and Reliable Detection of AI-Generated Images via Grounded Reasoning in MLLMs",
+        "earlier_authors": [
+          "Yikun Ji",
+          "Hong Yan",
+          "Jun Lan",
+          "Huijia Zhu",
+          "Weiqiang Wang",
+          "Qi Fan",
+          "Liqing Zhang",
+          "Jianfu Zhang"
+        ],
+        "later_title": "Interpretable and Reliable Detection of AI-Generated Images via Grounded Reasoning in MLLMs",
+        "later_authors": [
+          "Yikun Ji",
+          "Hong Yan",
+          "Jun Lan",
+          "Huijia Zhu",
+          "Weiqiang Wang",
+          "Qi Fan",
+          "Liqing Zhang",
+          "Jianfu Zhang"
+        ],
+        "author_overlap_normalized": [
+          "hongyan",
+          "huijiazhu",
+          "jianfuzhang",
+          "junlan",
+          "liqingzhang",
+          "qifan",
+          "weiqiangwang",
+          "yikunji"
+        ],
+        "arxiv_version_history": "https://arxiv.org/abs/2506.07045",
+        "earlier_date": [
+          "2025/06/08"
+        ],
+        "venue_chronology": "arXiv only; no verified final publication",
+        "method_identity": "Same title, authors and method in the cached primary metadata and reviewed manuscript.",
+        "final_corpus_decision": "One canonical work: curated:4e85e48ae9823f177aac"
+      }
+    ],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:d7a0be175acdedc4",
+    "versions": [
+      {
+        "earlier_title": "NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild",
+        "earlier_authors": [
+          "Aleksandr Gushchin",
+          "Khaled Abud",
+          "Ekaterina Shumitskaya",
+          "Artem Filippov",
+          "Georgii Bychkov",
+          "Sergey Lavrushkin",
+          "Mikhail Erofeev",
+          "Anastasia Antsiferova",
+          "Changsheng Chen",
+          "Shunquan Tan",
+          "Radu Timofte",
+          "Dmitry Vatolin",
+          "Chuanbiao Song",
+          "Zijian Yu",
+          "Hao Tan",
+          "Jun Lan",
+          "Zhiqiang Yang",
+          "Yongwei Tang",
+          "Zhiqiang Wu",
+          "Jia Wen Seow",
+          "Hong Vin Koay",
+          "Haodong Ren",
+          "Feng Xu",
+          "Shuai Chen",
+          "Ruiyang Xia",
+          "Qi Zhang",
+          "Yaowen Xu",
+          "Zhaofan Zou",
+          "Hao Sun",
+          "Dagong Lu",
+          "Mufeng Yao",
+          "Xinlei Xu",
+          "Fei Wu",
+          "Fengjun Guo",
+          "Cong Luo",
+          "Hardik Sharma",
+          "Aashish Negi",
+          "Prateek Shaily",
+          "Jayant Kumar",
+          "Sachin Chaudhary",
+          "Akshay Dudhane",
+          "Praful Hambarde",
+          "Amit Shukla",
+          "Zhilin Tu",
+          "Fengpeng Li",
+          "Jiamin Zhang",
+          "Jianwei Fei",
+          "Kemou Li",
+          "Haiwei Wu",
+          "Bilel Benjdira",
+          "Anas M. Ali",
+          "Wadii Boulila",
+          "Chenfan Qu",
+          "Junchi Li"
+        ],
+        "later_title": "NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild",
+        "later_authors": [
+          "Aleksandr Gushchin",
+          "Khaled Abud",
+          "Ekaterina Shumitskaya",
+          "Artem Filippov",
+          "Georgii Bychkov",
+          "Sergey Lavrushkin",
+          "Mikhail Erofeev",
+          "Anastasia Antsiferova",
+          "Changsheng Chen",
+          "Shunquan Tan",
+          "Radu Timofte",
+          "Dmitry Vatolin",
+          "Chuanbiao Song",
+          "Zijian Yu",
+          "Hao Tan",
+          "Jun Lan",
+          "Zhiqiang Yang",
+          "Yongwei Tang",
+          "Zhiqiang Wu",
+          "Jia Wen Seow",
+          "Hong Vin Koay",
+          "Haodong Ren",
+          "Feng Xu",
+          "Shuai Chen",
+          "Ruiyang Xia",
+          "Qi Zhang",
+          "Yaowen Xu",
+          "Zhaofan Zou",
+          "Hao Sun",
+          "Dagong Lu",
+          "Mufeng Yao",
+          "Xinlei Xu",
+          "Fei Wu",
+          "Fengjun Guo",
+          "Cong Luo",
+          "Hardik Sharma",
+          "Aashish Negi",
+          "Prateek Shaily",
+          "Jayant Kumar",
+          "Sachin Chaudhary",
+          "Akshay Dudhane",
+          "Praful Hambarde",
+          "Amit Shukla",
+          "Zhilin Tu",
+          "Fengpeng Li",
+          "Jiamin Zhang",
+          "Jianwei Fei",
+          "Kemou Li",
+          "Haiwei Wu",
+          "Bilel Benjdira",
+          "Anas M. Ali",
+          "Wadii Boulila",
+          "Chenfan Qu",
+          "Junchi Li"
+        ],
+        "author_overlap_normalized": [
+          "aashishnegi",
+          "akshaydudhane",
+          "aleksandrgushchin",
+          "amitshukla",
+          "anasmali",
+          "anastasiaantsiferova",
+          "artemfilippov",
+          "bilelbenjdira",
+          "changshengchen",
+          "chenfanqu",
+          "chuanbiaosong",
+          "congluo",
+          "dagonglu",
+          "dmitryvatolin",
+          "ekaterinashumitskaya",
+          "feiwu",
+          "fengjunguo",
+          "fengpengli",
+          "fengxu",
+          "georgiibychkov",
+          "haiweiwu",
+          "haodongren",
+          "haosun",
+          "haotan",
+          "hardiksharma",
+          "hongvinkoay",
+          "jayantkumar",
+          "jiaminzhang",
+          "jianweifei",
+          "jiawenseow",
+          "junchili",
+          "junlan",
+          "kemouli",
+          "khaledabud",
+          "mikhailerofeev",
+          "mufengyao",
+          "prafulhambarde",
+          "prateekshaily",
+          "qizhang",
+          "radutimofte",
+          "ruiyangxia",
+          "sachinchaudhary",
+          "sergeylavrushkin",
+          "shuaichen",
+          "shunquantan",
+          "wadiiboulila",
+          "xinleixu",
+          "yaowenxu",
+          "yongweitang",
+          "zhaofanzou",
+          "zhilintu",
+          "zhiqiangwu",
+          "zhiqiangyang",
+          "zijianyu"
+        ],
+        "arxiv_version_history": "https://arxiv.org/abs/2604.11487",
+        "earlier_date": [
+          "2026/04/13"
+        ],
+        "venue_chronology": "arXiv → CVPR Workshops 2026",
+        "method_identity": "Final CVPR workshop report is one work with the arXiv version, distinct from the separate face-deepfake challenge. Preserve 54 authors and section-7 superscripts rather than assigning every team affiliation to every author.",
+        "final_corpus_decision": "One canonical work: curated:834f0ca01f478a33b278"
+      }
+    ],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:5ce3749aacf92af9",
+    "versions": [
+      {
+        "earlier_title": "Rethinking the Use of Vision Transformers for AI-Generated Image Detection",
+        "earlier_authors": [
+          "NaHyeon Park",
+          "Kunhee Kim",
+          "Junsuk Choe",
+          "Hyunjung Shim"
+        ],
+        "later_title": "Rethinking the Use of Vision Transformers for AI-Generated Image Detection",
+        "later_authors": [
+          "NaHyeon Park",
+          "Kunhee Kim",
+          "Junsuk Choe",
+          "Hyunjung Shim"
+        ],
+        "author_overlap_normalized": [
+          "hyunjungshim",
+          "junsukchoe",
+          "kunheekim",
+          "nahyeonpark"
+        ],
+        "arxiv_version_history": "https://arxiv.org/abs/2512.04969",
+        "earlier_date": [
+          "2025/12/04"
+        ],
+        "venue_chronology": "arXiv only; no verified final publication",
+        "method_identity": "Same title, authors and method in the cached primary metadata and reviewed manuscript.",
+        "final_corpus_decision": "One canonical work: curated:07fc38c7a0fb83f3f931"
+      }
+    ],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:995a65a6df6dbf01",
+    "versions": [
+      {
+        "earlier_title": "SPECTRA-Net: Scalable Pipeline for Explainable Cross-domain Tensor Representations for AI-generated Images Detection",
+        "earlier_authors": [
+          "Sarra Arab",
+          "Anfal Achouri",
+          "Seif Eddine Bouziane"
+        ],
+        "later_title": "SPECTRA-Net: Scalable Pipeline for Explainable Cross-domain Tensor Representations for AI-generated Images Detection",
+        "later_authors": [
+          "Sarra Arab",
+          "Anfal Achouri",
+          "Seif Eddine Bouziane"
+        ],
+        "author_overlap_normalized": [
+          "anfalachouri",
+          "sarraarab",
+          "seifeddinebouziane"
+        ],
+        "arxiv_version_history": "https://arxiv.org/abs/2605.08226",
+        "earlier_date": [
+          "2026/05/06"
+        ],
+        "venue_chronology": "arXiv only; no verified final publication",
+        "method_identity": "Same title, authors and method in the cached primary metadata and reviewed manuscript.",
+        "final_corpus_decision": "One canonical work: curated:26e3335c0d625676a231"
+      }
+    ],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:20d96453098f935a",
+    "versions": [
+      {
+        "earlier_title": "ThinkFake: Reasoning in Multimodal Large Language Models for AI-Generated Image Detection",
+        "earlier_authors": [
+          "Tai-Ming Huang",
+          "Wei-Tung Lin",
+          "Kai-Lung Hua",
+          "Wen-Huang Cheng",
+          "Junichi Yamagishi",
+          "Jun-Cheng Chen"
+        ],
+        "later_title": "ThinkFake: Reasoning in Multimodal Large Language Models for AI-Generated Image Detection",
+        "later_authors": [
+          "Tai-Ming Huang",
+          "Wei-Tung Lin",
+          "Kai-Lung Hua",
+          "Wen-Huang Cheng",
+          "Junichi Yamagishi",
+          "Jun-Cheng Chen"
+        ],
+        "author_overlap_normalized": [
+          "junchengchen",
+          "junichiyamagishi",
+          "kailunghua",
+          "taiminghuang",
+          "weitunglin",
+          "wenhuangcheng"
+        ],
+        "arxiv_version_history": "https://arxiv.org/abs/2509.19841",
+        "earlier_date": [
+          "2025/09/24"
+        ],
+        "venue_chronology": "arXiv only; no verified final publication",
+        "method_identity": "Same title, authors and method in the cached primary metadata and reviewed manuscript.",
+        "final_corpus_decision": "One canonical work: curated:a34e3e644dac6d679cab"
+      }
+    ],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:07a67ddede76cbd3",
+    "versions": [
+      {
+        "earlier_title": "Weakly-supervised deepfake localization in diffusion-generated images",
+        "earlier_authors": [
+          "Dragos Tantaru",
+          "Elisabeta Oneata",
+          "Dan Oneata"
+        ],
+        "later_title": "Weakly-Supervised Deepfake Localization in Diffusion-Generated Images",
+        "later_authors": [
+          "Dragoș-Constantin Tântaru",
+          "Elisabeta Oneață",
+          "Dan Oneață"
+        ],
+        "author_overlap_normalized": [
+          "danoneata",
+          "elisabetaoneata"
+        ],
+        "arxiv_version_history": "https://arxiv.org/abs/2311.04584",
+        "earlier_date": [
+          "2023/11/08"
+        ],
+        "venue_chronology": "arXiv → WACV 2024",
+        "method_identity": "2023 arXiv 2311.04584 and WACV 2024 are one paper; use final proceedings metadata. Distinct from DeCLIP, which reuses Dolos.",
+        "final_corpus_decision": "One canonical work: curated:9e6bc47bc75cd7b9b637"
+      }
+    ],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  },
+  {
+    "candidate_id": "audit:90848f868ebeb1f7",
+    "versions": [
+      {
+        "earlier_title": "What makes fake images detectable? Understanding properties that generalize",
+        "earlier_authors": [
+          "Lucy Chai",
+          "David Bau",
+          "Ser-Nam Lim",
+          "Phillip Isola"
+        ],
+        "later_title": "What Makes Fake Images Detectable? Understanding Properties that Generalize",
+        "later_authors": [
+          "Lucy Chai",
+          "David Bau",
+          "Ser-Nam Lim",
+          "Phillip Isola"
+        ],
+        "author_overlap_normalized": [
+          "davidbau",
+          "lucychai",
+          "phillipisola",
+          "sernamlim"
+        ],
+        "arxiv_version_history": "https://arxiv.org/abs/2008.10588",
+        "earlier_date": [
+          "2020/08/24"
+        ],
+        "venue_chronology": "arXiv → ECCV 2020",
+        "method_identity": "ECCV DOI 10.1007/978-3-030-58574-7_7 and arXiv 2008.10588 are the same work.",
+        "final_corpus_decision": "One canonical work: curated:26ad52739947538ec0fa"
+      }
+    ],
+    "decision": "One canonical paper; no second distinct scientific work established."
+  }
+]

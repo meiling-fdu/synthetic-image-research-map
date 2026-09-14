@@ -1,0 +1,43 @@
+Public preview validation: web/data/public_preview_map_data.json
+Total records: 1466
+Unique papers: 624
+Unique institutions: 633
+Errors: 0
+Warnings: 0
+
+Public preview validation: web/data/public_preview_papers.json
+Total records: 636
+Unique papers: 636
+Papers with map locations: 623
+Papers missing affiliations: 0
+Papers missing coordinates: 7
+Errors: 0
+Warnings: 24
+
+Issues:
+WARNING record[3] 'A Difference-in-Difference Approach to Detecting AI-Generated Images': author has no institution index: Kai Ye
+WARNING record[3] 'A Difference-in-Difference Approach to Detecting AI-Generated Images': author has no institution index: Chengchun Shi
+WARNING record[3] 'A Difference-in-Difference Approach to Detecting AI-Generated Images': author has no institution index: Jin Zhu
+WARNING record[55] 'Detective SAM: Adaptive AI-Image Forgery Localization': author has no institution index: Pin-Yu Chen
+WARNING record[99] 'Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection': author has no institution index: Wenwei Xie
+WARNING record[99] 'Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection': author has no institution index: Lu Ma
+WARNING record[99] 'Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection': author has no institution index: Xuansong Zhang
+WARNING record[99] 'Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection': author has no institution index: Wenjing Zhang
+WARNING record[146] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Mikhail Erofeev
+WARNING record[146] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Ruiyang Xia
+WARNING record[146] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Qi Zhang
+WARNING record[146] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Yaowen Xu
+WARNING record[146] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Zhaofan Zou
+WARNING record[146] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Hao Sun
+WARNING record[146] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Cong Luo
+WARNING record[268] 'Denoising Trajectory Biases for Zero-Shot AI-Generated Image Detection': author has no institution index: Jingyuan Li
+WARNING record[268] 'Denoising Trajectory Biases for Zero-Shot AI-Generated Image Detection': author has no institution index: Lanchi Xie
+WARNING record[273] 'Detecting Generated Images by Fitting Natural Image Distributions': author has no institution index: Bo Han
+WARNING record[288] 'Epistemic Uncertainty for Generated Image Detection': author has no institution index: Yiu-ming Cheung
+WARNING record[288] 'Epistemic Uncertainty for Generated Image Detection': author has no institution index: Bo Han
+WARNING record[448] 'Evasion on General GAN-Generated Image Detection by Disentangled Representation': author has no institution index: Daniel S. Yeung
+WARNING record[552] "Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model": author has no institution index: Gopal Sarkarkar
+WARNING record[552] "Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model": author has no institution index: Shilpa Gedam
+WARNING record[623] 'What Makes Fake Images Detectable? Understanding Properties That Generalize': author has no institution index: Ser-Nam Lim
+
+Validation passed.

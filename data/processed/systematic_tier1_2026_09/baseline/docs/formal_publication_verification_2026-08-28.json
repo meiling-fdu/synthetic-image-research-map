@@ -1,0 +1,109 @@
+{
+  "verified_on": "2026-08-28",
+  "head_unchanged": "a74fd99",
+  "full_suite": {
+    "command": "PATH=<bundled-node>:$PATH python3 -m pytest -q -rs",
+    "passed": 1171,
+    "skipped": 0,
+    "failed": 0,
+    "seconds": 146.25
+  },
+  "curated_validator": {
+    "command": "python3 scripts/validate_curated_database.py",
+    "errors": 0,
+    "warnings": 178
+  },
+  "public_validator": {
+    "command": "python3 scripts/validate_public_preview.py",
+    "map_errors": 0,
+    "map_warnings": 0,
+    "paper_errors": 0,
+    "paper_warnings": 5
+  },
+  "generated_payload_validator": {
+    "call": "validate_proposed_public_outputs(map_payload, paper_payload, read_paper_version_merges())",
+    "passed": true
+  },
+  "relationship_completeness": {
+    "COMPLETE": 1263,
+    "ACTIONABLE": 8,
+    "EXCLUDED": 29,
+    "ERROR": 0
+  },
+  "javascript_syntax": {
+    "files": 10,
+    "passed": true
+  },
+  "python_compilation": {
+    "changed_files": 14,
+    "passed": true
+  },
+  "git_diff_check": "passed",
+  "byte_identical_consecutive_exports": true,
+  "unexplained_shrinkage": 0,
+  "browser_qa": {
+    "status": "passed",
+    "attempt_sessions": 1,
+    "console_errors": 0,
+    "checks": [
+      "static localhost map load",
+      "keyword filters and result-view switching",
+      "IncreFA five-author expanded card",
+      "Omni-Fake formal author 12",
+      "nine-author survey and six distinct institutions",
+      "survey layout screenshot inspection",
+      "JD.com present / NAWCWD absent in Co-Occurrence institution records",
+      "reload after final exporter fix"
+    ]
+  },
+  "data_integrity": {
+    "manual_data_unchanged": true,
+    "original_audit_bytes_preserved_as_prefix": true,
+    "candidate_coordinates_retained": true,
+    "no_new_repository_pdfs_or_debug_images": true,
+    "nothing_staged": true,
+    "nothing_committed": true
+  },
+  "public_json_sha256": {
+    "web/data/public_preview_papers.json": "79cc47e8f7b08f1921166d78e480c9073b64655fd1f5b6b2fdaa70189acb1eab",
+    "web/data/public_preview_map_data.json": "7bd63e3660f23320a17ed42b721f90f8b9fbf67423266b695c7d9585752531cb"
+  },
+  "canonical_counts": {
+    "papers": 546,
+    "mapped_author_occurrences": 2725,
+    "explicitly_non_institutional": 3,
+    "unresolved_authors": 5,
+    "affiliation_complete_papers": 541,
+    "raw_map_source_papers": 540,
+    "papers_with_locations": 539,
+    "map_relationships": 1263,
+    "mapped_institution_names": 617,
+    "active_canonical_institutions": 650,
+    "canonical_institution_rows": 662,
+    "confirmed_locations": 456,
+    "retained_location_candidates": 4
+  },
+  "export_stability_fix": {
+    "description": "Use raw source text consistently for unmapped venues; do not alternate a generated unconfirmed ID. No curated venue changes or additional venue research.",
+    "derived_paper_records_affected": 20,
+    "derived_map_records_affected": 62
+  },
+  "focused_suite": {
+    "passed": 213,
+    "skipped": 0,
+    "failed": 0,
+    "seconds": 38.23,
+    "files": [
+      "test_formal_publication_authors.py",
+      "test_public_relationship_location_completeness.py",
+      "test_author_affiliation_evidence_repairs.py",
+      "test_manual_location_audit_20260827.py",
+      "test_affiliation_order.py",
+      "test_curated_location_resolution.py",
+      "test_public_export_shrinkage.py",
+      "test_repository_baseline.py",
+      "test_venue_normalization.py",
+      "test_venue_metadata_sync.py"
+    ]
+  }
+}

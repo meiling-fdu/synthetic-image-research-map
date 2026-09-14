@@ -1,0 +1,413 @@
+# Local Admin Workflow
+
+## Paper arXiv enrichment
+
+Open **Papers → arXiv enrichment** to review public-map papers that have no
+effective arXiv ID. **Find candidates** searches the arXiv Atom API by title and
+keeps the results in the local Admin process only; discovery does not modify
+curated or generated files.
+
+Each candidate displays its arXiv ID, evidence, source, and confidence.
+**Accept** requires explicit confirmation and writes the confirmed override
+atomically to `data/curated/paper_arxiv_links.csv`. **Ignore** also requires
+confirmation, records the outcome in `data/curated/review_decisions.csv`, and
+leaves the arXiv-link file unchanged. Preview export and validation remain
+separate release steps.
+
+## Institution management safety boundary
+
+Use **Institution Management** for identity, alias, parent, status, and merge
+actions. Use **Institution Alias and Location Review** only for location and
+geocoding evidence. Location writes are bound to the row's stable
+`institution_id`; changing coordinates cannot rename an institution or reassign
+a paper author.
+
+The institution identity editor accepts only `university`, `research_unit`,
+`company`, or `other`. The Admin display calls `research_unit` **Research
+Institute**, while the editor and API retain the machine value. Admin responses
+resolve legacy values before display and show the applicable classification
+rule/evidence. The API rejects legacy type values rather than relying on a
+browser-only remap.
+
+Global merge displays affected papers, author mappings, markers, and authors,
+then requires the exact `REPLACE … WITH … GLOBALLY` phrase and writes an audit
+row. Ignore confirms that the institution is hidden from public outputs without
+deleting data. Geocoding combines canonical name with reviewed city, region,
+country, and parent context; candidate selection remains manual.
+
+## Institution cleanup queue
+
+Run `python3 scripts/audit_institution_consistency.py` to regenerate
+`data/manual/institution_consistency_audit.csv`, then run
+`python3 scripts/sync_institution_review_queue.py` to import its findings into
+`data/curated/institution_review_queue.csv`. Full refresh performs both steps.
+The sync also migrates legacy terminal statuses to `archived`, archives stale
+findings tied to excluded or replaced mappings, and preserves their resolution
+notes and timestamps. Institution Cleanup only treats `open` rows as actionable.
+The **Institution Cleanup** Admin section reads only the persistent curated
+queue. The generated audit CSV is reporting-only.
+
+The default table contains one review case per paper-author pair, not one row
+per finding. Opening a case shows all current and suggested institutions, raw
+affiliation evidence, every child finding, normalized mapping provenance, and
+the risk explanation. Filters cover severity, open/resolved/ignored status,
+provenance, issue type, and paper/author/institution text. Original findings
+remain in the queue for audit history.
+
+Accept Suggestion updates the linked author-institution mapping through the
+protected mapping API and records the resolution on the queue row. Ignore and
+Mark Manually Resolved retain the finding and its evidence without changing a
+mapping. Keep Multiple Affiliations resolves the grouped case without removing
+supported mappings. Replace Mapping opens the existing mapping editor; Add
+Alias and Set Parent Institution open institution management. Compatible
+suggestions may be selected and accepted as one transactional batch; any
+failed or conflicting fix rolls back the entire batch.
+
+Resolution decisions use an inline form showing the issue, paper, author,
+current institution, and selected action. Presets cover a correct existing
+mapping, alias/name variation, parent-child relationships, confirmed multiple
+affiliations, and custom notes. Notes are optional for manual resolution,
+ignore, and keep-multiple decisions; an empty note receives a stable default
+audit explanation. Mapping replacement and institution merge explanations
+remain mandatory. Multiple compatible review cases may be selected and marked
+manually resolved together; each child queue row retains the same generated
+batch note, reviewer, action, and timestamp.
+
+Use **View Evidence** to inspect a case without leaving Institution Cleanup.
+The read-only dialog combines paper and author metadata, current mapping
+IDs/status/provenance, raw affiliations, parsed suggestions, source and
+confidence fields, canonical aliases, confirmed parent/child relationships,
+the audit explanation, and risk factors. Suspicious replacements include a
+before/evidence/after comparison. Resolution shortcuts close the evidence
+dialog and enter the existing protected resolution, mapping, alias, or parent
+workflow; opening the dialog itself never writes curated data.
+
+For an open `confirmed_mapping_changed` finding, the detail panel reconstructs
+the structured transition from the durable institution audit log. It shows the
+paper and mapping identities, previous/current institution IDs and names, raw
+affiliation, change source, actor and timestamp, mapping provenance, evidence,
+and current public-map visibility. **Confirm intentional change** keeps the new
+mapping and records `mapping_change_confirmed`; **Revert mapping** restores the
+previous institution on the same mapping ID and records `mapping_reverted`.
+Both actions require a note and an explicit confirmation. The request includes
+the mapping institution/update timestamp and review update timestamp; Admin
+rejects stale panels and asks the curator to refresh. Mapping, queue, location
+review, and audit-log writes share the existing snapshot rollback boundary, so
+a failed write cannot leave a partial resolution. Revert retains the newer
+institution and evidence in the audit history and mapping review note.
+
+An exact confirmed old-to-new transition is suppressed on later consistency
+audits by its resolution audit record. A subsequent transition has a distinct
+source audit ID and becomes a new finding. Open/current findings remain publish
+blockers; only explicit confirmation, explicit revert, or a re-audit proving
+the finding obsolete clears the gate.
+
+After an author-institution mapping is excluded or retargeted, Admin mapping
+writes immediately reconcile linked cleanup findings. The old queue row is
+marked non-current and retained as historical audit evidence; a later queue
+sync cannot reopen it from a stale report. Cleanup cases derive **Current
+active institutions** only from mappings with `active` or `needs_review`
+status, and list excluded or superseded mappings separately under
+**Historical/excluded institutions**. Curated validation applies the same
+mapping-status guard so an excluded mapping cannot recreate a publish blocker.
+
+Only unresolved high-severity corruption findings (`confirmed_mapping_changed`
+and `suspicious_replacement`) fail curated validation and block Publish
+Changes. Other high findings are review cases, medium findings remain warnings,
+and low findings are report-only. Ignored or otherwise resolved queue findings
+do not block publishing. Trusted mappings are not challenged for ordinary name
+variation; ignored institutions and explicitly confirmed aliases, parents, and
+merges do not generate blockers.
+
+This runbook covers the local **Interactive Curation Console**. Run all commands from the repository root. Ordinary edit and save actions write durable human decisions locally and never stage, commit, or push them. Publishing is a separate, explicit, confirmed action.
+
+The data boundaries are deliberate:
+
+- `data/curated/*.csv`: source of truth for durable maintainer decisions.
+- `data/manual/*.csv`: generated diagnostic and review queues, never durable UI state.
+- `web/data/*.json`: generated public-preview output, regenerated by export workflows only.
+- `data/processed/*.csv`: OpenAlex/processed source layer, never edited by Admin.
+
+## Start a maintenance session
+
+1. Check the working tree so existing changes are understood:
+
+   ```bash
+   git status --short
+   ```
+
+2. Start the local admin server:
+
+   ```bash
+   python3 scripts/serve_admin.py
+   ```
+
+3. Open the tokenized `http://127.0.0.1:8765/admin/?token=...` URL printed in the terminal. Keep the server on loopback and treat the token as temporary local access.
+4. When finished, stop the server with `Ctrl-C`.
+
+## Add Paper
+
+1. Choose **Add Paper** and search by title, DOI, arXiv ID, or paper URL.
+2. Select the correct OpenAlex result and verify every prefilled field. If no result is correct, use **Add manually instead**.
+3. Confirm the task, provenance, links, and review note before saving. OpenAlex authorships are retained as mapping candidates. For manual or arXiv-only records, enter affiliation rows as `authors | institution | raw affiliation`.
+4. Saving creates reviewable author–institution mapping candidates. Exact confirmed institution or alias matches are eligible immediately; unresolved names use `needs_review`.
+
+The paper record is written to `data/curated/papers.csv`, and candidates are written to `data/curated/author_institution_mappings.csv`. A paper with no affiliation evidence is blocked until the maintainer explicitly acknowledges the missing-mapping diagnostic. Saving does not invent coordinates, create markers directly, or update generated preview JSON.
+
+## Paper Metadata Editor
+
+Select a paper, open **Paper Metadata**, and compare its effective record, original public-preview record, and curated override. Editing a preview-only paper creates a row in `data/curated/papers.csv`; editing an existing curated or manually added paper updates that row, preserves `created_at`, and advances `updated_at`. Identity collisions are rejected. Saving does not edit public JSON.
+
+Paper metadata does not store a free-text review note. Review and audit notes remain available only in the separate workflows that require durable evidence, including exclusions, author–institution mappings, institution cleanup, and location confirmation.
+
+## Delete / Scope Review
+
+1. Select the paper and choose **Delete / Exclude from site**.
+2. Select the most specific reason and record a review note that explains the decision.
+3. Use **Restore** if the scope decision is later reversed.
+
+This creates or updates an auditable decision in `data/curated/paper_exclusions.csv`; it does not delete source or processed metadata. The exclusion reaches the public preview only after a full refresh.
+
+## Author–Institution Mappings
+
+1. Select a paper and review **Current exported/public evidence** for context.
+2. Under **Author–Institution Mappings**, add or edit one row for each supported institution.
+3. Record the canonical institution name, every author associated with it, the raw affiliation or evidence, mapping status, and a review note.
+4. Use **Replace all mappings** only when intentionally superseding all active mappings; prior rows remain in the audit history.
+
+Mappings are written to `data/curated/author_institution_mappings.csv`. The compact form stores the institution, optional confirmed location, institution-author set, raw affiliation, and mapping status; paper-level links provide source provenance. Do not assign the whole paper to the first author's institution. Missing or ambiguous institution coordinates are handled in the separate location-review queue, and destructive transition evidence remains in dedicated audit logs.
+
+## Institution Location Review
+
+1. Choose **Institution Location Review** and select a queued institution.
+2. Verify the institution and coordinates against a reliable source.
+3. Enter the location labels, uppercase two-letter country code, latitude, and longitude.
+4. Confirm the location, or use **More actions** to mark an exceptional outcome.
+
+Confirmed coordinates are written to `data/curated/institution_locations.csv`, and the corresponding row in `data/curated/institution_location_review.csv` is updated. Never guess coordinates or resolve ambiguity merely to create a marker.
+
+### Institution review statuses and aliases
+
+Persistent statuses are `pending_review`, `ambiguous`, `confirmed`, `alias_of_confirmed`, `ignore`, and `excluded`. **Needs Coordinates** is derived for a pending valid institution without a usable confirmed location; it is not a separate transition.
+
+- **Confirm location** only after verifying the canonical name, city, country, latitude, and longitude.
+- **Confirm as alias** when the raw name is another language, acronym, or historical name for a selected confirmed institution. This writes `data/curated/institution_aliases.csv`; it does not create another location.
+- **Mark ambiguous** when identity or location is uncertain.
+- **Ignore** parsed non-institutions. Use **Exclude** for valid records that must not appear publicly.
+
+Only `confirmed` and `alias_of_confirmed` are exportable, and aliases use the canonical institution's verified coordinates. Fuzzy or translation-only suggestions remain pending or ambiguous until a reviewer decides. Raw multilingual affiliation text remains evidence even after canonicalization.
+
+## Diagnostic review queues and mapping coverage
+
+The console exposes four generated queues:
+
+- **High-risk Marker Review** reads `data/manual/high_risk_marker_review.csv`, grouped by P0/P1/P2.
+- **Marker Blocker Review** reads `data/manual/paper_marker_blocker_report.csv`.
+- **Key Paper Coverage Review** reads `data/manual/key_paper_coverage_report.csv`.
+- **Manual Import Review** discovers the supported `key_papers_*` candidate CSVs.
+
+The Dashboard starts with a grouped **Project Health** module covering the corpus, author mapping, institution/location maintenance, review queues, and publication/exclusion state. Metrics use green, amber, red, and blue/gray states for good, warning, critical, and contextual values. Queue metrics reuse their generated queue summaries and show the largest breakdown categories. Metrics link to their corresponding review workflow where one exists; Author Mapping links also apply the relevant status or missing-author sort. **Refresh Project Health**, **Reload all review queues**, and a successful full refresh all reload the same dashboard aggregation. Missing generated reports appear as **Report missing** rather than as a zero or a file-system error.
+
+Project Health reuses the public-preview JSON counts, Admin corpus counts, location review payload, the four generated review queue loaders listed above, and `data/manual/missing_author_mappings_report.csv`. The queue breakdown remains directly below it as an expanded secondary summary; the former duplicate top-level statistics row has been removed.
+
+The overall score is a bounded 0–100 heuristic maintenance score, not a paper-quality rating. It starts at 100 and deducts 0.25 per uncovered author-mapping percentage point (maximum 25), 0.5 per missing coordinate (maximum 15), 0.1 per missing affiliation (maximum 15), one point per 150 combined high-risk/blocker rows (maximum 20), and one point per 50 missing author links (maximum 15). Scores of 90 or more are **Excellent**, 75–89 **Needs attention**, and lower scores **Critical maintenance**. If a score input report is absent, the score reads **Needs refresh**.
+
+The Dashboard also shows a read-only **Author Mapping Coverage** card with complete, partial, and missing-mapping counts, full-paper coverage percentage, and the ten highest-priority gaps. Its dedicated tab defaults to warnings and provides search, status, triage, and key-paper filters, rank/missing-author sorting, and direct links into the paper's Author–Institution Mapping Editor. Coverage is recalculated from the current active curated mappings and active paper exclusions when Admin reloads; generated public markers are display/provenance inputs, not the authoritative mapping state. Authors explicitly named by an active paper-level mapping count as mapped after normal author-name normalization. Excluded papers do not enter this publication-preparation backlog. Each warning exposes current canonical institutions, mapping state and author text, raw affiliation evidence when it already exists in curated mappings, stable source identifiers, a public-impact cue, and a deterministic suggested action. **Likely auto-fixable** requires a displayed conservative name-reconciliation suggestion between a missing public author and an existing active curated mapping author; it is a suggestion, not a confirmed mapping or an automatic edit. **Map missing authors** opens a new mapping draft with the missing names prefilled; institution and affiliation evidence still require maintainer confirmation.
+
+- Dashboard data source: `data/manual/missing_author_mappings_report.csv`
+- Full narrative report: `docs/missing_author_mappings_report.md`
+
+The Admin server checks for the CSV at startup and generates it once when absent. If generation cannot complete, the UI shows **Author mapping report has not been generated.** with a **Generate Report** action. **Reload mapping coverage** bypasses browser caching and rereads only this report. The Admin full-refresh workflow also regenerates both report artifacts.
+
+### Canonical venue metadata
+
+The paper-metadata editor loads `GET /api/venues`, whose records are built only from confirmed `data/curated/venue_aliases.csv` identities. Options use the shared type order (Conference, Journal, Preprint, Book), then unique-paper count descending and canonical name. Search covers canonical name, audited acronym, venue type, track, confirmed aliases, and historical `raw_venue` variants. Selecting an option saves `venue_id`, `venue_name`, `venue_acronym`, `venue_type`, and `venue_track`; the combined label is display-only.
+
+The selected venue synchronizes formal `publication_type`. Conference track is independent paper metadata: main, workshop, findings, poster, and other supported tracks reuse the same canonical venue ID. Alias rows may retain a track hint for deterministic legacy resolution, but track is not part of canonical identity. Journal, preprint, and book papers have a blank `venue_track`. Historical `raw_venue` is retained unless the reviewer explicitly selects the provenance-replacement checkbox.
+
+Confirmed rows in `data/curated/venue_aliases.csv` are authoritative for a
+venue ID's canonical name, acronym, and type. Admin saves and public export
+materialize those fields from the registry before enforcing consistency, so
+stale paper-local text for the same ID cannot override the registry and does
+not require an identity-change confirmation. Missing conference tracks become
+`main`; valid paper-level tracks are preserved; non-conference tracks become
+blank. A missing/inactive ID and an old-ID to new-ID replacement remain errors
+unless they pass the existing reviewed venue workflow. Run
+`python3 scripts/synchronize_venue_metadata.py` for a read-only grouped audit,
+or add `--write --report data/processed/venue_metadata_sync_audit.json` to
+apply the deterministic same-ID migration and save its report.
+
+Paper metadata updates use patch semantics: omitted fields retain their effective curated values. A validated curated save is atomic. Public-preview refresh runs afterward as a best-effort local refresh; if it fails, the API reports `saved=true`, `preview_refreshed=false`, and leaves full validation, shrinkage checks, staging, commit, and push to the explicit Publish Changes workflow.
+
+Changing a paper to **Book** is the exception to venue synchronization. The
+editor lists any venue, venue-taxonomy, and paper-category values that will be
+cleared and asks for confirmation. Cancel restores the previous type without
+changing the form. Confirm clears those values immediately; book forms keep the
+controls unavailable, and switching away does not restore them. The API repeats
+the shared normalization defensively, and its existing file snapshots roll the
+whole metadata update back if persistence or preview export fails.
+
+Unknown text is never saved directly. **Create new canonical venue** submits a reviewed canonical name, optional acronym, type, track, raw alias, and note to `POST /api/venues/create`. Exact normalized duplicates are rejected. Similar names, aliases, or acronyms return possible matches and require explicit distinct-venue confirmation before the alias registry is atomically updated. Metadata updates reject nonexistent IDs or structured fields that conflict with their registry identity; legacy venue-only records are resolved through `scripts/venues.py` on load and unresolved or ambiguous values remain review cases.
+
+Use queue actions to open the metadata, scope, mapping, location, or Add Paper editor. Explicit reviewed/no-action, unresolved, marker-confirmation, and candidate outcomes are written to `data/curated/review_decisions.csv`; location-review actions also update `data/curated/institution_location_review.csv`. Confirm-marker actions create or activate a curated mapping only when paper, institution, and institution-author evidence are present. Exclude-wrong-mapping decisions exclude matching curated mappings and suppress matching automatic markers during export. The queue source CSV is never edited as durable state.
+
+Institution merges always preserve the selected target identity and reassign the
+source institution's curated references. If both source and target have
+confirmed locations, the merge review shows both and requires an explicit
+**Keep target location** or **Use source location** choice; neither choice is
+preselected. The unselected location rows are removed in the same rollback
+boundary as mappings, aliases, location reviews and audits, hierarchy links,
+review-queue references, institution status, and the merge audit entry.
+
+For title-match review, compare DOI, OpenAlex URL, normalized title, year, and suggested matches in the selected row. Confirm a match, add the paper, exclude it from scope, or leave an explicit unresolved decision.
+
+## Run the full refresh pipeline
+
+After curation changes, choose **Run full refresh pipeline**. It runs, in order:
+
+```text
+python3 scripts/validate_curated_database.py
+python3 scripts/validate_paper_exclusions.py
+python3 scripts/export_public_preview.py --preserve-existing
+python3 scripts/validate_public_preview.py
+python3 scripts/audit_key_paper_coverage.py
+python3 scripts/diagnose_paper_marker_blockers.py
+python3 scripts/report_high_risk_markers.py
+python3 scripts/report_missing_author_mappings.py
+```
+
+The pipeline stops at the first failure. The preserve-existing export unions the
+current complete public preview with the local candidate snapshot, so a
+no-search admin refresh cannot silently replace full coverage with a partial
+cache. Before that union, it filters old records covered by a current active
+paper exclusion, the duplicate side of an active confirmed paper-version merge,
+an explicit reviewed marker exclusion, or an active curated mapping that
+supersedes the same paper and normalized institution-author scope. Institution
+and location replacements use the shared public relationship identity while
+the mapping ID remains separate lineage. The exporter therefore preserves
+unexplained snapshot gaps without reviving an intentionally removed or replaced
+relationship.
+
+Before writing, the exporter compares the previous and proposed public outputs
+by canonical paper identities and paper–institution relationships. Curated paper
+IDs, DOI, OpenAlex, normalized arXiv/version identity, confirmed version merges,
+and canonical institution IDs are used; title is not the sole identity. Every
+disappearance must be explained by durable current evidence such as an active
+exclusion, confirmed merge, reviewed mapping exclusion/correction, or canonical
+institution redirect. Inactive exclusions with restoration metadata are history,
+not removal authority. The command prints every removed identity, its evidence,
+all unexplained removals, and a proceed/block decision.
+
+### Orphan institution cleanup
+
+The full refresh runs `scripts/orphan_institution_cleanup.py --authoritative`
+after institution consistency and review resolution, and before curated
+validation and public export. It proves source completeness by requiring every
+retained public paper identity to occur in the same authoritative source layers
+used by export: candidate map data, both processed candidate-paper tables,
+curated papers, key-paper/enrichment inputs, reviewed OpenAlex intake, or
+explicit version/override evidence. `scripts/full_source_completeness.py` runs
+immediately before cleanup and writes the original narrow-union failures to
+`data/processed/full_source_completeness_audit.csv`. Override-only or
+preserved-public-only records remain blockers unless a curator records an active
+exception in `data/curated/full_source_completeness_exceptions.csv`. If any
+retained identity remains blocked, cleanup runs report-only: no registry, alias,
+hierarchy, or location file is changed.
+
+On a proven-complete graph, cleanup marks institutions reached by active or
+reviewable author–institution mappings, confirmed aliases, confirmed hierarchy
+ancestors, reviewed location evidence, merge/replacement targets, durable audit
+relationships, any historical mapping/review/override reference, or explicit
+protection. A location marker alone is not a root; a marker attached to a
+retained paper is a retained paper–institution relationship and is a root.
+Only unreachable canonical rows are swept. Reviewed replacements and exact
+normalized names with matching city/country may preserve the old display name
+as an alias; fuzzy similarity only produces `ambiguous_duplicate`. Registry,
+exclusive-location, owned-alias, and hierarchy edits are committed with
+rollback as a unit. Every decision is recorded in
+`data/processed/orphan_institution_cleanup_audit.csv`.
+
+The public shrinkage guard accepts a confirmed cleanup record only for a removed
+map relationship with that exact institution ID. It does not explain unrelated
+paper or marker removal.
+
+Identity-affecting mapping saves automatically append exact durable shrinkage
+evidence. The evidence is scoped to paper, mapping lineage, old/new institution,
+old/new mapping-specific location, and old/new author sets. Cosmetic canonical
+name edits create no evidence. Replacement evidence is accepted only when the
+corresponding new public relationship exists; intentional removal without a
+replacement creates its own exact `mapping_removed` record. Replace-all writes
+one transition per affected author (and an explicit removal for any author with
+no replacement), so it cannot authorize unrelated authors from the old set.
+
+`data/curated/public_export_baseline.json` remains a bootstrap/disaster reference
+when there is no previous public output to compare, but it is not an
+unconditional lower bound for normal Admin maintenance and is never rewritten
+automatically. `--approved-baseline` remains available for an exceptional
+reviewed reduction that durable evidence cannot express. The final export still
+reapplies active exclusions and retraction checks
+to that union; preserved JSON cannot keep a paper whose current title starts
+with `[Retracted]` or `Retracted:`, whose publication type/flag marks a
+retraction, or whose exclusion metadata marks it retracted. The same rule is
+applied to both the paper list and map markers. Read the command log, correct
+the underlying curated record, and run it again. **Reload preview data** only
+rereads existing JSON; it does not export changes.
+
+After a successful local refresh:
+
+1. Inspect the changed-file list and command log.
+2. Review `git status --short` and the relevant diffs, especially curated CSVs and `web/data/public_preview_*.json`.
+3. Check that paper coverage, mappings, exclusions, and markers match the intended decisions.
+4. Choose **Publish Changes** only when the local changes are ready to publish.
+
+## Publish Changes
+
+The intended publishing workflow is:
+
+```text
+Admin edit
+→ Publish Changes
+→ full refresh pipeline runs
+→ public preview validation runs
+→ selected files are committed and pushed
+→ GitHub Pages updates after deployment
+```
+
+**Publish Changes** always asks for confirmation and cannot start while another
+admin workflow is running. It runs
+`python3 scripts/admin_publish_changes.py`, stops immediately on refresh or
+validation failure, shows the current stage and elapsed time while running,
+and does not create an empty commit. The browser keeps every publish control
+disabled until the authoritative server status is terminal. If the long-held
+HTTP response is closed by the browser or an intermediary, the server retains
+the completed result and the browser recovers it from the status endpoint
+instead of starting a second publish. A client disconnect never changes a
+completed workflow from success to failure. Before refresh and again before Git staging, it counts both
+public-preview datasets and reports their sizes and shrinkage percentages as
+diagnostics. The export step is the publication trust boundary: it blocks any
+unexplained removed paper or paper–institution relationship regardless of
+percentage, while allowing any size decrease for which every removal has
+durable reviewed evidence. A partial refresh therefore cannot pass merely
+because its count decrease is small, and an intentional Admin exclusion is not
+blocked merely because it crosses a static count floor.
+
+Curated paper identity remains strict: `scripts/audit_duplicate_papers.py`
+reports exact normalized DOI, OpenAlex, paper-ID, and normalized-title + year
+collisions. Reviewed duplicates are consolidated explicitly with
+`scripts/reconcile_duplicate_papers.py`; the survivor keeps its stable ID,
+references are reassigned, and ambiguous candidates are never fuzzy-merged.
+
+The publish set is calculated from Git's changed tracked files after refresh. It
+includes the complete durable admin layer under `data/curated/`, review outputs
+under `data/manual/`, generated `web/data/` previews, and the generated reports
+declared by the canonical admin workflow. Modified frontend assets under `web/`
+are included only when Git reports an actual change. `data/backups/` and
+temporary `data/manual/key_papers_missing_*` or
+`data/manual/key_papers_query_failed_*` batches are excluded. Unrelated staged
+files are not included. The result log lists changed and generated files, every
+validation/export step, and the commit/push outcome; a failed step stops before
+staging and retains its command output.
+
+Recommended order: fix P0 public-marker issues; confirm P1 candidates; resolve missing coordinates; resolve missing affiliations; review missing key papers; only then expand OpenAlex coverage.
+
+The server binds to `127.0.0.1` by default, requires its random token for every API, requires explicit `--unsafe-bind-all` for non-loopback binding, and runs only fixed `shell=False` command lists. Git commit and push are available only through the confirmed **Publish Changes** workflow.

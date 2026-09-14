@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    <title>WACV 2026 Open Access Repository</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/conf.css">
+<meta name="citation_title" content="The SAFE Image Authenticity Challenge: Detecting and Localizing Partial and Fully Synthetic Manipulations">
+<meta name="citation_author" content="Nguyen, Tai">
+<meta name="citation_author" content="Crisman, Jill">
+<meta name="citation_author" content="Hostetler, Jesse">
+<meta name="citation_author" content="Cassani, Laura">
+<meta name="citation_author" content="Davinroy, Michael">
+<meta name="citation_author" content="Bautista, Peter">
+<meta name="citation_author" content="Stamm, Matthew">
+<meta name="citation_publication_date" content="2026">
+<meta name="citation_conference_title" content="Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision">
+<meta name="citation_firstpage" content="933">
+<meta name="citation_lastpage" content="945">
+<meta name="citation_pdf_url" content="https://openaccess.thecvf.com/content/WACV2026W/SynRDinBAS/papers/Nguyen_The_SAFE_Image_Authenticity_Challenge_Detecting_and_Localizing_Partial_and_WACVW_2026_paper.pdf">
+</head>
+<body>
+<div id="header">
+    <div id="header_left">
+        <a href="https://wacv.thecvf.com/"><img src="/img/wacv2026_logo.svg" width="175" border="0" alt="WACV 2026"></a>
+        <a href="https://www.thecvf.com/"><img src="/img/cropped-cvf-s.jpg" width="175" height="112" border="0" alt="CVF"></a>
+    </div>
+    <div id="header_right">
+        <div id="header_title">
+            <a href="https://wacv.thecvf.com/">WACV 2026</a> <a href="/menu" class="a_monochrome">open access</a>
+        </div>
+        <div id="help">
+            These WACV 2026 workshop papers are the Open Access versions, provided by the
+<a href="https://www.thecvf.com/">Computer Vision Foundation.</a><br>
+Except for the watermark, they are identical to the accepted versions;
+the final published version of the proceedings is available on IEEE Xplore.
+        </div>
+        <div id="disclaimer">
+            This material is presented to ensure timely dissemination of scholarly and technical work.
+Copyright and all rights therein are retained by authors or by other copyright holders.
+All persons copying this information are expected to adhere to the terms and constraints invoked 
+by each author's copyright.<br><br>
+            <form action="/WACV2026_workshops" method="post">
+                <input type="text" name="query">
+                <input type="submit" value="Search">
+            </form>
+
+        </div>
+    </div>
+    <div id="header_sponsor">
+        <p style="vertical-align:center; text-align: center"> <strong>Powered by:</strong></p>
+        <img src="/img/ms-azure-logo.png" width="100" alt="Microsoft Azure">
+        <p> </p>
+        <p> </p>
+        <p style="vertical-align:center; text-align: center"> <strong>Sponsored by:</strong></p>
+        <img src="/img/amazon-logo.png" width="100" alt="Amazon">
+        <img src="/img/facebook_logo.jpg" width="100" alt="Facebook">
+        <img src="/img/Google_2015_logo.svg" width="100" alt="Google">
+    </div>
+</div>
+<div class="clear"></div>
+<div id="content">    <dl>
+    <div id="papertitle">
+        The SAFE Image Authenticity Challenge: Detecting and Localizing Partial and Fully Synthetic Manipulations
+    <dd>
+    </div>
+    <div id="authors">        <br><b><i>Tai Nguyen, Jill Crisman, Jesse Hostetler, Laura Cassani, Michael Davinroy, Peter Bautista, Matthew Stamm</i></b>; Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) Workshops, 2026, pp. 933-945
+    </div>
+    <font size="5">
+    <br><b>Abstract</b>
+    </font>
+    <br><br>
+    <div id="abstract">
+    Advances in generative AI and AI-assisted image editing tools have made it increasingly easy to produce not only fully AI-generated images, but also more subtle, locally manipulated partially synthetic content that is difficult for both humans and automated systems to detect. This emerging class of mixed-authenticity imagery challenges existing multimedia forensic benchmarks, which typically evaluate only a single manipulation type. Consequently, state-of-the-art forensic methods remain limited in their ability to operate reliably across a diverse range of fake image types and to provide insights beyond binary real-versus-fake decisions. To address this gap, we introduce the SAFE: Image Editing Detection and Localization Challenge, a new benchmark and competition designed to evaluate detection, classification, and localization across a broad spectrum of fake and manipulated images, including fully AI-generated and AI-edited content. Participating systems must output a global authenticity decision, a manipulation type classification, and a pixel-level localization mask. We support SAFE with SAFE-FORGE, a large-scale dataset generated by a scalable forensic data engine that produces diverse fake images with comprehensive ground-truth annotations and traceable manipulation histories. Preliminary evaluations using state-of-the-art forensic systems reveal substantial vulnerabilities in both detection and localization, underscoring the need for unified forensic approaches that remain robust to the rapidly evolving capabilities of modern generative and image editing models.
+    </div>
+    <font size="5">
+    <br><b>Related Material</b>
+    </font>
+    <br><br>    <dd>
+[<a href="/content/WACV2026W/SynRDinBAS/papers/Nguyen_The_SAFE_Image_Authenticity_Challenge_Detecting_and_Localizing_Partial_and_WACVW_2026_paper.pdf">pdf</a>]
+<div class="link2">[<a class="fakelink" onclick="$(this).siblings('.bibref').slideToggle()">bibtex</a>]
+<div class="bibref pre-white-space">@InProceedings{Nguyen_2026_WACV,
+    author    = {Nguyen, Tai and Crisman, Jill and Hostetler, Jesse and Cassani, Laura and Davinroy, Michael and Bautista, Peter and Stamm, Matthew},
+    title     = {The SAFE Image Authenticity Challenge: Detecting and Localizing Partial and Fully Synthetic Manipulations},
+    booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) Workshops},
+    month     = {March},
+    year      = {2026},
+    pages     = {933-945}
+}</div>
+</div>        
+</dd></dl></div>
+</body>
+</html>

@@ -1,0 +1,490 @@
+........................................................................ [  4%]
+........................................................................ [  9%]
+........................................................................ [ 14%]
+......................F...............F................................. [ 19%]
+........................................................................ [ 24%]
+........................................................................ [ 29%]
+........................................................................ [ 34%]
+...............................F........................................ [ 39%]
+........................................................................ [ 44%]
+........................................................................ [ 49%]
+........................................................................ [ 54%]
+.........................................................F...F.......... [ 59%]
+.............................................F.......................... [ 64%]
+F....................................................................... [ 69%]
+..F...............................................F.FF.F..............F. [ 74%]
+..F..................................................................... [ 79%]
+........................................................................ [ 84%]
+........................................................................ [ 89%]
+...................................................F.....FF.F........... [ 94%]
+............F........F.................................................. [ 99%]
+..........                                                               [100%]
+=================================== FAILURES ===================================
+______ test_unindexed_roster_remains_visible_and_has_durable_review_notes ______
+
+    def test_unindexed_roster_remains_visible_and_has_durable_review_notes():
+        records = json.loads((PUBLIC / "public_preview_papers.json").read_text())["records"]
+        unresolved = {a["name"] for p in records for a in p["authors"] if not a["affiliation_indices"]}
+        reviewed_unindexed = {
+            *CURRENT_NON_INSTITUTIONAL_AUTHORS,
+            *REMAINING_UNRESOLVED_AUTHORS,
+        }
+        legacy_expected = reviewed_unindexed
+        assert legacy_expected <= unresolved
+        notes = {r["affected_authors"]: r for r in csv_rows("institution_audit_log.csv")
+                 if r["action"] in {"author_affiliation_unresolved", "author_affiliation_review"}
+                 and r["affected_authors"] in reviewed_unindexed}
+        assert reviewed_unindexed <= notes.keys()
+        assert all(notes[name]["evidence_url"] and notes[name]["review_note"] for name in reviewed_unindexed)
+        preliminary_authors = {
+            name
+            for mapping in csv_rows("author_institution_mappings.csv")
+            if mapping["mapping_status"] == "needs_review"
+            for name in mapping["institution_authors"].split("; ")
+            if name
+        }
+        # The ten additions now have primary-source author mappings; their exact
+        # rosters and public/excluded membership are checked by the curation audit.
+>       assert unresolved - legacy_expected <= preliminary_authors
+E       AssertionError: assert {'Bo Han', 'C...yuan Li', ...} <= {'Anderson Ro...hun Shi', ...}
+E         
+E         Extra items in the left set:
+E         'Xuansong Zhang'
+E         'Wenwei Xie'
+E         'Lu Ma'
+E         'Zhaofan Zou'
+E         'Ruiyang Xia'...
+E         
+E         ...Full output truncated (8 lines hidden), use '-vv' to show
+
+tests/test_author_affiliation_evidence_repairs.py:162: AssertionError
+__________ test_final_repository_author_states_follow_formal_rosters ___________
+
+    def test_final_repository_author_states_follow_formal_rosters():
+        records = json.loads((PUBLIC / "public_preview_papers.json").read_text())["records"]
+        noninstitutional = {a["name"] for p in records for a in p["authors"] if is_non_institutional(a)}
+        assert noninstitutional == CURRENT_NON_INSTITUTIONAL_AUTHORS
+        unresolved = {a["name"] for p in records for a in p["authors"] if a["affiliation_status"] == "unresolved"}
+        legacy_expected = REMAINING_UNRESOLVED_AUTHORS
+        assert legacy_expected <= unresolved
+        preliminary_authors = {
+            name
+            for mapping in csv_rows("author_institution_mappings.csv")
+            if mapping["mapping_status"] == "needs_review"
+            for name in mapping["institution_authors"].split("; ")
+            if name
+        }
+        # The ten additions now have primary-source author mappings; their exact
+        # rosters and public/excluded membership are checked by the curation audit.
+>       assert unresolved - legacy_expected <= preliminary_authors
+E       AssertionError: assert {'Bo Han', 'C...yuan Li', ...} <= {'Anderson Ro...hun Shi', ...}
+E         
+E         Extra items in the left set:
+E         'Xuansong Zhang'
+E         'Wenwei Xie'
+E         'Ser-Nam Lim'
+E         'Lu Ma'
+E         'Ruiyang Xia'...
+E         
+E         ...Full output truncated (8 lines hidden), use '-vv' to show
+
+tests/test_author_affiliation_evidence_repairs.py:304: AssertionError
+_ FrontendPublishedOnlyFilterTests.test_canonical_dataset_has_only_resolved_publication_types _
+
+self = <test_frontend_published_only_filter.FrontendPublishedOnlyFilterTests testMethod=test_canonical_dataset_has_only_resolved_publication_types>
+
+    def test_canonical_dataset_has_only_resolved_publication_types(self):
+        counts = {}
+        for paper in self.public_papers:
+            publication_type = paper.get("publication_type", "")
+            counts[publication_type] = counts.get(publication_type, 0) + 1
+>       self.assertEqual(
+            counts,
+            # Prefill workshop identity and the three existing preprint exclusions.
+            {"conference": 362, "journal": 157, "preprint": 100, "book": 1},
+        )
+E       AssertionError: {'conference': 369, 'preprint': 108, 'journal': 158, 'book': 1} != {'conference': 362, 'journal': 157, 'preprint': 100, 'book': 1}
+E       - {'book': 1, 'conference': 369, 'journal': 158, 'preprint': 108}
+E       ?                             ^               ^                ^
+E       
+E       + {'book': 1, 'conference': 362, 'journal': 157, 'preprint': 100}
+E       ?                             ^               ^                ^
+
+tests/test_frontend_published_only_filter.py:59: AssertionError
+___ InstitutionTypeAuditTests.test_audited_repository_counts_and_unique_ids ____
+
+self = <test_institution_type_audit.InstitutionTypeAuditTests testMethod=test_audited_repository_counts_and_unique_ids>
+
+    def test_audited_repository_counts_and_unique_ids(self):
+        expected_rows = CURRENT_REPOSITORY_BASELINE["total_institution_registry_rows"]
+>       self.assertEqual(len(self.institutions), expected_rows)
+E       AssertionError: 722 != 703
+
+tests/test_institution_type_audit.py:32: AssertionError
+_ InstitutionTypeAuditTests.test_public_outputs_share_corrected_types_and_filter_counts _
+
+self = <test_institution_type_audit.InstitutionTypeAuditTests testMethod=test_public_outputs_share_corrected_types_and_filter_counts>
+
+    def test_public_outputs_share_corrected_types_and_filter_counts(self):
+        payloads = []
+        for filename in (
+            "public_preview_papers.json", "public_preview_map_data.json",
+        ):
+            with (ROOT / "web/data" / filename).open(encoding="utf-8") as handle:
+                payloads.append(json.load(handle))
+        timestamp = payloads[0]["metadata"]["public_preview_generated_at"]
+        self.assertEqual(timestamp, payloads[1]["metadata"]["public_preview_generated_at"])
+        self.assertRegex(timestamp, r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+        for payload in payloads:
+            by_name = {
+                row["canonical_name"]: row["institution_type"]
+                for row in payload["canonical_institution_search_index"].values()
+            }
+            self.assertEqual(by_name["Rensselaer Polytechnic Institute"], "university")
+            self.assertEqual(by_name["École Polytechnique"], "university")
+            self.assertEqual(by_name["Alibaba Group"], "company")
+            self.assertEqual(by_name["SenseTime"], "company")
+            self.assertEqual(by_name["Max Planck Institute for Informatics"], "research_unit")
+            self.assertEqual(by_name["University of Rajshahi"], "university")
+            self.assertEqual(by_name["Korea Aerospace University"], "university")
+            self.assertEqual(by_name["University of Michigan–Flint"], "university")
+            self.assertEqual(by_name["Anhui Business College"], "university")
+    
+        counts = Counter()
+        for paper in payloads[0]["records"]:
+            counts.update(set(paper.get("aggregated_institution_types") or ()))
+>       self.assertEqual(counts, PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS)
+E       AssertionError: Counter({'university': 603, 'company': 130, 'research_unit': 126, 'other': 33}) != {'university': 588, 'research_unit': 123, 'other': 33, 'company': 121}
+
+tests/test_institution_type_audit.py:112: AssertionError
+_____ test_prior_supported_records_and_current_review_candidates_preserved _____
+
+    def test_prior_supported_records_and_current_review_candidates_preserved():
+        decisions = json.loads((ROOT / "docs/remaining_institution_location_audit_2026-08-27.json").read_text())
+        payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
+        # The historical cases remain traceable after the later manual review. The
+        # Current pending rows are source-backed affiliations retained across the
+        # later targeted paper audits; they intentionally have no guessed coordinates.
+        assert payload["summary"]["pending_review"] == payload["summary"]["needs_coordinates"]
+        # Four earlier cases plus the newly verified WICT and UL affiliations.
+>       assert payload["summary"]["pending_review"] == 6
+E       assert 28 == 6
+
+tests/test_manual_location_audit_20260827.py:126: AssertionError
+_ MappingInstitutionRegistrationEndpointTests.test_create_endpoint_reports_provisional_registration _
+
+self = <test_mapping_institution_registration.MappingInstitutionRegistrationEndpointTests testMethod=test_create_endpoint_reports_provisional_registration>
+
+    def test_create_endpoint_reports_provisional_registration(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = {
+                "mappings_path": root / "mappings.csv",
+                "location_review_path": root / "reviews.csv",
+                "institutions_path": root / "institutions.csv",
+                "institution_aliases_path": root / "aliases.csv",
+                "institution_locations_path": root / "locations.csv",
+                "institution_review_queue_path": root / "queue.csv",
+            }
+            write_csv(paths["mappings_path"], AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+            write_csv(paths["location_review_path"], INSTITUTION_LOCATION_REVIEW_COLUMNS)
+            write_csv(paths["institutions_path"], INSTITUTION_COLUMNS)
+            write_csv(paths["institution_aliases_path"], INSTITUTION_ALIAS_COLUMNS)
+            write_csv(paths["institution_locations_path"], INSTITUTION_LOCATION_COLUMNS)
+            write_csv(paths["institution_review_queue_path"], INSTITUTION_REVIEW_QUEUE_COLUMNS)
+            handler = make_handler("token", geocoder=object(), **paths)
+            server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
+            thread = threading.Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            try:
+                connection = HTTPConnection("127.0.0.1", server.server_port, timeout=3)
+                connection.request(
+                    "POST",
+                    "/api/paper/mapping/create",
+                    body=json.dumps({
+                        "id": "openalex:W4416604008",
+                        "institution": "Zhejiang Lab",
+                        "institution_id": "institution:stale-preview-id",
+                        "institution_authors": "Ada Example",
+                        "raw_affiliation": "Zhejiang Lab",
+                        "evidence_source": "Publisher PDF",
+                        "mapping_status": "active",
+                    }),
+                    headers={"X-Admin-Token": "token", "Content-Type": "application/json"},
+                )
+>               response = connection.getresponse()
+
+tests/test_mapping_institution_registration.py:391: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/http/client.py:1349: in getresponse
+    response.begin()
+/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/http/client.py:316: in begin
+    version, status, reason = self._read_status()
+/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/http/client.py:277: in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.SocketIO object at 0x1129cff70>, b = <memory at 0x1106a7880>
+
+    def readinto(self, b):
+        """Read up to len(b) bytes into the writable buffer *b* and return
+        the number of bytes read.  If the socket is non-blocking and no bytes
+        are available, None is returned.
+    
+        If *b* is non-empty, a 0 return value indicates that the connection
+        was shutdown at the other end.
+        """
+        self._checkClosed()
+        self._checkReadable()
+        if self._timeout_occurred:
+            raise OSError("cannot read from timed out object")
+        while True:
+            try:
+>               return self._sock.recv_into(b)
+E               socket.timeout: timed out
+
+/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py:704: timeout
+_ PaperMetadataConsistencyAuditTests.test_full_corpus_has_no_unexplained_metadata_inconsistency _
+
+self = <test_paper_metadata_consistency_audit.PaperMetadataConsistencyAuditTests testMethod=test_full_corpus_has_no_unexplained_metadata_inconsistency>
+
+    def test_full_corpus_has_no_unexplained_metadata_inconsistency(self):
+        rows, summary = audit()
+    
+>       self.assertEqual(summary["papers_audited"], 620)
+E       AssertionError: 636 != 620
+
+tests/test_paper_metadata_consistency_audit.py:76: AssertionError
+______ PaperTaxonomyMigrationTests.test_expected_counts_and_review_counts ______
+
+self = <test_paper_taxonomy_migration.PaperTaxonomyMigrationTests testMethod=test_expected_counts_and_review_counts>
+
+    def test_expected_counts_and_review_counts(self):
+        expected = {
+            "tasks": Counter(detection=584, source_attribution=77, localization=21),
+            "image_scopes": Counter(fully_generated=526, generative_editing=29, deepfake=166, traditional_manipulation=14),
+            "research_types": Counter(method=532, dataset=116, benchmark=73, survey=23, analysis_study=60),
+        }
+        for field, counts in expected.items():
+            actual = Counter(value for row in self.registry for value in row[field].split(";") if value)
+>           self.assertEqual(counts, actual)
+E           AssertionError: Counter({'detection': 584, 'source_attribution': 77, 'localization': 21}) != Counter({'detection': 598, 'source_attribution': 77, 'localization': 25})
+
+tests/test_paper_taxonomy_migration.py:118: AssertionError
+_ PaperTaxonomyMigrationTests.test_generative_editing_has_source_modification_evidence _
+
+self = <test_paper_taxonomy_migration.PaperTaxonomyMigrationTests testMethod=test_generative_editing_has_source_modification_evidence>
+
+    def test_generative_editing_has_source_modification_evidence(self):
+        edited = [row for row in self.registry if "generative_editing" in row["image_scopes"].split(";")]
+>       self.assertEqual(29, len(edited))
+E       AssertionError: 29 != 32
+
+tests/test_paper_taxonomy_migration.py:102: AssertionError
+_ PaperTaxonomyMigrationTests.test_localization_has_explicit_task_or_evaluation_evidence _
+
+self = <test_paper_taxonomy_migration.PaperTaxonomyMigrationTests testMethod=test_localization_has_explicit_task_or_evaluation_evidence>
+
+    def test_localization_has_explicit_task_or_evaluation_evidence(self):
+        localized = [row for row in self.registry if "localization" in row["tasks"].split(";")]
+>       self.assertEqual(21, len(localized))
+E       AssertionError: 21 != 25
+
+tests/test_paper_taxonomy_migration.py:95: AssertionError
+_ PaperTaxonomyMigrationTests.test_registry_covers_the_reconciled_public_corpus_not_papers_csv _
+
+self = <test_paper_taxonomy_migration.PaperTaxonomyMigrationTests testMethod=test_registry_covers_the_reconciled_public_corpus_not_papers_csv>
+
+    def test_registry_covers_the_reconciled_public_corpus_not_papers_csv(self):
+>       self.assertEqual(433, len(self.curated_papers))
+E       AssertionError: 433 != 449
+
+tests/test_paper_taxonomy_migration.py:35: AssertionError
+_____ test_current_curation_audit_reproduces_and_preserves_every_older_row _____
+
+    def test_current_curation_audit_reproduces_and_preserves_every_older_row():
+>       report = audit.build_audit()
+
+tests/test_primary_paper_curation.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/meilinger/Desktop/synthetic-image-research-map')
+
+    def build_audit(root=ROOT):
+        ledger = json.loads((root / LEDGER).read_text())
+        decisions = ledger['papers']
+        baseline = json.loads((root / BASELINE).read_text())
+        ids = {d['paper_id'] for d in decisions}
+        if len(decisions) != 10 or len(ids) != 10 or ids != set(baseline['target_paper_ids']):
+            raise ValueError('Curation must cover exactly the original ten identities')
+        integrity = strict_regression(root)
+        if integrity['pre_existing_changes']:
+>           raise ValueError('\n'.join(integrity['pre_existing_changes']))
+E           ValueError: data/curated/author_institution_mappings.csv: appended relationship for older paper
+E           data/curated/paper_taxonomy.csv: unexpected appended records
+E           data/curated/papers.csv: unexpected appended records
+E           data/curated/venue_aliases.csv: unexpected appended records
+
+scripts/report_primary_paper_curation.py:86: ValueError
+_ test_current_reconciliation_counts_existing_exclusions_instead_of_missing_papers _
+
+    def test_current_reconciliation_counts_existing_exclusions_instead_of_missing_papers():
+        from scripts.verify_key_paper_reconciliation import verify_current_curation
+>       report = verify_current_curation()
+
+tests/test_primary_paper_curation.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/verify_key_paper_reconciliation.py:154: in verify_current_curation
+    primary = build_audit()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/meilinger/Desktop/synthetic-image-research-map')
+
+    def build_audit(root=ROOT):
+        ledger = json.loads((root / LEDGER).read_text())
+        decisions = ledger['papers']
+        baseline = json.loads((root / BASELINE).read_text())
+        ids = {d['paper_id'] for d in decisions}
+        if len(decisions) != 10 or len(ids) != 10 or ids != set(baseline['target_paper_ids']):
+            raise ValueError('Curation must cover exactly the original ten identities')
+        integrity = strict_regression(root)
+        if integrity['pre_existing_changes']:
+>           raise ValueError('\n'.join(integrity['pre_existing_changes']))
+E           ValueError: data/curated/author_institution_mappings.csv: appended relationship for older paper
+E           data/curated/paper_taxonomy.csv: unexpected appended records
+E           data/curated/papers.csv: unexpected appended records
+E           data/curated/venue_aliases.csv: unexpected appended records
+
+scripts/report_primary_paper_curation.py:86: ValueError
+_ CurrentRepositoryBaselineTests.test_current_repository_counts_recompute_from_authoritative_files _
+
+self = <test_repository_baseline.CurrentRepositoryBaselineTests testMethod=test_current_repository_counts_recompute_from_authoritative_files>
+
+    def test_current_repository_counts_recompute_from_authoritative_files(self):
+        active = [
+            row for row in self.institutions
+            if row["institution_status"] == "active"
+        ]
+>       self.assert_current("public_unique_papers", len(self.public_papers))
+
+tests/test_repository_baseline.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_repository_baseline.py:58: in assert_current
+    self.assertEqual(
+E   AssertionError: 636 != 620 : Current repository baseline is stale for public_unique_papers: expected 620, computed 636. Review curated changes and update tests/baseline_expectations.py.
+_ CurrentRepositoryBaselineTests.test_public_paper_map_coverage_matches_reviewed_blockers _
+
+self = <test_repository_baseline.CurrentRepositoryBaselineTests testMethod=test_public_paper_map_coverage_matches_reviewed_blockers>
+
+    def test_public_paper_map_coverage_matches_reviewed_blockers(self):
+        map_source_papers = {identity_key(row) for row in self.map_records}
+        papers_with_map = [
+            paper for paper in self.public_papers
+            if any(
+                records_share_any_identity(paper, marker)
+                for marker in self.map_records
+            )
+        ]
+        papers_without_map = [
+            paper for paper in self.public_papers
+            if paper not in papers_with_map
+        ]
+>       self.assert_current("public_map_source_papers", len(map_source_papers))
+
+tests/test_repository_baseline.py:253: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_repository_baseline.py:58: in assert_current
+    self.assertEqual(
+E   AssertionError: 624 != 614 : Current repository baseline is stale for public_map_source_papers: expected 614, computed 624. Review curated changes and update tests/baseline_expectations.py.
+_ CurrentRepositoryBaselineTests.test_publication_totals_and_overlapping_task_totals_match_baseline _
+
+self = <test_repository_baseline.CurrentRepositoryBaselineTests testMethod=test_publication_totals_and_overlapping_task_totals_match_baseline>
+
+    def test_publication_totals_and_overlapping_task_totals_match_baseline(self):
+        publication_types = Counter(
+            row.get("publication_type") for row in self.public_papers
+        )
+        tasks = Counter(
+            task for row in self.public_papers for task in row.get("tasks", [])
+        )
+>       self.assertEqual(publication_types, PUBLICATION_TYPE_TOTALS)
+E       AssertionError: Counter({'conference': 369, 'journal': 158, 'preprint': 108, 'book': 1}) != {'conference': 362, 'preprint': 100, 'journal': 157, 'book': 1}
+
+tests/test_repository_baseline.py:337: AssertionError
+_ CurrentRepositoryBaselineTests.test_status_and_type_totals_reconcile_their_declared_populations _
+
+self = <test_repository_baseline.CurrentRepositoryBaselineTests testMethod=test_status_and_type_totals_reconcile_their_declared_populations>
+
+    def test_status_and_type_totals_reconcile_their_declared_populations(self):
+        statuses = Counter(row["institution_status"] for row in self.institutions)
+>       self.assertEqual(statuses, CANONICAL_INSTITUTION_STATUS_TOTALS)
+E       AssertionError: Counter({'active': 701, 'merged': 15, 'ignored': 6}) != {'active': 682, 'ignored': 6, 'merged': 15}
+
+tests/test_repository_baseline.py:307: AssertionError
+________________ test_frozen_pre_audit_files_are_byte_identical ________________
+
+>   ???
+E   AssertionError: assert ['data/manual...ngs.csv', ...] == []
+E     
+E     Left contains 9 more items, first extra item: 'data/manual/missing_author_mappings_report.csv'
+E     Use -v to get more diff
+
+tests/test_systematic_literature_audit.py:103: AssertionError
+_____ TitleNormalizationTests.test_all_current_admin_records_are_canonical _____
+
+self = <test_title_normalization.TitleNormalizationTests testMethod=test_all_current_admin_records_are_canonical>
+
+    def test_all_current_admin_records_are_canonical(self):
+        root = Path(__file__).resolve().parents[1]
+        with (root / "data/curated/papers.csv").open(
+            encoding="utf-8-sig", newline=""
+        ) as handle:
+            datasets = [("curated papers", list(csv.DictReader(handle)))]
+        for dataset_name, records in datasets:
+            with self.subTest(dataset=dataset_name):
+>               self.assertEqual(
+                    [
+                        record.get("title", "")
+                        for record in records
+                        if record.get("title", "")
+                        != canonical_paper_title(record.get("title", ""))
+                    ],
+                    [],
+                )
+E               AssertionError: Lists differ: ['Exploring the Collaborative Advantage of[264 chars]ize'] != []
+E               
+E               First list contains 3 additional elements.
+E               First extra element 0:
+E               'Exploring the Collaborative Advantage of Low-level Information on Generalizable AI-Generated Image Detection'
+E               
+E               + []
+E               - ['Exploring the Collaborative Advantage of Low-level Information on '
+E               -  'Generalizable AI-Generated Image Detection',
+E               -  'SPECTRA-Net: Scalable Pipeline for Explainable Cross-domain Tensor '
+E               -  'Representations for AI-generated Images Detection',
+E               -  'What Makes Fake Images Detectable? Understanding Properties that Generalize']
+
+tests/test_title_normalization.py:243: AssertionError
+- generated xml file: /Users/meilinger/Desktop/synthetic-image-research-map/data/processed/systematic_tier1_2026_09/initial_suite.xml -
+=========================== short test summary info ============================
+FAILED tests/test_author_affiliation_evidence_repairs.py::test_unindexed_roster_remains_visible_and_has_durable_review_notes
+FAILED tests/test_author_affiliation_evidence_repairs.py::test_final_repository_author_states_follow_formal_rosters
+FAILED tests/test_frontend_published_only_filter.py::FrontendPublishedOnlyFilterTests::test_canonical_dataset_has_only_resolved_publication_types
+FAILED tests/test_institution_type_audit.py::InstitutionTypeAuditTests::test_audited_repository_counts_and_unique_ids
+FAILED tests/test_institution_type_audit.py::InstitutionTypeAuditTests::test_public_outputs_share_corrected_types_and_filter_counts
+FAILED tests/test_manual_location_audit_20260827.py::test_prior_supported_records_and_current_review_candidates_preserved
+FAILED tests/test_mapping_institution_registration.py::MappingInstitutionRegistrationEndpointTests::test_create_endpoint_reports_provisional_registration
+FAILED tests/test_paper_metadata_consistency_audit.py::PaperMetadataConsistencyAuditTests::test_full_corpus_has_no_unexplained_metadata_inconsistency
+FAILED tests/test_paper_taxonomy_migration.py::PaperTaxonomyMigrationTests::test_expected_counts_and_review_counts
+FAILED tests/test_paper_taxonomy_migration.py::PaperTaxonomyMigrationTests::test_generative_editing_has_source_modification_evidence
+FAILED tests/test_paper_taxonomy_migration.py::PaperTaxonomyMigrationTests::test_localization_has_explicit_task_or_evaluation_evidence
+FAILED tests/test_paper_taxonomy_migration.py::PaperTaxonomyMigrationTests::test_registry_covers_the_reconciled_public_corpus_not_papers_csv
+FAILED tests/test_primary_paper_curation.py::test_current_curation_audit_reproduces_and_preserves_every_older_row
+FAILED tests/test_primary_paper_curation.py::test_current_reconciliation_counts_existing_exclusions_instead_of_missing_papers
+FAILED tests/test_repository_baseline.py::CurrentRepositoryBaselineTests::test_current_repository_counts_recompute_from_authoritative_files
+FAILED tests/test_repository_baseline.py::CurrentRepositoryBaselineTests::test_public_paper_map_coverage_matches_reviewed_blockers
+FAILED tests/test_repository_baseline.py::CurrentRepositoryBaselineTests::test_publication_totals_and_overlapping_task_totals_match_baseline
+FAILED tests/test_repository_baseline.py::CurrentRepositoryBaselineTests::test_status_and_type_totals_reconcile_their_declared_populations
+FAILED tests/test_systematic_literature_audit.py::test_frozen_pre_audit_files_are_byte_identical
+FAILED tests/test_title_normalization.py::TitleNormalizationTests::test_all_current_admin_records_are_canonical
+20 failed, 1430 passed in 339.32s (0:05:39)

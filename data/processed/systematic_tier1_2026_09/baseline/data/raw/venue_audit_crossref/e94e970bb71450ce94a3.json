@@ -1,0 +1,350 @@
+{
+  "doi": "10.1109/prmvai70103.2026.11605668",
+  "source_url": "https://api.crossref.org/works/10.1109%2Fprmvai70103.2026.11605668",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            22
+          ]
+        ],
+        "date-time": "2026-07-22T06:04:16Z",
+        "timestamp": 1784700256644,
+        "version": "3.55.0"
+      },
+      "reference-count": 12,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                5,
+                1
+              ]
+            ],
+            "date-time": "2026-05-01T00:00:00Z",
+            "timestamp": 1777593600000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                5,
+                1
+              ]
+            ],
+            "date-time": "2026-05-01T00:00:00Z",
+            "timestamp": 1777593600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                5,
+                1
+              ]
+            ],
+            "date-time": "2026-05-01T00:00:00Z",
+            "timestamp": 1777593600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            5
+          ]
+        ]
+      },
+      "DOI": "10.1109/prmvai70103.2026.11605668",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            21
+          ]
+        ],
+        "date-time": "2026-07-21T19:11:55Z",
+        "timestamp": 1784661115000
+      },
+      "page": "1-6",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Source Attribution of AI-Generated Image via Orthogonal Subspace Mixture-of-Experts"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Qiutong",
+          "family": "Huang",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Shenzhen University",
+              "place": [
+                "Shenzhen, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Zhenyu",
+          "family": "Wu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Shenzhen University",
+              "place": [
+                "Shenzhen, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Haojie",
+          "family": "Liu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Shenzhen University",
+              "place": [
+                "Shenzhen, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Yuanman",
+          "family": "Li",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Shenzhen University",
+              "place": [
+                "Shenzhen, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Xia",
+          "family": "Li",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Shenzhen University",
+              "place": [
+                "Shenzhen, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3626235"
+        },
+        {
+          "key": "ref2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1609/aaai.v40i12.37930"
+        },
+        {
+          "key": "ref3",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3576915.3616588"
+        },
+        {
+          "issue": "6",
+          "key": "ref4",
+          "first-page": "7",
+          "article-title": "Effort: Efficient orthogonal modeling for generalizable ai-generated image detection",
+          "volume": "2",
+          "author": "Yan",
+          "year": "2024"
+        },
+        {
+          "key": "ref5",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV51701.2025.01651"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-031-92089-9_6"
+        },
+        {
+          "key": "ref7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52729.2023.01522"
+        },
+        {
+          "key": "ref8",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-031-73033-7_16"
+        },
+        {
+          "key": "ref9",
+          "article-title": "Few-shot learner generalizes across ai-generated image detection",
+          "author": "Wu",
+          "year": "2025"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3746027.3755434"
+        },
+        {
+          "key": "ref11",
+          "first-page": "8748",
+          "article-title": "Learning transferable visual models from natural language supervision",
+          "volume-title": "International conference on machine learning",
+          "author": "Radford"
+        },
+        {
+          "key": "ref12",
+          "article-title": "Loralib: A standardized benchmark for evaluating lora-moe methods",
+          "author": "Wang",
+          "year": "2025"
+        }
+      ],
+      "event": {
+        "name": "2026 IEEE International Conference on Pattern Recognition, Machine Vision and Artificial Intelligence (PRMVAI)",
+        "location": "Changzhou, China",
+        "start": {
+          "date-parts": [
+            [
+              2026,
+              5,
+              22
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2026,
+              5,
+              24
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2026 IEEE International Conference on Pattern Recognition, Machine Vision and Artificial Intelligence (PRMVAI)"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx8/11605416/11605155/11605668.pdf?arnumber=11605668",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            22
+          ]
+        ],
+        "date-time": "2026-07-22T05:27:13Z",
+        "timestamp": 1784698033000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/11605668/"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            5
+          ]
+        ]
+      },
+      "references-count": 12,
+      "URL": "https://doi.org/10.1109/prmvai70103.2026.11605668",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            5
+          ]
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,1126 @@
+{
+  "doi": "10.1002/widm.1520",
+  "source_url": "https://api.crossref.org/works/10.1002%2Fwidm.1520",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            28
+          ]
+        ],
+        "date-time": "2026-08-28T09:48:53Z",
+        "timestamp": 1787910533992,
+        "version": "build-2784847793"
+      },
+      "reference-count": 156,
+      "publisher": "Wiley",
+      "issue": "2",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                11,
+                20
+              ]
+            ],
+            "date-time": "2023-11-20T00:00:00Z",
+            "timestamp": 1700438400000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "http://creativecommons.org/licenses/by-nc-nd/4.0/"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "wires.onlinelibrary.wiley.com"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "WIREs Data Min &amp; Knowl"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            3
+          ]
+        ]
+      },
+      "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>Deep Learning (DL) has been effectively utilized in various complicated challenges in healthcare, industry, and academia for various purposes, including thyroid diagnosis, lung nodule recognition, computer vision, large data analytics, and human‐level control. Nevertheless, developments in digital technology have been used to produce software that poses a threat to democracy, national security, and confidentiality. Deepfake is one of those DL‐powered apps that has lately surfaced. So, deepfake systems can create fake images primarily by replacement of scenes or images, movies, and sounds that humans cannot tell apart from real ones. Various technologies have brought the capacity to change a synthetic speech, image, or video to our fingers. Furthermore, video and image frauds are now so convincing that it is hard to distinguish between false and authentic content with the naked eye. It might result in various issues and ranging from deceiving public opinion to using doctored evidence in a court. For such considerations, it is critical to have technologies that can assist us in discerning reality. This study gives a complete assessment of the literature on deepfake detection strategies using DL‐based algorithms. We categorize deepfake detection methods in this work based on their applications, which include video detection, image detection, audio detection, and hybrid multimedia detection. The objective of this paper is to give the reader a better knowledge of (1) how deepfakes are generated and identified, (2) the latest developments and breakthroughs in this realm, (3) weaknesses of existing security methods, and (4) areas requiring more investigation and consideration. The results suggest that the Conventional Neural Networks (CNN) methodology is the most often employed DL method in publications. According to research, the majority of the articles are on the subject of video deepfake detection. The majority of the articles focused on enhancing only one parameter, with the accuracy parameter receiving the most attention.</jats:p>\n                  <jats:p>\n                    This article is categorized under:\n                    <jats:list list-type=\"simple\">\n                      <jats:list-item>\n                        <jats:p>Technologies &gt; Machine Learning</jats:p>\n                      </jats:list-item>\n                      <jats:list-item>\n                        <jats:p>Algorithmic Development &gt; Multimedia</jats:p>\n                      </jats:list-item>\n                      <jats:list-item>\n                        <jats:p>Application Areas &gt; Science and Technology</jats:p>\n                      </jats:list-item>\n                    </jats:list>\n                  </jats:p>",
+      "DOI": "10.1002/widm.1520",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2023,
+            11,
+            21
+          ]
+        ],
+        "date-time": "2023-11-21T17:46:33Z",
+        "timestamp": 1700588793000
+      },
+      "update-policy": "https://doi.org/10.1002/crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 300,
+      "title": [
+        "Deepfake detection using deep learning methods: A systematic and comprehensive review"
+      ],
+      "prefix": "10.1002",
+      "volume": "14",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0003-4279-8551",
+          "authenticated-orcid": false,
+          "given": "Arash",
+          "family": "Heidari",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Department of Software Engineering Haliç University  Istanbul Turkey"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Nima",
+          "family": "Jafari Navimipour",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Computer Engineering Kadir Has Universitesi  Istanbul Turkey"
+            },
+            {
+              "name": "Future Technology Research Center National Yunlin University of Science and Technology  Douliou Taiwan"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Hasan",
+          "family": "Dag",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Management Information Systems Kadir Has Universitesi  Istanbul Turkey"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Mehmet",
+          "family": "Unal",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Computer Engineering Nisantasi Universitesi  Istanbul Turkey"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "311",
+      "published-online": {
+        "date-parts": [
+          [
+            2023,
+            11,
+            20
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "e_1_2_13_2_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Afchar D. Nozick V. Yamagishi J. &Echizen I.(2018).Mesonet: A compact facial video forgery detection network. Paper presented at the 2018 IEEE International Workshop on Information Forensics and Security (WIFS).",
+          "DOI": "10.1109/WIFS.2018.8630761"
+        },
+        {
+          "key": "e_1_2_13_3_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.asoc.2021.107489"
+        },
+        {
+          "key": "e_1_2_13_4_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s13204-021-02072-3"
+        },
+        {
+          "key": "e_1_2_13_5_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Akhtar Z. Mouree M. R. &Dasgupta D.(2020).Utility of deep learning features for facial attributes manipulation detection. Paper presented at the 2020 IEEE International Conference on Humanized Computing and Communication with Artificial Intelligence (HCCAI).",
+          "DOI": "10.1109/HCCAI49649.2020.00015"
+        },
+        {
+          "issue": "22",
+          "key": "e_1_2_13_6_1",
+          "first-page": "3242",
+          "article-title": "Deepfakes: Threats and countermeasures systematic review",
+          "volume": "97",
+          "author": "Albahar M.",
+          "year": "2019",
+          "journal-title": "Journal of Theoretical and Applied Information Technology"
+        },
+        {
+          "key": "e_1_2_13_7_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cosrev.2021.100389"
+        },
+        {
+          "key": "e_1_2_13_8_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cosrev.2021.100395"
+        },
+        {
+          "key": "e_1_2_13_9_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.eswa.2021.116030"
+        },
+        {
+          "key": "e_1_2_13_10_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bekci B. Akhtar Z. &Ekenel H. K.(2020).Cross‐dataset face manipulation detection.Paper presented at the 2020 28th Signal Processing and Communications Applications Conference (SIU).",
+          "DOI": "10.1109/SIU49456.2020.9302157"
+        },
+        {
+          "key": "e_1_2_13_11_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.52547/jist.9.35.161"
+        },
+        {
+          "key": "e_1_2_13_12_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bonettini N. Cannas E. D. Mandelli S. Bondi L. Bestagini P. &Tubaro S.(2021).Video face manipulation detection through ensemble of CNNS.Paper presented at the 2020 25th International Conference on Pattern Recognition (ICPR).",
+          "DOI": "10.1109/ICPR48806.2021.9412711"
+        },
+        {
+          "key": "e_1_2_13_13_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1186/s13635-021-00116-3"
+        },
+        {
+          "key": "e_1_2_13_14_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Burroughs S. J. Gokaraju B. Roy K. &Khoa L.(2020).DeepFakes detection in videos using feature engineering techniques in deep learning convolution neural network frameworks.Paper presented at the 2020 IEEE Applied Imagery Pattern Recognition Workshop (AIPR).",
+          "DOI": "10.1109/AIPR50011.2020.9425347"
+        },
+        {
+          "key": "e_1_2_13_15_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.patrec.2021.03.005"
+        },
+        {
+          "key": "e_1_2_13_16_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TITS.2021.3059455"
+        },
+        {
+          "key": "e_1_2_13_17_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TVT.2021.3053093"
+        },
+        {
+          "key": "e_1_2_13_18_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/jimaging7040069"
+        },
+        {
+          "key": "e_1_2_13_19_1",
+          "unstructured": "Chan C. C. K. Kumar V. Delaney S. &Gochoo M.(2020).Combating deepfakes: Multi‐LSTM and blockchain as proof of authenticity for digital media.Paper presented at the 2020 IEEE/ITU International Conference on Artificial Intelligence for Good (AI4G)."
+        },
+        {
+          "key": "e_1_2_13_20_1",
+          "first-page": "1",
+          "article-title": "FeatureTransfer: Unsupervised domain adaptation for cross‐domain deepfake detection",
+          "volume": "2021",
+          "author": "Chen B.",
+          "year": "2021",
+          "journal-title": "Security and Communication Networks"
+        },
+        {
+          "key": "e_1_2_13_21_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chi H. Maduakor U. Alo R. &Williams E.(2020).Integrating deepfake detection into cybersecurity curriculum.Paper presented at the Proceedings of the Future Technologies Conference.",
+          "DOI": "10.1007/978-3-030-63128-4_45"
+        },
+        {
+          "key": "e_1_2_13_22_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/JSTSP.2020.2999185"
+        },
+        {
+          "key": "e_1_2_13_23_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chugh K. Gupta P. Dhall A. &Subramanian R.(2020).Not made for each other‐audio‐visual dissonance‐based deepfake detection and localization.Paper presented at the Proceedings of the 28th ACM International Conference on Multimedia.",
+          "DOI": "10.1145/3394171.3413700"
+        },
+        {
+          "key": "e_1_2_13_24_1",
+          "unstructured": "Chung J. Gulcehre C. Cho K. &Bengio Y.(2015).Gated feedback recurrent neural networks.Paper presented at the International conference on machine learning."
+        },
+        {
+          "key": "e_1_2_13_25_1",
+          "unstructured": "Cozzolino D. Poggi G. &Verdoliva L.(2019).Extracting camera‐based fingerprints for video forensics. Paper Presented at the Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops."
+        },
+        {
+          "key": "e_1_2_13_26_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-981-15-7421-4_27"
+        },
+        {
+          "key": "e_1_2_13_27_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cosrev.2020.100317"
+        },
+        {
+          "key": "e_1_2_13_28_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cpcardiol.2022.101108"
+        },
+        {
+          "key": "e_1_2_13_29_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Du M. Pentyala S. Li Y. &Hu X.(2020).Towards generalizable deepfake detection with locality‐aware autoencoder.Paper presented at the Proceedings of the 29th ACM International Conference on Information & Knowledge Management.",
+          "DOI": "10.1145/3340531.3411892"
+        },
+        {
+          "key": "e_1_2_13_30_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.ijinfomgt.2019.08.002"
+        },
+        {
+          "key": "e_1_2_13_31_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cpcardiol.2021.101034"
+        },
+        {
+          "key": "e_1_2_13_32_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1002/adts.202200047"
+        },
+        {
+          "key": "e_1_2_13_33_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TMTT.2021.3119316"
+        },
+        {
+          "key": "e_1_2_13_34_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Fernandes S. L. &Jha S. K.(2020).Adversarial attack on deepfake detection using RL based texture patches.Paper presented at the European Conference on Computer Vision.",
+          "DOI": "10.1007/978-3-030-66415-2_14"
+        },
+        {
+          "key": "e_1_2_13_35_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.engappai.2020.103678"
+        },
+        {
+          "key": "e_1_2_13_36_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cosrev.2021.100370"
+        },
+        {
+          "key": "e_1_2_13_37_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1080/15295036.2020.1832697"
+        },
+        {
+          "key": "e_1_2_13_38_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ACCESS.2020.3023037"
+        },
+        {
+          "key": "e_1_2_13_39_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Güera D. &Delp E. J.(2018).Deepfake video detection using recurrent neural networks.Paper presented at the 2018 15th IEEE International Conference on Advanced Video and Signal Based Surveillance (AVSS).",
+          "DOI": "10.1109/AVSS.2018.8639163"
+        },
+        {
+          "key": "e_1_2_13_40_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cviu.2021.103170"
+        },
+        {
+          "key": "e_1_2_13_41_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-981-15-4692-1_31"
+        },
+        {
+          "key": "e_1_2_13_42_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s00521-022-07424-w"
+        },
+        {
+          "key": "e_1_2_13_43_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.scs.2022.104089"
+        },
+        {
+          "key": "e_1_2_13_44_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.compbiomed.2021.105141"
+        },
+        {
+          "key": "e_1_2_13_45_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.compbiomed.2022.105461"
+        },
+        {
+          "key": "e_1_2_13_46_1",
+          "unstructured": "Hinton G. Vinyals O. &Dean J.(2015).Distilling the knowledge in a neural network.arXiv Preprint arXiv:1503.02531 2(7)."
+        },
+        {
+          "key": "e_1_2_13_47_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TAP.2021.3137453"
+        },
+        {
+          "key": "e_1_2_13_48_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Hongmeng Z. Zhiqiang Z. Lei S. Xiuqing M. &Yuehan W.(2020).A detection method for DeepFake hard compressed videos based on super‐resolution reconstruction using CNN.Paper presented at the Proceedings of the 2020 4th High Performance Computing and Cluster Technologies Conference & 2020 3rd International Conference on Big Data and Artificial Intelligence.",
+          "DOI": "10.1145/3409501.3409542"
+        },
+        {
+          "key": "e_1_2_13_49_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3505281"
+        },
+        {
+          "key": "e_1_2_13_50_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/app10010370"
+        },
+        {
+          "key": "e_1_2_13_51_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.asoc.2021.107491"
+        },
+        {
+          "key": "e_1_2_13_52_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.jksuci.2020.04.001"
+        },
+        {
+          "key": "e_1_2_13_53_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Jafar M. T. Ababneh M. Al‐Zoube M. &Elhassan A.(2020).Forensics and analysis of deepfake videos.Paper presented at the 2020 11th International Conference on Information and Communication Systems (ICICS).",
+          "DOI": "10.1109/ICICS49469.2020.239493"
+        },
+        {
+          "key": "e_1_2_13_54_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.ijinfomgt.2020.102226"
+        },
+        {
+          "key": "e_1_2_13_55_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1080/13658816.2022.2055037"
+        },
+        {
+          "key": "e_1_2_13_56_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3233/JCS-200124"
+        },
+        {
+          "key": "e_1_2_13_57_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ACCESS.2020.2988660"
+        },
+        {
+          "key": "e_1_2_13_58_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.30534/ijatcse/2020/62922020"
+        },
+        {
+          "key": "e_1_2_13_59_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Katarya R. &Lal A.(2020).A study on combating emerging threat of deepfake weaponization.Paper presented at the 2020 Fourth International Conference on I‐SMAC (IoT in Social Mobile Analytics and Cloud) (I‐SMAC).",
+          "DOI": "10.1109/I-SMAC49090.2020.9243588"
+        },
+        {
+          "key": "e_1_2_13_60_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/fi13040093"
+        },
+        {
+          "key": "e_1_2_13_61_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.bushor.2019.11.006"
+        },
+        {
+          "key": "e_1_2_13_62_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ACCESS.2021.3110859"
+        },
+        {
+          "key": "e_1_2_13_63_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11042-020-10420-8"
+        },
+        {
+          "key": "e_1_2_13_64_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TCSVT.2021.3057457"
+        },
+        {
+          "key": "e_1_2_13_65_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.asoc.2021.107256"
+        },
+        {
+          "key": "e_1_2_13_66_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Lewis J. K. Toubal I. E. Chen H. Sandesera V. Lomnitz M. Hampel‐Arias Z. &Palaniappan K.(2020).Deepfake video detection based on spatial spectral and temporal inconsistencies using multimodal deep learning.Paper presented at the 2020 IEEE Applied Imagery Pattern Recognition Workshop (AIPR).",
+          "DOI": "10.1109/AIPR50011.2020.9425167"
+        },
+        {
+          "key": "e_1_2_13_67_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MCOM.001.2000601"
+        },
+        {
+          "key": "e_1_2_13_68_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/COMST.2020.2980570"
+        },
+        {
+          "key": "e_1_2_13_69_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TCNS.2020.3034523"
+        },
+        {
+          "issue": "4",
+          "key": "e_1_2_13_70_1",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1145/3072959.3073637",
+          "article-title": "Grass: Generative recursive autoencoders for shape structures",
+          "volume": "36",
+          "author": "Li J.",
+          "year": "2017",
+          "journal-title": "ACM Transactions on Graphics"
+        },
+        {
+          "key": "e_1_2_13_71_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2020.2964173"
+        },
+        {
+          "key": "e_1_2_13_72_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li Y. Zhang C. Sun P. Ke L. Ju Y. Qi H. &Lyu S.(2021).DeepFake‐o‐meter: An open platform for DeepFake detection.Paper presented at the 2021 IEEE Security and Privacy Workshops (SPW).",
+          "DOI": "10.1109/SPW53761.2021.00047"
+        },
+        {
+          "key": "e_1_2_13_73_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Liu Q. &Celebi N.(2021).Large feature mining and deep learning in multimedia forensics.Paper presented at the Proceedings of the 2021 ACM Workshop on Security and Privacy Analytics.",
+          "DOI": "10.1145/3445970.3456285"
+        },
+        {
+          "key": "e_1_2_13_74_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11036-020-01717-x"
+        },
+        {
+          "key": "e_1_2_13_75_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MNET.013.2100087"
+        },
+        {
+          "key": "e_1_2_13_76_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TITS.2022.3167019"
+        },
+        {
+          "key": "e_1_2_13_77_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TITS.2021.3113787"
+        },
+        {
+          "key": "e_1_2_13_78_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TITS.2020.2980864"
+        },
+        {
+          "key": "e_1_2_13_79_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TITS.2020.3034817"
+        },
+        {
+          "key": "e_1_2_13_80_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3468506"
+        },
+        {
+          "key": "e_1_2_13_81_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.rcim.2021.102145"
+        },
+        {
+          "key": "e_1_2_13_82_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Masi I. Killekar A. Mascarenhas R. M. Gurudatt S. P. &AbdAlmageed W.(2020).Two‐branch recurrent network for isolating deepfakes in videos.Paper presented at the European conference on Computer Vision.",
+          "DOI": "10.1007/978-3-030-58571-6_39"
+        },
+        {
+          "key": "e_1_2_13_83_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Matern F. Riess C. &Stamminger M.(2019).Exploiting visual artifacts to expose deepfakes and face manipulations.Paper presented at the 2019 IEEE Winter Applications of Computer Vision Workshops (WACVW).",
+          "DOI": "10.1109/WACVW.2019.00020"
+        },
+        {
+          "key": "e_1_2_13_84_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mehta V. Gupta P. Subramanian R. &Dhall A.(2021).FakeBuster: A DeepFakes detection tool for video conferencing scenarios.Paper presented at the 26th International Conference on Intelligent User Interfaces.",
+          "DOI": "10.1145/3397482.3450726"
+        },
+        {
+          "key": "e_1_2_13_85_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1093/jiplp/jpz167"
+        },
+        {
+          "key": "e_1_2_13_86_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3425780"
+        },
+        {
+          "key": "e_1_2_13_87_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mitra A. Mohanty S. P. Corcoran P. &Kougianos E.(2020).A novel machine learning based method for deepfake video detection in social media.Paper presented at the 2020 IEEE International Symposium on Smart Electronic Systems (iSES) (Formerly iNiS).",
+          "DOI": "10.1109/iSES50453.2020.00031"
+        },
+        {
+          "key": "e_1_2_13_88_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mittal T. Bhattacharya U. Chandra R. Bera A. &Manocha D.(2020).Emotions don't lie: An audio‐visual deepfake detection method using affective cues.Paper presented at the Proceedings of the 28th ACM International Conference on Multimedia.",
+          "DOI": "10.1145/3394171.3413570"
+        },
+        {
+          "key": "e_1_2_13_89_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TITS.2022.3171913"
+        },
+        {
+          "key": "e_1_2_13_90_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Nasar B. F. Sajini T. &Lason E. R.(2020).Deepfake detection in media files‐audios images and videos.Paper presented at the 2020 IEEE Recent Advances in Intelligent Computational Systems (RAICS).",
+          "DOI": "10.1109/RAICS51191.2020.9332516"
+        },
+        {
+          "key": "e_1_2_13_91_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Nguyen H. H. Yamagishi J. &Echizen I.(2019).Capsule‐forensics: Using capsule networks to detect forged images and videos.Paper presented at the ICASSP 2019–2019 IEEE International Conference on Acoustics Speech and Signal Processing (ICASSP).",
+          "DOI": "10.1109/ICASSP.2019.8682602"
+        },
+        {
+          "key": "e_1_2_13_92_1",
+          "unstructured": "Nguyen T. T. Nguyen C. M. Nguyen D. T. Nguyen D. T. &Nahavandi S.(2019).Deep learning for deepfakes creation and detection: A survey.arXiv Preprint arXiv:1909.11573."
+        },
+        {
+          "key": "e_1_2_13_93_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.fsidi.2021.301108"
+        },
+        {
+          "key": "e_1_2_13_94_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.engappai.2020.103529"
+        },
+        {
+          "key": "e_1_2_13_95_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2021.3093446"
+        },
+        {
+          "key": "e_1_2_13_96_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1049/cje.2021.00.295"
+        },
+        {
+          "key": "e_1_2_13_97_1",
+          "unstructured": "Pashine S. Mandiya S. Gupta P. &Sheikh R.(2021).Deep fake detection: Survey of facial manipulation detection solutions.arXiv Preprint arXiv:2106.12605."
+        },
+        {
+          "key": "e_1_2_13_98_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Pokroy A. A. &Egorov A. D.(2021).EfficientNets for DeepFake detection: Comparison of pretrained models.Paper presented at the 2021 IEEE Conference of Russian Young Researchers in Electrical and Electronic Engineering (ElConRus).",
+          "DOI": "10.1109/ElConRus51938.2021.9396092"
+        },
+        {
+          "key": "e_1_2_13_99_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ACCESS.2022.3154404"
+        },
+        {
+          "key": "e_1_2_13_100_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rana M. S. &Sung A. H.(2020).Deepfakestack: A deep ensemble‐based learning technique for deepfake detection.Paper presented at the 2020 7th IEEE International Conference on Cyber Security and Cloud Computing (CSCloud)/2020 6th IEEE International Conference on Edge Computing and Scalable Cloud (EdgeCom).",
+          "DOI": "10.1109/CSCloud-EdgeCom49738.2020.00021"
+        },
+        {
+          "key": "e_1_2_13_101_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3233/JIFS-210625"
+        },
+        {
+          "key": "e_1_2_13_102_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Sanghvi B. Shelar H. Pandey M. &Sisodia J.(2021).Detection of machine generated multimedia elements using deep learning.Paper presented at the 2021 5th International Conference on Computing Methodologies and Communication (ICCMC).",
+          "DOI": "10.1109/ICCMC51019.2021.9418008"
+        },
+        {
+          "key": "e_1_2_13_103_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cviu.2021.103247"
+        },
+        {
+          "key": "e_1_2_13_104_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11042-020-09974-4"
+        },
+        {
+          "key": "e_1_2_13_105_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/jimaging7070108"
+        },
+        {
+          "key": "e_1_2_13_106_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TII.2021.3126883"
+        },
+        {
+          "key": "e_1_2_13_107_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.jksuci.2018.08.005"
+        },
+        {
+          "key": "e_1_2_13_108_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Sun P. Li Y. Qi H. &Lyu S.(2020).Landmark breaker: Obstructing DeepFake by disturbing landmark extraction.Paper presented at the 2020 IEEE International Workshop on Information Forensics and Security (WIFS).",
+          "DOI": "10.1109/WIFS49906.2020.9360910"
+        },
+        {
+          "key": "e_1_2_13_109_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Suratkar S. Johnson E. Variyambat K. Panchal M. &Kazi F.(2020).Employing transfer‐learning based CNN architectures to enhance the generalizability of deepfake detection.Paper presented at the 2020 11th International Conference on Computing Communication and Networking Technologies (ICCCNT).",
+          "DOI": "10.1109/ICCCNT49239.2020.9225400"
+        },
+        {
+          "key": "e_1_2_13_110_1",
+          "unstructured": "Swathi P. &Sk S.(2021).DeepFake creation and detection: A survey.Paper presented at the 2021 Third International Conference on Inventive Research in Computing Applications (ICIRCA)."
+        },
+        {
+          "key": "e_1_2_13_111_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tariq S. Lee S. &Woo S.(2021).One detector to rule them all: Towards a general deepfake attack detection framework.Paper presented at the Proceedings of the Web Conference 2021.",
+          "DOI": "10.1145/3442381.3449809"
+        },
+        {
+          "key": "e_1_2_13_112_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tjon E. Moh M. &Moh T.‐S.(2021).Eff‐YNet: A Dual Task Network for DeepFake Detection and Segmentation.Paper presented at the 2021 15th International Conference on Ubiquitous Information Management and Communication (IMCOM).",
+          "DOI": "10.1109/IMCOM51814.2021.9377373"
+        },
+        {
+          "key": "e_1_2_13_113_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.inffus.2020.06.014"
+        },
+        {
+          "key": "e_1_2_13_114_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tu Y. Liu Y. &Li X.(2021).Deepfake video detection by using convolutional gated recurrent unit.Paper presented at the 2021 13th International Conference on Machine Learning and Computing.",
+          "DOI": "10.1145/3457682.3457736"
+        },
+        {
+          "key": "e_1_2_13_115_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Vahdat S. &Shahidi S.(2020).D‐dimer levels in chronic kidney illness: a comprehensive and systematic literature review.Proceedings of the National Academy of Sciences India Section B: Biological Sciences 1‐18.",
+          "DOI": "10.1007/s40011-020-01172-4"
+        },
+        {
+          "key": "e_1_2_13_116_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/JSTSP.2020.3002101"
+        },
+        {
+          "key": "e_1_2_13_117_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang R. Juefei‐Xu F. Huang Y. Guo Q. Xie X. Ma L. &Liu Y.(2020).Deepsonar: Towards effective and robust detection of AI‐synthesized fake voices.Paper presented at the Proceedings of the 28th ACM International Conference on Multimedia.",
+          "DOI": "10.1145/3394171.3413716"
+        },
+        {
+          "key": "e_1_2_13_118_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.oceaneng.2021.110106"
+        },
+        {
+          "key": "e_1_2_13_119_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3934/mbe.2022088"
+        },
+        {
+          "key": "e_1_2_13_120_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1140/epjs/s11734-022-00558-x"
+        },
+        {
+          "key": "e_1_2_13_121_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Weerawardana M. &Fernando T.(2021).Deepfakes detection methods: A literature survey.Paper presented at the 2021 10th International Conference on Information and Automation for Sustainability (ICIAfS).",
+          "DOI": "10.1109/ICIAfS52090.2021.9606067"
+        },
+        {
+          "key": "e_1_2_13_122_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wijethunga R. Matheesha D. Al Noman A. De Silva K. Tissera M. &Rupasinghe L.(2020).Deepfake audio detection: A deep learning based solution for group conversations.Paper presented at the 2020 2nd International Conference on Advancements in Computing (ICAC).",
+          "DOI": "10.1109/ICAC51239.2020.9357161"
+        },
+        {
+          "key": "e_1_2_13_123_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TSE.2021.3063727"
+        },
+        {
+          "key": "e_1_2_13_124_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/LAWP.2021.3138241"
+        },
+        {
+          "key": "e_1_2_13_125_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.rser.2021.111567"
+        },
+        {
+          "key": "e_1_2_13_126_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.amc.2020.125072"
+        },
+        {
+          "issue": "7",
+          "key": "e_1_2_13_127_1",
+          "first-page": "6518",
+          "article-title": "A collaborative alignment framework of transferable knowledge extraction for unsupervised domain adaptation",
+          "volume": "35",
+          "author": "Xie B.",
+          "year": "2023",
+          "journal-title": "IEEE Transactions on Knowledge and Data Engineering"
+        },
+        {
+          "key": "e_1_2_13_128_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Xie D. Chatterjee P. Liu Z. Roy K. &Kossi E.(2020).DeepFake detection on publicly available datasets using modified AlexNet.Paper presented at the 2020 IEEE Symposium Series on Computational Intelligence (SSCI).",
+          "DOI": "10.1109/SSCI47803.2020.9308428"
+        },
+        {
+          "key": "e_1_2_13_129_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1088/1361-6641/ac5bf8"
+        },
+        {
+          "key": "e_1_2_13_130_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.jvcir.2021.103119"
+        },
+        {
+          "key": "e_1_2_13_131_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TAES.2021.3103586"
+        },
+        {
+          "key": "e_1_2_13_132_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.inffus.2022.06.009"
+        },
+        {
+          "key": "e_1_2_13_133_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ACCESS.2021.3108178"
+        },
+        {
+          "key": "e_1_2_13_134_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIFS.2020.3045937"
+        },
+        {
+          "key": "e_1_2_13_135_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3389/fenvs.2022.996513"
+        },
+        {
+          "key": "e_1_2_13_136_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.future.2021.06.043"
+        },
+        {
+          "key": "e_1_2_13_137_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yazdinejad A. Parizi R. M. Srivastava G. &Dehghantanha A.(2020).Making sense of blockchain for AI deepfakes technology.Paper presented at the 2020 IEEE Globecom Workshops (GC Wkshps).",
+          "DOI": "10.1109/GCWkshps50303.2020.9367545"
+        },
+        {
+          "key": "e_1_2_13_138_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ACCESS.2020.3037735"
+        },
+        {
+          "key": "e_1_2_13_139_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1049/bme2.12031"
+        },
+        {
+          "key": "e_1_2_13_140_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1080/10408398.2021.1971155"
+        },
+        {
+          "key": "e_1_2_13_141_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/JIOT.2021.3051060"
+        },
+        {
+          "key": "e_1_2_13_142_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/JIOT.2020.3007518"
+        },
+        {
+          "key": "e_1_2_13_143_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/e22020249"
+        },
+        {
+          "key": "e_1_2_13_144_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhang Y. Gao F. Zhou Z. &Guo H.(2021).A survey on face forgery detection of Deepfake.Paper presented at the Thirteenth International Conference on Digital Image Processing (ICDIP 2021).",
+          "DOI": "10.1117/12.2600889"
+        },
+        {
+          "key": "e_1_2_13_145_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11069-020-04283-3"
+        },
+        {
+          "key": "e_1_2_13_146_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhao H. Zhou W. Chen D. Wei T. Zhang W. &Yu N.(2021).Multi‐attentional deepfake detection.Paper presented at the Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition.",
+          "DOI": "10.1109/CVPR46437.2021.00222"
+        },
+        {
+          "key": "e_1_2_13_147_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.4018/IJDCF.20210701.oa3"
+        },
+        {
+          "key": "e_1_2_13_148_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ACCESS.2021.3074937"
+        },
+        {
+          "key": "e_1_2_13_149_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/app11031316"
+        },
+        {
+          "key": "e_1_2_13_150_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TR.2021.3118026"
+        },
+        {
+          "key": "e_1_2_13_151_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.patcog.2021.108153"
+        },
+        {
+          "key": "e_1_2_13_152_1",
+          "unstructured": "Zhong L. Fang Z. Liu F. Yuan B. Zhang G. &Lu J.(2021).Bridging the theoretical bound and deep algorithms for open set domain adaptation.IEEE Transactions on Neural Networks and Learning Systems."
+        },
+        {
+          "key": "e_1_2_13_153_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1080/02331934.2022.2057852"
+        },
+        {
+          "key": "e_1_2_13_154_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhou X. Wang Y. &Wu P.(2020).Detecting deepfake videos via frame serialization learning.Paper presented at the 2020 IEEE 3rd International Conference of Safe Production and Informatization (IICSPI).",
+          "DOI": "10.1109/IICSPI51290.2020.9332419"
+        },
+        {
+          "key": "e_1_2_13_155_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zi B. Chang M. Chen J. Ma X. &Jiang Y.‐G.(2020).Wilddeepfake: A challenging real‐world dataset for deepfake detection.Paper presented at the Proceedings of the 28th ACM International Conference on Multimedia.",
+          "DOI": "10.1145/3394171.3413769"
+        },
+        {
+          "issue": "1",
+          "key": "e_1_2_13_156_1",
+          "doi-asserted-by": "crossref",
+          "first-page": "23",
+          "DOI": "10.21278/brod73102",
+          "article-title": "Container ship cell guide accuracy check technology based on improved 3D point cloud instance segmentation",
+          "volume": "73",
+          "author": "Zong C.",
+          "year": "2022",
+          "journal-title": "Brodogradnja: Teorija i Praksa Brodogradnje i Pomorske Tehnike"
+        },
+        {
+          "key": "e_1_2_13_157_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.compeleceng.2022.107685"
+        }
+      ],
+      "container-title": [
+        "WIREs Data Mining and Knowledge Discovery"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://wires.onlinelibrary.wiley.com/doi/pdf/10.1002/widm.1520",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2024,
+            3,
+            14
+          ]
+        ],
+        "date-time": "2024-03-14T05:37:07Z",
+        "timestamp": 1710394627000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://wires.onlinelibrary.wiley.com/doi/10.1002/widm.1520"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2023,
+            11,
+            20
+          ]
+        ]
+      },
+      "references-count": 156,
+      "journal-issue": {
+        "issue": "2",
+        "published-print": {
+          "date-parts": [
+            [
+              2024,
+              3
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "10.1002/widm.1520"
+      ],
+      "URL": "https://doi.org/10.1002/widm.1520",
+      "archive": [
+        "Portico"
+      ],
+      "relation": {},
+      "ISSN": [
+        "1942-4787",
+        "1942-4795"
+      ],
+      "issn-type": [
+        {
+          "value": "1942-4787",
+          "type": "print"
+        },
+        {
+          "value": "1942-4795",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2023,
+            11,
+            20
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "2022-02-09",
+          "order": 0,
+          "name": "received",
+          "label": "Received",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        },
+        {
+          "value": "2023-10-05",
+          "order": 1,
+          "name": "accepted",
+          "label": "Accepted",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        },
+        {
+          "value": "2023-11-20",
+          "order": 2,
+          "name": "published",
+          "label": "Published",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        }
+      ],
+      "article-number": "e1520"
+    }
+  }
+}

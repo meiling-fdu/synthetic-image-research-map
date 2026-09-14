@@ -1,0 +1,307 @@
+{
+  "artifact_reproducibility": true,
+  "committed": false,
+  "corpus_and_strict_diff": {
+    "corpus": {
+      "active_exclusion_leaks": 0,
+      "duplicate_identity_pairs": [],
+      "mapped": 623,
+      "markers": 1466,
+      "public": 636,
+      "published": 528
+    },
+    "diff": {
+      "author_institution_mappings.csv": {
+        "existing_rows": 1203,
+        "existing_rows_changed": 0,
+        "new_rows": 51
+      },
+      "frontend": {
+        "changed": 0,
+        "files_checked": 17
+      },
+      "institution_aliases.csv": {
+        "existing_rows": 120,
+        "existing_rows_changed": 0,
+        "new_rows": 0
+      },
+      "institution_hierarchy.csv": {
+        "existing_rows": 15,
+        "existing_rows_changed": 0,
+        "new_rows": 0
+      },
+      "institution_location_review.csv": {
+        "existing_rows": 640,
+        "existing_rows_changed": 0,
+        "new_rows": 1
+      },
+      "institution_locations.csv": {
+        "existing_rows": 520,
+        "existing_rows_changed": 0,
+        "new_rows": 0
+      },
+      "institutions.csv": {
+        "existing_rows": 703,
+        "existing_rows_changed": 0,
+        "new_rows": 19
+      },
+      "paper_exclusions.csv": {
+        "existing_rows": 56,
+        "existing_rows_changed": 0,
+        "new_rows": 0
+      },
+      "paper_taxonomy.csv": {
+        "existing_rows": 620,
+        "existing_rows_changed": 0,
+        "new_rows": 16
+      },
+      "papers.csv": {
+        "existing_rows": 433,
+        "existing_rows_changed": 0,
+        "new_rows": 16
+      },
+      "venue_aliases.csv": {
+        "existing_rows": 164,
+        "existing_rows_changed": 0,
+        "new_rows": 1
+      }
+    },
+    "outcomes": {
+      "MISSING_ADD": 16
+    }
+  },
+  "final_identity_audit": {
+    "detective_sam_canonical_records": 1,
+    "duplicate_identifier_or_normalized_title_groups": {},
+    "forenx_distinct_from_plada": true,
+    "fuse_distinct_from_fused_and_diffused": true,
+    "public_papers": 636
+  },
+  "final_location_audit": {
+    "authors_without_verified_institutional_mappings": [
+      {
+        "author": "Pin-Yu Chen",
+        "evidence_notes": [
+          "No confirmed institutional location reused for University of Neuch\u00e2tel; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Delft University of Technology; no city-center coordinate assigned.",
+          "Canonical institution/site identity pending for IBM Research; primary author positions [4] retained without an inferred registry match.",
+          "No confirmed institutional location reused for University of Turin; no city-center coordinate assigned."
+        ],
+        "paper_id": "curated:9a208cddb21ddfe2317a"
+      },
+      {
+        "author": "Lu Ma",
+        "evidence_notes": [
+          "Exact corporate research sites/legal entities and campus coordinates are not established by postal city alone; preserve paper affiliation strings and leave locations pending.",
+          "Canonical institution/site identity pending for Trend Micro Incorporated; primary author positions [1] retained without an inferred registry match.",
+          "No confirmed institutional location reused for Jiangsu Police Institute; no city-center coordinate assigned.",
+          "Canonical institution/site identity pending for BASF Incorporated; primary author positions [3] retained without an inferred registry match.",
+          "Canonical institution/site identity pending for BMW Incorporated; primary author positions [4] retained without an inferred registry match.",
+          "Canonical institution/site identity pending for Geely Automobile Research Institute; primary author positions [5] retained without an inferred registry match."
+        ],
+        "paper_id": "curated:eb04aa0a684bdc34b406"
+      },
+      {
+        "author": "Wenjing Zhang",
+        "evidence_notes": [
+          "Exact corporate research sites/legal entities and campus coordinates are not established by postal city alone; preserve paper affiliation strings and leave locations pending.",
+          "Canonical institution/site identity pending for Trend Micro Incorporated; primary author positions [1] retained without an inferred registry match.",
+          "No confirmed institutional location reused for Jiangsu Police Institute; no city-center coordinate assigned.",
+          "Canonical institution/site identity pending for BASF Incorporated; primary author positions [3] retained without an inferred registry match.",
+          "Canonical institution/site identity pending for BMW Incorporated; primary author positions [4] retained without an inferred registry match.",
+          "Canonical institution/site identity pending for Geely Automobile Research Institute; primary author positions [5] retained without an inferred registry match."
+        ],
+        "paper_id": "curated:eb04aa0a684bdc34b406"
+      },
+      {
+        "author": "Wenwei Xie",
+        "evidence_notes": [
+          "Exact corporate research sites/legal entities and campus coordinates are not established by postal city alone; preserve paper affiliation strings and leave locations pending.",
+          "Canonical institution/site identity pending for Trend Micro Incorporated; primary author positions [1] retained without an inferred registry match.",
+          "No confirmed institutional location reused for Jiangsu Police Institute; no city-center coordinate assigned.",
+          "Canonical institution/site identity pending for BASF Incorporated; primary author positions [3] retained without an inferred registry match.",
+          "Canonical institution/site identity pending for BMW Incorporated; primary author positions [4] retained without an inferred registry match.",
+          "Canonical institution/site identity pending for Geely Automobile Research Institute; primary author positions [5] retained without an inferred registry match."
+        ],
+        "paper_id": "curated:eb04aa0a684bdc34b406"
+      },
+      {
+        "author": "Xuansong Zhang",
+        "evidence_notes": [
+          "Exact corporate research sites/legal entities and campus coordinates are not established by postal city alone; preserve paper affiliation strings and leave locations pending.",
+          "Canonical institution/site identity pending for Trend Micro Incorporated; primary author positions [1] retained without an inferred registry match.",
+          "No confirmed institutional location reused for Jiangsu Police Institute; no city-center coordinate assigned.",
+          "Canonical institution/site identity pending for BASF Incorporated; primary author positions [3] retained without an inferred registry match.",
+          "Canonical institution/site identity pending for BMW Incorporated; primary author positions [4] retained without an inferred registry match.",
+          "Canonical institution/site identity pending for Geely Automobile Research Institute; primary author positions [5] retained without an inferred registry match."
+        ],
+        "paper_id": "curated:eb04aa0a684bdc34b406"
+      },
+      {
+        "author": "Cong Luo",
+        "evidence_notes": [
+          "Mikhail Erofeev is explicitly an independent researcher; no institutional relationship is assigned.",
+          "Cong Luo has no institutional affiliation in section 7.6; leave unresolved.",
+          "Authors 25-29 are labelled TeleAI-TeleGuard, China; the team-to-canonical-institution relationship is unresolved and not inferred from email addresses.",
+          "No confirmed institutional location reused for MSU Institute for Artificial Intelligence; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Lomonosov Moscow State University; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for University of W\u00fcrzburg; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Ant International; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for IntSig Information Co. Ltd; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Prince Sultan University; no city-center coordinate assigned."
+        ],
+        "paper_id": "curated:834f0ca01f478a33b278"
+      },
+      {
+        "author": "Hao Sun",
+        "evidence_notes": [
+          "Mikhail Erofeev is explicitly an independent researcher; no institutional relationship is assigned.",
+          "Cong Luo has no institutional affiliation in section 7.6; leave unresolved.",
+          "Authors 25-29 are labelled TeleAI-TeleGuard, China; the team-to-canonical-institution relationship is unresolved and not inferred from email addresses.",
+          "No confirmed institutional location reused for MSU Institute for Artificial Intelligence; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Lomonosov Moscow State University; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for University of W\u00fcrzburg; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Ant International; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for IntSig Information Co. Ltd; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Prince Sultan University; no city-center coordinate assigned."
+        ],
+        "paper_id": "curated:834f0ca01f478a33b278"
+      },
+      {
+        "author": "Mikhail Erofeev",
+        "evidence_notes": [
+          "Mikhail Erofeev is explicitly an independent researcher; no institutional relationship is assigned.",
+          "Cong Luo has no institutional affiliation in section 7.6; leave unresolved.",
+          "Authors 25-29 are labelled TeleAI-TeleGuard, China; the team-to-canonical-institution relationship is unresolved and not inferred from email addresses.",
+          "No confirmed institutional location reused for MSU Institute for Artificial Intelligence; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Lomonosov Moscow State University; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for University of W\u00fcrzburg; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Ant International; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for IntSig Information Co. Ltd; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Prince Sultan University; no city-center coordinate assigned."
+        ],
+        "paper_id": "curated:834f0ca01f478a33b278"
+      },
+      {
+        "author": "Qi Zhang",
+        "evidence_notes": [
+          "Mikhail Erofeev is explicitly an independent researcher; no institutional relationship is assigned.",
+          "Cong Luo has no institutional affiliation in section 7.6; leave unresolved.",
+          "Authors 25-29 are labelled TeleAI-TeleGuard, China; the team-to-canonical-institution relationship is unresolved and not inferred from email addresses.",
+          "No confirmed institutional location reused for MSU Institute for Artificial Intelligence; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Lomonosov Moscow State University; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for University of W\u00fcrzburg; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Ant International; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for IntSig Information Co. Ltd; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Prince Sultan University; no city-center coordinate assigned."
+        ],
+        "paper_id": "curated:834f0ca01f478a33b278"
+      },
+      {
+        "author": "Ruiyang Xia",
+        "evidence_notes": [
+          "Mikhail Erofeev is explicitly an independent researcher; no institutional relationship is assigned.",
+          "Cong Luo has no institutional affiliation in section 7.6; leave unresolved.",
+          "Authors 25-29 are labelled TeleAI-TeleGuard, China; the team-to-canonical-institution relationship is unresolved and not inferred from email addresses.",
+          "No confirmed institutional location reused for MSU Institute for Artificial Intelligence; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Lomonosov Moscow State University; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for University of W\u00fcrzburg; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Ant International; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for IntSig Information Co. Ltd; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Prince Sultan University; no city-center coordinate assigned."
+        ],
+        "paper_id": "curated:834f0ca01f478a33b278"
+      },
+      {
+        "author": "Yaowen Xu",
+        "evidence_notes": [
+          "Mikhail Erofeev is explicitly an independent researcher; no institutional relationship is assigned.",
+          "Cong Luo has no institutional affiliation in section 7.6; leave unresolved.",
+          "Authors 25-29 are labelled TeleAI-TeleGuard, China; the team-to-canonical-institution relationship is unresolved and not inferred from email addresses.",
+          "No confirmed institutional location reused for MSU Institute for Artificial Intelligence; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Lomonosov Moscow State University; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for University of W\u00fcrzburg; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Ant International; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for IntSig Information Co. Ltd; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Prince Sultan University; no city-center coordinate assigned."
+        ],
+        "paper_id": "curated:834f0ca01f478a33b278"
+      },
+      {
+        "author": "Zhaofan Zou",
+        "evidence_notes": [
+          "Mikhail Erofeev is explicitly an independent researcher; no institutional relationship is assigned.",
+          "Cong Luo has no institutional affiliation in section 7.6; leave unresolved.",
+          "Authors 25-29 are labelled TeleAI-TeleGuard, China; the team-to-canonical-institution relationship is unresolved and not inferred from email addresses.",
+          "No confirmed institutional location reused for MSU Institute for Artificial Intelligence; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Lomonosov Moscow State University; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for University of W\u00fcrzburg; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Ant International; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for IntSig Information Co. Ltd; no city-center coordinate assigned.",
+          "No confirmed institutional location reused for Prince Sultan University; no city-center coordinate assigned."
+        ],
+        "paper_id": "curated:834f0ca01f478a33b278"
+      },
+      {
+        "author": "Ser-Nam Lim",
+        "evidence_notes": [
+          "Ser-Nam Lim has only an email under superscript 2 in the official ECCV PDF. No institution is inferred from the project page or later employment."
+        ],
+        "paper_id": "curated:26ad52739947538ec0fa"
+      }
+    ],
+    "fuse_bangladesh_entity_distinct": true,
+    "fuse_official_tejgaon_address_retained": true,
+    "fuse_pending_review_without_coordinates": true,
+    "markerless_new_papers": [
+      "DeCLIP: Decoding CLIP Representations for Deepfake Localization",
+      "Detective SAM: Adaptive AI-Image Forgery Localization",
+      "Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection",
+      "FUSE: Unifying Spectral and Semantic Cues for Robust AI-Generated Image Detection",
+      "SPECTRA-Net: Scalable Pipeline for Explainable Cross-Domain Tensor Representations for AI-Generated Images Detection",
+      "Weakly-Supervised Deepfake Localization in Diffusion-Generated Images"
+    ],
+    "ntire_unresolved_authors_have_no_institution_marker": true
+  },
+  "focused_tests": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 113
+  },
+  "full_suite": {
+    "errors": 0,
+    "failures": 0,
+    "passed": 1461,
+    "skipped": 0,
+    "tests": 1461
+  },
+  "git_diff_check_exit": 0,
+  "historical_audit_reproduces": true,
+  "public_preservation": {
+    "new_paper_affiliation_groups_exact": 16,
+    "pre_existing_public_changes": [],
+    "pre_existing_public_papers_checked": 620
+  },
+  "pushed": false,
+  "source_integrity": {
+    "checksum_mismatches": [],
+    "successful_cached_sources_checked": 67,
+    "unavailable_sources": 10
+  },
+  "test_environment": "System Python 3.9 with pytest; bundled Node; localhost bindings permitted",
+  "validators": {
+    "curated": {
+      "errors": 0,
+      "warnings": 215
+    },
+    "exclusion": {
+      "errors": 0,
+      "warnings": 2
+    },
+    "public": {
+      "errors": 0,
+      "warnings": 24
+    }
+  }
+}

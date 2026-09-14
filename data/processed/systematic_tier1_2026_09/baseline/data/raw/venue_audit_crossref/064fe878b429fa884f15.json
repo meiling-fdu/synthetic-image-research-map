@@ -1,0 +1,524 @@
+{
+  "doi": "10.1007/978-3-032-23347-9_28",
+  "source_url": "https://api.crossref.org/works/10.1007%2F978-3-032-23347-9_28",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            2
+          ]
+        ],
+        "date-time": "2026-07-02T00:47:48Z",
+        "timestamp": 1782953268828,
+        "version": "3.54.5"
+      },
+      "publisher-location": "Cham",
+      "reference-count": 24,
+      "publisher": "Springer Nature Switzerland",
+      "isbn-type": [
+        {
+          "value": "9783032233462",
+          "type": "print"
+        },
+        {
+          "value": "9783032233479",
+          "type": "electronic"
+        }
+      ],
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2026-01-01T00:00:00Z",
+            "timestamp": 1767225600000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2026-01-01T00:00:00Z",
+            "timestamp": 1767225600000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "link.springer.com"
+        ],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "DOI": "10.1007/978-3-032-23347-9_28",
+      "type": "book-chapter",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            2
+          ]
+        ],
+        "date-time": "2026-07-02T00:26:59Z",
+        "timestamp": 1782952019000
+      },
+      "page": "341-354",
+      "update-policy": "https://doi.org/10.1007/springer_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Explainability-Driven Analysis of AI-Generated Image Detectors: Insights into Generalization and Failure Modes"
+      ],
+      "prefix": "10.1007",
+      "author": [
+        {
+          "given": "Andrea",
+          "family": "Abate",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Carmen",
+          "family": "Bisogni",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Lucia",
+          "family": "Cimmino",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Chiara",
+          "family": "Pero",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Matteo",
+          "family": "Polsinelli",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            1
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "issue": "2",
+          "key": "28_CR1",
+          "doi-asserted-by": "publisher",
+          "first-page": "199",
+          "DOI": "10.1080/23738871.2020.1797135",
+          "volume": "5",
+          "author": "C Whyte",
+          "year": "2020",
+          "unstructured": "Whyte, C.: Deepfake news: AI-enabled disinformation as a multi-level public policy challenge. J. Cyber Policy 5(2), 199–217 (2020)",
+          "journal-title": "J. Cyber Policy"
+        },
+        {
+          "key": "28_CR2",
+          "doi-asserted-by": "publisher",
+          "first-page": "25494",
+          "DOI": "10.1109/ACCESS.2022.3154404",
+          "volume": "10",
+          "author": "MS Rana",
+          "year": "2022",
+          "unstructured": "Rana, M.S., Nobi, M.N., Murali, B., Sung, A.H.: Deepfake detection: a systematic literature review. IEEE Access 10, 25494–25513 (2022)",
+          "journal-title": "IEEE Access"
+        },
+        {
+          "key": "28_CR3",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Castiglione, A., Cimmino, L., Nappi, M., Polsinelli, M., Sorrentino, C.: Robust fake image detection via incremental training of siamese neural networks. In: Cyberspace Safety and Security, pp. 332–345. Springer, Singapore (2026)",
+          "DOI": "10.1007/978-981-95-3551-4_23"
+        },
+        {
+          "key": "28_CR4",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Samek, W., Montavon, G., Vedaldi, A., Hansen, L.K., Müller, K.R.: Explainable AI: Interpreting, Explaining and Visualizing Deep Learning, vol. 11700. Springer (2019)",
+          "DOI": "10.1007/978-3-030-28954-6"
+        },
+        {
+          "key": "28_CR5",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Guidotti, R., Monreale, A., Ruggieri, S., Turini, F., Giannotti, F., Pedreschi, D.: A survey of methods for explaining black box models. ACM Comput. Surv. 51(5) (2018)",
+          "DOI": "10.1145/3236009"
+        },
+        {
+          "key": "28_CR6",
+          "doi-asserted-by": "publisher",
+          "first-page": "131",
+          "DOI": "10.1016/j.inffus.2020.06.014",
+          "volume": "64",
+          "author": "R Tolosana",
+          "year": "2020",
+          "unstructured": "Tolosana, R., Vera-Rodriguez, R., Fierrez, J., Morales, A., Ortega-Garcia, J.: Deepfakes and beyond: a survey of face manipulation and fake detection. Inf. Fusion 64, 131–148 (2020)",
+          "journal-title": "Inf. Fusion"
+        },
+        {
+          "key": "28_CR7",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Corvi, R., Cozzolino, D., Zingarini, G., Poggi, G., Nagano, K., Verdoliva, L.: On the detection of synthetic images generated by diffusion models. In: IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), pp. 1–5 (2023)",
+          "DOI": "10.1109/ICASSP49357.2023.10095167"
+        },
+        {
+          "issue": "5",
+          "key": "28_CR8",
+          "doi-asserted-by": "publisher",
+          "first-page": "910",
+          "DOI": "10.1109/JSTSP.2020.3002101",
+          "volume": "14",
+          "author": "L Verdoliva",
+          "year": "2020",
+          "unstructured": "Verdoliva, L.: Media forensics and DeepFakes: an overview. IEEE J. Sel. Top. Signal Process. 14(5), 910–932 (2020)",
+          "journal-title": "IEEE J. Sel. Top. Signal Process."
+        },
+        {
+          "key": "28_CR9",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Matern, F., Riess, C., Stamminger, M.: Exploiting visual artifacts to expose deepfakes and face manipulations. In: 2019 IEEE Winter Applications of Computer Vision Workshops (WACVW), pp. 83–92 (2019)",
+          "DOI": "10.1109/WACVW.2019.00020"
+        },
+        {
+          "key": "28_CR10",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yu, N., Davis, L.S., Fritz, M.: Attributing fake images to GANs: learning and analyzing GAN fingerprints. In: Proceedings of the IEEE/CVF International Conference on Computer Vision, pp. 7556–7566 (2019)",
+          "DOI": "10.1109/ICCV.2019.00765"
+        },
+        {
+          "key": "28_CR11",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang, S.Y., Wang, O., Zhang, R., Owens, A., Efros, A.A.: CNN-generated images are surprisingly easy to spot... for now. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 8695–8704 (2020)",
+          "DOI": "10.1109/CVPR42600.2020.00872"
+        },
+        {
+          "key": "28_CR12",
+          "unstructured": "Dosovitskiy, A.: An image is worth 16x16 words: transformers for image recognition at scale, arXiv preprint arXiv:2010.11929 (2020)"
+        },
+        {
+          "key": "28_CR13",
+          "unstructured": "Radford, A., et al.: Learning transferable visual models from natural language supervision. In: International Conference on Machine Learning, pp. 8748–8763. PmLR (2021)"
+        },
+        {
+          "key": "28_CR14",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ojha, U., Li, Y., Lee, Y.J.: Towards universal fake image detectors that generalize across generative models. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 24480–24489 (2023)",
+          "DOI": "10.1109/CVPR52729.2023.02345"
+        },
+        {
+          "key": "28_CR15",
+          "first-page": "3022",
+          "volume": "33",
+          "author": "T Dzanic",
+          "year": "2020",
+          "unstructured": "Dzanic, T., Shah, K., Witherden, F.: Fourier spectrum discrepancies in deep network generated images. Adv. Neural. Inf. Process. Syst. 33, 3022–3032 (2020)",
+          "journal-title": "Adv. Neural. Inf. Process. Syst."
+        },
+        {
+          "key": "28_CR16",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Corvi, R., Cozzolino, D., Zingarini, G., Poggi, G., Nagano, K., Verdoliva, L.: On the detection of synthetic images generated by diffusion models. In: IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), pp. 1–5 (2023)",
+          "DOI": "10.1109/ICASSP49357.2023.10095167"
+        },
+        {
+          "key": "28_CR17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li, Y., et al.: Masksim: detection of synthetic images by masked spectrum similarity analysis. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 3855–3865 (2024)",
+          "DOI": "10.1109/CVPRW63382.2024.00390"
+        },
+        {
+          "key": "28_CR18",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Selvaraju, R.R., Cogswell, M., Das, A., Vedantam, R., Parikh, D., Batra, D.: Grad-cam: visual explanations from deep networks via gradient-based localization. In: Proceedings of the IEEE International Conference on Computer Vision, pp. 618–626 (2017)",
+          "DOI": "10.1109/ICCV.2017.74"
+        },
+        {
+          "key": "28_CR19",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chefer, H., Gur, S., Wolf, L.: Transformer interpretability beyond attention visualization. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 782–791 (2021)",
+          "DOI": "10.1109/CVPR46437.2021.00084"
+        },
+        {
+          "key": "28_CR20",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Abate, A., Cimmino, L., Polsinelli, M.: Comparative evaluation of synthetic image detectors: insights from generative adversarial networks and stable diffusion generators. In: International Conference on Advanced Information Networking and Applications, pp. 426–436. Springer (2025)",
+          "DOI": "10.1007/978-3-031-87784-1_39"
+        },
+        {
+          "key": "28_CR21",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Xiao, B., et al.: Florence-2: advancing a unified representation for a variety of vision tasks. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 4818–4829 (2024)",
+          "DOI": "10.1109/CVPR52733.2024.00461"
+        },
+        {
+          "key": "28_CR22",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Park, S., Bae, Y., Han, G., Olson, A.W.: Floda: harnessing vision-language models for deepfake assessment. In: 2025 IEEE International Conference on Consumer Electronics (ICCE), pp. 1–8 (2025)",
+          "DOI": "10.1109/ICCE63647.2025.10929816"
+        },
+        {
+          "key": "28_CR23",
+          "unstructured": "Smilkov, D., Thorat, N., Kim, B., Viégas, F., Wattenberg, M.: Smoothgrad: removing noise by adding noise, arXiv preprint arXiv:1706.03825 (2017)"
+        },
+        {
+          "key": "28_CR24",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Valois, P.H.V., Niinuma, K., Fukui, K.: Occlusion sensitivity analysis with augmentation subspace perturbation in deep feature space. In: Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV), pp. 4829–4838 (2024)",
+          "DOI": "10.1109/WACV57701.2024.00476"
+        }
+      ],
+      "container-title": [
+        "Lecture Notes on Data Engineering and Communications Technologies",
+        "Advanced Information Networking and Applications"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://link.springer.com/content/pdf/10.1007/978-3-032-23347-9_28",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            2
+          ]
+        ],
+        "date-time": "2026-07-02T00:27:16Z",
+        "timestamp": 1782952036000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://link.springer.com/10.1007/978-3-032-23347-9_28"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "ISBN": [
+        "9783032233462",
+        "9783032233479"
+      ],
+      "references-count": 24,
+      "URL": "https://doi.org/10.1007/978-3-032-23347-9_28",
+      "relation": {},
+      "ISSN": [
+        "2367-4512",
+        "2367-4520"
+      ],
+      "issn-type": [
+        {
+          "value": "2367-4512",
+          "type": "print"
+        },
+        {
+          "value": "2367-4520",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "1 May 2026",
+          "order": 1,
+          "name": "first_online",
+          "label": "First Online",
+          "group": {
+            "name": "ChapterHistory",
+            "label": "Chapter History"
+          }
+        },
+        {
+          "value": "AINA",
+          "order": 1,
+          "name": "conference_acronym",
+          "label": "Conference Acronym",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "International Conference on Advanced Information Networking and Applications",
+          "order": 2,
+          "name": "conference_name",
+          "label": "Conference Name",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "Wellington",
+          "order": 3,
+          "name": "conference_city",
+          "label": "Conference City",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "New Zealand",
+          "order": 4,
+          "name": "conference_country",
+          "label": "Conference Country",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "2026",
+          "order": 5,
+          "name": "conference_year",
+          "label": "Conference Year",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "8 April 2026",
+          "order": 7,
+          "name": "conference_start_date",
+          "label": "Conference Start Date",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "10 April 2026",
+          "order": 8,
+          "name": "conference_end_date",
+          "label": "Conference End Date",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "40",
+          "order": 9,
+          "name": "conference_number",
+          "label": "Conference Number",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "aina2026",
+          "order": 10,
+          "name": "conference_id",
+          "label": "Conference ID",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "http://voyager.ce.fit.ac.jp/conf/aina/2026/",
+          "order": 11,
+          "name": "conference_url",
+          "label": "Conference URL",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        }
+      ]
+    }
+  }
+}

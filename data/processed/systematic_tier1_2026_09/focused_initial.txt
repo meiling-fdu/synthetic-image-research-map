@@ -1,0 +1,56 @@
+....F............................................F..............F....... [ 68%]
+.................................                                        [100%]
+=================================== FAILURES ===================================
+_ test_current_reconciliation_counts_existing_exclusions_instead_of_missing_papers _
+
+    def test_current_reconciliation_counts_existing_exclusions_instead_of_missing_papers():
+        from scripts.verify_key_paper_reconciliation import verify_current_curation
+>       report = verify_current_curation()
+
+tests/test_primary_paper_curation.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def verify_current_curation():
+        """Verify today's membership using the persisted pre-curation snapshot."""
+        try:
+            from .report_primary_paper_curation import build_audit, BASELINE
+        except ImportError:
+            from report_primary_paper_curation import build_audit, BASELINE
+        primary = build_audit()
+        artifacts, totals, errors = audit.expected_artifacts()
+>       assert not errors and not audit.validate_artifacts()
+E       AssertionError
+
+scripts/verify_key_paper_reconciliation.py:156: AssertionError
+_ PaperTaxonomyMigrationTests.test_localization_has_explicit_task_or_evaluation_evidence _
+
+self = <test_paper_taxonomy_migration.PaperTaxonomyMigrationTests testMethod=test_localization_has_explicit_task_or_evaluation_evidence>
+
+    def test_localization_has_explicit_task_or_evaluation_evidence(self):
+        localized = [row for row in self.registry if "localization" in row["tasks"].split(";")]
+        self.assertEqual(25, len(localized))
+        for row in localized:
+            evidence = row["tasks_evidence_excerpt"].casefold()
+>           self.assertTrue("local" in evidence or "segmentation" in evidence, row["title"])
+E           AssertionError: False is not true : Weakly-Supervised Deepfake Localization in Diffusion-Generated Images
+
+tests/test_paper_taxonomy_migration.py:98: AssertionError
+_____ test_prior_supported_records_and_current_review_candidates_preserved _____
+
+    def test_prior_supported_records_and_current_review_candidates_preserved():
+        decisions = json.loads((ROOT / "docs/remaining_institution_location_audit_2026-08-27.json").read_text())
+        payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
+        # The historical cases remain traceable after the later manual review. The
+        # Current pending rows are source-backed affiliations retained across the
+        # later targeted paper audits; they intentionally have no guessed coordinates.
+        assert payload["summary"]["pending_review"] == payload["summary"]["needs_coordinates"]
+        # Four earlier cases plus the newly verified WICT and UL affiliations.
+>       assert payload["summary"]["pending_review"] == 28
+E       assert 29 == 28
+
+tests/test_manual_location_audit_20260827.py:126: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_primary_paper_curation.py::test_current_reconciliation_counts_existing_exclusions_instead_of_missing_papers
+FAILED tests/test_paper_taxonomy_migration.py::PaperTaxonomyMigrationTests::test_localization_has_explicit_task_or_evaluation_evidence
+FAILED tests/test_manual_location_audit_20260827.py::test_prior_supported_records_and_current_review_candidates_preserved
+3 failed, 102 passed in 116.09s (0:01:56)

@@ -1,0 +1,572 @@
+PAGE 1
+         Weakly-superviseddeepfakelocalizationindiffusion-generatedimages
+
+
+   Dragos,-Constantin T, ˆant,aru                      Elisabeta Oneat,˘a                                    Dan Oneat,˘a
+              Bitdefender                                 Bitdefender                       University Politehnica of Bucharest
+   dtantaru@bitdefender.com                     eoneata@bitdefender.com                              dan.oneata@gmail.com
+
+
+                            Abstract                                        are emerging as the dominant paradigm [14], showcasing
+                                                                            impressive results on a wide array of tasks including text-
+   Theremarkablegenerativecapabilitiesofdenoisingdif-                       controlled image generation [45,48,51,61] or image-to-
+fusion models have raised new concerns regarding the au-                    image translation [38,48,50,61]. Prior work on deepfake
+thenticity of the images we see every day on the Internet.                  detectionhasnaturallymostlyconsidered detectingcontent
+However, the vast majority of existing deepfake detection                   generatedbyGANs[5,20,41,57,60],butthecomputervision
+models are tested against previous generative approaches                    communityisnowstartingtoconsiderDDPMs[9,47]. Here
+(e.g. GAN)andusuallyprovideonlya“fake”or“real”la-                           we continuethis direction, going onestep further toaddress
+belperimage. Webelieveamoreinformativeoutputwould                           the task of weakly-supervised deepfake localization.
+betoaugmenttheper-imagelabelwithalocalizationmap                               First,weextendpriorapproachestolocalisethemanipu-
+indicating which regions of the input have been manipu-                     lated area and not only label the entire image as fake or real.
+lated. Tothisend,weframethistaskasaweakly-supervised                        The binary output of the typical deepfake detection methods
+localization problem and identify three main categories of                  providesonlycoarseandopaqueinformation,especiallyin
+methods (based on either explanations, local scores or at-                  the frequent case of local manipulations and forgeries. In
+tention), which we compare on an equal footing by using                     this scenario, we would be much better served by a richer
+theXceptionnetworkasthecommonbackbonearchitecture.                          representationthatcouldpinpointwhich partoftheimageis
+We provide a careful analysis of all the main factors that                  likelytohavebeengenerated. Anotherbenefitoflocalization
+parameterize the design space: choice of method, type of                    isthatitallowstheend-usertotakemoreinformeddecisions.
+supervision, dataset and generator used in the creation of                  For example, changing the color of one’s eyes may just be
+manipulated images; our study is enabled by constructing                    an innocuous enhancement of the user’s appearance, but the
+datasetsinwhichonlyoneofthecomponentsisvaried. Our                          alteration of the movement of the lips in a video may hint
+results show that weakly-supervised localization is attain-                 towards a malicious use. Instead of deciding upfront what is
+able,withthebestperformingdetectionmethod(basedon                           deemed to be fake or real, a localization method can defer
+local scores) being less sensitive to the looser supervision                this decision to the end user, who is more informed and can
+thantothemismatchintermsofdatasetorgenerator.                               tailor the method to their use case.
+                                                                               Second, in contrast to prior work, which addresses lo-
+1.Introduction                                                              calization in a fully-supervised setting [26,33,58,64], we
+                                                                            consider a weakly-supervised scenario, where we assume
+   Image generation is improving by the day and it is ar-                   that we onlyhave access to image-level labels and themod-
+guably past the point where it is possible to perceptually                  els are not explicitly trained for localization.  This setup
+distinguishbetweengenerated(fake)andrealcontent. Gener-                     is motivated by the fact that generative methods are usu-
+ativeadversarialmodels(GAN)[19],normalizingflows[46],                       ally first developed in the context of full-image synthesis,
+denoisingdiffusionprobabilisticmodels(DDPM)[54]—all                         and only then extended to the more specific cases of local
+provide excellent means for the creation of digital art or                  editing,suchasinpaintingorattributemanipulation. More-
+entertainment content.  However, the advances in image                      over, ground truth manipulation masks might not always be
+generation come at the cost of also easing malicious use,                   available, especially for newly developed local manipula-
+e.g., by altering reality or spreading misinformation.  To                  tionmethods. Traininga deepfakelocalizationmethod ina
+counter these harmful effects, deepfake detection methods                   weakly-supervised fashion (based on a global label) would
+are developed to discriminate between fake and real sam-                    allowustobeonestepaheadofthepotentiallyharmfuluses
+ples [43,44,56].                                                            involving local changes.
+   Amongtheclassesofgenerativemodels,diffusionmodels                           Our work brings the following contributions:
+
+PAGE 2
+  1. Weproposeaweakly-supervisedframeworkfordeep-                                 image                      fakeness   explanation    localization
+      fakelocalizationinimagesthatallowstosystematically                                         backbone      score                      mask
+      uncover the importance of various factors (model,su-
+      pervisiontype,dataset,generator) in the context of                                                         0.9
+      weakly-supervised localization of face manipulations.
+  2. Wegenerateadetaileddataset(morethan125kimages)                                                                               GradCAM ·GC
+      with locally- and fully-manipulated images that allows                      image          backbone   localization    aggregation   fakeness
+      the disentanglement of different factors in deepfake                                                     mask                         score
+      manipulationlocalization. Theimagesareobtainedus-
+      ing either newly introduced state-of-the-artgenerative                                                                      Σ          0.9
+      models or a novel inpainting approach that incorpo-                                                                          Patches ·PT
+      ratesapretrainedLDM[48]modelinadiffusion-based
+      inpainting method [38].                                                                               localization                  fakeness
+                                                                                  image          backbone      mask             head        score
+  3. We provide extensive quantitative and qualitative
+      resultsto understandthe fundamentalfactors underly-                                                                 ·                  0.9
+      ingtheperformance ofweakly-supervisedlocalization
+      models.  Our analysis reveals the severity of out-of-                                                                     Attention ·AT
+      domaindegradation, provides insightsintothe model’s
+      sensitivity to looser supervision or dataset mismatch,                   Figure 1.  Overview of the three types of approaches proposed
+      andquantifies theperformanceacrossmultiple classes                       for the detection and localization of deepfakes. Each method is
+      of generative models. Our code and dataset are avail-                    able to produce a fakeness score (for detection) and a mask (for
+      able athttps://github.com/bit-ml/dolos.                                  localization); the mask is obtained either explicitly (for the first
+                                                                               model) or implicitly (for the second and third models).
+2.RelatedWork
+DeepfakedetectionofGANcontent. There is a vast and                             tionally GAN-based. Increasingly larger and more complex
+continuously-growing body of work dedicated to the de-                         datasets and challenges have emerged [15,25,28,31,34,49]
+tection of GAN-generated images, see [39,43,44,56] for                         and, with these, a considerable effort has been made to ex-
+reviews. Prior researchhas revealedmany particularitiesof                      pose those types of fakes [1,3,16,23,39,63].  However,
+GAN content [10,20,60], an important observation being                         actually localizingmanipulations hasarguably receivedless
+the appearance of a fingerprint—an imperceptible pattern,                      attention than detecting whether an image is fake or not.
+whichallowstheidentificationoftheGANmethodandtrain-                           Works that tackle localization rely on local noise fingerprint
+ing dataset [41,60]. Wang           et al. [57] also observe that all          patterns [21,33,40,64], attention mechanisms [12,13,42]
+CNN-generatedimagessharecommonsystematicartifacts,                             or self-consistency checks [2,27]. Very recent, concurrent
+that can be easily picked up by a classifier, while in [20]                   worksproposedaforensicframeworkforgeneralmanipula-
+the authors indicate that downsampling might destroy these                     tion localization [21] and a hierarchical fine-grained formu-
+high-frequency artifacts, which are the key to detection.                      lation for image forgery detection [22]. Similar to us they
+                                                                               consider diffusion-generated data with local forgeries, but
+DeepfakedetectionofDDPMcontent. Preliminary works                              differently they assume full supervision.
+ondetectingdiffusion-generatedimagesmadeuseofhigh-                             3.Methodology
+levelcuessuchasinconsistenciesinlighting[17]orperspec-
+tivedistortion[18]. However,morecommonend-to-endde-                               Wefirstdescribethemethodsusedfordeepfakedetection
+tectionnetworkswerealsotestedondiffusionimages[9,47],                          andweakly-supervised localization(§3.1). Thenwe detail
+focusing on the transferability across classes of generative                   the generative techniques that we areinterested in detecting
+models (from GAN to DDPM, and vice versa). The prevail-                        (§3.2)and thedatasetsgeneratedwiththese methods(    §3.3).
+ingobservationisthat detectors trainedononetypeofdata
+do not generalize well to the other, but finetuning helps.                     3.1.Methodsfordetectionandlocalization
+Local manipulations.  A common setup in deepfake cre-                             The task of deepfake detection consists of predicting
+ationisalteringaperson’sfacebyreenactment,replacement,                        whether an image is either real or fake. This task is usually
+editing or synthesis using techniques known as face swap,                      framed as a binary classification problem and it is addressed
+facetransfer,facialattributemanipulationsorinpainting[43].                     using standard classification networks. In this paperwe are
+These approaches result in local manipulations and are tradi-                  interestedin evaluatingthecapabilities ofsuchmethodsin a
+
+PAGE 3
+weakly-supervised setting: if we assume only image-level                    that the maximum value of the predicted mask agrees with
+labels, can these classifiers be successfully used forlocaliza-             the image-level label.  We modify the original implemen-
+tionof partially manipulated images?                                        tation in [12] to improve the performance and stabilize the
+   We identify and investigate three categories of architec-                training. First, wereplace theL1 losson themask withthe
+tures suitable for weakly-supervised localization.  These                   binary cross-entropy loss (CE). Second, we cross-validate
+methods are based on either explanations (GradCAM), local                   the weightλ that balancesthe two losses. Our final lossis:
+scores (Patches) or attention (Attention) (for visual                                     L = CE(y,ˆy)+λCE(y,max ˆm),                         (1)
+depictions see Figure1).  The first category is a general
+technique that given a trainedclassification network it uses               wherey isthetrueimagelabel, ˆy isthefakenessscoreand
+explainability techniques to highlight the most predictive                  ˆm is the estimated localization mask.
+regions for the “fake” label.  The other categories implic-                 Fully-supervised localization.   Along with the weakly-
+itly construct the localization maps: Patches produces                      supervisedsetupwealsoconsiderthefully-supervisedcase
+localpatch scoresthat arethen usedfor classification, while                 to show an upper bound on the performance.  Since not
+Attention predicts an activation map that is used topool                    all considered detection methods are able to be trained in
+relevant classification features.  To allow for a fair com-                 a fully-supervised setting out of the box, we modify them
+parison we fix the backbone and, in particular, we select                   to accommodate this setup: for GradCAM we truncate af-
+the Xception network [8], which has been shown to yield                     ter block 11 and add a fully convolutional layer as in [37];
+excellent results for deepfake detection of faces [49].                     forAttentionwekeeponlytheloss onthemask, other-
+   The proposed methods are inspired by and build upon                     wise the architecture remains the same; forPatches we
+state-of-the art deepfake detection methods [5,12,49], but                  maintain the same architecture, but instead of using the im-
+we further modify them as described below.                                  age label to supervise each feature prediction, we use the
+GradCAM. WhileGradCAM explanationswere previously                           downsized mask as groundtruth.
+usedinthedeepfakedetectionliterature[4,53,59,63],they                       3.2.Datasetgenerationmethods
+weremostly shownasqualitativeresults andrarely(ifever)
+evaluated quantitatively, in terms of how well they local-                     Weusediffusionmodelstogeneratebothfullimagesand
+ize the input alterations. In this paper we aim to quantify                 locally-inpainted ones.
+their performance and contrast them with other weakly-                      Diffusiondenoisingprobabilisticmodels(DDPM)[54]are
+supervisedlocalizationmethods. Concretely,weendowthe                        a class of generative models trained to reverse a diffusion
+Xception[8]networkwithlocalizationcapabilitiesbyapply-                      process. TheforwarddiffusionprocessiterativelyaddsGaus-
+ing GradCAM[52] on the activations producedby block 11,                     siannoisetoasampleuntilitsdistributionreachesastandard
+the one before the last downsampling operation.                             normal. The reverse denoising process gradually removes
+Patches. WeusePatch–Forensics[5],whichisatruncated                          noise, producing novel samples when starting from a ran-
+image classification network: it takes the feature activations              domimage. Thereverseprocessisimplementedasaneural
+after a few layers and projects them to a patch-level score                 network(withparametersθ)thatpredictsthemeanµθ(xt,t)
+using1×1convolutions. Attraintime,thelossiscomputed                         and covarianceΣθ(xt,t) of a Gaussian distribution:
+for each patch, while at test time, it produces a detection
+score by averaging the per-patch softmax scores. The au-                           pθ(xt−1|xt) =N (xt−1;µθ(xt,t),Σθ(xt,t)),                   (2)
+thors experiment with two backbones (Xception [8] and                      wherext are images that are sequentially generated, from
+ResNet [24]) and vary the number of layers that are kept.                   t =T tot = 1.
+WechosetheXceptionbackbonetruncatedafterthesecond
+blockoflayers,asthiscombinationwasshowntoyieldgood                          Repaint: Inpaintingwithdiffusion. Thetaskof inpainting
+performance [5].  One advantage of    Patches is that its                   istofillin themissingregionsofanimagex0 suchthatthe
+output naturally corresponds to a localization map. While                   resultingcompositionlooksnatural;themissingregionsare
+visualizationsoftheactivationmapswereshownintheorig-                        usually specified by a binary maskm. For inpainting with
+inal work, the localization performance was not quantified.                 diffusionweusetheapproachofLugmayretal.[38],whose
+Attention. Westartfrom[12]whichaugmentsanXcep-                              method performs mask-guided decoding on any pretrained
+tion[8]backbonewithalearnedattentionmaskthatisused                          DDPM.Moreprecisely,atgenerationtimetheyfirstsample
+tomodulatethefeaturemapsproducedbythenetwork. The                           a new image ˆxt from thepreviously-generated image, ˆxt+1,
+network is trained in a multi-task setting, with a loss on                  accordingtoEquation(2)   ,butthentheyreplacethevaluesof
+the full-image fakeness score and another one on the lo-                    ˆxt outside the given maskm with the values of the original
+calization mask. In the weakly-supervised scenario, when                    image encoded aftert stepsxt:
+no groundtruth mask is provided, the second term ensures                                      ˆxt←m⊙ˆxt+(1−m)xt                               (3)
+
+PAGE 4
+                     Full image synthesis· generator: P2 [7]                                               Generator                                   Num. samples
+
+                                                                                     Type           Family            Model               Dataset   Train  Val.   Test
+                                                                                     Real            –                     –                        CelebA       9k   900   900
+                                                                                     Real            –                     –                        FFHQ         9k   900       –
+                                                                                     Fake full     Diffusion        P2                      CelebA       9k     1k       –
+                                                                                     Fake full     Diffusion        P2                      FFHQ         9k     1k       –
+
+                    Local manipulations· dataset: CelebA-HQ                          Fake local  Diffusion        Repaint–P2       CelebA     30k     3k  8.5k
+                                                                                     Fake local  Diffusion        Repaint–P2       FFHQ       30k     3k       –
+                                                                                     Fake local  Latent diff      Repaint–LDM  CelebA       9k   900   900
+                                                                                     Fake local  Fourier conv  LaMa                CelebA       9k   900   900
+                                                                                     Fake local  GAN              Pluralistic          CelebA       9k   900   900
+
+                                                                                   Table 1. Details of our proposed dataset, which contains locally-
+                                                                                   and fully-generatedimages frommultiple typesof generators. The
+     original           mask           Repaint         Repaint          LaMa         Pluralisticdataset is designed to allow for a principled analysis of multiple
+                                P2               LDM                               factors: manipulation type, generator, source dataset. We provide:
+                                                                                   (i) fully-generated images on CelebA-HQ and FFHQusing P2 [7];
+Figure 2.  Examples from our generated dataset.  The first two                     (ii) locally-inpainted images on FFHQ using Repaint–P2 and on
+rows represent fully-generated images using P2 on CelebAHQand                      CelebA-HQ using Repaint–P2, Repaint–LDM, Pluralistic [62],
+FFHQ, respectively. The last two rows represent locally-inpainted                  LaMa [55] (using the same masks).
+images using Repaint–P2, Repaint–LDM, LaMa, Pluralistic, re-
+spectively; notice the high realism of images obtained with both
+large and small masks.                                                             andcropped. Bothdatasetsarepopularchoicesfortraining
+                                                                                   generativemodelsand,consequently,aresuitablechoicesfor
+                                                                                   trainingdeepfakedetectionmodels. Weselect asubsetof9k
+This procedure ensures that the values outside the mask are                        trainand900validationimagesfromeachofthetwodatasets
+preserved from the original imagex0.                                               to match the number of fake images that are generated.
+Repaint–LDM: Inpainting with diffusion in the latent                               Fakedata: Full-imagesynthesis. We use the perception-
+space. Latentdiffusionmodels(LDM)[48]havebeenshown                                 prioritized(P2)diffusionmethodofChoietal.[7]tosample
+to offer a scalable approach to generating high-fidelity im-                       fully-synthetic images.  We chose this approach because
+ages. Theirmainideaconsistsofperformingdiffusioninthe                              (i) the authors provide pretrained models on the two real
+(low-dimensional)latentspaceofavariationalautoencoder                              datasetsmentionedabove(CelebA-HQandFFHQ),which
+(VAE).WetranslatethisideatoinpaintingbyrunningtheRe-                               enableasystematicexperimentation,and(ii)themodelsare
+paintscheduler(Equation3)inthelatentspace,              x← enc(x),                 lightweightandhencetheinferenceisreasonablyfast. For
+of the variational autoencoder and using an appropriately                          both datasets we sample 10k images: 9k for training and 1k
+downsized mask, m ← resize(m). This procedure gener-                               forvalidation. Wedonotevaluateonthesefully-synthesized
+ates an (inpainted) latent code, ˆx, which is then inverted                        sets, hence no test set is provided. We refer to these datasets
+to the original pixel space using the decoder of the VAE,                          as P2/CelebA-HQ and P2/FFHQ, respectively.
+dec(ˆx). Notably,this method allows usto inpaint animage
+using any existing pretrained LDM model. To the best of                            Fakedata: Localmanipulations. We generate two locally-
+our knowledge, this approach to inpainting is novel.                               manipulated datasets using the Repaint method [38] to in-
+                                                                                   paintimagesfromtheCelebA-HQandFFHQdatasets. We
+3.3.Datasets                                                                       use the Repaint method on top of pretrained P2 models,
+   To train and evaluate our models, we use real images                            namely its variants trained on CelebA-HQ and FFHQ, re-
+and two types of fake images: fully-synthesized and locally-                       spectively.   The inpainted regions correspond to various
+manipulatedimages. ThedatasetsaresummarizedinTable1                                face attributes (skin, hair, eyes, mouth, nose, glasses). For
+and examples are shown in Figure2.                                                 CelebA-HQ, these annotations were manually labeled and
+                                                                                   areavailableintheCelebAMask-HQ[29]extensionofthe
+Realdata. We usetheCelebA-HQand FFHQfacedatasets                                   dataset,whileforFFHQtheseareobtainedusingapretrained
+as sources of real data.  CelebA-HQ [29] consists of 30k                           facesegmentationmethod[32]. Givenanimage(correspond-
+images that were selected and processed from the CelebA                            ing to the identity of a person) we generate multiple inpaint-
+dataset[36];wekeeptheoriginalsplitsfortraining,valida-                             ings by randomly sampling masks corresponding to these
+tionandtesting. FFHQ[30]consistsof70kPNGimagesthat                                 face attributes and, for thesmaller parts (eyes,mouth, nose),
+have been crawled from Flickr and automatically aligned                            by alsodilating them witha kernel ofrandomly-chosed size,
+
+PAGE 5
+but up to 15 pixels.  We refer to the resulting datasets as                        real        inpainted      mask              real        inpainted       mask
+Repaint–P2/CelebA-HQandRepaint–P2/FFHQ;theformer
+will represent our main test bed, while the latter is used only
+at training.
+   Tobe ableto systematically studythe importanceof the                            GC             PT             AT                GC             PT              AT
+generatorweinpaintedasubsetof9kimagesusedinRepaint–                           A
+P2/CelebA-HQ with three other methods:  Repaint-LDM
+(ours), LaMa [55], Pluralistic [62]. Repaint-LDM adapts the
+Repaint method to operate in the latent space by using the
+LDM model [48]; LaMa is an inpainting method that uses                        B
+an autonecoder with Fourier convolutions [6]; Pluralistic
+is a conditional variational autoencoder with adversarial
+loss. Wehavechosenthesemethodssincetheyallprovide                             C
+pretrained models on the CelebA-HQ dataset. This allows
+us to inpaint the same images using the same masks, and
+isolate the differences attributed to the change of generator.               Figure 3. Soft localization maps produced by the three approaches
+                                                                             usingdifferentlevelsofsupervision. Patchescanaccuratelyde-
+4.Experimentalsetup                                                          tectthemanipulationsafter havingseenonlyfully-generatedfake
+                                                                             images (scenario A) or locally-inpainted images with only image-
+Implementation details. Following the recommendation                         levelsupervision (scenario B). BothAttentionandGradCAM
+of Chaietal. [5], we ensure that real and fake images both                   struggle in scenarios A and B.  All methods recover the manip-
+follow exactly the same preprocessing steps prior to passing                 ulated region in the fully supervised scenario, C.  This suggests
+them through the detection methods. These steps include                      that operating at a patchlevel is better suited for recovering local
+theinputresolutionandresizealgorithm. Consequently,we                        manipulations than either using GradCAM or attention.
+process both CelebA-HQ and FFHQ images as they were
+processedfortrainingthegenerator,thatis,weresizethem                               real images from the corresponding dataset on which
+to 256× 256 using bicubic interpolation.                                           P2 was trained.
+Tasks and metrics. Localization is the main task that we                        • SetupB(label&partial)isaweakly-supervisedsetup
+tackle. We report intersection over union (IoU) and pixel-                         in which we have access to partially-manipulated im-
+wisebinaryclassification accuracy(PBCA).Thesemetrics                               ages,butonlywithimage-levellabels(nolocalization
+assumebinarypredictionandweuseafixedthresholdof0.5                                 information). This means thatwhile an imagemay be
+forbinarization. Thedetectionmethodsgeneratemasksof                                labelled as “fake”, not all of its regions are fake. We
+differentsizes: 19×19forGradCAMandAttention,37                                     use 9k locally-modified images by Repaint–P2 and 9k
+× 37forPatches. For afairevaluationwe resizethem to                                real images from the corresponding training dataset.
+the size of the input image: 256× 256.
+   We also report results on detection, the task of telling                     • SetupC (mask&partial)isafully-supervisedsetting,
+apart fake images from real images.  We rank the images                            in which we have access to ground-truth localization
+bytheirper-imagefakenessscore,whichisoutputbyeach                                  masks of partially-manipulated images. We uses 30k
+methodasillustratedinFigure1. Thedetectionperformance                              locally-modifiedimagesbyRepaint–P2;forthissetup,
+is then measured in terms of average precision (AP), which                         no real images are used.
+is a threshold-free metric.
+                                                                                 To evaluate localizationwe use 8.5klocally-manipulated
+5.Experiments                                                                imagesproducedbyRepaint–P2/CelebA-HQandtoevaluate
+   Ourexperimentsevaluatetheproposedmethodswithdif-                          detection we use 900real images from CelebA-HQ and 900
+ferent levels of supervision, gradually changing the dataset                 fakesfromRepaint–P2/CelebA-HQ.Notethattheevaluation
+and thegenerators in orderto quantifytheir importance for                    is carried on the same data regardless of the setup. Table 1
+localization.  We investigate the performance using three                    from the supplementary material summarizes the data used
+main levels of supervision:                                                  in each of the three setups.
+
+   • Setup A (label & full) is a weakly-supervised setup                     5.1.Evaluatinglocalizationabilities
+      inwhichwehaveaccesstofully-generatedimagesas                               Weevaluateallthreeproposedapproachesforlocalization
+      fakes and, consequently, only image-level labels. We                   in the three setups described above. To exclude other factors
+      use 9k fake images, fully synthesized by P2, and 9k                    of variation we maintain the image generator and source
+
+PAGE 6
+                                                              IoU (%)                     PBCA (%)                      AP (%)
+                       setupsup.      generator      GC       PT       AT       GC       PT       AT       GC       PT       AT
+
+                         A        label          full          16.8    64.9       9.7     83.1    96.7     83.4     67.3    95.3     79.3
+                         B        label        partial       21.5    37.7     23.2     85.1     79.8    86.3     94.4    95.3     94.4
+                         C        mask       partial       83.7    84.5     70.3     96.8    98.6     97.6          –          –          –
+
+Table2. Evaluationofthethreeselectedlocalizationtechniques(GradCAMGC,PatchesPT,AttentionAT)ontheRepaint–P2/CelebA-
+HQdatasetusingdifferentlevelsofsupervision: image-levellabelonfullimages(A),image-levellabelonlocallymanipulatedimages(B),
+andfully-supervisedmasks(C). Weevaluatebothlocalization(usingIoUandPBCA)anddetection(usingAP).Patchessystematically
+outperforms the other two methods under most of the scenarios and metrics.
+
+
+datasetfixed, thatis,forscenarioA wetrain onP2/CelebA-                                                        CelebA-HQ                    FFHQ
+HQ,whileforscenarios Band CweuseRepaint–P2/CelebA-                                   sup.    generator   IoU   PBCA    AP    IoU   PBCA    AP
+HQ. Real data from CelebA-HQ is used in setups A and B,
+while for the fully supervised scenario, setup C, real data is                   A    label        full        64.9       96.7   95.3   25.1       88.9   84.4
+not needed. Results for bothlocalization and detectionare                        B    label      partial     37.7       79.8   95.3   23.3       64.4   75.2
+shown in Table2.                                                                 C   mask     partial     84.5       98.6        –   32.3       89.2        –
+   Amongthe selectedmethods, wesee thatPatchesgen-                             Table 3. EvaluationofPatcheson theRepaint–P2/CelebA-HQ
+erally outperforms the other two approaches across mul-                        dataset using twotraining datasets: CelebA-HQand FFHQ. When
+tiple setups and metrics (bold values in Table2).   We                         the source dataset does not match the target one, we observe a
+see that localization performance is strong for all methods                    consistent drop in performance across all scenarios. This is more
+when training in the fully supervised scenario (setup C) and                   evident inscenario B whereonly image-level supervisionisavail-
+performance drops as we move to the two weakly super-                          able for locally-manipulated images.
+vised setups (setups A and B). Interestingly,GradCAM and
+Attentionperformbetterinsetup Bthaninsetup A,while
+forPatches we observe the reverse trend. We believe that                       sourcedatasets,whilefixing thegeneratorandthedetection
+Patchesisworseinsetup Bbecausethelossissetatpatch-                             method. Trainingiseitherbasedonfakedataderivedfrom
+level, and the patch labels are inherently noisy as we use                     CelebA-HQ (P2/CelebA-HQ for scenario A and Repaint–
+partially-manipulated images at input.                                         P2/CelebA-HQforscenarios B and C)orFFHQ(P2/FFHQ
+   In terms of detection (the ‘AP’ columns in Table2), we                      forscenario A andRepaint–P2/FFHQforscenarios B and C),
+observe strong performance of Patches in both weakly                           while the testing is carried on Repaint–P2/CelebA-HQ.
+supervisedsetups, A and B. Interestingly, thedetectionper-                         QuantitativeresultsareshowninTable3forallscenarios
+formance is good for all models in setup B. In retrospect,                     under both localization and detection metrics. We observe
+this is expected since for the detection task in setup B the                   a consistent drop in performance across all scenarios and
+train data matches the test data.                                              metricswhenthereisadatasetmismatch. Acloserlookat
+   Figure3shows examples of the localization maps pro-                         thesoftlocalizationmapsrevealsamorecompletepicture.
+duced by the detection methods in all three scenarios. We                      The ‘different’ columns in Figure4show that training on
+notice thatPatches is able to partially recoverthe manip-                      FFHQ still produces qualitatively reasonable predictions
+ulatedareaseveninsetups A and B. Insetup B weobserve                           even for small regions (nose and mouth). However, in this
+that due tothe noisy labels the modelfires also on the back-                   mismatched setting the predictions are less certain at the
+groundregions. GradCAMandAttentionstrugglemore                                 boundariesandthemasksappearstobeerodedorwithholes.
+in the weakly-supervised scenarios and their outputs are                           Tobetterassesstheestimatedlocalizationmapswelook
+qualitatively different: the former seems to produce weaker                    at thehow theiraccuracy varieswith the sizeof the manipu-
+activations,whicharespreadthroughirrelevantareasofthe                          latedregion. InFigure5weshowtheIoUscoreasafunction
+image (especially in scenario A), while the latter produces                    of the mask area for the three setups when (i) the training
+less precise localizations.                                                    dataset matches the one at test time (blue line), and (ii) is
+5.2.Generalizationacrosssourcedatasets                                         different(orangeline). Weobservethatlargermanipulations
+                                                                               are generally easier to correctly locate (increasing IoU with
+   Generalization is a key desirable property of deepfake                      area) and that the dataset mismatch results in a sizable drop
+detectors. Here, we assess how localization is affected by                     in performance. However, for setup B the slopes are much
+datasets shifts.  To this end, we design an experiment in                      steeper andthe gapbetween thetwo curves isreduced. We
+which the training and testing data come from different                        believethatthishappensbecauseinthissetupthemodelfires
+
+PAGE 7
+   inpainted      mask        inpainted      mask        inpainted       mask
+
+
+
+
+        trainvstest                    trainvs test                    trainvstest
+     same       different         same       different         same        different
+
+
+A
+
+
+
+
+B
+
+
+
+
+C                                                                              Figure 6. Localization performance (IoU) across four inpainting
+                                                                               methods(Repaint,LDM,LaMa,Pluralistic)andtheircombinations.
+                                                                               AllfourmethodsinpaintedthesameimagesfromCelebA-HQusing
+                                                                               the same masks. We usedPatchesin setup C.
+Figure 4.  Soft localization maps produced by Patches when
+using the samevs different source datasets for training and testing.           We observe that localization works generally very well as
+FortrainingweusedataderivedformeitherCelebA-HQorFFHQ,
+whilefortestingweusedataderivedfromCelebA-HQ.Whenthere                         long we test on data generated from the same model (main
+is a dataset mismatch (the ‘different’ column), we observe maps                diagonal in the left plot). However, LDM is an exception:
+thatare lesssharp anderoded, especiallyin theweakly supervised                 localization in LDM-manipulated images is more difficult
+scenarios, A and B.  The noisy training of scenario B dims the                 since the inpainting is carried in the latent space and the
+separation between real and fake regions.                                      decoding step “hides” the traces of the latent manipulation,
+                                                                               akin to how image processing steps degrade detection per-
+                                                                               formance [57].
+                                                                                  When we evaluate on data coming from a different gen-
+                                                                               erator, the performance drops sharply (off-diagonal entries
+                                                                               in the left plot). The transfer performance between LaMa
+                                                                               and Pluralistic isstill decent,presumably dueto thepartic-
+                                                                               ularities of the encoder–decoder approach.  The diffusion
+Figure5. IoUasafunctionofthemanipulatedarea(aspercentage)                      model of Repaint is different from the two and makes the
+forallthreesetupswhenchangingthetrainingdataset: CelebA-HQ                     cross-generatortransfer morechallenging. Still,it appears
+(same as test; blue) or FFHQ (different from test; orange).                    thatthetransferfromdiffusiontoautoencodersandGANs
+                                                                               (38.0%and41.4%,respectively)iseasierthantheotherway
+alsoonthebackgroundand,asthebackgroundtakesmostof                              around(10.3%and0.2%,respectively);asimilarconclusion
+the image, this region will impact most of the performance.                    has been observed for detection [47].
+                                                                                  Trainingoncombinationsofmultipledatasetsyieldsgen-
+5.3.Generalizationacrossgenerators                                             erallygoodperformance onallthedatasetsinvolvedattrain-
+   We evaluate to what extent localization methods trained                     ing(off-diagonalentriesintherightplot). However,wedo
+onaparticulargenerationmethod(e.g.,diffusion,GAN)gen-                          not observe a generalization benefit by using more types of
+eralizeto samplesproduced byadifferent one. To thisend                         generators at training (diagonal entries in the right plot vs
+we inpaint the CelebA-HQ dataset (using the same masks                         off-diagonal entries in the left plot). For example, training
+as before) with three other approaches:  Latent Diffusion                      onallgeneratorsbutLDMyieldsanIoUof19.7%,whichis
+Model (LDM) [48], LaMa [55] and Pluralistic [62]. For the                      only marginallyabove19.5%, what isachievedby training
+Repaint–P2 dataset we use a subset of 9k samples to match                      only on Repaint. For the other three generators, the perfor-
+the samples from the other approaches (see Table3). We                         manceisevenslightlyworseoncombinationsthanthesingle
+trainthePatchesmethodinafullysupervisedsetting(sce-                            best generator.
+nario C)oneachofthefourdatasetsaswellascombinations                            5.4.Performanceonunseendatasets
+ofthose(usingthreeoutofthefourdatasets). Theevaluation
+is carried on all four inpainted test sets.                                       In this section, we consider generalization in its most
+   The results for the 32 train–test combinations are given                    challenging form, by varying both the source dataset and
+inFigure6,whilequalitativeresultsareshowninFigure7.                            the generation algorithm. Consequently, we evaluate on a
+
+PAGE 8
+          real             mask                                                                                     R-P2/CelebA       COCO Glide
+
+                                                                                  Method                                   IoU     PBCA        IoU     PBCA
+                                                                                  MantraNet [58]                        4.8             81.9       25.1        79.8
+                    trained on    trained on    trained on    trained on          Noiseprint [11]                      18.2        23.8       23.9        29.0
+        inpainted       repaint           ldm             lama         pluralisticPSCC [35]                              14.3        66.5           33.3        80.6
+                                                                                  TruFor [21]                               23.1        81.3     . 29.2        81.4
+                                                                                  HiFi-Net [22]                           0.0        81.0         2.6          3.2
+                                                                                  MethodstrainedonRepaint–P2/CelebA-HQinsetup C
+                                                                                  PSCC [35]                            89.0 98.813.3        18.4
+                                                                                  Patches                              84.5 98.730.8        64.8
+
+                                                                                Table 4.   Evaluation of pretrained localization models on our
+                                                                                 Repaint–P2/CelebA-HQ and the COCO Glide dataset [21]. The
+                                                                                 grayedoutresults(PatchesandPSCConRepaint–P2/CelebA-
+                                                                                 HQ) arenot directly comparable to thoseof other methods,since
+                                                                                 bothPatches and PSCC are trained on Repaint–P2/CelebA-HQ.
+                                                                                 Qualitative results are available in the supplementary material.
+
+
+                                                                                 6.Conclusions
+Figure 7.  Qualitative results for the cross-generator evaluation
+usingPatches trained in setup C. We observe the difficulty in                       In this paper, we investigate weakly-supervised localiza-
+generalization across generators (off-diagonal predictions) and the              tion in the context of diffusion-generated images of faces.
+factthatlocalmanipulationsinducedbyLDMarechallengingto                          Weproposeaframeworkandadatasetthatallowstosystem-
+identify (second image on the main diagonal).                                    aticallyexploretheimportanceofdifferentfactorsinmodel
+                                                                                 performance,suchas: choiceofdetectionmethod,levelof
+                                                                                 supervision,datasetandtypeofgeneratorused. Wedesigna
+different dataset, COCOGlide [21], which consists of512                          series of experiments thatprogressively modify the training
+locally-edited images using a text-guided diffusion-based                        assumptionsandshowedthat,toacertainextent,detection
+model. Additionally,wepresentresultsoffiveotherexisting                          oflocalmanipulationscan beperformedweaklysupervised,
+localization methods [11,21,22,35,58], which were pre-                           even in the most restrictive scenarios.
+trained on different datasets, and compare their performance                        Wesummarizeourfindings:1.Thepatch-basedmethod
+on our own Repaint–P2/CelebA-HQ, as well as on COCO                              consistently outperforms the other two approaches (expla-
+Glide. Fora comparison toPatches, we alsofine-tune the                           nations or attention) across multiple settings and metrics.
+PSCC method [35] in setup       C on the Repaint–P2/CelebA-                      2.The detection performance in one of the weakly-super-
+HQ data. The results are shown in Table4.                                       visedsettings(imagelabel&partialmanipulations)isstrong
+                                                                                 acrossalldetectionmethods,suggestingthatpartially-manip-
+   Weobservethatthegeneralizationperformanceismodest                             ulatedimages canbe usedfor trainingdeepfakeclassifiers.
+on either of the two datasets: the best out-of-domain per-                       3.Among the three types of factors (supervision, dataset,
+formance onRepaint–P2/CelebA-HQ is23.1%, obtained by                             generator method), supervision seems to have a lesser im-
+TruFor,whileonCOCOGlideis33.3%,obtainedbyPSCC.                                   pact (at least for the best performing method, Patches),
+Even methods that haveshownto generalize (TruFor[21])                           while the generator impacts the most.4.Localization of
+or that have been trained specifically on diffusion images                       manipulationsforlatentdiffusionmodelsisverychallenging
+(HiFi-Net [22]) have difficulties on out-of-domain datasets.                     even in the most optimistic scenario.
+   Patches shows competitive results (second best in                                We believe that these findings can fuel research into
+terms of IoU on COCO Glide),  even if it was trained                            weakly-supervised localization of deepfake manipulations
+solelyon faces. Interestingly, thisis notthecase forPSCC.                       with possible extensions to general-content images and to
+WhilePSCCobtainstopperformancein-domain,onRepaint–                               other types of local manipulations, such as face-swap, local
+P2/CelebA-HQ,itstrugglestogeneraralize toCOCOGlide.                              enhancementsorfacialposetransferobtainedwithDDPMs.
+Thisbehavioursuggeststhatoverfittingisocurring,whichis                          Acknowledgements. This work was supported in part by
+not surprising given that the model capacity of PSCC (3.6M                       European Union’s HORIZON-CL4-2021-HUMAN-01 re-
+parameters)isanorderofmagnitude largerthantheoneof                               search and innovation program under grant agreement No.
+Patches (200k parameters).                                                      101070190 “AI4Trust”.
+
+PAGE 9
+References                                                                             Baining Guo. Protecting celebritiesfrom deepfakewith iden-
+ [1]DariusAfchar, Vincent Nozick, Junichi Yamagishi, andIsao                           tity consistency transformer.  In CVPR, pages 9468–9478,
+      Echizen. MesoNet: Acompact facialvideoforgerydetection                           2022.2
+      network. In IEEE Workshop on Information Forensics and                     [17]  HanyFarid. Lighting (in)consistencyof paintbytext. arXiv
+      Security, pages 1–7, 2018.2                                                      preprintarXiv:2207.13744, 2022.2
+ [2]  Susmit Agrawal, Prabhat Kumar, Siddharth Seth, Toufiq                      [18]  Hany Farid.  Perspective (in) consistency of paint by text.
+      Parag,ManeeshSingh,andR.VenkateshBabu. SISL:Self-                                arXivpreprintarXiv:2206.14617, 2022.2
+      supervisedimagesignaturelearningforsplicingdetection&                      [19]  Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing
+      localization. InCVPRW, pages 22–32, 2022.2                                       Xu,David Warde-Farley, SherjilOzair,AaronCourville, and
+                                                                                       YoshuaBengio. Generativeadversarialnetworks. Communi-
+ [3]  Jawadul H Bappy, Cody Simons, Lakshmanan Nataraj, BS                             cationsoftheACM, 63(11):139–144, 2020.1
+      Manjunath, and Amit K Roy-Chowdhury. Hybrid LSTM and                       [20]  Diego Gragnaniello, Davide Cozzolino, Francesco Marra,
+      encoder–decoderarchitecturefordetectionofimageforgeries.                         Giovanni Poggi, and Luisa Verdoliva. Are GAN generated
+      IEEETIP, 28(7):3286–3300, 2019.2                                                 imageseasytodetect? Acriticalanalysisofthestate-of-the-
+ [4]  Aidan Boyd, Patrick Tinsley, Kevin W. Bowyer, and Adam                           art. InICME, pages 1–6, 2021.1,2
+      Czajka. CYBORG: Blending human saliency into the loss                      [21]  Fabrizio Guillaro, Davide Cozzolino, Avneesh Sud, Nicholas
+      improves deep learning-based synthetic face detection.  In                       Dufour,andLuisaVerdoliva. TruFor: Leveragingall-round
+      WACV, pages 6108–6117, January 2023.3                                            cluesfortrustworthyimageforgerydetectionandlocalization.
+ [5]  LucyChai,DavidBau,Ser-NamLim,andPhillipIsola. What                               InCVPR, pages 20606–20615, 2023.2,8
+      makesfakeimagesdetectable? Understandingpropertiesthat                     [22]  XiaoGuo,XiaohongLiu,ZhiyuanRen,StevenGrosz,Iacopo
+      generalize. InECCV, pages 103–120, 2020.1,3,5                                    Masi, and Xiaoming Liu.  Hierarchical fine-grained image
+ [6]  LuChi,BoruiJiang,andYadongMu.Fastfourierconvolution.                             forgery detection and localization.  In CVPR, pages 3155–
+      NeurIPS, 33:4479–4488, 2020.5                                                    3165, 2023.2,8
+ [7]  Jooyoung Choi, Jungbeom Lee, Chaehun Shin, Sungwon                         [23]  Alexandros Haliassos, Konstantinos Vougioukas, Stavros
+      Kim, Hyunwoo Kim, and Sungroh Yoon. Perception prior-                            Petridis, andMaja Pantic. Lipsdon’tlie: A generalisableand
+      itized trainingof diffusionmodels. InCVPR, pages11472–                           robust approach to face forgery detection. In CVPR, pages
+      11481, 2022.4                                                                    5039–5049, 2021.2
+ [8]  Franc¸ois Chollet. Xception: Deep learning with depthwise                  [24]  Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+      separable convolutions. InCVPR, pages 1251–1258,2017.3                           Deepresiduallearningforimagerecognition. InCVPR,pages
+ [9]  RiccardoCorvi,DavideCozzolino,GiadaZingarini,Giovanni                            770–778, 2016.3
+      Poggi,KokiNagano,andLuisaVerdoliva. Onthedetectionof                       [25]  Yinan He,  Bei Gan,  Siyu Chen,  Yichun Zhou,  Guojun
+      synthetic images generated by diffusion models. InICASSP,                        Yin,  Luchuan  Song,  Lu  Sheng,  Jing  Shao,  and  Ziwei
+      pages 1–5. IEEE, 2023.1,2                                                        Liu. ForgeryNet: Aversatile benchmark forcomprehensive
+[10]  DavideCozzolino,DiegoGragnaniello,GiovanniPoggi,and                              forgery analysis. InCVPR, pages 4360–4369, 2021.2
+      LuisaVerdoliva. TowardsuniversalGANimagedetection. In                      [26]  XuefengHu,ZhihanZhang,ZhenyeJiang,SyomantakChaud-
+      IEEEVisualCommunicationsandImageProcessing,pages                                 huri,ZhenhengYang,andRamNevatia. SPAN:Spatialpyra-
+      1–5, 2021.2                                                                      mid attention network for image manipulation localization.
+[11]  Davide Cozzolino and Luisa Verdoliva. Noiseprint: A cnn-                         InCVPR, pages 312–328, 2020.1
+      based camera model fingerprint. IEEETransactionsonInfor-                   [27]  MinyoungHuh, AndrewLiu, AndrewOwens,and AlexeiA
+      mationForensicsandSecurity, 15:144–159, 2019.8                                   Efros. Fightingfakenews: Imagesplicedetectionvialearned
+[12]  Hao Dang, Feng Liu, Joel Stehouwer, Xiaoming Liu, and                            self-consistency. InECCV, pages 101–117, 2018.2
+      AnilK Jain. On thedetection ofdigitalface manipulation. In                 [28]  Liming  Jiang,  Ren  Li,  Wayne  Wu,  Chen  Qian,  and
+      CVPR, pages 5781–5790, 2020.2,3                                                  ChenChangeLoy. Deeperforensics1.0: Alarge-scaledataset
+                                                                                       forreal-worldfaceforgerydetection. InCVPR,pages2889–
+[13]  Sowmen Das, Md. SaifulIslam, andMd. Ruhul Amin. GCA-                             2898, 2020.2
+      Net : Utilizing gatedcontextattention forimproving image                   [29]  Tero Karras, Timo Aila, Samuli Laine,and Jaakko Lehtinen.
+      forgerylocalizationanddetection. InCVPRW,pages81–90,                             Progressivegrowing of GANs forimproved quality,stability,
+      2022.2                                                                           and variation. arXivpreprintarXiv:1710.10196, 2017.4
+[14]  Prafulla Dhariwal and Alexander Nichol. Diffusion models                   [30]  Tero Karras, Samuli Laine, and Timo Aila.  A style-based
+      beat GANs on image synthesis.  NeurIPS, 34:8780–8794,                            generator architecture for generative adversarial networks. In
+      2021.1                                                                           CVPR, pages 4401–4410, 2019.4
+[15]  BrianDolhansky,JoannaBitton,BenPflaum,Jikuo Lu,Russ                        [31]  HasamKhalid,ShahrozTariq,MinhaKim,andSimonS.Woo.
+      Howes, Menglin Wang, and Cristian Canton Ferrer.   The                           FakeAVCeleb:  A novel audio-video multimodal deepfake
+      deepfakedetectionchallenge(DFDC)dataset. arXivpreprint                           dataset. InNeurIPSDatasetsandBenchmarksTrack,2021.2
+      arXiv:2006.07397, 2020.2                                                   [32]  Cheng-Han Lee, Ziwei Liu, Lingyun Wu, and Ping Luo.
+[16]  Xiaoyi Dong, Jianmin Bao, Dongdong Chen, Ting Zhang,                             MaskGAN:Towardsdiverseandinteractivefacialimagema-
+      Weiming Zhang, Nenghai Yu, Dong Chen, Fang Wen, and                              nipulation. InCVPR, 2020.4
+
+PAGE 10
+[33]  Ang Li, Qiuhong Ke, Xingjun Ma, Haiqin Weng, Zhiyuan                       [48]  Robin  Rombach,  Andreas  Blattmann,  Dominik  Lorenz,
+      Zong,FengXue,andRuiZhang. Noisedoesn’tlie: Towards                               Patrick Esser, and Bj¨orn Ommer.   High-resolution image
+      universaldetectionofdeepinpainting. InIJCAI,pages786–                            synthesiswithlatentdiffusionmodels.InCVPR,pages10684–
+      792, 2021.1,2                                                                    10695, 2022.1,2,4,5,7
+[34]  Yuezun Li, Xin Yang, PuSun, Honggang Qi, andSiwei Lyu.                     [49]  Andreas Rossler, Davide Cozzolino, Luisa Verdoliva, Chris-
+      Celeb-DF: A large-scale challenging dataset for deepfake                         tian Riess, Justus Thies, and Matthias Nießner.  Faceforen-
+      forensics. InCVPR, pages 3207–3216, 2020.2                                       sics++:  Learning to detect manipulated facial images.  In
+[35]  XiaohongLiu,YaojieLiu,JunChen,andXiaomingLiu. Pscc-                              CVPR, pages 1–11, 2019.2,3
+      net: Progressivespatio-channelcorrelationnetworkforimage                   [50]  ChitwanSaharia,WilliamChan,HuiwenChang,ChrisLee,
+      manipulation detection and localization. IEEETransactions                        Jonathan Ho, Tim Salimans, David Fleet, and Mohammad
+      onCircuitsandSystemsforVideoTechnology, 32(11):7505–                             Norouzi. Palette: Image-to-imagediffusionmodels. InACM
+      7517, 2022.8                                                                     SIGGRAPH, pages 1–10, 2022.1
+[36]  Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang.                       [51]  Chitwan Saharia, William Chan, Saurabh Saxena, Lala Li,
+      Deep learning face attributes in the wild.  In ICCV, pages                       JayWhang,EmilyLDenton,KamyarGhasemipour,Raphael
+      3730–3738, 2015.4                                                                GontijoLopes,BurcuKaragolAyan,TimSalimans,etal. Pho-
+[37]  Jonathan Long, Evan Shelhamer, and Trevor Darrell. Fully                         torealistictext-to-imagediffusion modelswith deeplanguage
+      convolutionalnetworksforsemanticsegmentation. InCVPR,                            understanding. InNeurIPS, volume 35, pages 36479–36494,
+      pages 3431–3440, 2015.3                                                          2022.1
+[38]  AndreasLugmayr,MartinDanelljan,AndresRomero,Fisher                         [52]  Ramprasaath R Selvaraju, Michael Cogswell, Abhishek Das,
+      Yu, Radu Timofte, and Luc Van Gool. Repaint: Inpainting                          RamakrishnaVedantam,DeviParikh,andDhruvBatra. Grad-
+      using denoising diffusion probabilistic models.  In CVPR,                        CAM: Visual explanations from deep networks via gradient-
+      pages 11461–11471, June 2022.1,2,3,4                                             based localization. InCVPR, pages 618–626, 2017.3
+[39]  Asad Malik, Minoru Kuribayashi, Sani M Abdullahi, and                      [53]  Kaede Shiohara and Toshihiko Yamasaki.  Detecting deep-
+      Ahmad Neyaz Khan.  Deepfake detection for human face                             fakes with self-blended images.   In CVPR, pages 18720–
+      imagesandvideos: Asurvey. IEEEAccess,10:18757–18775,                             18729, 2022.3
+      2022.2
+[40]  Hannes Mareen, Dante Vanden Bussche, Fabrizio Guillaro,                    [54]  Jascha Sohl-Dickstein, Eric Weiss, Niru Maheswaranathan,
+      Davide Cozzolino, Glenn Van Wallendael, Peter Lambert,                           and Surya Ganguli.    Deep unsupervised learning using
+      and Luisa Verdoliva. Comprint: Image forgery detection and                       nonequilibriumthermodynamics. InICML,volume37,pages
+      localization using compression fingerprints. InICPR, pages                       2256–2265, 2015.1,3
+      281–299, 2022.2                                                            [55]  Roman Suvorov, Elizaveta Logacheva, Anton Mashikhin,
+[41]  Francesco Marra, Diego Gragnaniello,Luisa Verdoliva, and                         Anastasia Remizova, Arsenii Ashukha, Aleksei Silvestrov,
+      Giovanni Poggi.    Do GANs leave artificial fingerprints?                        NaejinKong,HarshithGoka,KiwoongPark,andVictorLem-
+      In IEEE Multimedia Information Processing and Retrieval,                         pitsky. Resolution-robustlargemaskinpaintingwithfourier
+      pages 506–511, 2019.1,2                                                          convolutions. InWACV, pages 2149–2159, 2022.4,5,7
+[42]GhazalMazaheri, NiluthpolChowdhuryMithun, JawadulH.                          [56]  Luisa  Verdoliva.     Media  forensics  and  deepfakes:   An
+      Bappy, and Amit K. Roy-Chowdhury.  A skip connection                             overview.  IEEE Journal of Selected Topics in Signal Pro-
+      architecture for localization of image manipulations.   In                       cessing, 14(5):910–932, 2020.1,2
+      CVPRW, pages 119–129, 2019.2                                               [57]  Sheng-Yu Wang,  Oliver Wang,  Richard Zhang,  Andrew
+[43]  YisroelMirskyandWenkeLee. Thecreationanddetectionof                              Owens, and Alexei A. Efros.  CNN-generated images are
+      deepfakes: A survey. ACMComputingSurveys, 54(1):1–41,                            surprisinglyeasytospot... fornow. InCVPR,June2020.1,
+      2021.1,2                                                                         2,7
+[44]  Thanh Thi Nguyen, Quoc Viet Hung Nguyen, Dung Tien                         [58]  Yue Wu, Wael AbdAlmageed, and Premkumar Natarajan.
+      Nguyen,DucThanhNguyen,ThienHuynh-The,SaeidNaha-                                  ManTra-Net: Manipulationtracingnetworkfordetectionand
+      vandi, Thanh Tam Nguyen, Quoc-Viet Pham, and Cuong M                             localizationofimageforgerieswithanomalousfeatures. In
+      Nguyen.  Deep learning for deepfakes creation and detec-                         CVPR, pages 9543–9552, 2019.1,8
+      tion: Asurvey. ComputerVisionandImageUnderstanding,                        [59]  Ying Xu, Kiran Raja, Luisa Verdoliva, and Marius Peder-
+      223:103525, 2022.1,2                                                             sen. Learning pairwise interaction for generalizable deepfake
+[45]  Aditya Ramesh, Prafulla Dhariwal, Alex Nichol, Casey Chu,                        detection. InWACV, pages 672–682, 2023.3
+      and Mark Chen. Hierarchical text-conditional image gener-                  [60]  Ning Yu, Larry S. Davis, and Mario Fritz. Attributing fake
+      ation with CLIP latents. arXiv preprint arXiv:2204.06125,                        imagestoGANs: LearningandanalyzingGANfingerprints.
+      2022.1                                                                           InICCV, October 2019.1,2
+[46]  DaniloRezendeandShakirMohamed. Variationalinference
+      withnormalizingflows. InICML,pages 1530–1538.PMLR,                         [61]  Lvmin Zhang, Anyi Rao, and Maneesh Agrawala. Adding
+      2015.1                                                                           conditional control to text-to-image diffusion models.   In
+[47]  JonasRicker,SimonDamm,ThorstenHolz,andAsjaFischer.                               ICCV, pages 3836–3847, 2023.1
+      Towards the detection of diffusion model deepfakes. arXiv                  [62]  ChuanxiaZheng,Tat-JenCham, andJianfeiCai. Pluralistic
+      preprintarXiv:2210.14571, 2022.1,2,7                                             imagecompletion. InCVPR,pages1438–1447,2019.4,5,7
+
+PAGE 11
+[63]  PengZhou,XintongHan,VladIMorariu,andLarrySDavis.
+     Two-stream neural networksfor tamperedface detection. In
+     CVPRW, pages 1831–1839, 2017.2,3
+[64]  PengZhou,XintongHan,VladIMorariu,andLarrySDavis.
+      Learningrichfeaturesforimagemanipulationdetection. In
+     CVPR, pages 1053–1061, 2018.1,2

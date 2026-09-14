@@ -1,0 +1,192 @@
+{
+  "author_institution_mappings.csv": {
+    "before": 998,
+    "after": 1016,
+    "all_existing_rows_unchanged": true
+  },
+  "institution_aliases.csv": {
+    "before": 80,
+    "after": 80,
+    "all_existing_rows_unchanged": true
+  },
+  "institution_audit_log.csv": {
+    "before": 310,
+    "after": 310,
+    "all_existing_rows_unchanged": true
+  },
+  "institution_hierarchy.csv": {
+    "before": 8,
+    "after": 8,
+    "all_existing_rows_unchanged": true
+  },
+  "institution_location_audit_log.csv": {
+    "before": 57,
+    "after": 57,
+    "all_existing_rows_unchanged": true
+  },
+  "institution_location_review.csv": {
+    "before": 588,
+    "after": 593,
+    "all_existing_rows_unchanged": true
+  },
+  "institution_locations.csv": {
+    "before": 462,
+    "after": 462,
+    "all_existing_rows_unchanged": true
+  },
+  "institution_review_queue.csv": {
+    "before": 405,
+    "after": 405,
+    "all_existing_rows_unchanged": true
+  },
+  "institution_search_relationships.csv": {
+    "before": 1,
+    "after": 1,
+    "all_existing_rows_unchanged": true
+  },
+  "institutions.csv": {
+    "before": 671,
+    "after": 675,
+    "all_existing_rows_unchanged": true
+  },
+  "paper_arxiv_links.csv": {
+    "before": 46,
+    "after": 46,
+    "all_existing_rows_unchanged": true
+  },
+  "paper_exclusions.csv": {
+    "before": 32,
+    "after": 32,
+    "all_existing_rows_unchanged": true
+  },
+  "paper_version_merges.csv": {
+    "before": 4,
+    "after": 4,
+    "all_existing_rows_unchanged": true
+  },
+  "papers.csv": {
+    "before": 365,
+    "after": 372,
+    "all_existing_rows_unchanged": true
+  },
+  "review_decisions.csv": {
+    "before": 8,
+    "after": 8,
+    "all_existing_rows_unchanged": true
+  },
+  "venue_aliases.csv": {
+    "before": 150,
+    "after": 159,
+    "all_existing_rows_unchanged": true
+  },
+  "requested": 7,
+  "added_needs_review": 7,
+  "updated": 0,
+  "duplicate_matches": 0,
+  "ordered_authors": 38,
+  "affiliation_groups": 18,
+  "venue_review_items": 0,
+  "affiliation_location_review_items": 5,
+  "new_canonical_institutions": [
+    "University of Information Technology, Viet Nam National University Ho Chi Minh City",
+    "University of Dayton",
+    "Beijing Institute of Technology",
+    "Secure Machines Lab Inc."
+  ],
+  "dashboard_needs_review_before": 215,
+  "dashboard_needs_review_after": 222,
+  "public_papers_before": 567,
+  "public_papers_after": 574,
+  "public_markers_before": 1262,
+  "public_markers_after": 1275,
+  "confirmed_papers_unchanged": 357,
+  "manual_files_unchanged": true,
+  "validators": {
+    "curated_errors": 0,
+    "public_errors": 0,
+    "institution_mismatches": 0
+  },
+  "tests": {
+    "focused": "136 passed",
+    "full": "1191 passed, 49 skipped, 24 unrelated historical baseline failures"
+  },
+  "papers": [
+    {
+      "paper_id": "curated:5ad6cb3411820ff01a03",
+      "title": "Forged Calamity: Benchmark for Cross-Domain Synthetic Disaster Detection in the Age of Diffusion",
+      "year": "2025",
+      "venue_name": "International Symposium on Information and Communication Technology",
+      "venue_acronym": "SOICT",
+      "venue_track": "Main",
+      "publication_type": "conference",
+      "curation_status": "needs_review",
+      "review_status": "pending"
+    },
+    {
+      "paper_id": "curated:6dcd6897e12fe71d5b9d",
+      "title": "Manifold-Contrastive Few-Shot Detection for AI-Generated Images",
+      "year": "2026",
+      "venue_name": "International Conference on Intelligent Communications and Computing",
+      "venue_acronym": "ICICC",
+      "venue_track": "Main",
+      "publication_type": "conference",
+      "curation_status": "needs_review",
+      "review_status": "pending"
+    },
+    {
+      "paper_id": "curated:8227355571a6d402e4f8",
+      "title": "SpectraGuard: Provably-Private Deepfake Detection with Learnable Frequency-Domain Differential Privacy",
+      "year": "2026",
+      "venue_name": "IEEE Transactions on Circuits and Systems for Video Technology",
+      "venue_acronym": "IEEE Trans. Circuits Syst. Video Technol.",
+      "venue_track": "",
+      "publication_type": "journal",
+      "curation_status": "needs_review",
+      "review_status": "pending"
+    },
+    {
+      "paper_id": "curated:d6f1c90d69e8b0e68e4f",
+      "title": "All-Around Forgery Clues for Generalizable AI-Generated Image Detection",
+      "year": "2026",
+      "venue_name": "Pattern Recognition",
+      "venue_acronym": "PR",
+      "venue_track": "",
+      "publication_type": "journal",
+      "curation_status": "needs_review",
+      "review_status": "pending"
+    },
+    {
+      "paper_id": "curated:f898cd2f736babc824dc",
+      "title": "HiDD-Net: A Hierarchical Dual-Domain Distillation Network for Efficient Deepfake Detection",
+      "year": "2026",
+      "venue_name": "International Conference on Digital Image Processing",
+      "venue_acronym": "ICDIP",
+      "venue_track": "Main",
+      "publication_type": "conference",
+      "curation_status": "needs_review",
+      "review_status": "pending"
+    },
+    {
+      "paper_id": "curated:92fe1dfd435209b21ff4",
+      "title": "Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3",
+      "year": "2026",
+      "venue_name": "ACM International Conference on Multimedia",
+      "venue_acronym": "ACM MM",
+      "venue_track": "Main",
+      "publication_type": "conference",
+      "curation_status": "needs_review",
+      "review_status": "pending"
+    },
+    {
+      "paper_id": "curated:4363b7a97f75f90ad22c",
+      "title": "A Swin Transformer and CLIP-Based Framework for Generalized DeepFake Detection",
+      "year": "2025",
+      "venue_name": "International Conference on the Frontiers of Robotics and Software Engineering",
+      "venue_acronym": "FRSE",
+      "venue_track": "Main",
+      "publication_type": "conference",
+      "curation_status": "needs_review",
+      "review_status": "pending"
+    }
+  ]
+}

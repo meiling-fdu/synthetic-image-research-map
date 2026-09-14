@@ -1,9 +1,11 @@
 from copy import deepcopy
+from pathlib import Path
 
 import pytest
 
 from scripts.report_public_relationship_location_completeness import build_report, repository_report, valid_coordinates
 from scripts.public_relationships import ReviewedRelationshipResolver
+from scripts.report_missing_institution_coordinates import read_csv, review_is_actionable, mapping_supports_derived_admin_review
 
 
 def fixture():
@@ -100,11 +102,65 @@ def test_current_repository_has_zero_silent_geographic_relationships():
     assert not [r for r in report if r["classification"] == "ERROR"]
     actionable = [r for r in report if r["classification"] == "ACTIONABLE"]
     assert actionable
+    explicit = [r for r in actionable if r['support_source'] == 'explicit_location_review']
+    curated = Path(__file__).resolve().parents[1] / 'data/curated'
+    reviews = read_csv(curated / 'institution_location_review.csv')
+    mappings = {r['mapping_id']: r for r in read_csv(curated / 'author_institution_mappings.csv')}
+    for row in explicit:
+        matching = [r for r in reviews if r['institution_id'] == row['institution_id']
+                    and (not r['related_paper_id'] or r['related_paper_id'] == row['paper_id'])
+                    and review_is_actionable(r) and r['evidence_source']]
+        assert matching, row
+        assert any(row['review_status'] == r['review_status'] + '/' + r['coordinate_status']
+                   and row['city'] == r['suggested_city'] and row['country'] == r['suggested_country']
+                   for r in matching), row
+        assert not row['latitude'] and not row['longitude'], row
     assert all(
         row["support_source"] == "derived_admin_location_review"
         and row["review_status"] == "pending_manual_confirmation"
-        for row in actionable
+        and mapping_supports_derived_admin_review(mappings[row['mapping_id']])
+        for row in actionable if row not in explicit
     )
+
+
+def test_verified_address_pending_manual_review_does_not_create_coordinates():
+    inputs = fixture()
+    inputs[1] = []
+    inputs[4] = []
+    inputs[5] = [dict(institution_id='institution:1', related_paper_id='paper:1',
+        suggested_city='Example campus', suggested_country='Italy',
+        evidence_source='Official institution contact page: street address verified; campus point unresolved',
+        evidence_url='https://example.edu/contact', review_status='pending_review', coordinate_status='missing')]
+    before = deepcopy(inputs)
+    row, = build_report(*inputs)
+    assert row['classification'] == 'ACTIONABLE'
+    assert row['support_source'] == 'explicit_location_review'
+    assert row['review_status'] == 'pending_review/missing'
+    assert (row['city'], row['country']) == ('Example campus', 'Italy')
+    assert not row['latitude'] and not row['longitude']
+    assert inputs == before
+
+
+def test_unreported_location_gap_without_automatic_review_evidence_is_error():
+    inputs = fixture()
+    inputs[1] = []
+    inputs[4] = []
+    assert not inputs[5]
+    assert not mapping_supports_derived_admin_review(inputs[2][0])
+    row, = build_report(*inputs)
+    assert row['classification'] == 'ERROR'
+
+
+def test_source_backed_mapping_still_generates_automatic_pending_review():
+    inputs = fixture()
+    inputs[1] = []
+    inputs[4] = []
+    inputs[2][0]['raw_affiliation'] = 'Department of Examples, Example University'
+    row, = build_report(*inputs)
+    assert row['classification'] == 'ACTIONABLE'
+    assert row['support_source'] == 'derived_admin_location_review'
+    assert row['review_status'] == 'pending_manual_confirmation'
+    assert not row['latitude'] and not row['longitude']
 
 
 @pytest.mark.parametrize("changed", [None, "id", "doi", "institution_id", "institution_authors"])

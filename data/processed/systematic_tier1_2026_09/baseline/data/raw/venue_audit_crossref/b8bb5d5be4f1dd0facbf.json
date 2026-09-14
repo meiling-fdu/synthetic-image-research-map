@@ -1,0 +1,385 @@
+{
+  "doi": "10.1109/idicaiei61867.2024.10842840",
+  "source_url": "https://api.crossref.org/works/10.1109%2Fidicaiei61867.2024.10842840",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            6,
+            1
+          ]
+        ],
+        "date-time": "2026-06-01T23:29:50Z",
+        "timestamp": 1780356590569,
+        "version": "3.54.1"
+      },
+      "reference-count": 20,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                11,
+                29
+              ]
+            ],
+            "date-time": "2024-11-29T00:00:00Z",
+            "timestamp": 1732838400000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                11,
+                29
+              ]
+            ],
+            "date-time": "2024-11-29T00:00:00Z",
+            "timestamp": 1732838400000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            11,
+            29
+          ]
+        ]
+      },
+      "DOI": "10.1109/idicaiei61867.2024.10842840",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            1,
+            20
+          ]
+        ],
+        "date-time": "2025-01-20T18:41:43Z",
+        "timestamp": 1737398503000
+      },
+      "page": "1-6",
+      "source": "Crossref",
+      "is-referenced-by-count": 9,
+      "title": [
+        "CNN-LSTM Model for Deepfake Image Detection"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Reena",
+          "family": "Satpute",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "DMIHER,School of Allied Sciences,Sawangi (M)"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Chidozie Peter",
+          "family": "Onwe",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Dominican University,Department of Computer Science,Ibadan,Nigeria"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref1",
+          "first-page": "130142",
+          "article-title": "Exploring deepfake detection using machine learning techniques",
+          "volume-title": "International Conference on Machine Learning and Artificial Intelligence",
+          "author": "Adi"
+        },
+        {
+          "key": "ref2",
+          "first-page": "105",
+          "article-title": "Multimodal deepfake detection using a convolutional multimodal network",
+          "volume-title": "Proceedings of the International Conference on Machine Learning and Data Science",
+          "author": "Ali"
+        },
+        {
+          "key": "ref3",
+          "first-page": "345",
+          "article-title": "Video deepfake detection using XGBoost",
+          "volume-title": "International Conference on Multimedia Modeling",
+          "author": "Aya"
+        },
+        {
+          "key": "ref4",
+          "first-page": "567",
+          "article-title": "Anomaly-based deepfake detection using autoencoders",
+          "volume": "67",
+          "author": "Brown",
+          "year": "2023",
+          "journal-title": "Journal of Artificial Intelligence Research"
+        },
+        {
+          "key": "ref5",
+          "first-page": "201",
+          "article-title": "Deepfake detection using ensemble learning and feature fusion",
+          "volume": "55",
+          "author": "Chen",
+          "year": "2022",
+          "journal-title": "Journal of Pattern Recognition"
+        },
+        {
+          "issue": "35",
+          "key": "ref6",
+          "first-page": "25327",
+          "article-title": "Overview of deepfake detection challenges",
+          "volume": "79",
+          "author": "Dang-Nguyen",
+          "year": "2020",
+          "journal-title": "Multimedia Tools and Applications"
+        },
+        {
+          "issue": "2",
+          "key": "ref7",
+          "first-page": "89",
+          "article-title": "Deepfake detection through facial expression analysis",
+          "volume": "15",
+          "author": "Garcia",
+          "year": "2020",
+          "journal-title": "Journal of Computational Vision and Image Processing"
+        },
+        {
+          "key": "ref8",
+          "first-page": "10234",
+          "article-title": "Detecting deepfakes in the wild",
+          "volume-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+          "author": "Li"
+        },
+        {
+          "issue": "1",
+          "key": "ref9",
+          "first-page": "56",
+          "article-title": "Improving deepfake detection using attention mechanisms",
+          "volume": "14",
+          "author": "Martinez",
+          "year": "2023",
+          "journal-title": "International Journal of Machine Learning and Cybernetics"
+        },
+        {
+          "issue": "5",
+          "key": "ref10",
+          "first-page": "345",
+          "article-title": "GAN-based deepfake detection using adversarial training",
+          "volume": "23",
+          "author": "Kim",
+          "year": "2021",
+          "journal-title": "IEEE Transactions on Multimedia"
+        },
+        {
+          "key": "ref11",
+          "first-page": "45",
+          "article-title": "Exploring deepfake detection using capsule networks",
+          "volume-title": "International Conference on Artificial Neural Networks",
+          "author": "Smith"
+        },
+        {
+          "issue": "2",
+          "key": "ref12",
+          "first-page": "120",
+          "article-title": "Medical deepfake image detection using DenseNet",
+          "volume": "20",
+          "author": "Siddharth",
+          "year": "2022",
+          "journal-title": "International Journal of Computer Science and Information Security"
+        },
+        {
+          "key": "ref13",
+          "first-page": "202",
+          "article-title": "Deepfake recognition based on human eye blinking pattern using DeepVision",
+          "volume-title": "Proceedings of the International Conference on Artificial Intelligence and Statistics",
+          "author": "Jung"
+        },
+        {
+          "issue": "5",
+          "key": "ref14",
+          "first-page": "223",
+          "article-title": "A survey on deepfake detection techniques",
+          "volume": "23",
+          "author": "Nguyen",
+          "year": "2023",
+          "journal-title": "Journal of Computer Science and Technology"
+        },
+        {
+          "issue": "3",
+          "key": "ref15",
+          "first-page": "201",
+          "article-title": "Deepfake detection using attention-based CNN-LSTM networks",
+          "volume": "9",
+          "author": "Park",
+          "year": "2024",
+          "journal-title": "Journal of Computational Intelligence and Data Analytics"
+        },
+        {
+          "issue": "4",
+          "key": "ref16",
+          "first-page": "813",
+          "article-title": "Ensemble learning for deepfake detection",
+          "volume": "19",
+          "author": "Qian",
+          "year": "2024",
+          "journal-title": "IEEE Transactions on Information Forensics and Security"
+        },
+        {
+          "issue": "2",
+          "key": "ref17",
+          "first-page": "89",
+          "article-title": "Deepfake detection through audio analysis",
+          "volume": "19",
+          "author": "Williams",
+          "year": "2023",
+          "journal-title": "International Journal of Speech Technology"
+        },
+        {
+          "issue": "3",
+          "key": "ref18",
+          "first-page": "40",
+          "article-title": "Deepfake detection using CNN architectures: A review",
+          "volume": "8",
+          "author": "Wang",
+          "year": "2022",
+          "journal-title": "Journal of Imaging"
+        },
+        {
+          "issue": "4",
+          "key": "ref19",
+          "first-page": "201",
+          "article-title": "Deepfake detection using generative adversarial networks",
+          "volume": "8",
+          "author": "Tan",
+          "year": "2021",
+          "journal-title": "Journal of Cybersecurity and Privacy"
+        },
+        {
+          "key": "ref20",
+          "first-page": "85849",
+          "article-title": "Deep learning-based deepfake detection methods",
+          "volume": "8",
+          "author": "Zhou",
+          "year": "2020",
+          "journal-title": "IEEE Access"
+        }
+      ],
+      "event": {
+        "name": "2024 2nd DMIHER International Conference on Artificial Intelligence in Healthcare, Education and Industry (IDICAIEI)",
+        "location": "Wardha, India",
+        "start": {
+          "date-parts": [
+            [
+              2024,
+              11,
+              29
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2024,
+              11,
+              30
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2024 2nd DMIHER International Conference on Artificial Intelligence in Healthcare, Education and Industry (IDICAIEI)"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx8/10842675/10842665/10842840.pdf?arnumber=10842840",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            1,
+            21
+          ]
+        ],
+        "date-time": "2025-01-21T06:36:04Z",
+        "timestamp": 1737441364000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/10842840/"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2024,
+            11,
+            29
+          ]
+        ]
+      },
+      "references-count": 20,
+      "URL": "https://doi.org/10.1109/idicaiei61867.2024.10842840",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            11,
+            29
+          ]
+        ]
+      }
+    }
+  }
+}

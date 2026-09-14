@@ -1,0 +1,792 @@
+{
+  "version": "2026-09-08",
+  "reviewer": "primary-source-curation",
+  "scope": "Exactly the ten 2026-09-08 reconciliation additions. No changes to older decisions; original reconciliation remains historical.",
+  "policy": "docs/data_schema.md: paper taxonomy and reviewed author-affiliation policy. Review dimensions are independent. Full curation requires no material unresolved fields; unlocated but verified institutions remain active with missing locations.",
+  "papers": [
+    {
+      "key": "2311.00962",
+      "paper_id": "curated:8aa00584c346440e0c41",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated",
+        "generative_editing",
+        "deepfake"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "taxonomy_evidence": {
+        "tasks": "Sec. 3 describes one-class real-versus-generated detection; the multiclass feature plots are not a source-attribution objective.",
+        "image_scopes": "Sec. 4.1 and Fig. 7 evaluate full synthesis plus source-image translation and facial attribute edits using CycleGAN, StarGAN and HiSD.",
+        "research_types": "The principal contribution is a detector trained only on real photographs; generated evaluation samples do not constitute a separate dataset release."
+      },
+      "affiliations": [
+        {
+          "institution": "Chongqing University of Posts and Telecommunications",
+          "authors": [
+            "Xiuli Bi",
+            "Bo Liu",
+            "Fan Yang",
+            "Bin Xiao",
+            "Weisheng Li"
+          ],
+          "raw_affiliation": "Department of Computer Science and Technology, Chongqing University of Posts and Telecommunications, Chongqing, China.",
+          "evidence_page": 1
+        },
+        {
+          "institution": "Tsinghua University",
+          "authors": [
+            "Gao Huang"
+          ],
+          "raw_affiliation": "Department of Automation, Tsinghua University, Beijing 100084, China.",
+          "evidence_page": 1
+        },
+        {
+          "institution": "University of California, San Diego",
+          "authors": [
+            "Pamela C. Cosman"
+          ],
+          "raw_affiliation": "Department of Electrical and Computer Engineering, University of California at San Diego, La Jolla, CA 92093 USA.",
+          "evidence_page": 1
+        }
+      ],
+      "bibliography_status": "reviewed",
+      "taxonomy_status": "reviewed",
+      "affiliation_status": "reviewed",
+      "primary_pdf": "data/raw/primary_curation_2026_09_08/2311.00962.pdf",
+      "publication_status": "arXiv preprint (2023)",
+      "bibliographic_evidence": "arXiv v1, 2023-11-02. The PDF's JOURNAL OF LATEX CLASS FILES header and 2005/2015 manuscript dates are template placeholders, not publication evidence. The distinct ECCV 2022 predecessor remains a separate work.",
+      "project_code_urls": [],
+      "project_code_status": "not_listed_in_inspected_primary_sources",
+      "unresolved_fields": [],
+      "overall_state": "fully_curated",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "primary_evidence_urls": [
+        "https://arxiv.org/abs/2311.00962",
+        "https://arxiv.org/pdf/2311.00962v1"
+      ],
+      "bibliography_overrides": {
+        "openalex_url": "https://openalex.org/W4388328956",
+        "paper_url": "https://arxiv.org/abs/2311.00962"
+      }
+    },
+    {
+      "key": "2503.11195",
+      "paper_id": "curated:2334b1774b5f65217e7b",
+      "tasks": [
+        "detection",
+        "source_attribution"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "taxonomy_evidence": {
+        "tasks": "Sec. 3 returns likely content-producing organizations from an encrypted perceptual-hash registry, with a fallback binary AI-image detector.",
+        "image_scopes": "The protected content and detector evaluation concern GAN/diffusion-generated images; compression/cropping are robustness transformations rather than generative edits.",
+        "research_types": "DinoHash, MP-FHE registry integration and the improved fallback detector form a method contribution; comparison with existing datasets is not a new benchmark release."
+      },
+      "affiliations": [
+        {
+          "institution": "Zellic",
+          "authors": [
+            "Shree Singhi",
+            "Aayan Yadav"
+          ],
+          "raw_affiliation": "2 Zellic",
+          "evidence_page": 1
+        },
+        {
+          "institution": "Massachusetts Institute of Technology",
+          "authors": [
+            "Aayush Gupta"
+          ],
+          "raw_affiliation": "3 MIT, ZK Email",
+          "evidence_page": 1
+        },
+        {
+          "institution": "ZK Email",
+          "authors": [
+            "Aayush Gupta"
+          ],
+          "raw_affiliation": "3 MIT, ZK Email",
+          "evidence_page": 1
+        },
+        {
+          "institution": "Newcastle University",
+          "authors": [
+            "Shariar Ebrahimi"
+          ],
+          "raw_affiliation": "4 Newcastle University",
+          "evidence_page": 1
+        },
+        {
+          "institution": "Polish Academy of Sciences",
+          "authors": [
+            "Parisa Hassanizadeh"
+          ],
+          "raw_affiliation": "5 Polish Academy of Science",
+          "evidence_page": 1
+        }
+      ],
+      "bibliography_status": "needs_review",
+      "taxonomy_status": "reviewed",
+      "affiliation_status": "needs_review",
+      "primary_pdf": "data/raw/primary_curation_2026_09_08/2503.11195.pdf",
+      "publication_status": "arXiv preprint (2025); workshop linkage unresolved",
+      "bibliographic_evidence": "arXiv v1, 2025-03-14, five authors. IIT Roorkee newsletter associates the title with ICML CODEML 2025, while the located DINOHash workshop record has a different title/author list. OpenReview full-text access returned 403/challenge; do not transfer workshop metadata or missing superscript 1 from that other work.",
+      "project_code_urls": [
+        "https://proteus.photos"
+      ],
+      "project_code_status": "explicit_primary_source",
+      "unresolved_fields": [
+        "Publication-version relation to CODEML/DINOHash is not established.",
+        "Shree Singhi and Aayan Yadav each carry superscripts 1,2; only 2 (Zellic) is defined. Affiliation 1 remains absent.",
+        "Locations for Zellic, ZK Email, Newcastle University and Polish Academy of Sciences remain pending."
+      ],
+      "overall_state": "unresolved",
+      "curation_status": "needs_review",
+      "review_status": "needs_check",
+      "primary_evidence_urls": [
+        "https://arxiv.org/abs/2503.11195",
+        "https://arxiv.org/pdf/2503.11195v1",
+        "https://www.iitr.ac.in/mfsdsai/docs/MFSDSAI_Newsletter_July_2025.pdf",
+        "https://openreview.net/forum?id=HrGa8Mq2NE"
+      ],
+      "bibliography_overrides": {
+        "openalex_url": "https://openalex.org/W4417284156",
+        "paper_url": "https://arxiv.org/abs/2503.11195"
+      }
+    },
+    {
+      "key": "2506.11031",
+      "paper_id": "curated:168e13e349336a266783",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated",
+        "deepfake"
+      ],
+      "research_types": [
+        "method",
+        "analysis_study"
+      ],
+      "taxonomy_evidence": {
+        "tasks": "PGT evaluates binary image authenticity; neither localization nor source identification is an output.",
+        "image_scopes": "Sec. 4.1 evaluates full-image generators and DF40 facial synthesis/editing; the actual StarGAN and StyleCLIP subsets support face-manipulation scope.",
+        "research_types": "Task-aligned response prefilling is a method. The separate confidence-trajectory investigation in Sec. 5 tests an explanatory hypothesis about overconfidence, supporting analysis_study; reused datasets do not warrant dataset."
+      },
+      "affiliations": [
+        {
+          "institution": "Observatory on Social Media",
+          "authors": [
+            "Zoher Kachwala",
+            "Danishjeet Singh",
+            "Danielle Yang",
+            "Filippo Menczer"
+          ],
+          "raw_affiliation": "Observatory on Social Media, Indiana University, Bloomington, USA",
+          "evidence_page": 1
+        }
+      ],
+      "bibliography_status": "reviewed",
+      "taxonomy_status": "reviewed",
+      "affiliation_status": "reviewed",
+      "primary_pdf": "data/raw/primary_curation_2026_09_08/2506.11031.pdf",
+      "publication_status": "NeurIPS 2025 GenProCC workshop paper",
+      "bibliographic_evidence": "Official NeurIPS event names the same four authors and PGT method as arXiv 2506.11031. Use workshop title as canonical, retaining the later arXiv v4 (2026-01-25) as a version of the same work. Workshop slides corroborate OSoMe/IU affiliation; no formal DOI was established.",
+      "project_code_urls": [
+        "https://github.com/Zoher15/Zero-shot-pgt"
+      ],
+      "project_code_status": "explicit_primary_source",
+      "unresolved_fields": [],
+      "overall_state": "fully_curated",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "bibliography_overrides": {
+        "title": "Prefilled Responses Enhance Zero-Shot Detection of AI-Generated Images",
+        "publication_type": "conference",
+        "venue": "Advances in Neural Information Processing Systems",
+        "venue_id": "venue:neurips",
+        "venue_name": "Advances in Neural Information Processing Systems",
+        "venue_acronym": "NeurIPS",
+        "venue_type": "conference",
+        "venue_track": "Workshops",
+        "raw_venue": "NeurIPS 2025 Workshop: The First Workshop on Generative and Protective AI for Content Creation (GenProCC)",
+        "paper_url": "https://neurips.cc/virtual/2025/128273",
+        "openalex_url": "https://openalex.org/W4415314077"
+      },
+      "primary_evidence_urls": [
+        "https://arxiv.org/abs/2506.11031",
+        "https://arxiv.org/pdf/2506.11031v4",
+        "https://neurips.cc/virtual/2025/128273",
+        "https://neurips.cc/media/neurips-2025/Slides/128273.pdf"
+      ]
+    },
+    {
+      "key": "2506.20548",
+      "paper_id": "curated:509324a7a8bc94c3eb78",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated",
+        "generative_editing",
+        "deepfake"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "taxonomy_evidence": {
+        "tasks": "The B2E/ODA model predicts real versus fake; its attention mechanism supplies no localization objective.",
+        "image_scopes": "Sec. 4.1 and Tables 1–3 evaluate synthesis, CycleGAN translation and StarGAN face edits; all remain within the image component despite the broad deepfake terminology.",
+        "research_types": "PLADA is a detection method; its compression settings and evaluations reuse existing ForenSynths/GANGen/DM datasets rather than introducing a separate dataset or benchmark."
+      },
+      "affiliations": [
+        {
+          "institution": "University of Chinese Academy of Sciences",
+          "authors": [
+            "Manyi Li"
+          ],
+          "raw_affiliation": "1 School of Artificial Intelligence, University of Chinese Academy of Sciences, Beijing, 100190, China.",
+          "evidence_page": 1
+        },
+        {
+          "institution": "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+          "authors": [
+            "Manyi Li",
+            "Yufan Liu",
+            "Bing Li"
+          ],
+          "raw_affiliation": "2 State Key Laboratory of Multimodal Artificial Intelligence Systems, Institute of Automation, Chinese Academy of Sciences, Beijing, 100190, China.",
+          "evidence_page": 1
+        },
+        {
+          "institution": "Institute of Information Science, Beijing Jiaotong University",
+          "authors": [
+            "Renshuai Tao",
+            "Chuangchuang Tan",
+            "Haotong Qin",
+            "Yunchao Wei",
+            "Yao Zhao"
+          ],
+          "raw_affiliation": "3 Institute of Information Science, Beijing Jiaotong University, Beijing, 100044, China.",
+          "evidence_page": 1
+        }
+      ],
+      "bibliography_status": "reviewed",
+      "taxonomy_status": "reviewed",
+      "affiliation_status": "reviewed",
+      "primary_pdf": "data/raw/primary_curation_2026_09_08/2506.20548.pdf",
+      "publication_status": "arXiv preprint (2025)",
+      "bibliographic_evidence": "arXiv v1, 2025-06-25. No final proceedings or publisher version established. The separately reconciled ODDN paper is not an alternate version.",
+      "project_code_urls": [
+        "https://github.com/ManyiLee/PLADA"
+      ],
+      "project_code_status": "explicit_primary_source",
+      "unresolved_fields": [],
+      "overall_state": "fully_curated",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "primary_evidence_urls": [
+        "https://arxiv.org/abs/2506.20548",
+        "https://arxiv.org/pdf/2506.20548v1"
+      ],
+      "bibliography_overrides": {
+        "openalex_url": "https://openalex.org/W4414989730",
+        "paper_url": "https://arxiv.org/abs/2506.20548"
+      }
+    },
+    {
+      "key": "2510.05740",
+      "paper_id": "curated:40d551857163fa643202",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "taxonomy_evidence": {
+        "tasks": "FusionDetect classifies generated images; the two axes concern generalization, not source-attribution output.",
+        "image_scopes": "OmniGen evaluates full synthetic images across visual domains and twelve generators; no partial-edit or face-manipulation detection task is established.",
+        "research_types": "Secs. 3–4 introduce FusionDetect and the OmniGen dataset with a two-axis evaluation protocol. All three method, dataset and benchmark contributions are explicit."
+      },
+      "affiliations": [
+        {
+          "institution": "Sharif University of Technology",
+          "authors": [
+            "Amirtaha Amanzadi",
+            "Zahra Dehghanian",
+            "Hamid Beigy",
+            "Hamid R. Rabiee"
+          ],
+          "raw_affiliation": "Department of Computer Engineering, Sharif University of Technology",
+          "evidence_page": 1
+        }
+      ],
+      "bibliography_status": "reviewed",
+      "taxonomy_status": "reviewed",
+      "affiliation_status": "reviewed",
+      "primary_pdf": "data/raw/primary_curation_2026_09_08/2510.05740.pdf",
+      "publication_status": "arXiv preprint (2025)",
+      "bibliographic_evidence": "arXiv v2, 2026-08-14; preserve original 2025 first-publication year. No formal published version established.",
+      "project_code_urls": [
+        "https://github.com/amir-aman/FusionDetect"
+      ],
+      "project_code_status": "explicit_primary_source",
+      "unresolved_fields": [],
+      "overall_state": "fully_curated",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "primary_evidence_urls": [
+        "https://arxiv.org/abs/2510.05740",
+        "https://arxiv.org/pdf/2510.05740v2"
+      ],
+      "bibliography_overrides": {
+        "openalex_url": "https://openalex.org/W4414978765",
+        "paper_url": "https://arxiv.org/abs/2510.05740"
+      }
+    },
+    {
+      "key": "2512.20257",
+      "paper_id": "curated:fc87c72c7e8c831652ea",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "deepfake"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "taxonomy_evidence": {
+        "tasks": "Secs. 3.3–4 evaluate binary/multilabel misinformation classification. The paper explicitly does not output localization predictions; shown boxes are illustrative ground truth.",
+        "image_scopes": "DGM4 FaceSwap and FaceAttribute form the still-image forensic contribution. TextSwap/TextAttribute and VERITE text-context mismatch do not establish other image scopes.",
+        "research_types": "The limited-annotation ensemble/model-soup architecture is a method; DGM4 and VERITE are existing evaluation datasets."
+      },
+      "affiliations": [
+        {
+          "institution": "Sapienza University of Rome",
+          "authors": [
+            "Daniele Cardullo",
+            "Simone Teglia",
+            "Irene Amerini"
+          ],
+          "raw_affiliation": "1 Sapienza University of Rome",
+          "evidence_page": 1
+        }
+      ],
+      "bibliography_status": "reviewed",
+      "taxonomy_status": "reviewed",
+      "affiliation_status": "reviewed",
+      "primary_pdf": "data/raw/primary_curation_2026_09_08/2512.20257.pdf",
+      "publication_status": "arXiv preprint (2025)",
+      "bibliographic_evidence": "arXiv v1, 2025-12-23, three authors, Sapienza affiliation. No formal proceedings/publisher version established.",
+      "project_code_urls": [],
+      "project_code_status": "not_listed_in_inspected_primary_sources",
+      "unresolved_fields": [],
+      "overall_state": "fully_curated",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "primary_evidence_urls": [
+        "https://arxiv.org/abs/2512.20257",
+        "https://arxiv.org/pdf/2512.20257v1"
+      ],
+      "bibliography_overrides": {
+        "openalex_url": "https://openalex.org/W7117248393",
+        "paper_url": "https://arxiv.org/abs/2512.20257"
+      }
+    },
+    {
+      "key": "2510.23023",
+      "paper_id": "curated:0e0f70c0146b624226ca",
+      "tasks": [
+        "detection",
+        "localization"
+      ],
+      "image_scopes": [
+        "fully_generated",
+        "generative_editing",
+        "deepfake"
+      ],
+      "research_types": [
+        "dataset",
+        "benchmark",
+        "analysis_study"
+      ],
+      "taxonomy_evidence": {
+        "tasks": "Sec. 3.1 explicitly defines binary authenticity and generated-pixel localization, and the evaluation measures both.",
+        "image_scopes": "Secs. 3.1–3.2 distinguish holistic synthesis, inpainting/instruction-guided editing, and face-manipulation models; all are evaluated rather than merely cited.",
+        "research_types": "The new annotated dataset and evaluation benchmark are accompanied by a substantive three-question study of generalization and the detection/localization relationship."
+      },
+      "affiliations": [
+        {
+          "institution": "Wangxuan Institute of Computer Technology",
+          "authors": [
+            "Huixuan Zhang",
+            "Xiaojun Wan"
+          ],
+          "raw_affiliation": "Wangxuan Institute of Computer Technology, Peking University",
+          "evidence_page": 1
+        }
+      ],
+      "bibliography_status": "reviewed",
+      "taxonomy_status": "reviewed",
+      "affiliation_status": "reviewed",
+      "primary_pdf": "data/raw/primary_curation_2026_09_08/2510.23023.pdf",
+      "publication_status": "arXiv preprint (2025)",
+      "bibliographic_evidence": "arXiv v1, 2025-10-27 explicitly labelled Preprint, two authors. No formal published version established.",
+      "project_code_urls": [],
+      "project_code_status": "not_listed_in_inspected_primary_sources",
+      "unresolved_fields": [
+        "Wangxuan Institute coordinates remain pending: official address is documented, but exact institutional geocoding returned no result."
+      ],
+      "overall_state": "bibliography_taxonomy_verified_affiliation_pending",
+      "curation_status": "needs_review",
+      "review_status": "needs_check",
+      "primary_evidence_urls": [
+        "https://arxiv.org/abs/2510.23023",
+        "https://arxiv.org/pdf/2510.23023v1"
+      ],
+      "bibliography_overrides": {
+        "openalex_url": "https://openalex.org/W7101910542",
+        "paper_url": "https://arxiv.org/abs/2510.23023"
+      }
+    },
+    {
+      "key": "2505.15644",
+      "paper_id": "curated:4bafe8e39a3e39ed2088",
+      "tasks": [
+        "detection",
+        "localization"
+      ],
+      "image_scopes": [
+        "generative_editing"
+      ],
+      "research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "taxonomy_evidence": {
+        "tasks": "The VLM experiments evaluate edited-image classification and edited-region localization; both are substantive tasks.",
+        "image_scopes": "The FragFake pipeline applies localized object addition/replacement to source photographs using generative editors.",
+        "research_types": "The paper introduces FragFake data and benchmark, and fine-tuning/RL approaches to edited-image forensics. Standard ablations are retained as method evaluation, without a separate analysis-study label."
+      },
+      "affiliations": [
+        {
+          "institution": "The Hong Kong University of Science and Technology (Guangzhou)",
+          "authors": [
+            "Zhen Sun",
+            "Ziyi Zhang",
+            "Zeren Luo",
+            "Zhiyuan Zhong",
+            "Jiaheng Wei",
+            "Xinlei He"
+          ],
+          "raw_affiliation": "1 Hong Kong University of Science and Technology (Guangzhou)",
+          "evidence_page": 1
+        },
+        {
+          "institution": "Ant Group",
+          "authors": [
+            "Zeyang Sha",
+            "Shiwen Cui",
+            "Weiqiang Wang"
+          ],
+          "raw_affiliation": "2 Ant Group",
+          "evidence_page": 1
+        },
+        {
+          "institution": "Tsinghua University",
+          "authors": [
+            "Qi Li"
+          ],
+          "raw_affiliation": "3 Tsinghua University",
+          "evidence_page": 1
+        },
+        {
+          "institution": "Shandong University",
+          "authors": [
+            "Tianshuo Cong",
+            "Zheng Li"
+          ],
+          "raw_affiliation": "4 Shandong University",
+          "evidence_page": 1
+        },
+        {
+          "institution": "Wuhan University",
+          "authors": [
+            "Qian Wang"
+          ],
+          "raw_affiliation": "5 Wuhan University",
+          "evidence_page": 1
+        }
+      ],
+      "bibliography_status": "reviewed",
+      "taxonomy_status": "reviewed",
+      "affiliation_status": "reviewed",
+      "primary_pdf": "data/raw/primary_curation_2026_09_08/2505.15644.pdf",
+      "publication_status": "arXiv preprint (2025)",
+      "bibliographic_evidence": "arXiv v2, 2025-12-03, has thirteen authors including Zhiyuan Zhong. The original FragFake title and twelve-author v1 are versions, not separate papers. No formal published version established.",
+      "project_code_urls": [],
+      "project_code_status": "not_listed_in_inspected_primary_sources",
+      "unresolved_fields": [],
+      "overall_state": "fully_curated",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "primary_evidence_urls": [
+        "https://arxiv.org/abs/2505.15644",
+        "https://arxiv.org/pdf/2505.15644v2"
+      ],
+      "bibliography_overrides": {
+        "openalex_url": "https://openalex.org/W4415329274",
+        "paper_url": "https://arxiv.org/abs/2505.15644"
+      }
+    },
+    {
+      "key": "safe",
+      "paper_id": "curated:f0a62826c32151c731c7",
+      "tasks": [
+        "detection",
+        "localization"
+      ],
+      "image_scopes": [
+        "fully_generated",
+        "generative_editing",
+        "traditional_manipulation"
+      ],
+      "research_types": [
+        "dataset",
+        "benchmark"
+      ],
+      "taxonomy_evidence": {
+        "tasks": "Sec. 3 requires authenticity decisions and pixel-level localization masks. Manipulation-type classification is not source-generator attribution.",
+        "image_scopes": "Secs. 3–5 explicitly include full synthesis, AI editing, splicing and conventional editing, with separate evaluations.",
+        "research_types": "SAFE introduces both the challenge/evaluation protocol and SAFE-FORGE dataset. Baseline forensic systems are evaluated, not claimed as a new detector."
+      },
+      "affiliations": [
+        {
+          "institution": "Drexel University",
+          "authors": [
+            "Tai Nguyen",
+            "Matthew Stamm"
+          ],
+          "raw_affiliation": "1 Drexel University",
+          "evidence_page": 1
+        },
+        {
+          "institution": "Underwriters Laboratories",
+          "authors": [
+            "Jill Crisman",
+            "Jesse Hostetler"
+          ],
+          "raw_affiliation": "2 Underwriters Laboratories",
+          "evidence_page": 1
+        },
+        {
+          "institution": "Aptima, Inc.",
+          "authors": [
+            "Laura Cassano",
+            "Michael Davinroy",
+            "Peter Bautista"
+          ],
+          "raw_affiliation": "3 Aptima, Inc.",
+          "evidence_page": 1
+        }
+      ],
+      "bibliography_status": "reviewed",
+      "taxonomy_status": "reviewed",
+      "affiliation_status": "reviewed",
+      "primary_pdf": "data/raw/primary_curation_2026_09_08/safe.pdf",
+      "publication_status": "WACV 2026 workshop paper",
+      "bibliographic_evidence": "Official CVF WACV workshop PDF and proceedings page; DOI 10.1109/wacvw68408.2026.00103, pp. 933–946, SynRDinBAS workshop. No arXiv version established.",
+      "project_code_urls": [],
+      "project_code_status": "not_listed_in_inspected_primary_sources",
+      "unresolved_fields": [
+        "Underwriters Laboratories coordinates remain pending; the paper gives no office and an exact institution geocoder query returned no result."
+      ],
+      "overall_state": "bibliography_taxonomy_verified_affiliation_pending",
+      "curation_status": "needs_review",
+      "review_status": "needs_check",
+      "bibliography_overrides": {
+        "raw_venue": "WACV 2026 Workshop on Synthetic and Real Data for Biometric and Forensic Applications (SynRDinBAS)",
+        "paper_url": "https://openaccess.thecvf.com/content/WACV2026W/SynRDinBAS/html/Nguyen_The_SAFE_Image_Authenticity_Challenge_Detecting_and_Localizing_Partial_and_WACVW_2026_paper.html",
+        "openalex_url": "https://openalex.org/W7172429649"
+      },
+      "primary_evidence_urls": [
+        "https://openaccess.thecvf.com/content/WACV2026W/SynRDinBAS/html/Nguyen_The_SAFE_Image_Authenticity_Challenge_Detecting_and_Localizing_Partial_and_WACVW_2026_paper.html",
+        "https://openaccess.thecvf.com/content/WACV2026W/SynRDinBAS/papers/Nguyen_The_SAFE_Image_Authenticity_Challenge_Detecting_and_Localizing_Partial_and_WACVW_2026_paper.pdf"
+      ]
+    },
+    {
+      "key": "dynamic",
+      "paper_id": "curated:980afddea0a156b5020b",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated",
+        "deepfake"
+      ],
+      "research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "taxonomy_evidence": {
+        "tasks": "The dynamic ensemble predicts a real/fake score; CLIP-conditioned weights are not source labels or localization masks.",
+        "image_scopes": "Sec. 4.1 explicitly includes face swap/reenactment and fully generated faces; FF++ supplies manipulated training images.",
+        "research_types": "The contribution list introduces an approximately 50k-image dataset, fourteen-detector benchmark and dynamic ensemble method."
+      },
+      "affiliations": [
+        {
+          "institution": "Czech Technical University in Prague",
+          "authors": [
+            "Patricie Petriľáková",
+            "Jan Čech"
+          ],
+          "raw_affiliation": "Faculty of Electrical Engineering, Czech Technical University in Prague",
+          "evidence_page": 1
+        }
+      ],
+      "bibliography_status": "reviewed",
+      "taxonomy_status": "reviewed",
+      "affiliation_status": "reviewed",
+      "primary_pdf": "data/raw/primary_curation_2026_09_08/dynamic.pdf",
+      "publication_status": "CVWW 2026 conference paper",
+      "bibliographic_evidence": "Official CVWW 2026 proceedings PDF, 29th workshop, 9–12 February 2026. Retain diacritics from proceedings metadata; PDF uses ASCII Petrilakova/Cech. No DOI or arXiv version established.",
+      "project_code_urls": [],
+      "project_code_status": "not_listed_in_inspected_primary_sources",
+      "unresolved_fields": [],
+      "overall_state": "fully_curated",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "primary_evidence_urls": [
+        "https://cmp.felk.cvut.cz/cvww2026/assets/pdfs/CVWW2026-31-final.pdf"
+      ],
+      "bibliography_overrides": {}
+    }
+  ],
+  "state_semantics": "affiliation_status=reviewed means all author-to-institution identities were inspected; overall affiliation pending can reflect missing institution coordinates. The audit separately exposes location_status. Undefined additional affiliations remain needs_review even when a supported affiliation already supplies an index.",
+  "institutions": [
+    {
+      "name": "University of California, San Diego",
+      "type": "university",
+      "geocode": "ucsd",
+      "city": "San Diego",
+      "region": "California",
+      "country": "United States",
+      "country_code": "US",
+      "evidence_url": "https://blink.ucsd.edu/technology/help-desk/directory/address.html",
+      "location_note": "Matched university campus way 25822522 at 9500 Gilman Drive; no existing canonical institution/alias/location found."
+    },
+    {
+      "name": "Zellic",
+      "type": "company",
+      "evidence_url": "https://www.zellic.io/",
+      "location_note": "Paper provides no office. Organization website does not establish a unique paper-time work location; coordinates pending."
+    },
+    {
+      "name": "ZK Email",
+      "type": "research_unit",
+      "evidence_url": "https://zk.email/",
+      "location_note": "Separately named with MIT in affiliation 3; no evidence of organizational subordination to MIT or a unique physical office. No parent or coordinates inferred."
+    },
+    {
+      "name": "Newcastle University",
+      "type": "university",
+      "city": "Newcastle upon Tyne",
+      "region": "England",
+      "country": "United Kingdom",
+      "country_code": "GB",
+      "evidence_url": "https://www.ncl.ac.uk/who-we-are/contact/",
+      "location_note": "Official main address NE1 7RU; geocoder returned a multi-site relation with NE4 5DP, so no point accepted."
+    },
+    {
+      "name": "Polish Academy of Sciences",
+      "type": "research_unit",
+      "country": "Poland",
+      "country_code": "PL",
+      "evidence_url": "https://pan.pl/en/",
+      "location_note": "Normalize singular Science in the PDF to the academy's official English name. No constituent institute or campus is specified; academy headquarters must not be inferred as the author's work site."
+    },
+    {
+      "name": "Observatory on Social Media",
+      "type": "research_unit",
+      "parent": "Indiana University",
+      "reuse_parent_location": true,
+      "evidence_url": "https://osome.iu.edu/about/support",
+      "location_note": "Paper explicitly locates OSoMe at Indiana University, Bloomington; official organization identifies it as an IU Bloomington research center. Reuse the existing reviewed Bloomington campus point as a representative campus location, not a claimed lab-building coordinate."
+    },
+    {
+      "name": "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+      "type": "research_unit",
+      "parent": "Institute of Automation, Chinese Academy of Sciences",
+      "reuse_parent_location": true,
+      "evidence_url": "https://english.ia.ac.cn/ju/",
+      "location_note": "Official CASIA directory houses MAIS at 95 Zhongguancun East Road, the parent institute's site. Reuse the existing reviewed parent-site point; preserve MAIS identity."
+    },
+    {
+      "name": "Institute of Information Science, Beijing Jiaotong University",
+      "type": "research_unit",
+      "parent": "Beijing Jiaotong University",
+      "reuse_parent_location": true,
+      "evidence_url": "https://arxiv.org/pdf/2506.20548v1",
+      "location_note": "Affiliation 3 explicitly identifies the institute inside Beijing Jiaotong University, Beijing 100044. Reuse the existing reviewed university campus point as representative campus geography, not an institute building coordinate."
+    },
+    {
+      "name": "Sharif University of Technology",
+      "type": "university",
+      "geocode": "sharif",
+      "city": "Tehran",
+      "region": "Tehran",
+      "country": "Iran",
+      "country_code": "IR",
+      "evidence_url": "https://en.sharif.ir/",
+      "location_note": "Exact university campus relation 14738965 on Azadi Street, Tehran; university identity verified by official site and PDF. No city-center fallback."
+    },
+    {
+      "name": "Wangxuan Institute of Computer Technology",
+      "type": "research_unit",
+      "parent": "Peking University",
+      "city": "Beijing",
+      "region": "Beijing",
+      "country": "China",
+      "country_code": "CN",
+      "evidence_url": "https://www.icst.pku.edu.cn/english/people/ss/index.htm",
+      "location_note": "Official institute address: No. 128 Zhongguancun North Street, Beijing 100871. Do not copy an unverified parent-campus point for this separately addressed institute; exact geocoder query returned no result."
+    },
+    {
+      "name": "Underwriters Laboratories",
+      "type": "research_unit",
+      "country": "United States",
+      "country_code": "US",
+      "evidence_url": "https://ul.org/about/",
+      "location_note": "Retain the paper's institutional wording and nonprofit research identity; do not merge with commercial UL Solutions or infer a separate lab from current staff pages. No uniquely verified paper-time office point."
+    },
+    {
+      "name": "Aptima, Inc.",
+      "type": "company",
+      "geocode": "aptima",
+      "city": "Woburn",
+      "region": "Massachusetts",
+      "country": "United States",
+      "country_code": "US",
+      "evidence_url": "https://aptima.com/",
+      "location_note": "Official organization names headquarters at 8 Cabot Road, Suite 4000. Geocoded building way 385497004 matches the exact address. Representative headquarters marker, not a claim that each author physically worked there."
+    }
+  ]
+}

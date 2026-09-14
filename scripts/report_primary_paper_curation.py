@@ -75,6 +75,11 @@ def strict_regression(root=ROOT):
 
 
 def build_audit(root=ROOT):
+    followup = root / 'data/processed/systematic_tier1_2026_09'
+    if (followup / 'insertion.json').exists():
+        # This report documents the completed ten-paper pass, before Tier 1.
+        # Its frozen input snapshot is independently checked by the Tier 1 audit.
+        root = followup / 'baseline'
     ledger = json.loads((root / LEDGER).read_text())
     decisions = ledger['papers']
     baseline = json.loads((root / BASELINE).read_text())

@@ -1,0 +1,943 @@
+{
+  "doi": "10.1016/j.jvcir.2023.103876",
+  "source_url": "https://api.crossref.org/works/10.1016%2Fj.jvcir.2023.103876",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            6,
+            16
+          ]
+        ],
+        "date-time": "2026-06-16T19:06:54Z",
+        "timestamp": 1781636814381,
+        "version": "3.54.5"
+      },
+      "reference-count": 61,
+      "publisher": "Elsevier BV",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                9,
+                1
+              ]
+            ],
+            "date-time": "2023-09-01T00:00:00Z",
+            "timestamp": 1693526400000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                9,
+                1
+              ]
+            ],
+            "date-time": "2023-09-01T00:00:00Z",
+            "timestamp": 1693526400000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/legal/tdmrep-license"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                9,
+                1
+              ]
+            ],
+            "date-time": "2023-09-01T00:00:00Z",
+            "timestamp": 1693526400000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-017"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                9,
+                1
+              ]
+            ],
+            "date-time": "2023-09-01T00:00:00Z",
+            "timestamp": 1693526400000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                9,
+                1
+              ]
+            ],
+            "date-time": "2023-09-01T00:00:00Z",
+            "timestamp": 1693526400000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-012"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                9,
+                1
+              ]
+            ],
+            "date-time": "2023-09-01T00:00:00Z",
+            "timestamp": 1693526400000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                9,
+                1
+              ]
+            ],
+            "date-time": "2023-09-01T00:00:00Z",
+            "timestamp": 1693526400000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-004"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/501100001809",
+          "name": "National Natural Science Foundation of China",
+          "doi-asserted-by": "publisher",
+          "award": [
+            "61901205"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "61901205"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100001809",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        },
+        {
+          "DOI": "10.13039/501100005047",
+          "name": "Natural Science Foundation of Liaoning Province",
+          "doi-asserted-by": "publisher",
+          "award": [
+            "2023-MS-139"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "2023-MS-139"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100005047",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "elsevier.com",
+          "sciencedirect.com"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "Journal of Visual Communication and Image Representation"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2023,
+            9
+          ]
+        ]
+      },
+      "DOI": "10.1016/j.jvcir.2023.103876",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2023,
+            6,
+            22
+          ]
+        ],
+        "date-time": "2023-06-22T19:37:11Z",
+        "timestamp": 1687462631000
+      },
+      "page": "103876",
+      "update-policy": "https://doi.org/10.1016/elsevier_cm_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 13,
+      "special_numbering": "C",
+      "title": [
+        "Detection of GAN generated image using color gradient representation"
+      ],
+      "prefix": "10.1016",
+      "volume": "95",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0003-4115-1617",
+          "authenticated-orcid": false,
+          "given": "Yun",
+          "family": "Liu",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-1856-3496",
+          "authenticated-orcid": false,
+          "given": "Zuliang",
+          "family": "Wan",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Xiaohua",
+          "family": "Yin",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Guanghui",
+          "family": "Yue",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Aiping",
+          "family": "Tan",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Zhi",
+          "family": "Zheng",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "78",
+      "reference": [
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b1",
+          "article-title": "Generative adversarial nets",
+          "volume": "27",
+          "author": "Goodfellow",
+          "year": "2014",
+          "journal-title": "Adv. Neural Inf. Process. Syst."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b2",
+          "series-title": "Began: Boundary equilibrium generative adversarial networks",
+          "author": "Berthelot",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b3",
+          "series-title": "Progressive growing of gans for improved quality, stability, and variation",
+          "author": "Karras",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b4",
+          "doi-asserted-by": "crossref",
+          "unstructured": "T. Karras, S. Laine, T. Aila, A style-based generator architecture for generative adversarial networks, in: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2019, pp. 4401–4410.",
+          "DOI": "10.1109/CVPR.2019.00453"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b5",
+          "doi-asserted-by": "crossref",
+          "unstructured": "T. Karras, S. Laine, M. Aittala, J. Hellsten, J. Lehtinen, T. Aila, Analyzing and improving the image quality of stylegan, in: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2020, pp. 8110–8119.",
+          "DOI": "10.1109/CVPR42600.2020.00813"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b6",
+          "doi-asserted-by": "crossref",
+          "unstructured": "C. Ledig, L. Theis, F. Huszár, J. Caballero, A. Cunningham, A. Acosta, A. Aitken, A. Tejani, J. Totz, Z. Wang, et al., Photo-realistic single image super-resolution using a generative adversarial network, in: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2017, pp. 4681–4690.",
+          "DOI": "10.1109/CVPR.2017.19"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b7",
+          "doi-asserted-by": "crossref",
+          "first-page": "92",
+          "DOI": "10.1016/j.sigpro.2018.10.004",
+          "article-title": "Variational probabilistic generative framework for single image super-resolution",
+          "volume": "156",
+          "author": "Wang",
+          "year": "2019",
+          "journal-title": "Signal Process."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b8",
+          "article-title": "Unsupervised image-to-image translation networks",
+          "volume": "30",
+          "author": "Liu",
+          "year": "2017",
+          "journal-title": "Adv. Neural Inf. Process. Syst."
+        },
+        {
+          "issue": "4",
+          "key": "10.1016/j.jvcir.2023.103876_b9",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1145/3072959.3073659",
+          "article-title": "Globally and locally consistent image completion",
+          "volume": "36",
+          "author": "Iizuka",
+          "year": "2017",
+          "journal-title": "ACM Trans. Graph. (ToG)"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b10",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1155/2021/5511435",
+          "article-title": "Detection of GAN-synthesized image based on discrete wavelet transform",
+          "volume": "2021",
+          "author": "Tang",
+          "year": "2021",
+          "journal-title": "Secur. Commun. Netw."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b11",
+          "doi-asserted-by": "crossref",
+          "unstructured": "K. Chandrasegaran, N.-T. Tran, N.-M. Cheung, A closer look at fourier spectrum discrepancies for cnn-generated images detection, in: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2021, pp. 7200–7209.",
+          "DOI": "10.1109/CVPR46437.2021.00712"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b12",
+          "series-title": "2019 IEEE Conference on Multimedia Information Processing and Retrieval",
+          "first-page": "506",
+          "article-title": "Do gans leave artificial fingerprints?",
+          "author": "Marra",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b13",
+          "article-title": "Image quality assessment based fake face detection",
+          "author": "Kiruthika",
+          "year": "2022",
+          "journal-title": "Multimedia Tools Appl."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b14",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.image.2021.116315",
+          "article-title": "BGT: A blind image quality evaluator via gradient and texture statistical features",
+          "volume": "96",
+          "author": "Deng",
+          "year": "2021",
+          "journal-title": "Signal Process., Image Commun."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b15",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.sigpro.2020.107616",
+          "article-title": "Identification of deep network generated images using disparities in color components",
+          "volume": "174",
+          "author": "Li",
+          "year": "2020",
+          "journal-title": "Signal Process."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b16",
+          "series-title": "2018 IEEE Conference on Multimedia Information Processing and Retrieval",
+          "first-page": "384",
+          "article-title": "Detection of gan-generated fake images over social networks",
+          "author": "Marra",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b17",
+          "doi-asserted-by": "crossref",
+          "first-page": "16",
+          "DOI": "10.1016/j.ins.2021.05.006",
+          "article-title": "Locally GAN-generated face detection based on an improved xception",
+          "volume": "572",
+          "author": "Chen",
+          "year": "2021",
+          "journal-title": "Inform. Sci."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b18",
+          "doi-asserted-by": "crossref",
+          "unstructured": "S. Tariq, S. Lee, H. Kim, Y. Shin, S.S. Woo, Detecting both machine and human created fake face images in the wild, in: Proceedings of the 2nd International Workshop on Multimedia Privacy and Security, 2018, pp. 81–87.",
+          "DOI": "10.1145/3267357.3267367"
+        },
+        {
+          "issue": "1",
+          "key": "10.1016/j.jvcir.2023.103876_b19",
+          "doi-asserted-by": "crossref",
+          "first-page": "370",
+          "DOI": "10.3390/app10010370",
+          "article-title": "Deep fake image detection based on pairwise learning",
+          "volume": "10",
+          "author": "Hsu",
+          "year": "2020",
+          "journal-title": "Appl. Sci."
+        },
+        {
+          "issue": "12",
+          "key": "10.1016/j.jvcir.2023.103876_b20",
+          "doi-asserted-by": "crossref",
+          "first-page": "1692",
+          "DOI": "10.3390/e23121692",
+          "article-title": "MFF-net: Deepfake detection network based on multi-feature fusion",
+          "volume": "23",
+          "author": "Zhao",
+          "year": "2021",
+          "journal-title": "Entropy"
+        },
+        {
+          "issue": "4",
+          "key": "10.1016/j.jvcir.2023.103876_b21",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1145/3499026",
+          "article-title": "Detection of AI-manipulated fake faces via mining generalized features",
+          "volume": "18",
+          "author": "Yu",
+          "year": "2022",
+          "journal-title": "ACM Trans. Multimed. Comput., Commun. Appl. (TOMM)"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b22",
+          "doi-asserted-by": "crossref",
+          "first-page": "127",
+          "DOI": "10.1016/j.future.2021.06.043",
+          "article-title": "Detecting fake images by identifying potential texture difference",
+          "volume": "125",
+          "author": "Yang",
+          "year": "2021",
+          "journal-title": "Future Gener. Comput. Syst."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b23",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.cviu.2021.103170",
+          "article-title": "Fake face detection via adaptive manipulation traces extraction network",
+          "volume": "204",
+          "author": "Guo",
+          "year": "2021",
+          "journal-title": "Comput. Vis. Image Underst."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b24",
+          "doi-asserted-by": "crossref",
+          "unstructured": "H. Mo, B. Chen, W. Luo, Fake faces identification via convolutional neural network, in: Proceedings of the 6th ACM Workshop on Information Hiding and Multimedia Security, 2018, pp. 43–47.",
+          "DOI": "10.1145/3206004.3206009"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b25",
+          "series-title": "2018 IEEE International Workshop on Information Forensics and Security",
+          "first-page": "1",
+          "article-title": "Mesonet: a compact facial video forgery detection network",
+          "author": "Afchar",
+          "year": "2018"
+        },
+        {
+          "issue": "11",
+          "key": "10.1016/j.jvcir.2023.103876_b26",
+          "doi-asserted-by": "crossref",
+          "first-page": "2772",
+          "DOI": "10.1109/TIFS.2018.2834147",
+          "article-title": "Distinguishing between natural and computer-generated images using convolutional neural networks",
+          "volume": "13",
+          "author": "Quan",
+          "year": "2018",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b27",
+          "doi-asserted-by": "crossref",
+          "unstructured": "S.-Y. Wang, O. Wang, R. Zhang, A. Owens, A.A. Efros, Cnn-generated images are surprisingly easy to spot... for now, in: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2020, pp. 8695–8704.",
+          "DOI": "10.1109/CVPR42600.2020.00872"
+        },
+        {
+          "issue": "5",
+          "key": "10.1016/j.jvcir.2023.103876_b28",
+          "doi-asserted-by": "crossref",
+          "first-page": "969",
+          "DOI": "10.1109/JSTSP.2020.2994523",
+          "article-title": "Gan-generated image detection with self-attention mechanism against gan generator defect",
+          "volume": "14",
+          "author": "Mi",
+          "year": "2020",
+          "journal-title": "IEEE J. Sel. Top. Sign. Proces."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b29",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Z. Liu, P. Luo, X. Wang, X. Tang, Deep learning face attributes in the wild, in: Proceedings of the IEEE International Conference on Computer Vision, 2015, pp. 3730–3738.",
+          "DOI": "10.1109/ICCV.2015.425"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b30",
+          "doi-asserted-by": "crossref",
+          "unstructured": "F. Chollet, Xception: Deep learning with depthwise separable convolutions, in: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2017, pp. 1251–1258.",
+          "DOI": "10.1109/CVPR.2017.195"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b31",
+          "series-title": "2020 IEEE International Workshop on Information Forensics and Security",
+          "first-page": "1",
+          "article-title": "CNN detection of GAN-generated face images based on cross-band co-occurrences analysis",
+          "author": "Barni",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b32",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.image.2021.116315",
+          "article-title": "BGT: A blind image quality evaluator via gradient and texture statistical features",
+          "volume": "96",
+          "author": "Deng",
+          "year": "2021",
+          "journal-title": "Signal Process., Image Commun."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b33",
+          "series-title": "2019 IEEE International Conference on Image Processing",
+          "first-page": "2299",
+          "article-title": "Detection of fake images via the ensemble of deep representations from multi color spaces",
+          "author": "He",
+          "year": "2019"
+        },
+        {
+          "issue": "6",
+          "key": "10.1016/j.jvcir.2023.103876_b34",
+          "doi-asserted-by": "crossref",
+          "first-page": "3527",
+          "DOI": "10.1109/TCSVT.2021.3116679",
+          "article-title": "A robust GAN-generated face detection method based on dual-color spaces and an improved xception",
+          "volume": "32",
+          "author": "Chen",
+          "year": "2021",
+          "journal-title": "IEEE Trans. Circuits Syst. Video Technol."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b35",
+          "doi-asserted-by": "crossref",
+          "first-page": "15",
+          "DOI": "10.1016/j.patrec.2021.03.009",
+          "article-title": "Perception matters: Exploring imperceptible and transferable anti-forensics for GAN-generated fake face imagery detection",
+          "volume": "146",
+          "author": "Wang",
+          "year": "2021",
+          "journal-title": "Pattern Recognit. Lett."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b36",
+          "doi-asserted-by": "crossref",
+          "first-page": "654",
+          "DOI": "10.1016/j.ins.2022.06.003",
+          "article-title": "Towards DeepFake video forensics based on facial textural disparities in multi-color channels",
+          "volume": "607",
+          "author": "Xia",
+          "year": "2022",
+          "journal-title": "Inform. Sci."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b37",
+          "article-title": "Distinguishing natural and computer generated images using multi-colorspace fused EfficientNet",
+          "volume": "68",
+          "author": "Gangan",
+          "year": "2022",
+          "journal-title": "J. Inf. Secur. Appl."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b38",
+          "series-title": "Detection of deep network generated images using disparities in color components, 2018",
+          "first-page": "1",
+          "author": "Li",
+          "year": "1808"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b39",
+          "series-title": "2019 IEEE International Workshop on Information Forensics and Security",
+          "first-page": "1",
+          "article-title": "Detecting and simulating artifacts in gan fake images",
+          "author": "Zhang",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b40",
+          "series-title": "Unsupervised representation learning with deep convolutional generative adversarial networks",
+          "author": "Radford",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b41",
+          "series-title": "Energy-based generative adversarial network",
+          "author": "Zhao",
+          "year": "2016"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b42",
+          "series-title": "International Conference on Machine Learning",
+          "first-page": "214",
+          "article-title": "Wasserstein generative adversarial networks",
+          "author": "Arjovsky",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b43",
+          "doi-asserted-by": "crossref",
+          "unstructured": "P. Isola, J.-Y. Zhu, T. Zhou, A.A. Efros, Image-to-image translation with conditional adversarial networks, in: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2017, pp. 1125–1134.",
+          "DOI": "10.1109/CVPR.2017.632"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b44",
+          "doi-asserted-by": "crossref",
+          "unstructured": "J.-Y. Zhu, T. Park, P. Isola, A.A. Efros, Unpaired image-to-image translation using cycle-consistent adversarial networks, in: Proceedings of the IEEE International Conference on Computer Vision, 2017, pp. 2223–2232.",
+          "DOI": "10.1109/ICCV.2017.244"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b45",
+          "series-title": "Large scale GAN training for high fidelity natural image synthesis",
+          "author": "Brock",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b46",
+          "doi-asserted-by": "crossref",
+          "unstructured": "T. Park, M.-Y. Liu, T.-C. Wang, J.-Y. Zhu, Semantic image synthesis with spatially-adaptive normalization, in: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2019, pp. 2337–2346.",
+          "DOI": "10.1109/CVPR.2019.00244"
+        },
+        {
+          "issue": "3",
+          "key": "10.1016/j.jvcir.2023.103876_b47",
+          "doi-asserted-by": "crossref",
+          "first-page": "480",
+          "DOI": "10.1109/TIFS.2010.2051426",
+          "article-title": "JPEG error analysis and its applications to digital image forensics",
+          "volume": "5",
+          "author": "Luo",
+          "year": "2010",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b48",
+          "series-title": "2014 22nd International Conference on Pattern Recognition",
+          "first-page": "1173",
+          "article-title": "Face anti-spoofing based on general image quality assessment",
+          "author": "Galbally",
+          "year": "2014"
+        },
+        {
+          "issue": "4",
+          "key": "10.1016/j.jvcir.2023.103876_b49",
+          "doi-asserted-by": "crossref",
+          "first-page": "746",
+          "DOI": "10.1109/TIFS.2015.2400395",
+          "article-title": "Face spoof detection with image distortion analysis",
+          "volume": "10",
+          "author": "Wen",
+          "year": "2015",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b50",
+          "doi-asserted-by": "crossref",
+          "unstructured": "X. Yang, Y. Li, H. Qi, S. Lyu, Exposing gan-synthesized faces using landmark locations, in: Proceedings of the ACM Workshop on Information Hiding and Multimedia Security, 2019, pp. 113–118.",
+          "DOI": "10.1145/3335203.3335724"
+        },
+        {
+          "issue": "18",
+          "key": "10.1016/j.jvcir.2023.103876_b51",
+          "doi-asserted-by": "crossref",
+          "first-page": "26345",
+          "DOI": "10.1007/s11042-022-12661-1",
+          "article-title": "Detecting GAN-generated face images via hybrid texture and sensor noise based features",
+          "volume": "81",
+          "author": "Fu",
+          "year": "2022",
+          "journal-title": "Multimedia Tools Appl."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b52",
+          "series-title": "2019 IEEE International Conference on Image Processing",
+          "first-page": "4584",
+          "article-title": "Detecting GAN-generated imagery using saturation cues",
+          "author": "McCloskey",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b53",
+          "series-title": "2019 IEEE Winter Applications of Computer Vision Workshops",
+          "first-page": "83",
+          "article-title": "Exploiting visual artifacts to expose deepfakes and face manipulations",
+          "author": "Matern",
+          "year": "2019"
+        },
+        {
+          "issue": "5",
+          "key": "10.1016/j.jvcir.2023.103876_b54",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.2352/ISSN.2470-1173.2019.5.MWSF-532",
+          "article-title": "Detecting GAN generated fake images using co-occurrence matrices",
+          "volume": "2019",
+          "author": "Nataraj",
+          "year": "2019",
+          "journal-title": "Electron. Imaging"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b55",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1155/2022/8609661",
+          "article-title": "Manipulated faces detection with adaptive filter",
+          "volume": "2022",
+          "author": "Peng",
+          "year": "2022",
+          "journal-title": "Secur. Commun. Netw."
+        },
+        {
+          "issue": "5",
+          "key": "10.1016/j.jvcir.2023.103876_b56",
+          "doi-asserted-by": "crossref",
+          "first-page": "1740",
+          "DOI": "10.1109/TIP.2012.2235848",
+          "article-title": "Local directional number pattern for face analysis: Face and expression recognition",
+          "volume": "22",
+          "author": "Rivera",
+          "year": "2012",
+          "journal-title": "IEEE Trans. Image Process."
+        },
+        {
+          "issue": "6",
+          "key": "10.1016/j.jvcir.2023.103876_b57",
+          "doi-asserted-by": "crossref",
+          "first-page": "803",
+          "DOI": "10.1016/j.imavis.2008.08.005",
+          "article-title": "Facial expression recognition based on local binary patterns: A comprehensive study",
+          "volume": "27",
+          "author": "Shan",
+          "year": "2009",
+          "journal-title": "Image Vis. Comput."
+        },
+        {
+          "issue": "2",
+          "key": "10.1016/j.jvcir.2023.103876_b58",
+          "doi-asserted-by": "crossref",
+          "first-page": "432",
+          "DOI": "10.1109/TIFS.2011.2175919",
+          "article-title": "Ensemble classifiers for steganalysis of digital media",
+          "volume": "7",
+          "author": "Kodovsky",
+          "year": "2011",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "issue": "3",
+          "key": "10.1016/j.jvcir.2023.103876_b59",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1145/1961189.1961199",
+          "article-title": "LIBSVM: A library for support vector machines",
+          "volume": "2",
+          "author": "Chang",
+          "year": "2011",
+          "journal-title": "ACM Trans. Intell. Syst. Technol."
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b60",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Y. Choi, M. Choi, M. Kim, J.-W. Ha, S. Kim, J. Choo, Stargan: Unified generative adversarial networks for multi-domain image-to-image translation, in: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2018, pp. 8789–8797.",
+          "DOI": "10.1109/CVPR.2018.00916"
+        },
+        {
+          "key": "10.1016/j.jvcir.2023.103876_b61",
+          "doi-asserted-by": "crossref",
+          "unstructured": "R. Wang, F. Juefei-Xu, L. Ma, X. Xie, Y. Huang, J. Wang, Y. Liu, Fakespotter: A Simple yet Robust Baseline for Spotting AI-Synthesized Fake Faces, in: Proceedings of the Twenty-Ninth International Joint Conference on Artificial Intelligence, IJCAI ’20, ISBN: 9780999241165, 2021.",
+          "DOI": "10.24963/ijcai.2020/476"
+        }
+      ],
+      "container-title": [
+        "Journal of Visual Communication and Image Representation"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S1047320323001268?httpAccept=text/xml",
+          "content-type": "text/xml",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S1047320323001268?httpAccept=text/plain",
+          "content-type": "text/plain",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            20
+          ]
+        ],
+        "date-time": "2025-10-20T02:55:29Z",
+        "timestamp": 1760928929000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://linkinghub.elsevier.com/retrieve/pii/S1047320323001268"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2023,
+            9
+          ]
+        ]
+      },
+      "references-count": 61,
+      "alternative-id": [
+        "S1047320323001268"
+      ],
+      "URL": "https://doi.org/10.1016/j.jvcir.2023.103876",
+      "relation": {},
+      "ISSN": [
+        "1047-3203"
+      ],
+      "issn-type": [
+        {
+          "value": "1047-3203",
+          "type": "print"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2023,
+            9
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "Elsevier",
+          "name": "publisher",
+          "label": "This article is maintained by"
+        },
+        {
+          "value": "Detection of GAN generated image using color gradient representation",
+          "name": "articletitle",
+          "label": "Article Title"
+        },
+        {
+          "value": "Journal of Visual Communication and Image Representation",
+          "name": "journaltitle",
+          "label": "Journal Title"
+        },
+        {
+          "value": "https://doi.org/10.1016/j.jvcir.2023.103876",
+          "name": "articlelink",
+          "label": "CrossRef DOI link to publisher maintained version"
+        },
+        {
+          "value": "article",
+          "name": "content_type",
+          "label": "Content Type"
+        },
+        {
+          "value": "© 2023 Elsevier Inc. All rights reserved.",
+          "name": "copyright",
+          "label": "Copyright"
+        }
+      ],
+      "article-number": "103876"
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "review_date": "2026-09-13",
+  "scope": "Only the 16 frozen Tier 1 audit candidates. Paper-time author blocks visually inspected; taxonomy reviewed against primary text. No scope-policy changes.",
+  "papers": {
+    "d2f5890b11ab48bf": {
+      "arxiv_id": "2409.08849", "doi": "10.1109/wacv61041.2025.00025", "year": "2025", "venue": "WACV", "publication_type": "conference",
+      "authors": ["Stefan Smeu", "Elisabeta Oneata", "Dan Oneata"],
+      "tasks": ["localization"], "image_scopes": ["generative_editing", "deepfake"], "research_types": ["method"],
+      "taxonomy_evidence": {"tasks": "Sections 3-4 evaluate predicted manipulation masks using localization metrics; decoding frozen CLIP features is the method, not merely an explanatory heatmap.", "image_scopes": "Dolos evaluation uses locally inpainted face attributes, including latent diffusion edits to real/source face images.", "research_types": "Introduces the DeCLIP decoder and evaluates generalization; reuses Dolos rather than claiming a new dataset."},
+      "affiliations": [["Bitdefender", [1,2], "Bitdefender"], ["University Politehnica of Bucharest", [3], "POLITEHNICA Bucharest"]],
+      "code_url": "https://github.com/bit-ml/DeCLIP",
+      "identity_note": "2024 arXiv 2409.08849 and WACV 2025 are the same work; use final WACV metadata."
+    },
+    "76f06867c0e6b17e": {
+      "year": "2026", "venue": "ICLR", "publication_type": "conference",
+      "authors": ["Gert Lek", "Nicolas Van Schaik", "Chaoyi Zhu", "Pin-Yu Chen", "Robert Birke", "Lydia Y. Chen"],
+      "tasks": ["localization"], "image_scopes": ["generative_editing"], "research_types": ["method", "dataset"],
+      "taxonomy_evidence": {"tasks": "ICLR PDF abstract and experiments report mask localization IoU/F1 across four benchmarks and seven baselines.", "image_scopes": "Real-image diffusion edits and adaptation to NanoBanana/Qwen image editing are the central evaluation.", "research_types": "Introduces Detective SAM and AutoEditForge paired edit-data generation; explicit released data/pipeline contribution, not ordinary benchmark usage."},
+      "affiliations": [["University of Neuchâtel", [1,6], "University of Neuchâtel"], ["Delft University of Technology", [2,3,6], "Delft University of Technology"], ["IBM Research", [4], "IBM Research"], ["University of Turin", [5], "University of Turin"]],
+      "alternate_titles": ["Detective SAM: Adapting SAM to Localize Diffusion-based Forgeries via Embedding Artifacts"],
+      "identity_note": "The ICML 2025 DIG-BUGS workshop precursor has five authors; the ICLR 2026 expanded paper adds Nicolas Van Schaik and AutoEditForge. Neither title is in the pre-task corpus; create only the final work. Do not infer a DOI/arXiv/OpenAlex ID from unrelated search results."
+    },
+    "eff7c9e8b0961396": {
+      "year": "2026", "venue": "arXiv", "publication_type": "preprint",
+      "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
+      "taxonomy_evidence": {"tasks": "Primary PDF evaluates zero-shot real/generated image discrimination and AUC, including OpenFake.", "image_scopes": "Text-to-image synthetic images and generator generalization are the detection endpoint.", "research_types": "Introduces structured frequency perturbation sensitivity as a training-free detector; no new dataset/benchmark is established."},
+      "affiliations": [["Fujitsu Limited", [1], "Fujitsu Ltd., Japan"], ["Fujitsu Research of America", [2], "Fujitsu Research of America, Inc., USA"]]
+    },
+    "708c69744d1ea0ed": {
+      "year": "2026", "venue": "ICLR", "publication_type": "conference",
+      "authors": ["Bin Li", "Haoyu Li", "Haodong Li", "Jiaming Zhong", "Changsheng Chen", "Jiangqun Ni", "Bo Cao"],
+      "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
+      "taxonomy_evidence": {"tasks": "DACOM estimates detector reliability and evaluates selective abstention/multi-detector routing for image detection.", "image_scopes": "Experiments address GAN/diffusion-generated image detectors under distortions.", "research_types": "A detector-assistance confidence method; supporting experiments do not constitute a separately introduced dataset or benchmark."},
+      "affiliations": [["Shenzhen University", [1,2,3,4], "Guangdong Provincial Key Laboratory of Intelligent Information Processing and Shenzhen Key Laboratory of Media Security, Shenzhen University"], ["Shenzhen MSU-BIT University", [5], "Faculty of Engineering, Shenzhen MSU-BIT University"], ["Sun Yat-sen University", [6], "SUN YAT-SEN University"], ["Smart City Research Institute of China Electronics Technology Group Corporation", [7], "The Smart City Research Institute of China Electronics Technology Group Corporation"]],
+      "identity_note": "Primary PDF explicitly includes seventh author Bo Cao; the audit metadata omitted this author. Final ICLR paper controls."
+    },
+    "8a11b03cd7f7267b": {
+      "year": "2025", "venue": "arXiv", "publication_type": "preprint",
+      "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
+      "taxonomy_evidence": {"tasks": "ALEI evaluates binary generated-image detection across unseen GAN and diffusion generators.", "image_scopes": "Fully generated ProGAN training images and unseen GAN/diffusion image datasets.", "research_types": "Adaptive Low-level Experts Injection and feature selection are the contributions; existing datasets are reused."},
+      "affiliations": [["Xiamen University", [1,2,3,4,8], "Key Laboratory of Multimedia Trusted Perception and Efficient Computing, Ministry of Education of China, Xiamen University"], ["Tencent Youtu Lab", [5,6,7], "Tencent YouTu Lab"]]
+    },
+    "08beb6425ead6689": {
+      "year": "2022", "venue": "IEEE Access", "publication_type": "journal", "doi": "10.1109/access.2022.3179116",
+      "authors": ["Sara Mandelli", "Davide Cozzolino", "Edoardo Daniele Cannas", "João Phillipe Cardenuto", "Daniel Moreira", "Paolo Bestagini", "Walter Scheirer", "Anderson Rocha", "Luisa Verdoliva", "Stefano Tubaro", "Edward J. Delp"],
+      "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method", "dataset", "analysis_study"],
+      "taxonomy_evidence": {"tasks": "PDF page 2 explicitly studies synthetic western-blot detection with binary/one-class detectors; this is scientific-image forensics, not downstream medical diagnosis.", "image_scopes": "Four generation methods synthesize western-blot images; robustness editing is a detector stress test, not a new generative-editing task.", "research_types": "Introduces a dataset exceeding 14K original and 24K synthetic images, detection strategies and a comparative robustness investigation."},
+      "affiliation_pages": [2],
+      "affiliations": [["Politecnico di Milano", [1,3,6,10], "Dipartimento di Elettronica, Informazione e Bioingegneria, Politecnico di Milano, 20133 Milan, Italy"], ["University of Naples Federico II", [2,9], "Dipartimento di Ingegneria Elettrica e Tecnologie dell’Informazione (Cozzolino); Dipartimento di Ingegneria Industriale (Verdoliva), University Federico II of Naples, 80125 Naples, Italy"], ["University of Notre Dame", [5,7], "Department of Computer Science and Engineering, University of Notre Dame, Notre Dame, IN 46556, USA"], ["University of Campinas", [4,8], "Artificial Intelligence Lab, RECOD.ai, Institute of Computing, University of Campinas, Campinas 13083-970, Brazil"], ["Purdue University", [11], "School of Electrical and Computer Engineering, Purdue University, West Lafayette, IN 47907, USA"]],
+      "identity_note": "2021 arXiv is the preprint of the 2022 IEEE Access paper. Distinct from the existing 2024 Explainable Artifacts for Synthetic Western Blot Source Attribution. PDF corrects Sara Mandelli and expands middle names."
+    },
+    "98e7bf0da8264d5f": {
+      "year": "2025", "venue": "arXiv", "publication_type": "preprint",
+      "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method", "dataset"],
+      "taxonomy_evidence": {"tasks": "Sections 4.1-4.2 evaluate detection accuracy/generalization and textual explanation quality; box annotations alone do not establish evaluated localization.", "image_scopes": "GenImage/ForenSynths generated images are the explicit endpoint.", "research_types": "Introduces ForenX and ForgReason, with 2,215 human-annotated fake images extended to 8,215 images; section 3.2 documents construction."},
+      "affiliations": [["Beijing Jiaotong University", [1,4,5,6], "Beijing Jiaotong University"], ["Microsoft Research Asia", [1,2,3,7], "Microsoft Research Asia"]],
+      "identity_note": "Tan et al. ForenX/ForgReason is distinct from Ji et al. similarly worded explainable detection and grounded-reasoning papers; authors, arXiv and methods differ."
+    },
+    "7f06c42f18ac0ce3": {
+      "year": "2026", "venue": "arXiv", "publication_type": "preprint",
+      "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method", "analysis_study"],
+      "taxonomy_evidence": {"tasks": "Primary manuscript studies real/synthetic image discrimination from low-correlation signals.", "image_scopes": "AI-generated images compared with authentic images; no spatial mask-localization task established.", "research_types": "Fractal characterization supplies a detector and a signal-level investigation of intrinsic real/generated differences; no new dataset claim."},
+      "affiliations": [["Trend Micro Incorporated", [1], "Trend Micro Incorporated, Nanjing 210000, Jiangsu, China"], ["Jiangsu Police Institute", [2], "Jiangsu Police Institute, Nanjing 210031, Jiangsu, China"], ["BASF Incorporated", [3], "BASF Incorporated, Nanjing 210000, Jiangsu, China"], ["BMW Incorporated", [4], "BMW Incorporated, Nanjing 210012, Jiangsu, China"], ["Geely Automobile Research Institute", [5], "Geely Automobile Research Institute, Ningbo 315000, Zhejiang, China"]],
+      "unresolved": ["Exact corporate research sites/legal entities and campus coordinates are not established by postal city alone; preserve paper affiliation strings and leave locations pending."]
+    },
+    "745a864cbd6a6efc": {
+      "year": "2025", "venue": "ICCIT", "publication_type": "conference", "doi": "10.1109/iccit68739.2025.11491327",
+      "authors": ["Md. Zahid Hossain", "Most. Sharmin Sultana Samu", "Md. Kamrozzaman Bhuiyan", "Farhad Uz Zaman", "Md. Rakibul Islam"],
+      "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
+      "taxonomy_evidence": {"tasks": "ICCIT manuscript evaluates image detection accuracy/AP with fused spectral and CLIP features.", "image_scopes": "GenImage, WildFake, DiTFake, GPT-ImgEval and Chameleon synthetic images.", "research_types": "Two-stage spectral/semantic detection method; uses existing benchmarks."},
+      "affiliation_pages": [2],
+      "affiliations": [["Ahsanullah University of Science and Technology", [1,5], "Department of CSE, Ahsanullah University of Science and Technology, Dhaka-1208, Bangladesh"], ["BRAC University", [2], "Department of CSE, BRAC University, Dhaka-1212, Bangladesh"], ["Enosis Solutions", [3], "Enosis Solutions, Bangladesh"], ["Southeast University (Bangladesh)", [4], "Department of CSE, Southeast University, Dhaka-1208, Bangladesh"]],
+      "identity_note": "IEEE-formatted accepted manuscript explicitly names ICCIT 2025. Crossref confirms the final DOI/title/authors; DOI resolves to IEEE document 11491327 but returns empty HTTP 202. Do not merge the Bangladesh affiliation with the existing Chinese Southeast University."
+    },
+    "be26f9e744e3f708": {
+      "year": "2025", "venue": "arXiv", "publication_type": "preprint",
+      "tasks": ["detection", "localization"], "image_scopes": ["fully_generated"], "research_types": ["method", "dataset"],
+      "taxonomy_evidence": {"tasks": "Primary abstract and evaluation jointly optimize/evaluate image detection and bounding-box localization of visual flaws; localization is an evaluated objective.", "image_scopes": "Fully AI-generated images carry annotated synthesis artifacts, not necessarily generative edits of source images.", "research_types": "Introduces a box/caption-annotated image dataset and multi-stage grounded-reasoning MLLM training."},
+      "affiliations": [["Shanghai Jiao Tong University", [1,6,7,8], "Shanghai Jiao Tong University"], ["Ant Group", [2,3,4,5], "Ant Group"]]
+    },
+    "d7a0be175acdedc4": {
+      "year": "2026", "venue": "CVPR Workshops", "publication_type": "conference",
+      "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["dataset", "benchmark"],
+      "taxonomy_evidence": {"tasks": "Challenge ranks real/generated-image detectors by ROC AUC under transformed/untransformed test conditions.", "image_scopes": "Images from 42 generators; 36 transformations are robustness perturbations, not an independently evaluated generative-editing task.", "research_types": "Foundational NTIRE challenge report and novel 108,750-real/185,750-generated-image dataset; summarizes team methods without attributing all methods to a single new method."},
+      "affiliation_pages": [9,10],
+      "affiliations": [["MSU Institute for Artificial Intelligence", [1,2,3,5,6,8,12], "MSU Institute for Artificial Intelligence"], ["Lomonosov Moscow State University", [4], "Lomonosov Moscow State University"], ["Shenzhen MSU-BIT University", [9,10], "Shenzhen MSU-BIT University"], ["University of Würzburg", [11], "University of Würzburg"], ["Ant Group", [13,14,15,16], "Ant Group, China"], ["Ant International", [17,18,19,20,21,22,23,24], "Ant International, Singapore"], ["IntSig Information Co. Ltd", [30,31,32,33,34], "IntSig Information Co. Ltd, Shanghai, China"], ["Shanghai Jiao Tong University", [33], "Shanghai Jiao Tong University, Shanghai, China"], ["Indian Institute of Technology Mandi", [36,37,38,39,40,41,42,43], "IIT Mandi, Reagvis Labs, Mandi, India"], ["University of Electronic Science and Technology of China", [44,45,46,47,48,49], "University of Electronic Science and Technology of China, China"], ["Prince Sultan University", [50,51,52], "Prince Sultan University, Robotics and Internet-of-Things Laboratory, Riyadh, Saudi Arabia"], ["South China University of Technology", [53], "South China University of Technology, Guangzhou, China"], ["Zhejiang University", [54], "Zhejiang University, Hangzhou, China"]],
+      "unresolved": ["Mikhail Erofeev is explicitly an independent researcher; no institutional relationship is assigned.", "Cong Luo has no institutional affiliation in section 7.6; leave unresolved.", "Authors 25-29 are labelled TeleAI-TeleGuard, China; the team-to-canonical-institution relationship is unresolved and not inferred from email addresses."],
+      "identity_note": "Final CVPR workshop report is one work with the arXiv version, distinct from the separate face-deepfake challenge. Preserve 54 authors and section-7 superscripts rather than assigning every team affiliation to every author."
+    },
+    "5ce3749aacf92af9": {
+      "year": "2025", "venue": "arXiv", "publication_type": "preprint",
+      "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method", "analysis_study"],
+      "taxonomy_evidence": {"tasks": "MoLD evaluates GAN/diffusion image detection and cross-generator robustness.", "image_scopes": "Fully generated GAN/diffusion images; local ViT features are not a localization task.", "research_types": "Systematically studies layer-wise detector representations and introduces adaptive Mixture of Layers detection; no new dataset."},
+      "affiliations": [["Korea Advanced Institute of Science and Technology", [1,2,4], "KAIST AI"], ["Sogang University", [3], "Sogang University"]],
+      "code_url": "https://github.com/nahyeonkaty/mold"
+    },
+    "995a65a6df6dbf01": {
+      "year": "2026", "venue": "arXiv", "publication_type": "preprint",
+      "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
+      "taxonomy_evidence": {"tasks": "Detection is quantitatively evaluated; patch-wise explanations do not establish a separately evaluated spatial localization task.", "image_scopes": "AI-generated images on WildFake, Chameleon and RRDataset.", "research_types": "Introduces a multi-view semantic/spectral/statistical detector using existing datasets."},
+      "affiliations": [["National School of Artificial Intelligence", [1,2,3], "The National School of Artificial Intelligence, Algiers, Algeria"]]
+    },
+    "20d96453098f935a": {
+      "year": "2025", "venue": "arXiv", "publication_type": "preprint",
+      "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
+      "taxonomy_evidence": {"tasks": "GRPO-trained MLLM reasoning is evaluated for image detection on GenImage and LOKI.", "image_scopes": "Generated-image authenticity; reasoning output alone is not localization.", "research_types": "Detection framework and training strategy; benchmark usage is not a new dataset/benchmark contribution."},
+      "affiliations": [["National Taiwan University", [1,4], "National Taiwan University"], ["Academia Sinica", [1,2,6], "Academia Sinica"], ["National Institute of Informatics", [5], "National Institute of Informatics"], ["Microsoft", [3], "Microsoft"], ["National Taiwan University of Science and Technology", [2,3], "National Taiwan University of Science and Technology"]]
+    },
+    "07a67ddede76cbd3": {
+      "arxiv_id": "2311.04584", "doi": "10.1109/wacv57701.2024.00614", "year": "2024", "venue": "WACV", "publication_type": "conference",
+      "authors": ["Dragoș-Constantin Tântaru", "Elisabeta Oneață", "Dan Oneață"],
+      "tasks": ["detection", "localization"], "image_scopes": ["generative_editing", "deepfake", "fully_generated"], "research_types": ["method", "dataset", "analysis_study"],
+      "taxonomy_evidence": {"tasks": "The common-backbone framework evaluates both per-image detection and weakly supervised manipulation-mask IoU (section 4).", "image_scopes": "Introduces over 125K fully and locally manipulated images, including face manipulation, GAN and diffusion inpainting; real/source-image edits are explicit.", "research_types": "Proposes a systematic weak-supervision framework, Dolos dataset, and comparative study isolating supervision, dataset and generator effects."},
+      "affiliations": [["Bitdefender", [1,2], "Bitdefender"], ["University Politehnica of Bucharest", [3], "University Politehnica of Bucharest"]],
+      "code_url": "https://github.com/bit-ml/dolos",
+      "identity_note": "2023 arXiv 2311.04584 and WACV 2024 are one paper; use final proceedings metadata. Distinct from DeCLIP, which reuses Dolos."
+    },
+    "90848f868ebeb1f7": {
+      "arxiv_id": "2008.10588", "year": "2020", "venue": "ECCV", "publication_type": "conference",
+      "authors": ["Lucy Chai", "David Bau", "Ser-Nam Lim", "Phillip Isola"],
+      "tasks": ["detection"], "image_scopes": ["fully_generated", "deepfake"], "research_types": ["method", "analysis_study"],
+      "taxonomy_evidence": {"tasks": "ECCV paper evaluates patch classifiers by average precision; explanatory heatmaps do not warrant localization under the current taxonomy.", "image_scopes": "PGAN/StyleGAN/Glow full synthesis and FaceForensics++ face manipulation experiments (Table 3) provide substantive mixed coverage.", "research_types": "Patch-based detector plus analysis of generalizable artifacts and adversarial generator finetuning; no newly introduced dataset."},
+      "affiliations": [["Massachusetts Institute of Technology", [1,2,4], "MIT CSAIL, Cambridge MA, 02139"]],
+      "unresolved": ["Ser-Nam Lim has only an email under superscript 2 in the official ECCV PDF. No institution is inferred from the project page or later employment."],
+      "code_url": "https://github.com/chail/patch-forensics",
+      "identity_note": "ECCV DOI 10.1007/978-3-030-58574-7_7 and arXiv 2008.10588 are the same work."
+    }
+  }
+}

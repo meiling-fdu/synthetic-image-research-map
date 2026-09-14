@@ -1,0 +1,523 @@
+{
+  "doi": "10.3390/jimaging7030059",
+  "source_url": "https://api.crossref.org/works/10.3390%2Fjimaging7030059",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            31
+          ]
+        ],
+        "date-time": "2026-07-31T12:29:58Z",
+        "timestamp": 1785500998450,
+        "version": "3.56.0"
+      },
+      "reference-count": 32,
+      "publisher": "MDPI AG",
+      "issue": "3",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                3,
+                20
+              ]
+            ],
+            "date-time": "2021-03-20T00:00:00Z",
+            "timestamp": 1616198400000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/501100015812",
+          "name": "Universidad Militar Nueva Granada",
+          "doi-asserted-by": "publisher",
+          "award": [
+            "IMP-ING-2936"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "IMP-ING-2936"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100015812",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "J. Imaging"
+      ],
+      "abstract": "<jats:p>With the exponential growth of high-quality fake images in social networks and media, it is necessary to develop recognition algorithms for this type of content. One of the most common types of image and video editing consists of duplicating areas of the image, known as the copy-move technique. Traditional image processing approaches manually look for patterns related to the duplicated content, limiting their use in mass data classification. In contrast, approaches based on deep learning have shown better performance and promising results, but they present generalization problems with a high dependence on training data and the need for appropriate selection of hyperparameters. To overcome this, we propose two approaches that use deep learning, a model by a custom architecture and a model by transfer learning. In each case, the impact of the depth of the network is analyzed in terms of precision (P), recall (R) and F1 score. Additionally, the problem of generalization is addressed with images from eight different open access datasets. Finally, the models are compared in terms of evaluation metrics, and training and inference times. The model by transfer learning of VGG-16 achieves metrics about 10% higher than the model by a custom architecture, however, it requires approximately twice as much inference time as the latter.</jats:p>",
+      "DOI": "10.3390/jimaging7030059",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2021,
+            3,
+            21
+          ]
+        ],
+        "date-time": "2021-03-21T22:00:37Z",
+        "timestamp": 1616364037000
+      },
+      "page": "59",
+      "update-policy": "https://doi.org/10.3390/mdpi_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 80,
+      "title": [
+        "Copy-Move Forgery Detection (CMFD) Using Deep Learning for Image and Video Forensics"
+      ],
+      "prefix": "10.3390",
+      "volume": "7",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-1801-1328",
+          "authenticated-orcid": false,
+          "given": "Yohanna",
+          "family": "Rodriguez-Ortega",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Faculty of Engineering, Universidad Militar Nueva Granada, Bogotá 110111, Colombia"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-3864-818X",
+          "authenticated-orcid": false,
+          "given": "Dora M.",
+          "family": "Ballesteros",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Faculty of Engineering, Universidad Militar Nueva Granada, Bogotá 110111, Colombia"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-8073-3594",
+          "authenticated-orcid": false,
+          "given": "Diego",
+          "family": "Renza",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Faculty of Engineering, Universidad Militar Nueva Granada, Bogotá 110111, Colombia"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "1968",
+      "published-online": {
+        "date-parts": [
+          [
+            2021,
+            3,
+            20
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "ref_1",
+          "unstructured": "ITU (2020, December 04). Statistics. Available online: https://www.itu.int/en/ITU-D/Statistics/Pages/stat/default.aspx."
+        },
+        {
+          "key": "ref_2",
+          "doi-asserted-by": "crossref",
+          "first-page": "110311",
+          "DOI": "10.1016/j.forsciint.2020.110311",
+          "article-title": "Recent Advances in Digital Image Manipulation Detection Techniques: A brief Review",
+          "volume": "312",
+          "author": "Thakur",
+          "year": "2020",
+          "journal-title": "Forensic Sci. Int."
+        },
+        {
+          "key": "ref_3",
+          "doi-asserted-by": "crossref",
+          "first-page": "259",
+          "DOI": "10.1016/j.jnca.2016.09.008",
+          "article-title": "Copy-move forgery detection: Survey, challenges and future directions",
+          "volume": "75",
+          "author": "Wahab",
+          "year": "2016",
+          "journal-title": "J. Netw. Comput. Appl."
+        },
+        {
+          "key": "ref_4",
+          "doi-asserted-by": "crossref",
+          "first-page": "106685",
+          "DOI": "10.1016/j.compeleceng.2020.106685",
+          "article-title": "A review of digital image forensics",
+          "volume": "85",
+          "author": "Ferreira",
+          "year": "2020",
+          "journal-title": "Comput. Electr. Eng."
+        },
+        {
+          "key": "ref_5",
+          "doi-asserted-by": "crossref",
+          "first-page": "115778",
+          "DOI": "10.1016/j.image.2020.115778",
+          "article-title": "Detection and localization of forgery using statistics of DCT and Fourier components",
+          "volume": "82",
+          "author": "Dua",
+          "year": "2020",
+          "journal-title": "Signal Process. Image Commun."
+        },
+        {
+          "key": "ref_6",
+          "first-page": "102510",
+          "article-title": "A robust copy-move forgery detection technique based on discrete cosine transform and cellular automata",
+          "volume": "54",
+          "author": "Gani",
+          "year": "2020",
+          "journal-title": "J. Inf. Secur. Appl."
+        },
+        {
+          "key": "ref_7",
+          "first-page": "102481",
+          "article-title": "A copy-move image forgery detection technique based on tetrolet transform",
+          "volume": "52",
+          "author": "Meena",
+          "year": "2020",
+          "journal-title": "J. Inf. Secur. Appl."
+        },
+        {
+          "key": "ref_8",
+          "doi-asserted-by": "crossref",
+          "first-page": "470",
+          "DOI": "10.1016/j.ijleo.2018.07.021",
+          "article-title": "A hybrid technique to discriminate Natural Images, Computer Generated Graphics Images, Spliced, Copy Move tampered images and Authentic images by using features and ELM classifier",
+          "volume": "172",
+          "author": "Sharma",
+          "year": "2018",
+          "journal-title": "Optik"
+        },
+        {
+          "key": "ref_9",
+          "doi-asserted-by": "crossref",
+          "first-page": "159",
+          "DOI": "10.1016/j.fcij.2018.03.001",
+          "article-title": "A fast SIFT based method for copy move forgery detection",
+          "volume": "3",
+          "author": "Alberry",
+          "year": "2018",
+          "journal-title": "Future Comput. Inform. J."
+        },
+        {
+          "key": "ref_10",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Badr, A., Youssif, A., and Wafi, M. (2020, January 1–2). A Robust Copy-Move Forgery Detection In Digital Image Forensics Using SURF. Proceedings of the 2020 8th International Symposium on Digital Forensics and Security (ISDFS), Beirut, Lebanon.",
+          "DOI": "10.1109/ISDFS49300.2020.9116433"
+        },
+        {
+          "key": "ref_11",
+          "doi-asserted-by": "crossref",
+          "first-page": "102966",
+          "DOI": "10.1016/j.jvcir.2020.102966",
+          "article-title": "An Efficient Copy Move Forgery Detection Using Adaptive Watershed Segmentation withAGSO and Hybrid Feature Extraction",
+          "volume": "74",
+          "author": "Tinnathi",
+          "year": "2020",
+          "journal-title": "J. Vis. Commun. Image Represent."
+        },
+        {
+          "key": "ref_12",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ulloa, C., Ballesteros, D.M., and Renza, D. (2021). Video Forensics: Identifying Colorized Images Using Deep Learning. Appl. Sci., 11.",
+          "DOI": "10.3390/app11020476"
+        },
+        {
+          "key": "ref_13",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Pachón, C., Ballesteros, D.M., and Renza, D. (2021). Fake Banknote Recognition Using Deep Learning. Appl. Sci., 11.",
+          "DOI": "10.3390/app11031281"
+        },
+        {
+          "key": "ref_14",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rao, Y., and Ni, J. (2016, January 4–7). A deep learning approach to detection of splicing and copy-move forgeries in images. Proceedings of the 2016 IEEE International Workshop on Information Forensics and Security (WIFS), Abu Dhabi, United Arab Emirates.",
+          "DOI": "10.1109/WIFS.2016.7823911"
+        },
+        {
+          "key": "ref_15",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Thakur, R., and Rohilla, R. (2019, January 18–19). Copy-Move Forgery Detection using Residuals and Convolutional Neural Network Framework: A Novel Approach. Proceedings of the 2019 2nd International Conference on Power Energy, Environment and Intelligent Control (PEEIC), Greater Noida, India.",
+          "DOI": "10.1109/PEEIC47157.2019.8976868"
+        },
+        {
+          "key": "ref_16",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kumar, S., and Gupta, S.K. (2020, January 4–5). A Robust Copy Move Forgery Classification Using End to End Convolution Neural Network. Proceedings of the 2020 8th International Conference on Reliability, Infocom Technologies and Optimization (Trends and Future Directions) (ICRITO), Noida, India.",
+          "DOI": "10.1109/ICRITO48877.2020.9197955"
+        },
+        {
+          "key": "ref_17",
+          "doi-asserted-by": "crossref",
+          "first-page": "18269",
+          "DOI": "10.1007/s11042-017-5374-6",
+          "article-title": "Copy-move forgery detection based on convolutional kernel network",
+          "volume": "77",
+          "author": "Liu",
+          "year": "2018",
+          "journal-title": "Multimed. Tools Appl."
+        },
+        {
+          "key": "ref_18",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Muzaffer, G., and Ulutas, G. (2019, January 24–26). A new deep learning-based method to detection of copy-move forgery in digital images. Proceedings of the 2019 Scientific Meeting on Electrical-Electronics & Biomedical Engineering and Computer Science (EBBT), Istanbul, Turkey.",
+          "DOI": "10.1109/EBBT.2019.8741657"
+        },
+        {
+          "key": "ref_19",
+          "doi-asserted-by": "crossref",
+          "first-page": "7355",
+          "DOI": "10.1007/s11042-019-08495-z",
+          "article-title": "An efficient copy move forgery detection using deep learning feature extraction and matching algorithm",
+          "volume": "79",
+          "author": "Agarwal",
+          "year": "2019",
+          "journal-title": "Multimed. Tools Appl."
+        },
+        {
+          "key": "ref_20",
+          "doi-asserted-by": "crossref",
+          "first-page": "211",
+          "DOI": "10.1007/s11263-015-0816-y",
+          "article-title": "Imagenet large scale visual recognition challenge",
+          "volume": "115",
+          "author": "Russakovsky",
+          "year": "2015",
+          "journal-title": "Int. J. Comput. Vis."
+        },
+        {
+          "key": "ref_21",
+          "unstructured": "Simonyan, K., and Zisserman, A. (2014). Very deep convolutional networks for large-scale image recognition. arXiv."
+        },
+        {
+          "key": "ref_22",
+          "doi-asserted-by": "crossref",
+          "unstructured": "He, Y., Zhang, X., and Sun, J. (2017, January 22–29). Channel pruning for accelerating very deep neural networks. Proceedings of the IEEE International Conference on Computer Vision, Venice, Italy.",
+          "DOI": "10.1109/ICCV.2017.155"
+        },
+        {
+          "key": "ref_23",
+          "doi-asserted-by": "crossref",
+          "first-page": "2084",
+          "DOI": "10.1109/TIFS.2015.2445742",
+          "article-title": "Copy–move forgery detection by matching triangles of keypoints",
+          "volume": "10",
+          "author": "Ardizzone",
+          "year": "2015",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "ref_24",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wen, B., Zhu, Y., Subramanian, R., Ng, T.T., Shen, X., and Winkler, S. (2016, January 25–28). COVERAGE—A novel database for copy-move forgery detection. Proceedings of the 2016 IEEE International Conference on Image Processing (ICIP), Phoenix, AZ, USA.",
+          "DOI": "10.1109/ICIP.2016.7532339"
+        },
+        {
+          "key": "ref_25",
+          "doi-asserted-by": "crossref",
+          "first-page": "104864",
+          "DOI": "10.1016/j.dib.2019.104864",
+          "article-title": "A dataset of 1050-tampered color and grayscale images (CG-1050)",
+          "volume": "28",
+          "author": "Castro",
+          "year": "2020",
+          "journal-title": "Data Brief"
+        },
+        {
+          "key": "ref_26",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Castro, M., Ballesteros, D.M., and Renza, D. (2020, December 17). CG-1050 v2: Original and Tampered Images. Available online: https://data.mendeley.com/datasets/28xhc4kyfp/1.",
+          "DOI": "10.1016/j.dib.2019.104864"
+        },
+        {
+          "key": "ref_27",
+          "doi-asserted-by": "crossref",
+          "first-page": "1099",
+          "DOI": "10.1109/TIFS.2011.2129512",
+          "article-title": "A sift-based forensic method for copy–move attack detection and transformation recovery",
+          "volume": "6",
+          "author": "Amerini",
+          "year": "2011",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "ref_28",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Dong, J., Wang, W., and Tan, T. (2013, January 6–10). Casia image tampering detection evaluation database. Proceedings of the 2013 IEEE China Summit and International Conference on Signal and Information Processing, Beijing, China.",
+          "DOI": "10.1109/ChinaSIP.2013.6625374"
+        },
+        {
+          "key": "ref_29",
+          "doi-asserted-by": "crossref",
+          "first-page": "656",
+          "DOI": "10.1049/ipr2.12051",
+          "article-title": "Dual branch convolutional neural network for copy move forgery detection",
+          "volume": "15",
+          "author": "Goel",
+          "year": "2021",
+          "journal-title": "IET Image Process."
+        },
+        {
+          "key": "ref_30",
+          "doi-asserted-by": "crossref",
+          "first-page": "36863",
+          "DOI": "10.1109/ACCESS.2020.2974804",
+          "article-title": "Copy-move forgery detection based on keypoint clustering and similar neighborhood search algorithm",
+          "volume": "8",
+          "author": "Chen",
+          "year": "2020",
+          "journal-title": "IEEE Access"
+        },
+        {
+          "key": "ref_31",
+          "doi-asserted-by": "crossref",
+          "first-page": "19167",
+          "DOI": "10.1007/s11042-020-08751-7",
+          "article-title": "A novel deep learning framework for copy-moveforgery detection in images",
+          "volume": "79",
+          "author": "Elaskily",
+          "year": "2020",
+          "journal-title": "Multimed. Tools Appl."
+        },
+        {
+          "key": "ref_32",
+          "doi-asserted-by": "crossref",
+          "first-page": "1159",
+          "DOI": "10.1007/s11042-014-2362-y",
+          "article-title": "Feature point-based copy-move forgery detection: Covering the non-textured areas",
+          "volume": "75",
+          "author": "Yu",
+          "year": "2016",
+          "journal-title": "Multimed. Tools Appl."
+        }
+      ],
+      "container-title": [
+        "Journal of Imaging"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://www.mdpi.com/2313-433X/7/3/59/pdf",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            11
+          ]
+        ],
+        "date-time": "2025-10-11T05:38:29Z",
+        "timestamp": 1760161109000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://www.mdpi.com/2313-433X/7/3/59"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2021,
+            3,
+            20
+          ]
+        ]
+      },
+      "references-count": 32,
+      "journal-issue": {
+        "issue": "3",
+        "published-online": {
+          "date-parts": [
+            [
+              2021,
+              3
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "jimaging7030059"
+      ],
+      "URL": "https://doi.org/10.3390/jimaging7030059",
+      "relation": {},
+      "ISSN": [
+        "2313-433X"
+      ],
+      "issn-type": [
+        {
+          "value": "2313-433X",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2021,
+            3,
+            20
+          ]
+        ]
+      }
+    }
+  }
+}

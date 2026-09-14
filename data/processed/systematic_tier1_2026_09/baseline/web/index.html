@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="An interactive research map of AI-generated image detection and source attribution papers, researchers, and institutions."
+    >
+    <title>Synthetic Image Detection &amp; Attribution Landscape</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
+      crossorigin=""
+    >
+    <link rel="stylesheet" href="style.css?v=20260906-feature-freeze-1">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-inner">
+      <div class="header-brand">
+        <h1 class="visually-hidden">Synthetic Image Detection &amp; Attribution Landscape</h1>
+        <img
+          class="header-logo"
+          src="assets/synthetic-image-detection-attribution-landscape-logo.png?v=20260906-feature-freeze-1"
+          alt="Synthetic Image Detection &amp; Attribution Landscape"
+          width="1149"
+          height="393"
+        >
+      </div>
+
+      <section class="header-statistics" aria-label="Filtered unique-paper statistics">
+        <article class="header-chart task-chart">
+          <h2>Unique Papers by Forensic Task</h2>
+          <div id="task-chart-content" class="header-chart-content" aria-live="polite">
+            <p class="chart-empty">Loading…</p>
+          </div>
+        </article>
+        <article class="header-chart institution-chart">
+          <h2>Top Institutions by Unique Papers</h2>
+          <div id="institution-chart-content" class="header-chart-content" aria-live="polite">
+            <p class="chart-empty">Loading…</p>
+          </div>
+        </article>
+        <article class="header-chart year-chart">
+          <h2>Unique Papers by Year</h2>
+          <div id="year-chart-content" class="header-chart-content" aria-live="polite">
+            <p class="chart-empty">Loading…</p>
+          </div>
+        </article>
+      </section>
+
+      <div class="header-repository-block">
+        <a
+          class="header-repository-link"
+          href="https://github.com/meiling-fdu/synthetic-image-research-map"
+          target="_blank"
+          rel="noopener noreferrer"
+        >GitHub Repository</a>
+        <p class="header-maintainer">Maintained by Meiling Li</p>
+        <p id="data-updated" class="header-data-updated" aria-live="polite" hidden>
+          Last updated: <time id="data-updated-time"></time>
+        </p>
+      </div>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <aside class="sidebar" aria-labelledby="filters-heading">
+        <button
+          id="mobile-filters-trigger"
+          class="mobile-filters-trigger"
+          type="button"
+          aria-expanded="false"
+          aria-controls="filters-panel"
+        ><span id="mobile-filters-trigger-label">Filters</span></button>
+        <div id="filters-backdrop" class="filters-backdrop" hidden></div>
+        <section
+          id="filters-panel"
+          class="panel filters-panel"
+          aria-labelledby="filters-heading"
+          role="region"
+        >
+          <div class="filters-panel-heading">
+            <h2 id="filters-heading" tabindex="-1">Filters</h2>
+            <button
+              id="close-filters"
+              class="close-filters"
+              type="button"
+              aria-label="Close filters"
+            >×</button>
+          </div>
+          <div class="filters-panel-content">
+            <div class="filter-grid">
+            <div class="keyword-search-field">
+            <label for="keyword-filter">
+              Keyword
+              <input
+                id="keyword-filter"
+                type="search"
+                placeholder="Title, Author, Institution..."
+                autocomplete="off"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-expanded="false"
+                aria-controls="keyword-suggestions"
+                disabled
+              >
+            </label>
+            <div id="keyword-suggestions" class="keyword-suggestions" role="listbox" aria-label="Keyword suggestions" hidden></div>
+            </div>
+
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="task-filter-label" class="filter-label">Forensic Task</span>
+              <select id="task-filter" multiple disabled>
+                <option value="all">All</option>
+                <option value="detection">Detection</option>
+                <option value="source_attribution">Source Attribution</option>
+                <option value="localization">Localization</option>
+              </select>
+            </div>
+
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="image-scope-filter-label" class="filter-label">Image Scope</span>
+              <select id="image-scope-filter" multiple disabled>
+                <option value="all">All</option>
+                <optgroup label="Core scopes">
+                  <option value="fully_generated">Fully Generated</option>
+                  <option value="generative_editing">Generative Editing</option>
+                </optgroup>
+                <optgroup label="Extended scopes">
+                  <option value="deepfake">Deepfake</option>
+                  <option value="traditional_manipulation">Traditional Manipulation</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span
+                id="research-type-filter-label"
+                class="filter-label"
+              >Research Type</span>
+              <span id="research-type-filter-description" class="visually-hidden">
+                Research contribution type: Methods, Datasets, Benchmarks, Surveys,
+                Analysis Studies, and related contributions.
+              </span>
+              <select id="research-type-filter" multiple aria-describedby="research-type-filter-description" disabled>
+                <option value="all">All</option>
+                <option value="method">Methods</option>
+                <option value="dataset">Datasets</option>
+                <option value="benchmark">Benchmarks</option>
+                <option value="survey">Surveys</option>
+                <option value="analysis_study">Analysis Studies</option>
+              </select>
+            </div>
+
+
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="published-only-filter-label" class="filter-label">Publication Status</span>
+              <select id="published-only-filter" aria-labelledby="published-only-filter-label" disabled>
+                <option value="all">All</option>
+                <option value="published-only">Published only</option>
+              </select>
+            </div>
+
+            <fieldset class="year-range">
+              <legend>Publication Year</legend>
+              <div class="year-range-slider">
+                <div class="year-range-track" aria-hidden="true"></div>
+                <label class="visually-hidden" for="min-year-filter">Start Publication Year</label>
+                <input
+                  id="min-year-filter"
+                  class="year-range-input year-range-input-start"
+                  type="range"
+                  step="1"
+                  aria-label="Start Publication Year"
+                  disabled
+                >
+                <label class="visually-hidden" for="max-year-filter">End Publication Year</label>
+                <input
+                  id="max-year-filter"
+                  class="year-range-input year-range-input-end"
+                  type="range"
+                  step="1"
+                  aria-label="End Publication Year"
+                  disabled
+                >
+              </div>
+              <div class="year-range-bounds" aria-hidden="true">
+                <span id="year-range-min">—</span>
+                <span id="year-range-max">—</span>
+              </div>
+            </fieldset>
+
+            <div class="more-filters">
+              <button id="more-filters-toggle" class="more-filters-toggle" type="button"
+                aria-expanded="false" aria-controls="more-filters-content">More filters</button>
+              <div id="more-filters-content" class="more-filters-content" hidden>
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span
+                id="venue-type-filter-label"
+                class="filter-label"
+                title="Publication format: Conference, Journal, Preprint, Book Chapter, and related formats."
+              >Publication Type</span>
+              <span id="venue-type-filter-description" class="visually-hidden">
+                Publication format: Conference, Journal, Preprint, Book Chapter, and related
+                formats.
+              </span>
+              <select id="venue-type-filter" aria-describedby="venue-type-filter-description" disabled>
+                <option value="all">All</option>
+              </select>
+            </div>
+
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="venue-filter-label" class="filter-label">Publication Venue</span>
+              <select id="venue-filter" disabled>
+                <option value="all">All</option>
+              </select>
+            </div>
+
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="country-filter-label" class="filter-label">Country</span>
+              <select id="country-filter" disabled>
+                <option value="all">All</option>
+              </select>
+            </div>
+
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="institution-type-filter-label" class="filter-label">Institution Type</span>
+              <select id="institution-type-filter" disabled>
+                <option value="all">All</option>
+              </select>
+            </div>
+
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="preprint-filter-label" class="filter-label">Record Version</span>
+              <select id="preprint-filter" disabled>
+                <option value="all">All</option>
+                <option value="has-arxiv">Records With arXiv Version</option>
+                <option value="no-arxiv">Records Without arXiv Version</option>
+              </select>
+            </div>
+              </div>
+            </div>
+
+            </div>
+            <div
+              id="active-filter-bar"
+              class="active-filter-bar"
+              aria-label="Active filters"
+              hidden
+            >
+              <ul id="active-filter-chips" class="active-filter-chips"></ul>
+              <button id="clear-active-filters" class="clear-active-filters" type="button" hidden>
+                Clear all
+              </button>
+              <span id="active-filter-status" class="visually-hidden" role="status" aria-live="polite"></span>
+            </div>
+          </div>
+          <div class="filters-panel-actions">
+            <button id="reset-filters" type="button" disabled>Reset Filters</button>
+            <button id="done-filters" class="done-filters" type="button">Done</button>
+          </div>
+        </section>
+      </aside>
+
+      <div class="map-column">
+        <section class="map-panel" aria-label="Research Map">
+          <div class="map-summary">
+            <div class="dataset-overview" aria-label="Filtered data overview">
+              <dl class="dataset-statistics" aria-live="polite">
+                <div>
+                  <dt>Institution Records</dt>
+                  <dd id="dataset-record-count">0</dd>
+                </div>
+                <div>
+                  <dt>Unique Papers</dt>
+                  <dd id="dataset-paper-count">0</dd>
+                </div>
+                <div>
+                  <dt>Unique Institutions</dt>
+                  <dd id="dataset-institution-count">0</dd>
+                </div>
+                <div>
+                  <dt>Countries</dt>
+                  <dd id="dataset-country-count">0</dd>
+                </div>
+              </dl>
+              <p id="dataset-statistics-note">
+                Filtered institution records represent paper–institution links; unique papers
+                include papers without mapped institutions.
+              </p>
+            </div>
+            <div class="map-status-row">
+              <p class="map-encoding-legend" aria-label="Circle size represents unique papers in the current view; circle color represents dominant task">
+                <span class="map-encoding-item">
+                  <span class="marker-size-examples" aria-hidden="true">
+                    <i class="marker-size-example small"></i>
+                    <i class="marker-size-example medium"></i>
+                    <i class="marker-size-example large"></i>
+                  </span>
+                  Circle Size = Unique Papers in Current View
+                </span>
+                <span class="map-encoding-item">
+                  <span class="marker-color-examples" aria-hidden="true">
+                    <i class="marker-color-example detection"></i>
+                    <i class="marker-color-example source-attribution"></i>
+                    <i class="marker-color-example mixed"></i>
+                  </span>
+                  Circle Color = Dominant Task
+                </span>
+              </p>
+              <p id="map-status" class="map-status" role="status">
+                Loading research map data...
+              </p>
+              <details id="map-help" class="map-help">
+                <summary aria-controls="map-help-content" aria-expanded="false">How to use</summary>
+                <div id="map-help-content" class="map-help-content">
+                  <p><strong>Explore the map:</strong> select a circle to inspect an institution’s papers, or select a result to open Paper Details.</p>
+                  <ul>
+                    <li><strong>Forensic Task:</strong> Detection identifies generated images; Source Attribution identifies their origin; Localization identifies where content was generated or manipulated.</li>
+                    <li><strong>Image Scope:</strong> the kind of image generation or manipulation studied.</li>
+                    <li><strong>Research Type:</strong> the contribution, such as a method, dataset, benchmark, or survey.</li>
+                    <li><strong>Institution Records</strong> are paper–institution links; <strong>Unique Papers</strong> lists each paper once. A paper may have multiple institution records. Papers without mapped institutions remain in the paper view.</li>
+                    <li><strong>Circles:</strong> size shows unique papers in the current view; color shows the dominant forensic task.</li>
+                    <li><strong>Current view:</strong> filters narrow the results, Copy link shares the current state, and Export CSV downloads the current results.</li>
+                  </ul>
+                  <p><a href="#site-information-heading">About, Methodology, and Scope</a> · <a href="../docs/data_collection.md">Data Methodology</a></p>
+                </div>
+              </details>
+            </div>
+          </div>
+          <div class="map-workspace details-collapsed">
+            <div id="map" aria-label="World map of synthetic-image research institutions"></div>
+            <button id="open-paper-details" class="paper-details-handle" type="button"
+              aria-controls="paper-details" aria-expanded="false" aria-label="Open paper details">Details</button>
+            <aside
+              id="paper-details"
+              class="paper-details"
+              aria-labelledby="paper-details-heading"
+              role="region"
+            >
+              <div class="paper-details-heading">
+                <h3 id="paper-details-heading" tabindex="-1">Paper Details</h3>
+                <span id="paper-details-pin-status" class="paper-details-pin-status" hidden>
+                  <span aria-hidden="true">&#128204;</span> Pinned
+                </span>
+                <button
+                  id="close-paper-details"
+                  class="paper-details-close"
+                  type="button"
+                  aria-label="Close paper details"
+                  disabled
+                >&times;</button>
+              </div>
+              <div id="paper-details-content" class="paper-details-content" aria-live="polite">
+                <p class="paper-details-placeholder">Select a paper or explore an institution marker to view details.</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="panel results-panel" aria-labelledby="results-heading">
+          <div class="results-heading-row">
+            <div class="results-heading-group">
+              <h2 id="results-heading">Filtered Records</h2>
+            <p id="results-count" role="status" aria-live="polite" tabindex="-1">Loading…</p>
+            </div>
+            <div class="results-view-toggle" role="group" aria-label="Results View">
+              <span>View:</span>
+              <button
+                type="button"
+                data-results-view="institutions"
+                aria-pressed="true"
+              >Institution Records</button>
+              <button
+                type="button"
+                data-results-view="papers"
+                aria-pressed="false"
+              >Unique Papers</button>
+            </div>
+            <div class="results-actions">
+              <div class="sort-control-label filter-dropdown-field" data-filter-dropdown>
+                <span id="sort-control-label" class="filter-label">Sort By</span>
+                <select id="sort-control" class="sort-control-compact" disabled>
+                  <option value="year-desc">Year: Newest First</option>
+                  <option value="year-asc">Year: Oldest First</option>
+                  <option value="venue-asc">Publication Venue: A–Z</option>
+                  <option value="title-asc">Title: A–Z</option>
+                  <option value="title-desc">Title: Z–A</option>
+                </select>
+              </div>
+              <button id="copy-view-link" class="copy-link-button" type="button">
+                Copy link
+              </button>
+              <button id="export-csv" class="export-button" type="button" disabled>
+                Export CSV
+              </button>
+              <span id="copy-view-link-status" class="visually-hidden" role="status" aria-live="polite"></span>
+            </div>
+          </div>
+          <div class="results-records-area">
+            <div id="results-loading" class="results-loading" hidden aria-hidden="true">
+              <span class="results-loading-card"></span>
+              <span class="results-loading-card"></span>
+              <span class="results-loading-card"></span>
+              <span class="results-loading-card"></span>
+            </div>
+            <ol id="results-list" class="results-list"></ol>
+            <div id="results-sentinel" class="results-sentinel" aria-hidden="true"></div>
+            <section
+              id="results-empty"
+              class="results-empty"
+              aria-labelledby="results-empty-heading"
+              hidden
+            >
+              <h3 id="results-empty-heading" role="status" aria-live="polite" aria-atomic="true">No matching results</h3>
+              <p id="results-empty-summary"></p>
+              <div class="results-empty-primary-actions">
+                <button id="undo-last-filter" type="button" hidden>Undo last filter</button>
+                <button id="clear-empty-filters" type="button" hidden>Clear all filters</button>
+              </div>
+              <ul
+                id="results-empty-filter-actions"
+                class="results-empty-filter-actions"
+                aria-label="Remove individual filters"
+              ></ul>
+            </section>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel site-information" aria-labelledby="site-information-heading">
+        <header class="site-information-header">
+          <h2 id="site-information-heading" tabindex="-1">About, Methodology, and Scope</h2>
+          <p>
+            An academic map of synthetic-image detection and source-attribution
+            research, curated from source metadata and manual review.
+          </p>
+        </header>
+        <div class="site-information-grid">
+          <section>
+            <h3>Scope</h3>
+            <p>
+              The dataset covers detection and attribution of AI-generated images,
+              including separately labeled deepfake, image-editing, and survey work.
+            </p>
+          </section>
+          <section>
+            <h3>Records and Mapping</h3>
+            <p>
+              Author affiliations are preserved per paper. Only institutions with valid
+              mapped locations appear as markers, so one paper may appear at multiple
+              institutions or remain available only in the paper list.
+            </p>
+          </section>
+          <section>
+            <h3>Explore and Report</h3>
+            <p>
+              Filters and <strong>Export CSV</strong> apply to the current results.
+              Report missing papers or metadata problems through
+              <a
+                href="https://github.com/meiling-fdu/synthetic-image-research-map/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+              >GitHub Issues</a>.
+            </p>
+          </section>
+        </div>
+        <nav class="project-link-list" aria-label="Public data and documentation">
+          <a href="data/public_preview_map_data.json">Map Data JSON</a>
+          <a href="data/public_preview_papers.json">Paper Data JSON</a>
+          <a href="../docs/public_preview_report.md">Quality Report</a>
+          <a href="../docs/data_collection.md">Data Methodology</a>
+        </nav>
+      </section>
+    </main>
+
+    <footer aria-label="Site credits">
+      <span class="footer-credit-group">
+        Metadata source:
+        <a href="https://openalex.org/" target="_blank" rel="noopener noreferrer">OpenAlex</a>
+      </span>
+      <span class="footer-credit-group">
+        Map:
+        <a href="https://leafletjs.com/" target="_blank" rel="noopener noreferrer">Leaflet</a>
+        /
+        <a
+          href="https://www.openstreetmap.org/copyright"
+          target="_blank"
+          rel="noopener noreferrer"
+        >© OpenStreetMap contributors</a>
+      </span>
+      <span class="footer-credit-group">
+        Development assistance:
+        <a
+          href="https://developers.openai.com/codex/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Codex</a>
+        ·
+        <a
+          href="https://learn.chatgpt.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >ChatGPT</a>
+      </span>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="title_markup.js?v=20260906-feature-freeze-1"></script>
+    <script src="paper_details_helpers.js?v=20260906-feature-freeze-1"></script>
+    <script src="paper_link_helpers.js?v=20260906-feature-freeze-1"></script>
+    <script src="marker_size_helpers.js?v=20260906-feature-freeze-1"></script>
+    <script src="marker_interaction_helpers.js?v=20260906-feature-freeze-1"></script>
+    <script src="public_metadata.js?v=20260906-feature-freeze-1"></script>
+    <script src="institution_type_labels.js?v=20260906-feature-freeze-1"></script>
+    <script src="institution_display.js?v=20260906-feature-freeze-1"></script>
+    <script src="keyword_suggestions.js?v=20260906-feature-freeze-1"></script>
+    <script src="app.js?v=20260906-feature-freeze-1"></script>
+  </body>
+</html>

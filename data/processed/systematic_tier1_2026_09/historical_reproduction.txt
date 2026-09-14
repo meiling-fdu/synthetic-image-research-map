@@ -1,0 +1,62 @@
+Extracted 684 successful responses; 654 with title and summary
+{
+  "raw_records": 51226,
+  "observations": 2351,
+  "sources_enumerated": 138
+}
+{
+  "candidates": 1993,
+  "status": {
+    "REVIEW_REQUIRED": 1689,
+    "EXISTING_CURRENT": 293,
+    "EXISTING_EXCLUSION": 11
+  },
+  "fuzzy_review": 6
+}
+{
+  "works": 1993,
+  "status": {
+    "OUT_OF_SCOPE": 1250,
+    "EXISTING_ALTERNATE_TITLE": 22,
+    "AMBIGUOUS_SCOPE": 208,
+    "EXISTING_CURRENT": 271,
+    "CANDIDATE_ADD_NEEDS_SCOPE_REVIEW": 215,
+    "EXISTING_EXCLUSION": 11,
+    "CANDIDATE_ADD_HIGH_CONFIDENCE": 16
+  }
+}
+{
+  "report": "docs/systematic_literature_completeness_audit_2026_09.md",
+  "works": 1993,
+  "counts": {
+    "EXISTING_CURRENT": 271,
+    "EXISTING_ALTERNATE_TITLE": 22,
+    "EXISTING_EXCLUSION": 11,
+    "CANDIDATE_ADD_HIGH_CONFIDENCE": 16,
+    "CANDIDATE_ADD_NEEDS_SCOPE_REVIEW": 215,
+    "AMBIGUOUS_IDENTITY": 0,
+    "AMBIGUOUS_SCOPE": 208,
+    "OUT_OF_SCOPE": 1250,
+    "DUPLICATE_VERSION": 0,
+    "EXCLUSION_REVIEW_RECOMMENDED": 0
+  }
+}
+{
+  "byte_identical": true,
+  "sha256": {
+    "data/manual/systematic_literature_completeness_candidates_2026_09.csv": "9ec87a942eb6137892b9a2f2ae930a07d54122164065a1ffefd034caafd53e0b",
+    "docs/systematic_literature_completeness_audit_2026_09.md": "3f77e796a28b58fc9747bc184c0af6025aeae586d662fca99c19253db5a857ee",
+    "data/processed/systematic_literature_2026_09/audit_statistics.json": "97195cbf6897e42f8c7698f4d59d9b6df858cfb5de1945fce8f632df436b918a",
+    "data/processed/systematic_literature_2026_09/source_coverage.json": "e33836bcf70aadead6aba59b2321714c906401bd06379938389173f5e15f2455",
+    "data/processed/systematic_literature_2026_09/lineage_review.json": "b422ba524cf7babf7edc3a1089582c1ea1d6f7bddcab7f6309d1ef2a8b88c560"
+  },
+  "canonical_matches_regenerated_draft": true,
+  "statistics_include": [
+    "candidate counts",
+    "channel overlap",
+    "pass yields",
+    "survey outcomes",
+    "coverage counts"
+  ]
+}
+Historical audit reproduced byte-for-byte from its frozen corpus.

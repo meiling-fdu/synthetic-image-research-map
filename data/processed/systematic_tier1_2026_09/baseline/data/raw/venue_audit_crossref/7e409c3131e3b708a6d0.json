@@ -1,0 +1,512 @@
+{
+  "doi": "10.1007/978-981-92-1947-6_34",
+  "source_url": "https://api.crossref.org/works/10.1007%2F978-981-92-1947-6_34",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            6,
+            24
+          ]
+        ],
+        "date-time": "2026-06-24T16:53:38Z",
+        "timestamp": 1782320018554,
+        "version": "3.54.5"
+      },
+      "publisher-location": "Singapore",
+      "reference-count": 26,
+      "publisher": "Springer Nature Singapore",
+      "isbn-type": [
+        {
+          "value": "9789819219469",
+          "type": "print"
+        },
+        {
+          "value": "9789819219476",
+          "type": "electronic"
+        }
+      ],
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                6,
+                25
+              ]
+            ],
+            "date-time": "2026-06-25T00:00:00Z",
+            "timestamp": 1782345600000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                6,
+                25
+              ]
+            ],
+            "date-time": "2026-06-25T00:00:00Z",
+            "timestamp": 1782345600000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "link.springer.com"
+        ],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2027
+          ]
+        ]
+      },
+      "DOI": "10.1007/978-981-92-1947-6_34",
+      "type": "book-chapter",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            6,
+            24
+          ]
+        ],
+        "date-time": "2026-06-24T16:00:08Z",
+        "timestamp": 1782316808000
+      },
+      "page": "424-435",
+      "update-policy": "https://doi.org/10.1007/springer_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "AI-Generated Image Detection Based on the Most Suspicious Patch"
+      ],
+      "prefix": "10.1007",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0003-4797-3072",
+          "authenticated-orcid": false,
+          "given": "Hang",
+          "family": "Gao",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-1536-5400",
+          "authenticated-orcid": false,
+          "given": "Mengting",
+          "family": "Hu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Tiegang",
+          "family": "Gao",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            6,
+            25
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "34_CR1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang, S., et al.: CNN-generated images are surprisingly easy to spot... for now. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 8695–8704 (2020)",
+          "DOI": "10.1109/CVPR42600.2020.00872"
+        },
+        {
+          "key": "34_CR2",
+          "unstructured": "Frank, J., Eisenhofer, T., Schönherr, L., et al.: Leveraging frequency analysis for deep fake image recognition. In: International Conference on Machine Learning, pp. 3247-3258 (2020)"
+        },
+        {
+          "key": "34_CR3",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tan, C., Zhao, Y., Wei, S., et al.: Learning on gradients: generalized artifacts representation for gan-generated images detection. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 12105-12114 (2023)",
+          "DOI": "10.1109/CVPR52729.2023.01165"
+        },
+        {
+          "key": "34_CR4",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "publisher",
+          "first-page": "103",
+          "DOI": "10.1007/978-3-030-58574-7_7",
+          "volume-title": "Computer Vision – ECCV 2020",
+          "author": "L Chai",
+          "year": "2020",
+          "unstructured": "Chai, L., Bau, D., Lim, S.-N., Isola, P.: What makes fake images detectable? understanding properties that generalize. In: Vedaldi, A., Bischof, H., Brox, T., Frahm, J.-M. (eds.) ECCV 2020. LNCS, vol. 12371, pp. 103–120. Springer, Cham (2020). https://doi.org/10.1007/978-3-030-58574-7_7"
+        },
+        {
+          "key": "34_CR5",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Liu, B., Yang, F., Bi, X., et al.: Detecting generated images by real images. In: European Conference on Computer Vision, pp. 95-110 (2022)",
+          "DOI": "10.1007/978-3-031-19781-9_6"
+        },
+        {
+          "key": "34_CR6",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tan, C., Zhao, Y., Wei, S., et al.: Rethinking the up-sampling operations in cnn-based generative network for generalizable deepfake detection. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 28130-28139 (2024)",
+          "DOI": "10.1109/CVPR52733.2024.02657"
+        },
+        {
+          "key": "34_CR7",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhou, B., Khosla, A., Lapedriza, A., et al.: Learning deep features for discriminative localization. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 2921-2929 (2016)",
+          "DOI": "10.1109/CVPR.2016.319"
+        },
+        {
+          "key": "34_CR8",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Liu, Z., Qi, X., Torr, P.: Global texture enhancement for fake face detection in the wild. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 8060-8069 (2020)",
+          "DOI": "10.1109/CVPR42600.2020.00808"
+        },
+        {
+          "key": "34_CR9",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yu, N., Davis, L., Fritz, M.: Attributing fake images to gans: learning and analyzing gan fingerprints. In: Proceedings of the IEEE/CVF International Conference on Computer Vision, pp. 7556-7566 (2019)",
+          "DOI": "10.1109/ICCV.2019.00765"
+        },
+        {
+          "key": "34_CR10",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Marra, F., Gragnaniello, D., Verdoliva, L., et al.: Do gans leave artificial fingerprints? In: IEEE Conference on Multimedia Information Processing and Retrieval, pp. 506-511 (2019)",
+          "DOI": "10.1109/MIPR.2019.00103"
+        },
+        {
+          "key": "34_CR11",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "publisher",
+          "first-page": "667",
+          "DOI": "10.1007/978-3-030-58571-6_39",
+          "volume-title": "Computer Vision – ECCV 2020",
+          "author": "I Masi",
+          "year": "2020",
+          "unstructured": "Masi, I., Killekar, A., Mascarenhas, R.M., Gurudatt, S.P., AbdAlmageed, W.: Two-branch recurrent network for isolating deepfakes in videos. In: Vedaldi, A., Bischof, H., Brox, T., Frahm, J.-M. (eds.) ECCV 2020. LNCS, vol. 12352, pp. 667–684. Springer, Cham (2020). https://doi.org/10.1007/978-3-030-58571-6_39"
+        },
+        {
+          "key": "34_CR12",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "publisher",
+          "first-page": "86",
+          "DOI": "10.1007/978-3-030-58610-2_6",
+          "volume-title": "Computer Vision – ECCV 2020",
+          "author": "Y Qian",
+          "year": "2020",
+          "unstructured": "Qian, Y., Yin, G., Sheng, L., Chen, Z., Shao, J.: Thinking in frequency: face forgery detection by mining frequency-aware clues. In: Vedaldi, A., Bischof, H., Brox, T., Frahm, J.-M. (eds.) ECCV 2020. LNCS, vol. 12357, pp. 86–103. Springer, Cham (2020). https://doi.org/10.1007/978-3-030-58610-2_6"
+        },
+        {
+          "key": "34_CR13",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Luo, Y., Zhang, Y., Yan, J., et al.: Generalizing face forgery detection with high-frequency features. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 16317-16326 (2021)",
+          "DOI": "10.1109/CVPR46437.2021.01605"
+        },
+        {
+          "key": "34_CR14",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Woo, S.: Add: frequency attention and multi-view based knowledge distillation to detect low-quality compressed deepfake images. In: Proceedings of the AAAI Conference on Artificial Intelligence, pp. 122-130 (2022)",
+          "DOI": "10.1609/aaai.v36i1.19886"
+        },
+        {
+          "key": "34_CR15",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Jeong, Y., Kim, D., Min, S., et al.: Bihpf: bilateral high-pass filters for robust deepfake detection. In: Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision, pp. 48-57 (2022)",
+          "DOI": "10.1109/WACV51458.2022.00293"
+        },
+        {
+          "key": "34_CR16",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Jeong, Y., Kim, D., Ro, Y., et al.: Frepgan: robust deepfake detection using frequency-level perturbations. In: Proceedings of the AAAI Conference on Artificial Intelligence, pp. 1060-1068 (2022)",
+          "DOI": "10.1609/aaai.v36i1.19990"
+        },
+        {
+          "key": "34_CR17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang, Z., Bao, J., Zhou, W., et al.: Dire for diffusion-generated image detection. In: Proceedings of the IEEE/CVF International Conference on Computer Vision, pp. 22445-22455 (2023)",
+          "DOI": "10.1109/ICCV51070.2023.02051"
+        },
+        {
+          "key": "34_CR18",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ojha, U., Li, Y., Lee, Y.: Towards universal fake image detectors that generalize across generative models. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 24480-24489 (2023)",
+          "DOI": "10.1109/CVPR52729.2023.02345"
+        },
+        {
+          "key": "34_CR19",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Sandler, M., Howard, A., Zhu, M., et al.: Mobilenetv2: Inverted residuals and linear bottlenecks. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 4510-4520 (2018)",
+          "DOI": "10.1109/CVPR.2018.00474"
+        },
+        {
+          "key": "34_CR20",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Durall, R., Keuper, M., Keuper, J.: Watch your up-convolution: Cnn based generative deep neural networks are failing to reproduce spectral distributions. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 7890-7899 (2020)",
+          "DOI": "10.1109/CVPR42600.2020.00791"
+        },
+        {
+          "key": "34_CR21",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Shiohara, K., Yamasaki, T.: Detecting deepfakes with self-blended images. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 18720-18729 (2022)",
+          "DOI": "10.1109/CVPR52688.2022.01816"
+        },
+        {
+          "key": "34_CR22",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mandelli, S., Bonettini, N., Bestagini, P., et al.: Detecting gan-generated images by orthogonal training of multiple cnns. In: IEEE International Conference on Image Processing, pp. 3091-3095 (2022)",
+          "DOI": "10.1109/ICIP46576.2022.9897310"
+        },
+        {
+          "key": "34_CR23",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Liu, H., Tan, Z., Tan, C., et al.: Forgery-aware adaptive transformer for generalizable synthetic image detection. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 10770-10780 (2024)",
+          "DOI": "10.1109/CVPR52733.2024.01024"
+        },
+        {
+          "key": "34_CR24",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tan, C., Zhao, Y., Wei, S., et al.: Frequency-aware deepfake detection: improving generalizability through frequency space domain learning. In: Proceedings of the AAAI Conference on Artificial Intelligence, pp. 5052-5060 (2024)",
+          "DOI": "10.1609/aaai.v38i5.28310"
+        },
+        {
+          "key": "34_CR25",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li, O., Cai, J., Hao, Y., et al.: Improving synthetic image detection towards generalization: an image transformation perspective. In: Proceedings of the 31st ACM SIGKDD Conference on Knowledge Discovery and Data Mining, pp. 2405-2414 (2025)",
+          "DOI": "10.1145/3690624.3709392"
+        },
+        {
+          "key": "34_CR26",
+          "unstructured": "Liu, S., Lian, Z., Gu, S., et al.: Block shuffling learning for deepfake detection. arXiv preprint arXiv:2202.02819 (2022)"
+        }
+      ],
+      "container-title": [
+        "Lecture Notes in Computer Science",
+        "Data Science: Foundations and Applications"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://link.springer.com/content/pdf/10.1007/978-981-92-1947-6_34",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            6,
+            24
+          ]
+        ],
+        "date-time": "2026-06-24T16:00:46Z",
+        "timestamp": 1782316846000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://link.springer.com/10.1007/978-981-92-1947-6_34"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            6,
+            25
+          ]
+        ]
+      },
+      "ISBN": [
+        "9789819219469",
+        "9789819219476"
+      ],
+      "references-count": 26,
+      "URL": "https://doi.org/10.1007/978-981-92-1947-6_34",
+      "relation": {},
+      "ISSN": [
+        "0302-9743",
+        "1611-3349"
+      ],
+      "issn-type": [
+        {
+          "value": "0302-9743",
+          "type": "print"
+        },
+        {
+          "value": "1611-3349",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            6,
+            25
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "25 June 2026",
+          "order": 1,
+          "name": "first_online",
+          "label": "First Online",
+          "group": {
+            "name": "ChapterHistory",
+            "label": "Chapter History"
+          }
+        },
+        {
+          "value": "PAKDD",
+          "order": 1,
+          "name": "conference_acronym",
+          "label": "Conference Acronym",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "Pacific-Asia Conference on Knowledge Discovery and Data Mining",
+          "order": 2,
+          "name": "conference_name",
+          "label": "Conference Name",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "Hong Kong",
+          "order": 3,
+          "name": "conference_city",
+          "label": "Conference City",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "China",
+          "order": 4,
+          "name": "conference_country",
+          "label": "Conference Country",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "2026",
+          "order": 5,
+          "name": "conference_year",
+          "label": "Conference Year",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "9 June 2026",
+          "order": 7,
+          "name": "conference_start_date",
+          "label": "Conference Start Date",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "12 June 2026",
+          "order": 8,
+          "name": "conference_end_date",
+          "label": "Conference End Date",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "30",
+          "order": 9,
+          "name": "conference_number",
+          "label": "Conference Number",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "pakdd2026",
+          "order": 10,
+          "name": "conference_id",
+          "label": "Conference ID",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "https://www.pakdd2026.org/",
+          "order": 11,
+          "name": "conference_url",
+          "label": "Conference URL",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,669 @@
+PAGE 1
+ ThinkFake: Reasoning in Multimodal Large Language Models for AI-Generated
+                                                            Image Detection
+
+                                 Tai-Ming Huang1,2  , Wei-Tung Lin2,5  , Kai-Lung Hua4,5  ,
+                             Wen-Huang Cheng1, Junichi Yamagishi3, Jun-Cheng Chen2
+                         National Taiwan University1, Academia Sinica2, National Institute of Informatics3,
+                                  Microsoft4 National Taiwan University of Science and Technology5
+
+
+                              Abstract                                         ited to binary classification and lack meaningful explana-
+  TheincreasingrealismofAI-generatedimageshasraisedse-                         tions,whichmakestheiroutputsdifficulttointerpretandun-
+  rious concerns about misinformation and privacy violations,                  reliable in real-world scenarios. To improve interpretability,
+  highlighting the urgent need for accurate and interpretable                  some recent approaches (Gao et al. 2025; Zhou et al. 2025;
+  detection methods. While existing approaches have made                       Ji et al. 2025; Kang et al. 2025; Wen et al. 2025) leverage
+  progress, most rely on binary classification without explana-                Multimodal Large Language Models (MLLMs) due to their
+  tions or depend heavily on supervised fine-tuning, resulting                 strong capabilities in commonsense reasoning and natural
+  in limited generalization. In this paper, we propose Think-                  language generation. Despite their promise, these methods
+  Fake, a novel reasoning-based and generalizable framework                    often rely on large-scale annotated datasets for supervised
+  for AI-generated image detection. Our method leverages a                     fine-tuning. This heavy dependence on labeled data leads
+  Multimodal Large Language Model (MLLM) equipped with                         to memorization rather than genuine reasoning, ultimately
+  a forgery reasoning prompt and is trained using Group Rel-                   resulting in poor generalization. While these advancements
+  ative Policy Optimization (GRPO) reinforcement learning                      are promising, two key challenges remain:1) lack of inter-
+  with carefully designed reward functions. This design en-                    pretability:most models provide only binary outputs with-
+  ables the model to perform step-by-step reasoning and pro-                   out explaining their decisions, which limits their practical
+  duce interpretable, structured outputs. We further introduce                 applicability;and2)lackofreasoningandgeneralization:
+  a structured detection pipeline to enhance reasoning qual-                   methods that incorporate MLLMs for explanation typically
+  ity and adaptability. Extensive experiments show that Think-
+  Fake outperforms state-of-the-art methods on the GenImage                    rely on extensive supervision and lack autonomous reason-
+  benchmark and demonstrates strong zero-shot generalization                   ing,makingitdifficulttogeneralizetocomplex,unseensce-
+  on the challenging LOKI benchmark. These results validate                    narios. Therefore, developing AI-generated image detectors
+  our framework’s effectiveness and robustness. Code will be                   that are both capable of reasoning and generalization has
+  released upon acceptance.                                                    become increasingly urgent. “Reasoning” in MLLMs rep-
+                                                                               resents a major step forward in handling complex analyti-
+                       1   Introduction                                        cal tasks. Unlike traditional classifiers that rely on pattern
+The rapid development of generative models (Ramesh et al.                      matching or likelihood scores, reasoning-capable MLLMs
+2021; Dhariwal and Nichol 2021; Li, Hou, and Loy 2024)                         can produce step-by-step explanations that resemble human
+has led to AI-generated images that are increasingly re-                       cognition. The principle of “SFT memorizes, RL general-
+alistic and difficult to distinguish from real ones. While                     izes”hasbeenappliedinrecentwork(Chuetal.2025),rais-
+these advancements benefit creative industries, they also                      ing an important question: can we leverage this reasoning
+raise  serious  concerns  regarding  misuse,  including  mis-                  ability not only to detect AI-generated images, but also to
+information, fraud, and privacy violations. As techniques                      explain decisions through logic, comparison, and context?
+such as GANs (Goodfellow et al. 2014), diffusion mod-                             Toaddresstheabovechallenges,weproposeareasoning-
+els (Esser et al. 2024), and flow-based approaches (Rom-                       based and generalizable framework for AI-generated image
+bach et al. 2022; Labs 2024) continue to evolve, the chal-                     detection,inspiredbyrecentprogressinreasoningtasks(Liu
+lengeofdetectingsyntheticcontentgrowsmoresevere.This                           et al. 2025; Huang et al. 2025a) and reinforcement learn-
+trendhighlightstheurgentneedandimportanceofdetection                           ing (Shao et al. 2024). Our method builds on a reasoning
+methods that are both accurate and interpretable.                              MLLM, guided by carefully designed prompts and reward
+  Recent studies (Wang et al. 2020; Yan et al. 2025; Tan                       functions, to enhance both performance and generalization.
+et al. 2024; Ojha, Li, and Lee 2023; Chang et al. 2023)                        We further introduce a structured detection pipeline com-
+have shown significant progress in detecting AI-generated                      bined with Group Relative Policy Optimization (GRPO) re-
+images. However, most existing detection models are lim-                       inforcement learning to strengthen the model’s reasoning
+                                                                               and adaptability. Through extensive experiments and ab-
+Copyright © 2026, Association for the Advancement of Artificial                lation studies, our approach outperforms existing state-of-
+Intelligence (www.aaai.org). All rights reserved.                              the-art methods on the GenImage (Zhu et al. 2024) bench-
+
+PAGE 2
+mark. Moreover, on the more challenging and comprehen-                        explainability effectiveness. To overcome these limitations,
+sive LOKI (Ye et al. 2024) benchmark, our method demon-                       researchers have employed fine-tuning approaches such as
+strates strong zero-shot generalization, validating the effec-                LoRA (Hu et al. 2022) or Direct Preference Optimization
+tivenessofourframework.Ourmaincontributionsaresum-                            (DPO)(Rafailovetal.2023)forMLLMs(Huangetal.2024;
+marized as follows:                                                           Wenetal.2025;Gaoetal.2025;Zhouetal.2025).However,
+ •WedevelopanovelreasoningMLLMframeworkthatnot                                thesemethodstendtomemorizetrainingpatternsratherthan
+   onlyachievesstrongdetectionperformancebutalsopro-                          generalize to real-world scenarios. To address this limita-
+   videsinterpretablereasoningforAI-generatedimagede-                         tion, we employ GRPO (Guo et al. 2025), which enhances
+   tection.                                                                   generalization by letting the model learns how to “think”,
+ •Wedesignspecializedpromptsandrewardfunctionsthat                            for improved MLLM detection and explainability.
+   significantly enhance the model’s detection capability,                                               3   Method
+   performance, and explainability.                                           3.1    Overview
+ •Our method outperforms state-of-the-art approaches on                       In this paper, we aim to train a model that effectively dis-
+   theGenImagebenchmark.Extensiveexperimentsfurther                           tinguishes AI-generated images from real images captured
+   demonstrate the framework’s generalization ability and                     bycameras.Leveragingrecentadvancementsinmultimodal
+   robustness under real-world challenges.                                    largelanguagemodels(MLLMs)(Chenetal.2024;Baietal.
+                      2   Related Work                                        2025), we utilize their capabilities in image understanding
+                                                                              and text generation to analyze image authenticity and pro-
+2.1    AI-Generated Image Detection                                           vide reliable explanations. We propose ThinkFake, a care-
+The rapid advancement of generative AI models has inten-                      fully designed framework that employs a reasoning MLLM
+sified the challenge of detecting AI-generated images, as                     Fθ withareinforcementlearningprocesstoclassifyandrea-
+recent models including MidJourney (mid 2025), DALLE-                         son about whether an image is real or AI-generated. Given
+3 (Ramesh et al. 2021), Stable Diffusion (Rombach et al.                      aninputimageIandacorrespondingpromptP,withasim-
+2021), and Flux (Labs 2024) produce increasingly realis-                      ple question“is this image real or generated by AI?”, the
+tic images. FreDect (Frank et al. 2020) identifies anoma-                     reasoning MLLMF            θ produces both verdictVand reason-
+liesbyanalyzingfrequencydomaincharacteristicsofGAN-                           ing explanationR. This process can be represented by the
+generated images. UnivFD (Ojha, Li, and Lee 2023) lever-                      following equations:
+ages  pre-trained  CLIP-ViT  features  with  nearest  neigh-                                       V,R=f           post(F θ(I,P)),                      (1)
+bor  and  linear  probing  for  cross-domain  generalization.                 wheref             post(·)denotes the post-processing function.
+DIRE  (Wang  et  al.  2023)  exploits  reconstruction  errors                    Specifically,  we  developed  a  comprehensive  detection
+to distinguish diffusion-generated images from real ones,                     pipeline and training process for the MLLM. First, we de-
+though it suffers from poor generalization and high com-                      signed a task-specificForgery Reasoning Prompttailored
+putational overhead. PatchCraft (Zhong et al. 2023) seg-                      for the MLLM to address this task. Inspired by (Guo et al.
+ments images into patches and applies SRM filters to ana-                     2025), we then employed reinforcement learning with four
+lyzepixelcorrelationsfordetection.AEROBLADE(Ricker,                           carefullydesignedrewardfunctionstoenhancetheMLLM’s
+Lukovnikov, and Fischer 2024) introduces a training-free                      reasoning capabilities for this task, enabling it to perform
+approach using autoencoder reconstruction errors for latent                   both detection and explanation, as illustrated in Fig. 1.
+diffusionmodeldetection.AIDE(Yanetal.2025)employsa
+dual-streamarchitecturecombiningfrequencyandsemantic                          3.2    Pipeline and Forgery Reasoning Prompt
+features. However, these approaches often fail to generalize
+to out-of-distribution data due to limited training data and                  Pipeline:Inspired  by  (Gao  et  al.  2025),  detecting  AI-
+the lack of prior knowledge from Multimodal Large Lan-                        generated content requires a multifaceted approach that ex-
+guage Models (MLLMs) (Bai et al. 2025; Liu et al. 2023).                      amines various visual attributes, such as lighting, shadows,
+In addition, their binary predictions lack explanations, lim-                 textures, and edges. By analyzing these features, it is possi-
+iting their practical applicability.                                          ble to identify recurring patterns or artifacts commonly as-
+                                                                              sociated with AI-generated content, thereby facilitating ro-
+2.2    Explainability                                                         bust detection. Drawing on recent advancements in multi-
+Explainability  in  MLLMs  is  crucial  for  mitigating  risks                modal  chain-of-thought  (CoT)  reasoning  on  Multimodal
+associated  with  AI  misuse,  and  recent  research  has  in-                Large Language Models (MLLMs), we propose a novel
+creasingly investigated this domain. Some studies (Huang                      chain-of-thoughtpipelineforAI-generatedimagedetection.
+et al. 2025b; Jia et al. 2024) directly prompt MLLMs with                     Thispipelineincorporateshierarchicalreasoningstepstoen-
+queries such as “explain what the artifacts are.” However,                    hancethevisualreasoningcapabilitiesofMLLMs.First,we
+research reveals that directly generating textual explana-                    decompose the detection pipeline into five steps, as shown
+tions frequently results in hallucinations or overthinking,                   in the upper part of Fig. 2:
+leading to inaccurate outcomes or refusal to respond (Jia                      •InitialQuickScanandIntuitiveJudgment:Inthefirst
+et al. 2024). Furthermore, MLLMs often fail to comprehen-                         step, an initial impression of the input image is formed,
+sively perceive all relevant features, which constrains their                     evaluatingitsoverallharmony,content,andcomposition.
+
+PAGE 3
+Figure 1:Overview of our ThinkFake:We propose a reasoning MLLM framework capable of deliberate reasoning for de-
+tecting AI-generated images. Guided by a forgery reasoning prompt, and trained with carefully designed reward functions and
+GRPO-basedreinforcementlearning,themodeldemonstratesstronggeneralizationandself-reflectiveexplanatorycapabilities.
+
+
+ •Detailed In-Depth Observation and Analysis:Next, a                           the model through a complete detection pipeline, ultimately
+   meticulous examination is conducted, focusing on tex-                       producing interpretable and structured outputs.
+   ture quality, lighting, shadows, reflections, edges, and
+   blending, with each aspect analyzed in detail.                              3.3    Reward Functions
+ •Technical Analysis and Source Tracing:During the                             Reward functions guide model optimization in reinforce-
+   technical analysis and source tracing phase, specific at-                   ment learning. We design four binary rewards, each set to
+   tention  is  given  to  artifacts  commonly  found  in  AI-                 1 if satisfied and 0 otherwise.
+   generated content, such as inconsistencies in structure,                    Reasoning   Format   Reward   (f format).The   model’s
+   surfaces, edges, and contextual elements.                                   output must adhere to the<think>...</think>and<an-
+ •Auxiliary  Tool  Inspection:Several  specialized  AI-                        swer>...</answer> format.    This    reward    constrains
+   generatedimagedetectiontools,eachfocusingondiffer-                          the  model  to  output  its  reasoning  process  within  the
+   ent aspects, are available as reference or auxiliary tools                  <think>tags  and  provide  the  final  answer  within  the
+   to support comprehensive detection and evaluation.                          <answer>tags.
+ •Comprehensive Judgment and Conclusion:In the fi-                             JSON Format Reward (f json).To support Forgery Rea-
+   nal stage of the pipeline, evidence and analysis results                    soningPrompt,weimposestricterconstraintsonthemodel’s
+   from all previous steps are synthesized to deliver a final                  response format, requiring answers to adhere to a struc-
+   judgment and reasoning, completing the comprehensive                        tured JSON format. This constraint improves detection per-
+   detection process.                                                          formance, enhances the efficiency of answer extraction, and
+Forgery Reasoning Prompt:Inspired by recent advance-                           provides interpretable outputs.
+mentsinstructuredoutputforMLLMs(Tametal.2024;He                                Accuracy Reward (f acc).To evaluate the model’s perfor-
+etal.2024),weunifytheanalyticalprocessdescribedabove                           mance, we implemented a reward function that measures
+and provide clear guidance for evaluating each attribute.                      binary accuracy by comparing the predicted answer to the
+As illustrated in the lower part of Fig. 2, we introduce the                   ground-truthlabel.Specifically,themodelreceivesareward
+Forgery Reasoning Promptto enhance the reasoning capa-                         of 1 when itsprediction matches the ground-truth label, and
+bility of MLLMs, specifically for the task of detecting AI-                    0 otherwise. This straightforward yet effective scheme of-
+generated images. Each analytical step is incorporated into                    fers a clear and reliable signal for guiding the model toward
+the prompt using special tokens,<think>and<answer>,                            accurate classification.
+together with a strict JSON format to constrain the model’s                    Agentic  Reward  (f agentic).The  agentic  reward  corre-
+output.Thisstructuredformatimprovesbothinterpretability                        sponds  to  the  “Auxiliary  Tool  Inspection”  step  in  our
+and detection performance. In the “Auxiliary Tool Inspec-                      pipeline. We incorporated state-of-the-art models as expert
+tion” stage, we define three expert perspectives: a semantic                   agents to enhance the inspection process from multiple per-
+expert that focuses on high-level features, a frequency ex-                    spectives: UnivFD (Ojha, Li, and Lee 2023) for high-level
+pert that targets low-level features, and a dual-stream expert                 semantic artifact analysis, NPR (Tan et al. 2024) for low-
+that considers both. This design allows theForgeryReason-                      levelfrequency-basedartifactfeatures,andAIDE(Yanetal.
+ing Promptto support comprehensive reasoning and guide                         2025) as a dual-stream agent addressing both levels. The
+
+PAGE 4
+     Figure 2: Top: Overview of ThinkFake detection pipeline. Bottom: Detail of our proposedForgeryReasoningPrompt.
+
+outputs  of  these  agents  serve  as  ground-truth  labels  for               Instruct model using the proposed reward signals to guide
+their respective inspection tasks. Rewards are computed via                    policy learning. For optimization, we adopt the Group Rel-
+cross-entropy between these labels and the model’s predic-                     ative Policy Optimization (GRPO) algorithm (Shao et al.
+tions.Leveragingsupervisionfromexpertagentsenablesthe                          2024;Guoetal.2025),whicheliminatestheneedforasep-
+modeltoachievemorerobustandcomprehensiveartifactde-                            arate critic network by leveraging group-level reward statis-
+tection.FurtherdetailsareprovidedintheAppendix.A.                              tics to estimate baselines, thereby reducing computational
+                                                                               overhead.
+3.4    Training Process                                                           Given a questionq, GRPO draws a set ofGresponses
+Data Preparation.We follow the GenImage protocol (Zhu                          o1,o2,...,oG from the old policyπ  θold and updates the cur-
+etal.2024)fordatasetconstruction.Realimagesaresourced                          rent policyπ  θ by maximizing the following objective:
+from ImageNet, while fake images are generated using SD
+v1.4 based on 1k ImageNet labels. To ensure balance, we                                                 "      GX           πθ(o i|q)
+uniformly sample each class to create a sub-dataset with                        JGRPO(θ) =E      q,{o    i}1         min
+equal numbers of real and fake images. This sub-dataset is                                                G                 πθold(o i|q)  Ai,
+splitintotwoparts:oneforcold-startsupervisedfine-tuning                                                       i=1   πθ(o i|q)
+(SFT-set) and one for reinforcement learning (RL-set).1)                                                     clip                                Ai
+SFT-set:Sincetheoriginaldatacontainsonlybinarylabels,                                                               πθold(o i|q)  ,1−ϵ,1+ϵ
+we design a data annotation pipeline using a commercial                                                                           #
+MLLM (e.g., Gemini-1.4-pro) to generate reasoning paths                                                    −βD       KL(π θ∥π  ref)  ,
+and attribute-level answers. The ground-truth label is in-
+cluded in the prompt to reduce hallucinations. We further                                                                                           (2)
+apply rule-based filtering to remove low-quality responses,                    where the hyperparametersϵandβregulate the clipping
+resulting in 638 high-quality samples for SFT training.2)                      threshold and the KL regularization strength, respectively.
+RL-set:RLtrainingusesonlybinarylabels,sonoadditional                           The KL-divergence term is computed as:
+annotation is needed. We use 5,000 samples (2,500 real and
+2,500 fake) as the RL training set.                                                 DKL(π θ∥π  ref) = πref(o i|q)
+GRPO.We  fine-tune  the  pre-trained  Qwen2.5-VL-7B-                                                      πθ(o i|q)   −log   πref(o i|q)πθ(o i|q)   −1,     (3)
+
+PAGE 5
+              Table 1: Performance comparison in Acc.(%)on selected generative models. For ThinkFake, except for SD v1.4 (used in
+              training), all others are unseen test sets. The best results are highlighted in bold.
+
+              andthenormalizedadvantageA          i isderivedfromthegroup-                        Datasets.As noted in Sec. 3.4, we adhere to the GenImage
+              wise reward setr     1,r2,...,rG as:                                                protocol (Zhu et al. 2024) but employ our constructed SFT-
+                                        ({r                    1,r2,...,rG}))                     set and RL-set sub-training sets for cold-start SFT and RL
+                             Ai = ri−mean                                                         training, respectively. Testing follows the GenImage bench-
+                                         std({r           1,r2,...,rG}))       .            (4)   mark, with training performed on SD v1.4 and generaliza-
+                                                                                                  tion evaluated on unseen models, including SD v1.5, Mid-
+              TrainingThinkFake.Overall,ourThinkFakeapproachbe-                                   journey, ADM, GLIDE, Wukong, VQDM, and BigGAN.
+              gins with supervised fine-tuning (SFT) using the SFT-set                            Evaluation Metrics.Following prior work (Wang et al.
+              for cold-start initialization. The high-quality SFT-set data                        2020; Yan et al. 2025), we report classification accuracy
+              enables the reasoning MLLM to develop initial capabili-                             (Acc.) averaged over both real and AI-generated images.
+              ties for AI-generated image detection while aligning with
+              the desired output format. Subsequently, we employ rein-                            4.2    Can MLLMs Handle AI-generated Image
+              forcement learning withthe RL-set using GRPO to enhance                                     Detection?
+              the MLLM’s generalization ability. At this stage, we uti-                           We first investigate whether existing state-of-the-art mul-
+              lize four carefully designed reward functions, as described                         timodal  large  language  models  (MLLMs)  possess  AI-
+              in Sec. 3.3, to guide the model. Two format reward func-                            generated image detection capabilities. We evaluated open-
+              tions constrain the model’s reasoning and output structure.                         source general MLLMs, including the Qwen2.5-VL series,
+              The “Accuracy Reward” improves yes/no discrimination,                               InternVL-2.5,andLLaVA-Next,aswellasopen-sourcerea-
+              while the “Agentic Reward” enables multi-perspective eval-                          soning MLLMs such as LLaVA-CoT and Mulberry. Ad-
+              uation for better performance and interpretability.Full data                        ditionally, we assessed closed-source commercial models
+              pipelineandtrainingdetailsareinAppendixB.                                           like ChatGPT-4o, Gemini-2.0-Flash, and the widely recog-
+                                       4   Experiments                                            nized reasoning model ChatGPT-o3. The results, presented
+                                                                                                  in Tab. 1, reveal that these large-scale MLLMs, includ-
+              4.1    Experimental Settings                                                        ing reasoning models, fail to distinguish real images from
+              Implementation   Details.We   initialize   the   reasoning                          AI-generated  ones,  underscoring  the  importance  and  ur-
+              MLLMF            θ  using  Qwen2.5-VL-7B-Instruct  (Bai  et  al.                    gencyofthistask.Incontrast,ourThinkFakemodeldemon-
+              2025). The cold-start phase comprises 58 iterations with                            strates superior detection capabilities, performing competi-
+              a batch size of 40 and a learning rate of5e−6, imple-                               tively despite having significantly fewer parameters. These
+              mented via LLaMA-Factory  1. This is followed by GRPO                               results highlight ThinkFake’s strong reasoning capabilities,
+              training for 1,250 iterations with a batch size of 256, a                           enablingittogeneralizetounseencategoriesandeffectively
+              learning rate of1e−6, and 8 generations, conducted us-                              handle complex detection and explanation tasks.
+              ing the VLM-R1  2  framework. To implement the expert                               4.3    Comparison with Other SOTA Methods
+              agents—UnivFD (Ojha, Li, and Lee 2023), NPR (Tan et al.
+              2024), and AIDE (Yan et al. 2025)—we adopt their official                           To assess detection performance, we compare our proposed
+              open-source code and pre-trained weights. All experiments                           method with SOTA method (Wang et al. 2020; Yan et al.
+              are conducted on 8 NVIDIA H200 GPUs.                                                2025;  Tan  et  al.  2024;  Ojha,  Li,  and  Lee  2023;  Chang
+                                                                                                  et al. 2023). For a fair comparison, all baseline detectors
+                  1https://github.com/hiyouga/LLaMA-Factory                                       are re-trained using our experimental configuration, which
+                  2https://github.com/om-ai-lab/VLM-R1                                            adheres to the GenImage protocol and trains solely on the
+
+Model                                           Params.     Midjourney   SDv1.4   SDv1.5   ADM   GLIDE   Wukong   VQDM   BigGANMean
+                                                                 Closed-SourceMLLMs
+ChatGPT-4o(2024)                                    –          56.8          75.3        75.7       65.8      79.3        84.4  79.7        84.6  75.2
+ChatGPT-o3(2025)                                    –          62.0          81.6        81.2       68.8      80.5        91.0        79.0        81.4       78.2
+Gemini-2.0-flash(Comanicietal.2025)                 –          55.5          80.1        77.8       65.4      66.5        88.2        78.8        79.4       73.9
+                                                             Open-SourceGeneralMLLMs
+Qwen2.5-VL-7B-Instruct(Baietal.2025)               7B          54.6          51.9        50.6       52.3      58.0        56.3        54.7        54.2       54.1
+Qwen2.5-VL-72B-Instruct(Baietal.2025)             72B          54.5          56.0        54.9       55.5      62.3        65.1        61.1        61.6       58.9
+InternVL2.5-78B(Chenetal.2024)                    78B          52.7          53.4        53.0       55.0      63.0        59.2        61.7        72.3       58.8
+LLaVA-NeXT(Lietal.2024)                           72B          52.0          51.5        49.4       51.5      50.8        55.3        56.8        59.3       53.3
+                                                           Open-SourceReasoningMLLMs
+LLaVA-CoT-7B(Xuetal.2024)                          7B          51.5          50.8        51.5       51.3      54.8        55.3        53.9        54.8       53.0
+Mulberry-7B(Yaoetal.2024)                          7B          50.4          50.2        50.5       51.2      63.4        54.5        53.4        56.0       53.7
+                                                                       OurModel
+ThinkFake(Ours)                                    7B          92.5          93.1        95.3       73.1      87.4        93.6  66.2        70.8  84.0
+
+PAGE 6
+                                                             Overall    Scene    Animal    Person    Object    Medicine    Doc    Satellite
+                            Human                                 27.3        24.0        25.8         19.9        26.9          26.1        22.1       39.3
+                            AIDE (Yan et al. 2025)       63.1           -          89.9  62.5 96.5   53.4        49.7       39.3
+                            VILA1.5-40B                      48.8        53.7        39.3         50.0        33.4          52.5        59.9       50.6
+                            InternVL2-40B                    49.6        55.7        37.3         59.2        34.8          55.5        64.8       40.8
+                            Qwen2-VL-72B                  53.2        55.9        43.4         66.9        38.0          55.9        73.7       38.2
+                            LLaVA-OneVision-72b       46.3        54.7        31.6         53.1        27.8          52.1 67.936.6
+                            Claude-3.5-Sonnet              53.6        51.6        51.6         55.2        51.4          51.9        59.1       50.9
+                            Gemini-1.5-Pro                   43.5        53.7        35.7         51.5        30.3          50.0        47.2       38.1
+                            GPT-4o                                63.4        70.1        69.7  84.4 70.3          54.3        60.1       45.0
+                            ThinkFake (Ours)             75.4        78.5 87.2         71.7        89.4   64.5 54.282.2
+
+              Table 2: Quantitative results in Acc.(%)on the LOKI (Ye et al. 2024) benchmark. All categories are unseen zero-shot test
+              cases. The best results are highlighted in bold.
+
+
+                     Method                      Reasoning        Mean Acc.
+                     CNNSpot                                           62.6
+                     AntifakePrompt                                    76.9
+                     UnivFD                                            72.3
+                     NPR                                               59.6
+                     AIDE                                              81.7                     Table 4:Comparison of Training Strategies:We compare
+                     ThinkFake (Ours)✓                                 84.0                     ThinkFake with various training methods under the GenIm-
+                                                                                                ageevaluationprotocol.Thebaselinereferstoourinitialrea-
+              Table 3:Comparison of State-of-the-Art Methods:All                                soning model, Qwen2.5-VL-7B-Instruct.
+              baselines are re-trained on our training set to ensure a fair
+              comparison, following the GenImage evaluation protocol.                                  fformat    fjson    facc    fagentic          Mean Acc.
+
+              sub-training set. Evaluation is conducted on unseen genera-                                                       ✓                          %
+              tors, as described in Sec.4.1. In this experiment, we report                                ✓              ✓                                74.6
+              the mean image-level accuracy (Mean Acc.) across all test                                   ✓       ✓     ✓                                 82.6
+              sets, as shown in Tab. 3. Our ThinkFake model achieves                                      ✓       ✓     ✓      ✓                          84.0
+              strongdetectionperformance.UnliketheotherSOTAmeth-                                Table 5:Comparison of Reward Functions:We evaluate
+              ods, which are limited to binary classification, our method                       the impact of different reward functions on the performance
+              also generates interpretable reasoning, further demonstrat-                       ofThinkFakeundertheGenImageevaluationprotocol.A%
+              ing the effectiveness of our reinforcement learning frame-                        symbol indicates training failure.
+              work in guiding the model’s decision-making process for
+              AI-generated image detection.A comprehensive evaluation
+              willbepresentedintheAppendix.C.                                                   or uncommon categories, the model maintains high perfor-
+              4.4    Generalization in Real-World Scenarios                                     mance, suggesting that its reasoning and explanatory capa-
+              In Tab. 2, we assess the generalization capability of our                         bilities can effectively generalize to real-world challenges.
+              ThinkFake model against the LOKI benchmark (Ye et al.                             These results underscore the effectiveness of our approach.
+              2024). LOKI benchmark is a novel, comprehensive evalua-                           Additionalbaselinemethodsandvisualexampleswillbein-
+              tionforMLMMstodetectsyntheticdataacrossmultimodal,                                troducedintheAppendix.D.
+              with 18,000 questions across 26 subcategories. We selected                        4.5    Ablation Study
+              the “Image Judgment Task”, where MLLMs identify syn-
+              thetic or real images in categories like Scene, Animal, Per-                      Training  StrategyInspired  by  DeepSeek-R1-Zero  (Guo
+              son, Object, Medicine, Doc, and Satellite. Following the                          et al. 2025), we explored training strategies that guide mod-
+              LOKI protocol, we zero-shot tested our ThinkFake model.                           els toward self-reflected reasoning for AI-generated image
+              As shown in Tab. 2, ThinkFake exhibited strong generaliza-                        detection. Specifically, we followed the DeepSeek-R1-Zero
+              tion, performing well across unseen categories, with slight                       pipeline  to  train  a  reasoning  MLLM  using  GRPO  with
+              performance drops in Doc and Medicine but still compet-                           our RL-set, as described in Sec. 3.4. This variant, named
+              itive results. Notably, ThinkFake exhibits strong and com-                        “ThinkFake-Zero”,  was  trained  using  only  the  “Reason-
+              prehensiverobustnessunderunseenscenarios.Evenforrare                              ing Format Reward” and “Accuracy Reward” (Sec. 3.3) to
+
+
+
+
+
+
+
+Method                        ColdStart    GRPO      MeanAcc.
+Baseline                                                 54.1
+ThinkFake-Zero                ✓                          72.4
+ThinkFake-SFT       ✓                                    76.7
+ThinkFake-R1(Ours)✓        ✓                             84.0
+
+PAGE 7
+Figure3:QualitativeResults:WepresentqualitativeexamplesdemonstratingThinkFake’scapabilityindetectingAI-generated
+images and providing corresponding explanations.
+
+encourage reasoning behavior. We also implemented the                         bust, comprehensive detection.
+DeepSeek-R1 pipeline, which begins with a cold-start ini-
+tialization  followed  by  GRPO  training.  Using  the  SFT-                  4.6    Qualitative Results
+set, we first obtained “ThinkFake-SFT”, then applied rein-                    Fig. 3 showcases the detection and explanation results gen-
+forcement learning to produce the final model, “ThinkFake-                    erated by ThinkFake on both real and AI-generated images.
+R1”. As shown in Tab. 3, ThinkFake-Zero improved upon                         Our method provides detailed thinking processes, diverse
+the base model but exhibited limited generalization. This                     perspectives of judgment, and intuitive, human-friendly ex-
+suggests that applying RL alone to enhance reasoning in                       planations,  clearly  demonstrating  its  effectiveness.Addi-
+MLLMs remains challenging. In contrast, ThinkFake-SFT,                        tionalqualitativeexamplesareprovidedintheAppendix.E.
+trained with high-quality supervision, achieved stable out-
+put formatting and basic task competency. Subsequent RL
+fine-tuningledtoThinkFake-R1,whichdemonstratedstrong                                                  5   Conclusions
+generalization across diverse scenarios.                                      Inthispaper,weintroducedThinkFake,areasoningMLLM
+Reward Function.In Tab. 5, we evaluate the impact of                          framework for detecting AI-generated images. By integrat-
+different reward functions on the framework’s generaliza-                     ingaforgeryreasoningprompt,GRPOreinforcementlearn-
+tion across all test set. Our results highlight the critical role             ing, and carefully designed reward functions, our method
+of carefully designed rewards. The accuracy reward (f acc)                    achieves both accurate classification and interpretable rea-
+is key to driving convergence during reinforcement learn-                     soning.  Evaluations  under  the  GenImage  protocol  show
+ing, while omitting the reasoning format reward (f format)                    that ThinkFake surpasses existing state-of-the-art detectors.
+leads to unstructured and unstable outputs. Together,f acc                    Moreover, the model generalizes effectively to challeng-
+andf      format provide a stable foundation for effective train-             ing real-world LOKI benchmarks, highlighting its robust-
+ing. Adding the JSON structure reward (f json) boosts per-                    nessandpracticalvalue.Theseresultshighlightthepotential
+formance by enforcing outputs aligned with the detection                      of reasoning-based methods for trustworthy AI detection.
+pipeline.Incorporatingtheagenticreward(f agentic),guided                      ThinkFake offers a strong foundation for future research in
+byexpertagents,furtherenhancesreasoningandenablesro-                          explainable and generalizable media forensics.
+
+PAGE 8
+                          References                                        Huang,Z.;Hu,J.;Li,X.;He,Y.;Zhao,X.;Peng,B.;Wu,B.;
+2025. Midjourney. https://www.midjourney.com/home.                          Huang, X.; and Cheng, G. 2025b. SIDA: Social Media Im-
+(2024), O. 2024. GPT-4o System Card. arXiv:2410.21276.                      age Deepfake Detection, Localization and Explanation with
+(2025), O. 2025. OpenAI o3 and o4-mini System Card.                         Large Multimodal Model. InCVPR.
+Bai,S.;Chen,K.;Liu,X.;Wang,J.;Ge,W.;Song,S.;Dang,                           Huang, Z.; Xia, B.; Lin, Z.; Mou, Z.; and Yang, W. 2024.
+K.; Wang, P.; Wang, S.; Tang, J.; et al. 2025.  Qwen2. 5-vl                 FFAA: Multimodal Large Language Model based Explain-
+technical report.arXivpreprintarXiv:2502.13923.                             able Open-World Face Forgery Analysis Assistant.arXiv
+                                                                            preprintarXiv:2408.10072.
+Chang,  Y.-M.;  Yeh,  C.;  Chiu,  W.-C.;  and  Yu,  N.  2023.               Ji, Y.; Hong, Y.; Zhan, J.; Chen, H.; Zhu, H.; Wang, W.;
+Antifakeprompt: Prompt-tuned vision-language models are                     Zhang,L.;Zhang,J.;etal.2025. TowardsExplainableFake
+fake image detectors.arXivpreprintarXiv:2310.17419.                         Image Detection with Multi-Modal Large Language Mod-
+Chen, Z.; Wu, J.; Wang, W.; Su, W.; Chen, G.; Xing, S.;                     els.arXivpreprintarXiv:2504.14245.
+Zhong, M.; Zhang, Q.; Zhu, X.; Lu, L.; et al. 2024.   In-                   Jia, S.; Lyu, R.; Zhao, K.; Chen, Y.; Yan, Z.; Ju, Y.; Hu, C.;
+ternvl:Scalingupvisionfoundationmodelsandaligningfor                        Li, X.; Wu, B.; and Lyu, S. 2024.   Can ChatGPT Detect
+generic visual-linguistic tasks. InCVPR, 24185–24198.                       DeepFakes? A Study of Using Multimodal Large Language
+Chu, T.; Zhai, Y.; Yang, J.; Tong, S.; Xie, S.; Schuurmans,                 Models for Media Forensics.CVPRW.
+D.;Le,Q.V.;Levine,S.;andMa,Y.2025. Sftmemorizes,rl                          Kang, H.; Wen, S.; Wen, Z.; Ye, J.; Li, W.; Feng, P.; Zhou,
+generalizes:Acomparativestudyoffoundationmodelpost-                         B.; Wang, B.; Lin, D.; Zhang, L.; and He, C. 2025.   LE-
+training.arXivpreprintarXiv:2501.17161.                                     GION:LearningtoGroundandExplainforSyntheticImage
+Comanici, G.; Bieber, E.; Schaekermann, M.; Pasupat, I.;                    Detection.arXivpreprintarXiv:2503.15264.
+Sachdeva, N.; Dhillon, I.; Blistein, M.; Ram, O.; Zhang,                    Labs, B. F. 2024.  FLUX.  https://github.com/black-forest-
+D.; Rosen, E.; et al. 2025.  Gemini 2.5: Pushing the fron-                  labs/flux.
+tier with advanced reasoning, multimodality, long context,
+and next generation agentic capabilities.arXiv preprint                     Li, B.; Zhang, K.; Zhang, H.; Guo, D.; Zhang, R.; Li, F.;
+arXiv:2507.06261.                                                           Zhang,Y.;Liu,Z.;andLi,C.2024. LLaVA-NeXT:Stronger
+Dhariwal, P.; and Nichol, A. 2021.  Diffusion models beat                   LLMs Supercharge Multimodal Capabilities in the Wild.
+gans on image synthesis.NeurIPS, 34: 8780–8794.                             Li, X.; Hou, X.; and Loy, C. C. 2024. When stylegan meets
+Esser, P.; Kulal, S.; Blattmann, A.; Entezari, R.; M¨uller, J.;             stable diffusion: a w+ adapter for personalized image gen-
+Saini,H.;Levi,Y.;Lorenz,D.;Sauer,A.;Boesel,F.;Podell,                       eration.   InProceedings of the IEEE/CVF Conference on
+D.;Dockhorn,T.;English,Z.;andRombach,R.2024. Scal-                          ComputerVisionandPatternRecognition, 2187–2196.
+ingRectifiedFlowTransformersforHigh-ResolutionImage                         Liu, H.; Li, C.; Wu, Q.; and Lee, Y. J. 2023. Visual Instruc-
+Synthesis. InICML.                                                          tion Tuning. InNeurIPS, volume 36, 34892–34916.
+Frank,J.;Eisenhofer,T.;Sch¨onherr,L.;Fischer,A.;Kolossa,                    Liu,Y.;Peng,B.;Zhong,Z.;Yue,Z.;Lu,F.;Yu,B.;andJia,
+D.; and Holz, T. 2020.  Leveraging frequency analysis for                   J.2025. Seg-zero:Reasoning-chainguidedsegmentationvia
+deep fake image recognition. InICML, 3247–3258. PMLR.                       cognitive reinforcement.arXivpreprintarXiv:2503.06520.
+Gao,  Y.;  Chang,  D.;  Yu,  B.;  Qin,  H.;  Chen,  L.;  Liang,             Ojha,U.;Li,Y.;andLee,Y.J.2023. Towardsuniversalfake
+K.; and Ma, Z. 2025.   FakeReasoning: Towards General-                      imagedetectorsthatgeneralizeacrossgenerativemodels. In
+izable Forgery Detection and Reasoning.arXiv preprint                       CVPR, 24480–24489.
+arXiv:2503.21210.                                                           Rafailov, R.; Sharma, A.; Mitchell, E.; Manning, C. D.; Er-
+Goodfellow, I. J.; Pouget-Abadie, J.; Mirza, M.; Xu, B.;                    mon, S.; and Finn, C. 2023.  Direct Preference Optimiza-
+Warde-Farley, D.; Ozair, S.; Courville, A.; and Bengio, Y.                  tion: Your Language Model is Secretly a Reward Model. In
+2014. Generative adversarial nets.NeurIPS, 27.                              NeurIPS.
+Guo, D.; Yang, D.; Zhang, H.; Song, J.; Zhang, R.; Xu, R.;                  Ramesh, A.; Pavlov, M.; Goh, G.; Gray, S.; Voss, C.; Rad-
+Zhu, Q.; Ma, S.; Wang, P.; Bi, X.; et al. 2025. Deepseek-r1:                ford, A.; Chen, M.; and Sutskever, I. 2021.  Zero-shot text-
+Incentivizing reasoning capability in llms via reinforcement                to-image generation. InICML, 8821–8831.
+learning.arXivpreprintarXiv:2501.12948.
+He, J.; Rungta, M.; Koleczek, D.; Sekhon, A.; Wang, F. X.;                  Ricker, J.; Lukovnikov, D.; and Fischer, A. 2024. AEROB-
+and Hasan, S. 2024.  Does prompt formatting have any im-                    LADE: Training-Free Detection of Latent Diffusion Images
+pactonllmperformance?arXivpreprintarXiv:2411.10541.                         Using Autoencoder Reconstruction Error. InCVPR, 9130–
+Hu, E. J.; yelong shen; Wallis, P.; Allen-Zhu, Z.; Li, Y.;                  9140.
+Wang, S.; Wang, L.; and Chen, W. 2022. LoRA: Low-Rank                       Rombach,R.;Blattmann,A.;Lorenz,D.;Esser,P.;andOm-
+Adaptation of Large Language Models. InICLR.                                mer,B.2021. High-ResolutionImageSynthesiswithLatent
+Huang, C.-P.; Wu, Y.-H.; Chen, M.-H.; Wang, Y.-C. F.;                       Diffusion Models.arXivpreprintarXiv:2112.10752.
+and Yang, F.-E. 2025a. ThinkAct: Vision-Language-Action                     Rombach,R.;Blattmann,A.;Lorenz,D.;Esser,P.;andOm-
+Reasoning via Reinforced Visual Latent Planning.arXiv                       mer, B. 2022.  High-resolution image synthesis with latent
+preprintarXiv:2507.16815.                                                   diffusion models. InCVPR, 10684–10695.
+
+PAGE 9
+Shao,Z.;Wang,P.;Zhu,Q.;Xu,R.;Song,J.;Bi,X.;Zhang,
+H.; Zhang, M.; Li, Y.; Wu, Y.; et al. 2024.  Deepseekmath:
+Pushing the limits of mathematical reasoning in open lan-
+guage models.arXivpreprintarXiv:2402.03300.
+Tam, Z. R.; Wu, C.-K.; Tsai, Y.-L.; Lin, C.-Y.; Lee, H.-y.;
+and Chen, Y.-N. 2024. Let me speak freely? a study on the
+impact of format restrictions on performance of large lan-
+guage models.arXivpreprintarXiv:2408.02442.
+Tan,C.;Zhao,Y.;Wei,S.;Gu,G.;Liu,P.;andWei,Y.2024.
+Rethinkingtheup-samplingoperationsincnn-basedgenera-
+tivenetworkforgeneralizabledeepfakedetection. InCVPR,
+28130–28139.
+Wang, S.-Y.; Wang, O.; Zhang, R.; Owens, A.; and Efros,
+A.A.2020. CNN-generatedimagesaresurprisinglyeasyto
+spot...for now. InCVPR.
+Wang, Z.; Bao, J.; Zhou, W.; Wang, W.; Hu, H.; Chen, H.;
+and Li, H. 2023. Dire for diffusion-generated image detec-
+tion. InICCV, 22445–22455.
+Wen, S.; Ye, J.; Feng, P.; Kang, H.; Wen, Z.; Chen, Y.; Wu,
+J.; Wu, W.; He, C.; and Li, W. 2025.  Spot the Fake: Large
+Multimodal Model-Based Synthetic Image Detection with
+Artifact Explanation.arXivpreprintarXiv:2503.14905.
+Xu,G.;Jin,P.;Li,H.;Song,Y.;Sun,L.;andYuan,L.2024.
+LLaVA-CoT:LetVisionLanguageModelsReasonStep-by-
+Step. InICCV.
+Yan, S.; Li, O.; Cai, J.; Hao, Y.; Jiang, X.; Hu, Y.; and Xie,
+W.2025. ASanityCheckforAI-generatedImageDetection.
+InICLR.
+Yao, H.; Huang, J.; Wu, W.; Zhang, J.; Wang, Y.; Liu, S.;
+Wang, Y.; Song, Y.; Feng, H.; Shen, L.; et al. 2024.  Mul-
+berry: Empowering mllm with o1-like reasoning and reflec-
+tion via collective monte carlo tree search.arXiv preprint
+arXiv:2412.18319.
+Ye,J.;Zhou,B.;Huang,Z.;Zhang,J.;Bai,T.;Kang,H.;He,
+J.;Lin,H.;Wang,Z.;Wu,T.;etal.2024. LOKI:ACompre-
+hensive Synthetic Data Detection Benchmark using Large
+Multimodal Models.arXivpreprintarXiv:2410.09732.
+Zhong, N.; Xu, Y.; Li, S.; Qian, Z.; and Zhang, X. 2023.
+Patchcraft:Exploringtexturepatchforefficientai-generated
+image detection.arXivpreprintarXiv:2311.12397.
+Zhou, Z.; Luo, Y.; Wu, Y.; Sun, K.; Ji, J.; Yan, K.; Ding, S.;
+Sun, X.; Wu, Y.; and Ji, R. 2025.  AIGI-Holmes: Towards
+Explainable and Generalizable AI-Generated Image Detec-
+tion via Multimodal Large Language Models. InICCV.
+Zhu, M.; Chen, H.; Yan, Q.; Huang, X.; Lin, G.; Li, W.; Tu,
+Z.;Hu,H.;Hu,J.;andWang,Y.2024. Genimage:Amillion-
+scalebenchmarkfordetectingai-generatedimage.NeurIPS,
+36.
+
+PAGE 10
+                  A   Reward Functions                                        Algorithm 1: Reasoning Format Reward
+We carefully design four reward functions as follows:                           1:Input:Completions:Alistofcontentgeneratedbythe
+Reasoning Format Reward (f format).Pseudocode is pro-                              model.
+vided in Algorithm 1.                                                           2:Output:Rewards: A list of reward values.
+JSON Format Reward (f json).Pseudocode is provided in                           3:InitializeRewards←[]
+Algorithm 2.                                                                    4:DefinePattern  ←<think>...</think>   <an-
+Accuracy Reward (f acc).Pseudocode is provided in Algo-                            swer>...</answer>
+rithm 3.                                                                        5:for allCinCompletionsdo
+Agentic Reward (f agentic).Pseudocode is provided in Al-                        6:   ifCmatches the fullPatternthen
+gorithm 4.                                                                      7:       Append1.0toRewards
+                                                                                8:   else
+              B   Training Process Details                                      9:       Append0.0toRewards
+As described in Section 3.4, we follow the GenImage pro-                       10: end if
+tocol for data preparation. After obtaining the full GenIm-                    11:end for
+age (Zhu et al. 2024) training set, we uniformly sample                        12:returnRewards
+6,000 examples, consisting of 3,000 real and 3,000 fake im-
+ages. This sampled data is then split into two subsets: 1,000                 Algorithm 2: JSON Format Reward
+samplesforsupervisedfine-tuning(SFT-set)and5,000sam-                            1:Input:Completions:Alistofcontentgeneratedbythe
+ples for reinforcement learning (RL-set).                                          model.
+  The original dataset provides only binary labels (real/-                      2:Output:Rewards: A list of reward values.
+fake).Toconstructahigh-qualitySFT-set,wedesignathree-                           3:InitializeRewards←[]
+stage data preparation pipeline:1)We adapt the “Forgery                         4:for allCinCompletionsdo
+Reasoning Prompt” as described in Sec. 3.2 and inject prior                     5:  R←0.0
+ground-truth information into the prompt to reduce hallu-                       6:   try
+cinations (see Fig. 4 for full prompt example).2)Using                          7:      ExtractedJSON←Extract  fromCwithin
+a commercial MLLM (e.g., Gemini-1.4-pro), we generate                                 ‘‘‘json...‘‘‘
+attribute-levelexplanationsbasedonthepromptsandcorre-                           8:       ifExtractedJSONis not emptythen
+sponding images.3)A rule-based post-processing step fil-                        9:           ParseExtractedJSON
+ters out low-quality outputs to ensure consistency and accu-                   10:        R←1.0
+racy. Through this process, we obtain 638 high-quality an-                     11:     end if
+notated samples, which form the final SFT-set. This care-                      12: catchJSONParseException
+fullydesignedpipelineservesasacriticalfoundationforthe                         13:    R←0.0
+strong performance of our model.                                               14: end try
+  AsdescribedinSection4.1,thetrainingofourThinkFake                            15: AppendRtoRewards
+model consists of two stages. The first stage is a cold-start                  16:end for
+initialization, where we perform supervised fine-tuning us-                    17:returnRewards
+ing the SFT-set under the LLaMA-Factory 3 framework to
+align the model’s output with the AI-generated image de-
+tection task. In the second stage, we adopt the VLM-R1 4                      conducted on a cross test-set to assess generalization. Note
+framework and train the model on the RL-set using the                         that only SD v1.4 overlaps with the training domain, while
+GRPOreinforcementlearningalgorithm.Duringthisphase,                           all other test sets contain unseen categories.
+we employ four reward functions—“Reasoning Format Re-                            The  full  cross-evaluation  results  are  reported  in  Ta-
+ward”, “JSON Format Reward”, “Accuracy Reward”, and                           ble  6,  with  accuracy  (ACC.  %)  as  the  evaluation  met-
+“Agentic Reward”—to guide and optimize the training pro-                      ric. Despite being trained on a limited dataset, our Think-
+cess.                                                                         Fake  model  demonstrates  strong  and  consistent  general-
+         C   Compare with SOTA Methods                                        ization across diverse test domains. This suggests that the
+We compare our method with several state-of-the-art ap-                       model effectively performs reasoning-based detection. Fur-
+proaches,includingCNNSpot(Wangetal.2020),Antifake-                            thermore, unlike other detectors that provide only binary
+                                                                              predictions, ThinkFake generates interpretable, structured
+Prompt (Chang et al. 2023), UnivFD (Ojha, Li, and Lee                         outputs—highlighting its effectiveness in explainable AI-
+2023), NPR (Tan et al. 2024), and AIDE (Yan et al. 2025).                     generated image detection.
+For fair comparison, we reproduce their results using their
+officialopen-sourcecodesandretrainallmodelsonthesame                                             D   LOKI Benchmark
+sub-training set constructed under the GenImage (Zhu et al.                   Generalization has long been one of the key challenges in
+2024) protocol, as described in Section 3.4. Evaluation is                    AI-generated image detection, limiting the practical appli-
+
+   3https://github.com/hiyouga/LLaMA-Factory                                  cability of previous methods. The Image modality of the
+   4https://github.com/om-ai-lab/VLM-R1                                       LOKI (Ye et al. 2024) benchmark offers a valuable setting
+
+PAGE 11
+Algorithm 3: Accuracy Reward                                                   Algorithm 4: Agentic Reward
+ 1:Input:Completions:Alistofcontentgeneratedbythe                                1:Input:Completions:Alistofcontentgeneratedbythe
+     model.Solutions:Thegroundtruthlabelforeachcom-                                  model.Solutions:Thegroundtruthlabelforeachcom-
+     pletion.                                                                        pletion.AgenticSolutions:Thegroundtruthprobabil-
+ 2:Output:Rewards: A list of calculated reward values.                               ity distribution data.
+ 3:InitializeRewards←[]                                                          2:Output:Rewards: A list of calculated reward values.
+ 4:for all(C,S) in zip(Completions,Solutions)do                                  3:InitializeRewards←[]
+ 5:  R←−1.0                                                                      4:ProbKeys←[prob          semantic,probfrequency,probdual].
+ 6:   try                                                                        5:for  all(C,S,A)  in  zip(Completions, Solutions,
+ 7:      ExtractedJSON←Extract JSON fromC                                            AgenticSolutions)do
+ 8:      ParsedAnswer←ParseExtractedJSON                                         6:  R←−1.0
+ 9:      Verdict←ParsedAnswer.final                    verdict.verdict           7:   try
+                                                                                 8:      ExtractedJSON←Extract JSON fromC
+10:     if(S= 0andVerdict=“REAL”)or                                              9:      ParsedAnswer←ParseExtractedJSON
+           (S=  1andVerdict=“AI-GENERATED”)                                     10:    Verdict←ParsedAnswer.final                      verdict.verdict
+           then
+11:           R←1.0                                                             11:     if(S= 0andVerdict=“REAL”)or
+12:     else                                                                               (S=  1andVerdict =‘AI-GENERATED”)
+13:           R←0.0                                                                        then
+14:     end if                                                                  12:             InitializeLosses←[]
+15: catchJSONParseException                                                     13:           PredProbs                              ←
+16:    R←−1.0                                                                                 ParsedAnswer.specialist           analysis
+17: end try                                                                     14:         for allkeyinProbKeysdo
+18: AppendRtoRewards                                                            15:              p      pred←PredProbs[key]
+19:end for                                                                      16:              p      gt←A[key]
+20:returnRewards                                                                17:            L      BCE←BinaryCrossEntropy(p          pred,pgt)
+                                                                                18:                 AppendL                        BCE toLosses
+                                                                                19:         end for
+for evaluating generalization in real-world scenarios. This                     20:         L      avg←Mean(Losses)
+evaluation dataset contains over 2,200 images from seven                        21:           R←e         −Lavg
+real-world subcategories (e.g., Scene, Animal, Person, Ob-                      22:     else
+ject, Medicine, Document, Satellite), collected through ex-                     23:           R←0.0
+istingdatasets,internetsources,andnewlysynthesizeddata.                         24:     end if
+Image generation methods include FLUX, Midjourney, Sta-                         25: catchJSONParseException
+ble Diffusion, and ten additional techniques to ensure high                     26:    R←−1.0
+quality and diversity. The task requires the model to deter-                    27: end try
+mine whether each image is real or synthetic, presenting a                      28: AppendRtoRewards
+challenging evaluation of generalization to complex and di-                     29:end for
+verse scenarios.                                                                30:returnRewards
+  FollowingtheLOKIprotocolanditscomprehensiveeval-
+uation results, we conduct a zero-shot evaluation of our                       and summarize before making a final decision with expla-
+ThinkFake method. The results are presented in Table D.                        nation—demonstrating practical applicability in real-world
+Our method demonstrates unprecedented detection perfor-                        scenarios.
+mance and robustness across diverse categories. While per-
+formanceslightlydecreasesinrareanddomain-specificcat-                                             E   Qualitative Results
+egoriessuchas“Medicine”and“Document”,theoverallre-                             We provide additional qualitative examples in Fig.6 and
+sults highlight the effectiveness of our framework. We at-                     Fig.7,showcasingthecompleteoutputsgeneratedbyThink-
+tribute this success to the combination of our reasoning-                      Fake. These outputs include the full step-by-step reason-
+based design and the generalization capability enabled by                      ing process, along with clearly structured answers. Think-
+reinforcementlearning,whichallowsthemodeltoreasonef-                           Fakedemonstratesnotonlyaccuratedetectionbutalsouser-
+fectivelyeveninunseenscenarios.Notably,although“Satel-                         friendly and interpretable explanations.
+lite” is also a rare category, our ThinkFake model achieves
+outstanding performance. As shown in Fig. 5, the model                                    F   Limitation and Future Work
+is able to think accurately and provide interpretable an-
+swers. This success can be attributed not only to the strong                   Limitation.Our  proposed  ThinkFake  framework  estab-
+knowledge base of the underlying base MLLM, but more                           lishesacompletedetectionpipelineandleveragesreinforce-
+importantly, to our carefully designed reasoning pipeline.                     ment learning with carefully designed reward functions for
+This pipeline guides the model to analyze, differentiate,                      training. Unlike previous methods (Gao et al. 2025; Zhou
+
+PAGE 12
+et al. 2025), which rely heavily on large-scale supervised
+fine-tuning (SFT) data and techniques such as prompt op-
+timization or in-context learning to simulate reasoning be-
+havior, ThinkFake achieves more generalized and effective
+results using only a small amount of SFT data and coarse-
+labeled RL data. Through a well-designed pipeline, Think-
+Fakeenablesthemodeltoperformself-reasoningandstruc-
+tured detection.
+  However, since reinforcement learning is applied directly
+to the base MLLM, we freeze the visual encoder and fully
+fine-tunetheLLMcomponenttoreducecomputationalcost.
+Despite this, a key limitation of ThinkFake is its require-
+ment for substantial computational resources during train-
+ing. Additionally, because the model relies on reasoning to
+produce decisions, real-time detection remains challenging
+during inference.
+Future Work.In this paper, ThinkFake has demonstrated
+strong detection performance, interpretability, and robust
+generalization to real-world challenges. However, for end
+users, visual cues are often more intuitive than textual ex-
+planations. Future work could integrate segmentation mod-
+els to map ThinkFake’s reasoning outcomes directly onto
+the image, highlighting relevant regions. Combining visual
+annotationswithtextualreasoningmayleadtomorehuman-
+friendly and understandable explanations.
+  As AI-generated media continues to grow, so do the as-
+sociated risks. We believe that detection technologies must
+evolvealongsidegenerationtechniquestoensureasaferand
+more trustworthy digital future.
+
+PAGE 13
+Figure 4:SFT-set Preparation Prompt:We adapt the “Forgery Reasoning Prompt” as the base and design a ground-truth
+injection mechanism to guide the MLLM in generating high-quality reasoning without hallucination.
+
+
+
+
+
+
+     Method         Midjourney    SD v1.4    SD v1.5    ADM    GLIDE    Wukong    VQDM    BigGANMean
+     CNNSpot                          49.9             84.9          85.1         50.6        53.2          70.0          51.9           55.2         62.6
+     AntifakePrompt                77.1                  81.6          81.4         72.3           82.1          80.4          69.8             70.4         76.9
+     UnivFD                            76.6             80.5          80.6         58.5        78.9          73.9          53.1    76.7  72.3
+     NPR                                  61.1             61.3          59.2         55.9        61.4          60.0          58.2           60.1         59.6
+     AIDE                                73.6      98.7          99.3  64.7        81.6   95.6          73.6    67.0         81.7
+     ThinkFake (Ours)          92.5      93.1                           95.3          73.1        87.4   93.6                   66.2           70.8          84.0
+
+Table6:ComparisonofState-of-the-ArtMethods:Allbaselinesarere-trainedonourtrainingsettoensureafaircomparison,
+following the GenImage evaluation protocol. Performance comparison in Acc.(%)
+
+PAGE 14
+                Table 7: Accuracy (%) of different models on judgment questions from the Image modality of the LOKI benchmark. All
+                categories are unseen zero-shot test cases. Best results are in bold, and second-best are underlined.
+
+
+
+
+
+                                              Overall     Scene     Animal     Person     Object     Medicine     Doc     Satellite
+Random Choice                         18.0          21.6          18.3           18.6          26.0            22.2          22.1         22.1
+Human                                         27.3          24.0          25.8           19.9          26.9            26.1          22.1         39.3
+AIDE (Yan et al. 2025)             63.1             -           89.9   62.5  96.5    53.4          49.7         39.3
+MiniCPM-V-2.6                         44.8          52.0          34.4           53.1          31.5            53.8          51.5         38.3
+Phi-3.5-Vision                            52.5          50.8          41.7           71.5          34.1            57.3                              54.3         60.5
+LLaVA-OneVision-7B              49.8          59.2          41.9           58.1          37.3            52.3          53.0         50.1
+InternLM-XComposer2.5        46.4          52.7          40.0           56.7          32.5            56.1          49.8         38.2
+mPLUG-Owl3-7B                     45.9          52.1          37.3           52.9          31.4            55.3          53.8         38.1
+Qwen2-VL-7B                           47.8          54.7          38.9           57.9          30.3            56.0          59.6         36.9
+LongVA-7B                                46.2          57.6          37.4           52.5          34.1            54.4          49.8         39.7
+Mantis-8B                                   54.6          54.9          52.2           54.8          53.5            53.1          51.9         63.3
+Idefics2-8B                                 45.0          51.8          35.3           52.3          29.2            52.3          53.9         40.6
+InternVL2-8B                             49.7          58.8          39.4           54.4          37.8            53.9          60.2         44.2
+Llama3-LongVILA-8B            49.8          49.8          50.5           50.6          47.2            50.0          49.9         50.0
+VILA1.5-13B                             49.3          52.0          38.6           54.2          31.0            50.1          56.6         62.4
+InternVL2-26B                          44.3          51.6          35.4           50.8          28.2            51.3          54.4         37.6
+VILA1.5-40B                             48.8          53.7          39.3           50.0          33.4            52.5          59.9         50.6
+InternVL2-40B                          49.6          55.7          37.3           59.2          34.8            55.5          64.8         40.8
+Qwen2-VL-72B                         53.2          55.9          43.4           66.9          38.0            55.9  73.7 38.2
+LLaVA-OneVision-72b            46.3          54.7          31.6           53.1          27.8            52.1          67.9                                           36.6
+Claude-3.5-Sonnet                    53.6          51.6          51.6           55.2          51.4            51.9          59.1         50.9
+Gemini-1.5-Pro                          43.5          53.7          35.7           51.5          30.3            50.0          47.2         38.1
+GPT-4o                                        63.4               70.1            69.7   84.4  70.3            54.3          60.1         45.0
+ThinkFake (Ours)                   75.4          78.5  87.2                                       71.7             89.4              64.5  54.2 82.2
+
+PAGE 15
+Figure 5:Qualitative Results:We present qualitative examples of ThinkFake on the “Satellite” category from the LOKI
+benchmark. Despite the rarity of such images, ThinkFake consistently provides high-quality and robust predictions along with
+clear explanations.
+
+PAGE 16
+Figure 6:Qualitative Result:Detection and explanation of real image by ThinkFake.
+
+PAGE 17
+Figure 7:Qualitative Result:Detection and explanation of AI-generated image by ThinkFake.

@@ -1,0 +1,899 @@
+PAGE 1
+  Rethinking the Use of Vision Transformers for AI-Generated Image Detection
+
+
+           NaHyeon Park                      Kunhee Kim                          Junsuk Choe                     Hyunjung Shim
+              KAIST AI                         KAIST AI                      Sogang University                      KAIST AI
+            julia19@kaist.ac.kr           kunhee.kim@kaist.ac.kr              jschoe@sogang.ac.kr               kateshim@kaist.ac.kr
+
+
+                            Abstract                                         search [10,27,51,52,55].
+                                                                                 A key challenge in AI-generated image detection is en-
+Rich feature representations derived from CLIP-ViT have                      suring generalizability across different generative models.
+beenwidelyutilizedinAI-generatedimagedetection. While                        Aneffectivedetectionsystemshouldnotonlyrecognizeim-
+most existing methods primarily leverage features from the                   ages produced by known models but also generalize to im-
+final layer, we systematically analyze the contributions of                  ages from unseen generative models. Recent work by Ojha
+layer-wise features to this task. Our study reveals that ear-                et al. [39] has demonstrated that the pre-trained CLIP [44],
+lier layers provide more localized and generalizable fea-                    a vision-language model trained on a large-scale dataset of
+tures, often surpassing the performance of final-layer fea-                  400 million real image-text pairs, can be effectively uti-
+tures in detection tasks.  Moreover, we find that different                  lized for AI-generated image detection.  Their findings in-
+layers capture distinct aspects of the data, each contribut-                 dicate that a simple classification head built upon CLIP-
+ing uniquely to AI-generated image detection.  Motivated                     derived features exhibits strong generalization capabilities
+by these findings, we introduce a novel adaptive method,                     across various generative models. Building on this founda-
+termedM    ixtureo  fL ayersforAI-generatedimageD            etection        tion, subsequent studies [6,7,33] have further investigated
+(MoLD), which dynamically integrates features from mul-                      CLIP-based detectors. However, these approaches predom-
+tiple ViT layers using a gating-based mechanism.  Exten-                     inantly leverage features from the final layers of CLIP’s vi-
+siveexperimentsonbothGAN-anddiffusion-generatedim-                           siontransformer(ViT),whichmayconstraintheireffective-
+ages demonstrate that MoLD significantly improves detec-                     ness in capturing richer representational patterns.
+tion performance, enhances generalization across diverse                         In this paper, we address a critical research question:
+generative models, and exhibits robustness in real-world                     Is relying exclusively on the last-layer features of CLIP’s
+scenarios.  Finally, we illustrate the scalability and versa-                ViT the optimal approach for effective AI-generated image
+tility of our approach by successfully applying it to other                  detection?  This question is motivated by prior studies on
+pre-trained ViTs, such as DINOv2.   Code is available in                     ViTs[42,45],whichsuggestthatearlierlayerscaptureboth
+https://github.com/nahyeonkaty/mold.                                         local and global information, whereas later layers predom-
+                                                                             inantly encode high-level semantic representations.  Given
+1. Introduction                                                              that AI-generated image detection is more closely associ-
+                                                                             ated with local image attributes rather than high-level se-
+Therapidadvancementofgenerativemodels,suchasgener-                           mantic understanding [5,39,49,51,52,56], we hypoth-
+ative adversarial networks (GANs) [13] and diffusion mod-                    esize that relying solely on last-layer features, which pri-
+els [20,50],  has significantly improved the realism and                     marilycapturehigh-levelsemantics,maynotbeoptimalfor
+fidelity of synthesized images.   In particular,  the emer-                  this task.   Instead, we investigate the use of earlier-layer
+genceoftext-to-imagediffusionmodels[38,43,46,48]has                          features,positingthatdifferentlayersmayencodemorerel-
+revolutionized image synthesis, enabling the generation of                   evant information for distinguishing AI-generated images.
+highly detailed visuals from natural language descriptions.                      Toinvestigatethishypothesis,weconductacomprehen-
+However, as AI-generated images become highly sophis-                        sive layer-wise analysis of CLIP-ViT by training classifiers
+ticated, distinguishing them from real images has become                     on features extracted from different layers while keeping
+increasingly challenging, raising critical concerns regard-                  the CLIP backbone frozen.  Specifically, each classifier is
+ing privacy [3,12,31], digital authenticity [15,30,58],                      trained using features from a specific layer index and eval-
+and the proliferation of misinformation [29,37].    Con-                     uatedforAI-generatedimagedetection. Wethenassessthe
+sequently,  the development of reliable AI-generated im-                     performance ofthese classifiers on imagesgenerated by di-
+age detection techniques has become a crucial area of re-                    verse generative models.  Our analysis yields several key
+
+
+                                                                         1
+
+PAGE 2
+observations:                                                                 •We validate our approach through extensive experiments
+•(O1) Features from very early layers exhibit suboptimal                         on multiple datasets, demonstrating its effectiveness and
+  performance due to their highly localized nature. In con-                      generalizabilityacrossdiversegenerativemodelsandpre-
+  trast, mid-layer features achieve superior detection accu-                     trained ViTs.
+  racy compared to features from the final layer.
+•(O2)Theoptimallayer-wisefeatureforAI-generatedim-                            2. Related Work
+  age detection varies across datasets, suggesting that no                    2.1. AI-generated image detection
+  single layer universally provides the best discriminative
+  features.                                                                   Thefieldoffakeimagedetectionhasbeenextensivelystud-
+   To further investigate the degree of information overlap                   ied [5,14,49,55,63], driven by the rapid advancements in
+among different layers, we analyze the proportion of com-                     generative models. Many studies [4,30,34,35,47,56,57]
+monly misclassified samples to assess the consistency of                      haveinvestigatedthedistinguishingcharacteristicsbetween
+classifiers trained on features extracted from different lay-                 real and synthetic images, and utilized them to train fake
+ers.                                                                          image detector.  In contrast to these methods, Ojha et al.
+•(O3) Our findings demonstrate that different layers en-                      [39] argued that detectors focusing solely on fake-specific
+  code distinct and complementary information relevant to                     features tend to introduce bias, leading to reduced gener-
+  AI-generatedimagedetection. Thissuggeststhatthefea-                         alizability.  They proposed that a more effective approach
+  tureslearnedateachlayercontributeuniquelytotheclas-                         for universal fake image detection involves utilizing fea-
+  sification process rather than being redundant.                             ture representations not exclusively trained for this task.
+   Based on these insights, we proposeM             ixtureo  fL  ayers        Theirfindingssuggestthatthefeaturespaceofapre-trained
+for AI-generated imageD         etection (MoLD), a novel adap-                CLIP-ViT model is particularly well-suited for generaliz-
+tiveapproachinspiredbytheMixture-of-Expertsparadigm.                          able fake image detection. This discovery has spurred fur-
+Specifically,MoLDaggregates[CLS]tokensfrommultiple                            therresearch[6,7,33]intotheapplicationofCLIP-ViTfor
+layers using a data-dependent gating network that dynami-                     fakeimagedetection. Forexample,Chenetal.[6]extracted
+cally assigns weights based on input characteristics.  Each                   featuresfromCLIPandadoptedcontrastivelearningframe-
+layer’s features are projected into a shared representational                 workthatutilizesimagesreconstructedbydiffusionmodels
+spaceandcombinedadaptively,allowingMoLDtoleverage                             as negative samples to enhance fake image detection. Un-
+thedistinctandcomplementaryinformationencodedacross                           like previous studies that primarily focus on the final layers
+different ViT layers effectively.                                             of neural networks, our work investigates the effectiveness
+   Extensive experiments,  evaluated on GAN-based im-                         of different layers for AI-generated image detection.
+agesfromForenSynths[55]anddiffusion-generatedimages                           2.2. Layer-wise characteristics of ViTs
+from the GenImage [64] dataset, demonstrate that our pro-
+posedmethodsignificantlyenhancesdetectionperformance                          Numerousstudies[18,36,41,42]haveexaminedthelayer-
+with high generalization capability across diverse genera-                    wise  characteristics  of  Vision  Transformers  (ViTs)  [9].
+tive models. Furthermore, we assess the robustness of our                     Raghu et al. [45] demonstrated that, given a sufficiently
+method under various scenarios, including adversarial per-                    large dataset, the lower (i.e., earlier) layers of ViTs attend
+turbations and different training dataset sizes.  Finally, we                 to both local and global regions, whereas the higher (i.e.,
+show that our MoLD consistently improves detection per-                       later) layers primarily capture global context.  In the con-
+formance across different pre-trained ViTs, thereby broad-                    text of transfer learning, Yosinski et al. [59] showed that
+eningtheapplicabilityofpre-trainedfeaturerepresentations                      early layers learn more generalizable features applicable
+for AI-generated image detection.                                             across multiple tasks, while higher layers encode represen-
+   In summary, our main contributions are as follows:                         tations that are more specialized to the pre-training objec-
+•We conduct a detailed layer-wise analysis of CLIP-based                      tive. Leveraging these distinct layer-wise characteristics, a
+  ViTs for AI-generated image detection,  demonstrating                       number of studies [1,2,11,19,21,25,28] have explored
+  thatfeaturesfromdifferentlayerscanbeeffectiveforthis                        the role of ViT layers in various applications. For instance,
+  task.                                                                       Uselis and Oh [53] demonstrated that the intermediate lay-
+•We show that different ViT layers contribute distinct in-                    ersofaViTplayacrucialroleinout-of-distribution(OOD)
+  formationtoAI-generatedimagedetection,enhancingthe                          generalization, underscoring the significance of representa-
+  robustness of detection systems with diverse feature rep-                   tions learned at different depths. Building upon these prior
+  resentations.                                                               investigations, our study examines the role of features ex-
+•We propose MoLD, an adaptive,  gating-based method                           tracted from different layers of a pre-trained ViT. Specifi-
+  that aggregates features from multiple ViT layers, signif-                  cally,weevaluatetheireffectivenessinAI-generatedimage
+  icantly improving detection performance.                                    detection, an area that has not been explicitly explored in
+
+
+                                                                          2
+
+PAGE 3
+                                                                                 Figure2.Overlapinmisclassifiedsamplesacrosslayers.Toan-
+                                                                                 alyzethedecision-makingprocessofclassifierstrainedonfeatures
+Figure  1. Layer-wise  performance  in  AI-generated  image                      from different layers, we measure the proportion of commonly
+detection.We  train  individual  classifiers  using  pre-trained                 misclassifiedsamples. Theresultsindicatethattheoverlapinmis-
+CLIP:ViT-L/14 features from different layers of a model on the                   classified samples across layers is relatively low, suggesting that
+GenImage-ADM training set.   The performance of each layer-                      each layer captures distinct aspects of the input data.  This high-
+specific classifier is then evaluated on various test subsets, and               lightsthecomplementarynatureofmulti-layerrepresentationsand
+the average precision is reported.   The results indicate that the               underscores the importance of integrating features from all layers
+optimal performance (marked as star for each test subset) varies                 for robust fake image detection.
+across datasets, with mid-layer features generally outperforming
+those from earlier or later layers.                                              was kept frozen throughout this process, making only the
+
+                                                                                 classification head learnable.  For each layer indexi, we
+prior work.                                                                      extracted the feature representations from the output of the
+                                                                                 i-th transformer block and passed these features through a
+3. Approach                                                                      classifier to obtain the corresponding logits.  Specifically,
+3.1. Motivation                                                                  we trained a total of eight classifiers, corresponding to the
+                                                                                 layers with indicesi∈ {3,6,9,12,15,18,21,24}.   The
+Our work is inspired by previous studies on Vision Trans-                        classifiers were trained on the training subset,  and each
+formers (ViTs) [42,45], which suggest that earlier layers                        trained detector was evaluated on the test subset of Gen-
+capture both local and global information, while later lay-                      Image [64].
+ers primarily encode high-level semantic representations.                        Using mid-layer features leads to performance gain.We
+Since AI-generated image detection is a task that has low                        begin by evaluating the performance of trained layer-wise
+relevance with high-level semantics of an image [5,49,51,                        classifiers for AI-generated image detection. The results of
+52,56], relying exclusively on the features from the final                       this experiment are presented in Figure1. Our findings in-
+layermayleadtosuboptimalutilizationofthefeaturespace                             dicatethatfeaturesextractedfromtheearliestlayersexhibit
+provided by CLIP-ViT. Indeed, we find that the final layers                      suboptimal performance, likely due to their highly local-
+are highly entangled with semantic information (see Supp.                        ized nature.  Notably, we observe that features from mid-
+A.1). Inlightofthis,wesystematicallyexaminethecharac-                            level layers outperform those from the final layer, which is
+teristics and effectiveness of features from different layers                    the approach employed in UnivFD [39]. We also have ex-
+in the context of AI-generated image detection.                                  tended this analysis to other settings:  different backbone
+3.2. Prior Analysis                                                              and datasets.  Please refer to Supp.  A.2 for additional set-
+                                                                                 tings.  The results confirm that this trend generally holds
+Experiment design.To investigate this in detail, a sys-                          across different datasets and generative model.
+tematiclayer-wiseexperimentisdesignedtoexaminelayer-                             Optimal layer features vary across datasets.As illus-
+wise contribution of each group of transformer block’s fea-                      trated in Figure1, the highest performance of the trained
+tures for AI-generated image detection.   Specifically, we                       fake image detector was achieved by utilizing features ex-
+trained classifiers using features extracted from individual                     tracted from layers other than the final layer. However, the
+layers of the CLIP:ViT/L-14 model, which consists of 24                          optimal layer for feature extraction varies across different
+transformer layers. Given that the layers in the ViTs are se-                    test datasets.  For instance, on the ADM test set, the 12-th
+quentially structured, we grouped them into sets of three                        layer provides the best performance (indicated by the blue
+consecutive layers to simplify the analysis and improve                          star),whileontheBigGANtestset,the18-thlayerperforms
+computational efficiency (All layers of CLIP:ViT/B-16 in                         the best (indicated by the orange star). This variation raises
+Supp.  A.2).  It is important to note that the ViT backbone                      an important question: which specific network layer yields
+
+
+                                                                             3
+
+PAGE 4
+                                                                                    ing [CLS] token embedding from each ViT layer:
+
+                                                                                               F(x) ={f                (1)(x),f        (2)(x),...,f        (L)   (x)},        (1)
+
+                                                                                    wheref              (i)  (x) = (f     i◦···◦f  1)(x)denotes the feature ex-
+                                                                                    tracted from thei-th layer.
+                                                                                       Next, each featuref               (i)  (x)is projected through a dedi-
+                                                                                    cated small neural networkg     i(·)(implemented as a linear
+                                                                                    projection followed by GELU activation) into a common
+                                                                                    representation space:
+Figure 3.Overview of ourMoLD.Our approach fully leverages                                         hi =g   i(f  (i)  (x)),   fori= 1,...,L.         (2)
+thefeaturesofapre-trainedVisionTransformerbyaggregatingthe
+[CLS]tokenembeddingsfromalltransformerlayers. Adedicated                               The gating mechanism, implemented as a lightweight
+lightweightnetworkisappliedateachlayertogeneratelayer-wise                          multi-layerperceptronG(·),computesdata-dependentlayer
+predictions.  These predictions are then processed by a learnable                   weightsw            i,  dynamically determining the importance of
+classification head to produce the final prediction. The layer-wise                 eachlayerrepresentationbasedonthetop-layerembedding:
+networksg           i and the classification head are jointly trained using
+binary cross-entropy loss.  Note that the ViT backbone remains                                                                                  LX
+frozen throughout the entire training process.                                        w= softmax(G(f                               (L)   (x))),  w∈R               L,wi = 1.
+
+                                                                                                                                              i=1
+                                                                                                                                                            (3)
+the most informative features for optimal detection perfor-                            We then aggregate these layer representations using the
+mance?  Since the optimal layer differs across datasets, a                          learned weights into a single fused representation:
+fixed-layer approach may not be universally effective.                                                                     LX
+Features of each ViT layer has different contributions.                                                       hfused =        wihi.                           (4)
+Togainadeeperunderstandingofthedecision-makingpro-                                                                       i=1
+cessatvariouslayersofthemodel,weconductedanexper-
+iment to assess whether classifiers trained on features from                           The fused representationh                                fused is subsequently passed
+differentlayersexhibitsimilarordivergentclassificationer-                           throughalinearclassificationhead. Wefirstcomputealogit
+rors. Specifically, we measured the proportion of misclas-                                                 z(x) =W       ⊤hfused+b,                     (5)
+sifiedsamplesforeachlayer-specificclassifier. Theresults,
+presented in Figure2, demonstrate that the overlap in mis-                          and obtain the predicted probability via a sigmoid activa-
+classified samples across layers is low (additional results in                      tion:
+Supp.  A.3).  This finding suggests that classifiers trained                                                   ˆy(x) =σ(z(x)).                            (6)
+on features from different layers tend to make distinct er-
+rors, indicating that each layer captures unique aspects of                            The feature projection networks{g        i}Li=1 , the gating net-
+thedata. Consequently,thishighlightsthevalueofleverag-                              workG(·),andtheclassificationhead(parametersW,b)are
+ingmulti-layerfeatureswhenconstructingarobustfakeim-                                jointly trained using the binary cross-entropy loss:
+age detector. By integrating features from multiple layers,
+we can fully utilize the pre-trained CLIP-ViT’s representa-                                        NX  yjlogˆy(x     j)+(1−y      j)log 1−ˆy(x          j),
+tions,therebyenhancingthedetector’scapacitytocapturea                                L=−      1N
+broader range of discriminative information.                                                      j=1
+                                                                                                                                                            (7)
+3.3. Fully Utilizing Different Layer Features                                       whereNis the batch size andy                  j ∈ {0,1}is the ground
+                                                                                    truth label.
+Motivated  by  the  mixture-of-experts  paradigm  [22, 26]                             This adaptive gating formulation allows us to dynami-
+and  our  earlier  observation  that  different  Vision  Trans-                     callycapitalizeonthedistinctstrengthsofeachtransformer
+former layers capture complementary information, we pro-                            layer, significantly enhancing detection performance com-
+poseMoLD: Mixture-of-Layers  for  AI-generated  image                               pared to methods relying solely on fixed or final-layer fea-
+Detection.  Our approach aims to effectively leverage the                           tures. Despite its conceptual simplicity, our adaptive fusion
+diversefeaturesextractedacrossdifferentlayersthroughan                              strategy demonstrates substantial improvements in detect-
+adaptive gating mechanism, inspired by the concept of dy-                           ing AI-generated content. In subsequent sections, we eval-
+namic feature weighting introduced by Jacobs et al. [22].                           uateMoLDacrossvariouspre-trainedViTs,includingCLIP,
+   Given an input imagex, we first extract the correspond-                          highlighting its effectiveness and interpretability benefits.
+
+
+                                                                               4
+
+PAGE 5
+                   Table 1.Evaluation on the ForenSynths [55].We follow the same experimental setting of Tan et al. [52], and the values in this table are
+                   borrowed from their paper. To incorporate more recent works, we train DIRE and DRCT and add their results to the table. We present
+                   accuracy (ACC) and average precision (AP) in percentage for each test set and compute the overall average.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   Table 2.Evaluation on the GenImage [64].To assess the effectiveness of our approach on recent generative models, we evaluate both
+                   baseline methods and our proposed approach using the GenImage dataset, which includes samples from GAN-based and Diffusion-based
+                   models.  To demonstrate generalizability, we train the fake image detectors on the training set of GenImage-ADM (the first model in
+                   alphabetical order) and evaluate their performance on the test sets of different generative models. We report accuracy (ACC) and average
+                   precision (AP) in percentage (%) for each test set and compute the overall average.
+
+
+                                                                                                                  Synths [55] and GenImage [64] datasets for the training
+                                                                                                                  and evaluation of our model. Since ForenSynths is widely
+                                                                                                                  usedinAI-generatedimagedetectionresearch,wefollowed
+                                                                                                                  prior studies [23,24,51,52] by training our model on
+                                                                                                                  AI-generated images from four ProGAN classes (car, cat,
+                                                                                                                  chair, and horse), alongside real images from the LSUN
+                   Table 3.Cross-validation on different train sets.To assess the                                 dataset [60].  For the evaluation, we employed the Foren-
+                   generalizability of our approach across different training images                              Synths test set and assessed our model on images gener-
+                   generatedbyvarioussourcegenerativemodels,wetrainourmodel                                       ated by eight different generative models, primarily GAN-
+                   on different subsets of the training data.  The left column indi-                              based, in line with previous works [51,52].   To specif-
+                   cates the training set derived from GenImage.  We then evaluate                                ically assess the performance on generated images from
+                   the model on all other test subsets and report the average preci-                              diffusion models, we incorporated the GenImage dataset,
+                   sion (AP) for each combination of training and test sets. The re-                              which has gained recent attention due to its inclusion of a
+                   sults demonstrate that our method maintains strong generalizabil-                              diverse range of recent generative models. Specifically, we
+                   ity when trained on subsets generated by different models.                                     trained our model on images generated by ADM, the type
+                                                                                                                  of first generative model in alphabetical order, using real
+                   4. Experiments                                                                                 images from ImageNet [8].  We then tested the model on
+                                                                                                                  images from eight advanced generative models, predomi-
+                   4.1. Experimental Settings                                                                     nantly diffusion-based, within the GenImage dataset. Since
+                   Datasets.In this task of AI-generated image detection,                                         GenImage dataset includes both GAN and diffusion mod-
+                   both the training and test datasets are divided into two                                       els, it is well-suited for testing a wide range of generative
+                   classes:  real and fake.  A binary classifier is then trained                                  models. Therefore, unless otherwise specified, most exper-
+                   to function as the fake detector.   We utilized the Foren-                                     iments were conducted using the GenImage setup.  Addi-
+
+
+                                                                                                             5                                                         Mean
+Method                    ProGAN       StyleGAN     StyleGAN2       BigGAN      CycleGAN      StarGAN        GauGAN       Deepfake                                     Mean
+Method                       ADM          BigGAN         GLIDE       Midjourney      SDv1.4         SDv1.5          VQDM         WukongACC     AP    ACC    AP    ACC    AP    ACC    AP    ACC    AP    ACC    AP    ACC     AP    ACC    APACC    AP
+                         ACC    AP    ACC    AP    ACC    AP    ACC    AP    ACC    AP    ACC     AP    ACC    AP    ACC    AP                                     ACC    AP
+CNNDetection[55]     99.7   100.0    87.3   99.3    96.2     99.6    64.6   90.1    57.8   86.2    58.0   87.1     80.0     97.7    54.8   79.1ADM  BigGAN  GLIDE  Midjourney  SDv1.4  SDv1.5  VQDM  Wukong74.8   92.4
+CNNDetection[55]    91.4    99.4    63.8   91.4    76.4    97.5    52.9    73.3    72.7   88.6    63.8    90.8    63.9    92.2    51.7   62.3                       67.1   86.9
+ADM        100.0      97.9     99.0         95.2     98.5     98.3     99.2      98.1PatchFor[5]            100.0   100.0    50.0   97.4    98.1   100.0    51.3   87.7    50.0   69.2    50.0   68.7   100.0   100.0    50.0   71.168.7   86.8
+BigGAN      78.4      99.9     95.5         76.1     94.0     94.5     97.5      90.7PatchFor[5]             97.8   100.0    82.6   93.1    83.6    98.5    64.7    69.5    74.5   87.2   100.0   100.0    57.2    55.4    85.0   93.280.7   87.1
+LGrad[51]               99.9   100.0    57.2   98.0    94.2     99.6    62.1   93.5    56.5   89.4    56.4   89.7     92.4     99.8    53.9   81.9                  71.6   94.0
+GLIDE       94.0      95.7    100.0         90.4     97.6     97.4     95.3      95.9LGrad[51]              99.9   100.0    94.8   99.9    96.0    99.9    82.9    90.7    85.3   94.0    99.6   100.0    72.4    79.3    58.0   67.986.1   91.5
+Midjourney    71.4      87.6     86.6         98.7     86.9     87.3     51.9      77.8UnivFD[39]             90.6     97.1    91.7   99.1    79.0     88.2    61.8   69.5    80.3   89.2    79.5   88.4     90.8     98.5    84.8   93.382.3   90.4
+UnivFD[39]            99.7   100.0    89.0   98.7    83.9    98.4    90.5    99.1    87.9   99.8    91.4   100.0    89.9   100.0    80.2   90.2                     89.1   98.3
+SDv1.4       80.5      81.6     92.4         95.8     99.9     99.9     89.0      98.6DIRE[56]                99.5   100.0    67.6   94.8    94.3     99.1    62.7   88.1    56.3   80.2    56.3   80.7     73.4     95.7    54.2   73.470.5   89.0
+SDv1.5       79.1      75.8     92.9         95.5     99.9     99.9     90.1      98.9DIRE[56]               98.3    99.9    72.5   94.3    66.3    97.7    59.1    79.2    66.2   78.2    92.8   100.0    54.9    72.2    87.0   97.174.6   89.8
+NPR[52]                100.0   100.0    51.2   98.6    96.1     99.8    64.4   90.9    52.9   77.9    52.7   78.6     74.9     97.8    52.3   73.8                  63.5   88.2
+VQDM       92.7      97.8     97.9         97.4     99.8     99.6    100.0      99.8NPR[52]                99.8   100.0    96.3   99.8    97.3   100.0    87.5    94.5    95.0   99.5    99.7   100.0    86.6    88.8    77.4   86.292.596.1
+DRCT(Conv-B)[6]     99.6   100.0    65.9   96.3    96.5     99.8    67.0   94.9    68.9   96.4    68.2   96.5     81.5     98.8    63.9   93.9                      76.4   97.1
+Wukong      87.0      71.9     93.2         89.0     99.9     99.9     94.4      99.7DRCT(Conv-B)[6]    98.6    99.9    76.2   96.2    60.8    96.2    86.0    75.7    96.9   98.0    61.4    94.1    82.6    99.5    33.9   75.374.6   91.9
+DRCT(CLIP-L)[6]     95.4     99.3    86.5   97.3    93.5     99.0    57.6   77.4    71.0   91.4    70.1   90.4     91.3     98.5    69.5   89.8                     79.4   92.9
+DRCT(CLIP-L)[6]    98.4    99.9    82.8   95.0    74.5    95.4    87.9    96.7    92.2   98.0    83.2    95.8    98.5    99.9    42.4   78.6                        82.5   94.9
+MoLD(Ours)                99.3    100.0     83.3    97.9     91.1     99.0     76.3    95.2    88.2    98.5     87.0    98.3     93.5      99.2    86.5    98.1     88.2    98.2
+MoLD(Ours)                99.9   100.0     91.1    99.8     86.0     99.8    98.4    100.0     98.1    99.9     99.1    100.0     99.7    100.0     58.7   96.5     91.4    99.5
+
+PAGE 6
+tionalresultsonothertrainingsetofGenImageareprovided                         generalizationacrossdiversegenerativemodels. Ourresults
+Table3and Supp. B.                                                           further substantiate this by showing that fully utilizing the
+Baselines  and  metrics.For  baselines,  we  compared                        rich feature representations learned from pre-trained ViTs
+our  method  against  seven  recent  techniques:   CNNDe-                    allows our approach to outperform UnivFD, achieving su-
+tection  [55],  PatchFor  [5],  LGrad  [51],  UnivFD  [39],                  perior performance in comparison.
+DIRE [56], NPR [52], and DRCT [6], which provides pub-                          Furthermore, GenImage offers training datasets derived
+lic training codebase.   For DRCT, as they propose using                     from eight distinct generative models, enabling us to per-
+twotypesofpre-trainednetworks: ConvNext-Base[32]and                          form experiments using various source models for train-
+CLIP:ViT-L/14, we report results of both backbones.  All                     ing.  Therefore, we present the results of training on var-
+baseline models were trained using the settings specified in                 ious training sets for each generative model in GenImage.
+their respective original papers.  As many prior studies in                  TheresultsareprovidedinTable3. Theresultsconsistently
+this field [5,39,55] primarily focus on reporting average                    demonstrate that our proposedMoLDexhibits robust gener-
+precisionasakeyevaluationmetric,wealsoreportaverage                          alization across different generative models, irrespective of
+precision(%)formostofourexperiments. Additionally,for                        the source image set utilized for training.
+the main table, we include accuracy (%) as another impor-
+tant evaluation metric.                                                      4.3. Robustness
+Implementation details.In order to show the effective-                       To assess robustness concerning perturbations (e.g., blur,
+ness of our layer aggregation strategy, we adopt the major-                  jpeg compression, scale) and training dataset size (from 5k
+ity of their experimental setup from Ojha et al. [39] and                    to full 320k), we conducted a series of experiments.  The
+mainly utilize the CLIP:ViT-L/14 backbone.  Specifically,                    model was trained using ADM and tested on eight genera-
+wetrainedthemodelwithaninputresolutionof224×224,                             tive models, reporting the mean Average Precision (mAP).
+employing early stopping with patience of 5 epochs with                      The results were then compared with UnivFD, which is
+learning rate decay. All the hyperparameters, including the                  methodologically the closest baseline and performing the
+learningrate,weredirectlyinheritedfromtheUnivFDcon-                          second-best next to ours in Table2.
+figuration.                                                                  Robustnesstoperturbations.Inthecontextoffakeimage
+4.2. Main Results                                                            detection, adversaries can evade detection by applying per-
+                                                                             turbations to images.  Additionally, given that JPEG com-
+As demonstrated in Tables1and2, our simple yet effec-                        pression is commonly applied on the web, we evaluated
+tive approach achieves significantly improved performance                    the robustness of our method against such perturbations.
+compared to the latest baselines.  Specifically, we achieve                  Furthermore, we examined whether detection performance
+the highest average precision in both datasets:  99.5% in                    varies with scale due to resizing effects. For these evalua-
+ForenSynths and 98.2% in GenImage.  We also record the                       tions, we conducted experiments under various conditions.
+second best in ForenSynths and the highest average detec-                    Toassesstheimpactofblur,weappliedGaussianblurwith
+tionaccuracyinGenImage. Whileourmethodsharessome                             different sigma values.  For JPEG compression, we varied
+methodological similarities with UnivFD, it fundamentally                    thecompressionstrengthbyadjustingtheJPEGqualityfac-
+differs in its comprehensive utilization of features across                  tor. Lastly,forscalevariations,weresizedimagestodiffer-
+multiple layers. This key distinction enables our approach                   ent scales using the default bilinear interpolation function
+to achieve significantly superior performance, demonstrat-                   in the torchvision resize module.
+ing clear advantage over UnivFD.                                                The results of these experiments are presented in Fig-
+   In particular, as shown in Table2, while many baseline                    ure4a.  While detection performance decreases as pertur-
+methodsstruggletoachievehighdetectionperformance,es-                         bation intensity increases in both Gaussian blur and JPEG
+pecially on Midjourney and Wukong, our method demon-                         compression, our method consistently achieves high per-
+strates consistently high detection performance.   Further-                  formance across different levels of blur and compression.
+more, several baseline methods faced challenges in achiev-                   Regarding scale variations, both UnivFD and our approach
+ingsatisfactoryperformanceonSDv1.4andSDv1.5,which                            demonstrated a certain level of robustness. However, while
+canbeattributedtotheinherentdifferencesbetweenADM,                           UnivFD exhibited a slight performance drop, our method
+a pixel-space generative model trained on the dataset, and                   remained nearly unaffected.   In summary,  our approach
+Stable Diffusion, which operates in the latent space.  De-                   demonstrates robustness against various levels of perturba-
+spite these challenges, our method exhibited robust gener-                   tions, including blur, JPEG compression, and scale varia-
+alization across both types of generative models.                            tions.
+   This observation supports the claim made by UnivFD,                       Robustness to train-data size.To evaluate the robustness
+which emphasizes that, rather than learning model-specific                   with respect to training dataset size, we conducted exper-
+features, leveraging pre-trained ViT features enables better                 iments using randomly selected subsets of the GenImage
+
+                                                                         6
+
+PAGE 7
+                                               (a) Perturbations                                                              (b) Train-data size
+
+Figure 4.Robustness evaluation.To assess the robustness of our approach in real-world scenarios, we conduct evaluations under various
+perturbations and training dataset sizes. Specifically, we apply perturbations including blur, JPEG compression, and scaling at different
+intensity levels (each sigma, quality and scale, respectively). Additionally, we vary the training dataset size from 5k to 320k, where 320k
+isthefulldatasetsizeofGenImage-ADM.Notethatthetotalsizeincludesbothrealandsyntheticimages. Ourresultsdemonstratethatthe
+proposed method maintains robustness across a wide range of perturbations and dataset sizes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                  Figure 6.Ablation on layer contributions.To assess the impact
+                                                                                  of each layer’s features on the performance of the fake image de-
+Figure  5. Performance  across  different  pre-trained  Vision                    tector, we conducted an ablation study by excluding the features
+Transformers(ViTs).Ourapproachcanbeseamlesslyintegrated                           from specific layers of the trained detector.  The results demon-
+intovariouspre-trainedViTs,includingCLIP[48],MAE(Masked                           strate that all layers contribute to the model’s performance, with
+Autoencoders) [16], SigLIP [62], and DINOv2 [40]. We observe                      the degree of contribution varying across different settings.  This
+consistentperformanceimprovementsacrossdifferentbackbones,                        highlights the importance of considering the full set of layer fea-
+demonstrating the effectiveness of fully leveraging prior features                tures, thereby supporting the rationale for our approach.
+for AI-generated image detection.   Additionally, larger models
+tend to yield superior performance, with CLIP ViT-L/14 achiev-
+ing the best results, followed by DINOv2-Large.                                   strictedtoCLIPViT;itcanbeappliedtovariouspre-trained
+                                                                                  Vision Transformers, fully leveraging prior features for AI-
+ADM dataset (full 320k). Training was performed on pro-                           generated image detection. Therefore, we evaluated its ap-
+gressivelylargersubsets,startingfromaminimalsizeof5k,                             plicability to not only CLIP but also Masked AutoEncoder
+where the dataset size refers to the total number of real and                     (MAE) [16], SigLIP [62], and DINOv2 [40], that encom-
+fake images combined.                                                             pass different pre-train data and training techniques.  For
+   The results, presented in Figure4(b), demonstrate that                         comparison, we evaluated UnivFD under the same condi-
+even with a very small dataset of 5k samples, the model                           tions, replacing only the backbone while maintaining the
+achieves remarkably high performance.  Overall, the find-                         use of the last-layer features. Similarly, ourMoLDwas ap-
+ings indicate that the model exhibits robustness with mini-                       plied with different backbones, utilizing features from all
+mal sensitivity to dataset size.                                                  layers.   For SigLIP, which does not have a [CLS] token,
+                                                                                  we used pooled features instead.  The results of these ex-
+4.4. Expanding to Different Pre-trained ViTs                                      periments are presented in Figure5, demonstrating that our
+Throughoutthis paper,the experimentswereconducted us-                             approachisapplicabletoawiderangeofpre-trainedViTs.
+ingthesamebackboneasUnivFD,whichleveragesthefea-                                      These experiments yielded several key observations. (1)
+tures of CLIP:ViT-L/14.  However, our method is not re-                           Overall, UnivFD exhibited a certain level of detection per-
+
+
+                                                                             7
+
+PAGE 8
+formance across nearly all pre-trained ViTs, indicating that
+many  pre-trained  ViTs  provide  useful  features  for  fake
+image detection.   (2) Compared to UnivFD, our method
+consistently outperformed across diverse pre-trained ViTs.
+This suggests that ourMoLDenables a more comprehen-
+siveutilizationofthefeaturesprovidedbypre-trainedViTs,
+demonstrating its effectiveness for the AI-generated image
+detection task.  (3) Model size of pre-trained ViT affects
+performance: in all ViT settings in the figure, larger mod-
+els consistently outperformed their base counterparts.  (4)
+TherearedistinctperformancedifferencesamongViTvari-                          Figure 7.Misclassified examples.We show instances of misclas-
+ants, likely due to differences in their pre-trained datasets,               sified images with the lowest confidences from our AI-generated
+architectural  details,  and  training  methodologies.     No-               imagedetectionmodel. Theexamplesincludebothfalsenegatives
+tably, CLIP:ViT-L, which was used in the UnivFD setting,                     (authenticimagesincorrectlyclassifiedasfake)andfalsepositives
+achieved the highest performance, followed by DINOv2-                        (AI-generated images incorrectly classified as authentic).  These
+Large.  However, SigLIP exhibited relatively poor perfor-                    samples demonstrate no apparent contextual anomalies upon vi-
+mance,whichmaybeattributedtoitsuseofpooledfeatures                           sual inspection.
+instead of a [CLS] token.
+   In summary,  while various pre-trained  Vision Trans-                     mat, exhibited noticeable compression artifacts. Addition-
+formers (ViTs) with different architectures and sizes pro-                   ally, certain images contained wave-like distortions, while
+vide valuable features for fake image detection, our ap-                     others appeared to have been extracted from their original
+proach effectively utilizes these features across all layers,                backgrounds.
+resultinginaperformanceimprovementanddemonstrating
+its efficacy in detecting AI-generated images.                               5. Discussion
+
+4.5. Analyzing the Results                                                   Limitations & Future directions.Our research builds on
+Which layer contributes the most?We conducted an ab-                         recent work using CLIP-ViT and focuses on improving the
+lation study by removing features from specific layers and                   usability of pre-trained Vision Transformers. Although our
+measuringtheperformancedrop. Initially,weremovedone                          approach can also be applied to CNN-based detectors, we
+layeratatime,butwith23layersremaining,thedifferences                         focusonViTsduetoUnivFD’sreportsthatViT-basedCLIP
+were small.   To get clearer results, we removed features                    outperformsResNet-basedCLIPfordetectingAI-generated
+fromthreelayersatonce. AsshowninFigure6,theperfor-                           images.   Even though our approach leads to significant
+mance drop varied across test subsets: layers 16-18 had the                  performance  improvements,  certain  samples—especially
+most significant drop for the BigGAN dataset, while layers                   fromspecificgenerativemodels—remaindifficulttodetect.
+10-12 had the second-largest drop for the SDv1.5 dataset.                    For example, the ForenSynths-DeepFake and GenImage-
+To summarize, this confirms the distinct and varying roles                   Midjourney subset show lower detection rates across most
+of different layers in detection performances. It aligns with                of baseline approaches, including ours.  Solving this issue
+ourearlierobservationontheimportanceofintegratingfea-                        may require strategies specific to these models.  It’s also
+tures from all layers.                                                       worth noting that our approach, along with all the base-
+Examples of hard samples.We conducted an analysis                            line methods, is designed to detect fully-generated images
+of the types of images that presented the greatest chal-                     from generative models.  Detecting AI-edited images will
+lenges for our fake image detector, specifically focusing                    require further research and different techniques.  We be-
+on those where the classifier demonstrated the lowest con-                   lieve that more explainable research is needed to identify
+fidence scores.  This involved examining real images that                    the unique features that distinguish real from synthetic im-
+were misclassified as fake (false positives) and fake images                 ages, which will help improve detection performance be-
+that were misclassified as real (false negatives). Examples                  yond current benchmarks.
+of these misclassified samples are shown in Figure7.                         Societal impact.The rapid advancement of generative
+   Upon visual inspection, no clear patterns were identi-                    modelshasgivenrisetosignificantconcernsregardingtheir
+fiable among these misclassified samples, suggesting that                    potential negative impacts. Notably, privacy infringements
+the classifier’s performance has reached a level that is be-                 resulting from fabricated images and the dissemination of
+yond reliable detection by human observation.  However,                      false information are critical issues that must be addressed.
+we did observe that some real images from the GenImage                       This research investigates how content generated by such
+dataset, sourced from ImageNet and stored in JPEG for-                       models can be analyzed using features from pre-trained
+
+
+                                                                         8
+
+PAGE 9
+models, offering a promising approach for a wide range of                                 the IEEE/CVF Conference on Computer Vision and Pattern
+forgery detection methods. To ensure secure and trustwor-                                 Recognition, pages 4356–4366, 2024.1,2
+thy AI systems, it is essential to establish robust safeguards                       [8]Jia Deng,  Wei Dong,  Richard Socher,  Li-Jia Li,  Kai Li,
+against these emerging threats.                                                           and Li Fei-Fei.  Imagenet: A large-scale hierarchical image
+                                                                                          database. In2009 IEEE conference on computer vision and
+6. Conclusion                                                                             pattern recognition, pages 248–255. Ieee, 2009.5
+                                                                                     [9]Alexey Dosovitskiy,  Lucas Beyer,  Alexander Kolesnikov,
+In  this  paper,  we  addressed  the  research  question  of                              Dirk  Weissenborn,  Xiaohua  Zhai,  Thomas  Unterthiner,
+whether   the   commonly   adopted   approach—utilizing                                   Mostafa Dehghani, Matthias Minderer, Georg Heigold, Syl-
+only  the  last-layer  representation—is  truly  optimal  for                             vain Gelly, et al.  An image is worth 16x16 words: Trans-
+AI-generated image detection.  Through a comprehensive                                    formers  for  image  recognition  at  scale.arXiv  preprint
+layer-wise  analysis,  we  demonstrated  that  earlier-layer                              arXiv:2010.11929, 2020.2
+features  contribute  valuable  information  and  that  each                       [10]David C Epstein,  Ishan Jain,  Oliver Wang,  and Richard
+layer  offers  distinct  decision-making  insights  for  this                             Zhang. Onlinedetectionofai-generatedimages. InProceed-
+task.  Based on these findings, we proposed a simple yet                                  ings of the IEEE/CVF international conference on computer
+effective layer aggregation strategy, which achieved strong                               vision, pages 382–392, 2023.1
+performance across diverse scenarios.  Our research offers                         [11]Utku  Evci,   Vincent  Dumoulin,   Hugo  Larochelle,   and
+fresh perspectives on forgery detection,  highlighting the                                Michael C Mozer.   Head2toe:  Utilizing intermediate rep-
+scalability of our approach and underscoring the impor-                                   resentations for better transfer learning.   InInternational
+tance of fully leveraging the rich feature representations                                ConferenceonMachineLearning,pages6009–6033.PMLR,
+inherent in pre-trained Vision Transformers. We hope that                                 2022.2
+ourfindingsserveasavaluablecontributiontothefieldand                               [12]Joel Frank, Thorsten Eisenhofer, Lea Sch      ¨onherr, Asja Fis-
+inspire further investigations into this promising direction.                             cher, Dorothea Kolossa, and Thorsten Holz. Leveraging fre-
+                                                                                          quency analysis for deep fake image recognition.  InInter-
+                                                                                          nationalconferenceonmachinelearning,pages3247–3258.
+References                                                                                PMLR, 2020.1
+                                                                                   [13]Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing
+ [1]ThomasAdler,JohannesBrandstetter,MichaelWidrich,An-                                   Xu,DavidWarde-Farley,SherjilOzair,AaronCourville,and
+      dreas Mayr, David Kreil, Michael Kopp, G¨unter Klambauer,                           Yoshua Bengio.  Generative adversarial networks.Commu-
+      and Sepp Hochreiter.   Cross-domain few-shot learning by                            nications of the ACM, 63(11):139–144, 2020.1
+      representation  fusion.arXiv  preprint  arXiv:2010.06498,                    [14]Patrick Grommelt, Louis Weiss, Franz-Josef Pfreundt, and
+      2020.2                                                                              Janis  Keuper.     Fake  or  jpeg?     revealing  common  bi-
+ [2]Guillaume Alain and Yoshua Bengio.  Understanding inter-                              ases in generated image detection datasets.arXiv preprint
+      mediate layers using linear classifier probes.arXiv preprint                        arXiv:2403.17608, 2024.2
+      arXiv:1610.01644, 2016.2                                                     [15]JiazhiGuan,HangZhou,ZhibinHong,ErruiDing,Jingdong
+ [3]Shivangi Aneja and Matthias Nießner. Generalized zero and                             Wang, Chengbin Quan, and Youjian Zhao. Delving into se-
+      few-shot transfer for facial forgery detection.arXiv preprint                       quential patches for deepfake detection.Advances in Neural
+      arXiv:2006.11863, 2020.1                                                            Information Processing Systems, 35:4517–4530, 2022.1
+ [4]George Cazenavette, Avneesh Sud, Thomas Leung, and Ben                         [16]Kaiming He, Xinlei Chen, Saining Xie, Yanghao Li, Piotr
+      Usman. Fakeinversion: Learning to detect images from un-                            Doll´ar,andRossGirshick.Maskedautoencodersarescalable
+      seen text-to-image models by inverting stable diffusion.  In                        visionlearners. InProceedingsoftheIEEE/CVFconference
+      Proceedings of the IEEE/CVF Conference on Computer Vi-                              on computer vision and pattern recognition, pages 16000–
+      sion and Pattern Recognition, pages 10759–10769, 2024.2                             16009, 2022.7
+ [5]Lucy Chai,  David Bau,  Ser-Nam Lim,  and Phillip Isola.                       [17]Dan Hendrycks and Kevin Gimpel.   Gaussian error linear
+      What makes fake images detectable?  understanding prop-                             units (gelus).arXiv preprint arXiv:1606.08415, 2016.13
+      ertiesthatgeneralize. InComputervision–ECCV2020: 16th                        [18]Byeongho Heo, Sangdoo Yun, Dongyoon Han, Sanghyuk
+      European conference, Glasgow, UK, August 23–28, 2020,                               Chun, Junsuk Choe, and Seong Joon Oh.  Rethinking spa-
+      proceedings, part XXVI 16, pages 103–120. Springer, 2020.                           tial dimensions of vision transformers.   InProceedings of
+      1,2,3,5,6                                                                           the IEEE/CVF international conference on computer vision,
+                                                                                          pages 11936–11945, 2021.2
+ [6]Baoying Chen, Jishen Zeng, Jianquan Yang, and Rui Yang.                        [19]Juyeon  Heo,  Christina  Heinze-Deml,  Oussama  Elachqar,
+      Drct:  Diffusion reconstruction contrastive training towards                        ShirleyRen,UdhayNallasamy,AndyMiller,KwanHoRyan
+      universal detection of diffusion generated images. InForty-                         Chan,andJayaNarain.Dollms”know”internallywhenthey
+      first International Conference on Machine Learning, 2024.                           followinstructions?arXivpreprintarXiv:2410.14516,2024.
+      1,2,5,6                                                                             2
+ [7]Davide   Cozzolino,   Giovanni   Poggi,   Riccardo   Corvi,                    [20]Jonathan Ho, Ajay Jain, and Pieter Abbeel.  Denoising dif-
+      Matthias Nießner, and Luisa Verdoliva.  Raising the bar of                          fusionprobabilisticmodels.Advancesinneuralinformation
+      ai-generated image detection with clip.  InProceedings of                           processing systems, 33:6840–6851, 2020.1
+
+
+                                                                               9
+
+PAGE 10
+[21]Qian Huang, Isay Katsman, Horace He, Zeqi Gu, Serge Be-                               diffusion-generated  image  detection.     InProceedings  of
+      longie, and Ser-Nam Lim.  Enhancing adversarial example                             the IEEE/CVF Conference on Computer Vision and Pattern
+      transferabilitywithanintermediatelevelattack. InProceed-                            Recognition, pages 17006–17015, 2024.2
+      ings of the IEEE/CVF international conference on computer                     [35]Ruipeng Ma, Jinhao Duan, Fei Kong, Xiaoshuang Shi, and
+      vision, pages 4733–4742, 2019.2                                                     Kaidi Xu. Exposing the fake: Effective diffusion-generated
+[22]Robert A Jacobs, Michael I Jordan, Steven J Nowlan, and                               imagesdetection.arXivpreprintarXiv:2307.06272,2023.2
+      GeoffreyEHinton. Adaptivemixturesoflocalexperts.Neu-                          [36]Muhammad  Muzammal  Naseer,   Kanchana  Ranasinghe,
+      ral computation, 3(1):79–87, 1991.4                                                 SalmanHKhan,MunawarHayat,FahadShahbazKhan,and
+[23]Yonghyun Jeong, Doyeon Kim, Seungjai Min, Seongho Joe,                                Ming-HsuanYang. Intriguingpropertiesofvisiontransform-
+      YoungjuneGwon,andJongwonChoi. Bihpf: Bilateralhigh-                                 ers.AdvancesinNeuralInformationProcessingSystems,34:
+      pass filters for robust deepfake detection. InProceedings of                        23296–23308, 2021.2
+      the IEEE/CVF Winter Conference on Applications of Com-                        [37]Dat  Nguyen,   Nesryne  Mejri,   Inder  Pal  Singh,   Polina
+      puter Vision, pages 48–57, 2022.5                                                   Kuleshova, Marcella Astrid, Anis Kacem, Enjie Ghorbel,
+[24]YonghyunJeong,DoyeonKim,YoungminRo,andJongwon                                         and Djamila Aouada.  Laa-net: Localized artifact attention
+      Choi.  Frepgan: robust deepfake detection using frequency-                          network for quality-agnostic and generalizable deepfake de-
+      level perturbations.  InProceedings of the AAAI conference                          tection.   InProceedings of the IEEE/CVF Conference on
+      on artificial intelligence, pages 1060–1068, 2022.5                                 Computer Vision and Pattern Recognition,  pages 17395–
+[25]Yiding Jiang, Dilip Krishnan, Hossein Mobahi, and Samy                                17405, 2024.1
+      Bengio. Predicting the generalization gap in deep networks                    [38]Alex Nichol,  Prafulla Dhariwal,  Aditya Ramesh,  Pranav
+      withmargindistributions.arXivpreprintarXiv:1810.00113,                              Shyam, Pamela Mishkin, Bob McGrew, Ilya Sutskever, and
+      2018.2                                                                              MarkChen. Glide: Towardsphotorealisticimagegeneration
+[26]MichaelIJordanandRobertAJacobs.Hierarchicalmixtures                                   andeditingwithtext-guideddiffusionmodels.arXivpreprint
+      of experts and the em algorithm.Neural computation, 6(2):                           arXiv:2112.10741, 2021.1
+      181–214, 1994.4                                                               [39]Utkarsh Ojha, Yuheng Li, and Yong Jae Lee.  Towards uni-
+[27]Romeo   Lanzino,    Federico   Fontana,    Anxhelo   Diko,                            versal fake image detectors that generalize across genera-
+      Marco Raoul Marini, and Luigi Cinque.   Faster than lies:                           tive models.  InProceedings of the IEEE/CVF Conference
+      Real-time deepfake detection using binary neural networks.                          on Computer Vision and Pattern Recognition, pages 24480–
+      InProceedings of the IEEE/CVF Conference on Computer                                24489, 2023.1,2,3,5,6,12
+      Vision and Pattern Recognition, pages 3771–3780, 2024.1                       [40]Maxime Oquab, Timoth      ´ee Darcet, Th´eo Moutakanni, Huy
+[28]Yoonho Lee,  Annie S Chen,  Fahim Tajwar,  Ananya Ku-                                 Vo,  Marc  Szafraniec,  Vasil  Khalidov,  Pierre  Fernandez,
+      mar, Huaxiu Yao, Percy Liang, and Chelsea Finn.  Surgical                           Daniel Haziza, Francisco Massa, Alaaeldin El-Nouby, et al.
+      fine-tuning improves adaptation to distribution shifts.arXiv                        Dinov2: Learningrobustvisualfeatureswithoutsupervision.
+      preprint arXiv:2210.11466, 2022.2                                                   arXiv preprint arXiv:2304.07193, 2023.7
+[29]Li Lin, Xinan He, Yan Ju, Xin Wang, Feng Ding, and Shu                          [41]NamukParkandSongkukKim. Howdovisiontransformers
+      Hu. Preservingfairnessgeneralizationindeepfakedetection.                            work?arXiv preprint arXiv:2202.06709, 2022.2
+      InProceedings of the IEEE/CVF Conference on Computer                          [42]Namuk Park, Wonjae Kim, Byeongho Heo, Taekyung Kim,
+      Vision and Pattern Recognition, pages 16815–16825, 2024.                            andSangdooYun.Whatdoself-supervisedvisiontransform-
+      1                                                                                   ers learn?arXiv preprint arXiv:2305.00729, 2023.1,2,3,
+[30]Huan Liu, Zichang Tan, Chuangchuang Tan, Yunchao Wei,                                 13
+      Jingdong Wang,  and Yao Zhao.    Forgery-aware adaptive                       [43]Dustin   Podell,    Zion   English,    Kyle   Lacey,    Andreas
+      transformer for generalizable synthetic image detection.  In                        Blattmann, Tim Dockhorn, Jonas M¨uller, Joe Penna, and
+      Proceedings of the IEEE/CVF Conference on Computer Vi-                              Robin Rombach.   Sdxl:  Improving latent diffusion mod-
+      sion and Pattern Recognition, pages 10770–10780, 2024.1,                            els  for  high-resolution  image  synthesis.arXiv  preprint
+      2                                                                                   arXiv:2307.01952, 2023.1
+[31]Zhengzhe Liu, Xiaojuan Qi, and Philip HS Torr. Global tex-
+      tureenhancementforfakefacedetectioninthewild. InPro-                          [44]Alec  Radford,  Jong  Wook  Kim,  Chris  Hallacy,  Aditya
+      ceedings of the IEEE/CVF conference on computer vision                              Ramesh,  Gabriel  Goh,  Sandhini  Agarwal,  Girish  Sastry,
+      and pattern recognition, pages 8060–8069, 2020.1                                    AmandaAskell,PamelaMishkin,JackClark,etal. Learning
+[32]Zhuang Liu, Hanzi Mao, Chao-Yuan Wu, Christoph Feicht-                                transferable visual models from natural language supervi-
+      enhofer, Trevor Darrell, and Saining Xie. A convnet for the                         sion. InInternationalconferenceonmachinelearning,pages
+      2020s. InProceedingsoftheIEEE/CVFconferenceoncom-                                   8748–8763. PmLR, 2021.1
+      puter vision and pattern recognition, pages 11976–11986,                      [45]Maithra  Raghu,  Thomas  Unterthiner,  Simon  Kornblith,
+      2022.6                                                                              Chiyuan Zhang, and Alexey Dosovitskiy.  Do vision trans-
+[33]ZihanLiu,HanyiWang,YaoyuKang,andShilinWang.Mix-                                       formers see like convolutional neural networks?Advances
+      ture of low-rank experts for transferable ai-generated image                        in neural information processing systems, 34:12116–12128,
+      detection.arXiv preprint arXiv:2404.04883, 2024.1,2                                 2021.1,2,3,13
+[34]Yunpeng Luo, Junlong Du, Ke Yan, and Shouhong Ding.                             [46]Aditya Ramesh, Mikhail Pavlov, Gabriel Goh, Scott Gray,
+      Lareˆ  2:   Latent  reconstruction  error  based  method  for                       ChelseaVoss,AlecRadford,MarkChen,andIlyaSutskever.
+
+
+                                                                              10
+
+PAGE 11
+      Zero-shot text-to-image generation. InInternational confer-                    [59]JasonYosinski,JeffClune,YoshuaBengio,andHodLipson.
+      ence on machine learning, pages 8821–8831. Pmlr, 2021.1                              How transferable are features in deep neural networks?Ad-
+[47]Jonas Ricker, Denis Lukovnikov, and Asja Fischer.   Aer-                               vances in neural information processing systems, 27, 2014.
+      oblade:  Training-free detection of latent diffusion images                          2,12
+      using autoencoder reconstruction error.   InProceedings of                     [60]Fisher Yu, Ari Seff, Yinda Zhang, Shuran Song, Thomas
+      the IEEE/CVF Conference on Computer Vision and Pattern                               Funkhouser, and Jianxiong Xiao.  Lsun:  Construction of a
+      Recognition, pages 9130–9140, 2024.2                                                 large-scale image dataset using deep learning with humans
+[48]Robin  Rombach,  Andreas  Blattmann,  Dominik  Lorenz,                                 in the loop.arXiv preprint arXiv:1506.03365, 2015.5
+      Patrick Esser, and Bj¨orn Ommer.   High-resolution image                       [61]Sangdoo Yun, Dongyoon Han, Seong Joon Oh, Sanghyuk
+      synthesis with latent diffusion models.   InProceedings of                           Chun, Junsuk Choe, and Youngjoon Yoo.  Cutmix:  Regu-
+      the IEEE/CVF conference on computer vision and pattern                               larization strategy to train strong classifiers with localizable
+      recognition, pages 10684–10695, 2022.1,7                                             features. InProceedingsoftheIEEE/CVFinternationalcon-
+[49]Sergey Sinitsa and Ohad Fried. Deep image fingerprint: To-                             ference on computer vision, pages 6023–6032, 2019.12
+      wards low budget synthetic image detection and model lin-                      [62]Xiaohua Zhai, Basil Mustafa, Alexander Kolesnikov, and
+      eageanalysis. InProceedingsoftheIEEE/CVFWinterCon-                                   Lucas Beyer. Sigmoid loss for language image pre-training.
+      ference on Applications of Computer Vision, pages 4067–                              InProceedingsoftheIEEE/CVFinternationalconferenceon
+      4076, 2024.1,2,3                                                                     computer vision, pages 11975–11986, 2023.7
+[50]Jascha Sohl-Dickstein, Eric Weiss, Niru Maheswaranathan,                         [63]Nan  Zhong,  Yiran  Xu,  Sheng  Li,  Zhenxing  Qian,  and
+      and  Surya  Ganguli.     Deep  unsupervised  learning  using                         Xinpeng Zhang.   Patchcraft:  Exploring texture patch for
+      nonequilibrium thermodynamics.   InInternational confer-                             efficient  ai-generated  image  detection.arXiv  preprint
+      ence on machine learning, pages 2256–2265. pmlr, 2015.1                              arXiv:2311.12397, 2023.2
+[51]Chuangchuang Tan, Yao Zhao, Shikui Wei, Guanghua Gu,                             [64]MingjianZhu,HantingChen,QiangyuYan,XudongHuang,
+      and Yunchao Wei. Learning on gradients: Generalized arti-                            Guanyu Lin, Wei Li, Zhijun Tu, Hailin Hu, Jie Hu, and
+      facts representation for gan-generated images detection.  In                         YunheWang. Genimage: Amillion-scalebenchmarkforde-
+      Proceedings of the IEEE/CVF Conference on Computer Vi-                               tecting ai-generated image.Advances in Neural Information
+      sion and Pattern Recognition, pages 12105–12114, 2023.1,                             Processing Systems, 36:77771–77782, 2023.2,3,5
+      3,5,6
+[52]Chuangchuang Tan, Yao Zhao, Shikui Wei, Guanghua Gu,
+      PingLiu,andYunchaoWei. Rethinkingtheup-samplingop-
+      erations in cnn-based generative network for generalizable
+      deepfake detection.  InProceedings of the IEEE/CVF Con-
+      ference on Computer Vision and Pattern Recognition, pages
+      28130–28139, 2024.1,3,5,6
+[53]Arnas Uselis and Seong Joon Oh. Intermediate layer classi-
+      fiers for ood generalization. InThe Thirteenth International
+      Conference on Learning Representations.2
+[54]Laurens Van der Maaten and Geoffrey Hinton.  Visualizing
+      data using t-sne.Journal of machine learning research, 9
+      (11), 2008.13
+[55]Sheng-Yu  Wang,  Oliver  Wang,  Richard  Zhang,  Andrew
+      Owens,  and Alexei A Efros.    Cnn-generated images are
+      surprisingly  easy  to  spot...  for  now.    InProceedings  of
+      the IEEE/CVF conference on computer vision and pattern
+      recognition, pages 8695–8704, 2020.1,2,5,6
+[56]Zhendong  Wang,  Jianmin  Bao,  Wengang  Zhou,  Weilun
+      Wang, Hezhen Hu, Hong Chen, and Houqiang Li.  Dire for
+      diffusion-generated image detection.  InProceedings of the
+      IEEE/CVF International Conference on Computer Vision,
+      pages 22445–22455, 2023.1,2,3,5,6
+[57]Zhenting Wang, Vikash Sehwag, Chen Chen, Lingjuan Lyu,
+      Dimitris N Metaxas, and Shiqing Ma.  How to trace latent
+      generative model generated images without artificial water-
+      mark?arXiv preprint arXiv:2405.13360, 2024.2
+[58]Zhiyuan Yan, Yong Zhang, Yanbo Fan, and Baoyuan Wu.
+      Ucf:  Uncovering common features for generalizable deep-
+      fake detection.   InProceedings of the IEEE/CVF Interna-
+      tionalConferenceonComputerVision,pages22412–22423,
+      2023.1
+
+
+                                                                               11
+
+PAGE 12
+Supplementary Material                                                         sequently, for the task of fake image detection, it may be
+A. More Results on Prior Analysis                                              more advantageous to utilize features from the earlier lay-
+                                                                               ers, which are less sensitive to high-level semantics.
+A.1. Impact of high-level semantics on each layer                              A.2. Performance of layer-wise classifiers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 8.Impact of semantic transformation on each layer.
+We analyze how semantic modifications affect fake image detec-                                      (a) GenImage (CLIP:ViT-B/16)
+tion by applying CutMix and Jigsaw transformations. In CutMix,
+realimages aremixed withrealimages andfake imageswithfake
+images, keeping the true labels unchanged.  To understand how
+different network layers respond to high-level semantics, we train
+afakeimagedetectorusingfeaturesfromindividuallayersandre-
+port their Average Precision. The results show that higher layers
+aremoreaffectedbysemanticchanges,leadingtolowerdetection
+performance. Meanwhile,mid-layerfeaturesachievebetterdetec-
+tionaccuracythanbothearlyandhigh-levelfeatures,makingthem
+more effective for distinguishing fake images.
+
+   In the experiment conducted to investigate the relation-
+ship between layer-specific features and high-level seman-                                         (b) ForenSynths (CLIP:ViT-L/14)
+tics, we aimed to test the degree to which each layer’s fea-
+tures are influenced by semantic information.  To achieve                      Figure 9.Layer-wise results on different settings.We plot the
+this, we modified the semantics of the original images and                     detection performance of layer-wise classifiers trained on diverse
+assessed the impact on the model’s performance.  Specifi-                      settings, in average precision. Results indicate that the earlier lay-
+cally, we applied CutMix [61] and Jigsaw transformations,                      ers compared to final layers generally achieves better detection
+asillustratedinFigure8. Sincefakeimagedetectionshould                          paerformance.
+ideally be invariant to changes in semantics,  the model
+shouldstillclassifyimagesasfake,evenwhentheirseman-                                In the main paper, we primarily investigated CLIP:ViT-
+tics are altered through transformations such as shuffling                     L/14, which was the backbone used by Ojha et al. [39].
+(Jigsaw) or mixing (CutMix).                                                   Given that CLIP:ViT-L/14 is a large model with 24 trans-
+   The experimental results demonstrate that, while most                       former layers, we grouped every three consecutive layers
+layers maintain consistent performance, later layers exhibit                   into one. To assess whether the findings from the main pa-
+a noticeable decline in accuracy. This suggests that the lay-                  perarebroadlyapplicable,wereplicatedtheexperimentus-
+ers closer to the final output are more sensitive to seman-                    ing every layer of CLIP:ViT-B/16 and a different dataset.
+tic information, while earlier layers are less influenced by                   The results are presented in Figure9.
+it. This finding aligns with established observations in the                       Consistent with the findings in the main paper using
+transfer learning literature [59], which indicate that earlier                 CLIP:ViT-L/14,weobservedthatthehighestdetectionper-
+layers of a pre-trained network capture more general fea-                      formanceistypicallyachievedinthelayersprecedingthefi-
+tures, whereas later layers become increasingly specialized                    nallayer. ThistrendalsoholdsfortheForenSynthsdataset,
+to the specific task of pre-training.  Based on this frame-                    where features from the early to mid-layers contribute to
+work, it is reasonable to infer that the later layers retain                   higher detection rates compared to those from the final
+semantic information learned during CLIP training.  Con-                       layer.
+
+                                                                          12
+
+PAGE 13
+                                                                              Figure 11.Attention distance of CLIP:ViT-L/14.The atten-
+Figure 10.Overlap of misclassified examples in CLIP-ViT-                      tiondistancesfor500imagesfromForenSynthsaremeasuredand
+Base.To  analyze  the  decision-making  process  of  classifiers              averaged for plotting. CLIP:ViT-L/14 is used as the backbone, re-
+trained on features from different layers, we measure the propor-             sulting in 24 data points.
+tion of commonly misclassified samples. The results indicate that
+theoverlapinmisclassifiedsamplesacrosslayersisrelativelylow,                  tween BigGAN-generated images and the diffusion model-
+suggesting that each layer captures distinct aspects of the input             generated images in the test set, which predominantly con-
+data.                                                                         sists of diffusion model samples. This demonstrates the su-
+
+                                                                              perior generalization capability of our approach.
+A.3. Investigating layer-wise decisions                                       C. Additional Analyses
+In the main paper, we present results from the CLIP:ViT-                      C.1. Attention distance of CLIP-ViT
+L/14 model. Here, we replicate the experiment to show the
+layer-wise overlap for CLIP:ViT-B/16.  The results in the                     To examine the local and global receptive fields of each
+main paper are derived from the GenImage-Glide dataset,                       transformer layer, we calculate the attention distance, as
+whereas in this supplementary section, we provide results                     proposedinpreviousworks[42,45]. Specifically,theatten-
+based on a different dataset, GenImage-Midjourney.                            tion distance is determined by the pixel distance, weighted
+   The findings reveal that the overlap between the clas-                     bythecorrespondingattentionscores. AsillustratedinFig-
+sifiers at each layer varies across layers.   By examining                    ure11,theattentiondistanceincreaseswiththelayerindex.
+each layer individually, we observe more overlap than in                      This observation indicates that lower layers focus primar-
+the main figure. However, despite this increased overlap, it                  ilyon localregions, mid-levellayerscapture bothlocal and
+remains relatively low overall, suggesting that each layer’s                  global information, and higher layers predominantly attend
+classifier makes distinct decisions.                                          to global contexts.
+   In conclusion, our analysis demonstrates that the fea-                     C.2. t-SNE plot of each layer
+tures extracted from each layer contribute differently to the                 Wepresentthet-SNE[54]plotsofeachlayerofCLIP:ViT-
+overallmodel’soutput. Thisvariabilityunderscorestheim-                        L/14 in Figure12. As illustrated in the figure, the real and
+portance of our Layer-wise Attention Distillation (LAD)                       fake images are more distinguishable in the early and mid-
+method.                                                                       dle layers compared to the layers at the extremes. Specifi-
+B. More Results                                                               cally, in the initial layers (1 to 5), the real and fake images
+We  train  our  AI-generated  image  detector  using  the                     arelargelyindistinguishable,whereasinthefinallayers(21
+GenImage-ADM  dataset,  which  is  the  first  generative                     to24),thefeaturesbecomemoreseparable,thoughstillnot
+model in the GenImage collection.  We compare the per-                        as distinct as in the middle layers. This observation is con-
+formanceofourmodelwithbaselineapproaches,aswellas                             sistentwithandsupportstheresultsofourlayer-wisedetec-
+with models trained on the subsequent dataset in alphabet-                    tion performance discussed in the previous analysis of the
+ical order, GenImage-BigGAN (see Table4). As shown in                         main paper.
+the table, our LAD model achieves the best performance,                       C.3. Effect of number of linear layers
+surpassing the second-best model by over 8% in average                        Strictly speaking,  UnivFD employs a single-layer MLP,
+precision. This improvement is more pronounced than the                       whereas  our  approach  utilizes a  two-layer  MLP  with  a
+results obtained using the GenImage-ADM dataset, as re-                       GELU activation function [17] between the layers.  Since
+ported in the main paper’s table.  We hypothesize that this                   UnivFD relies solely on a single linear layer, all results re-
+enhanced performance is due to the greater differences be-                    ported in the main paper are based on its original imple-
+
+
+                                                                         13
+
+PAGE 14
+                                                     ADM    BigGAN    GLIDE    Midjourney    SDv1.4    SDv1.5    VQDM    Wukong                                                     Mean
+                         CNNDetection         61.9          100.0         93.8                54.1         47.8         47.7          64.9           40.6                             63.1
+                         PatchFor                   81.9          100.0         98.0                78.8         55.2         55.8          66.2           59.2                       74.6
+                         Lgrad                        61.0          100.0         91.3                62.2         48.8         49.0          58.0           43.4                     64.5
+                         UnivFD                    82.5            99.9         54.3                75.7         82.3         82.3          96.5           83.5                       82.1
+                         DIRE                        59.5          100.0         95.0                60.0         49.1         49.3          54.3           45.5                      64.6
+                         NPR                          59.8          100.0         98.1                61.6         55.5         55.9          64.3           46.0                     67.7
+                         DRCT (Conv-B)       55.7          100.0         67.6                56.5         49.9         50.0          58.6           42.0                              60.0
+                         DRCT (CLIP-L)       90.6          100.0         94.9                65.7         72.6         71.5          92.5           67.7                              81.4
+                         LAD (Ours)                    78.4             99.9           95.5                 76.1           94.0           94.5            97.5            90.7        90.1
+
+                  Table 4.Evaluation on GenImage-BigGAN.We present the detection performance of baseline methods and our approach in terms of
+                  averageprecision(AP).EachdetectoristrainedontheGenImage-BigGANtrainingset,whichfollowsGenImage-ADMinthealphabetical
+                  sequence of generative models. The results include average precision and mean average precision (mAP). Our LAD method achieves the
+                  highest detection performance, while UnivFD yields the second-best result.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  Figure 12.Layer-wise t-SNE plot.We present the t-SNE visualization of features extracted from each layer of the ForenSynths BigGAN
+                  model, using a test set of 600 images (300 real and 300 fake).  The results suggest that the middle layers exhibit a stronger ability to
+                  distinguish between real and fake images compared to the early and final layers.
+
+
+
+
+
+
+
+
+                  Table5.EvaluationofUnivFDin2-layerMLP.Weimplement2-layerclassificationheadtoUnivFDinordertoexaminetheeffectiveness
+                  of 2-layer MLP on its performance. The results are negligability different with a little performance increase. Still, our LAD noticeably
+                  outperforms UnivFD, demonstrating the effectiveness of layer aggregation strategy of our approach. Note that all the other values except
+                  the second row is same to GenImage-ADM table in the main paper.
+
+
+
+
+                                                                                                         14
+
+
+
+Method                         ADM         BigGAN        GLIDE      Midjourney      SDv1.4        SDv1.5        VQDM        Wukong                        Mean
+                          ACC    AP    ACC    AP    ACC    AP    ACC    AP    ACC    AP    ACC    AP    ACC    AP    ACC    AP                         ACC    AP
+UnivFD                     90.6    97.1    91.7   99.1    79.0   88.2    61.8   69.5    80.3   89.2    79.5   88.4    90.8   98.5    84.8   93.3        82.3   90.4
+UnivFD(2-layerMLP)    94.8    99.3    95.4   99.6    87.1   94.8    59.3   69.8    75.9   87.6    74.4   86.6    92.9   98.4    80.5   91.3             82.6   90.9
+Ours                      99.3    100.0    83.3    97.9    91.1   99.0    76.3   95.2     88.2   98.5    87.0   98.3    93.5    99.2    86.5   98.1     88.2   98.2
+
+PAGE 15
+mentation. This architectural difference raises the question
+ofwhethertheobservedperformancegapisduetotheaddi-
+tionalnon-linearityinourmodel. Toinvestigatethis,were-
+implemented UnivFD using a two-layer MLP with GELU
+andpresenttheresultsinTable5. Asshowninthetable,the
+performance difference is negligible, indicating that the su-
+periorperformanceofourLADapproachisnotattributable
+to the two-layer MLP architecture but rather to the effec-
+tivenessofourmethodinfullyleveragingthefeaturesfrom
+different layers of pre-trained CLIP-ViT.
+C.4. Consistency analysis
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 13.Consistency in training.Each model is trained three
+times,andwereportthemeanandstandarddeviationofthecoeffi-
+cientsforeachlayer. Theresultsdemonstrateconsistentlayer-wise
+utilization across the different training sets for the detectors.
+
+   We assess the consistency of our LAD model by train-
+ing it three times with different random seeds and plotting
+themeanandstandarddeviationofthecoefficientsforeach
+layer. It is important to note that this analysis does not di-
+rectly reflect the importance of each layer, as it includes
+biases such as the mean or norm of the features for each
+layer.   However, this evaluation demonstrates the consis-
+tency of our LAD model, illustrating that the network ef-
+fectively learns to utilize all features from each layer, even
+when trained with different random initializations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                         15

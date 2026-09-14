@@ -1,0 +1,881 @@
+PAGE 1
+ExploringtheCollaborativeAdvantageofLow-levelInformationonGeneralizable
+                                           AI-Generated Image Detection
+
+
+                              Ziyin Zhou1    Ke Sun1    Zhongxi Chen1    Xianming Lin1
+                           Yunpeng Luo2    Ke Yan2    Shouhong Ding2    Xiaoshuai Sun1
+                 1 Key Laboratory of Multimedia Trusted Perception and Efficient Computing,
+                                      Ministry of Education of China, Xiamen University
+                                                        2 Tencent YouTu Lab
+
+
+                           Abstract                                      cant progress, raising concerns about misuse, privacy, and
+                                                                         copyright issues. To address these concerns, universal AI-
+Existingstate-of-the-artAI-Generatedimagedetectionmeth-                  generated image detection methods are essential. A major
+ods mostly consider extracting low-level information from                challengefacedbyexistingdetectionmethodsishowtoef-
+RGB  images  to  help  improve  the  generalization  of  AI-             fectivelygeneralizetounseenAI-GeneratedImagesinreal-
+Generatedimagedetection,suchasnoisepatterns. However,                    worldscenarios. Existingmethods[36,54],whichprimarily
+thesemethodsoftenconsideronlyasingletypeoflow-level                      useRGBimages,oftenfocusoncontentinformation,leading
+information, which may lead to suboptimal generalization.                tooverfittingonAI-generatedfakeimagesinthetrainingset
+Through empirical analysis, we have discovered a key in-                 and asignificant dropin generalizationaccuracyon unseen
+sight: differentlow-levelinformationoftenexhibitsgeneral-                AI-generated images.
+izationcapabilities fordifferent typesofforgeries. Further-                  Recent studies have demonstrated that incorporating low-
+more,wefound thatsimplefusionstrategiesareinsufficient                   level information, which refers to fundamental signal prop-
+toleveragethedetectionadvantagesofeachlow-leveland                       ertieslikenoisepatternsandsubtleartifactsinherentinim-
+high-level information for various forgery types. Therefore,             ages [58, 59], can significantly enhance the generalization
+weproposetheAdaptiveLow-levelExpertsInjection(ALEI)                      of detection models [18, 19, 26, 48, 49, 55]. For example,
+framework. OurapproachintroducesLoraExperts,enabling                     LNP [26] and NPR [48] achieve state-of-the-art results by
+the backbone network, which is trained with high-level se-               leveraging low-level information. LNP extracts noise pat-
+mantic RGB images, to accept and learn knowledge from                    terns from spatial images using a well-trained denoising
+different low-level information. We utilize a cross-attention            model, while NPR focuses on artifacts from upsampling
+method to adaptively fuse these features at intermediate                 operations in generative models. These methods study and
+layers.  To prevent the backbone network from losing the                 designspecifictypesoflow-levelinformationfordetection.
+modelingcapabilitiesofdifferentlow-levelfeaturesduring                   However,thediversityofAIGCtechnologiesandthevariety
+the later stages of modeling, we developed a Low-level In-               oflow-levelfeaturesraisetwounresolvedbutimportantques-
+formation Adapter that interacts with the features extracted             tions: 1. How do different types of low-level information
+by the backbone network.  Finally, we propose Dynamic                    contribute to the detection of various AIGC forgeries? 2.
+FeatureSelection,whichdynamicallyselectsthemostsuit-                     Is simply incorporating low-level features into existing
+able features for detecting the current image to maximize                models sufficient for optimal detection results?
+generalizationdetectioncapability. Extensiveexperiments
+demonstrate that our method, finetuned on only four cate-                    To address these question, we conduct two sets of ana-
+gories of mainstream ProGAN data, performs excellently                   lytical experiments. First, we train detection models using
+and achieves state-of-the-art results on multiple datasets               6 widely used low-level features and evaluate their perfor-
+containing unseen GAN and Diffusion methods.                             manceseparatelyon16distincttypesofAI-Generatedmeth-
+                                                                         ods.  We then explore the impact of combining multiple
+                                                                         low-levelinformationsourcesbyexaminingbothearlyand
+1. Introduction                                                          late fusion strategies on these images. The results of these
+                                                                         experiments are presented in Fig.1. Our analysis of these
+Advanced AIGC technologies, such as GANs [13, 21–23]                     validation experiments yields two key insights:  (a) The
+and Diffusion models [8, 14, 35, 42], have seen signifi-                 effectiveness of different low-level information varies sig-
+
+PAGE 2
+Figure1. Radarchartoftheaverage accuracy onvariousforgerytestdatasetsusing(a) differentlow-levelfeaturesand(b)differentfusion
+strategies.
+nificantly across various types of AIGC image forgeries.                     mationAdaptermaintainsandeffectivelyfuseslow-level
+(b)Simplefusionmechanismsproveinadequateinfully                              features during the forward pass of the visual backbone,
+leveragingthese low-levelfeatures foroptimaldetection                        while dynamic feature selection chooses the appropriate
+performance. The detailed analysis of these two insights                     detection features for the current AIGC forgery types.
+is presented in Sec.3, with comprehensive experimental                     • Experimentalresultsdemonstratethatourmethodachieves
+resultsprovidedintheAppendix. Thus,itisimportanttode-                        competitive performance with state-of-the-art methods
+signmethodsforintegratinglow-levelfeaturesintodetection                      acrossmultipleAI-generatedimagedetection benchmark
+models effectively.                                                          datasets.
+   Inthispaper,weproposetheAdaptiveLow-levelExperts
+Injection(ALEI)framework,whichadaptivelyincorporates                       2. Related Work
+diverse low-level information into the visual backbone to                  2.1. AI-Generated Image Detection
+effectively detect a wide range of AI-Generated image forg-
+eries. Specifically, we train an expert for each type of low-              AI-generated image detection methods can be broadly cat-
+level information using LoRA [17] and develop a cross-                     egorized into high-level-information based and low-level-
+attention layer to facilitate feature fusion.  To address the              information based mehtods.
+potential loss of low-level features during deep transformer               High-level Based Methods. Considering that images can
+modeling, we introduce a low-level information adapter.                    provide semantic high-level features through subsequent
+This adapter extracts low-level features through two con-                  modelingbyconvolutionalnetworks[28],werefertoRGB
+volutionallayersandmaintainsongoinginteractionwiththe                      imagesas high-level information. Earlyresearches utilize
+backbone’sfeaturesviaourcustom-designedinjectorandex-                      images as input and trains binary classification models for
+tractor. Fortheclassification,weimplementdynamicfeature                    GAN-Generated image detection.  For instance, Wang et
+selection,which canadaptivelychoosethe relevant features                   al.[54]usesProGANimagesandrealimagesasthetraining
+beneficial for detecting the unseen AI-generated images.                   set,achieving promisingresultsacross multipleGAN meth-
+   The main contributions can be summarized as follows:                    ods. Rossleretal.[43]trains anXceptionmodel toidentify
+• We offer key insights into the effectiveness of various                  deepfake facial images, while Chai et al. [3] focuses on de-
+  low-level features for detectingAI-generated images. Our                 tectingrecognizable regionswithin images. More recently,
+  findingsdemonstratethatdifferenttypesoflow-levelinfor-                   Ojha et al. [36] achieves good generalization to diffusion
+  mationgeneralizedifferentlyacrossvariousAIGCforgery                      models by finetuning the fully connected layers of a CLIP’s
+  types, and simple fusion strategies are inadequate for                   ViT-Lbackbone. Buildinguponthisapproach,Liuetal.[27]
+  achieving optimal detection performance.                                 further enhances the detection method’s generalization by
+• We propose the Adaptive Low-level Experts Injection                      consideringCLIP’stextencodingembeddingsandintroduc-
+  (ALEI)framework,anovelapproachthatadaptivelyinte-                        ing frequency-related adapters into the image encoder.
+  gratesdiverselow-levelinformationintothevisualback-                      Low-level Based Methods.   Following the descriptions
+  bone. OurframeworkaddsaLoRAexpertforeachtypeof                           in prior works [29, 51],  we refer to the noise patterns
+  low-level information and employs a cross-attention layer                extracted  from  RGB  images  as  low-level  information.
+  for fusion at intermediate layers.  The Low-level Infor-                 Since directly using high-level RGB images as the train-
+
+PAGE 3
+ingset[54]oftenresults inlimitedgeneralizationtounseen                     3.1. Evaluation of Individual Low-level Features
+AI-Generated images.  Some studies attempt to find uni-                    Experimental Setup:  We investigate 6 types of low-level
+versal low-level forgery information based on high-level                   information from various domains: SRM [12], DnCNN [6],
+images [18, 26, 32, 48, 49, 55, 61]. Luo et al. [32] utilizes              NPR [48], LNP [26], Bayar [1], and NoisePrint [15]. Fol-
+SRM filters [12] to extract high-frequency features, enhanc-               lowing the standard paradigmin AI-Generated image detec-
+ing the generalization of face forgery detection.  Jeong et                tion [36, 54], we train our model on a dataset comprising
+al. [18] amplifies artifacts using high-frequency filters to               only ProGAN and real images, and subsequently test on
+achievebetterdetectionperformance. Liuetal.[26]extracts                    other AI-Generated images using the AIGCDetectBench-
+noise from images using a denoising network and Zhong                      mark [61], which includes 16 AI-Generated methods. We
+et al. [61] uses this noise for detection baseline.  Tan et                employ the visual backbone of CLIP [40] as the backbone,
+al. [49] uses gradient maps generated from discriminator                   applying LoRA [17] to train the QKV matrix weights in the
+pretrained on StyleGAN for detection.  Zhong et al. [61]                   attention layers. The classification head is optimizedusing
+trains models based on arrangements of high-frequency fea-                 binary cross-entropy loss.
+turesextractedbySRMfiltersinbothadversarialandbenign                       Results and Analysis:  The detailed results are presented
+texture regions. Wang et al. [55] utilizes an ADM model                    in Fig.1(a) and in the Appendix.   NPR, DnCNN, and
+forimagereconstructionand usethedifferencebetweenthe                       NoisePrint demonstrate strong generalization in detecting
+reconstructedandoriginalimages(DIRE) forclassification.                    unseen AI-generated images. Image-based methods achieve
+Tanetal.[48]proposesNPRasthelow-levelinformationof                         superiorperformanceonGANdatasetsbutshowelimitations
+the upsampling processfor detection, achieving impressive                  onDiffusion-baseddatasets. Differentlow-levelinformation
+generalization across multiple forgery types.                              variesintheirgeneralizationacrossdifferentAIGCmethods:
+2.2. Low-Level Fusion in Detection tasks.                                  NPRexcelledindetectingmainstreamGANmethods,partic-
+Low-level information plays a crucial role in tasks that are               ularly StyleGAN, while DnCNN and NoisePrint performed
+difficult for the human eye to perceive.  Therefore, many                  better on diffusion-based methods.  Specifically, DnCNN
+studiesexplorehowincorporatinglow-levelinformationas                       excels at detecting DDPM-based generation methods such
+input canenhance theperformance of methodsthat useonly                     asADMandGlide,whereasNoisePrintdemonstratessensi-
+high-level information. Wang et al. [53] guides the detec-                 tivity to LDM-based methods, such as Stable Diffusion.
+tion model to detect camouflaged objects by incorporating                  Conclusion: Experiments lead us to the following insight:
+depthmapsintothedetectionnetworkbasedonRGBimages.                          The effectiveness of different low-level information varies
+Guillaroetal. [15]trainsa noisenetworkcalledNoiseprint                     significantly across various types of AIGC image forgeries.
+usingcontrastivelearninglosstodetectimagemanipulation                      3.2. Evaluation of Simple Fusion Strategies
+traces,andthen integratethetracesandimages intoatrans-                     ExperimentalSetup: Toexplorethepotentialofcombining
+formernetworkforclassificationandsegmentation. Triaridis                   multiple low-level information types, we use two simple
+et al. [51] employs multiple low-level features for adaptive               fusionstrategies: (1). EarlyFusion: Afterembeddingeach
+earlyfusionintheinputmoduleofthetransformer,achieving                      input using learnable1×1 convolutional layers in the early
+state-of-the-art results on multiple datasets. Liu et al. [29]             stagesofthebackbone,asimpleadditionoperationfusesthe
+develops a universal framework for detecting various low-                  inputs. (2). Late Fusion: After extracting features for each
+levelstructures.[32,47]introduceshigh-frequencyfeatures                    inputwiththebackbone,weconcatenatethefeaturevectors
+using SRM [12] through designed fusion modules into the                    anduse alearnableclassificationhead fortraining. Both of
+high-level detection branch, applied to deepfake detection.                the above backbones are trained using LoRA [17].
+[34]combinesRGBandfrequencydomaininformationus-                            ResultsandAnalysis: TheresultsarepresentedinFig.1(b)
+ing a two-stream network to detect processed face images                   andintheAppendix. EarlyFusionappearedtoconfusesome
+andvideos. However,intheAI-Generatedimagedetection,                        keyfeatures,leadingtoalossofgeneralization. LateFusion,
+although many methods emerge using low-levelinformation                    whileshowingstrongresults,stillsufferedfrominsufficient
+instead of high-level images for generalization, detection                 utilization,failing tomatch thegeneralization ofindividual
+methods that combine multiple low-level information and                    low-levelinformation typesfor certain AI-generatedimages.
+high-level information remain unexplored.                                  Conclusion:  Simple fusion methods prove inadequate in
+3. Analysis of Low-level Information                                       fully leveraging these low-level features for optimal detec-
+                                                                           tion performance across various AIGC forgery types.
+Tofurtherinvestigatethephenomenahighlightedintheintro-                     Basedonthesefindings,weproposetheAdaptiveLow-level
+duction,weconductedtwosetsofexperimentstoanalyzethe                        ExpertsInjection(ALEI)framework. Giventhesuperiorper-
+effectivenessofvariouslow-levelfeaturesandtheirfusion                      formanceofNPR,DnCNN,andNoisePrint,andfollowing
+strategies in AI-Generated image detection.                                the principle of Occam’s Razor, we conduct further exper-
+
+PAGE 4
+iments using only these 3 low-level information. The inte-                 through an additional plug-and-play module.
+gration of additional low-level information is also feasible                   Each expert layer consists of our designed Multi-Lora-
+withinourframework,whichwediscussfurtherinAppendix.                        Expert Layer in Fig.2(a), Self-Attention, residual connec-
+The method will be presented in subsequent sections.                       tions, Layer Normalization and a FFN layer. In the Multi-
+                                                                           Lora-Expert Layer at layer i, we employ Lora to process
+4. Methodology                                                             features specific to each input by designing different Lora
+4.1. Overview                                                              experts. The computation is as follows:
+Given an input imageI ∈RH×W×3, whereH andW de-                              ˆF(j)i    =Wqkv·F(j)i   +αr∆Wj·F(j)i    =Wqkv·F(j)i   +αrBjAj·F(j)i
+note the heightand width respectively,we extractmultiple                                                                                     (1)
+low-level informationC ={C1,C2,...,CM}, where each                         Here,  ˆF(j)i    represents the output of F(j)i    after processing
+Ci ∈RH×W×3,i = 1,2,3,...,m. Following UniFD [36],                          by thejth Lora expert and we setr = 4 andα = 8,Wqkv
+our approach uses the CLIP’s visual backbone(ViT-L/14)                     denotes the matrix weights of the qkv in the attention layer
+in Fig.2.  To enable the model, pretrained on high-level                   and∆Wj =BjAj isthetrainableparameterofthejth Lora
+images, to accept various low-level informationinputs and                  expert. Next, ˆF(j)i    serves as the input for the self-attention
+ensure effective integration, while avoiding insufficientfu-               Q,K,V inthe originalCLIP, andthe outputafter theFFN
+sioneitherintheearlyorlatestages,wetransformtheorigi-                      layer is denoted as     F(j)i   . Noting that the features of each
+nal transformer layer into a Cross-Low-level Expert LoRA                   informationarecomputedinparallelwithoutinteraction,we
+Transformer Layer, which will be introduced in Sec.4.2.                    employa cross-attentionlayer inthe originaloutput section
+Furthermore,topreventthelossoflow-levelinputcharacter-                     to facilitateinteraction between modalities, ascomputed by:
+istics in deep transformer modeling, we employ a low-level
+informationinteractionadapter. Theadapterfurtherinjection                        Fi = Concatnate[F(j)i  , 0≤j≤C]
+low-levelinformationintotheViTforenhancedinteraction,                          Fi+1 =   Fi+βiMHA(LN(Fi),LN(Fi),LN(Fi))    (2)
+asdiscussedinSec.4.3. Finally,toselectsuitablefeatures
+for different types of forgeries, we propose the Dynamic                   Here,LN(·)representsLayerNorm,andtheattentionlayer
+Feature Selection method to choose the most appropriate                    MHA(·) is suggested to use a multi-head attention mecha-
+low-level features for the current type of forgery, which will             nism with the number of heads set to 4. Furthermore, we
+be detailed in Sec.4.4.  The overall training phase of our                 apply a learnable vectorβi∈R(1+L)×D to balance the out-
+framework will be presented in Sec.4.5.                                    put of the attention layer with the input features, initially set
+4.2. Cross-Low-level Transformer Layer                                     to0. Thisinitializationstrategyensuresthattheuniquefea-
+                                                                           turesofeachmodalitydonotundergodrasticchangesdueto
+In our approach, we avoid merging features using straight-                 theinjectionoffeaturesfromothermodalitiesandadaptively
+forward fusion techniques.  Instead, we strive to preserve                 integratesfeaturesrelatedtoforgerytypescontainedinother
+the unique characteristics of each low-level information                   modalities.
+while capturing the interactions and influences between                    4.3. Low-level Information Interaction Adapter
+them.  For the M + 1 different low-level inputs with the
+high-levelimageinputI denotedasC0 andadded totheset                        Many work [38, 57, 60] suggests that the deeper layers of
+C,Cj,(j = 0,1,2,...,M),thevisualencoderinitiallytrans-                     transformersmight leadtothe lossoflow-level information,
+formstheinputtensorsofsizeRH×W×3 intoD-dimensional                         focusing instead on the learning of semantic information.
+imagefeaturesFj0 ∈R(1+L)×D,where1representstheCLS                          Inspiredby[4],topreventourframeworkfromlosingcritical
+token of the image, andL = H×WP2    withP representing the                 classification features related to forgery types during the
+number of patches. The input features for thejth informa-                  fusion of low-level information, we introduce a low-level
+tion Cj through the ith transformer layer are denoted as                   information interaction adapter.  This adapter is designed
+Fji ∈ R(1+L)×D,i = 0,1,2,...,N, where N denotes the                        to capture low-level information priors and to enhance the
+number of layers in thetransformer. The transformer mod-                   significance of low-level information within the backbone.
+ule takes the patch-embedded featuresFj0 as input for each                 ItoperatesparalleltothepatchembeddinglayeroftheCLIP
+low-level information.                                                     imageencoderanddoesnotalterthearchitectureoftheCLIP
+   Consideringthedistinctivenessofeachinformation, we                      visual backbone. Unlike the vit-adapter [4], which injects
+aim to embed the knowledge of each information into the                    spatial priors, our adapter injects low-level priors.
+CLIP visual backbone without affecting the original pre-                       As  illustrated,   we  utilize  the  first  two  blocks  of
+trainedweights. Weemploythefine-tuningtechniqueknown                       ResNet50[16],followedbyglobalpoolingandseveral1×1
+as Lora [17], which is widely used in large language mod-                  convolutions applied at the end to project the low-level in-
+els and diffusion models, to incorporate modal knowledge                   formationC1,C2,...,CM intoD dimensions. Through this
+
+PAGE 5
+Figure 2. The overall framework of our proposed method. Our method consists of three main components: (a) Cross-Low-level LoRA
+Transformer Layer, (b) Low-Level InformationInteraction Adapter, and (c)Dynamic Feature Selection. These modules willbe explainedin
+the methods section.
+
+process, we obtain the feature vector G0 ∈ RD extracted                      4.4. Dynamic Feature Selection
+fromthelow-levelencoder. Tobetterintegrateourfeatures                        Asmentionedintheintroduction,sincedifferentfeaturesare
+into the backbone, we design a cross-attention-based low-                    often sensitive to differenttypes of forgeries, simple feature
+level feature injector and a low-level feature extractor.                    concatenation or averaging followed by training with a uni-
+   Low-levelFeatureInjector. Thismoduleisusedtoinject                        fiedclassificationheadmightlosesomefeature’sadvantages
+low-level priors into the ViT. As shown in Fig.2(b), for the                 for detecting certain types of forgeries. To better integrate
+outputfrom eachmodality featureoftheith layerof CLIP                         low-level features for generalizing to various forgery type
+using ViT-L, the features are concatenated into a feature                    detections, inspired by the mixed experts routing dynamic
+vectorFi∈R(1+M)·(1+L)×D,whichservesasthequeryfor                             featureselection[45],weintroduceadynamicmodalfeature
+computing cross-attention.  The low-level feature Gi acts                    selection mechanism at the final output classification feature
+as the key and value in injecting into the modal featureFi,                  part of the model.  Specifically, we extract the cls tokens
+represented by the following equation:                                       of the final output, concatenate them, and denote this as
+       ˜Fi =Fi+γiMHA(LN(Fi),LN(Gi),LN(Gi))     (3)                           Fcls∈R(1+M)·D,whichservesastheinputforthedynamic
+                                                                             router. The dynamic router employs a learnable fully con-
+   As before, LN and MHA operations respectively repre-                      nectedneural network,withits matrix parameterdefinedas
+sent LayerNorm and multi-head attention mechanisms, with                     WRouter∈R(1+M)·D×(1+M). Theprobabilitydistribution
+thenumberofheadssetto4. Similarly,weusealearnable                            for selecting each modal feature is computed as follows:
+vectorγi∈RD to balance the two different features.
+   Modal Feature Extractor. After injecting the low-level                                      p = SoftMax(WRouterFcls)                    (6)
+priors into the backbone, we perform the forward propaga-
+tion process. We concatenate the output of each modality                         For each feature, a corresponding classification head
+feature of the (i+1)th layer to obtain the feature vector                    headi,i = 0,1,2,...,M,isprepared. Thefinalclassification
+Fi+1 andthen applya modulecomposed ofcross-attention                         result ˆy is obtained through the following equation:
+and FFN to extract modal features, as shown in Fig.2(b).
+This process is represented by the following equations:                                                    MX
+   ˜Gi =Gi+ηiMHA(LN(Gi),LN(Fi+1),LN(Fi+1))   (4)                                                ˆP(y) =        pi·headi(Ficls)                    (7)
+
+                                                                                                          i=0
+                  Gi+1 = ˜Gi+FFN(LN(˜Gi))                   (5)                  Here,Ficls represents the cls token of theith output fea-
+Here, the low-level feature Gi ∈ RD serves as the query,                     ture. Byadaptivelylearningadynamicmodalfeatureselec-
+and the output Fi+1 ∈ R(1+M)·(1+L)×D from backbone                           tion module,we enablethe selectionof suitablefeatures for
+acts as the key and value. Similar to the low-level feature                  integration, thus allowing the classification to be tailored to
+injector, we use a learnable vectorηi∈RD to balance the                      the forgery type of the current image under detection. To
+twodifferentfeatures. Gi+1 isthenusedastheinputforthe                        balance the selection of different experts, we use entropy
+next low-level feature injector.                                             regularization loss as an additional constraint, as shown be-
+
+PAGE 6
+low:                                                                      with data from up to 16 different AI generation methods,
+                                  MX                                      allowingforacomprehensiveevaluation. Moredetailsabout
+                    Lmoe =−           pilogpi                        (8)  testing dataset are provided in the Appendix.
+                                 i=0                                      SOTA Methods Details.  This paper aims to establish a
+                                                                          framework that integrates multiple low-level and high-level
+4.5. Training phase                                                       features to enhance the generalization capabilities of AI-
+We first train Lora Expert and the low-level information                  generated image detection.  To this end, we conduct ex-
+encoder for each type of low-level information and the high-              tensive comparisons with several state-of-the-art methods
+level image information to ensure that the model learns                   that explore generalization in AI-generated image detection,
+knowledgerelevanttoAI-Generatedimagedetectionfrom                         including: CNNDet[54], FreDect[10], Fusing[20], Gram-
+both low-level and high-level information. Let the true label             Net [31], Frank [11], Durall [9], Patchfor [3], F3Net [39],
+be y and the model’s prediction be ˆP(y).  The training is                SelfBlend[46],GANDet[33],FrePGAN[19],BiHPF[18],
+performed using the cross-entropy loss as defined in Eq.9.                LNP [26], LGrad [49], DIRE-G [55], DIRE-D [55], Uni-
+Subsequently, we load these pre-trained weights into our                  vFD [36], PatchCraft [61], FAFormer [27], and NPR [48].
+framework and further train our carefully designed fusion                 Inthiscontext,DIRE-Dreferstotheresultsobtainedusing
+moduletoensuretheadequateandappropriatefusionofeach                       thepretrainedweightsfromtheoriginalDIREmodel,trained
+typeoflow-levelandhigh-levelinformation. Ourfinalfused                    on the ADM dataset, while DIRE-G refers to the results ob-
+prediction results are given in Eq.7, and we optimize our                 tainedfromretrainingtheDIREmodelusingweightstrained
+overallframeworkusingEq.10aswell,thelossiscomposed                        on the ProGAN dataset.
+oftheclassificationloss(Eq.9)andtheexpertbalanceregu-                     Implementation Details.  Our main training and testing
+larization loss (Eq.8) weighted together. In our experiments,             settings largely follow previous research.  First, the input
+we setλ = 0.1.                                                            imagesareresizedto256×256,thencenter-croppedto224×
+                                                                          224. During training, we use a random cropping strategy,
+     Lcls =−y·log ˆP(y)−(1−y)·log(1− ˆP(y))    (9)                        whilefor testing,only centercropping isapplied. We train
+   Ltotal =Lcls+λLmoe                                             (10)    ourmethodusing theAdamoptimizerwith parameters (0.9,
+                                                                          0.999), a learning rate of2×10−4, and a batch size of 32.
+5. Experiment                                                             Our method is implemented using the PyTorch framework
+                                                                          on four Nvidia GeForce RTX 3090 GPUs.  The training
+5.1. Experimental Setups                                                  periodissetto10epochs. Theoveralltrainingtaskcanbe
+TrainingDataset. Toensureafaircomparison,weadhereto                       completed within 24 hours. We report the average accuracy
+the training set proposed by [54]. Testing is then conducted              (Acc.) andaverageprecision(A.P.)duringtheevaluationfor
+onotherunseenforgerytypes,suchasthosegeneratedbydif-                      each forgery type. More details related to our method and
+ferentGANsornewdiffusionmodels. Thistrainingsetcom-                       baseline methods are provided in the Appendix.
+prises 20different categories,with eachcategory containing                5.2. Compared with SOTA methods
+18,000syntheticimagesgeneratedbyProGAN.Additionally,
+an equal number of real images sampled from the LSUN                      Comparisons on AIGCDetectBenchmark. Tab.1reports
+datasetareincluded. Asinpreviousmethods[18,19,27,48],                     results of our method and baseline methods on AIGCDetect-
+we restrict the training set to four categories: car, cat, chair,         Benchmark. Our method outperforms previous state-of-the-
+and horse.                                                                art methods by3.44% across 16 different forgery datasets.
+Testing  Dataset.     To  further  evaluate  the  generaliza-             This notable achievement is largely due to the generaliza-
+tion capability of the proposed method in real-world sce-                 tioncapabilityoffered bydiverse low-levelfeatures forAI-
+narios,  we  employ  various  real-world  images  and  im-                generated imagedetection, alongwith theeffectiveintegra-
+ages generated by diverse GANs and Diffusions.   The                      tion of low-level information containing various forensic
+evaluation  dataset  follows  the  test  datasets  proposed               clues.  This enables our method to generalize well to un-
+by previous methods and primarily includes the follow-                    seenfakeimagesusingalimitedamountofProGANdataset.
+ing datasets:CNNDetectionBenchmark [54], GANGen-                          Furthermore, we analyzed the time efficiency and overall
+DetectionBenchmark [50], UniversalFakeDetectBench-                        parametersofourmethod. The results,presentedinTab.??,
+mark [36] and AIGCDetectBenchmark [61].  Although                         demonstrate that we achieve a balance between efficiency
+we achieve state-of-the-art (SOTA) results on other bench-                and accuracy at the same parameter level of the backbone
+marks,ouranalysisinthemaintextandsubsequentablation                       when compared to SOTA methods.
+studies are conducted specifically on the AIGCDetectBench-                Comparison on GANGenDetectionBenchmark.  Tab.2
+mark. This benchmark incorporates the widely used Gen-                    evaluatestheAcc. andA.P.metricsonGANGenDetection,
+Image[64]datasetforAI-Generatedimagedetection,along                       withtestresultsonCNNDetectionprovidedintheAppendix.
+
+PAGE 7
+                Table 1. The detection accuracy comparison between our approach and baselines. Among all detectors, the best result and the second-best
+                result are denoted in boldface and underlined, respectively. The complete table will be presented in the Appendix.
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                               Table 3. Performance of differ-
+               Table 2. Cross-GAN-Sources Evaluation on the GANGenDetection [50]. Partial results from [48]. The                entcombinationsofmodelcom-
+                complete table will be presented in the Appendix.                                                               poents.
+
+
+               The test datasets were unseen during training, with ProGAN                   generalizewelltodiffusiondetection,resultinginimproved
+                inthetestsetcomprising20classes,comparedtoonly4in                           performance.
+                the training set. Our method outperforms several baseline                   5.3. Ablation Study
+                methodsandachievescomparableresultstothestate-of-the-
+                artmethodsNPR[27],improvingaverageaccuracyby2.1%                            Combinationofdifferentlow-levelinformation.Todemon-
+                and1.5%. This indicates that our method, by incorporating                   strate the effectiveness of the low-level information used in
+                multiple low-level information, enhances detection perfor-                  our method, we compared its performance with different
+                mance uniformly across various GAN generation methods.                      low-level information in Tab.5. Each type of low-level in-
+                Comparisonon UniversalFakeDetectBenchmark. Tab.4                            formation individually achieved over 83% Acc.  and 89%
+                evaluatestheAcc. andA.P.metricsontheDiffusionsdataset                       A.P.onthetestset,indicatinggeneralizationperformanceon
+                from UniversalFakeDetect. Given that our method is trained                  syntheticimages. Asweprogressivelyaddedlow-levelinfor-
+                onProGAN,thissettingposesachallengeasthefakeimages                          mation,performanceimproved,withanoverallenhancement
+                originate from different Diffusion methods, which differ sig-               of 8.0% in Acc. and 6.6% in A.P. We visualized features
+                nificantly from GAN generation processes.  Nevertheless,                    of different low-level information using t-SNE [52] plots
+                ourmethodexhibitsstronggeneralizationcapabilitiesacross                     for various synthetic image methods (StyleGAN, BigGAN,
+               variousDiffusionmodels. Comparedtostate-of-the-artmeth-                      ADM, Stable Diffusion) and the distribution of low-level
+                ods NPR [27] and FAFormer [48], our method enhances                         featuresfordifferentforgerytypesinFig.3. Asnotedinthe
+    Generator     CNNDet GramNet  LNP  LGrad DIRE-G DIRE-D UnivFD PatchCraft  OursAcc.  by 2.0% and 3.4%, respectively, and A.P. by 1.7%Analysis section, different low-level information provides
+    ProGAN       100.00     99.99    99.95  99.83   95.19     52.75    99.81     100.00   100.00and3.6%,respectively. Theseresultsstronglysuggestthatkeycluesfordetectingsyntheticimagemethods,establish-
+   StyleGAN      90.17      87.05    92.64  91.08   83.03     51.31    84.93      92.77thelow-levelinformation utilized containscriticalcluesthating distinct boundaries. For example, Image and NPR ef-98.35
+    BigGAN       71.17      67.33    88.43  85.62   70.12     49.70    95.08                                          95.80     94.51
+Method     AttGAN     BEGAN    CramerGAN InfoMaxGAN MMDGAN    RelGAN     SNGANCycleGAN      87.62      86.07    79.07  86.94   74.19     49.58    98.33      70.17     97.03Mean
+    StarGAN       94.60      95.05   100.00 99.27   95.47     46.72    95.75      99.97Acc. A.P.  Acc.   A.P.   Acc.   A.P.  Acc.    A.P.    Acc.  A.P.   Acc.   A.P.  Acc. A.P.Acc. A.P.100.00
+LE LIIA CLA DFSCNNDet   51.1 83.7  50.2   44.9   81.5   97.5  71.1    94.7    72.9  94.4   53.3   82.1  62.7 90.4GauGAN       81.42      69.35    79.17  78.46   67.79     51.23    99.47      71.58     95.19Acc. A.P.62.3 82.9
+Frank       65.0 74.4  39.4   39.9   31.0   36.0  41.1    41.0    38.4  40.5   69.2   96.2  48.4 47.980.8 87.647.5 54.7
+Durall      39.9 38.2  48.2   30.9   60.9   67.2  50.1    51.7    59.5  65.5   80.0   88.2  54.8 58.9StyleGAN2      86.91      87.28    93.8285.32   75.31     51.72    74.96      89.55     98.8860.3 63.3
+Patchfor   68.0 92.9  97.1  100.0  97.8   99.9  93.6    98.2    97.9 100.0  99.6  100.0 97.6 99.8✓89.0 93.790.1 95.4
+whichfaceisreal   91.65      86.80    50.00  55.70   58.05     53.30    86.90                                         85.80     75.71
+F3Net      85.2 94.8  87.1   97.5   89.5   99.8  67.1    83.1    73.7  99.6   98.8  100.0 51.6 93.6✓  ✓ADM          60.39      58.61    83.91  67.15   75.78     98.25    66.87      82.17     88.4391.7 96.075.4 93.1
+SelfBlend 63.1 66.1  56.4   59.0   75.1   82.4  79.0    82.5    68.6  74.0   73.6   77.8  61.6 65.0✓       ✓90.6 95.365.8 69.7
+GANDet   57.4 75.1  67.9  100.0  67.8   99.7  67.6    92.4    67.7  99.3   60.9   86.2  66.7 90.6✓  ✓   ✓Glide          58.07      54.50    83.50  66.11   71.75     92.42    62.46      83.79     91.5392.8 97.866.1 91.6
+LGrad      68.6 93.8  69.9   89.2   50.3   54.0  71.1    82.0    57.5  67.3   89.1   99.1  78.0 87.4Midjourney      51.39      50.02    69.55  65.35   58.01     89.45    56.13      90.1268.6 80.891.56
+UnivFD    78.5 98.3  72.0   98.9   77.6   99.8  77.6    98.9    77.6  99.7   78.2   98.7  77.6 98.7✓  ✓   ✓   ✓SDv1.4        50.57      51.70    89.33  63.02   49.74     91.24    63.66      95.38     93.2893.3 98.477.6 98.8
+NPR        83.0 96.2  99.0   99.8   98.7   99.0  94.5    98.3    98.6  99.0   99.6  100.0 88.8 97.4SDv1.5        50.53      52.16    88.81  63.67   49.83     91.63    63.49      95.30     93.3893.2 96.6
+Ours        86.2 97.8 100.0 100.0 100.0 100.0  98.6    99.9    99.3  99.8  100.0 100.0 90.4 98.7  95.3 98.1
+     wukong        51.03      50.76    86.39  59.55   54.46     90.90VQDM        56.46      52.86    85.03  72.99   53.68     91.90    85.31      88.91     90.9470.93      91.07     89.46
+    DALLE2       50.45      49.25    92.45  65.45   66.48     92.45    50.75      96.60     93.32
+     Average        69.73      68.43    85.28  75.11   67.90     72.70    76.80      89.85                                         93.29
+
+PAGE 8
+                                                                                                                             Table 5.  Performance of different combina-
+                                                                                                                              tionsoflow-levelinformationusedinthemain
+                 Table4. Cross-Diffusion-SourcesEvaluationonthediffusiontestsetofUniversalFakeDe-text.
+                 tect[36]. Partialresultsfrom[27,48]. ThecompletetablewillbepresentedintheAppendix.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 Figure3. T-SNE visualizationof featuresextractedby theclassifier [52]. Blueand redrepresentthe featuresof realimages andfakeimages,
+                 respectively. The rightmost column shows the distribution bar chart of the selected different features when facing different forgery types.
+                 fectively separate BigGAN and StyleGAN, while DnCNN
+                 and NoisePrint delineate boundaries for ADM and Stable
+                 Diffusion. Our method adeptly selects the best features for
+                 classifying the current forgery type.
+
+                 Core model components.   Tab.3presents the ablation
+                 studyofourproposedmodelcomponents: LoraExpert(LE),
+                 Cross-Low-level Attention (CLA), Low-level Information
+                 Interaction Adapter (LIIA), and Dynamic Feature Selection
+                 (DFS). Utilizing individual components and various com-
+                 binations enhances the model’s generalization performance
+                 on the test set. By employing all components, our method                             Figure4. VisualizationoftheClassActivationMap(CAM)corre-
+                 achieves improvements of 12.5%in Acc. and 10.8%in A.P.                               spondingtodifferentforgerytypesanddifferentlow-levelinforma-
+                 compared to using only low-level information and Image                               tion [62]. Warmer colors indicate higher probabilities.
+                 as input, followed by late fusion and fine-tuning the fully
+                 connected layer.  To further illustrate the effectiveness of                         information using the CAM method from [62], shown in
+                 ourfusion strategy,we visualizetheClassActivation Map                                Fig.4. The results indicate that different low-level informa-
+                 (CAM)forimageswithdifferentforgerytypesandlow-level                                  tionhighlightsdistinctregionsforthesameforgerytype,and
+
+Method      DALLE   Glide_100_10 Glide_50_27     ADM     LDM_100 LDM_200                       Mean
+           Acc. A.P. Acc.    A.P.    Acc.   A.P.   Acc.  A.P.  Acc. A.P. Acc. A.P.          Acc. A.P.
+CNNDet   51.8 61.3 53.3    72.9    54.2   76.0   54.9  66.6  51.9  63.7  52.0  64.5          52.8 67.4
+Image NPR DnCNN NoisePrint             Acc.  A.P.
+Frank       57.0 62.5 53.6    44.3    52.0   42.3   53.4  52.5  56.6  51.3  56.4  50.9       54.5 49.6
+Durall      55.9 58.0 54.9    52.3    51.7   49.9   40.6  42.3  62.0  62.6  61.7  61.7✓85.3  91.854.3 54.0
+Patchfor    79.8 99.1 87.3    99.7    84.9   98.8   74.2  81.4  95.8  99.8  95.6  99.9✓84.6  91.486.8 97.2
+F3Net       71.6 79.9 88.3    95.4    88.5   95.4   69.2  70.8  74.1  84.0  73.4  83.3✓83.9  89.679.1 86.5
+SelfBlend  52.4 51.6 58.8    63.2    64.2   68.3   58.3  63.4  53.0  54.0  52.6  51.9✓85.1  90.156.3 58.7
+GANDet   67.2 83.0 51.2    52.6    51.7   53.5   49.6  49.0  54.7  65.8  54.9  65.9✓   ✓89.1  93.254.3 60.1
+LGrad      88.5 97.3 89.4    94.9    90.7   95.1   86.6 100.0 94.8  99.2  94.2  99.1✓   ✓    ✓91.3  95.190.9 97.2
+UnivFD    89.5 96.8 90.1    97.0    91.1   97.4   75.7  85.1  90.5  97.0  90.2  97.1✓   ✓    ✓       ✓93.3  98.486.9 94.5
+NPR        94.5 99.5 98.2    99.8    98.2   99.8   75.8  81.0  99.3  99.9  99.1  99.9        95.2 97.4
+FAFormer 98.8 99.8 94.2    99.2    94.7   99.4   76.1  92.0  98.7  99.9  98.6  99.8          93.8 95.5
+Ours        97.7 99.7 97.9    99.2    98.6   99.9   90.1  96.4  99.5  99.9  98.9  99.3       97.3 99.1
+
+PAGE 9
+our fusion method effectively combines these focus regions                        [9]  RicardDuralletal. Watchyourup-convolution: Cnnbased
+to better identify hidden forgery clues in the images.                                 generativedeepneuralnetworksarefailingtoreproducespec-
+                                                                                       tral distributions. InCVPR, pages 7890–7899, 2020.6
+6. Conclusion                                                                   [10]  JoelFrank,ThorstenEisenhofer,LeaSchönherr,AsjaFischer,
+                                                                                       Dorothea Kolossa, andThorsten Holz. Leveragingfrequency
+In this paper, we have discovered the advantageof various                              analysis for deep fake image recognition.  In International
+low-levelfeaturesinenhancingthegeneralizationcapability                                conference on machine learning, pages 3247–3258. PMLR,
+of AI-generated image detection.  We presents the Adap-                                2020.6
+tive Low-level ExpertsInjection(ALEI) framework, which                          [11]  Joel Frank et al. Leveraging frequency analysis for deep fake
+enhances AI-generated image detection through low-level                                imagerecognition. InICML,pages3247–3258.PMLR,2020.
+features. By utilizing Lora Experts, our transformer-based                             6
+approach learns from these features, merging them via a                         [12]  Jessica Fridrich and JanKodovsky. Richmodels forsteganal-
+                                                                                       ysis of digital images.  IEEE Transactions on information
+Cross-Low-levelAttentionlayer. WeintroduceaLow-level                                   Forensics and Security, 7(3):868–882, 2012.3
+InformationAdapter tomaintain thebackbone’s modeling                            [13]  Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing
+ability and employ Dynamic Feature Selection to optimize                               Xu,David Warde-Farley, SherjilOzair,AaronCourville, and
+featureselectionforcurrentimages. Ourmethodachieved                                    Yoshua Bengio.  Generative adversarial nets.  Advances in
+state-of-the-artresultsonmultipledatasets,demonstrating                                Neural Information Processing Systems, 27, 2014.1
+improvedgeneralizationindetectingAI-generatedimages.                            [14]  ShuyangGu,DongChen,JianminBao,FangWen,BoZhang,
+                                                                                       Dongdong Chen, Lu Yuan, and Baining Guo. Vector quan-
+References                                                                             tizeddiffusionmodelfortext-to-imagesynthesis. InProceed-
+                                                                                       ings of the IEEE/CVF Conference on Computer Vision and
+ [1]  Belhassen Bayar and Matthew C Stamm.  A deep learning                            Pattern Recognition, pages 10696–10706, 2022.1
+      approach to universal image manipulation detection using                  [15]  Fabrizio Guillaro, Davide Cozzolino, Avneesh Sud, Nicholas
+      a new convolutional layer. In Proceedings of the 4th ACM                         Dufour, and Luisa Verdoliva. Trufor: Leveraging all-round
+      workshop on information hiding and multimedia security,                          cluesfortrustworthyimageforgerydetectionandlocalization.
+      pages 5–10, 2016.3                                                               In Proceedings of the IEEE/CVF Conference on Computer
+ [2]  Andrew Brock, Jeff Donahue, and Karen Simonyan. Large                            Visionand PatternRecognition, pages 20606–20615, 2023.3
+      scalegantrainingforhighfidelitynaturalimagesynthesis. In                  [16]  Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+      InternationalConferenceon LearningRepresentations,2018.                          Deep residual learning for image recognition.  In Proceed-
+      1                                                                                ings of the IEEE conference on computer vision and pattern
+ [3]  LucyChai,DavidBau,Ser-NamLim,andPhillipIsola. What                               recognition, pages 770–778, 2016.4
+      makes fake images detectable? understanding propertiesthat                [17]  EdwardJHu,YelongShen,PhillipWallis,ZeyuanAllen-Zhu,
+      generalize. In Proceedings of the European Conference on                         Yuanzhi Li, Shean Wang, Lu Wang, and Weizhu Chen. Lora:
+      Computer Vision, pages 103–120. Springer, 2020.2,6                               Low-rankadaptationoflargelanguagemodels. arXivpreprint
+ [4]  Zhe Chen, Yuchen Duan, Wenhai Wang, Junjun He, Tong                              arXiv:2106.09685, 2021.2,3,4
+      Lu, JifengDai,and YuQiao. Visiontransformer adapterfor                    [18]  YonghyunJeong,DoyeonKim,SeungjaiMin,SeonghoJoe,
+      dense predictions. arXiv preprint arXiv:2205.08534, 2022.4                       YoungjuneGwon,andJongwonChoi. Bihpf: Bilateralhigh-
+ [5]  Yunjey Choi, Minje Choi, Munyoung Kim, Jung-Woo Ha,                              passfiltersforrobustdeepfakedetection. InProceedingsof
+      Sunghun Kim, and Jaegul Choo.  Stargan: Unified genera-                          the IEEE/CVF Winter Conference on Applications of Com-
+      tiveadversarialnetworksformulti-domainimage-to-image                             puter Vision, pages 48–57, 2022.1,3,6
+      translation. InProceedingsoftheIEEE/CVFConferenceon                       [19]  Yonghyun Jeong, Doyeon Kim, Youngmin Ro, and Jongwon
+      ComputerVisionandPatternRecognition,pages8789–8797,                              Choi. Frepgan: robust deepfake detection using frequency-
+      2018.1                                                                           levelperturbations. InProceedingsof the AAAIConference
+                                                                                       on Artificial Intelligence, pages 1060–1068, 2022.1,6
+ [6]  Riccardo Corvi, Davide Cozzolino, Giovanni Poggi, Koki                    [20]  YanJu,ShanJia,LipengKe,HongfeiXue,KokiNagano,and
+      Nagano, and Luisa Verdoliva. Intriguing properties of syn-                       SiweiLyu. Fusingglobalandlocalfeaturesforgeneralized
+      thetic images: fromgenerative adversarial networks to diffu-                     ai-synthesized image detection. In2022 IEEEInternational
+      sion models. In Proceedings of the IEEE/CVF Conference                           Conference on Image Processing (ICIP), pages 3465–3469.
+      onComputerVisionandPatternRecognition,pages973–982,                              IEEE, 2022.6
+      2023.3                                                                    [21]  Tero Karras, Timo Aila, Samuli Laine,and Jaakko Lehtinen.
+ [7]  JiaDeng,WeiDong,RichardSocher,Li-JiaLi,KaiLi,andLi                               Progressive growing of gans for improved quality, stability,
+      Fei-Fei. Imagenet: Alarge-scalehierarchicalimagedatabase.                        andvariation. InInternationalConferenceonLearningRep-
+      In 2009 IEEE conference on computer vision and pattern                           resentations, 2018.1
+      recognition, pages 248–255. Ieee, 2009.1,5                                [22]  Tero Karras, Samuli Laine, and Timo Aila.  A style-based
+ [8]  Prafulla Dhariwal and Alexander Nichol. Diffusion models                         generator architecture for generative adversarial networks. In
+      beatgansonimagesynthesis. Advancesinneuralinformation                            ProceedingsoftheIEEE/CVFconferenceoncomputervision
+      processing systems, 34:8780–8794, 2021.1                                         and pattern recognition, pages 4401–4410, 2019.1
+
+PAGE 10
+[23]  Tero Karras, Samuli Laine, Miika Aittala, Janne Hellsten,                         and Mark Chen. Glide: Towards photorealistic image gen-
+      Jaakko Lehtinen, and Timo Aila.  Analyzing and improv-                            eration and editing with text-guided diffusion models.  In
+      ing the image quality of stylegan.   In Proceedings of the                        InternationalConferenceonMachineLearning,pages16784–
+      IEEE/CVF conference on computer vision and pattern recog-                         16804. PMLR, 2022.1
+      nition, pages 8110–8119, 2020.1                                             [36]  Utkarsh Ojha, Yuheng Li, and Yong Jae Lee. Towards uni-
+[24]  Alexander Kirillov, Eric Mintun, Nikhila Ravi, Hanzi Mao,                         versalfakeimagedetectorsthatgeneralizeacrossgenerative
+      Chloe Rolland,Laura Gustafson, Tete Xiao, SpencerWhite-                           models. InProceedingsoftheIEEE/CVFConferenceonCom-
+      head, Alexander C Berg, Wan-Yen Lo, et al. Segment any-                           puter Vision and Pattern Recognition, pages 24480–24489,
+      thing. In Proceedings ofthe IEEE/CVFInternationalConfer-                          2023.1,2,3,4,6,8
+      ence on Computer Vision, pages 4015–4026, 2023.5                            [37]  TaesungPark,Ming-YuLiu,Ting-ChunWang,andJun-Yan
+[25]  Tsung-YiLin,MichaelMaire,SergeBelongie,JamesHays,                                 Zhu. Semantic image synthesis with spatially-adaptive nor-
+      Pietro Perona, Deva Ramanan, Piotr Dollár, and C Lawrence                         malization. InProceedingsoftheIEEE/CVFconferenceon
+      Zitnick.  Microsoft coco: Common objects in context.  In                          computervisionandpatternrecognition,pages2337–2346,
+      Computer Vision–ECCV 2014: 13th European Conference,                              2019.1
+      Zurich,Switzerland,September6-12,2014,Proceedings,Part                      [38]  ZhiliangPeng,WeiHuang,ShanzhiGu,LingxiXie,Yaowei
+      V 13, pages 740–755. Springer, 2014.1                                             Wang,JianbinJiao,andQixiangYe. Conformer: Localfea-
+[26]  Bo Liu, Fan Yang, Xiuli Bi, Bin Xiao, Weisheng Li, and                            turescouplingglobalrepresentationsforvisualrecognition.
+      Xinbo Gao. Detecting generated images by real images. In                          In Proceedings of the IEEE/CVF international conference on
+      European Conference on Computer Vision, pages 95–110.                             computer vision, pages 367–376, 2021.4
+      Springer, 2022.1,3,6                                                        [39]  Yuyang Qian, Guojun Yin, Lu Sheng, Zixuan Chen, and
+[27]  Huan Liu, Zichang Tan, Chuangchuang Tan, Yunchao Wei,                             Jing Shao.  Thinking in frequency: Face forgery detection
+      YaoZhao,andJingdongWang. Forgery-awareadaptivetrans-                              by mining frequency-aware clues.   In Proceedings of the
+      former for generalizable synthetic image detection.  arXiv                        European Conference on Computer Vision, pages 86–103.
+      preprint arXiv:2312.16649, 2023.2,6,7,8,1,3                                       Springer, 2020.6
+[28]  Wei Liu, Shengcai Liao, Weiqiang Ren, Weidong Hu, and                       [40]  Alec  Radford,  Jong  Wook  Kim,  Chris  Hallacy,  Aditya
+      Yinan Yu.   High-level semantic feature detection:  A new                         Ramesh,  Gabriel Goh,  Sandhini Agarwal,  Girish Sastry,
+      perspective for pedestrian detection. In Proceedings of the                       AmandaAskell,PamelaMishkin,JackClark,etal. Learning
+      IEEE/CVF conference on computer vision and pattern recog-                         transferable visual models from natural language supervi-
+      nition, pages 5187–5196, 2019.2                                                   sion. In International conference on machine learning, pages
+[29]  Weihuang Liu, Xi Shen, Chi-Man Pun, and Xiaodong Cun.                             8748–8763. PMLR, 2021.3,5
+      Explicit visual prompting for low-level structure segmenta-                 [41]  Aditya Ramesh, Mikhail Pavlov, Gabriel Goh, Scott Gray,
+      tions. In Proceedings of the IEEE/CVF Conference onCom-                           Chelsea Voss, Alec Radford, Mark Chen, and Ilya Sutskever.
+      puter Vision and Pattern Recognition, pages 19434–19445,                          Zero-shottext-to-imagegeneration. InInternationalconfer-
+      2023.2,3                                                                          ence on machine learning, pages 8821–8831. Pmlr, 2021.
+[30]  Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang.                              1
+      Deeplearningfaceattributes inthewild. In Proceedingsof                      [42]  Robin  Rombach,  Andreas  Blattmann,  Dominik  Lorenz,
+      theIEEEinternationalconferenceoncomputervision,pages                              Patrick Esser, and Björn Ommer.   High-resolution image
+      3730–3738, 2015.1                                                                 synthesis with latent diffusion models.  In Proceedings of
+[31]  Zhengzhe Liu, Xiaojuan Qi, and Philip HS Torr.   Global                           theIEEE/CVFConferenceonComputerVisionandPattern
+      texture enhancement for fake face detection in the wild. In                       Recognition, pages 10684–10695, 2022.1
+      ProceedingsoftheIEEE/CVFconferenceoncomputervision                          [43]  Andreas Rossler, Davide Cozzolino, Luisa Verdoliva, Chris-
+      and pattern recognition, pages 8060–8069, 2020.6                                  tian Riess, Justus Thies, and Matthias Nießner.  Faceforen-
+[32]  Yuchen Luo, Yong Zhang, Junchi Yan, and Wei Liu. General-                         sics++:  Learning to detect manipulated facial images.  In
+      izingfaceforgerydetectionwithhigh-frequencyfeatures. In                           Proceedings of the IEEE/CVF international conference on
+      ProceedingsoftheIEEE/CVFconferenceoncomputervision                                computer vision, pages 1–11, 2019.2,1
+      and pattern recognition, pages 16317–16326, 2021.3                          [44]  Christoph Schuhmann, Richard Vencu, Romain Beaumont,
+[33]  Sara Mandelli, Nicolò Bonettini, Paolo Bestagini, and Ste-                        Robert Kaczmarczyk, Clayton Mullis, Aarush Katta, Theo
+      fanoTubaro. Detectinggan-generatedimagesbyorthogonal                              Coombes,Jenia Jitsev,andAran Komatsuzaki. Laion-400m:
+      training of multiple cnns.  In International Conference on                        Open dataset of clip-filtered 400 million image-text pairs.
+      Image Processing, pages 3091–3095. IEEE, 2022.6                                   arXiv preprint arXiv:2111.02114, 2021.1
+[34]  Iacopo Masi, Aditya Killekar, Royston Marian Mascaren-                      [45]  NoamShazeer,AzaliaMirhoseini,KrzysztofMaziarz,Andy
+      has,ShenoyPratikGurudatt,andWaelAbdAlmageed. Two-                                 Davis, Quoc Le, Geoffrey Hinton, and Jeff Dean.  Outra-
+      branch recurrent network for isolating deepfakes in videos.                       geouslylargeneuralnetworks: Thesparsely-gatedmixture-
+      InComputerVision–ECCV2020: 16thEuropeanConference,                                of-experts layer. arXiv preprint arXiv:1701.06538, 2017.5
+      Glasgow, UK,August23–28, 2020,Proceedings,PartVII 16,                       [46]  Kaede Shiohara and Toshihiko Yamasaki.  Detecting deep-
+      pages 667–684. Springer, 2020.3                                                   fakes with self-blended images.    In Proceedings of the
+[35]  AlexanderQuinnNichol,PrafullaDhariwal,AdityaRamesh,                               IEEE/CVF Conference on Computer Vision and Pattern
+      PranavShyam,PamelaMishkin,BobMcgrew,IlyaSutskever,                                Recognition, pages 18720–18729, 2022.6
+
+PAGE 11
+[47]  Chao Shuai, Jieming Zhong, Shuang Wu, Feng Lin, Zhibo                      [59]  KaiZhang,WangmengZuo,YunjinChen,DeyuMeng,and
+      Wang,ZhongjieBa,Zhenguang Liu,LorenzoCavallaro,and                               LeiZhang. Beyondagaussiandenoiser: Residuallearningof
+      Kui Ren. Locate and verify: A two-stream network for im-                         deep cnn forimage denoising. IEEE transactions on image
+      proveddeepfakedetection. InProceedingsofthe31stACM                               processing, 26(7):3142–3155, 2017.1
+      International Conference on Multimedia, pages 7131–7142,                   [60]  Zixiang Zhao, Haowen Bai, Jiangshe Zhang, Yulun Zhang,
+      2023.3                                                                           Shuang Xu, Zudi Lin, Radu Timofte, and Luc Van Gool.
+[48]  Chuangchuang Tan, Yao Zhao, Shikui Wei, Guanghua Gu,                             Cddfuse: Correlation-driven dual-branch feature decompo-
+      Ping Liu, and Yunchao Wei.  Rethinking the up-sampling                           sition for multi-modality image fusion.  In Proceedings of
+      operationsincnn-basedgenerativenetworkforgeneralizable                           the IEEE/CVF conference on computer vision and pattern
+      deepfake detection. arXiv preprint arXiv:2312.10461, 2023.                       recognition, pages 5906–5916, 2023.4
+      1,3,6,7,8,2                                                                [61]  Nan Zhong, Yiran Xu, Zhenxing Qian, and Xinpeng Zhang.
+[49]  Chuangchuang Tan, Yao Zhao, Shikui Wei, Guanghua Gu,                             Rich and poor texture contrast: A simple yet effective ap-
+      and Yunchao Wei. Learning on gradients: Generalized arti-                        proach for ai-generated image detection.   arXiv preprint
+      facts representation for gan-generated images detection. In                      arXiv:2311.12397, 2023.3,6,1
+      Proceedings of the IEEE/CVF Conference on Computer Vi-                     [62]  Bolei Zhou, Aditya Khosla, Agata Lapedriza, Aude Oliva,
+      sion and Pattern Recognition, pages 12105–12114, 2023.1,                         and Antonio Torralba. Learning deep features for discrimina-
+      3,6                                                                              tivelocalization. InProceedingsoftheIEEEconferenceon
+[50]  ChuangchuangTan,RenshuaiTao,HuanLiu,andYaoZhao.                                  computervisionandpatternrecognition,pages2921–2929,
+      Gangen-detection: A dataset generated by gans for gener-                         2016.8
+      alizable deepfake detection.  https://github.com/                          [63]  Jun-YanZhu,TaesungPark,PhillipIsola,andAlexeiAEfros.
+      chuangchuangtan/GANGen-Detection, 2024.6,7,                                      Unpaired image-to-image translation using cycle-consistent
+      1,3                                                                              adversarial networks.  In Proceedings of the IEEE interna-
+[51]  Konstantinos Triaridis and Vasileios Mezaris.   Exploring                        tionalconferenceoncomputervision,pages2223–2232,2017.
+      multi-modal fusion for image manipulation detection and                          1
+      localization. InInternationalConferenceonMultimediaMod-                    [64]MingjianZhu, HantingChen, QiangyuYan, XudongHuang,
+      eling, pages 198–211. Springer, 2024.2,3                                         GuanyuLin,WeiLi,ZhijunTu,HailinHu,JieHu,andYunhe
+[52]  LaurensVanDerMaaten. Acceleratingt-sneusingtree-based                            Wang. Genimage: A million-scale benchmark for detecting
+      algorithms. Thejournalofmachinelearningresearch,15(1):                           ai-generatedimage. arXivpreprintarXiv:2306.08571,2023.
+      3221–3245, 2014.7,8                                                              6,1
+[53]  Qingwei Wang, Jinyu Yang, Xiaosheng Yu, Fangyi Wang,
+      PengChen,andFengZheng. Depth-aidedcamouflagedobject
+      detection.   In Proceedings of the 31st ACM International
+      Conference on Multimedia, pages 3297–3306, 2023.3
+[54]  Sheng-Yu Wang,  Oliver Wang,  Richard Zhang,  Andrew
+      Owens, and Alexei A Efros.   Cnn-generated images are
+      surprisingly easy to spot... for now.  In Proceedings of the
+      IEEE/CVF conference on computer vision and pattern recog-
+      nition, pages 8695–8704, 2020.1,2,3,6
+[55]  ZhendongWang,JianminBao,WengangZhou,WeilunWang,
+      HezhenHu,HongChen,andHouqiangLi. Direfordiffusion-
+      generatedimagedetection. arXivpreprintarXiv:2303.09295,
+      2023.1,3,6
+[56]  Fisher Yu, Ari Seff, Yinda Zhang, Shuran Song, Thomas
+      Funkhouser, and Jianxiong Xiao.  Lsun: Construction of a
+      large-scaleimage datasetusing deeplearning with humansin
+      the loop. arXiv preprint arXiv:1506.03365, 2015.1
+[57]  Kun Yuan, Shaopeng Guo, Ziwei Liu, Aojun Zhou, Feng-
+      weiYu,andWeiWu. Incorporatingconvolutiondesignsinto
+      visualtransformers. InProceedingsoftheIEEE/CVFinterna-
+      tionalconferenceoncomputervision,pages579–588,2021.
+      4
+[58]  Syed Waqas Zamir, Aditya Arora, Salman Khan, Munawar
+      Hayat, Fahad Shahbaz Khan, Ming-Hsuan Yang, and Ling
+      Shao.  Cycleisp: Real image restoration via improved data
+      synthesis.  In Proceedings of the IEEE/CVF conference on
+      computervisionandpatternrecognition,pages2696–2705,
+      2020.1
+
+PAGE 12
+ExploringtheCollaborativeAdvantageofLow-levelInformationonGeneralizable
+                                           AI-Generated Image Detection
+                                                  Supplementary Material
+
+A. Appendix                                                              levelattentionlayerandLow-levelInformationAdapteronly
+A.1. More implementation details                                         at one-quarter, one-half, three-quarters, and the final layer
+                                                                         of the pre-trained transformer backbone we use.  We will
+Testing  datasets.     In  the  main  text,  we  used  three             provide the code for reproducing our experiments, and more
+datasets,   CNNDetectionBenchmark   [54],   GANGen-                      implementation details can be found in the code.
+DetectionBenchmark [50], UniversalFakeDetectBench-                       A.2. More Experimental Results
+mark [36] and AIGCDetectBenchmark [61], to evaluate
+the generalization of our method across different types of               Comparison on testing datasets.  The raw experimental
+forgeries. The following provides a more detailed descrip-               data used to plot Fig.1and for the analysis in the methods
+tion of these datasets:                                                  sectionispresentedinTab.6. Tab.7evaluatetheAcc. and
+• CNNDetectionBenchmark [54]: This dataset includes                      A.P. metrics on CNNDetection.  Our method achieves ex-
+  fake images generated by various GAN methods such                      cellent results compared to multiple baseline methods and
+  as ProGAN [21], StyleGAN [22], StyleGAN2 [23], Big-                    yields comparable results with the current state-of-the-art
+  GAN[2],CycleGAN[63],StarGAN[5],GauGAN[37],                             methods NPR [27] and FAFormer [48].  Specifically, our
+  andDeepFake[43]. Italsocontainsrealimagesrandomly                      method improves Acc.  by 3.4% and 0.1% compared to
+  selected from six datasets:  LSUN [56], ImageNet [7],                  [27] and [48], respectively. For the StyleGAN, where [27]
+  CelebA [30], CelebA-HQ [21], COCO [25], and Face-                      performs poorly, and the BigGAN, where [48] underper-
+  Forensics++ [43]. This dataset is commonly used in early               forms,our methodimprovesthe averageaccuracyby10.7%
+  AIGC detection work.                                                   and7.0%, respectively. This demonstrates that our method,
+• GANGenDetectionBenchmark [50]:  To better evalu-                       by incorporating multiple low-level information, uniformly
+  ate the generalization of our detection method on GAN-                 enhances the detection performance across different GAN
+  generated images, we follow [48] andextend ourevalua-                  generation methods. Tab.8, Tab.9and Tab.10are the com-
+  tionwithimagesgeneratedby9additionalGANmodels.                         plete versions of Tab.1, Tab.2and Tab.4presented in the
+  EachGANmodelincludes4Ktestimages,withanequal                           main text, respectively. They include more baseline method
+  number of real and fake images.                                        comparisons and additional test results on more datasets.
+• UniversalFakeDetectBenchmark [36]: This dataset in-                    Tab.11presents the results of some combinations of low-
+  cludes testsets from diffusionmethods suchas ADM [8],                  levelinformationnotutilizedinthemaintext,demonstrating
+  DALL-E [41], LDM [42], and Glide [35].  Variants of                    thatourframeworkcaneffectivelyintegrateotherlow-level
+  these methods are also considered for LDM and Glide.                   information that may possess generalization capabilities.
+  RealimagedatasetsaredrawnfromLAION[44]andIma-                          RobustnessTests. Inreal-worldapplications,imagesspread
+  geNet [7].                                                             on public platforms may undergo various common image
+• AIGCDetectBenchmark [61]: Similar to cnndetection,                     processing techniques like JPEG compression. Therefore,
+  this dataset collects fake images generated by seven GAN-              it is important to evaluate the performance of the detector
+  based models and real images from the same sources.                    whenhandlingdistortedimages. Weadoptthreecommonim-
+  Additionally,itincorporateswhichfaceisreal(WFIR)and                    age distortions, including JPEG compression (quality factor
+  GenImage [64], collecting images from seven diffusion                  QF=95), Gaussian blur (σ = 1), and image downsampling,
+  models.                                                                where the image size is reduced to a quarter of its original
+Implementationdetails. FortheLoRAexpertmodulewe                          size (r = 0.5). Consistent with previous methods [54] and
+use,wesetα = 8andr = 4. Asmentionedinthemaintext,                        [61], weaugment thetraining setusing theaforementioned
+theseLoraexpertsaretrainedindividuallyforeachtypeof                      imagedistortionmethodsandtestontheAIGCDetectBench-
+low-levelinformation. The trainingsteps areconsistent with               marktestsetprocessedwiththesedistortionmethods. The
+theimplementationdetailsinthemaintext. Forthelow-level                   results are presented in Tab.12. The results show that com-
+encoderpart, wealso followthe samepre-training setupas                   pared to previous methods, our method achieves better ro-
+in the main text, where the extracted features are trained               bustness,outperformingthecurrentbestmethodsby8.04%,
+usingaclassificationheadandcross-entropylosstoensure                     6.13%,and7.27%inrobustnesstestsforJPEGcompression,
+thatthefeaturesextractedfromthelow-levelinformationare                   Gaussianblur,andimagedownsampling,respectively. Fig.5
+optimalforourclassificationtask. WeinsertourCross-Low-                   visualizes the low-level information we use, including high-
+
+PAGE 13
+                 Table6. Thedetectionaccuracycomparisonbetweendifferentlow-levelinformationandfusionmethod. Amongalldetectors,thebestresult
+                 and the second-best result are denoted in boldface and underlined, respectively.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  Table 7. Cross-GAN-Sources Evaluation on the test set of CNNDetection [54]. Partial results from [27,48].
+
+                 levelimages,beforeandaftertheseoperations. Forlow-level                            A.3. Broader impacts and Limitation
+                 information, these operations partially affect it. However,                        AsAI-generatedimagedetectionmethodscontinuetoevolve,
+                 due to our robust training and the introduction of high-level                      theyaimtocombatthegrowinginfluxoffakeinformation
+                 images along with multiple low-level features, our method’s                        and theconstantly updatingAIGC technologies. However,
+                 robustness is effectively enhanced.                                                these methods may have unintended consequences in the
+                 Transfer toother pretrainingmethods. To furtherdemon-                              realm of content moderation.  Legitimate human-created
+                 strate the generality of our proposed method, we analyze                           content that resembles forgeries may be incorrectly iden-
+                 its performancewhen combined withdifferent architectures                           tified as AI-generated images, while some highly realistic
+                 andpretraining strategies. Tab.13showstheAcc. andA.P.                              AI-generated images might be recognized by algorithms
+                 metrics for different pretrained models and various back-                          as genuine.  This could impact the sharing of normal in-
+                 bones. By comparing theperformance withand without our                             formation based on image morphology.  Further research
+                 method, we verify the effectiveness of incorporating low-                          and consideration are needed when applying this work to
+                 levelinformationandusingourfusionarchitectureunderdif-                             practical applications in content moderation.
+   Generator      Image  SRM   LNP    NPR   Bayar  DnCNN  Noiseprint  EarlyFusion  LateFusion  NPR(ResNet50)   Oursferentpretrainingframeworks. Thissignificantlyimproves
+    ProGAN       99.49  98.38  99.18  100.00  97.15    98.28        99.88           98.51           99.95              99.96          100.00thegeneralizationofthesemethodsfordetectingsynthetic
+Method                 ProGAN       StyleGAN     StyleGAN2     BigGAN     CycleGAN       StarGAN        GauGAN      DeepfakeStyleGAN      89.45  79.00  69.22   96.59   77.85    83.68        82.69           83.99           99.12images.97.28           98.35Mean
+    BigGAN       96.95  82.23  88.33   86.13   70.28    81.40        72.53           75.88           87.78              85.88           94.51Acc.   A.P.  Acc.  A.P.  Acc.  A.P.  Acc. A.P. Acc.  A.P.   Acc.   A.P.  Acc.  A.P.  Acc. A.P.Acc. A.P.
+CNNDetection  91.4   99.4  63.8  91.4  76.4  97.5  52.9 73.3 72.7  88.6   63.8   90.8  63.9  92.2  51.7 62.3CycleGAN      98.59  50.91  74.11   83.17   84.44    86.45        75.85           66.50           98.0595.12           97.0367.1 86.9
+Frank              90.3   85.2  74.5  72.0  73.1  71.4  88.7 86.0 75.5  71.2   99.5   99.5  69.2  77.4  60.7 49.1StarGAN       99.57  96.42  99.22   98.05   99.50    95.35       100.00          99.87           99.92              97.32          100.0078.9 76.5
+Durall             81.1   74.4  54.4  52.6  66.8  62.0  60.1 56.3 69.0  64.0   98.1   98.1  61.9  57.4  50.2 50.0GauGAN       97.92  69.78  83.52   84.51   53.59    71.12        52.84           63.47           84.69              97.99           95.1967.7 64.4
+Patchfor           97.8  100.0 82.6  93.1  83.6  98.5  64.7 69.5 74.5  87.2  100.0 100.0 57.2  55.4  85.0 93.2StyleGAN2     91.71  77.52  73.38   96.53   81.15    79.75        87.18           78.79           96.61              99.56           98.8880.7 87.1
+F3Net             99.4  100.0 92.6  99.7  88.0  99.8  65.3 69.9 76.4  84.3  100.0 100.0 58.1  56.7  63.5 78.8                                      80.4 86.2
+whichfaceisreal  83.25  51.95  50.00   70.30   50.00    45.85        90.45           51.95           71.30              50.35           75.71
+SelfBlend         58.8   65.2  50.1  47.7  48.6  47.4  51.1 51.9 59.2  65.3   74.5   89.2  59.2  65.5  93.8 99.3                                   61.9 66.4
+GANDetection  82.7   95.1  74.4  92.9  69.9  87.9  76.3 89.9 85.2  95.5   68.8   99.7  61.4  75.8  60.0 83.9ADM          77.78  89.61  82.54   68.88   89.47    92.26        79.72           57.19           87.05              71.30           88.4372.3 90.1
+BiHPF             90.7   86.2  76.9  75.1  76.2  74.7  84.9 81.7 81.9  78.9   94.4   94.4  69.5  78.1  54.4 54.6Glide          84.99  93.58  75.21   86.25   90.14    93.97        74.70           39.67           88.41              94.11           91.5378.6 77.9
+FrePGAN        99.0   99.9  80.7  89.6  84.1  98.6  69.2 71.1 71.1  74.4   99.9  100.0 60.3  71.7  70.9 91.9Midjourney     58.14  51.14  50.59   86.39   50.00    87.23        93.58           55.34           91.33              74.30           91.5679.4 87.2
+LGrad             99.9  100.0 94.8  99.9  96.0  99.9  82.9 90.7 85.3  94.0   99.6  100.0 72.4  79.3  58.0 67.9SDv1.4        74.29  50.02  50.20   86.12   50.00    81.24        91.18           56.70           89.83              69.43           93.2886.1 91.5
+UnivFD           99.7  100.0 89.0  98.7  83.9  98.4  90.5 99.1 87.9  99.8   91.4  100.0 89.9 100.0 80.2 90.2SDv1.5        74.40  49.96  49.96   85.88   50.00    81.29        91.14           56.52           89.96              69.51           93.3889.1 98.3
+NPR               99.8  100.0 96.3  99.8  97.3 100.0 87.5 94.5 95.0  99.5   99.7  100.0 86.6  88.8  77.4 86.2VQDM        85.43  77.27  68.51   69.94   87.79    93.07        87.43           57.25           91.2380.80           90.9492.5 96.1
+FAFormer        99.8  100.0 87.7  97.4  91.1  99.3  98.9 99.9 99.9 100.0 100.0 100.0 99.9 100.0 89.4 97.3                                          95.8 99.2
+Ours              100.0 100.0 98.4 100.0 98.9 100.0 94.5 98.8 97.0  99.9  100.0 100.0 95.2  98.9  83.4 88.2wukong        77.29  50.04  50.14   78.88   50.00    76.67        89.52           56.87           83.45              61.97           89.4695.9 98.2
+    DALLE2       75.90  92.30  83.05   76.00   94.55    95.00        93.40           33.45           92.40              93.25           93.32
+    Average        85.32  72.51  71.70   84.60   73.49    83.91        85.13           64.50           90.69                        83.63           93.29
+
+PAGE 14
+                  Table 8. The detection accuracy comparison between our approach and baselines. Among all detectors, the best result and the second-best
+                  result are denoted in boldface and underlined, respectively.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                          Table 9. Cross-GAN-Sources Evaluation on the GANGenDetection [50]. Partial results from [48]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                       Table 10. Cross-Diffusion-Sources Evaluation on the diffusion test set of UniversalFakeDetect [36]. Partial results from [27,48].
+Method       DALLE   Glide_100_10  Glide_100_27  Glide_50_27      ADM      LDM_100  LDM_200  LDM_200_cfgGenerator     CNNDet  FreDect  Fusing  GramNet   LNP   LGrad  DIRE-G  DIRE-D  UnivFD  PatchCraft   OursMean
+Method      AttGAN      BEGAN    CramerGAN InfoMaxGAN  MMDGAN    RelGAN      S3GAN    SNGAN      STGANStyleGAN      90.17     78.02    85.20    87.05    92.64   91.08    83.03     51.31     84.93      92.77ProGAN      100.00    99.36   100.00    99.99    99.95   99.83    95.19     52.75     99.81     100.00    100.00Acc.  A.P.  Acc.     A.P.     Acc.     A.P.     Acc.    A.P.    Acc.   A.P.   Acc.  A.P.  Acc.  A.P.  Acc.     A.P.Acc.  A.P.Mean98.35
+CNNDet    51.8  61.3  53.3     72.9     53.0     71.3     54.2    76.0    54.9   66.6   51.9  63.7  52.0  64.5  51.6     63.1BigGAN       71.17     81.97    77.40    67.33    88.43   85.62    70.12     49.70     95.08Acc.  A.P.  Acc.   A.P.   Acc.   A.P.   Acc.    A.P.    Acc.  A.P.   Acc.   A.P.  Acc.  A.P.  Acc.  A.P.  Acc.   A.P.95.80     94.5152.8  67.4Acc.  A.P.
+CNNDet   51.1  83.7  50.2   44.9   81.5   97.5   71.1    94.7    72.9   94.4   53.3   82.1   55.2  66.1  62.7  90.4  63.0   92.7CycleGAN      87.62     78.77    87.00    86.07    79.07   86.94    74.19     49.58     98.33      70.17     97.0362.3  82.9
+Frank        57.0  62.5  53.6     44.3     50.4     40.8     52.0    42.3    53.4   52.5   56.6  51.3  56.4  50.9  56.5     52.1                      54.5  49.6
+Frank       65.0  74.4  39.4   39.9   31.0   36.0   41.1    41.0    38.4   40.5   69.2   96.2   69.7  81.9  48.4  47.9  25.4   34.0StarGAN       94.60     94.62    97.00    95.05    100.00  99.27    95.47     46.72     95.75      99.9747.5  54.7100.00
+Durall        55.9  58.0  54.9     52.3     48.9     46.9     51.7    49.9    40.6   42.3   62.0  62.6  61.7  61.7  58.4     58.5GauGAN       81.42     80.57    77.00    69.35    79.17   78.46    67.79     51.23     99.47      71.58     95.1954.3  54.0
+Durall       39.9  38.2  48.2   30.9   60.9   67.2   50.1    51.7    59.5   65.5   80.0   88.2   87.3  97.0  54.8  58.9  62.1   72.5                   60.3  63.3
+Patchfor     79.8  99.1  87.3     99.7     82.8     99.1     84.9    98.8    74.2   81.4   95.8  99.8  95.6  99.9  94.0     99.8StyleGAN2     86.91     66.19    83.30    87.28    93.8285.32    75.31     51.72     74.96      89.55     98.8886.8  97.2
+Patchfor    68.0  92.9  97.1  100.0  97.8   99.9   93.6    98.2    97.9  100.0  99.6  100.0  66.8  68.1  97.6  99.8  92.7   99.8                       90.1  95.4
+F3Net        71.6  79.9  88.3     95.4     87.0     94.5     88.5    95.4    69.2   70.8   74.1  84.0  73.4  83.3  80.7     89.1whichfaceisreal   91.65     50.75    66.80    86.80    50.00   55.70    58.05     53.30     86.9085.80     75.7179.1  86.5
+F3Net       85.2  94.8  87.1   97.5   89.5   99.8   67.1    83.1    73.7   99.6   98.8  100.0  65.4  70.0  51.6  93.6  60.3   99.9ADM         60.39     63.42    49.00    58.61    83.91   67.15    75.78     98.25     66.87      82.17     88.4375.4  93.1
+SelfBlend  52.4  51.6  58.8     63.2     59.4     64.1     64.2    68.3    58.3   63.4   53.0  54.0  52.6  51.9  51.9     52.6                        56.3  58.7
+SelfBlend  63.1  66.1  56.4   59.0   75.1   82.4   79.0    82.5    68.6   74.0   73.6   77.8   53.2  53.9  61.6  65.0  61.2   66.7Glide         58.07     54.13    57.20    54.50    83.50   66.11    71.75     92.42     62.46      83.79     91.5365.8  69.7
+GANDet    67.2  83.0  51.2     52.6     51.1     51.9     51.7    53.5    49.6   49.0   54.7  65.8  54.9  65.9  53.8     58.9                         54.3  60.1
+GANDet   57.4  75.1  67.9  100.0  67.8   99.7   67.6    92.4    67.7   99.3   60.9   86.2   69.6  83.5  66.7  90.6  69.6   97.2Midjourney     51.39     45.87    52.20    50.02    69.55   65.35    58.01     89.45     56.13      90.1266.1  91.691.56
+LGrad       88.5  97.3  89.4     94.9     87.4     93.2     90.7    95.1    86.6  100.0  94.8  99.2  94.2  99.1  95.9     99.2SDv1.4        50.57     38.79    51.00    51.70    89.33   63.02    49.74     91.24     63.66      95.38     93.2890.9  97.2
+LGrad      68.6  93.8  69.9   89.2   50.3   54.0   71.1    82.0    57.5   67.3   89.1   99.1   78.5  86.0  78.0  87.4  54.8   68.0SDv1.5        50.53     39.21    51.40    52.16    88.81   63.67    49.83     91.63     63.49      95.30     93.3868.6  80.8
+UnivFD     89.5  96.8  90.1     97.0     90.7     97.2     91.1    97.4    75.7   85.1   90.5  97.0  90.2  97.1  77.3     88.6                        86.9  94.5
+UnivFD    78.5  98.3  72.0   98.9   77.6   99.8   77.6    98.9    77.6   99.7   78.2   98.7   85.2  98.1  77.6  98.7  74.2   97.8VQDM        56.46     77.80    55.10    52.86    85.03   72.99    53.68     91.90     85.31      88.91     90.9477.6  98.8
+NPR          94.5  99.5  98.2     99.8     97.8     99.7     98.2    99.8    75.8   81.0   99.3  99.9  99.1  99.9  99.0     99.8                      95.2  97.4
+NPR         83.0  96.2  99.0   99.8   98.7   99.0   94.5    98.3    98.6   99.0   99.6  100.0  79.0  80.0  88.8  97.4  98.0  100.0wukong       51.03     40.30    51.70    50.76    86.39   59.55    54.46     90.9070.93      91.07     89.4693.2  96.6
+FAFormer  98.8  99.8  94.2     99.2     94.4     99.1     94.7    99.4    76.1   92.0   98.7  99.9  98.6  99.8  94.9     99.1                         93.8  95.5
+Ours         86.2  97.8 100.0 100.0 100.0  100.0  98.6    99.9    99.3   99.8  100.0 100.0  83.0  87.0  90.4  98.7 100.0 100.0DALLE2       50.45     34.70    52.80    49.25    92.45   65.45    66.48     92.45     50.75      96.60     93.3295.3  98.1
+Ours          97.7  99.7  97.9     99.2     97.3     99.1     98.6    99.9    90.1   96.4   99.5  99.9  98.9  99.3  98.5     99.5Average       69.73     63.28    67.63    68.43    85.28   75.11    67.90     72.70     76.80      89.8597.3  99.193.29
+
+PAGE 15
+      (a) The original image and low-level information.                                               (b) The blurred image and low-level information.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(c) The JPEG compressed image and low-level information.                                          (d) The downsampled image and low-level information.
+
+                                  Figure 5. The visualization results of the image and low-level information.
+
+PAGE 16
+              Table11. Robustnessperformance(Acc.) ondifferentbaselinesand
+               our method. the best result and thesecond-best resultare denoted
+               in boldface and underlined, respectively
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              Table12. Robustnessperformance(Acc.) ondifferentbaselinesand
+               our method. the best result and thesecond-best resultare denoted
+               in boldface and underlined, respectively
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              Table 13. Analysisof different architecturesand pretraining strate-
+ArchDetector          JPEG     Downsampling      Blurgies.Pretrainw/OursAcc.A.P.
+Image     SRM     LNP     Bayar×                  Acc.     A.P.71.788.5
+ViT-B        ImageNet [7]
+CNNDetction     64.03              58.85              68.39✓85.493.6
+   ✓FreDect          66.95              35.84              65.75×85.3      91.876.289.0
+ViT-LFusing            62.43              50.00              68.09ImageNet [7]✓✓72.5      84.489.794.2
+   GramNet         65.47              60.30              68.63✓×71.7      83.263.381.2
+ViT-BLNP             53.56              63.28              65.88SAM [24]✓✓73.5      87.980.189.9
+   ✓       ✓LGrad            51.55              60.86              71.73×87.8      92.466.682.4
+ViT-L✓       ✓      ✓DIRE-G          66.49              56.09              64.00SAM [24]✓89.3      93.181.186.8
+   ✓                ✓       ✓DIRE-D          70.27              62.26              70.46×88.1      92.772.585.1
+ViT-B✓       ✓                ✓UnivFD          74.10CLIP [40]✓70.87              70.3190.4      93.086.893.6
+  Patchcraft         72.48              78.36✓       ✓      ✓       ✓×90.7      95.676.875.9990.2
+ViT-LOurs             80.52              84.49              83.26CLIP [40]✓93.398.4

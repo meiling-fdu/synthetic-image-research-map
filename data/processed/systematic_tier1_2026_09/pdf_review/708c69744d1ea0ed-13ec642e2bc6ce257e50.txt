@@ -1,0 +1,1684 @@
+PAGE 1
+Published as a conference paper at ICLR 2026
+
+
+ENABLINGYOURFORENSICDETECTORKNOWHOW
+WELLITPERFORMS ONDISTORTEDSAMPLES
+
+
+  Bin Li1,     Haoyu Li1,     Haodong Li1∗,     Jiaming Zhong1
+  Changsheng Chen2,     Jiangqun Ni3,     Bo Cao4
+  1Guangdong Provincial Key Laboratory of Intelligent Information Processing and
+    Shenzhen Key Laboratory of Media Security, Shenzhen University
+  2Faculty of Engineering, Shenzhen MSU-BIT University 3SUN YAT-SEN University
+  4The Smart City Research Institute of China Electronics Technology Group Corporation
+
+
+                                                 ABSTRACT
+
+          Generative AI has substantially facilitated realistic image synthesizing, posing
+          great challenges for reliable forensics.  When image forensic detectors are de-
+          ployed in the wild, the inputs usually undergone various distortions including
+          compression, rescaling, and lossy transmission.  Such distortions severely erode
+          forensic traces and make a detector fail silently—returning an over-confident bi-
+          nary prediction while being incapable of making reliable decision, as the detector
+          cannotexplicitlyperceivethedegreeofdatadistortion. Thispaperarguesthatreli-
+          ableforensicsmustthereforemovebeyond“istheimagerealorfake?” toalsoask
+          “how trustworthy is the detector’s decision on the image?” We formulate this re-
+          quirementasDetector’sDistortion-AwareConfidence(DAC):asample-levelcon-
+          fidencethatagivendetectorcouldproperlyhandletheinput. TakingAI-generated
+          image detection as an example, we empirically discover that detection accuracy
+          drops almost monotonically with full-reference image quality scores as distortion
+          becomesseverer,whilesuchreferencesareinfactunavailableattesttime. Guided
+          by this observation, theDistortion-AwareConfidenceModel(DACOM) is pro-
+          posedasausefulassistanttotheforensicdetector. DACOMutilizesfull-reference
+          image quality assessment to provide oracle statistical information that labels the
+          detectability of images for training, and integrates intermediate forensic features
+          of the detector, no-reference image quality descriptors and distortion-type cues to
+          estimate DAC. With the estimated confidence score, it is possible to conduct se-
+          lective abstention and multi-detector routing to improve the overall accuracy of a
+          detection system. Extensive experiments have demonstrated the effectiveness of
+          our approach.
+
+1    INTRODUCTION
+
+Withtherapiddevelopmentofgenerativeartificialintelligence(e.g.,GANs(Goodfellowetal.,2014)
+andDiffusionModels(Hoetal.,2020)),photo-realisticcontentscanbemanipulatedorsynthesized
+atscale. Todefenseagainstsuchfakevisualcontents,imageforensicsincreasinglyunderpinsafety-
+critical decisions. However, great challenges are presented in the practical deployment of forensic
+detectors. Most images have already undergone various degradations, such as compression, resam-
+pling,lossyplatformtransmission,andsoon. Suchdistortionswhichmaynotbewell-informedcan
+weakenforensictracesandoftenpushaninputbeyondthedetector’s“comfortzone”. Unfortunately,
+if a detector is trained exclusively on clean data, it remains largely unaware of distortions; conse-
+quently,asshowninFigure1(a),itreportsonlyabinarydecision(realorfake)withoutquantifying
+howmuchthedecisionshouldbetrusted. Lackingthisconfidencesignal,downstreamsystems(e.g.,
+humanfact-checkers,multi-detectorpools)cannotassesswhichdetectorperformsbetteronacertain
+sample, and thus are unable to reasonably abstain or select among detectors, raising both reliability
+and usability concerns. Even when distortion augmentations are included during training, this issue
+still persists. Consequently, we argue that confidence matters in reliable image forensics.
+
+   ∗Corresponding Author
+
+
+                                                         1
+
+PAGE 2
+Published as a conference paper at ICLR 2026
+
+
+
+
+Totackletheabovechallenges,severalintuitivestrategies
+could be employed in practice, yet they suffer from clear
+limitations. Robustnesstrainingseeksamodelthatworks
+under distortions, but the combinatorial explosion of dis-
+tortion type/degree makes it elusive and computationally
+costly.   Confidence calibration (Guo et al., 2017) can
+improve probability estimates in standard classification,
+butdistortionshiftstheinputdistributionheterogeneously
+andthusbreaksthecalibrationassumptions. Usingimage
+quality(assessedwithoutreference)asaproxyfordistor-
+tionlevelispotentialtoestimateforensicperformance,as
+shown in prior study (Kim et al., 2024). However, com-
+mon no-reference image quality assessment (NR-IQA) is
+designedforhumanperceptionandcannotdirectlyreflect                     Figure 1: When facing open-world dis-
+the detection confidence (refer to Section 3).   Another               tortions,  detectors’ outputs lack relia-
+line of work examines forensicability (Chu et al., 2015;               bility.  The proposed Distortion-Aware
+Pasquini&B¨ohme,2018)—theintrinsicdetectabilityde-                     Confidence Model (DACOM) provides
+termined by the data distribution.  However, such treat-               sample-level confidence scores to facil-
+mentsdonotbridgedetectabilityofdatawithspecificde-                     itate reliable detection.
+tector, leaving a gap in practical application.  Therefore,
+we propose constructing aDistortion-AwareConfidence(DAC) score, a detector-conditioned score
+that estimates the probability that a given image will be classified correctly under its present distor-
+tions.
+In this paper, we take AI-generated image (AIGI) detection as a case study to analyze how distor-
+tion affects forensic performance and how to link image quality with DAC. Our analysis reveals
+that, when a pristine reference is available, full-reference image quality assessment (FR-IQA) pro-
+duces scores that line up almost monotonically with detector accuracy across all tested distortions,
+suggesting that forensic confidence can be obtained with the guidance of image quality. The gaps
+for practical applications lie in: (i) Image quality must be estimated without reference at test time.
+While NR-IQA is available, it is too noisy to serve as a direct surrogate.  (ii) Our analysis shows
+that different types of distortions lead to different degrees of detection confidence, even when the
+resulting FR-IQA score is the same.  It indicates that we need to build a more sophisticated and
+generalizable model to bridge image quality, distortion type, and forensic performance, so as to
+effectively estimate DAC which can be served as an useful indicator for either human decision or
+expert system fusion.
+Buildingontheaboveinsights,thispaperproposestodevelopaDistortion-AwareConfidenceModel
+(DACOM).ThekeyideaistodistillthereliablerelationshipobservedwithFR-IQAintoatrainable
+confidence model, eliminating the need for references at test time. DACOM fuses forensic features
+derived from the detector, no-reference image quality descriptors, and distortion-type cues to pro-
+duceconfidencescores. Duringtraining,foreachdistortiontype,werecordthedetector’sempirical
+accuracyatdifferentlevelsofimagequalitybyusingFR-IQAasanoracle,andtreatthecorrespond-
+ingaccuracyasimagelabelexplicitlylinkingdistortiondegreetoforensicperformance. Aregressor
+is trained to map the features to the obtained labels. Once trained, DACOM outputs a confidence
+score per image (Figure 1 (b)), which can be attached to legacy detectors or to an ensemble of de-
+tectors, enabling abstention policies and multi-detector routing. Our contributions are summarized
+as follows:
+
+        •WeformulateDAC,providingaprincipledreliabilitytargetforpracticalforensics. Onthis
+          basis, we conduct an in-depth analysis and reveal the relationship between FR-IQA scores
+          and forensic accuracy, offering the empirical foundation for confidence modelling.
+        •We introduce DACOM to connect image quality with detection confidence. It uses super-
+          vision guided by FR-IQA during training, yet at inference it estimates sample-level DAC
+          scores without reference. DACOM can be deployed with diverse forensic detectors.
+        •Extensiveexperimentsonmultipledatasets,detectors,anddistortiontypesshowsthatDA-
+          COM can effectively predict confidence and unlock advantages in downstream tasks, in-
+          cludinga7.66%relativeaccuracyimprovementviaselectivefilteringanda5.84%accuracy
+          improvement in multi-detector routing compared with naive logit calibration.
+
+
+                                                          2
+
+PAGE 3
+Published as a conference paper at ICLR 2026
+
+
+
+
+
+
+
+
+
+
+
+
+         (a) DISTS withCD                      (b) SSIM withND                    (c) MS-SSIM withC2P        *
+
+
+
+
+
+
+
+
+
+      (d) QualiCLIP withCD                    (e) ARNIQA withND                   (f) QualiCLIP withC2P        *
+
+Figure 2: Relationship between IQA Metrics and Model Detection Performance. (a)-(c) show the
+relationship between FR-IQA scores and model balanced accuracy; (d)-(f) show the corresponding
+relationship for NR-IQA metrics.
+2    RELATEDWORKS
+
+RobustAIGIDetection.EarlyCNN-baseddetectorsfocusedonspatialfeaturesandemployeddata
+augmentation (e.g., JPEG compression, blurring) (Wang et al., 2020; Gragnaniello et al., 2021) to
+gainrobustnessagainstcommondistortions,buttheygeneralizedpoorlytounseenprocessing. Later
+methods exploited frequency features (Tan et al., 2024a; 2023; Li et al., 2024b; Tan et al., 2024b),
+handcraftedextractors(Lietal.,2024a)toenhancesubtleforensiccuesandimprovegeneralization.
+Yet, frequency-domain information is highly distortion-sensitive, where even slight perturbations
+can cause sharp performance drops.  Some approaches (Tao et al., 2025) improved robustness to
+JPEGandOSN(OnlineSocialNetworks)distortionsbyaddingpairedoriginal-compressedsamples
+during training.  More recently, reconstruction-based methods use diffusion models to recover au-
+thenticcounterparts,wherelatent-spacereconstruction(Chenetal.,2024a)yieldsgreaterrobustness
+than pixel-space (Wang et al., 2023) under the same augmentations. While these methods improve
+robustness, they seldom address the reliability of predictions under diverse distortions. In contrast,
+our work focuses on quantifying reliability by linking distortion intensity to detection performance.
+ModelSelf-AssessmentandForensibility.Manymethodshavebeenproposedforuncertaintyesti-
+mation(Blundelletal.,2015;Gal&Ghahramani,2016;Lakshminarayananetal.,2017;VanAmers-
+foortetal.,2021;2020;Guoetal.,2017;Liangetal.,2017;Naeinietal.,2015),buttheyaremostly
+designed for general tasks and have not been systematically adapted to image forensics. Recently,
+severalstudies(Zhangetal.,2025;Jietal.,2023;Linetal.,2024;Haoetal.,2024;Panetal.,2024)
+haveintroduceduncertaintymodelingintoforensics,yettypicallyasameanstoboostmodelperfor-
+mance or robustness, rather than as a principled quantification of detection reliability. In addition,
+theinformation-theoreticnotionofforensicability(Chuetal.,2015;Pasquini&B¨ohme,2018;Chen
+etal.,2022;Pasquini&B¨ohme,2017;Schl¨ogletal.,2021;Lietal.,2023)providesvaluableinsights
+intothetheoreticallimitsofforensicsystems. However,itsapplicationhaslargelyremainedatathe-
+oreticallevel,withlimitedvalidationunderrealisticconditions,leadingtoagapbetweentheoretical
+potential and practical effectiveness.
+
+3    ANALYSIS OFFORENSICPERFORMANCE:ADISTORTIONPERSPECTIVE
+
+Beforeintroducingourconfidencemodel,wefirstpresentananalysisofforensicperformancefrom
+a distortion perspective, establishing the empirical foundation for our framework. Specifically, we
+aim to answer two questions:
+
+      (i)How do common distortions affect the accuracy of forensic detectors?
+     (ii)Can off-the-shelf Image Quality Assessment (IQA) metrics serve as proxies for esti-
+          mating the detection confidence on a given image?
+
+
+                                                        3
+
+PAGE 4
+Published as a conference paper at ICLR 2026
+
+
+
+
+Setup of Analysis.We adopt three pretrained AIGI detectors (CD,ND, andC2P                                       *; details pro-
+vided in Section 5.1) and six common distortion types (additional results for more distortion types
+is provided in Appendix Figure 6) in our empirical analysis. For every distorted image, we employ
+imagequalityassessment(IQA)methodstoquantifythedegreeofdistortion. Specifically,wecom-
+pute FR-IQA scores—DISTS (Ding et al., 2020), SSIM (Hore & Ziou, 2010), and MS-SSIM (Sara
+et al., 2019)—using the pristine reference, as well as NR-IQA scores—ARNIQA (Agnolucci et al.,
+2024b),QualiCLIP(Agnoluccietal.,2024a),etc. Wethenbucketimagesbyqualityscoreandmea-
+sure balanced accuracy in each bucket, thereby obtaining the forensic performance of each detector
+on images subjected to a certain type and a certain degree of distortion.  The obtained results are
+shown in Figure 2.
+FR-IQA strongly correlates with detection performance.A clear positive correlation between
+FR-IQAmetricsandtheperformanceofdifferentdetectorsisobservedinFigure2(a)-(c): forafixed
+distortion type, a more severe degradation (i.e., a lower FR-IQA score) results in poorer detection
+performance.  This suggests that FR-IQA can reliably characterize the relation between distortion
+intensityandperformancedegradationunderagivendistortiontype. Moreover,weobservethatthe
+moresevereFR-IQAdegradation,thegreatershiftsinthelogitdistribution(AppendixB).Therefore,
+we conclude thatFR-IQA captures an oracle notion of distortion severity that is strongly predictive
+of forensic performance. We should also note thatFR-IQA methods cannot be applied at inference
+time as they require access to the reference images.
+NR-IQA alone is insufficient to predict detection performance.In contrast to FR-IQA, the cor-
+relation between NR-IQA metrics and detection performance is relatively weak. As shown in Fig-
+ure 2 (d)-(f), the NR-IQA scores fail to exhibit a consistent trend of “lower quality leads to lower
+performance”. This is primarily because NR-IQA metrics are designed based on human perceptual
+quality, which is highly content-dependent and thus difficult to be directly applied to predicting the
+behaviorofforensicmodels. TheseobservationsindicatethatwhileNR-IQAmethodsaredeployable
+andcanperceivedegradation,theirscoresexhibitaweakandinconsistentcorrelationwithforensic
+performance, making them unsuitable to be used alone as a reliable indicator of model confidence.
+Distortion type is a critical factor. As shown in Figure 2, even at the same level of distortion,
+different distortion types lead to noticeably different accuracies, no matter FR-IQA or NR-IQA is
+used. Thisimpliesthatdistortiontypeisanindispensablefactorforassessingforensicperformance.
+The above findings confirm that both the distortion type and its severity determine forensic per-
+formance.  While FR-IQA provides a dependable signal, it is inherently reference-dependent.  At
+testtime,onlyNR-IQAscoresanddetector-internalfeaturesareavailable,andeithersourcealoneis
+insufficienttopredictdetectionconfidence. Theseobservationsmotivateareference-free,distortion-
+aware confidence model that (i) learns to distill the relationship between FR-IQA scores and detec-
+tion performance during training, and (ii) fuses detector features with cues of distortion type and
+severity at inference. The proposed model is described in the next section.
+
+4    METHODOLOGY
+
+Inthissection,wefirstformalizethegoalofDistortion-AwareConfidence(DAC),thendetailatwo-
+stagepipelinethat(i)convertsfull-referenceimagequalitystatisticsintoper-imagereliabilitylabels
+and (ii) trains a reference-free Distortion-Aware Confidence Model (DACOM) that can be plugged
+into a given detector.
+
+4.1    PROBLEMFORMULATION
+
+Consider an image forensic detectorM:x∈R                        H×W×3        →c∈ {0,1}trained in the standard
+binary-classification paradigm.  A real-world test imagexis typically subjected to an (unknown)
+distortion operationϕ                t,s—characterised by itstypet∈Tandseveritys—to a pristine image
+x0:x=ϕ      t,s(x 0). As distortion attenuates forensic traces, the softmax or logit value of detectorM
+onxis no longer a trustworthy indicator of correctness. Our target thus is to obtain a DAC score,
+which is defined as thesample-level probability thatMis correct:
+
+                                   DACM(x) = Pr(M(x) =c|x)∈[0,1].                                        (1)
+
+
+                                                           4
+
+PAGE 5
+Published as a conference paper at ICLR 2026
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure3: Overviewofthedistortion-awareconfidencepipeline. (a)illustratestheprocessofadaptive
+severitybinninganddatalabeling,wherepriorknowledgeofforensicperformanceisusedtoassign
+labels to data within each intensity bin for every distortion type. (b) depicts the training process of
+the DACOM. (c) shows the architecture of the DACOM.
+
+Attesttimeweassumenoaccesstothepristinereferencex                 0 andtheclasslabelc;onlytheimagex
+itself and intermediate features ofMare available.
+
+4.2    DISTORTION-AWARECONFIDENCEPIPELINE
+
+As already revealed in Sec. 3, detector accuracy variesmonotonicallywith the FR-IQA score, and
+NR-IQA and detector embeddings are readily available at runtime but neither alone aligns well
+with detection accuracy. These observations inspire us to adopt a two-stage pipeline as illustrated
+in Fig. 3 (a)-(b).  Stage A —Collect statistics and perform labeling. For every distortion typet
+we use FR-IQA scoresq              FR(x,x 0)to build an ordered distortion severity axis, divide it into several
+bins, bucket image according to bins, and record the detector’s balanced accuracy as a label of
+“detectabilityprior”. StageB—Trainareference-freepredictor.WetrainDACOM,aregressorthat
+fusesthreeinference-availablefeaturestreams,includingdetectorembeddings,NR-IQAdescriptors,
+and distortion-type cues, and regresses to the detectability label obtained in Stage A. Once trained,
+DACOM outputsˆs(x;M)≈DAC                              M(x)for a given image without requiring reference images.
+
+4.3    STAGEA: SEVERITYBINNING ANDLABELASSIGNMENT
+
+We construct a large-scale distorted dataset that covers multiple distortion typest∈Tand a range
+ofseverities. GuidedbyFR-IQA,webuild,withineachtypet,aunifiedseverityaxisandbucketthe
+samplesalongthisaxis. Sincedifferentdistortiontypesexhibitdistinctrangesand/ordistributionsof
+FR-IQA scores (Appendix C), naive uniform partitioning by absolute FR-IQA values causes severe
+imbalance across types and bins. To avoid this, we adopttype-wise adaptive binningwith a fixed
+number of binsBfor everyt, so that each distortion type contributesBbuckets with comparable
+sample sizes.
+Type-wise Adaptive Binning. Letq         FR be an FR-IQA metric whose larger value indicates higher
+quality.  For each distortion typetwe split its FR-IQA score distribution intoBequal-frequency
+bins and collect samples into each bin as:
+
+                   bin(t,b) ={x|t(x) =t,q                             (b−1)t     ≤q    FR(x,x 0)<q (b)t  },b= 1...B,                   (2)
+
+wheret(x)is the distortion type ofxandq                                (b)t    are the  bB-quantiles w.r.t. distortion typet. Quantile
+binningguaranteessimilarsamplecountsper(t,b)andavoidstheimbalancecausedbythedifferent
+dynamicrangesofFR-IQAmetricsacrosstypes. Inaddition,adedicatedbinisreservedforpristine
+images,i.e.,bin(pristine,1).
+
+
+                                                             5
+
+PAGE 6
+Published as a conference paper at ICLR 2026
+
+
+
+
+Bin-wise Detectability Labeling. For each bin, we compute the detector’s balanced accuracy on
+samples lying in the bin:
+                                           BAcct,b =Acc    bal(M;bin(t,b)).                                               (3)
+This bin-level statistic serves as astatistical average, which is then converted into a scalar label for
+representingthedegreeofasampleisexpectedtobecorrectlyclassifiedbyM. Specifically,BAcc       t,b
+is mapped to adetectability labelwithin the range of[0,1]:
+
+                                          yt,b = 2·max(BAcc    t,b−0.5,0),                                             (4)
+
+wherey          t,b  = 0means random guessing andy        t,b  = 1means perfect detection.  Every sample
+x∈bin(t,b)inherits the labely(x) =y                                 t,b. These labels encodebothdistortion severity and type
+influence, providing supervised targets for Stage B.
+
+4.4    STAGEB: CONSTRUCTING THEDISTORTION-AWARECONFIDENCEMODEL
+
+AsillustratedinFig.3(c),foranimagexDACOMfirstextractsfeatureswiththreecomplementary
+encoders:
+
+        •Forensic Trace Encoderϕ                M: it extracts intermediate features from the frozen forensic
+           detectorM, carrying information about forensic traces and their corruption.
+        •Image Quality Encoderϕ                      IQ: it extracts distortion-sensitive features by using an NR-IQA
+           descriptor.
+        •DistortionTypeEncoderϕ                      DT: itextractsembeddingsofadistortion-typeclassifier,which
+           is capable of identifying various distortion types.
+
+Features from each branch are then linearly projected to aD-dimensional space (D=256):
+                     zM =W   MϕM(x),   z         IQ =W    IQϕIQ(x),   z         DT =W    DTϕDT(x).                    (5)
+and optionally subjected to LayerNorm. The concatenated feature vectorh(x) = [z                M∥z  IQ∥z  DT]∈
+R3D  is fed to a MLP headg        θ for predicting the distortion-aware confidence:
+                                             ˆs(x;M) =g                θ(h(x))∈[0,1].                                                 (6)
+
+Training Objective.Given the bin-derived labely(x), DACOM minimises a weighted mean-
+squared error:
+                                                     NX
+                                    LMSE =  1N           wti,bi(ˆs(x     i;M)−y(x             i))2,                                      (7)
+                                                    i=1
+wherew          t,b inversely scales with the bin’s sample size to counter residual imbalance. Empirically,
+this simple loss can preserve the monotonicity FR-IQA observed in Sec. 3.
+Inference and Usage.At deployment, DACOM needs only the three features extracted from a
+given image to outputˆs(x;M).  The output score enables:  (i)selective abstention:  refrain from
+making decisions whenˆs(x;M)is insufficiently high; and (ii)multi-detector selection: given mul-
+tipledetectors{M                 j},picktheonewiththehighestˆs(x;M                       j)foreachinputx. Bothapplicationscan
+enhance overall reliability.
+
+5    EXPERIMENTS
+
+5.1    EXPERIMENTALSETTINGS
+
+AIGIDetectors.WeevaluateourconfidencemodelonsixrepresentativeAIGIdetectors:CD(Wang
+et al., 2020),ND(Gragnaniello et al., 2021),NPR(Tan et al., 2024b),FreqNet(Tan et al., 2024a),
+SAFE(Li et al., 2024b) andC2P(Tan et al., 2025).  All models exceptC2Pwere retrained on
+the ForenSynths dataset using the four-class training protocol (i.e., cars, cats, chairs, and horses).
+SinceNPR,FreqNet, andSAFEwere originally trained on pristine images without robustness
+enhancements, we incorporated two distortions as augmentations during their training,i.e., JPEG
+
+
+                                                                6
+
+PAGE 7
+Published as a conference paper at ICLR 2026
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure4: Correlationbetweenaverageconfidenceanddetectionaccuracy.◦: seendistortions;△/×:
+unseen single/platform-compression distortions.
+
+
+compression and blurring.  The JPEG compression quality was sampled from[30,100], and the
+blurringkernelsizevariedin[0,3]. Bothaugmentationswereappliedwithaprobabilityof10%. The
+resultingmodelsweredenotedNPR               +,FreqNet + andSAFE      +. Unlessstatedotherwise,experiments
+were conducted with the trained modelsCD,ND,NPR                           +,FreqNet +,SAFE +. C2Pprovides no
+training code; we therefore used its released pretrained weights, denoted asC2P   *. Meanwhile, to
+validatethegeneralityofourapproach,wetransferthedatadomainfromGANstodiffusionmodels.
+Specifically, we retrain our detector on a diffusion-model dataset and evaluate the proposed method
+under the same experimental settings. Detailed results and analyses are provided in the Appendix I.
+Datasets.EightdistortionfamilieswereusedwhentrainingDACOM,includingJPEG,Blur,Noise,
+Resize, Color warming, Color cooling, Brighten, and Darken.  Each distortion has an associated
+test split, forming theSeen Distortion test sets.  To evaluate the generalization ability, we con-
+structedUnseen Distortion test setscomprising ten distortion types that never appear in training.
+Additionally,to evaluatethescreening performance,wealso includedanEvaluation-datasetand a
+Cross-dataset. More details about datasets are provided in Appendix D.
+Implementation of DACOM.To form the training-time supervision, we experimented with four
+FR-IQAmetrics,includingSSIM(Hore&Ziou,2010),MS-SSIM(Saraetal.,2019),FSIM(Zhang
+et al., 2011), and DISTS (Ding et al., 2020), producing four variants of our model.  The models
+are referred to asDACOM    SSIM,DACOM MS-SSIM,DACOM FSIM andDACOM        DISTS.  In the pro-
+posed confidence model, we employQualiCLIP, a NR-IQA model that operates entirely in a self-
+supervised manner without relying on Mean Opinion Score (MOS) for supervision, as ourImage
+Quality Encoder. We adopt the feature extractor fromARNIQA(Agnolucci et al., 2024b) as our
+Distortion Type Encoder, considering its strong capability in identifying distortion types. Further
+details regarding the selection of Distortion Type Encoder are discussed in the Appendix E. More
+details of the experimental configuration of DACOM are provided in the Appendix F.
+Comparison Methods.We compare DACOM against three categories of methods in our exper-
+iments:  (1) FR-IQA methods:  SSIM, MS-SSIM, FSIM, and DISTS; for clarity, we prefix full-
+reference metrics with “FR-”. (2) NR-IQA methods: TOPIQ (Chen et al., 2024b), ARNIQA, and
+QualiCLIP. (3) Post-hoc logit calibration (Guo et al., 2017). For the logit calibration baseline, the
+same training set as used for the confidence model is employed to normalize the output of each
+classifier, and the detector’s confidence score is given by|logit−0.5|.
+
+
+5.2    CORRELATION BETWEENESTIMATEDCONFIDENCE ANDDETECTORACCURACY
+
+WefirstverifywhetherDACOMcanfaithfullypredicttheconfidenceofagivendetector. Usingthe
+conventional linear- and rank-correlation measures, DACOM achieves a Pearson linear correlation
+coefficient (PLCC) of97.73%and a Spearman rank correlation coefficient (SRCC) of94.01%on
+the test set, confirming the effectiveness of our strategy. Complete results are reported in Appendix
+Table 8. Figure 4 plots average confidence against detection accuracy for both the seen and unseen
+
+
+                                                          7
+
+PAGE 8
+                                        Published as a conference paper at ICLR 2026
+
+
+
+                                        Table1: Performance(%)ofmulti-detectorfusionontheSeenDistortiontestsets. Foreveryimage
+                                        we conduct Top-1 routing, using the prediction from the detector whose associated DACOM yields
+                                        thehighestconfidencescore. “Average”isthemeanvalueoveralleightdistortionsubsets,whereas
+                                        “Worst” corresponds to the poorest performance observed on any single subset.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                  Table 2: Performance (%) of multi-detector fusion on theUnseen Distortion test sets.
+
+
+
+
+
+
+
+
+
+
+                                        distortion test sets.  A strong positive correlation is evident for all the involved detetors.  Detailed
+                                        quantitative results are provided in the Appendix G.
+
+                                        5.3    RESULTS OFTOP-1 ROUTING INMULTI-DETECTORSCENARIO
+
+                                        Wenexttestwhethertheestimatedconfidencecanguideanon-the-flychoiceamongmultipledetec-
+                                        tors. The six detectors described in Section 5.1 are each equipped with its own DACOM. Given an
+                                        image, six confidence scores are computed and the prediction of the detector with the highest score
+                                        is returned, denoted as “Top-1 routing” fusion. This strategy is compared against two baselines: (1)
+                                        using a single detector’s output; (2) using the calibrated logit-based confidence to perform Top-1
+                                        routing.  Results on the Seen Distortion test sets (Table 1) show that Top-1 routing with DACOM
+                                        consistently outperforms the single best detector, demonstrating the effectiveness of our confidence
+                                        model in identifying the most suitable detector for each input.  Notably, our best result surpasses
+                                        logit-based Top-1 routing by 5.82% in mean accuracy (Acc) and 8.98% in mean average preci-
+                                        sion (AP). On unseen distortion types (Table 2), our approach still outperforms logit-based fusion
+                                        by 2.62% in mean accuracy and 8.45% in mean AP, showcasing its robustness and generalization
+                                        capabilities, especially under complex distortion conditions such as social media transmission.
+
+                                        5.4    RESULTS OFCONFIDENCE-BASEDFILTERING
+
+                                        We finally examine whether DACOM can serve as a reliable basis for rejecting uncertain predic-
+                                        tions. Experiments are carried out on the Evaluation-dataset and the Cross-dataset, and each image
+                                        undergoes a single, randomly selected distortion. For every detector we rank all test images by the
+                                        confidence produced by its corresponding DACOM. Starting from the full set, we iteratively dis-
+                                        card the lowest-confidencep%of samples and compute the Balanced Accuracy (BAcc) and Equal
+                                        Error Rate (EER) on the retained subset. Tables 3 (Evaluation-dataset) and 4 (Cross-dataset) show
+                                        that, at every filtering rate, DACOM achieves higher BAcc and lower EER compared to the logit-
+                                        based confidence baseline. The results for random multiple distortions are provided in Appendix H
+                                        and exhibit similar trend.   Furthermore, we plot the Risk-Coverage (RC) curve (Figure 5).   As
+                                        more low-confidence samples are filtered out, the risk on the retained set monotonically decreases,
+                                        demonstrating the effectiveness of confidence-based filtering.
+    Method            JPEG            Blur            Noise            Resize         Colorshift     BrightnessAverage         Worst
+                    Acc     AP     Acc     AP     Acc     AP     Acc     AP     Acc     AP     Acc     AP     Acc     AP     Acc     AP
+   Method       Histogram    Saturation    Sharpening      Mix1        Mix2       WeChat        QQ        Weibo      Facebook       SRx2   Average      WorstCD          94.20  99.28  94.80  99.36  65.70  93.37  98.30   99.90   62.30  90.75  93.80  99.74  84.85  97.07  62.30  90.758
+             Acc    Ap    Acc   Ap   Acc   Ap   Acc   Ap   Acc   Ap   Acc   Ap   Acc   Ap   Acc   Ap   Acc   Ap    Acc    Ap    Acc   Ap   Acc   Ap
+    CD       87.30  97.72  93.70 99.75 89.60 99.32 75.50 88.92 85.80 94.66 90.30 99.1284.30 98.8695.20 99.61 95.9099.7499.30  99.99  89.69 97.77 75.50 88.92ND          87.10  95.88  93.90  99.01  68.10  80.71  98.70   99.93   54.00  66.79  88.00  98.33  81.63  90.11  54.00  66.79
+    FreqNet+      55.20  67.40  82.40  90.66  50.50  50.87  94.90   98.15   58.70  64.48  86.80  95.02  71.42  77.76  50.50  50.87ND       88.30  98.83  91.40 98.90 68.20 89.58 71.30 79.61 78.20 85.69 78.70 92.93 70.30 90.24 89.40 97.17 91.70 98.32  98.10  99.70  82.56 93.02 68.20 89.58
+  FreqNet+    82.80  93.29  89.10 94.83 60.80 75.10 55.00 53.34 52.80 59.97 63.90 67.83 54.80 58.34 68.30 74.04 74.30 81.25  99.10  99.91  70.09 75.79 52.80 53.34NPR+        68.50  79.99  91.90  97.85  51.30  51.34  98.90   99.98   67.80  76.86  92.40  98.85  78.47  84.15  51.30  51.34
+   NPR+      91.00  98.57  90.50 96.24 91.00 97.22 62.50 69.07 60.30 67.41 71.70 81.10 62.90 72.39 79.90 88.31 83.30 91.35  95.00  99.46  78.81 86.11 60.30 67.41
+   SAFE+     82.90  95.26  95.10 99.2399.1099.94 52.40 50.48 51.60 50.85 52.20 58.32 52.20 54.77 52.40 58.94 53.40 60.43  93.00  98.56  68.52 72.68 51.60 50.48SAFE+        52.30  55.11  63.30  79.31  49.00  48.06  92.60   99.21   78.20  85.73  93.20  98.39  71.43  77.63  49.00  48.06
+   C2P*      99.80 100.0097.70 99.9794.1099.9983.90 92.08 84.60 93.78 90.20 95.78 74.90 88.94 95.00 98.61 95.00 98.30100.00 100.0091.52 96.75 74.90 88.94C2P*         92.70  97.98  81.10  94.1592.90  99.2799.20100.00  90.90  99.0599.0099.9992.63  98.41  81.10  94.15
+ LogitCalib.   99.90 100.0097.50 99.83 98.70 99.24 77.20 68.66 82.50 92.07 85.50 85.03 78.40 83.56 88.30 86.58 95.10 96.06100.00 100.0090.31 90.95 77.20 68.66
+ DACOMSSIM   99.80100.0097.00 99.35 94.1099.9985.20 93.24 86.90 95.23 90.7098.9384.00 98.26 95.30 99.55 96.10 99.65  97.00  99.33  92.70 98.5384.0093.24LogitCalib.     92.20  98.07  92.70  97.59  64.40  55.4699.90  100.0089.20  92.09  99.10  99.78  89.58  90.49  64.40  55.46
+DACOMMS-SSIM 99.80100.0097.60 99.77 94.1099.9983.20 91.07 86.70 95.0390.8098.79 83.40 97.2895.6099.54 96.10 99.49  98.50  99.94  92.58 98.04 83.20 91.07DACOMSSIM    94.0099.2894.70  98.9192.90  99.2799.40   99.9090.90  99.0598.90  99.98  95.13  99.4290.90  99.05
+ DACOMFSIM   99.80100.00 97.70 99.9794.1099.99 85.40 93.3386.30 95.1190.80 98.9383.80 97.75 95.5099.62 96.2099.55  99.70  99.8092.93 98.4083.8093.33
+DACOMMS-SSIM  94.20  99.19  95.30  98.9292.90  99.2799.40   99.9990.90  99.0598.90  99.98  95.27  99.4090.90  99.05DACOMDISTS  99.80100.00 97.7099.87 94.1099.9984.90 93.1687.00 95.2190.70 98.79 83.20 97.45 95.40 99.57 95.90 99.47  99.70  99.80  92.84 98.33 83.20 93.16
+  DACOMFSIM    94.20  99.1395.60  99.38  92.90  99.2799.60   99.9990.90  99.05  99.20  99.99  95.40  99.47  90.90  99.05
+ DACOMDISTS    94.3099.13  95.50  99.3892.90  99.2799.60   99.9990.90  99.0599.0099.9995.3799.47  90.90  99.05
+
+PAGE 9
+                                      Published as a conference paper at ICLR 2026
+
+
+
+                                                              Table 4: Results on Cross-dataset Single-Distortion Filtering (%).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      Figure5: Risk-Coverage(RC)curveswithriskdefinedas1−BAcc(x-axis: coverage,y-axis: risk).
+                                      (a)and(b)showresultsontheevaluationdatasetwithsingle-andmulti-distortion,while(c)and(d)
+                                      present Cross-dataset results under single- and multi-distortion.
+
+
+                                      5.5    ABLATIONSTUDY
+
+                                      TodisentanglethecontributionofeachdesignchoiceinsideDACOM,weevaluatetheDACOMen-
+                                      coder design and the choice of the Image Quality Encoderϕ               IQ. As summarized in Appendix J, in-
+                                      corporating distortion-sensitive features fromϕ        IQ consistently improves regression.The best con-
+                                      figuration is using QualiCLIP as Image Quality Encoder and including a Distortion Type En-
+                                      coder, achieving the strongest overall performance with the averagePLCCof97.66%andSRCC
+                                      of93.97%acrossdetectors. Weconductedacomparativestudyonthemappingfunctionsfortrans-
+                                      forming detectability labels, and the detailed results are reported in Appendix Table 18. Among the
+                                      considered alternatives, our mapping function achieves the best performance.
+
+
+                                      Table3: Evaluation-datasetSingle-DistortionFiltering(%). Averagesovermultipledetectors. “Dis-
+                                      tortion” reports BAcc and EER on distorted sets; “Filtering Proportion” is the fraction of samples
+                                      removed. Best and second-best areboldand underlined                              , respectively.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   MethodMethod    Distortion                                           FilteringProportionDistortion                                           FilteringProportion
+                BAcc↑EER↓BAcc↑EER↓   0.05           0.10           0.15           0.20           0.30           0.400.05           0.10           0.15           0.20           0.30           0.40
+     TopiqTopiq                  84.89 14.5170.65 26.7085.35 14.1971.05 26.1185.90 13.8471.42 25.5471.81 24.9486.52 13.2187.98 11.6372.53 23.8589.30 10.1373.20 22.869
+   ARNIQAARNIQA  70.19   27.2684.43   14.7970.24 27.2284.86 14.5085.18 14.4070.33 27.1085.46 14.3870.38 26.9170.42 26.8685.73 14.2769.98 27.0685.53 14.8685.89 14.4569.83 26.97
+  QualiCLIPQualiCLIP             70.91 26.3385.02 14.2785.69 13.6771.50 25.5786.23 13.1571.96 25.0272.38 24.4986.76 12.6472.92 23.8587.89 11.5888.55 10.8673.25 23.49
+ LogitCalib.LogitCalib.          70.81 27.1685.86 14.1986.93 13.5371.38 27.0887.85 13.3071.92 27.1472.29 26.9888.54 12.7373.06 27.0790.33 11.6192.21 10.7373.71 27.50
+   FR-SSIMFR-SSIM                70.82 26.5485.34 13.9786.22 13.2171.41 25.8087.10 12.3671.97 25.1672.51 24.6587.87 11.4473.31 23.7989.31 10.3290.95  8.8074.16 22.89
+FR-MS-SSIMFR-MS-SSIM70.19   27.2684.43   14.7970.66 26.7084.90 14.4685.63 13.8171.24 26.0186.49 13.0471.82 25.3472.46 24.6187.22 12.3073.50 23.5588.60 10.8990.40  9.2274.49 22.46
+   FR-FSIMFR-FSIM                70.67 26.6684.93 14.3885.49 14.0871.20 26.0086.30 13.3471.80 25.2772.35 24.6087.20 12.3873.35 23.5489.46 10.0591.65  8.0574.44 22.41
+  FR-DISTSFR-DISTS               84.98 14.3970.94 26.3285.79 13.7671.75 25.3086.67 12.8872.48 24.4773.14 23.7087.85 11.6490.23  9.2974.51 22.1892.28  7.4675.73 20.96
+ DACOMSSIMDACOMSSIM              71.01 26.0386.01 13.1387.53 11.5471.86 24.9288.99 10.5172.87 23.8973.70 23.1289.91  9.2475.37 21.7191.61  7.1193.26  5.3577.06 20.09
+DACOMMS-SSIMDACOMMS-SSIM70.19   27.2684.43   14.7971.0586.0425.9413.1087.56 11.5771.9524.8589.0372.9423.8510.4173.7489.9823.149.1875.39 21.7991.677.0693.32  5.2677.09 19.99
+ DACOMFSIMDACOMFSIM              71.0626.0286.0413.0587.6071.9724.8711.4389.0510.4472.97 23.8873.80 23.0990.00  9.1475.4691.707.1121.7393.3577.2219.895.27
+ DACOMDISTSDACOMDISTS            71.0625.9786.17 12.9687.66 11.4171.9524.8189.0510.4372.8323.8873.7123.0989.97  9.2175.54 21.6991.65  7.1593.52  5.1277.32 19.87
+
+PAGE 10
+Published as a conference paper at ICLR 2026
+
+
+
+6    CONCLUSION
+
+This work takes the problem of AI-generated image (AIGI) detection as a test-bed and offers the
+first systematic analysis of detector reliability in the presence of common, real-world distortions.
+We show that the raw outputs of detectors cannot convey sample-level confidence once images are
+degraded, and we introduce DACOM, a distortion-aware confidence model, to enable detectors to
+output a confidence score for each image under distortion. Experiments across diverse distortions
+and detectors support three findings: (i) FR-IQA-based distortion levels align more strongly with
+forensic performance than no-reference IQA (NR-IQA) scores; (ii) distortion effects are detector-
+and type-dependent—even at matched intensities—revealing systematic interaction patterns; and
+(iii) the proposed confidence model enables effective sample-level filtering and multi-detector fu-
+sion,improvingoverallreliability. Despitetheseadvances,DACOMexhibitsdegradedperformance
+in cross-dataset evaluation, reflecting its sensitivity to changes in the data source distribution.  To
+address this, we will explore more general and shift-resilient formulations of distortion-aware,
+detector-conditioned reliability modeling, strengthening the framework as a foundation for relia-
+bility estimation under real-world degradations.
+
+ACKNOWLEDGMENTS
+
+This work was supported in part by NSFC (Grant U23B2022, U22B2047, 62572325, 62371301),
+Shenzhen R&D Program (Grant JCYJ20250604181211016, SYSPG20241211174032004), Guang-
+dong Basic and Applied Basic Research Foundation (Grant 2025A1515010234).
+
+REFERENCES
+Lorenzo Agnolucci, Leonardo Galteri, and Marco Bertini. Quality-aware image-text alignment for
+  opinion-unaware image quality assessment.arXiv preprint arXiv:2403.11176, 2024a.
+
+Lorenzo Agnolucci, Leonardo Galteri, Marco Bertini, and Alberto Del Bimbo.  Arniqa: Learning
+  distortion manifold for image quality assessment. InProceedings of the IEEE/CVF Winter Con-
+  ference on Applications of Computer Vision, pp. 189–198, 2024b.
+
+Charles Blundell, Julien Cornebise, Koray Kavukcuoglu, and Daan Wierstra. Weight uncertainty in
+  neural network. InInternational conference on machine learning, pp. 1613–1622. PMLR, 2015.
+
+Baoying Chen, Jishen Zeng, Jianquan Yang, and Rui Yang.  Drct:  Diffusion reconstruction con-
+  trastivetrainingtowardsuniversaldetectionofdiffusiongeneratedimages. InForty-firstInterna-
+  tional Conference on Machine Learning, 2024a.
+
+ChangshengChen,LinZhao,RizhaoCai,ZitongYu,JiwuHuang,andAlexC.Kot. Forensicability
+  assessmentofquestionedimagesinrecapturingdetection.CoRR,abs/2209.01935,2022. doi: 10.
+  48550/ARXIV.2209.01935. URLhttps://doi.org/10.48550/arXiv.2209.01935.
+
+Chaofeng Chen, Jiadi Mo, Jingwen Hou, Haoning Wu, Liang Liao, Wenxiu Sun, Qiong Yan, and
+  Weisi Lin. Topiq: A top-down approach from semantics to distortions for image quality assess-
+  ment.IEEE Transactions on Image Processing, 33:2404–2418, 2024b.
+
+XiaoyuChu,YanChen,MatthewCStamm,andKJRayLiu. Informationtheoreticallimitofmedia
+  forensics: The forensicability.IEEE Transactions on Information Forensics and Security, 11(4):
+  774–788, 2015.
+
+Keyan Ding, Kede Ma, Shiqi Wang, and Eero P Simoncelli.  Image quality assessment: Unifying
+  structure and texture similarity.IEEE transactions on pattern analysis and machine intelligence,
+  44(5):2567–2581, 2020.
+
+Yarin Gal and Zoubin Ghahramani.  Dropout as a bayesian approximation:  Representing model
+  uncertainty in deep learning.  Ininternational conference on machine learning, pp. 1050–1059.
+  PMLR, 2016.
+
+
+                                                        10
+
+PAGE 11
+Published as a conference paper at ICLR 2026
+
+
+
+
+Ian J Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair,
+  AaronCourville,andYoshuaBengio.Generativeadversarialnets.Advancesinneuralinformation
+  processing systems, 27, 2014.
+
+Diego Gragnaniello, Davide Cozzolino, Francesco Marra, Giovanni Poggi, and Luisa Verdoliva.
+  Are gan generated images easy to detect? a critical analysis of the state-of-the-art. In2021 IEEE
+  international conference on multimedia and expo (ICME), pp. 1–6. IEEE, 2021.
+
+Chuan Guo, Geoff Pleiss, Yu Sun, and Kilian Q Weinberger.   On calibration of modern neural
+  networks. InInternational conference on machine learning, pp. 1321–1330. PMLR, 2017.
+
+Qixian Hao, Ruyong Ren, Shaozhang Niu, Kai Wang, Maosen Wang, and Jiwei Zhang. Ugee-net:
+  Uncertainty-guidedandedge-enhancednetworkforimagesplicinglocalization.NeuralNetworks,
+  178:106430, 2024.
+
+Jonathan Ho, Ajay Jain, and Pieter Abbeel. Denoising diffusion probabilistic models.Advances in
+  neural information processing systems, 33:6840–6851, 2020.
+
+Alain Hore and Djemel Ziou.  Image quality metrics:  Psnr vs. ssim.  In2010 20th international
+  conference on pattern recognition, pp. 2366–2369. IEEE, 2010.
+
+Kaixiang Ji, Feng Chen, Xin Guo, Yadong Xu, Jian Wang, and Jingdong Chen. Uncertainty-guided
+  learning for improving image manipulation detection. InProceedings of the IEEE/CVF interna-
+  tional conference on computer vision, pp. 22456–22465, 2023.
+
+Hyunjoon Kim, Jaehee Lee, Leo Hyun Park, and Taekyoung Kwon.  On the correlation between
+  deepfakedetectionperformanceandimagequalitymetrics. InProceedingsofthe3rdACMWork-
+  shop on the Security Implications of Deepfakes and Cheapfakes, pp. 14–19, 2024.
+
+Balaji Lakshminarayanan, Alexander Pritzel, and Charles Blundell. Simple and scalable predictive
+  uncertaintyestimationusingdeepensembles.Advancesinneuralinformationprocessingsystems,
+  30, 2017.
+
+JialiangLi, HaoyueWang, ShengLi, ZhenxingQian, XinpengZhang, andAthanasiosV Vasilakos.
+  Are handcrafted filters helpful for attributing ai-generated images?  InProceedings of the 32nd
+  ACM International Conference on Multimedia, pp. 10698–10706, 2024a.
+
+Ouxiang Li, Jiayin Cai, Yanbin Hao, Xiaolong Jiang, Yao Hu, and Fuli Feng. Improving synthetic
+  image detection towards generalization:  An image transformation perspective.arXiv preprint
+  arXiv:2408.06741, 2024b.
+
+Yuanman Li, Jiaxiang You, Jiantao Zhou, Wei Wang, Xin Liao, and Xia Li. Image operation chain
+  detectionwithmachinetranslationframework.IEEETransactionsonMultimedia,25:6852–6867,
+  2023. doi: 10.1109/TMM.2022.3215000.
+
+Shiyu Liang, Yixuan Li, and Rayadurgam Srikant.  Enhancing the reliability of out-of-distribution
+  image detection in neural networks.arXiv preprint arXiv:1706.02690, 2017.
+
+XunLin,ShuaiWang,RizhaoCai,YizhongLiu,YingFu,WenzhongTang,ZitongYu,andAlexKot.
+  Suppress and rebalance: Towards generalized multi-modal face anti-spoofing. InProceedings of
+  the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 211–221, 2024.
+
+AnishMittal,AnushKrishnaMoorthy,andAlanConradBovik. No-referenceimagequalityassess-
+  ment in the spatial domain.IEEE Transactions on image processing, 21(12):4695–4708, 2012.
+
+MahdiPakdamanNaeini,GregoryCooper,andMilosHauskrecht. Obtainingwellcalibratedproba-
+  bilities using bayesian binning. InProceedings of the AAAI conference on artificial intelligence,
+  volume 29, 2015.
+
+UtkarshOjha,YuhengLi,andYongJaeLee. Towardsuniversalfakeimagedetectorsthatgeneralize
+  across generative models. InProceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition, pp. 24480–24489, 2023.
+
+
+                                                       11
+
+PAGE 12
+Published as a conference paper at ICLR 2026
+
+
+
+
+Wenyan Pan,  Wentao Ma,  Tongqing Zhou,  Shan Zhao,  Lichuan Gu,  Guolong Shi,  and Zhi-
+  hua Xia.   Dual-decoupling with frequency–spatial domains for image manipulation localiza-
+  tion.IEEE Transactions on Neural Networks and Learning Systems, pp. 1–11, 2024.   doi:
+  10.1109/TNNLS.2024.3472846.
+
+Cecilia Pasquini and Rainer B¨ohme.  Information-theoretic bounds of resampling forensics: New
+  evidence for traces beyond cyclostationarity.   In Matthew C. Stamm, Matthias Kirchner, and
+  Sviatoslav Voloshynovskiy (eds.),Proceedings of the 5th ACM Workshop on Information Hid-
+  ing and Multimedia Security, IH&MMSec 2017, Philadelphia, PA, USA, June 20-22, 2017, pp.
+  3–14. ACM, 2017.  doi: 10.1145/3082031.3083233.  URLhttps://doi.org/10.1145/
+  3082031.3083233.
+Cecilia Pasquini and Rainer B¨ohme.   Information-theoretic bounds for the forensic detection of
+  downscaledsignals.IEEETransactionsonInformationForensicsandSecurity,14(7):1928–1943,
+  2018.
+
+UmmeSara,MoriumAkter,andMohammadShorifUddin. Imagequalityassessmentthroughfsim,
+  ssim,mseandpsnr—acomparativestudy.JournalofComputerandCommunications,7(3):8–18,
+  2019.
+AlexanderSchl¨ogl,TobiasKupek,andRainerB¨ohme. Forensicabilityofdeepneuralnetworkinfer-
+  encepipelines. InICASSP2021-2021IEEEInternationalConferenceonAcoustics,Speechand
+  Signal Processing (ICASSP), pp. 2515–2519, 2021. doi: 10.1109/ICASSP39728.2021.9414301.
+
+ChuangchuangTan,YaoZhao,ShikuiWei,GuanghuaGu,andYunchaoWei. Learningongradients:
+  Generalized artifacts representation for gan-generated images detection.  InProceedings of the
+  IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 12105–12114, 2023.
+ChuangchuangTan,YaoZhao,ShikuiWei,GuanghuaGu,PingLiu,andYunchaoWei. Frequency-
+  aware deepfake detection: Improving generalizability through frequency space domain learning.
+  InProceedings of the AAAI Conference on Artificial Intelligence, volume 38, pp. 5052–5060,
+  2024a.
+
+Chuangchuang Tan, Yao Zhao, Shikui Wei, Guanghua Gu, Ping Liu, and Yunchao Wei. Rethinking
+  theup-samplingoperationsincnn-basedgenerativenetworkforgeneralizabledeepfakedetection.
+  InProceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp.
+  28130–28139, 2024b.
+
+ChuangchuangTan,RenshuaiTao,HuanLiu,GuanghuaGu,BaoyuanWu,YaoZhao,andYunchao
+  Wei. C2p-clip: Injecting category common prompt in clip to enhance generalization in deepfake
+  detection. InProceedingsoftheAAAIConferenceonArtificialIntelligence,volume39,pp.7184–
+  7192, 2025.
+Renshuai Tao, Manyi Le, Chuangchuang Tan, Huan Liu, Haotong Qin, and Yao Zhao. Oddn: Ad-
+  dressingunpaireddatachallengesinopen-worlddeepfakedetectionononlinesocialnetworks. In
+  Proceedings of the AAAI Conference on Artificial Intelligence, volume 39, pp. 799–807, 2025.
+
+Joost Van Amersfoort, Lewis Smith, Yee Whye Teh, and Yarin Gal. Uncertainty estimation using a
+  single deep deterministic neural network.  InInternational conference on machine learning, pp.
+  9690–9700. PMLR, 2020.
+JoostVanAmersfoort,LewisSmith,AndrewJesson,OscarKey,andYarinGal. Onfeaturecollapse
+  and deep kernel learning for single forward pass uncertainty. arXiv preprint arXiv:2102.11409,
+  2021.
+
+Sheng-YuWang,OliverWang,RichardZhang,AndrewOwens,andAlexeiAEfros. Cnn-generated
+  images are surprisingly easy to spot... for now.  InProceedings of the IEEE/CVF conference on
+  computer vision and pattern recognition, pp. 8695–8704, 2020.
+Zhendong Wang,  Jianmin Bao,  Wengang Zhou,  Weilun Wang,  Hezhen Hu,  Hong Chen,  and
+  Houqiang Li.  Dire for diffusion-generated image detection.  InProceedings of the IEEE/CVF
+  International Conference on Computer Vision, pp. 22445–22455, 2023.
+
+
+                                                      12
+
+PAGE 13
+Published as a conference paper at ICLR 2026
+
+
+
+
+JialeZhang,YulunZhang,JinjinGu,YongbingZhang,LingheKong,andXinYuan. Accurateimage
+  restoration with attention retractable transformer.arXiv preprint arXiv:2210.01427, 2022.
+LinZhang,LeiZhang,XuanqinMou,andDavidZhang. Fsim: Afeaturesimilarityindexforimage
+  quality assessment.IEEE transactions on Image Processing, 20(8):2378–2386, 2011.
+YuanhanZhang,YichaoWu,ZhenfeiYin,JingShao,andZiweiLiu. Robustfaceanti-spoofingwith
+  dual probabilistic modeling.Pattern Recognition, pp. 111700, 2025.
+MingjianZhu,HantingChen,QiangyuYan,XudongHuang,GuanyuLin,WeiLi,ZhijunTu,Hailin
+  Hu, Jie Hu, and Yunhe Wang. Genimage: A million-scale benchmark for detecting ai-generated
+  image.Advances in Neural Information Processing Systems, 36:77771–77782, 2023.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                     13
+
+PAGE 14
+Published as a conference paper at ICLR 2026
+
+
+
+A    IQA METRICS ANDDETECTIONPERFORMANCE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   (a) Dists withCD                                             (b) Qualiclip withCD
+
+
+
+
+
+
+
+
+
+
+               (c) MS-SSIM withC2P        *                                    (d) Qualiclip withC2P        *
+
+
+
+
+
+
+
+
+
+
+                     (e) SSIM withND                                          (f) ARNIQA withND
+
+           Figure 6: Relationship between IQA Metrics and Model Detection Performance.
+
+We present the correlation between IQA scores and model detection performance for a broader set
+of distortion types in Figure 6. The results indicate a consistently strong correlation across diverse
+distortion categories.
+
+
+B    DISTORTIONTYPES, FR-IQA,ANDMODELLOGITDISTRIBUTIONS
+
+
+We visualize the drift in output logit distributions of various detectors as the distortion severity
+increases (indicated by a decrease in FR-IQA metrics). As shown in the Figure 7, we observe that
+different detectors exhibit distinct distributional shifts under the same distortion type and severity.
+InFigure7(a)-(c),underGaussianwhitenoisewithincreasingintensity,bothCDandSAFE                     + exhibit
+a shift of the fake distribution toward the real distribution, whereasNPR               + shows the opposite trend.
+In Figure 7 (d)-(f), under color shift distortions,CDshows a shift of the fake distribution toward
+therealone;FreqNet        + displaysaconvergenceofbothdistributionstowardthedecisionboundary;
+andC2PbehavesoppositelytoCD.InFigure7(g)-(i),underdistortionsintroducedbyfourdifferent
+social media platforms,CDconsistently shows the fake distribution shifting toward the real one;
+NPR+ exhibits a convergence of both distributions toward the center; andSAFE      + demonstrates a
+complete shift of the real distribution into the domain of fakes.  These results indicate that under
+identicaldistortionconditions,differentdetectorsareaffecteddissimilarly,leadingtovariedpatterns
+of misclassification.
+
+
+                                                           14
+
+PAGE 15
+Published as a conference paper at ICLR 2026
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       (a)CDwith white noise                      (b)NPR     + with white noise                (c)SAFE     + with white noise
+
+
+
+
+
+
+
+
+
+
+     (d)CDwith color cooling                  (e)FreqNet     + with color cooling              (f)C2P    * with color cooling
+
+
+
+
+
+
+
+
+
+
+    (g)CDwith media platforms                  (h)NPR     + with media platforms            (i)SAFE    + with media platforms
+
+Figure7: Thelogitdistributionshiftsundertheinfluenceofdistortion. Blue/yellow: cleanreal/fake;
+green/red: distorted real/fake.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                Figure 8: Distribution of FR-IQA Scores Across Distortion Types (SSIM).
+
+                                                                15
+
+PAGE 16
+Published as a conference paper at ICLR 2026
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            Figure 9: Distribution of FR-IQA Scores Across Distortion Types (MS-SSIM).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             Figure 10: Distribution of FR-IQA Scores Across Distortion Types (FSIM).
+
+
+                                                         16
+
+PAGE 17
+Published as a conference paper at ICLR 2026
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             Figure 11: Distribution of FR-IQA Scores Across Distortion Types (DISTS).
+C    DISTRIBUTION OFIMAGEQUALITYASSESSMENTSCORES UNDER
+      DISTORTION
+
+We visualize the distribution ranges of full-reference image quality assessment (FR-IQA) scores
+across different datasets of distortion types, as shown in Figures 8–11.  The distortion types from
+top to bottom are:  JPEG, Blur, Noise, Resize, Color warming, Color cooling, Brighten, Darken,
+Saturation, Histogram, Sharpening, Mix1, Mix2, SRx2, WeChat, QQ, WeiBo, and Facebook. For
+each distortion type, we present the score distributions for real images, fake images, and their com-
+bination.  Several key observations can be made.  First, the score ranges vary considerably across
+distortion types.  For instance, the scores for JPEG compression consistently fall within [0.8, 1.0]
+across all four FR-IQA methods, and a similar concentration is observed for the four social media
+platforms (WeChat, QQ, WeiBo, Facebook). Second, the distributions for real and fake images are
+highly consistent for each distortion type.  This indicates that the FR-IQA methods perceive the
+overall quality of real and fake images similarly, without being significantly affected by potential
+artifacts. This property ensures that our approach treats both real and fake data fairly.
+
+D DATASET DETAILS
+
+We randomly sample 4,000 images (with an equal number of real and fake samples) from the Pro-
+GANtestset(totaling8,000images)(Wangetal.,2020)toformthebasedatasetfortheconfidence
+model. Based on this, we design eight common distortion types: JPEG compression, blur, additive
+white Gaussian noise, resize, darkening, brightening, and two types of color shift. Each distortion
+typeisappliedat10intensitylevels,generating40,000distortedimagespertype(coveringallinten-
+sities of that distortion), resulting in a total of 320,000 distorted images for training and evaluating
+the regression performance of the confidence model.  During training and evaluation, the original
+4,000 images are split into 2,500/500/1,000 for the training, validation, and test sets, respectively.
+After applying distortions, the overall dataset sizes become 202,500, 40,500, and 81,000 for these
+threesubsets. Theremaining4,000imagesfromtheProGANtestsetarereservedasanindependent
+Evaluation-datasetand are not involved in the training or validation of the confidence model.
+
+
+                                                         17
+
+PAGE 18
+                                    Published as a conference paper at ICLR 2026
+
+
+
+
+                                                  Table 5: Dataset construction with distortions, number of samples, and sources.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    Tofurtherevaluatethemodel’sgeneralizationcapability,weconstructtestsetscontainingbothseen
+                                    and Unseen Distortions.Seen Distortion test sets.We mergeBrightenandDarkenintoBright-
+                                    ness, andColor warmingandColor coolingintoColor shift. For each of the six distortion types
+                                    mentionedabove,weapplyarandomlyselectedintensitytoeveryimageinthetestset(originalim-
+                                    ages), resulting in six corresponding distorted subsets.Unseen Distortion test sets.This includes
+                                    the following ten categories: (1)Mix1: Randomly selects 2–4 distortion types from{JPEG, Blur,
+                                    Noise,Resize}andcombinesthemrandomly;(2)Mix2: Similarlyselects2–4types,butfixesJPEG
+                                    asthefinaldistortionstep(withothersappliedrandomlybefore).;(3)QQplatformtransmission;(4)
+                                    WeChatplatformtransmission;(5)Weiboplatformtransmission;(6)Facebookplatformtransmis-
+                                    sion; (7)Saturation adjustment; (8)Histogram equalization; (9)Image sharpening: using the
+                                    unsharp mask (USM) enhancement algorithm; (10)Super-Resolution (2×upscaling): performed
+                                    with a Transformer-based architecture (Zhang et al., 2022).
+                                    Table 6: The types of distortions and their corresponding intensities used in the training set. “Pa-
+                                    rameter Range” indicates the closed interval “[min, max]” for a single distortion.
+
+                                                                        Distortion Type    Parameter Range      Step
+                                                                        JPEG                    [24,96]                8
+                                                                        Gaussian blur         [0.3,3.0]              0.3
+                                                                        Noise              [0.0002,0.002]       0.0002
+Dataset                    Distortion                                Number    SourceResize              [0.20,0.92]           0.08
+Training                 JPEG,Blur,Noise,Resize,                202,500    2500samplesfromForenSynthsProGanColor warming  [1.05,1.5]            0.05
+Validation               Colorwarming,Colorcooling,              40,500    500samplesfromForenSynthsProGanColor cooling   [0.5,0.95]    −0.05
+Test                     Brighten,Darken                         81,000    1000samplesfromForenSynthsProGanBrighten         [0.05,0.5]            0.05
+                         JPEG                                           1,000Darken                  [−0.5,−0.05]  −0.05
+                         Blur                                             1,000
+SeenDistortion           Noise                                           1,000Additionally, in the sample filtering experiments, we introduce Cross-dataset evaluation based on
+testsets                 Resize                                          1,000
+                         Colorshift                                    1,000the Evaluation-dataset.  Specifically, from the three dataset collections–ForenSynths (Wang et al.,
+                         Brightness                                    1,0002020), Universal (Ojha et al., 2023), GenImage (Zhu et al., 2023) and DiTFake (Li et al., 2024b)–
+                         Mix1                                            1,000
+                         Mix2                                            1,000Fromthesamedatasplitasthetest
+                         Saturation                                     1,000                            18
+                         Histogram                                     1,000
+UnseenDistortion         Sharpening                                   1,000
+testsets                 SR(2×upscaling)                         1,000
+                         QQ                                              1,000
+                         WeChat                                        1,000
+                         Weibo                                          1,000
+                         Facebook                                      1,000
+Evaluation-dataset       randomlyselect
+singledistortion         onedistortiontype                         4,000    4000samplesfromForenSynthsProgan
+Evaluation-dataset       randomlycombine
+multipledistortions      2–4distortiontypes                        4,000
+                                                                            Subsetsforwhichthedetectorachieves
+                                                                            reasonableperformance(accuracy>0.75)
+Cross-dataset            randomlyselect                                     ForenSynths:{Stylegan,Stylegan2,Biggan,
+singledistortion         onedistortiontype                               –  Cyclegan,Stargan,Gaugan,Deepfake}
+                                                                            Universal:{glide      100  10,glide   100  27,glide  50  27,
+                                                                            DALLE,ldm       100,ldm    200,ldm    200  cfg},
+                                                                            GenImage:{ADM,BigGAN,glide,Midjourney,
+Cross-dataset            randomlycombine                                    SD   v14,SD    v15,VQDM},
+multipledistortions      2–4distortiontypes                              –  DiTFake:{FLUX,PixArt,SD3}
+
+PAGE 19
+                                  Published as a conference paper at ICLR 2026
+
+
+
+
+                                  Table 7:  The types of distortions and their corresponding intensities applied in the test set.  We
+                                  onlylistdistortiontypeswithtunableparameters;Histogram,Super-Resolution(2×),QQ,WeChat,
+                                  Weibo, and Facebook have no adjustable parameters and are omitted. For “Mix1” and “Mix2”, pa-
+                                  rameterrangesarenotfixed;instead,eachcomponentdistortionrandomlysamplesitsintensityfrom
+                                  its own range. The “Sharpening” distortion uses the Unsharp Mask algorithm internally, controlled
+                                  by radius (blur extent) and amount (enhancement strength).
+
+                                      Distortion Type                           Parameter Range                                          Step
+                                      JPEG                                        [24,100]                                                2
+                                      Gaussian blur                              [0.15,5.0]                                             0.15
+                                      Noise                                   [0.0001,0.002]                                       0.0001
+                                      Resize                                     [0.5,1.5]                                              0.2
+                                      Color shift                                  [0.5,1.5]                                              0.2
+                                      Saturation                           [0.1,1.9]                                              0.2
+                                      Brightness                        [−0.5,0.5]                                             0.2
+                                      Sharpening                           radius:[1,5], amount:[0.5,3]                Random within ranges
+                                      Mix1                      Random 2–4 from{JPEG, Blur, Noise, Resize}   Per-distortion random
+                                      Mix2                               Random 1–3 from above set + JPEG              Per-distortion random
+
+
+                                  we select subsets on which the detector achieves reasonable performance (accuracy>0.75). Note
+                                  that the number of selected subsets may vary across detectors due to performance differences. We
+                                  then apply single distortions (randomly selecting one distortion type and intensity) and multiple
+                                  distortions (randomly combining 2–4 distortion types) to these subsets, limiting the distortions to
+                                  the eight types already encountered by the confidence model.  Table 5 presents the full details of
+                                  ourdatasets,whileTables6and7summarizethedistortiontypesandtheircorrespondingparameter
+                                  ranges used in the training and test sets, respectively.
+
+
+                                  E    DISTORTION TYPE CLASSIFICATIONMODEL
+
+                                  To investigate whether features from NR-IQA methods can be used for explicit distortion identifi-
+                                  cation, we report the distortion-type classification results of several NR-IQA methods (ARNIQA,
+                                  QualiCLIP,Topiq(Chenetal.,2024b),andBRISQUE(Mittaletal.,2012)). Wefreezethefeature
+                                  extractors of each NR-IQA model and directly feed their output features into a classification head
+                                  for distortion-type classification.
+                                  We sample 9,600 distorted images from the distorted dataset, covering eight types of distortions:
+                                  JPEGcompression,noise,resizing,blur,darken,brighten,andtwotypesofcolorshifts(“SatDown”
+                                  corresponding to Cool and “Sat Up” corresponding to Warm).  Among these, 8,000 images are
+                                  used to train the classifier, and 1,600 are reserved for testing. We visualize the confusion matrices
+                                  corresponding to the best classification performance achieved by each NR-IQA method over 100
+                                  epochs, as shown in the figure 12.  “Sat Down” and “Sat Up” refer to the two specific types of
+                                  color shifts. It can be intuitively observed thatARNIQAachieves the best classification accuracy,
+                                  followed byQualiCLIP. Therefore, we selectARNIQAas the Distortion-Type Encoder in our
+                                  method section.
+
+                                  Table 8:  Regression performance ofDACOMacross detectors trained with different FR-IQA
+                                  (SSIM,MS-SSIM,FSIM,DISTS).EvaluatedbyPLCCandSRCConthetestset;allmethodsyield
+                                  consistently high scores, supporting the proposed FR-guided supervision strategy.
+
+
+
+
+
+
+
+
+
+
+                                                                                                   19
+
+   Method               CD                 ND                NPR+            FreqNet+            SAFE+              C2P*             Average
+                 PLCC   SRCC   PLCC   SRCC   PLCC   SRCC   PLCC   SRCC   PLCC   SRCC   PLCC   SRCC   PLCC   SRCC
+ DACOMSSIM     97.71    90.10    97.71    95.44    98.59    95.91    97.74    95.49    98.15    95.76    96.05    91.11    97.66    93.97
+DACOMMS-SSIM   98.03    90.55    97.70    95.57    98.62    96.12    97.77    95.54    98.24    95.08    96.01    91.23    97.73    94.01
+ DACOMFSIM     97.65    90.83    97.75    95.13    98.70    96.01    97.70    95.37    97.88    94.90    94.79    90.18    97.41    93.74
+ DACOMDISTS     97.70    90.93    97.59    95.21    98.64    96.38    97.77    95.54    98.16    95.70    96.05    91.70    97.65    94.24
+
+PAGE 20
+                                 Published as a conference paper at ICLR 2026
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                         (a) ARNIQA                                                        (b) QualiCLIP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                           (c) Topiq                                                        (d) BRISQUE
+
+                                                         Figure 12: Confusion Matrix for Distortion Type Classification
+
+                                 F    IMPLEMENTATION DETAILS
+
+                                 For our distortion-aware confidence model(DACOM), we employed the Adam optimizer with a
+                                 weight decay term. The batch size was set to 64, and the model was trained for 5 epochs with an
+                                 initial learning rate of1×10        −5  .  A linear warm-up strategy was applied during the first epoch,
+                                 where the learning rate increased gradually from 10% of the initial value to the full rate. After the
+                                 warm-up, a cosine annealing schedule was used, with the minimum learning rate set to 5% of the
+                                 initialvalue. ModelcheckpointsareselectedbasedonthehighestSRCCachievedonthevalidation
+                                 set. TheinputtotheConfidenceModel’sImageQualityEncoderandDistortion-TypeEncoderisof
+                                 size 256×256 pixels, while the inputto the Forensic Detector Encoder is processed according to the
+                                 specific requirements of the corresponding detector.
+
+                                 G    DISTORTION-TYPECONFIDENCE WITHDETECTIONPERFORMANCE
+
+                                       Table 9: Correlation between Distortion-Type Confidence and Detection Performance (%).
+
+
+
+
+
+
+
+
+                                 The regression performance of DACOM across all detectors is summarized in Table 8. We evaluate
+                                 therelationshipbetweentheaverageconfidenceandaccuracyofourproposedconfidencemodelon
+                                 datasets comprising various distortion types, including both seen and unseen distortions. As shown
+                                 in the Table 9, we report the PLCC and SRCC correlation metrics between average confidence and
+
+
+                                                                                                20
+
+   Method               CD                 ND                NPR+            FreqNet+            SAFE+              C2P*             Average
+                PLCC   SRCC   PLCC   SRCC   PLCC   SRCC   PLCC   SRCC   PLCC   SRCC   PLCC   SRCC   PLCC   SRCC
+ DACOMSSIM     93.25    83.82    86.49    86.18    90.83    85.80    90.67    86.76    98.23    88.95    71.65    75.94    88.52    84.58
+DACOMMS-SSIM   93.10    87.35    85.79    87.94    92.34    89.92    92.35    88.53    98.38    88.07    71.63    79.1888.93    86.83
+ DACOMFSIM     92.78    81.47    85.13    86.47    91.55    86.83    92.18    87.35    97.54    90.43    67.99    80.50    87.86    85.51
+DACOMDISTS     93.78    81.76    85.93    87.65    92.29    88.01    90.99    87.35    98.33    90.13    69.81    82.27    88.52    86.19
+
+PAGE 21
+                                  Published as a conference paper at ICLR 2026
+
+
+
+
+                                  accuracy.  Using MS-SSIM as the full-reference IQA method, the model achieves average PLCC
+                                  and SRCC values of 88.93% and 86.83%, respectively. Experimental results demonstrate that the
+                                  confidence model generalizes well across different distortion types, and its outputs exhibit a strong
+                                  correlation with detection performance, effectively predicting the likelihood of correct detection.
+
+                                  H    MULTI-DISTORTIONFILTERING
+
+                                  AsshowninTable10andTable11,wepresentthefilteringresultsunderrandommultipledistortions
+                                  for the Evaluation-dataset and Cross-dataset, respectively. This setting is particularly challenging,
+                                  especially for Cross-dataset, as most compared methods show limited performance gains.  While
+                                  this is the case, our approach still manages to achieve competitive results in BAcc and EER across
+                                  most screening ratios.
+
+                                                         Table 10: Results on Evaluation-dataset Multi-Distortion Filtering
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                            Table 11: Results on Cross-dataset Multi-Distortion Filtering
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  I    APPLICABILITY OFDACOM ACROSSDIFFERENTDATADOMAIN
+
+                                  We retrained our detector on the SD14 subset of GenImage (Zhu et al., 2023), following the same
+                                  experimental protocol and hyperparameter configuration.  During training,FreqNetandSAFE
+                                  failed to converge under the required augmentation pipeline—likely due to sensitivity to the high-
+                                  frequency artifacts and distributional characteristics of diffusion-generated images. Therefore, we
+                                  report results only forCD,ND,NPR, andC2P. Similarly,C2Puses the SD14-pretrained weights.
+                                  All models, includingDACOM                 DISTS, are trained on SD14, and baselines use temperature-scaled
+                                  logit calibration.  The distortion types and data volume used during training and evaluation are
+    MethodMethod      Distortion                                                     FilteringProportionDistortion                                                     FilteringProportionfully consistent with the original paper’s configuration.  We compare our proposed method (using
+                   BAcc↑EERBAcc↑EER↓↓     0.05              0.10              0.15              0.20              0.30              0.400.05              0.10              0.15              0.20              0.30              0.40
+     TopiqTopiq                      73.05  25.3860.86  35.9573.31  25.2261.06  35.6873.61  24.9861.31  35.4073.80  24.7061.55  35.062174.47  24.0361.94  34.6275.22  23.3362.47  33.84
+   ARNIQAARNIQA     72.79    25.7760.64    36.2072.94  25.7060.54  36.2973.03  25.6660.46  36.3573.11  25.6260.41  36.5073.34  25.5660.44  36.4473.65  25.5760.32  36.6473.84  25.3560.10  36.74
+  QualiCLIPQualiCLIP                 73.22  25.2461.00  35.7673.54  24.8861.37  35.2174.08  24.3761.70  34.8374.55  23.9861.98  34.4975.35  23.2562.54  33.8276.12  22.6663.06  33.42
+  LogitCalib.LogitCalib.             73.63  25.5060.68  36.3774.45  25.4360.69  36.6875.01  25.3760.65  37.0875.45  25.4160.71  37.4775.92  25.1560.81  37.8076.46  24.6961.12  38.28
+   FR-SSIMFR-SSIM                    60.95  35.8573.33  25.1761.27  35.5373.82  24.7661.61  35.0974.48  24.0261.96  34.7675.00  23.5062.72  33.9876.03  22.5963.46  33.4177.15  21.60
+ FR-MS-SSIM                          73.14  25.36    73.51  24.90    73.79  24.64   74.28  24.26    75.19  23.39    76.31  22.28
+ FR-MS-SSIM         72.79    25.7760.64    36.2060.82  36.0661.11  35.7761.42  35.4661.77  34.96    62.48  34.17    63.20  33.45
+   FR-FSIMFR-FSIM                    73.00  25.5260.83  36.0073.21  25.3361.04  35.8473.66  24.9561.29  35.1174.03  24.6161.60  35.2174.72  23.7962.30  34.4575.94  22.4563.14  33.64
+  FR-DISTSFR-DISTS                   61.0373.26  25.2135.7261.4473.56  24.9335.2461.8373.97  24.5334.7062.22  34.3474.29  24.1463.08  33.3675.32  23.0763.92  32.5476.69  21.63
+ DACOMSSIMDACOMSSIM                  73.78  24.6160.93  35.7174.69  23.5461.30  35.0675.70  22.6361.73  34.5076.70  21.7062.21  33.9678.02  20.2463.15  33.0678.72  19.0964.02  32.46
+DACOMMS-SSIMDACOMMS-SSIM72.79    25.7760.64    36.2073.77  24.5560.95  35.6574.61  23.6261.3535.0075.76  22.6061.79  34.4376.73  21.6462.28  33.8678.1863.20  33.0220.1178.83  19.0164.05  32.29
+ DACOMFSIMDACOMFSIM                  73.79  24.5360.96  35.7174.7561.35  35.0723.4675.72  22.6461.77  34.5476.73  21.6662.3633.8978.29  20.1163.35  32.9778.70  19.0664.12  32.33
+ DACOMDISTSDACOMDISTS                73.87  24.5160.9735.6474.83  23.4661.34  35.0175.91  22.4261.7734.4476.85  21.5662.2533.8578.26  20.1363.22  32.9878.95  18.7664.19  32.23
+
+PAGE 22
+                                  Published as a conference paper at ICLR 2026
+
+
+
+
+                                  DACOMDISTS as an example) against the outputs of the calibrated detectors.  As shown in the
+                                  Table 12,DACOM     DISTS consistently outperforms baseline calibration methods across both seen
+                                  and unseen distortions, delivering superior average and worst-case performance.
+
+                                                     Table 12: Multi-detector fusion performance on SD14 (%; Acc↑/ AP↑)
+
+
+
+
+
+
+
+                                  Moreover,itfacilitatesamorefavorableprecision–coveragetrade-offforconfidence-basedfiltering
+                                  on SD14, and generalizes well to cross-dataset evaluation on SD15.  As shown in Tables 13–16,
+                                  DACOM consistently surpasses baseline in the filtering task across every setting—including in-
+                                  domain and cross-domain datasets, as well as both single- and multi-distortion scenarios.
+                                                                    Table 13: Single-Distortion filtering (%) in SD14
+
+
+
+
+
+
+
+                                                                    Table 14: Single-Distortion filtering (%) in SD15
+
+
+
+
+
+
+
+                                                                    Table 15: Multi-Distortion filtering (%) in SD14
+
+
+
+
+
+
+
+                                                                    Table 16: Multi-Distortion filtering (%) in SD15
+
+
+
+
+
+
+
+                                  J    ABLATION RESULTS
+
+                                  AsshowninTable17,ourablationstudyshowsthataddingeachproposedmoduleleadstoasubstan-
+                                  tial increase in both PLCC and SRCC, demonstrating their individual necessity and effectiveness.
+                                  Table 18 reports the impact of different mappings (e.g., linear, power-law, logarithmic) on the final
+                                  routing performance.  The results show that the simple linear mapping (Linear) achieves the best
+                                  performance. This observation reveals an intriguing empirical regularity: in a statistical sense, the
+                                  detector’s detectability strength is approximately linearly related to thedegree of deviation from
+                                  random guessing. In contrast, overly nonlinear transformations may introduce additional noise or
+                                  distort the underlying distributional characteristics.
+
+
+                                                                                                   22
+   MethodMethodMethod       Seendistortion   UnseendistortionMethodMethodDistortion                                FilteringProportionDistortion                                FilteringProportionDistortion                               FilteringProportionDistortion                               FilteringProportionAverage           Worst
+                 BAcc↑EERBAcc↑EERBAcc↑EERBAcc↑EERAcc       AP       Acc         AP         Acc      AP      Acc      AP↓↓↓↓0.10              0.20              0.30              0.400.10              0.20              0.30              0.400.10              0.20              0.30             0.400.10              0.20              0.30             0.40
+ LogitCalib.    91.85    99.00    94.64      98.67      93.59   98.79   72.70   90.14LogitCalib.LogitCalib.LogitCalib.LogitCalib.76.81    21.7676.21    22.1287.77    11.8287.74    11.6077.77  22.6677.36  23.1289.88  11.4689.78  11.3178.19  23.6377.74  24.1791.11  10.7891.18  10.8178.44  24.4277.97  25.0092.62  9.7292.62  9.9378.62  24.7577.99  25.6194.20  8.3894.06  8.60
+DACOMDISTSDACOMDISTS76.81    21.7676.21    22.1278.69  18.9378.01  19.5281.01  15.8080.52  16.3283.00  13.9082.54  14.1784.51  12.4883.95  12.76
+DACOMDISTS   97.70    99.70    96.10      98.95      96.70   99.23   81.60   93.38DACOMDISTSDACOMDISTS87.74    11.6087.77    11.8290.28   7.7790.31   7.9792.69   5.1892.68   5.2294.34  3.8994.29  4.0295.55  2.9595.50  2.92
+
+PAGE 23
+                                  Published as a conference paper at ICLR 2026
+
+
+
+
+                                  Table 17: Ablation studies on the effectiveness of each module (%). Here,ϕ          (Q)IQ  andϕ      (T)IQ  denote
+                                  the use of QualiCLIP and Topiq as the Image Quality Encoder, respectively.
+
+
+
+
+
+
+
+                                  Table 18: Ablation on label transformation functions for DACOM training.  Performance (Acc↑/
+                                  AP↑) of multi-detector fusion under different label mappings.
+
+
+
+
+
+
+
+
+                                  K    REPRODUCIBILITYSTATEMENT
+
+                                  We have made every effort to ensurethe reproducibility of our work. All datasets used in this paper
+                                  are publicly available and the exact training/testing splits and preprocessing steps are documented
+                                  in Appendix D. Our proposed Distortion-Aware Confidence Model (DACOM) is described in de-
+                                  tail, including its motivation in Section 3, methodological steps in Section 4, training procedures in
+                                  Section4.4,andhyperparametersandimplementationdetailsinSection5.1andAppendixF.Tofur-
+                                  therfacilitatereproduction,wewillreleaseoursourcecode,pretrainedmodels,anddata-processing
+                                  scripts upon publication.
+
+                                  L    THEUSE OFLARGELANGUAGEMODELS(LLMS)
+
+                                  During the preparation of this manuscript, Large Language Models (LLMs), specifically GPT-5,
+                                  were employed as versatile writing and research assistants. Their primary contributions included:
+
+                                           •Refining and Polishing Language:Improving clarity, conciseness, and grammatical ac-
+                                              curacy of the text, with particular attention to academic English style and phrasing.
+                                           •Formatting LaTeX Code:Supporting the generation and debugging of LaTeX code for
+                                              tables,figures,andmathematicalequations,therebyensuringprofessionalpresentationand
+                                              consistent formatting.
+
+                                  It is important to note that all core research ideas, experimental design, implementation, and inter-
+                                  pretation of results were independently conceived and conducted by the human authors. The LLM
+                                  was used solely as a tool to enhance the quality and readability of the manuscript’s presentation,
+                                  without contributing to the original scientific findings.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Labelfunctionsα   IDdistortion    OODdistortion      Average          Worst                        23
+
+ϕM ϕ(T)
+Linear(Ours)           –    95.37IQ  ϕ(Q)IQ  ϕDT         CD                ND              NPR+           FreqNet+          SAFE+             C2P*            AveragePLCC  SRCC  PLCC  SRCC  PLCC  SRCC  PLCC  SRCC  PLCC  SRCC  PLCC  SRCC  PLCC  SRCC/99.47       92.84/98.33      93.79/98.76    84.90/93.16
+ypow =(y)   α            0.5    95.20/99.41       92.46/97.78      93.49/98.39    82.80/90.66✓                           93.40   78.22   93.76   87.91   97.23   94.04   90.86   86.50   94.21   91.33   86.86   81.88   92.72   86.65
+ypow =(y)   α            2.0    95.35/✓   ✓                   95.14   81.41   95.03   90.34   97.80   94.29   94.04   90.16   95.61   92.74   88.18   82.63   94.30   88.6099.4792.65/98.19      93.66/98.67    84.00/92.15
+ylog = log(1+αy         lin)✓        ✓          96.49   85.92   96.48   92.99   98.33   95.12   96.56   93.23   96.78   94.12   91.99   87.01   96.11   91.40log(1+α)            3.0    95.13/99.38       92.29/97.58      93.36/98.26    82.80/90.46
+yexp = 1−e   −αy   lin✓        ✓   ✓  97.71   90.10   97.71   95.44   98.58   95.91   97.74   95.49   98.15   95.76   96.05   91.11   97.66   93.97
+          1−e   −α          3.0    94.72/99.12       92.14/97.54      93.11/98.14    82.10/90.16

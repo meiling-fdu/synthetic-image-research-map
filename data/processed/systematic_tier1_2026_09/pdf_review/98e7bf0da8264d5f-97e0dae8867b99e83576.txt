@@ -1,0 +1,893 @@
+PAGE 1
+ ForenX:TowardsExplainableAI-GeneratedImageDetectionwithMultimodal
+                                                  LargeLanguageModels
+
+
+           Chuangchuang Tan1,2*  Jinglu Wang2    Xiang Ming2    Renshuai Tao1    Yunchao Wei1
+                                                         Yao Zhao1    Yan Lu2
+                               1Beijing Jiaotong University       2Microsoft Research Asia
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure1. WepresentasampleresultofourexplainableAI-generatedimagedetectionmethod,ForenX.GivenanimagecreatedbyFlux.ai
+[3], ForenX not only delivers the detection result (“Yes”), but also offers a forensic analysis that resonates with human reasoning.  For
+instance, the third evidence, highlighting the lack of a supporting structure for the microphone, is closely aligned with human intuition,
+which standard MLLMs fail to provide (demonstrated in our experiments).
+
+                            Abstract                                        stratethatevenlimitedmanualannotationssignificantlyim-
+   AdvancesingenerativemodelshaveledtoAI-generated                          prove explanation quality. We evaluate the effectiveness of
+images visually indistinguishable from authentic ones. De-                  ForenX  on two major benchmarks.   The model’s explain-
+spite numerous studies on detecting AI-generated images                     ability is verified by comprehensive subjective evaluations.
+with classifiers, a gap persists between such methods and
+human cognitive forensic analysis.  We present ForenX, a
+novel method that not only identifies the authenticity of im-               1.Introduction
+ages but also provides explanations that resonate with hu-
+man thoughts.   ForenX employs the powerful multimodal                      Recent advancements in generative models, such as GANs
+large language models (MLLMs) to analyze and interpret                      and diffusion models [14,17,23,24,43], have led to the
+forensic cues. Furthermore, we overcome the limitations of                  creation of AI-generated images that are nearly indistin-
+standard MLLMs in detecting forgeries by incorporating a                    guishable from real-world photographs,  raising concerns
+specializedforensicpromptthatdirectstheMLLMs’atten-                         about potential misuse.  As a result, developing effective
+tiontoforgery-indicativeattributes. Thisapproachnotonly                     methods for detecting AI-generated images has become a
+enhancethegeneralizationofforgerydetectionbutalsoem-                        critical research focus.
+powers the MLLMs to provide explanations that are accu-                        Recent studies in AI-generated image detection [7,12,
+rate, relevant, and comprehensive.  Additionally, we intro-                 30,31,50,51] have predominantly focused on detection-
+duce ForgReason, a dataset dedicated to descriptions of                     based approaches (Fig.2(a)), aiming to differentiate AI-
+forgeryevidencesinAI-generatedimages. Curatedthrough                        generated and authentic images by detecting specific arti-
+collaboration between an LLM-based agent and a team of                      facts or patterns introduced by generative models.  These
+human annotators, this process provides refined data that                   methods rely on artifact-based features to capture subtle
+further enhances our model’s performance.   We demon-                       traces of forgery.   However, they are prone to the clas-
+
+   *Work done during C. Tan’s internship at MSRA.                           sic overfitting issue, restricting their capacity to generalize
+
+
+                                                                        1
+
+PAGE 2
+Figure 2. Empower MLLMs to detect AI-generated Images with reliable explanations. Detection model (a) only outputs binary classifica-
+tion without human-understood explanations. Prompt engineering (b), even integrated with detection result (c) may generate explanations
+without focusing on forensic evidences. Our method (d) enhances the MLLM by incorporating the specialized forensic prompt.
+
+
+across new generative models.                                                 authenticity1 within the standard MLLMs.   To overcome
+   Moreover, detection models, based on binary classifica-                    thislimitation,weintroducetheforensicprompt,aspecial-
+tion, typically identify indicative patterns in a black-box                   ized input designed to direct MLLMs towards prioritizing
+manner.  Such patterns, often imperceptible or incompre-                      authenticity and its related cues, which are beyond con-
+hensible to humans, resulting in difficulties for humans to                   ventional text and image inputs.  This strategy, integrated
+verify their detection results. In contrast, human observers                  with LoRA [18] fine-tuning, enhances MLLMs’ ability to
+spot AI-generated images by examining not only artifacts                      achieve both robust detection and reliable explanation gen-
+butalsothecontent,suchasunnaturalhumanposes,incon-                            eration.
+sistent lighting conditions, or violations of physical laws.                      The forensic prompt is considered to fulfill three essen-
+There is a significant discrepancy in the forensic analysis                   tial requirements for effectiveness.  (1) Initially, it should
+by detection models and humans.  To bridge this gap, we                       enable multi-modal representation with alignment of text
+introduce an approach that goes beyond binary classifica-                     and image features.  We derive inspiration from the detec-
+tion. Ourmethodenrichestheforensicanalysisofdetection                         tor [37], which showcases the utility of pretrained CLIP-
+results, delivering explanations that highlight both content-                 ViT [11,42] features.  We construct our forensic prompt
+related anomalies and generation-based artifacts, thereby                     based on the CLIP-ViT features. However, we observe that
+aligningthemodelclosertohumanperceptualandcognitive                           the pretrained features, designed for general purpose, may
+strategies. We term our method as theForensics eXplainer                      not inherently possess the specific authenticity.   (2) The
+(ForenX). Additionally, model-generated explanations can                      prompt should encapsulate effective cues indicative of au-
+improve user understanding of the detection results and fa-                   thenticity.  We integrate the features with authenticity at-
+cilitate a “double-check” process, enabling human verifica-                   tributes by tuning them specifically for detection with an
+tion of the model’s predictions.                                              additional detection loss. (3) Finally, the prompt should be
+                                                                              adaptabletoMLLMs. Toensurethis,wefine-tunetheseen-
+   Multimodal Large Language Models (MLLMs), such as                          hanced features along with the forensic prompt during the
+LLava [29] and GPT-4 Vision [4], demonstrate compelling                       MLLM training phase. This process is aimed at intensify-
+abilitiesinvariouscross-modaltasks,includingunderstand-                       ingMLLMs’focusonauthenticitycues,makingthemmore
+ing and reasoning.  These abilities render them highly ad-                    adept at identifying authentic content. As demonstrated in
+vantageous for achieving explainable AI-generated image                       our experiment, our model with fine-tuned CLIP-ViT fea-
+detection. Adopting prompt engineering in the straightfor-                    turesachievessignificantlybetterperformancecomparedto
+ward manner to guide MLLM outputs (Fig.2(b)) tends to                         the untuned ones.
+generatehallucinations,whichmaynotprovidemeaningful                               Since no existing dataset provides annotations detailing
+explanations. Even when prompts are integrated with pre-                      why an image appears AI-generated, we initially train our
+determined classification results (Fig.2(c)), the approach                    model using captions generated by the method in Fig.2(b),
+proves unsatisfactory.   Likewise,  enhancing MLLMs by                        as it is impractical to obtain large-scale annotations from
+simply fine-tuning them with textual annotations does not                     humanannotatorsforAI-generatedimages. However,these
+suffice for reliable explanation. All the effectiveness is at-                    1Authenticityinthispaperreferstothelikelihoodanimageiscaptured
+tributed to the inherent lack of considerations for image                     in the real world rather than generated by AI.
+
+
+                                                                          2
+
+PAGE 3
+machine-generated  captions  lack  alignment  with  human                    such as GPT-4V [4] and LLaVA [28] has garnered signifi-
+reasoning.  To address this, we collected human-provided                     cantattentionduetotheirunparalleledproficiencyinimage
+annotations specifying the attributes that make an image                     comprehension and analysis.  Several studies [22,44,54]
+seem AI-generated.  We then fine-tune the model, initially                   have employed prompt engineering to explore the applica-
+trained on machine generated low-quality captions, using                     bility of MLLMs on new tasks, such as face forgery anal-
+thishuman-annotateddata. Thisapproachallowsthemodel                          ysis and reasoning.  Moreover, research efforts [9,25,26]
+to attain human-like reasoning capabilities with a minimal                   have been directed towards instruction tuning to augment
+set of human annotations.                                                    the performance of large language models on specialized
+   In conclusion, we present ForenX, the first approach to                   tasks. Recent advancements in deepfake detection have in-
+extendMLLMsforExplainableAI-generatedImageDetec-                             troducedmethodologiesleveragingMLLM.SNIFFER[40]
+tion. Our contributions are three-fold:                                      employs  InstructBLIP  [9]  for  the  enhancement  of  mis-
+•We propose a simple yet effective pipeline, ForenX, to                      information detection capabilities, showcasing its signifi-
+  enable MLLMs for explainable AI-generated image de-                        cant contributions to the domain of information security.
+  tection. ForenXdemonstratesstrongrecognitioncapabil-                       FFAA [19] integrates a fine-tuned Multimodal LLM with a
+  ities, generalization performance, and explainability.                     Multi-answer Intelligent Decision System for Open-World
+•We introduce the concept of  forensic prompt to guide                       FaceForgeryAnalysisVQA.ForgeryGPT[27]utilizespre-
+  MLLMs, enhancing their ability to detect AI-generated                      cise forgery mask data to refine LLM capabilities for ex-
+  images accurately.                                                         plainable image forgery detection.   Jia et al. [22] metic-
+•We develop an explainable AI-generated image detec-                         ulously crafted prompts to assess MLLM’s effectiveness
+  tion  dataset,  ForgReason,  which  pairs  images  with                    in face forgery detection.  Despite initial explorations into
+  authenticity-related descriptions annotated by human an-                   leveraging MLLM for detecting forgery image,  existing
+  notators and GPT-4 Vision, facilitating alignment with                     studies have mainly focused on identifying facial manip-
+  human reasoning.                                                           ulations and exhibit a gap in AIGC forgery detection.
+
+2.RelatedWorks                                                               3.Method
+AI-Generatedimagedetection.    Toimprovethegeneral-                          In this work, we aim to develop a Multimodal Large Lan-
+izability of models in AI-generated image detection, cur-                    guage Model (MLLM) capable of detecting AI-generated
+rent research primarily focuses on artifact extraction and                   images, with a focus on three key attributes:  recognition
+detector design within this domain.  Various low-level ar-                   ability, generalizability, and explainability. An overview of
+tifact features have been introduced to capture generation                   the ForenX architecture is shown in Fig.3.  Our primary
+traces, including frequency-based attributes [20], gradient                  approach involves incorporating a forensic prompt into the
+information [46], neighboring pixel relationships [50], and                  MLLM,suchasLLava[29]. Intheremainderofthissection,
+random-mapping features [47].  For example, BiHPF [20]                       we describe the technical aspects of ForenX, emphasizing
+enhances artifact magnitudes using dual high-pass filters,                   the construction of the forensic prompt and the two-stage
+while LGrad [46] utilizes gradient data from pre-trained                     training strategy. We also outline the creation of the Foren-
+models as representations of artifacts. NPR [50] presents a                  Reason dataset.
+simpleyeteffectiveapproachbyreconsideringup-sampling                         3.1.TheArchitectureofForenX
+operations for artifact representation.  In addition to low-                 As discussed in Sec.1, we introduce an forensic prompt
+level features, large pre-trained models have been lever-                    to guide the MLLM’s focus on assessing the authenticity
+aged to capture high-level forgery traces in AI-generated                    of the image. Leveraging the strong performance of CLIP-
+content detection tasks.  UniFD [37] directly incorporates                   ViT[11]forthistask,weusefeaturesextractedfromCLIP-
+image features from the CLIP model for linear classifica-                    ViT to construct the forensic prompt.   To maintain fea-
+tion, showcasing robust deepfake detection even with un-                     tureconsistencyandreducetraininginstability,wealsouse
+seen sources. FatFormer [30] combines frequency analysis                     CLIP-ViT features as the representation of image content,
+with a text encoder as an adapter to the frozen CLIP vi-                     ensuring aligned feature distributions across inputs.
+sion model, thereby enhancing detection performance sig-                         Formally, the construction of the forensic prompts is as
+nificantly.  After investigating the mechanism of CLIP in                    follows:                  Fv =g(Xv),
+deepfake detection, C2P-CLIP[48] introduces the category
+common prompt to enhance detection accuracy.                                                           Ffv  =lf(Fv),                            (1)
+
+Multimodal large language model.    In recent years, the                                               Hfv  =mf(Ffv ),
+advent of Multimodal Large Language Models (MLLMs)                           in this setup, Xv denotes the input image, g represents the
+
+                                                                         3
+
+PAGE 4
+Figure 3. Overview of our ForenX: A Simple Yet Effective Explainable AI-Generated Image Detection Pipeline. To overcome the lim-
+itations of standard MLLMs in detecting forgeries, we incorporate a specialized forensic prompt that directs the MLLMs’ attention to
+forgery-indicative attributes.
+
+featureextractorandFv referstotheextractedfeatures. The                       fine-tuning of LLM:
+lf andmf constitute the forensic projector designed to ex-
+tract forensic prompt.   We apply forensics encoder lf  to                                      Linstruction =Loss(Tp,Tl).                   (5)
+project these features into the forensics embedding space,
+resulting inFfv , which also serves as the input for an auxil-                inwhichTl istheconversationaldataforinstructiontuning.
+iary forgery detection loss, providing additional constraints                 Following the foundation MLLM, we adopt instruction-
+on the forensic embedding space.  Here Hfv  serves as the                     tuning using an auto-regressive objective, enabling model
+forensic prompt in our model andmf is the mapping func-                       to predict subsequent outputs based on input instructions.
+tion from the forensics embedding space to the word em-                           Inourpipeline,itisessentialthattheLLMcanindepen-
+bedding space.                                                                dently identify AI-generated images to generate convinc-
+   We use a trainable forensics embedding d as the foren-                     ing forensic reasoning.  To achieve this, we avoid directly
+sics encoderlf in our experiments. Specifically, the foren-                   converting detection results into prompts (e.g., “this image
+sics embedding d transforms the visual feature Fv  into                       is real” or “this image is AI-generated”).  Instead, we in-
+forensics featuresFfv  as follows:                                            troduce a forensic prompt to guide the LLM’s attention to
+                                                                              both the semantic content and authenticity elements within
+                           Ffv  =Fv⊗d.                               (2)      theimage,promptingthemodeltogeneratemoreinsightful
+In our experiments,⊗ denotes the Hadamard product.  To                        forensic analyses.
+
+further integrate forensics information intoFfv , we impose                   3.2.DatasetConstruction
+constraints using forgery detection labelsyd∈{0,1}:                           To our knowledge,  no existing dataset directly supports
+                Ldetection =Loss(fd(Ffv ),yd),                (3)             training MLLMs for AI-generated image detection, as we
+                                                                              require image captions focused on authenticity.  However,
+in whichfd is a function that maps featureFfv  to the clas-                   since modern AI-generated images closely mimic real im-
+sificationspace. Inourexperiment,weweemployasimple                            ages,creatinglarge-scalelabeleddatathroughhumananno-
+summation function sum(·) as fd.  We then connect Ffv                         tation alone is impractical. A small sample size would also
+into the word embedding space usingmf. This mapping is                        risk quick overfitting.  To address this, we first use LLMs
+implemented using two MLP layers.                                             to generate a large set of preliminary captions focused on
+   To achieve comprehensive content understanding, AI-                        image authenticity.  We then manually filter for cases that
+generated image detection and forensics analysis, we feed                     are difficult for state-of-the-art binary classifiers but read-
+the text tokens Ht (from text prompts), visual content to-                    ily identifiable by human judgment.  The data from LLMs
+kensHcv(same as LLava), and forensic promptHfv into the                       serves as a pretraining set, while the human-labeled exam-
+Large Language Model(LLM), as follows:                                        ples are used for fine-tuning, enhancing the model’s align-
+                                                                              ment with human reasoning on image authenticity.
+                     Tp =llm(Ht,Hcv,Hfv).                       (4)           3.2.1.DataGenerationwithLLM
+
+We utilize conversations with image captions, detection re-                   For fair comparison with other model in the paper,  we
+sults, and forensics descriptions as labels for instruction                   only  use  the  LLava  [29]  to  generate  the  image  cap-
+
+
+                                                                          4
+
+PAGE 5
+tions for two widely used forgery detection datasets, Gen-                  the second stage, as the initial 2,215 human-annotated im-
+image  and  ForenSynths.     For  each  image  Xv  in  the                  ages consist solely of AI-generated samples, which could
+datasets,  it  is  annotated  with  two-round  conversational               lead to overfitting.  We further sample 5000 real and 1000
+data {(X1q,X1a),(X2q,X2a)}.   This includes two types of                    fakefromGenimagedataset,resultinginatotalof8,215im-
+question-and-answer pairs: content-related (X1q,X1a), and                   ages. Following is the optimization details for each stage:
+detection results(X2q,X2a).                                                 Stage 1: Initial training for general recognition and ex-
+   Specifically, responses related to image content are gen-                plainability.
+eratedbythepre-trainedLLavamodel,usingquestionsthat                             We begin by using the pre-trained LLava model as the
+are randomly chosen from a predefined list within LLava2                    foundational MLLM, fine-tuning it on the ForenSynths and
+For questions about detection results, answers are directly                 GenImagedatasets,whichprovidecontentcaptionsandde-
+derived from image labels. For example, if an image is la-                  tection labels.  During this stage, both the CLIP-ViT en-
+beled as AI-generated, the corresponding question and an-                   coderandtheLLMarefine-tunedusingLoRA.Theoverall
+swer pair might be:                                                         loss function applied in this stage is:
+ • Question: Summarize whether this image is generated                                       L =Ldetection +Linstruction                  (6)
+   by AI, please return beginning withYesorNo.
+ • Answer: Yes, this image is typically generated by AI.                    Stage2: Fine-tuningwiththededicatedForgReason.. In
+   The test samples will marked as AI-generated/authentic                   this stage, we utilize the 8,215 images to further enhance
+if the answer starts with Yes, and authentic if the answer                  the explainability of the LLM. During this phase, only the
+starts withYes/No in the evaluation process.                                LLM is fine-tuned using LoRA with the instruction-based
+                                                                            lossLinstruction,whileallotherlayers,includingtheCLIP-
+3.2.2.DataAnnotationwithHuman                                               ViT,remainfrozen. Thisfine-tuningprocessfocusesonim-
+To  further  enhance  the  forensics  interpretability  of  the             provingthemodel’sabilitytogeneratedetailedandaccurate
+LLM, we involve human annotators to label 2,215 images                      forensicsexplanations,guidingthemodeltobetterinterpret
+with explanations on why each image is identified as AI-                    and explain the authenticity of AI-generated images.
+generated. The detailed annotation process is as follows:
+ 1. Select Images:  Obtain images from Midjourney and                       4.Experiments
+    choose those that have a realistic style.                               Dataset.   Weconductourexperimentontwomajorbench-
+ 2. Annotate with boxes: Manually annotate areas in the                     marks, Genimage and ForenSynths, for detection accuracy
+    imagesthatappearunreasonableusingboxannotations.                        evaluationandoneconstructeddataset,ForgReason,forex-
+    Provide a description explaining why these areas are                    plainability fine-tuning.
+    deemed unreasonable.                                                    • Genimage.    This  dataset  predominantly  utilizes  vari-
+ 3. Summarize with GPT-4 Vison:  Use GPT-4 Vision                              ous  diffusion  models  for  image  generation,  including
+    to summarize the images and the manual annotations,                        Midjourney [1], SDv1.4 [43], SDv1.5 [43], ADM [10],
+    generating final explanations for why the images are                       GLIDE[36],Wukong[2],VQDM[15],andBigGAN[5].
+    considered AI-generated.                                                • ForenSynths.  Following Wang et al.  [53], our dataset
+                                                                               employs ProGAN as part of its training configuration.
+   These images were annotated with captions and detec-                        We utilize a four-class categorization scheme consisting
+tion results following the methods described in Sec.3.2.1.                     of horse, chair, cat, and car classes as outlined by Tan et
+The detailed flowchart of Human-annotation is provided in                      al. [50]andLiuetal. [30]. Thetestsetencompasseseight
+thesupplementarymaterials. BeforeusingGPT-4Visionto                            subsetsderivedfromvariousgenerativemodels: ProGAN
+generate summaries, we convert bounding box coordinates                        [23],StyleGAN[24],BigGAN[5],CycleGAN[56],Star-
+into textual descriptions that convey relative spatial posi-                   GAN [8], GauGAN [38], and Deepfake            3.
+tions. Inthisprocess,somedetailedannotationsareomitted                      • ForgReason. This dataset comprises 2215 realistic fake
+to adhere to OpenAI’s restrictions.                                            images from Midjourney, alongside 5000 real and 1000
+3.3.OptimizationStrategy                                                       fake sampled from Genimage dataset. Each image from
+                                                                               Midjourney includes manually annotated fake descrip-
+Ourtrainingprocessfollowsatwo-stageoptimizationstrat-                          tions. All these images collectively for training.
+egy to address the imbalance between annotations obtained
+fromtheLLMandthosefromhumanannotators. Addition-                            Implementation detail.    Our implementation uses LLava
+ally,weintroducereal-worldimagesasnegativesamplesin                         8B as the foundational Multimodal Large Language Model
+
+
+   2Some samples can be found in the supplementary materials.                  3Deepfake
+
+
+                                                                        5
+
+PAGE 6
+                   Table 1.  Cross-Diffusion-Sources Evaluation on the Genimage Dataset.  The model is trained using SDv1.4 as described in [57].
+                   LLAVA-PEreferstoLLAVA-Prompt-Engineering,whileLLAVA-FTdenotesLLAVA-FineTuning. Wehighlightthehighestandthesecond
+                   highest numbers ingreenandbluerespectively.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        Table 2. Cross-GAN-SourcesEvaluationonForenSynthsdataset. We adopt ProGAN as the training source following [30,50].
+
+                   (MLLM),  incorporating  Llama3  as  the  large  language                                       recognitionandgeneralizationabilitiesoftheLLMarecru-
+                   model component. We optimize the model using an initial                                        cial. Themodelmusthavestrongdetectioncapabilitiesand
+                   learning rate set to 2× 10−5. The batch size is configured                                     beabletogeneralizetounknownsourcesforitsforgeryex-
+                   to 128, and the model is trained for 1 epoch.  We apply                                        planations to be considered reliable and acceptable.
+                   LoRA on the q          proj, k      proj, and v        proj layers using the
+                   Parameter-Efficient Fine-Tuning (PEFT) [35] library.  The                                      GenImageevaluation.  To assess the recognition and gen-
+                   hyperparameters for the LoRA layers are set as follows:                                        eralizationcapabilitiesofourForenXmodel,weuseStable
+                   lora    r = 8, lora        alpha = 16, and lora               dropout = 0.9.                   Diffusion 1.4 as the training set and evaluate our method
+                   The proposed method is implemented in PyTorch [39] and                                         on images generated by eight different models:  Midjour-
+                   runs on 4 Nvidia A100 GPUs.   Consistent with baseline                                         ney, SDv1.4, SDv1.5, ADM, GLIDE, Wukong, VQDM,
+                   studies [30,37,50], we use mean accuracy (mAcc) as the                                         andBigGAN.Thedetectionresultsarepresentedin Tab.1,
+                   evaluation metric to assess model performance.                                                 showing that ForenX achieves an impressive accuracy of
+                                                                                                                  97.8%.   During Stage 2 training, employing ForgReason
+                   4.1.RecognitionandGeneralizationEvaluation                                                     to enhance the model’s interpretability results in a slight
+                                                                                                                  0.2% impact on its recognition performance.  Our model
+                   We evaluate the recognition and generalization capabilities                                    outperforms both non-MLLM and MLLM baselines.  Our
+Methods                 Venues             Abilities                                                         TestModelsof ForenX using the GenImage and ForenSynths datasets.ForenX is composed of CLIP, LLM, and two projectors,
+Methods           Venues            Abilities                                                              TestModelsIn the domain of deepfake detection, we believe that theDetection   Explain   Midjourney   SDv1.4   SDv1.5   ADM   GLIDE   Wukong   VQDM   BigGAN   mAccwith  CLIP  primarily  used  for  image  feature  extraction.
+ResNet-50[16]         CVPR2016               ✓        ×            54.9          99.9       99.7      53.5      61.9        98.2        56.6        52.0       72.1Detection   Explain   ProGAN   StyleGAN   StyleGAN2   BigGAN   CycleGAN   StarGAN   GauGAN   DeepfakemAcc
+CNNDet[53]      CVPR2020             ✓       ×         91.4         63.8           76.4          52.9          72.7          63.8         63.9         51.7                67.1
+DeiT-S[52]              ICML2021         ✓        ×            55.6          99.9       99.8      49.8      58.1        98.9        56.9        53.5       71.6
+Frank[13]         PMLR2020           ✓       ×         90.3         74.5           73.1          88.7          75.5          99.5         69.2         60.76               78.9
+Swin-T[32]             ICCV2021             ✓        ×            62.1          99.9       99.8      49.8      67.6        99.1        62.3        57.6       74.8
+Durall[12]         CVPR2020            ✓       ×         81.1         54.4           66.8          60.1          69.0          98.1         61.9         50.2              67.7
+CNNSpot[53]          CVPR2020               ✓        ×            52.8          96.3       95.9      50.1      39.8        78.6        53.4        46.8       64.2
+Patchfor[6]        ECCV2020           ✓       ×         97.8         82.6           83.6          64.7          74.5          100.         57.2         85.0               80.7
+Spec[55]                 WIFS2019           ✓        ×            52.0          99.4       99.2      49.7      49.8        94.8        55.6        49.8       68.8
+F3Net[41]         ECCV2020           ✓       ×         99.4         92.6           88.0          65.3          76.4          100.         58.1         63.5                80.4
+F3Net[41]              ECCV2020            ✓        ×            50.1          99.9       99.9      49.9      50.0        99.9        49.9        49.9       68.7
+SelfBland[45]     CVPR2022              ✓       ×         58.8         50.1           48.6          51.1          59.2          74.5         59.2         93.8             61.9
+GANDet[34]       ICIP2022              ✓       ×         82.7         74.4           69.9          76.3          85.2          68.8         61.4         60.0GramNet[33]           CVPR2020              ✓        ×            54.2          99.2       99.1      50.3      54.6        98.9        50.8        51.7       69.972.3
+BiHPF[20]        WACV2022            ✓       ×         90.7         76.9           76.2          84.9          81.9          94.4         69.5         54.4                78.6
+UnivFD[37]            CVPR2023           ✓        ×            93.9          96.4       96.2      71.9      85.4        94.3        81.6        90.5       88.8
+FrePGAN[21]     AAAI2022              ✓       ×         99.0         80.7           84.1          69.2          71.1          99.9         60.3         70.9               79.4
+NPR[50]               CVPR2024        ✓        ×            81.0          98.2       97.9      76.9      89.8        96.9        84.1        84.2       88.6
+LGrad[51]        CVPR2023       ✓       ×         99.9         94.8           96.0          82.9          85.3          99.6         72.4         58.0                     86.1
+FreqNet[49]            AAAI2024        ✓        ×            89.6          98.8       98.6      66.8      86.5        97.3        75.8        81.4       86.8
+UniFD[37]       CVPR2023       ✓       ×         99.7         89.0           83.9          90.5          87.9          91.4         89.9         80.2                      89.1
+FatFormer[30]         CVPR2024            ✓        ×            92.7         100.0      99.9      75.9      88.0        99.9        98.8        55.8       88.9
+FreqNet[49]       AAAI2024             ✓       ×         99.6         90.2           88.0          90.5          95.8          85.7         93.4         88.9              91.5
+DRCT[7]                ICML2024            ✓        ×            91.5          95.0       94.4      79.4      89.2        94.7        90.0        81.7       89.5
+NPR[50]          CVPR2024           ✓       ×         99.8         96.3           97.3          87.5          95.0          99.7         86.6         77.4                 92.5
+CLIP(336px)-Lora           -         ✓        ×            94.2          99.0       99.1      50.7      94.2        98.9        88.2        61.2       85.7
+FatFormer[30]    CVPR2024           ✓       ×         99.9         97.2           98.8          99.5          99.3          99.8         99.4         93.2                 98.4
+LLAVA                NeurIPS2023     ✓       ✓            51.6          50.5       50.6      50.2      51.7        52.8        50.6        54.0       51.5
+LLAVA           NeurIPS2023    ✓      ✓         61.9         50.2           49.9          54.8          53.6          52.8         61.3         50.5                       54.4
+LLAVA-PE            NeurIPS2023     ✓       ✓            50.6          50.4       50.4      50.1      50.9        52.1        51.1        52.9       51.1
+LLAVA-PE      NeurIPS2023    ✓      ✓         63.5         50.1           50.0          54.9          59.4          53.2         59.5         51.6                         55.3
+LLAVA-FT            NeurIPS2023     ✓       ✓            90.8          95.2       95.1      64.5      97.5        93.9        95.6        95.0       91.0
+LLAVA-FT      NeurIPS2023    ✓      ✓         96.7         61.6           53.9          84.8          89.6          85.0         95.3         65.1                         79.0
+ForenX-S1                    ours             ✓             ✓            97.9           97.8       97.7       97.4       98.0         98.0        97.7         97.8        97.8
+ForenX                ours             ✓           ✓          99.9          94.8           89.8          98.6         96.6           93.2         99.1          83.2       94.4
+ForenX-S2                    ours             ✓             ✓            97.9           97.8       97.7       96.9       98.0         98.0        97.8         97.0        97.6
+
+PAGE 7
+Figure4. ExamplesofExplainableAI-GeneratedImageDetectionusingLLavaandourForenX.ForenXidentifiesanomaliesinthelocation
+andstatusofobjects,suchasthepigeonandCoca-Cola,withintheimages. Duetospacelimitations,thefulldescriptionisprovidedinthe
+supplementary materials.
+                                                                          altering prompts to implement prompt engineering, named
+                                                                          LLava-PE,weassessLLava’sdetectionability. Bothvanilla
+                                                                          LLava and LLava-PE achieved accuracies of only 51.5%
+                                                                          and 51.1%, respectively. This is due to LLava’s design fo-
+                                                                          cus on image content understanding, lacking specific in-
+                                                                          sights needed for AI-generated image detection detection.
+                                                                          Toaddressdatasetbias,wefine-tunedLLavausingthesame
+                                                                          dataset with LoRA. This fine-tuning improved detection
+                                                                          performanceto79.7%,stillsignificantlylessthanForenX’s
+                                                                          97.8% accuracy.
+                                                                              Unlike LLava, which exclusively extracts image con-
+                                                                          tent for LLM input,  our approach extracts both content
+                                                                          information and forensics-related details for LLM input,
+                                                                          significantly  enhancing  detection  capabilities.    ForenX-
+                                                                          S1 achieves an accuracy of 97.8%, notably outperforming
+Figure5. UserstudyforComparingExplanationPerformanceBe-                   LLava, LLava-PE, and LLava-finetune by 45.8%, 46.2%,
+tween LLaVA and Our ForenX. We set a full score of 5 points.              and17.6%,respectively. Thisdemonstratesthatincorporat-
+                                                                          ingforensics-relevantinformationintoMLLMcansubstan-
+                                                                          tially improve detection performance.
+ComparedtoCLIP-basedmethodssuchasFatFormer,Uni-                           ForenSynths evaluation.   We further validate the perfor-
+vFD, and CLIP336-lora,  ForenX demonstrates a perfor-                     mance of the proposed method on the ForenSynths dataset,
+mance improvement of 8-9%.   This indicates that incor-                   as shown in   Tab.2.   Following the baselines, we adopt
+porating an LLM enhances the detection performance of                     fourclassessettingtotrainthemodels,whichconsistofim-
+CLIP in AI-generated image detection tasks. Furthermore,                  ages of horse, chair, cat, car generated by ProGAN. Then,
+DRCT, which uses a pretrained Stable Diffusion model                      evaluation on eight generative models containing ProGAN,
+to generate rebuilt images and then performs detection on                 StyleGAN, BigGAN, CycleGAN, StarGAN, GauGAN and
+paired images, achieves lower performance than ForenX.                    Deepfake.  Compared to the Non-LLM methods, our pro-
+Our method surpasses DRCT by 7.8%, while also offering                    posed ForenX approach achieved competitive results with
+the ability to explain the forensics reasons.                             an accuracy of 94.4%.  Our method achieves an improve-
+   In comparison to LLM-based baselines, our approach                     ment of 1.9% compared to the NPR-based approach and a
+also  shows  significant  improvements.    To  evaluate  the              5.3%enhancementovertheCLIP-onlyUniFDmethod. Our
+vanilla LLava model’s deepfake detection capabilities, we                 approach achieves a competitive accuracy of 94.4%, as op-
+used prompts similar to those in ForenX. Additionally, by                 posedtothe98.4%reportedbyFatformer. Itisimportantto
+
+                                                                      7
+
+PAGE 8
+               note that our method possesses both recognition and inter-                    providing a specific and insightful observation pertinent to
+               pretation capabilities, whereas Fatformer can only detect.                    the image content in a forensic context.
+               We further compare against LLM-based methods, includ-                            In addition, in the second image, ForenX also detects
+               ing LLava, LLava-PE, and LLava-FT. It can be observed                         anomalies in the cola. Although LLava recognizes the im-
+               that our approach outperforms these three methods.                            age as fake, it did not notice the anomalies with the cola
+                   Additionly,toevaluatetheeffectivenessofourproposed                        bottle and soccer ball.  All explanations from ForenX are
+               methodonstate-of-the-artgenerativemodels,weconducted                          directlytiedtotheimage’scontent,showcasingitssuperior
+               experiments using SDV3 and Flux.  We sample 6,000 im-                         capability to interpret and elucidate the reasoning behind
+               agesfromStable-Diffusion-3andFlux.1[dev],respectively.                        detection decisions.  This qualitative analysis underscores
+               An equal number of real images are sourced from the Gen-                      the enhanced explainability of ForenX compared to LLava.
+               Image dataset. Our ForenX achieves an accuracy of97.7%                        4.2.2.User-Study
+               on SDv3 and97.8% on Flux, respectively.
+                                                                                             To  quantify  the  explanatory  capability  of  the  proposed
+               4.2.ExplainabilityAnalysis                                                    method, we conducted a user study.  Specifically, we se-
+               In this section, we assess the explainability performance of                  lecte 100 realistic-style images from Midjourney and Flux,
+               ForenX through qualitative analysis and user-study.                           then  rated  the  reasons  for  image  forgery  generated  by
+                   QuantitativeEvaluationToevaluatetheinterpretability                       ForenX and Llava-FT. We chose 20 users to evaluate five
+               of the proposed model, we present an assessment frame-                        aspects: accuracy,relevance,reasonableness,completeness,
+               work  utilizing  LLMs.    Specifically,  both  the  generated                 and an overall assessment of all aspects.  During this pro-
+               forgery explanations and their respective manually anno-                      cess, we randomly shuffle the order of the two reasons so
+               tatedreferencesareinputintotheLLMforevaluationacross                          that users could not know which method generated them.
+               five metrics: comprehensiveness, relevance, similarity, rea-                  The results are shown in   Fig.5.   We can see that our
+               sonableness,  and average performance.    The annotation                      ForenX outperforms LLava-FT in all four aspects.
+               method introduced in Sec.3.2.2is employed to annotate                            To quantify the explanatory capability of the proposed
+               images from Midjoury and Flux.  ChatGPT-4o is used to                         method, we conduct a user study.  Specifically, we selecte
+               compute those metric, with results in Tab.3showing that                       100 realistic-style images from Midjourney and Flux, then
+               our proposed method,  ForenX, significantly outperforms                       ratethereasonsforimageforgerygeneratedbyForenXand
+               LLAVA-FT.Tomitigatetheimpactofvariabilityintroduced                           Llava-FT. We chose 20 users to evaluate five aspects: accu-
+               by ChatGPT-4’s stochastic nature, we compute the average                      racy, relevance, reasonableness, completeness, and overall
+               value across three iterations and use it as the final result.                 evaluation of all aspects.  We set a full score of 5 points.
+                                                                                             During this process, we randomly shuffled the order of the
+                  Table 3. Quantitative results of interpretability (transposed).            tworeasonssothatuserscouldnotknowwhichmethodwas
+                                                                                             used to generate them. The results are shown in  Fig.5. It
+                                Metric             LLava-FT    ForenX                        can be seen that our ForenX outperforms LLava-FT in five
+                        Comprehensiveness              80.7           81.2                   aspects simultaneously.  Our method outperforms LLava-
+                              Relevance                71.4           75.0                   FT on five metrics, indicating that the proposed forensic
+                              Similarity               60.9           70.5                   prompt enhances MLLM’s recognition ability, and the pro-
+                          Reasonableness               74.1           77.2                   posed ForgReason dataset significantly improves MLLM’s
+                                 Avg                   71.8           76.0                   interpretative ability in low-sample scenarios.
+
+
+
+               4.2.1.Qualitativeanalysis
+                Fig.4provides the examples of detection explanations
+               given by LLava and ForenX. The first image depicts a pi-
+               geon standing on a man’s shoulder in an indoor scene. As
+               shown in the figure, LLava’s judgment is incorrect, as it re-                 Table 4.  Ablation Study regarding the effectiveness of ForenX’s
+               liesonsuperficialreasoningbasedongeneralaspectsofthe                          components on Genimage dataset. The results demonstrate an in-
+               image, such as quality, lighting, and contextual clues, with-                 cremental benefit with the inclusion of each module.
+               out delivering specific insights related to AI-generated im-
+               age detection. In contrast, ForenX accurately identifies the                  4.3.AblationStudy
+               image’s authenticity and offers detailed, contextually rele-
+               vant explanations. For instance, ForenX highlights the un-                    In this section, we analyze the impact of various compo-
+               usual presence of a pigeon perched on the man’s shoulder,                     nentsofourForenXonitsperformanceusingtheGenImage
+
+
+                                                                                         8
+
+w/oLora                                                     mAcc.
+onCLIP    w/oLLM    w/oForensicsProjector       w/oLdetction
+   ✗          ✗            ✗              ✗                  84.7
+   ✓          ✗            ✗              ✗                  85.7
+   ✓         ✓            ✗              ✗                   91.0
+   ✓         ✓            ✓              ✗                   93.7
+   ✓         ✓            ✓             ✓                    97.8
+
+PAGE 9
+dataset. Therefore,wefocusontheimpactofthefollowing
+factors: 1)theeffectofLDetection;2)theeffectofforensics
+projector; 3) the effect of LLM for CLIP, besides provid-
+inginterpretability; 4)theeffectof LoraonCLIP.When all
+thosemoduleisdisable,itisafixedCLIP(336px)andtrain-
+able MLP implementation for detection. The results of are
+shown in  Tab.4. Compared to non-LLM methods, the ad-
+dition of LLM effectively improves detection performance.
+Additionally,LDetection and the forensics projector intro-
+duce an forensic prompt into the LLM, further enhancing
+detection performance.  The study reveals that each mod-
+ule contributes to overall effectiveness, with improvements
+observed as additional components are integrated.
+
+5.Conclusion
+In this paper, we explore methods to enhance Multimodal
+LargeLanguageModels(MLLMs)withcapabilitiesforde-
+tecting AI-generated images, introducing ForenX, a simple
+yet effective framework for explainable detection.  Unlike
+MLLMsdesignedsolelyforcontentunderstanding,suchas
+LLava, which focus on extracting image content for LLM
+input,ourapproachintegratesbothcontentinformationand
+aforensicprompt,significantlyimprovingdetectionperfor-
+mance. Additionally, we believe that further exploration of
+diverse forensic prompts, such as frequency features, gra-
+dients, and NPR[50], presents a promising research direc-
+tion.  We hope this work inspires continued advancements
+in leveraging MLLMs for explainable AI-generated image
+detection.
+
+6.Ethicsstatement
+The AI-generated images employed in this study are exclu-
+sively utilized for training a detection model designed to
+determine whether an image has been generated by artifi-
+cial intelligence. These datasets will not be repurposed be-
+yondthescopeexplicitlydefinedherein. Topreventanypo-
+tential misuse or unethical applications, strict adherence to
+transparency principles, respect for digital content creators
+and consumers, as well as compliance with relevant legal
+frameworks and ethical standards governing AI technolo-
+giesismaintainedthroughoutthiswork. Byfocusingsolely
+on advancing detection technologies, this research seeks to
+reinforceauthenticityandtrustworthinesswithinvisualme-
+dia domains.
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                       9
+
+PAGE 10
+ ForenX:TowardsExplainableAI-GeneratedImageDetectionwithMultimodal
+                                                  LargeLanguageModels
+                                                   Supplementary Material
+
+This supplementary material is organized as follows:                             whetherthisimageisAI-generatedimages,pleasere-
+•In Sec.A, we provide more detail of label processing of                         turn begin with yes or no.
+  the forgReason dataset.                                                   v3. System:   LLava-System-Default User:   Tell  me  if
+•In Sec.B, we discuss the effects of the different prompt.                       there are synthesis artifacts in the image.  Please re-
+•In Sec.C, we present additional qualitative results and                         turn begin with yes or no.
+  discuss limitations in more details..                                     v4. System: LLava-System-Default User: I want you to
+•In Sec.D, we provide further ablation studies.                                  workasanimageforensicexpertforAI-generatedim-
+                                                                                 age. Checkiftheimagehastheartifact. Pleasereturn
+A.DataAnnotation                                                                 begin with yes or no.
+In this Section, we show more detail of data annotation. To                 v5. System: You are an image authentication expert who
+further enhance the forensics interpretability of the LLM,                       can identify images as artificially generated by arti-
+weinvolvehumanannotatorstolabel2,215imageswithex-                                ficial intelligence based on the content and details of
+planationsonwhyeachimageisidentifiedasAI-generated.                              theimages,anddescribeitinnaturallanguage. User:
+The detailed annotation process is as follows:                                   Summarize whether this image is Generated by Arti-
+                                                                                 ficial Intelligence, please return begin with yes or no.
+ 1. Select Images:  Obtain images from Midjourney [1]                         HerewedefinethedefaultsystempromptofLLava[29]
+    and choose those that have a realistic style.                          as LLava-System-Default. We perform prompt engineering
+ 2. Annotate with boxes: Manually annotate areas in the                    evaluation on Geniamge dataset.   The results are shown
+    imagesthatappearunreasonableusingboxannotations.                       in   Tab.A. The prompt-v1 is employed in the training
+    Provide a description explaining why these areas are                   stage.  Despite minor differences between prompt-v1 and
+    deemed unreasonable.                                                   prompt-v2,LLava-FT’srecognitionaccuracyexhibitsignif-
+ 3. Summarize with GPT-4 Vison:  Use GPT-4 Vision                          icant variability, decreasing by 8.8% from an initial rate of
+    to summarize the images and the manual annotations,                    91.0%to82.8%. Conversely,ourproposedForenXmethod
+    generating final explanations for why the images are                   demonstratesuperiordetectioncapabilities,achievingaccu-
+    considered AI-generated.                                               raciesof97.8%withprompt-v1and97.7%withprompt-v2.
+                                                                           The prompt-v3 and prompt-v4 are designed to enable the
+   These images are annotated with captions and detection                  large language model (LLM) to determine the presence of
+results following the methods described in Sec.  3.2.1 of                  artifacts in an image.  Notably, while ForenX and LLava-
+main text.  An example of the annotation process is pro-                   FT exhibited a decline in performance, LLava’s accuracy
+vided in FigureA. Before using GPT-4 Vision [4] to gener-                  increased to 58.4% with the application of Prompt-3. Fur-
+ate summaries, we convert bounding box coordinates into                    thermore, we have designed the system prompt to utilize
+textual descriptions that convey relative spatial positions.               LLM as an image authentication expert within Prompt-v5.
+In this process, some detailed annotations are omitted to                  Notably, the performance of LLava-FT decreased by 2.1%,
+adhere to OpenAI’s restrictions.  We conduct a word fre-                   dropping from an initial rate of 91.0% to 87.9%.  In con-
+quency analysis of the reasons for manually annotating, as                 trast, our ForenX achieved a mean accuracy of 97.6%. Our
+shown in  Fig.B. It can be observed that several words re-                 proposed method demonstrates enhanced robustness when
+lated to the human body appear frequently, such as “hand”,                 responding to various input prompts, compared to existing
+“finger”, “skin”, “teeth”, and “hair”.                                     techniques.
+
+B.PromptEngineering                                                        C.MoreQualitativeResults
+To  further  investigate  the  impact  of  prompts  on  detec-             Forgery  reason  generation  is  considered  an  open-ended
+tionperformance,wedesignedvariouspromptsinspiredby                         problem within the field.   There exists no definitive an-
+prior work[22], as follows:                                                swer for the reasons behind image forgery.   We propose
+ v1. System:   LLava-System-Default User:   Summarize                      that leveraging large-scale models can generate proposals
+      whether this image is Generated by Artificial Intel-                 to assist humans in making informed judgments.  In this
+      ligence, please return begin with yes or no.                         paper, we design a Forensics eXplainer (ForenX) to iden-
+ v2. System:   LLava-System-Default User:   Summarize                      tify whether an image is AI-generated and provide rea-
+
+
+                                                                       1
+
+PAGE 11
+                 Figure A. The process of human labeling for AI-generated images involves two steps. First, annotators identify regions with artifacts by
+                 marking them with bounding boxes and providing detailed descriptions of the reasons behind their decisions. These location-and-reason
+                 pairs are subsequently input into GPT-4 Vision, which generates a summarized annotation for each image.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 Table A. Prompt Engineering Evaluation on the Genimage Dataset.  We design five prompt to evaluate the performance of LLava,
+                 LLava-FT, and our ForenX.
+
+
+                 sons.  The recognition capability of the proposed method                                   eye, while considering possible hallucinations.   As illus-
+                 has been demonstrated on both the Genimage and Foren-                                      trated in  Fig.C,  Fig.E, and  Fig.F, anomalies such as
+                 Synths datasets.                                                                           misplaced microphones, pigeons, and bottles represent is-
+                     HerewefurtherprovideanextensiveanalysisofForenX                                        sues evident to human observers.  Additionally, there ex-
+                 by presenting additional qualitative results, focusing on its                              ists evidence beyond human perception;  for example, in
+                 explainabilityandlimistations.Duetospacelimitations,we                                     Fig.C, ForenX detects an irregular distribution of a man’s
+                 place the forgery reason summarized by GPT in the main                                     beard—an observation challenging for humans without as-
+                 text. Here we provide the full version of ForenX’s forgery                                 sistance from technology due to its subtlety—and raises
+                 reason, as illustrated in  Fig.C- Fig.F.In addition, we also                               questions about whether these observations might result
+                 provide more qualitative results of ForenX as illustrated in                               from hallucination effects.  Additionally, ForenX provides
+                 Fig.G- Fig.H.                                                                              incorrect evidence in  Fig.H, mistakenly determining that
+Methods       Prompts                                                                  TestModelsOurForenXiscapableofidentifyingcausesthatareeas-thesteeringwheelisontherightsideandsubsequentlycat-
+                 ilydiscerniblebyhumansandthosenotvisibletothenakedMidjourney    SDv1.4    SDv1.5    ADM    GLIDE    Wukong    VQDM    BigGAN    mAccegorizing this as fake.
+LLava                                     51.0             50.4         50.5        50.2        51.4          52.4          50.9          54.6         51.4
+LLava-FT                                 90.8             95.2         95.1        64.5        97.5          93.9          95.6          95.0         91.0prompt-v12
+ForenX                                     97.9             97.8         97.7        97.4        98.0          98.0          97.7          97.8         97.8
+LLava                                     51.1             50.3         50.3        50.1        51.0          52.1          50.3          51.9         50.9
+LLava-FT                                 82.2             85.8         85.7        56.9        91.5          83.3          83.7          88.4         82.2prompt-v2
+ForenX                                     97.8             97.6         97.6        97.5        97.9          97.9          97.6          97.8         97.7
+LLava                                     49.5             49.5         49.2        59.9        59.5          56.9          64.1          78.2         58.4
+LLava-FT                                 73.6             72.7         73.9        73.7        74.3          74.0          74.0          73.4         73.7prompt-v3
+ForenX                                     63.4             63.5         63.6        63.7        63.7          63.4          63.4          63.6         63.5
+LLava                                     50.6             51.0         51.0        50.0        51.6          53.2          51.0          56.4         51.9
+LLava-FT                                 50.0             50.0         50.1        50.1        50.1          50.0          50.1          50.1         50.1prompt-v4
+ForenX                                     50.7             50.6         50.6        50.7        50.8          50.5          50.7          50.7         50.7
+LLava                                     50.9             50.6         50.8        50.4        52.5          53.3          52.6          56.9         52.2
+LLava-FT                                 86.1             89.2         88.6        71.0        93.6          89.0          91.1          94.4         87.9prompt-v5
+ForenX                                     97.6             97.5         97.5        97.5        97.7          97.9          97.5          97.6         97.6
+
+PAGE 12
+Figure B. Word Frequency Analysis. The word frequency analysis highlights common forgery region in manual annotation, revealing
+frequentoccurrencesoftermsassociatedwithhumanbody,including“hand”,“finger”,“skin”,“teeth”,and“hair”. Additionally,prevalent
+adjectives characterizing forgery include descriptors such as “unrealistic”, “distorted”, “unreasonable”, “unnatural”, “twisted”, “unreal”,
+“oversmoothed”, “impossible,” and “unreadable”.
+
+D.AblationStudy                                                              that our ForenX achieves a mean accuracy of 94.5% when
+In this section, we analyze the impact of detector fd, fea-                  employing the entire last hidden state of CLIP, whereas
+tureFv, and detection embedingd of our ForenX using the                      ForenX using the pooler output achieves a higher accuracy
+GenImage dataset..                                                           of 97.8%.  This suggests that the pooler output of CLIP’s
+                                                                             lasthiddenstatecontainssufficientinformationforforensic
+Detector fd.    We first analyze the impact of detectorfd.                   purposes, effectively feeding forensics information to the
+In our method, detector fd is utilized to introduce foren-                   LLM. This efficiency highlights the adequacy of the pooler
+sics information intoFvf though an auxiliary forgery detec-                  output for generating informative forensic prompts.
+tion loss.  We initially employ a simple summation func-                     Forensics Embeding d.       We then analyze the impact
+tion sum() as fd.  For comparison, we replace the sum()                      of detection embeding d.  In our ForenX, a trainable de-
+to MLP layer.  The results of this substitution are shown                    tection embeding d is used to transform the visual fea-
+in   Tab.B. It can be observed that when we adopt the                        ture Fv  into forensics features Ffv .   We implement this
+MLP as the detector fd, we achieve a mean accuracy of                        using a 1× 1024 tensor, applying it to Fv through the
+97.6%, whereas the summation function sum() yields a                         Hadamard product.  For comparison, we experiment with
+slightly higher mean accuracy of 97.8%. This suggests that                   using1024×1024tensor usingmatrixmultiplication. The
+while both methods are effective, the simpler summation                      results are shown in Tab.D. We observe that ForenX with
+approach performs marginally better in this context.                         the1024×1024ForensicsEmbeddingachievesonly96.9%
+Feature Fv.    We further analyze the impact of Fv in our                    accuracy.  This indicates that the simpler 1× 1024 tensor
+ForenX on its performance using the GenImage dataset. In                     with Hadamard product is more effective in transforming
+our ForenX, the feature from the visual encoder is fed into                  the visual features into relevant forensic features, poten-
+the Forensics projector to obtain a forensic prompt. In our                  tially due to its ability to retain essential information with-
+paper, we use the pooler output of CLIP’s last hidden state                  out introducing unnecessary complexity.
+as Fv. This is also used to perform contrastive learning in
+CLIP. For comparison, we experiment with using the entire                    E.LimitationDiscussion
+last hidden state of CLIP asFv. In this scenario, the chan-
+nel size of Fv is first converted from 577 to 16, and then                   ForenX effectively identifies forged images and provides
+it is fed into the Forensics projector to obtain the foren-                  explanations to assist humans in explainable AI-Generated
+sic prompt.  The results are shown in Tab.C. We observe                      imagedetection. However,someoftheseexplanationshave
+
+                                                                         3
+
+PAGE 13
+Figure C. Qualitative Results Example. Our ForenX provides three pieces of evidence for detecting AI-generated images by focusing
+on specific objects, including man’s beard, lanyard, and microphone. While humans can readily recognize missing support structures in
+microphones as evidence, identifying anomalies in a man’s beard and lanyard requires closer inspection. In future work, ForenX aims to
+provide more detailed evidence to assist humans in performing explainable deepfake detection.
+
+
+problems, including:
+•Hallucinations: Reasoncontainsinformationunrelatedto                                           Detectorfd                        mAcc
+  the prompt and image content.                                                                    sum()                           97.8
+•Vaguedescription: Reasonincludespartiallyforgerycues                                               MLP                            97.6
+  but cannot be verified.
+•Incorrect information:  Reasons include information in-                                        Table B. Ablation study on Detectorfd.
+  consistent with the image content..
+In  future  research,  it  is  essential  to  develop  improved
+forgery reason datasets and implement more robust train-
+ing strategies to address these challenges, thereby enhanc-                                          Fv                             mAcc
+ing the ability of LLMs to explain forgeries.                                                      Pooler                            97.8
+                                                                                                     All                             94.5
+
+                                                                                                Table C. Ablation study on FeatureFv.
+
+
+
+                                                                             4
+
+PAGE 14
+Figure D. Qualitative Results Example.  Our ForenX provides forgery evidences including: face, skin, hair, candles, and background
+lights.  In those reasons, the characteristics of the woman and candle depicted in the image suggest that it was generated by artificial
+intelligence; however, the description pertaining to her hair remains ambiguous.
+
+
+
+
+        Forensics Embedingd                         mAcc
+                1×1024                               97.8
+              1024×1024                              96.9
+
+         Table D. Ablation study on forensics embedingd.
+
+
+
+                                                                               5
+
+PAGE 15
+Figure E.QualitativeResultsExample. Our ForenX has twice highlighted the implausibility of pigeons perching on people’s shoulders.
+Limitation:  The first reason mentions that the bird’s head appears disproportionately large compared to its body; however, additional
+evidence is required to substantiate this claim.
+
+
+
+
+
+
+
+
+                                                                                  6
+
+PAGE 16
+FigureF.QualitativeResultsExample. InouranalysisusingForenX,weidentifythree: bottle,man’sscarf,andsoccerball.Limitation:
+Notably, it overlooks a detail where the liquid contained within the inclined bottle maintains a horizontal surface level. The completeness
+of forgery reasons needs to be considered in future work.
+
+
+
+
+
+
+
+
+
+
+                                                                                7
+
+PAGE 17
+Figure G. Qualitative Results Example.  Our ForenX identifies five distinct indicators of forgery within this image.  It identifies that
+the text on the screen might not belong to any known language and uses this as a basis for forgery detection. Limitation: Furthermore,
+the description in point four regarding uneven lighting is ambiguous; it requires specification of the affected regions to enhance the
+persuasiveness of the argument.
+
+
+
+
+
+
+                                                                                   8
+
+PAGE 18
+FigureH.FailureCase. Inthisimage,ourForenXprovidesincorrectandunintelligibleexplanations. Forinstance,iterroneouslyidentifies
+the steering wheel as being on the right side of the car. Additionally, it notes a small object at the bottom center of the image that cannot
+be recognized within the picture, which may result from an illusion generated by LLM .
+
+
+
+
+
+
+
+
+
+
+                                                                                  9
+
+PAGE 19
+References                                                                          [18]Edward J Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-
+ [1]Midjourney.       Inhttps://www.midjourney.com/                                       Zhu, Yuanzhi Li, Shean Wang, Lu Wang, and Weizhu Chen.
+      home/, 2022. Accessed: 2024-11-09.5,1                                               Lora: Low-rank adaptation of large language models. arXiv
+                                                                                          preprint arXiv:2106.09685, 2021.2
+ [2]Wukong,2022.5.    Inhttps://xihe.mindspore.cn/                                  [19]Zhengchao Huang, Bin Xia, Zicheng Lin, Zhun Mou, and
+      modelzoo/wukong, 2022. Accessed: 2024-11-09.5                                       Wenming Yang.   Ffaa:  Multimodal large language model
+ [3]Flux.     Inhttps://fluxaiimagegenerator.com/,                                        basedexplainableopen-worldfaceforgeryanalysisassistant.
+      2024.1                                                                              arXiv preprint arXiv:2408.10072, 2024.3
+ [4]Josh Achiam, Steven Adler, Sandhini Agarwal, Lama Ah-                           [20]Yonghyun  Jeong  et  al.     Bihpf:   Bilateral  high-pass  fil-
+      mad,IlgeAkkaya,FlorenciaLeoniAleman,DiogoAlmeida,                                   ters for robust deepfake detection.   In Proceedings of the
+      Janko Altenschmidt, Sam Altman, Shyamal Anadkat, et al.                             IEEE/CVF Winter Conference on Applications of Computer
+      Gpt-4 technical report.   arXiv preprint arXiv:2303.08774,                          Vision, pages 48–57, 2022.3,6
+      2023.2,3,1                                                                    [21]Yonghyun Jeong et al.   Frepgan:  robust deepfake detec-
+ [5]Andrew Brock et al.  Large scale gan training for high fi-                            tion using frequency-level perturbations.  In Proceedings of
+      delity natural image synthesis.  In International Conference                        the AAAI Conference on Artificial Intelligence, pages 1060–
+      on Learning Representations, 2018.5                                                 1068, 2022.6
+ [6]LucyChaietal. Whatmakesfakeimagesdetectable? under-                             [22]Shan Jia, Reilin Lyu, Kangran Zhao, Yize Chen, Zhiyuan
+      standingpropertiesthatgeneralize. InEuropeanConference                              Yan, Yan Ju, Chuanbo Hu, Xin Li, Baoyuan Wu, and Siwei
+      on Computer Vision, pages 103–120. Springer, 2020.6                                 Lyu. Can chatgpt detect deepfakes? a study of using multi-
+ [7]Baoying Chen, Jishen Zeng, Jianquan Yang, and Rui Yang.                               modallargelanguagemodelsformediaforensics. InCVPR,
+      DRCT:Diffusionreconstructioncontrastivetrainingtowards                              pages 4324–4333, 2024.3,1
+      universal detection of diffusion generated images. In Forty-                  [23]Tero Karras et al. Progressive growing of gans for improved
+      first International Conference on Machine Learning, 2024.                           quality, stability, and variation. In International Conference
+      1,6                                                                                 on Learning Representations, 2018.1,5
+ [8]Yunjey Choi et al.  Stargan: Unified generative adversarial                     [24]Tero Karras et al.  A style-based generator architecture for
+      networks for multi-domain image-to-image translation.  In                           generative adversarial networks.    In CVPR, pages 4401–
+      Proceedings of the IEEE Conference on Computer Vision                               4410, 2019.1,5
+      and Pattern Recognition, pages 8789–8797, 2018.5                              [25]BoLi,YuanhanZhang,LiangyuChen,JinghaoWang,Fanyi
+ [9]Wenliang Dai, Junnan Li, Dongxu Li, Anthony Meng Huat                                 Pu, Jingkang Yang, Chunyuan Li, and Ziwei Liu.  Mimic-
+      Tiong, Junqi Zhao, Weisheng Wang, Boyang Li, Pascale                                it: Multi-modalin-contextinstructiontuning. arXivpreprint
+      Fung,  and  Steven  Hoi.     Instructblip:   Towards  general-                      arXiv:2306.05425, 2023.3
+      purpose  vision-language  models  with  instruction  tuning,                  [26]Chunyuan Li, Cliff Wong, Sheng Zhang, Naoto Usuyama,
+      2023.3                                                                              HaotianLiu,JianweiYang,TristanNaumann,HoifungPoon,
+[10]Prafulla Dhariwal et al.  Diffusion models beat gans on im-                           and Jianfeng Gao.  Llava-med:  Training a large language-
+      age synthesis.  Advances in Neural Information Processing                           and-visionassistantforbiomedicineinoneday. Advancesin
+      Systems, 34:8780–8794, 2021.5                                                       Neural Information Processing Systems, 36, 2024.3
+[11]Alexey Dosovitskiy et al.  An image is worth 16x16 words:                       [27]Jiawei Li, Fanrui Zhang, Jiaying Zhu, Esther Sun, Qiang
+      Transformers for image recognition at scale, 2020.2,3                               Zhang, and Zheng-Jun Zha.  Forgerygpt: Multimodal large
+[12]Ricard Durall et al. Watch your up-convolution: Cnn based                             language model for explainable image forgery detection and
+      generative deep neural networks are failing to reproduce                            localization. arXiv preprint arXiv:2410.10238, 2024.3
+      spectral distributions. In CVPR, pages 7890–7899, 2020.1,                     [28]HaotianLiu,ChunyuanLi,QingyangWu,andYongJaeLee.
+      6                                                                                   Visual instruction tuning.  Advances in neural information
+[13]JoelFranketal. Leveragingfrequencyanalysisfordeepfake                                 processing systems, 36, 2024.3
+      image recognition. In International Conference on Machine                     [29]HaotianLiu,ChunyuanLi,QingyangWu,andYongJaeLee.
+      Learning, pages 3247–3258. PMLR, 2020.6                                             Visual instruction tuning.  Advances in neural information
+[14]Ian J Goodfellow et al.  Generative adversarial nets.  In       Ad-                   processing systems, 36, 2024.2,3,4,1
+      vances in Neural Information Processing Systems, 2014.1                       [30]Huan Liu, Zichang Tan, Chuangchuang Tan, Yunchao Wei,
+[15]Shuyang  Gu,  Dong  Chen,  Jianmin  Bao,  Fang  Wen,  Bo                              Jingdong Wang,  and Yao Zhao.    Forgery-aware adaptive
+      Zhang, Dongdong Chen, Lu Yuan, and Baining Guo.  Vec-                               transformer for generalizable synthetic image detection.  In
+      torquantizeddiffusionmodelfortext-to-imagesynthesis. In                             CVPR, pages 10770–10780, 2024.1,3,5,6
+      CVPR, pages 10696–10706, 2022.5                                               [31]Ping  Liu,  Qiqi  Tao,  and  Joey  Tianyi  Zhou.     Evolving
+[16]Kaiming He et al.  Deep residual learning for image recog-                            fromsingle-modaltomulti-modalfacialdeepfakedetection:
+      nition. InProceedingsoftheIEEEConferenceonComputer                                  Progress and challenges.  arXiv preprint arXiv:2406.06965,
+      Vision and Pattern Recognition, pages 770–778, 2016.6                               2024.1
+[17]Jonathan Ho et al.  Denoising diffusion probabilistic mod-                      [32]Ze Liu, Yutong Lin, Yue Cao, Han Hu, Yixuan Wei, Zheng
+      els.   Advances in Neural Information Processing Systems,                           Zhang, Stephen Lin, and Baining Guo.  Swin transformer:
+      33:6840–6851, 2020.1                                                                Hierarchical vision transformer using shifted windows.  In
+
+
+                                                                               10
+
+PAGE 20
+      Proceedings of the IEEE/CVF International Conference on                       [47]ChuangchuangTan,PingLiu,RenShuaiTao,HuanLiu,Yao
+      Computer Vision, pages 10012–10022, 2021.6                                          Zhao, Baoyuan Wu, and Yunchao Wei.   Data-independent
+[33]ZhengzheLiuetal.Globaltextureenhancementforfakeface                                   operator:    A  training-free  artifact  representation  extrac-
+      detection in the wild. InCVPR, pages 8060–8069, 2020.6                              tor for generalizable deepfake detection.    arXiv preprint
+[34]Sara Mandelli, Nicol      `o Bonettini, Paolo Bestagini, and Ste-                     arXiv:2403.06803, 2024.3
+      fano Tubaro.  Detecting gan-generated images by orthogo-                      [48]ChuangchuangTan,RenshuaiTao,HuanLiu,GuanghuaGu,
+      nal training of multiple cnns.  In 2022 IEEE International                          BaoyuanWu,YaoZhao,andYunchaoWei. C2p-clip: Inject-
+      Conference on Image Processing (ICIP), pages 3091–3095.                             ing category common prompt in clip to enhance generaliza-
+      IEEE, 2022.6                                                                        tionindeepfakedetection. arXivpreprintarXiv:2408.09647,
+[35]Sourab  Mangrulkar,   Sylvain  Gugger,   Lysandre  Debut,                             2024.3
+      Younes  Belkada,   Sayak  Paul,   and  Benjamin  Bossan.                      [49]Chuangchuang Tan, Yao Zhao, Shikui Wei, Guanghua Gu,
+      Peft:  State-of-the-art parameter-efficient fine-tuning meth-                       Ping Liu, and Yunchao Wei. Frequency-aware deepfake de-
+      ods.  https://github.com/huggingface/peft,                                          tection: Improving generalizability through frequency space
+      2022.6                                                                              domainlearning. InProceedingsoftheAAAIConferenceon
+[36]AlexanderQuinnNichol,PrafullaDhariwal,AdityaRamesh,                                   Artificial Intelligence, pages 5052–5060, 2024.6
+      Pranav   Shyam,   Pamela   Mishkin,   Bob   Mcgrew,   Ilya                    [50]Chuangchuang Tan, Yao Zhao, Shikui Wei, Guanghua Gu,
+      Sutskever, and Mark Chen.   Glide:  Towards photorealis-                            Ping Liu, and Yunchao Wei.   Rethinking the up-sampling
+      tic image generation and editing with text-guided diffusion                         operationsincnn-basedgenerativenetworkforgeneralizable
+      models. In International Conference on Machine Learning,                            deepfake detection. In CVPR, pages 28130–28139, 2024.1,
+      pages 16784–16804. PMLR, 2022.5                                                     3,5,6,9
+[37]Utkarsh Ojha et al.  Towards universal fake image detectors                     [51]ChuangchuangTanetal. Learningongradients: Generalized
+      that generalize across generative models.  In CVPR, pages                           artifacts representation for gan-generated images detection.
+      24480–24489, 2023.2,3,6                                                             In CVPR (CVPR), pages 12105–12114, 2023.1,6
+[38]TaesungParketal. Semanticimagesynthesiswithspatially-                           [52]Hugo Touvron, Matthieu Cord, Matthijs Douze, Francisco
+      adaptive normalization.  In CVPR, pages 2337–2346, 2019.                            Massa, Alexandre Sablayrolles, and Herv´e J´egou.  Training
+      5                                                                                   data-efficient image transformers & distillation through at-
+[39]Adam Paszke et al.   Pytorch:  An imperative style, high-                             tention.  In International Conference on Machine Learning,
+      performance deep learning library.  Advances in Neural In-                          pages 10347–10357. PMLR, 2021.6
+      formation Processing Systems, 32, 2019.6                                      [53]Sheng-YuWangetal. Cnn-generatedimagesaresurprisingly
+[40]Peng  Qi,  Zehong  Yan,  Wynne  Hsu,  and  Mong  Li  Lee.                             easytospot...fornow. InCVPR,pages8695–8704,2020.5,
+      Sniffer:  Multimodal large language model for explainable                           6
+      out-of-context misinformation detection.   In CVPR, pages                     [54]Jason  Wei,   Xuezhi  Wang,   Dale  Schuurmans,   Maarten
+      13052–13062, 2024.3                                                                 Bosma,brianichter,FeiXia,EdChi,QuocVLe,andDenny
+[41]Yuyang Qian et al. Thinking in frequency: Face forgery de-                            Zhou. Chain-of-thought prompting elicits reasoning in large
+      tectionby mining frequency-aware clues. InEuropean Con-                             language models.  In Advances in Neural Information Pro-
+      ference on Computer Vision, pages 86–103. Springer, 2020.                           cessing Systems,  pages 24824–24837. Curran Associates,
+      6                                                                                   Inc., 2022.3
+[42]Alec  Radford,  Jong  Wook  Kim,  Chris  Hallacy,  Aditya                       [55]Xu Zhang et al.  Detecting and simulating artifacts in gan
+      Ramesh,  Gabriel  Goh,  Sandhini  Agarwal,  Girish  Sastry,                         fake images.  In 2019 IEEE International Workshop on In-
+      Amanda Askell, Pamela Mishkin, Jack Clark, et al.  Learn-                           formation Forensics and Security (WIFS), pages 1–6. IEEE,
+      ing transferable visual models from natural language super-                         2019.6
+      vision.  In International Conference on Machine Learning,                     [56]Jun-Yan Zhu et al. Unpaired image-to-image translation us-
+      pages 8748–8763. PMLR, 2021.2                                                       ing cycle-consistent adversarial networks.   In Proceedings
+[43]Robin Rombach et al. High-resolution image synthesis with                             of the IEEE International Conference on Computer Vision,
+      latent diffusion models.    In CVPR, pages 10684–10695,                             pages 2223–2232, 2017.5
+      2022.1,5                                                                      [57]MingjianZhu,HantingChen,QiangyuYan,XudongHuang,
+[44]Yichen Shi, Yuhao Gao, Yingxin Lai, Hongyang Wang, Jun                                Guanyu Lin, Wei Li, Zhijun Tu, Hailin Hu, Jie Hu, and
+      Feng, Lei He, Jun Wan, Changsheng Chen, Zitong Yu, and                              YunheWang. Genimage: Amillion-scalebenchmarkforde-
+      Xiaochun Cao.  Shield:  An evaluation benchmark for face                            tecting ai-generated image. Advances in Neural Information
+      spoofing and forgery detection with multimodal large lan-                           Processing Systems, 36, 2024.6
+      guage models. arXiv preprint arXiv:2402.04178, 2024.3
+[45]KaedeShioharaetal. Detectingdeepfakeswithself-blended
+      images. In CVPR, pages 18720–18729, 2022.6
+[46]Chuangchuang Tan, Yao Zhao, Shikui Wei, Guanghua Gu,
+      and Yunchao Wei. Learning on gradients: Generalized arti-
+      facts representation for gan-generated images detection.  In
+      CVPR (CVPR), pages 12105–12114, 2023.3
+
+
+                                                                              11

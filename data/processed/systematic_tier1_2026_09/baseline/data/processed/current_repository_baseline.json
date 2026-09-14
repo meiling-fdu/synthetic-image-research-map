@@ -1,0 +1,141 @@
+{
+  "checkpoint": "2026-08-24-stable-release",
+  "validated_on": "2026-08-28",
+  "generated_from": [
+    "data/curated/papers.csv",
+    "data/curated/institutions.csv",
+    "data/curated/author_institution_mappings.csv",
+    "data/curated/institution_aliases.csv",
+    "data/curated/institution_hierarchy.csv",
+    "data/curated/institution_locations.csv",
+    "data/curated/institution_location_review.csv",
+    "data/curated/institution_review_queue.csv",
+    "web/data/public_preview_papers.json",
+    "web/data/public_preview_map_data.json"
+  ],
+  "counting_semantics": {
+    "curated_papers": "Rows in the maintained curated paper registry.",
+    "public_unique_papers": "Production-export paper records after canonical paper-identity deduplication.",
+    "public_map_source_papers": "Unique paper identities represented by the raw public map relationship export.",
+    "public_papers_with_map": "Public paper records matching at least one raw public map relationship.",
+    "public_papers_without_map": "Public paper records without a matching raw public map relationship.",
+    "public_map_relationships": "Production-export unique canonical paper/institution/location relationships, retaining distinct campuses.",
+    "public_unique_institutions": "Unique institution identities in the raw map export under validator semantics.",
+    "canonical_institution_rows": "All canonical registry rows, including merged and ignored rows.",
+    "active_canonical_institutions": "Canonical rows with institution_status=active; this is the public canonical search-index population.",
+    "public_paper_institution_type_totals": "Paper-deduplicated membership per institution type; a paper may contribute to more than one type.",
+    "publication_type": "Exactly one publication_type per public paper.",
+    "task": "Exactly one task enum per public paper; detection_and_source_attribution is one combined enum."
+  },
+  "dataset_counts": {
+    "curated_papers": 342,
+    "public_unique_papers": 546,
+    "public_map_source_papers": 540,
+    "public_papers_with_map": 539,
+    "public_papers_without_map": 7,
+    "public_map_relationships": 1264,
+    "public_unique_institutions": 618,
+    "canonical_institution_rows": 662,
+    "active_canonical_institutions": 650,
+    "inactive_or_merged_institutions": 12,
+    "author_institution_mappings": 942,
+    "confirmed_institution_locations": 457,
+    "institution_location_review_rows": 571,
+    "institution_aliases": 80,
+    "institution_hierarchy_edges": 8,
+    "institution_search_relationships": 1,
+    "institution_review_queue_rows": 398
+  },
+  "distribution_counts": {
+    "institution_status": {
+      "active": 650,
+      "ignored": 6,
+      "merged": 6
+    },
+    "author_institution_mapping_status": {
+      "active": 894,
+      "excluded": 28,
+      "needs_review": 20
+    },
+    "canonical_institution_type": {
+      "university": 474,
+      "company": 72,
+      "research_unit": 67,
+      "other": 49
+    },
+    "active_canonical_institution_type": {
+      "university": 468,
+      "company": 70,
+      "research_unit": 65,
+      "other": 47
+    },
+    "public_paper_institution_type": {
+      "other": 55,
+      "research_unit": 105,
+      "university": 514,
+      "company": 91
+    },
+    "publication_type": {
+      "conference": 314,
+      "preprint": 64,
+      "journal": 167,
+      "book": 1
+    },
+    "task": {
+      "detection": 471,
+      "source_attribution": 46,
+      "detection_and_source_attribution": 29
+    },
+    "public_map_relationship_resolution": {
+      "active_canonical_institution": 1238,
+      "unreviewed_automatic_fallback": 26
+    }
+  },
+  "validation": {
+    "complete_test_suite": {
+      "collected": 1184,
+      "passed": 1184,
+      "skipped_environment_conditional": 0,
+      "failed": 0,
+      "deselected": 0
+    },
+    "curated": {
+      "files_checked": 16,
+      "errors": 0,
+      "warnings": 178,
+      "duplicate_candidates": 0
+    },
+    "public_map": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "public_papers": {
+      "errors": 0,
+      "warnings": 5,
+      "papers_missing_affiliations": 0,
+      "papers_missing_coordinates": 1
+    },
+    "paper_exclusions": {
+      "errors": 0,
+      "warnings": 2
+    },
+    "javascript_syntax_files": 10,
+    "git_diff_check": "passed"
+  },
+  "manual_curation_backlog": [
+    "Five public author occurrences remain unresolved; three explicitly non-institutional authors require no institution or marker. See docs/formal_publication_audit_2026-08-27.md.",
+    "Curated warnings retain missing/conflicting mapping evidence, historical audit references, and explicit review-queue conflicts.",
+    "Two restored exclusions are not currently present in the public preview.",
+    "Same-name Northeastern University identities remain separate because their confirmed country evidence conflicts.",
+    "Xiaohongshu retains distinct Shanghai and Beijing confirmed locations and requires explicit location selection when evidence is ambiguous."
+  ],
+  "notes": [
+    "Frontend behavior tests use semantic assertions or isolated fixtures; mutable production totals are confined to dedicated repository-baseline integration tests.",
+    "Historical public-export shrinkage baselines and historical audit reports are intentionally not rewritten.",
+    "The internal institution type enum remains research_unit; the public-facing label remains Research Institute.",
+    "26 public map relationships intentionally retain unreviewed automatic-fallback institution IDs outside the active canonical search index.",
+    "Strict public validation intentionally remains nonzero while manual-curation warnings exist; warnings are neither suppressed nor auto-resolved.",
+    "2026-08-28 formal publication/location audit: five curated papers corrected; four retained coordinate candidates are excluded from confirmed locations and public markers. See docs/formal_publication_audit_2026-08-27.md.",
+    "2026-08-28 scoped evidence resolution confirms one Kumoh building for the 2022 survey; seven location relationships and five authors remain unresolved. See docs/evidence_resolution_2026-08-28.md."
+  ]
+}

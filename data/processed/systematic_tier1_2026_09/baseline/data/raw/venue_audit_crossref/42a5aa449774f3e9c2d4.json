@@ -1,0 +1,910 @@
+{
+  "doi": "10.3390/jimaging8100263",
+  "source_url": "https://api.crossref.org/works/10.3390%2Fjimaging8100263",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            19
+          ]
+        ],
+        "date-time": "2026-08-19T20:09:28Z",
+        "timestamp": 1787170168501,
+        "version": "build-2736575974"
+      },
+      "reference-count": 58,
+      "publisher": "MDPI AG",
+      "issue": "10",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2022,
+                9,
+                28
+              ]
+            ],
+            "date-time": "2022-09-28T00:00:00Z",
+            "timestamp": 1664323200000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "J. Imaging"
+      ],
+      "abstract": "<jats:p>Multimedia data manipulation and forgery has never been easier than today, thanks to the power of Artificial Intelligence (AI). AI-generated fake content, commonly called Deepfakes, have been raising new issues and concerns, but also new challenges for the research community. The Deepfake detection task has become widely addressed, but unfortunately, approaches in the literature suffer from generalization issues. In this paper, the Face Deepfake Detection and Reconstruction Challenge is described. Two different tasks were proposed to the participants: (i) creating a Deepfake detector capable of working in an “in the wild” scenario; (ii) creating a method capable of reconstructing original images from Deepfakes. Real images from CelebA and FFHQ and Deepfake images created by StarGAN, StarGAN-v2, StyleGAN, StyleGAN2, AttGAN and GDWCT were collected for the competition. The winning teams were chosen with respect to the highest classification accuracy value (Task I) and “minimum average distance to Manhattan” (Task II). Deep Learning algorithms, particularly those based on the EfficientNet architecture, achieved the best results in Task I. No winners were proclaimed for Task II. A detailed discussion of teams’ proposed methods with corresponding ranking is presented in this paper.</jats:p>",
+      "DOI": "10.3390/jimaging8100263",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2022,
+            9,
+            28
+          ]
+        ],
+        "date-time": "2022-09-28T22:53:19Z",
+        "timestamp": 1664405599000
+      },
+      "page": "263",
+      "update-policy": "https://doi.org/10.3390/mdpi_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 75,
+      "title": [
+        "The Face Deepfake Detection Challenge"
+      ],
+      "prefix": "10.3390",
+      "volume": "8",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0001-8315-351X",
+          "authenticated-orcid": false,
+          "given": "Luca",
+          "family": "Guarnera",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Department of Mathematics and Computer Science, University of Catania, 95125 Catania, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-8343-2049",
+          "authenticated-orcid": false,
+          "given": "Oliver",
+          "family": "Giudice",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Applied Research Team, IT Department, Banca d’Italia, 00044 Rome, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-7703-3367",
+          "authenticated-orcid": false,
+          "given": "Francesco",
+          "family": "Guarnera",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mathematics and Computer Science, University of Catania, 95125 Catania, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-3461-4679",
+          "authenticated-orcid": false,
+          "given": "Alessandro",
+          "family": "Ortis",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mathematics and Computer Science, University of Catania, 95125 Catania, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-6222-9933",
+          "authenticated-orcid": false,
+          "given": "Giovanni",
+          "family": "Puglisi",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mathematics and Computer Science, University of Cagliari, 09124 Cagliari, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-0883-147X",
+          "authenticated-orcid": false,
+          "given": "Antonino",
+          "family": "Paratore",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "iCTLab s.r.l., 95125 Catania, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-4049-2156",
+          "authenticated-orcid": false,
+          "given": "Linh M. Q.",
+          "family": "Bui",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Amped Software, 34149 Trieste, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-0630-2128",
+          "authenticated-orcid": false,
+          "given": "Marco",
+          "family": "Fontani",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Amped Software, 34149 Trieste, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-0755-6154",
+          "authenticated-orcid": false,
+          "given": "Davide Alessandro",
+          "family": "Coccomini",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "ISTI-CNR, via G. Moruzzi 1, 56124 Pisa, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-3471-1196",
+          "authenticated-orcid": false,
+          "given": "Roberto",
+          "family": "Caldelli",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "National Inter-University Consortium for Telecommunications (CNIT), 43124 Parma, Italy"
+            },
+            {
+              "name": "Faculty of Economics, Universitas Mercatorum, 00186 Rome, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-6258-5313",
+          "authenticated-orcid": false,
+          "given": "Fabrizio",
+          "family": "Falchi",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "ISTI-CNR, via G. Moruzzi 1, 56124 Pisa, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-3715-149X",
+          "authenticated-orcid": false,
+          "given": "Claudio",
+          "family": "Gennaro",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "ISTI-CNR, via G. Moruzzi 1, 56124 Pisa, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-3011-2487",
+          "authenticated-orcid": false,
+          "given": "Nicola",
+          "family": "Messina",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "ISTI-CNR, via G. Moruzzi 1, 56124 Pisa, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-0171-4315",
+          "authenticated-orcid": false,
+          "given": "Giuseppe",
+          "family": "Amato",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "ISTI-CNR, via G. Moruzzi 1, 56124 Pisa, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-4873-4746",
+          "authenticated-orcid": false,
+          "given": "Gianpaolo",
+          "family": "Perelli",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Electrical and Electronic Engineering (DIEE), University of Cagliari, 09123 Cagliari, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-8114-0686",
+          "authenticated-orcid": false,
+          "given": "Sara",
+          "family": "Concas",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Electrical and Electronic Engineering (DIEE), University of Cagliari, 09123 Cagliari, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-4519-1854",
+          "authenticated-orcid": false,
+          "given": "Carlo",
+          "family": "Cuccu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Electrical and Electronic Engineering (DIEE), University of Cagliari, 09123 Cagliari, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-7802-2483",
+          "authenticated-orcid": false,
+          "given": "Giulia",
+          "family": "Orrù",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Electrical and Electronic Engineering (DIEE), University of Cagliari, 09123 Cagliari, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-8719-9643",
+          "authenticated-orcid": false,
+          "given": "Gian Luca",
+          "family": "Marcialis",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Electrical and Electronic Engineering (DIEE), University of Cagliari, 09123 Cagliari, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-6127-2470",
+          "authenticated-orcid": false,
+          "given": "Sebastiano",
+          "family": "Battiato",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Mathematics and Computer Science, University of Catania, 95125 Catania, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "1968",
+      "published-online": {
+        "date-parts": [
+          [
+            2022,
+            9,
+            28
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "ref_1",
+          "unstructured": "Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., Courville, A., and Bengio, Y. (2014, January 8–13). Generative Adversarial Nets. Proceedings of the Advances in Neural Information Processing Systems, Montreal, QC, Canada."
+        },
+        {
+          "key": "ref_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Guarnera, L., Giudice, O., and Battiato, S. (2022, January 23–27). Deepfake Style Transfer Mixture: A First Forensic Ballistics Study on Synthetic Images. Proceedings of the International Conference on Image Analysis and Processing, Lecce, Italy.",
+          "DOI": "10.1007/978-3-031-06430-2_13"
+        },
+        {
+          "key": "ref_3",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Giudice, O., Paratore, A., Moltisanti, M., and Battiato, S. (2017, January 11–15). A Classification Engine for Image Ballistics of Social Data. Proceedings of the International Conference on Image Analysis and Processing, Catania, Italy.",
+          "DOI": "10.1007/978-3-319-68548-9_57"
+        },
+        {
+          "key": "ref_4",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang, X., Guo, H., Hu, S., Chang, M.C., and Lyu, S. (2022). GAN-generated Faces Detection: A Survey and New Perspectives. arXiv.",
+          "DOI": "10.3233/FAIA230558"
+        },
+        {
+          "key": "ref_5",
+          "doi-asserted-by": "crossref",
+          "first-page": "910",
+          "DOI": "10.1109/JSTSP.2020.3002101",
+          "article-title": "Media Forensics and Deepfakes: An Overview",
+          "volume": "14",
+          "author": "Verdoliva",
+          "year": "2020",
+          "journal-title": "IEEE J. Sel. Top. Signal Process."
+        },
+        {
+          "key": "ref_6",
+          "doi-asserted-by": "crossref",
+          "first-page": "131",
+          "DOI": "10.1016/j.inffus.2020.06.014",
+          "article-title": "Deepfakes and Beyond: A Survey of Face Manipulation and Fake Detection",
+          "volume": "64",
+          "author": "Tolosana",
+          "year": "2020",
+          "journal-title": "Inf. Fusion"
+        },
+        {
+          "key": "ref_7",
+          "doi-asserted-by": "crossref",
+          "first-page": "5464",
+          "DOI": "10.1109/TIP.2019.2916751",
+          "article-title": "AttGAN: Facial Attribute Editing by Only Changing What You Want",
+          "volume": "28",
+          "author": "He",
+          "year": "2019",
+          "journal-title": "IEEE Trans. Image Process."
+        },
+        {
+          "key": "ref_8",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Cho, W., Choi, S., Park, D.K., Shin, I., and Choo, J. (2019, January 15–20). Image-to-image Translation via Group-wise Deep Whitening-and-coloring Transformation. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, Long Beach, CA, USA.",
+          "DOI": "10.1109/CVPR.2019.01089"
+        },
+        {
+          "key": "ref_9",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Choi, Y., Choi, M., Kim, M., Ha, J.W., Kim, S., and Choo, J. (2018, January 18–23). StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-image Translation. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, Salt Lake City, UT, USA.",
+          "DOI": "10.1109/CVPR.2018.00916"
+        },
+        {
+          "key": "ref_10",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Choi, Y., Uh, Y., Yoo, J., and Ha, J.W. (2020, January 13–19). StarGAN v2: Diverse Image Synthesis for Multiple Domains. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, Seattle, WA, USA.",
+          "DOI": "10.1109/CVPR42600.2020.00821"
+        },
+        {
+          "key": "ref_11",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Karras, T., Laine, S., and Aila, T. (2019, January 16–17). A Style-based Generator Architecture for Generative Adversarial Networks. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, Long Beach, CA, USA.",
+          "DOI": "10.1109/CVPR.2019.00453"
+        },
+        {
+          "key": "ref_12",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Karras, T., Laine, S., Aittala, M., Hellsten, J., Lehtinen, J., and Aila, T. (2020, January 13–19). Analyzing and Improving the Image Quality of StyleGAN. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, Seattle, WA, USA.",
+          "DOI": "10.1109/CVPR42600.2020.00813"
+        },
+        {
+          "key": "ref_13",
+          "first-page": "376",
+          "article-title": "Forensics Face Detection from GANs Using Convolutional Neural Network",
+          "volume": "2018",
+          "author": "Do",
+          "year": "2018",
+          "journal-title": "ISITC"
+        },
+        {
+          "key": "ref_14",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mo, H., Chen, B., and Luo, W. (2018, January 20–22). Fake Faces Identification via Convolutional Neural Network. Proceedings of the 6th ACM Workshop on Information Hiding and Multimedia Security, Innsbruck, Austria.",
+          "DOI": "10.1145/3206004.3206009"
+        },
+        {
+          "key": "ref_15",
+          "doi-asserted-by": "crossref",
+          "first-page": "107616",
+          "DOI": "10.1016/j.sigpro.2020.107616",
+          "article-title": "Identification of Deep Network Generated Images Using Disparities in Color Components",
+          "volume": "174",
+          "author": "Li",
+          "year": "2020",
+          "journal-title": "Signal Process."
+        },
+        {
+          "key": "ref_16",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang, S.Y., Wang, O., Zhang, R., Owens, A., and Efros, A.A. (2020, January 13–19). CNN-generated Images are Surprisingly Easy to Spot…for Now. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, Seattle, WA, USA.",
+          "DOI": "10.1109/CVPR42600.2020.00872"
+        },
+        {
+          "key": "ref_17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Gragnaniello, D., Cozzolino, D., Marra, F., Poggi, G., and Verdoliva, L. (2021, January 5–9). Are GAN Generated Images Easy to Detect? A Critical Analysis of the State-of-the-art. Proceedings of the 2021 IEEE International Conference on Multimedia and Expo (ICME), Shenzhen, China.",
+          "DOI": "10.1109/ICME51207.2021.9428429"
+        },
+        {
+          "key": "ref_18",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Guarnera, L., Giudice, O., Nastasi, C., and Battiato, S. (2020, January 23–25). Preliminary forensics analysis of deepfake images. Proceedings of the 2020 AEIT International Annual Conference (AEIT), Catania, Italy.",
+          "DOI": "10.23919/AEIT50178.2020.9241108"
+        },
+        {
+          "key": "ref_19",
+          "unstructured": "Korshunov, P., and Marcel, S. (2018). Deepfakes: A New Threat to Face Recognition? Assessment and Detection. arXiv."
+        },
+        {
+          "key": "ref_20",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yang, X., Li, Y., and Lyu, S. (2019, January 12–17). Exposing Deep Fakes Using Inconsistent Head Poses. Proceedings of the ICASSP 2019—2019 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Brighton, UK.",
+          "DOI": "10.1109/ICASSP.2019.8683164"
+        },
+        {
+          "key": "ref_21",
+          "unstructured": "Rossler, A., Cozzolino, D., Verdoliva, L., Riess, C., Thies, J., and Nießner, M. (November, January 27). Faceforensics++: Learning to Detect Manipulated Facial Images. Proceedings of the IEEE/CVF International Conference on Computer Vision, Seoul, Korea."
+        },
+        {
+          "key": "ref_22",
+          "first-page": "3",
+          "article-title": "Contributing data to deep-fake detection research",
+          "volume": "1",
+          "author": "Dufour",
+          "year": "2019",
+          "journal-title": "Google AI Blog"
+        },
+        {
+          "key": "ref_23",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li, Y., Yang, X., Sun, P., Qi, H., and Lyu, S. (2020, January 13–19). Celeb-DF: A Large-scale Challenging Dataset for Deepfake Forensics. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, Seattle, WA, USA.",
+          "DOI": "10.1109/CVPR42600.2020.00327"
+        },
+        {
+          "key": "ref_24",
+          "unstructured": "Dolhansky, B., Bitton, J., Pflaum, B., Lu, J., Howes, R., Wang, M., and Ferrer, C.C. (2020). The Deepfake Detection Challenge (DFDC) Dataset. arXiv."
+        },
+        {
+          "key": "ref_25",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Jiang, L., Li, R., Wu, W., Qian, C., and Loy, C.C. (2020, January 13–19). Deeperforensics-1.0: A Large-scale Dataset for Real-world Face Forgery Detection. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, Seattle, WA, USA.",
+          "DOI": "10.1109/CVPR42600.2020.00296"
+        },
+        {
+          "key": "ref_26",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Le, T., Nguyen, H.H., Yamagishi, J., and Echizen, I. (2021, January 11–17). OpenForensics: Large-Scale Challenging Dataset For Multi-Face Forgery Detection And Segmentation In-The-Wild. Proceedings of the 2021 IEEE/CVF International Conference on Computer Vision (ICCV), Online.",
+          "DOI": "10.1109/ICCV48922.2021.00996"
+        },
+        {
+          "key": "ref_27",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Coccomini, D.A., Messina, N., Gennaro, C., and Falchi, F. (2022, January 27–28). Combining EfficientNet and Vision Transformers for Video Deepfake Detection. Proceedings of the International Conference on Image Analysis and Processing, Paris, France.",
+          "DOI": "10.1007/978-3-031-06433-3_19"
+        },
+        {
+          "key": "ref_28",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zi, B., Chang, M., Chen, J., Ma, X., and Jiang, Y.G. (2020, January 16). WildDeepfake: A Challenging Real-World Dataset for Deepfake Detection. Proceedings of the 28th ACM International Conference on Multimedia, Seattle, WA, USA.",
+          "DOI": "10.1145/3394171.3413769"
+        },
+        {
+          "key": "ref_29",
+          "doi-asserted-by": "crossref",
+          "unstructured": "He, Y., Gan, B., Chen, S., Zhou, Y., Yin, G., Song, L., Sheng, L., Shao, J., and Liu, Z. (2021, January 20–25). ForgeryNet: A Versatile Benchmark for Comprehensive Forgery Analysis. Proceedings of the 2021 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), Nashville, TN, USA.",
+          "DOI": "10.1109/CVPR46437.2021.00434"
+        },
+        {
+          "key": "ref_30",
+          "unstructured": "Seferbekov, S. (2022, March 01). DFDC 1st Place Solution. Available online: https://www.kaggle.com/c/deepfake-detection-challenge."
+        },
+        {
+          "key": "ref_31",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Montserrat, D.M., Hao, H., Yarlagadda, S.K., Baireddy, S., Shao, R., Horváth, J., Bartusiak, E., Yang, J., Guera, D., and Zhu, F. (2020, January 14–19). Deepfakes Detection with Automatic Face Weighting. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops, Seattle, WA, USA.",
+          "DOI": "10.1109/CVPRW50498.2020.00342"
+        },
+        {
+          "key": "ref_32",
+          "unstructured": "Wodajo, D., and Atnafu, S. (2021). Deepfake Video Detection Using Convolutional Vision Transformer. arXiv."
+        },
+        {
+          "key": "ref_33",
+          "unstructured": "Heo, Y.J., Choi, Y.J., Lee, Y.W., and Kim, B.G. (2021). Deepfake Detection Scheme Based on Vision Transformer and Distillation. arXiv."
+        },
+        {
+          "key": "ref_34",
+          "doi-asserted-by": "crossref",
+          "first-page": "109",
+          "DOI": "10.1109/MSP.2021.3120982",
+          "article-title": "More Real Than Real: A Study on Human Visual Perception of Synthetic Faces [Applications Corner]",
+          "volume": "39",
+          "author": "Lago",
+          "year": "2022",
+          "journal-title": "IEEE Signal Process. Mag."
+        },
+        {
+          "key": "ref_35",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Marra, F., Gragnaniello, D., Verdoliva, L., and Poggi, G. (2019, January 28–30). Do GANs Leave Artificial Fingerprints?. Proceedings of the 2019 IEEE Conference on Multimedia Information Processing and Retrieval (MIPR), San Jose, CA, USA.",
+          "DOI": "10.1109/MIPR.2019.00103"
+        },
+        {
+          "key": "ref_36",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yu, N., Davis, L., and Fritz, M. (November, January 27). Attributing Fake Images to GANs: Learning and Analyzing GAN Fingerprints. Proceedings of the 2019 IEEE/CVF International Conference on Computer Vision (ICCV), Seoul, Korea.",
+          "DOI": "10.1109/ICCV.2019.00765"
+        },
+        {
+          "key": "ref_37",
+          "first-page": "3022",
+          "article-title": "Fourier Spectrum Discrepancies in Deep Network Generated Images",
+          "volume": "Volume 33",
+          "author": "Larochelle",
+          "year": "2020",
+          "journal-title": "Advances in Neural Information Processing Systems"
+        },
+        {
+          "key": "ref_38",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Durall, R., Keuper, M., and Keuper, J. (2020, January 13–19). Watch Your Up-Convolution: CNN Based Generative Deep Neural Networks Are Failing to Reproduce Spectral Distributions. Proceedings of the 2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), Seattle, WA, USA.",
+          "DOI": "10.1109/CVPR42600.2020.00791"
+        },
+        {
+          "key": "ref_39",
+          "unstructured": "Frank, J., Eisenhofer, T., Schönherr, L., Fischer, A., Kolossa, D., and Holz, T. (2020, January 13–18). Leveraging Frequency Analysis for Deep Fake Image Recognition. Proceedings of the 37th International Conference on Machine Learning, ICML 2020, Online."
+        },
+        {
+          "key": "ref_40",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Giudice, O., Guarnera, L., and Battiato, S. (2021). Fighting Deepfakes by Detecting GAN DCT Anomalies. J. Imaging, 7.",
+          "DOI": "10.3390/jimaging7080128"
+        },
+        {
+          "key": "ref_41",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Guarnera, L., Giudice, O., and Battiato, S. (2020, January 14–19). DeepFake Detection by Analyzing Convolutional Traces. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops, Seattle, WA, USA.",
+          "DOI": "10.1109/CVPRW50498.2020.00341"
+        },
+        {
+          "key": "ref_42",
+          "doi-asserted-by": "crossref",
+          "first-page": "165085",
+          "DOI": "10.1109/ACCESS.2020.3023037",
+          "article-title": "Fighting Deepfake by Exposing the Convolutional Traces on Images",
+          "volume": "8",
+          "author": "Guarnera",
+          "year": "2020",
+          "journal-title": "IEEE Access"
+        },
+        {
+          "key": "ref_43",
+          "doi-asserted-by": "crossref",
+          "first-page": "47",
+          "DOI": "10.1109/79.543975",
+          "article-title": "The Expectation-Maximization Algorithm",
+          "volume": "13",
+          "author": "Moon",
+          "year": "1996",
+          "journal-title": "IEEE Signal Process. Mag."
+        },
+        {
+          "key": "ref_44",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Guarnera, L., Giudice, O., Nießner, M., and Battiato, S. (2022, January 19–20). On the Exploitation of Deepfake Model Recognition. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, New Orleans, LA, USA.",
+          "DOI": "10.1109/CVPRW56347.2022.00016"
+        },
+        {
+          "key": "ref_45",
+          "doi-asserted-by": "crossref",
+          "unstructured": "He, K., Zhang, X., Ren, S., and Sun, J. (2016, January 27–30). Deep Residual Learning for Image Recognition. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, Las Vegas, NV, USA.",
+          "DOI": "10.1109/CVPR.2016.90"
+        },
+        {
+          "key": "ref_46",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Liu, E.Y., Guo, Z., Zhang, X., Jojic, V., and Wang, W. (2012, January 10–13). Metric Learning from Relative Comparisons by Minimizing Squared Residual. Proceedings of the 2012 IEEE 12th International Conference on Data Mining, Brussels, Belgium.",
+          "DOI": "10.1109/ICDM.2012.38"
+        },
+        {
+          "key": "ref_47",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Liu, Z., Luo, P., Wang, X., and Tang, X. (2015, January 7–13). Deep Learning Face Attributes in the Wild. Proceedings of the IEEE International Conference on Computer Vision, Santiago, Chile.",
+          "DOI": "10.1109/ICCV.2015.425"
+        },
+        {
+          "key": "ref_48",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Buslaev, A., Iglovikov, V.I., Khvedchenya, E., Parinov, A., Druzhinin, M., and Kalinin, A.A. (2020). Albumentations: Fast and Flexible Image Augmentations. Information, 11.",
+          "DOI": "10.3390/info11020125"
+        },
+        {
+          "key": "ref_49",
+          "unstructured": "Tan, M., and Le, Q. (2019, January 17–23). Efficientnet: Rethinking Model Scaling for Convolutional Neural Networks. Proceedings of the International Conference on Machine Learning. PMLR, Long Beach, CA, USA."
+        },
+        {
+          "key": "ref_50",
+          "unstructured": "Dosovitskiy, A., Beyer, L., Kolesnikov, A., Weissenborn, D., Zhai, X., Unterthiner, T., Dehghani, M., Minderer, M., Heigold, G., and Gelly, S. (2020, January 26–30). An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale. Proceedings of the International Conference on Learning Representations, Addis Abeba, Ethiopia."
+        },
+        {
+          "key": "ref_51",
+          "doi-asserted-by": "crossref",
+          "first-page": "1499",
+          "DOI": "10.1109/LSP.2016.2603342",
+          "article-title": "Joint Face Detection and Alignment Using Multitask Cascaded Convolutional Networks",
+          "volume": "23",
+          "author": "Zhang",
+          "year": "2016",
+          "journal-title": "IEEE Signal Process. Lett."
+        },
+        {
+          "key": "ref_52",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chen, C.F.R., Fan, Q., and Panda, R. (2021, January 11–17). CrossViT: Cross-Attention Multi-Scale Vision Transformer for Image Classification. Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV), Montreal, QC, Canada.",
+          "DOI": "10.1109/ICCV48922.2021.00041"
+        },
+        {
+          "key": "ref_53",
+          "unstructured": "Tan, M., and Le, Q.V. (2019). EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks. arXiv."
+        },
+        {
+          "key": "ref_54",
+          "unstructured": "Tan, M., and Le, Q.V. (2021). EfficientNetV2: Smaller Models and Faster Training. arXiv."
+        },
+        {
+          "key": "ref_55",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Concas, S., Perelli, G., Marcialis, G.L., and Puglisi, G. (2022, January 16–19). Tensor-Based Deepfake Detection In Scaled And Compressed Images. Proceedings of the 29th IEEE International Conference on Image Processing (IEEE ICIP), Bordeaux, France. in press.",
+          "DOI": "10.1109/ICIP46576.2022.9897606"
+        },
+        {
+          "key": "ref_56",
+          "doi-asserted-by": "crossref",
+          "first-page": "90",
+          "DOI": "10.1109/T-C.1974.223784",
+          "article-title": "Discrete Cosine Transform",
+          "volume": "C-23",
+          "author": "Ahmed",
+          "year": "1974",
+          "journal-title": "IEEE Trans. Comput."
+        },
+        {
+          "key": "ref_57",
+          "doi-asserted-by": "crossref",
+          "first-page": "1661",
+          "DOI": "10.1109/83.869177",
+          "article-title": "A Mathematical Analysis of the DCT Coefficient Distributions for Images",
+          "volume": "9",
+          "author": "Lam",
+          "year": "2000",
+          "journal-title": "IEEE Trans. Image Process."
+        },
+        {
+          "key": "ref_58",
+          "unstructured": "Liu, L., Jiang, H., He, P., Chen, W., Liu, X., Gao, J., and Han, J. (2019). On the variance of the adaptive learning rate and beyond. arXiv."
+        }
+      ],
+      "container-title": [
+        "Journal of Imaging"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://www.mdpi.com/2313-433X/8/10/263/pdf",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            11
+          ]
+        ],
+        "date-time": "2025-10-11T00:41:09Z",
+        "timestamp": 1760143269000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://www.mdpi.com/2313-433X/8/10/263"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2022,
+            9,
+            28
+          ]
+        ]
+      },
+      "references-count": 58,
+      "journal-issue": {
+        "issue": "10",
+        "published-online": {
+          "date-parts": [
+            [
+              2022,
+              10
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "jimaging8100263"
+      ],
+      "URL": "https://doi.org/10.3390/jimaging8100263",
+      "relation": {},
+      "ISSN": [
+        "2313-433X"
+      ],
+      "issn-type": [
+        {
+          "value": "2313-433X",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2022,
+            9,
+            28
+          ]
+        ]
+      }
+    }
+  }
+}
