@@ -1,0 +1,617 @@
+{
+  "causes": {
+    "CURRENT_POLICY_APPLIES": 99,
+    "PAPER_SPECIFIC_EVIDENCE": 41,
+    "POLICY_CONFLICT": 75
+  },
+  "clusters": {
+    "ATTRIBUTION": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 1,
+      "PAPER_SPECIFIC_REVIEW": 3,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 3,
+      "paper_count": 4
+    },
+    "EMBED": {
+      "LIKELY_EXCLUDE": 40,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 40
+    },
+    "EVASION": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 3,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 3
+    },
+    "FACE": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 60,
+      "additional_evidence_flags": 44,
+      "paper_count": 60
+    },
+    "HYBRID": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 11,
+      "additional_evidence_flags": 3,
+      "paper_count": 11
+    },
+    "IMAGE": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 4,
+      "PAPER_SPECIFIC_REVIEW": 28,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 28,
+      "paper_count": 32
+    },
+    "MODALITY": {
+      "LIKELY_EXCLUDE": 11,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 4,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 4,
+      "paper_count": 15
+    },
+    "PROTECT": {
+      "LIKELY_EXCLUDE": 27,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 27
+    },
+    "TRADITIONAL": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 4,
+      "additional_evidence_flags": 0,
+      "paper_count": 4
+    },
+    "VERIFY": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 3,
+      "PAPER_SPECIFIC_REVIEW": 2,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 2,
+      "paper_count": 5
+    },
+    "WM_EVAL": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 10,
+      "PAPER_SPECIFIC_REVIEW": 4,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 4,
+      "paper_count": 14
+    }
+  },
+  "subgroups": {
+    "active_fingerprint_injection": {
+      "LIKELY_EXCLUDE": 6,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 6,
+      "policy_clusters": [
+        "EMBED"
+      ]
+    },
+    "adversarial_training_detection": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 4,
+      "additional_evidence_flags": 3,
+      "paper_count": 4,
+      "policy_clusters": [
+        "FACE"
+      ]
+    },
+    "analysis_or_benchmark": {
+      "LIKELY_EXCLUDE": 3,
+      "LIKELY_INCLUDE": 4,
+      "PAPER_SPECIFIC_REVIEW": 4,
+      "USER_POLICY_DECISION_REQUIRED": 12,
+      "additional_evidence_flags": 16,
+      "paper_count": 23,
+      "policy_clusters": [
+        "FACE",
+        "IMAGE",
+        "MODALITY",
+        "PROTECT",
+        "VERIFY",
+        "WM_EVAL"
+      ]
+    },
+    "attack_only": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 10,
+      "PAPER_SPECIFIC_REVIEW": 3,
+      "USER_POLICY_DECISION_REQUIRED": 2,
+      "additional_evidence_flags": 5,
+      "paper_count": 15,
+      "policy_clusters": [
+        "EVASION",
+        "FACE",
+        "WM_EVAL"
+      ]
+    },
+    "attack_plus_defense": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 1,
+      "PAPER_SPECIFIC_REVIEW": 1,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 1,
+      "paper_count": 2,
+      "policy_clusters": [
+        "EVASION",
+        "WM_EVAL"
+      ]
+    },
+    "benchmark_generative_coverage_unverified": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 4,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 4,
+      "paper_count": 4,
+      "policy_clusters": [
+        "IMAGE"
+      ]
+    },
+    "classical_compositing": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 2,
+      "additional_evidence_flags": 0,
+      "paper_count": 2,
+      "policy_clusters": [
+        "TRADITIONAL"
+      ]
+    },
+    "copy_move": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 2,
+      "additional_evidence_flags": 0,
+      "paper_count": 2,
+      "policy_clusters": [
+        "TRADITIONAL"
+      ]
+    },
+    "copyright_or_model_ownership": {
+      "LIKELY_EXCLUDE": 21,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 1,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 1,
+      "paper_count": 22,
+      "policy_clusters": [
+        "ATTRIBUTION",
+        "EMBED",
+        "PROTECT"
+      ]
+    },
+    "credentials_metadata": {
+      "LIKELY_EXCLUDE": 2,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 2,
+      "policy_clusters": [
+        "PROTECT"
+      ]
+    },
+    "cryptographic_provenance": {
+      "LIKELY_EXCLUDE": 3,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 3,
+      "policy_clusters": [
+        "EMBED",
+        "MODALITY",
+        "PROTECT"
+      ]
+    },
+    "distortion_robustness": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 2,
+      "USER_POLICY_DECISION_REQUIRED": 5,
+      "additional_evidence_flags": 5,
+      "paper_count": 7,
+      "policy_clusters": [
+        "FACE",
+        "MODALITY"
+      ]
+    },
+    "face_evaluation_unit_unverified": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 41,
+      "additional_evidence_flags": 41,
+      "paper_count": 41,
+      "policy_clusters": [
+        "FACE"
+      ]
+    },
+    "facial_generative_editing": {
+      "LIKELY_EXCLUDE": 1,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 10,
+      "additional_evidence_flags": 1,
+      "paper_count": 11,
+      "policy_clusters": [
+        "EMBED",
+        "FACE",
+        "HYBRID"
+      ]
+    },
+    "frame_method_video_system_evaluation": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 3,
+      "USER_POLICY_DECISION_REQUIRED": 1,
+      "additional_evidence_flags": 3,
+      "paper_count": 4,
+      "policy_clusters": [
+        "FACE",
+        "MODALITY"
+      ]
+    },
+    "generation_prevention": {
+      "LIKELY_EXCLUDE": 3,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 3,
+      "policy_clusters": [
+        "PROTECT"
+      ]
+    },
+    "generative_inpainting_editing": {
+      "LIKELY_EXCLUDE": 1,
+      "LIKELY_INCLUDE": 1,
+      "PAPER_SPECIFIC_REVIEW": 1,
+      "USER_POLICY_DECISION_REQUIRED": 7,
+      "additional_evidence_flags": 1,
+      "paper_count": 10,
+      "policy_clusters": [
+        "FACE",
+        "HYBRID",
+        "IMAGE",
+        "PROTECT"
+      ]
+    },
+    "human_perception_component": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 1,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 1,
+      "paper_count": 1,
+      "policy_clusters": [
+        "MODALITY"
+      ]
+    },
+    "hybrid_active_passive": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 11,
+      "additional_evidence_flags": 3,
+      "paper_count": 11,
+      "policy_clusters": [
+        "HYBRID"
+      ]
+    },
+    "identity_authenticity_without_detection": {
+      "LIKELY_EXCLUDE": 3,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 3,
+      "policy_clusters": [
+        "PROTECT"
+      ]
+    },
+    "image_level_deepfake_localization": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 4,
+      "additional_evidence_flags": 0,
+      "paper_count": 4,
+      "policy_clusters": [
+        "FACE"
+      ]
+    },
+    "image_quality_not_authenticity": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 0,
+      "policy_clusters": []
+    },
+    "independent_watermark_detection": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 1,
+      "PAPER_SPECIFIC_REVIEW": 1,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 1,
+      "paper_count": 2,
+      "policy_clusters": [
+        "VERIFY"
+      ]
+    },
+    "mixed_benchmark_coverage": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 2,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 2,
+      "policy_clusters": [
+        "IMAGE"
+      ]
+    },
+    "mixed_image_video": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 3,
+      "additional_evidence_flags": 3,
+      "paper_count": 3,
+      "policy_clusters": [
+        "FACE"
+      ]
+    },
+    "mixed_traditional_generative": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 1,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 1,
+      "policy_clusters": [
+        "IMAGE"
+      ]
+    },
+    "multimodal_image_forensics": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 2,
+      "PAPER_SPECIFIC_REVIEW": 3,
+      "USER_POLICY_DECISION_REQUIRED": 12,
+      "additional_evidence_flags": 11,
+      "paper_count": 17,
+      "policy_clusters": [
+        "FACE",
+        "IMAGE",
+        "VERIFY"
+      ]
+    },
+    "neural_rendering": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 1,
+      "PAPER_SPECIFIC_REVIEW": 1,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 1,
+      "paper_count": 2,
+      "policy_clusters": [
+        "IMAGE"
+      ]
+    },
+    "photoshop_style": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 2,
+      "USER_POLICY_DECISION_REQUIRED": 2,
+      "additional_evidence_flags": 2,
+      "paper_count": 4,
+      "policy_clusters": [
+        "IMAGE",
+        "TRADITIONAL"
+      ]
+    },
+    "possible_existing_exclusion_identity": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 1,
+      "additional_evidence_flags": 1,
+      "paper_count": 1,
+      "policy_clusters": [
+        "FACE"
+      ]
+    },
+    "provenance_recovery": {
+      "LIKELY_EXCLUDE": 7,
+      "LIKELY_INCLUDE": 4,
+      "PAPER_SPECIFIC_REVIEW": 3,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 3,
+      "paper_count": 14,
+      "policy_clusters": [
+        "ATTRIBUTION",
+        "EMBED",
+        "VERIFY"
+      ]
+    },
+    "retouching": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 0,
+      "policy_clusters": []
+    },
+    "scientific_biomedical": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 1,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 1,
+      "paper_count": 1,
+      "policy_clusters": [
+        "IMAGE"
+      ]
+    },
+    "splicing": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 2,
+      "additional_evidence_flags": 0,
+      "paper_count": 2,
+      "policy_clusters": [
+        "TRADITIONAL"
+      ]
+    },
+    "still_image_face_detection": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 13,
+      "additional_evidence_flags": 0,
+      "paper_count": 13,
+      "policy_clusters": [
+        "FACE"
+      ]
+    },
+    "text_only": {
+      "LIKELY_EXCLUDE": 3,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 3,
+      "policy_clusters": [
+        "MODALITY"
+      ]
+    },
+    "training_aid_not_release_injection": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 2,
+      "additional_evidence_flags": 2,
+      "paper_count": 2,
+      "policy_clusters": [
+        "FACE"
+      ]
+    },
+    "verification_recovery": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 2,
+      "PAPER_SPECIFIC_REVIEW": 1,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 1,
+      "paper_count": 3,
+      "policy_clusters": [
+        "VERIFY"
+      ]
+    },
+    "video_only_deepfake": {
+      "LIKELY_EXCLUDE": 7,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 1,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 1,
+      "paper_count": 8,
+      "policy_clusters": [
+        "MODALITY"
+      ]
+    },
+    "watermark_detection": {
+      "LIKELY_EXCLUDE": 40,
+      "LIKELY_INCLUDE": 4,
+      "PAPER_SPECIFIC_REVIEW": 1,
+      "USER_POLICY_DECISION_REQUIRED": 1,
+      "additional_evidence_flags": 2,
+      "paper_count": 46,
+      "policy_clusters": [
+        "EMBED",
+        "HYBRID",
+        "VERIFY",
+        "WM_EVAL"
+      ]
+    },
+    "watermark_embedding_centric": {
+      "LIKELY_EXCLUDE": 40,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 10,
+      "additional_evidence_flags": 3,
+      "paper_count": 50,
+      "policy_clusters": [
+        "EMBED",
+        "HYBRID"
+      ]
+    },
+    "watermark_embedding_only": {
+      "LIKELY_EXCLUDE": 0,
+      "LIKELY_INCLUDE": 0,
+      "PAPER_SPECIFIC_REVIEW": 0,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 0,
+      "paper_count": 0,
+      "policy_clusters": []
+    },
+    "watermark_robustness_evasion": {
+      "LIKELY_EXCLUDE": 6,
+      "LIKELY_INCLUDE": 10,
+      "PAPER_SPECIFIC_REVIEW": 4,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 4,
+      "paper_count": 20,
+      "policy_clusters": [
+        "MODALITY",
+        "PROTECT",
+        "WM_EVAL"
+      ]
+    },
+    "watermark_verification": {
+      "LIKELY_EXCLUDE": 40,
+      "LIKELY_INCLUDE": 7,
+      "PAPER_SPECIFIC_REVIEW": 2,
+      "USER_POLICY_DECISION_REQUIRED": 0,
+      "additional_evidence_flags": 2,
+      "paper_count": 49,
+      "policy_clusters": [
+        "EMBED",
+        "VERIFY",
+        "WM_EVAL"
+      ]
+    }
+  },
+  "total": {
+    "LIKELY_EXCLUDE": 78,
+    "LIKELY_INCLUDE": 21,
+    "PAPER_SPECIFIC_REVIEW": 41,
+    "USER_POLICY_DECISION_REQUIRED": 75,
+    "additional_evidence_flags": 88,
+    "paper_count": 215
+  }
+}

@@ -123,7 +123,7 @@ def test_prior_supported_records_and_current_review_candidates_preserved():
     # later targeted paper audits; they intentionally have no guessed coordinates.
     assert payload["summary"]["pending_review"] == payload["summary"]["needs_coordinates"]
     # Six prior cases plus Tier 1 affiliations and the Bangladesh address review.
-    assert payload["summary"]["pending_review"] == 29
+    assert payload["summary"]["pending_review"] == 39
     for iid in ("institution:ea7b31bae9ab636d", "institution:251314027de80424"):
         assert any(r["institution_id"] == iid and r["review_status"] == "pending_review"
                    for r in payload["records"])

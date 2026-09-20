@@ -1,0 +1,82 @@
+{
+  "analysis_only": true,
+  "classified_candidates": 215,
+  "committed": false,
+  "current_corpus": {
+    "mapped": 623,
+    "markers": 1466,
+    "public": 636,
+    "published_only": 528
+  },
+  "first_suite_attempt": {
+    "failed": 1,
+    "log": "full_suite_first_run.txt",
+    "passed": 1468,
+    "reason": "Report generator was refined after test collection; the long-running suite retained an earlier imported module. The completed frozen rerun passed all 1469 tests."
+  },
+  "full_suite": {
+    "errors": 0,
+    "failures": 0,
+    "passed": 1469,
+    "skipped": 0,
+    "tests": 1469
+  },
+  "git_diff_check": "PASS",
+  "git_status": [
+    "?? data/manual/systematic_tier2_scope_policies_2026_09.json",
+    "?? data/manual/systematic_tier2_scope_policy_clusters_2026_09.csv",
+    "?? data/processed/systematic_tier2_policy_2026_09/",
+    "?? docs/systematic_tier2_scope_policy_review_2026_09.md",
+    "?? scripts/prepare_systematic_tier2_policy.py",
+    "?? scripts/report_systematic_tier2_policy.py",
+    "?? tests/test_systematic_tier2_policy.py"
+  ],
+  "papers_added_or_excluded": false,
+  "policies_applied": false,
+  "policy_layer_frozen_hashes_match": true,
+  "pre_task_integrity": {
+    "changed_count": 0,
+    "changed_paths": [],
+    "protected_files_checked": 3914
+  },
+  "primary_clusters": 11,
+  "protected_category_changes": {
+    "affiliations": 0,
+    "exclusions": 0,
+    "frontend": 0,
+    "hierarchy": 0,
+    "institutions": 0,
+    "locations": 0,
+    "original_audit_statuses": 0,
+    "papers": 0,
+    "public_json": 0,
+    "taxonomy": 0,
+    "tier1": 0,
+    "tier3": 0
+  },
+  "provisional_outcomes": {
+    "LIKELY_EXCLUDE": 78,
+    "LIKELY_INCLUDE": 21,
+    "PAPER_SPECIFIC_REVIEW": 41,
+    "USER_POLICY_DECISION_REQUIRED": 75,
+    "additional_evidence_flags": 88,
+    "paper_count": 215
+  },
+  "pushed": false,
+  "reproducibility": {
+    "byte_identical": true,
+    "different_cwd": "/tmp",
+    "hashes": {
+      "summary.json": "3ffdfb9d72090bfb516c95c6c83c0eea86a2126e6d37ec0265e559c93acd2a99",
+      "systematic_tier2_scope_policy_review_2026_09.md": "38a47d23d95405a0dad461a036ef36f199ac712636784f3734e6eab0e7caa559"
+    },
+    "manual_registries_read_only": true,
+    "runs": 2
+  },
+  "uncertainty_causes": {
+    "CURRENT_POLICY_APPLIES": 99,
+    "PAPER_SPECIFIC_EVIDENCE": 41,
+    "POLICY_CONFLICT": 75
+  },
+  "user_decisions": 3
+}

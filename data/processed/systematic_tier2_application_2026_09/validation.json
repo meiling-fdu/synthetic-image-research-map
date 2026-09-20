@@ -1,0 +1,26 @@
+{
+  "application_integrity": {
+    "changed_count": 0,
+    "protected_files_checked": 3931
+  },
+  "double_regeneration": {
+    "byte_identical": true,
+    "runs": 2
+  },
+  "focused_tests": {
+    "command": "/usr/bin/python3 -m pytest -q tests/test_systematic_tier2_application.py tests/test_systematic_tier2_policy.py",
+    "failed": 0,
+    "passed": 22,
+    "skipped": 0
+  },
+  "full_suite": {
+    "command": "/usr/bin/python3 -m pytest -q",
+    "duration_seconds": 358.74,
+    "failed": 0,
+    "passed": 1483,
+    "skipped": 0
+  },
+  "git_diff_check": "passed",
+  "historical_audit_statuses_modified": 0,
+  "papers_added_or_removed": 0
+}

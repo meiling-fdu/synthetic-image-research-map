@@ -1,0 +1,1124 @@
+{
+  "schema_version": 1,
+  "analysis_only": true,
+  "source": "data/manual/systematic_literature_completeness_candidates_2026_09.csv",
+  "selected_status": "CANDIDATE_ADD_NEEDS_SCOPE_REVIEW",
+  "expected_count": 215,
+  "subgroup_tags": [
+    "active_fingerprint_injection",
+    "provenance_recovery",
+    "cryptographic_provenance",
+    "watermark_detection",
+    "watermark_verification",
+    "hybrid_active_passive",
+    "watermark_robustness_evasion",
+    "independent_watermark_detection",
+    "verification_recovery",
+    "watermark_embedding_only",
+    "still_image_face_detection",
+    "image_level_deepfake_localization",
+    "frame_method_video_system_evaluation",
+    "video_only_deepfake",
+    "mixed_image_video",
+    "facial_generative_editing",
+    "identity_authenticity_without_detection",
+    "text_only",
+    "copy_move",
+    "splicing",
+    "classical_compositing",
+    "photoshop_style",
+    "retouching",
+    "generative_inpainting_editing",
+    "mixed_traditional_generative",
+    "mixed_benchmark_coverage",
+    "benchmark_generative_coverage_unverified",
+    "multimodal_image_forensics",
+    "scientific_biomedical",
+    "neural_rendering",
+    "analysis_or_benchmark",
+    "attack_only",
+    "attack_plus_defense",
+    "adversarial_training_detection",
+    "distortion_robustness",
+    "copyright_or_model_ownership",
+    "credentials_metadata",
+    "generation_prevention",
+    "possible_existing_exclusion_identity",
+    "training_aid_not_release_injection",
+    "image_quality_not_authenticity",
+    "human_perception_component",
+    "watermark_embedding_centric",
+    "face_evaluation_unit_unverified"
+  ],
+  "policies": [
+    {
+      "cluster_id": "EMBED",
+      "cluster_name": "Embedding-centric active provenance",
+      "conceptual_boundary": "New watermark/fingerprint injection is the main contribution; paired decoding or payload accuracy alone does not make it an independent forensic evaluation.",
+      "included_precedent": [
+        {
+          "title": "AI-generated Image Detection: Passive or Watermark?",
+          "paper_id": "",
+          "doi": "10.48550/arxiv.2411.13553",
+          "primary_url": "https://openalex.org/W4404649743",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "benchmark"
+          ]
+        },
+        {
+          "title": "Evading Watermark based Detection of AI-Generated Content",
+          "paper_id": "",
+          "doi": "10.1145/3576915.3623189",
+          "primary_url": "https://doi.org/10.1145/3576915.3623189",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "analysis_study"
+          ]
+        },
+        {
+          "title": "EKILA: Synthetic Media Provenance and Attribution for Generative Art",
+          "paper_id": "",
+          "doi": "10.1109/cvprw59228.2023.00098",
+          "primary_url": "https://doi.org/10.1109/cvprw59228.2023.00098",
+          "tasks": [
+            "source_attribution"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method"
+          ]
+        }
+      ],
+      "excluded_precedent": [
+        {
+          "title": "The Stable Signature: Rooting Watermarks in Latent Diffusion Models",
+          "exclusion_id": "exclusion-78b444d274874e47acbaee80631a942a",
+          "doi": "10.1109/iccv51070.2023.02053",
+          "reason": "out_of_scope",
+          "review_note": "ML",
+          "is_active": "true"
+        },
+        {
+          "title": "InvisMark: Invisible and Robust Watermarking for AI-Generated Image Provenance",
+          "exclusion_id": "exclusion-84f3cb6f4b844e938bebca64d8415fcf",
+          "doi": "10.1109/wacv61041.2025.00098",
+          "reason": "out_of_scope",
+          "review_note": "ML",
+          "is_active": "true"
+        }
+      ],
+      "hidden_rule_assessment": "APPARENT_CONFLICT_RECONCILED: contribution type explains the inspected records. ImageDetectBench and WEvade evaluate forensic systems; EKILA combines visual attribution with credentials, rather than proposing signal embedding. Stable Signature and InvisMark are excluded embedding methods. Their notes say only ML, so this is a moderate-confidence inferred practice, not an explicit universal rule. No comparable embedding-centric inclusion was identified in the current title/abstract scan.",
+      "recommended_policy": "RECOMMEND_EXCLUDE",
+      "condition": "Keep new signal-injection/embedding mechanisms outside the proposed scope when their forensic result is only recovery of their own mark. Independent evaluation and hybrid manipulation forensics use separate clusters.",
+      "precedent_detail": "The cached Stable Signature abstract explicitly describes decoder fine-tuning, watermark extraction and a statistical source-model test with an image-origin accuracy/false-positive evaluation. It is not embedding-only and does not lack forensic metrics. InvisMark describes high-resolution embedding, UUID payloads, decoding and robustness. Thus the defensible inferred distinction is new mark construction plus its paired verification versus an independent forensic evaluation, not 'embedding has no detector'. This explains observed outcomes but cannot establish the intent behind the opaque ML notes.",
+      "precedent_cache_paths": [
+        "data/raw/openalex/20260619T193231Z_005_diffusion-generated-image-detection.json",
+        "data/raw/openalex/20260619T211726Z_017_generated-image-provenance.json"
+      ],
+      "policy_confidence": "moderate",
+      "future_recurrence": "high",
+      "over_inclusion_risk": "Expanding into the whole watermark engineering and model-distribution literature.",
+      "under_inclusion_risk": "Missing useful proactive attribution mechanisms.",
+      "options": [
+        {
+          "label": "A — Retain contribution-based boundary (recommended)",
+          "rationale": "Prioritize analysis of generated images over engineering their signatures.",
+          "taxonomy_fit": "No new task category; detection/attribution labels describe the endpoint, not automatic eligibility.",
+          "precedent_impact": "Explains the two embedding exclusions while retaining watermark benchmarks and C2PA-assisted visual attribution.",
+          "future_implications": "Keep new embedding systems out; include independent forensic assessments separately.",
+          "scope_creep": "Low."
+        },
+        {
+          "label": "B — Include embedding with forensic verification",
+          "rationale": "Treat the paired verification pipeline as sufficient forensic contribution.",
+          "taxonomy_fit": "Detection/source_attribution may fit; would need explicit mechanism metadata later.",
+          "precedent_impact": "Broadens beyond Stable Signature and InvisMark decisions; does not authorize restoring them.",
+          "future_implications": "Many future watermark engineering papers become candidates.",
+          "scope_creep": "High; ordinary bit recovery may masquerade as image authenticity."
+        },
+        {
+          "label": "C — Include active provenance broadly",
+          "rationale": "Map the full provenance ecosystem.",
+          "taxonomy_fit": "Credentials, ownership and consent are not always existing forensic tasks.",
+          "precedent_impact": "Would require a wider scope revision than existing inclusions establish.",
+          "future_implications": "Includes embedding, model distribution and copyright infrastructure.",
+          "scope_creep": "Very high."
+        }
+      ],
+      "user_question": "",
+      "recommended_answer": "",
+      "yes_consequence": "",
+      "no_consequence": "",
+      "decision_rank": 0
+    },
+    {
+      "cluster_id": "VERIFY",
+      "cluster_name": "Independent watermark detection and recovery",
+      "conceptual_boundary": "Inference on already generated/watermarked images, without making a new embedding mechanism the substantive contribution.",
+      "included_precedent": [
+        {
+          "title": "AI-generated Image Detection: Passive or Watermark?",
+          "paper_id": "",
+          "doi": "10.48550/arxiv.2411.13553",
+          "primary_url": "https://openalex.org/W4404649743",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "benchmark"
+          ]
+        },
+        {
+          "title": "Evading Watermark based Detection of AI-Generated Content",
+          "paper_id": "",
+          "doi": "10.1145/3576915.3623189",
+          "primary_url": "https://doi.org/10.1145/3576915.3623189",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "analysis_study"
+          ]
+        },
+        {
+          "title": "EKILA: Synthetic Media Provenance and Attribution for Generative Art",
+          "paper_id": "",
+          "doi": "10.1109/cvprw59228.2023.00098",
+          "primary_url": "https://doi.org/10.1109/cvprw59228.2023.00098",
+          "tasks": [
+            "source_attribution"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method"
+          ]
+        }
+      ],
+      "excluded_precedent": [
+        {
+          "title": "The Stable Signature: Rooting Watermarks in Latent Diffusion Models",
+          "exclusion_id": "exclusion-78b444d274874e47acbaee80631a942a",
+          "doi": "10.1109/iccv51070.2023.02053",
+          "reason": "out_of_scope",
+          "review_note": "ML",
+          "is_active": "true"
+        },
+        {
+          "title": "InvisMark: Invisible and Robust Watermarking for AI-Generated Image Provenance",
+          "exclusion_id": "exclusion-84f3cb6f4b844e938bebca64d8415fcf",
+          "doi": "10.1109/wacv61041.2025.00098",
+          "reason": "out_of_scope",
+          "review_note": "ML",
+          "is_active": "true"
+        }
+      ],
+      "hidden_rule_assessment": "CURRENT_RULE: ImageDetectBench and WEvade establish detection/verification as forensic endpoints; EKILA allows credentials when coupled to visual attribution. Detecting a watermark is not by itself proof of AI origin, and keyless recovery is not synonymous with passive natural-fingerprint attribution.",
+      "recommended_policy": "RECOMMEND_INCLUDE_WITH_CONDITION",
+      "condition": "Require an independently evaluated image-level AI-origin, source/provenance attribution or generative-edit verification endpoint. State key/reference assumptions and false-positive controls; generic watermark-presence AUC or extraction accuracy without this link remains a paper-specific check.",
+      "policy_confidence": "moderate",
+      "future_recurrence": "high",
+      "over_inclusion_risk": "Including every decoder optimization or watermark-presence detector.",
+      "under_inclusion_risk": "Excluding useful inference because an earlier producer embedded a mark.",
+      "options": [
+        {
+          "label": "A — Forensic verification only (recommended)",
+          "rationale": "The evaluated inference endpoint determines relevance.",
+          "taxonomy_fit": "Detection/source_attribution/localization only where the endpoint actually matches.",
+          "precedent_impact": "Consistent with ImageDetectBench, WEvade and EKILA.",
+          "future_implications": "Admit independent forensic recovery while testing its threat model.",
+          "scope_creep": "Bounded by explicit origin or edit verification."
+        },
+        {
+          "label": "B — Any watermark recovery",
+          "rationale": "Make watermark detection itself sufficient.",
+          "taxonomy_fit": "Payload recovery is not always a forensic task.",
+          "precedent_impact": "Goes beyond included evaluation precedents.",
+          "future_implications": "Large decoder and steganalysis literature enters.",
+          "scope_creep": "High."
+        }
+      ],
+      "user_question": "",
+      "recommended_answer": "",
+      "yes_consequence": "",
+      "no_consequence": "",
+      "decision_rank": 0
+    },
+    {
+      "cluster_id": "WM_EVAL",
+      "cluster_name": "Watermark robustness and evasion",
+      "conceptual_boundary": "Independent attacks, benchmarks and analysis of watermark-based image forensic decisions.",
+      "included_precedent": [
+        {
+          "title": "AI-generated Image Detection: Passive or Watermark?",
+          "paper_id": "",
+          "doi": "10.48550/arxiv.2411.13553",
+          "primary_url": "https://openalex.org/W4404649743",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "benchmark"
+          ]
+        },
+        {
+          "title": "Evading Watermark based Detection of AI-Generated Content",
+          "paper_id": "",
+          "doi": "10.1145/3576915.3623189",
+          "primary_url": "https://doi.org/10.1145/3576915.3623189",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "analysis_study"
+          ]
+        }
+      ],
+      "excluded_precedent": [
+        {
+          "title": "The Stable Signature: Rooting Watermarks in Latent Diffusion Models",
+          "exclusion_id": "exclusion-78b444d274874e47acbaee80631a942a",
+          "doi": "10.1109/iccv51070.2023.02053",
+          "reason": "out_of_scope",
+          "review_note": "ML",
+          "is_active": "true"
+        },
+        {
+          "title": "InvisMark: Invisible and Robust Watermarking for AI-Generated Image Provenance",
+          "exclusion_id": "exclusion-84f3cb6f4b844e938bebca64d8415fcf",
+          "doi": "10.1109/wacv61041.2025.00098",
+          "reason": "out_of_scope",
+          "review_note": "ML",
+          "is_active": "true"
+        }
+      ],
+      "hidden_rule_assessment": "APPARENT_CONFLICT_RECONCILED: method versus analysis is not the boundary. WEvade is an attack-only study and ImageDetectBench is a benchmark. Their targets are AI-image forensic decisions, whereas embedding exclusions concern new mark construction.",
+      "recommended_policy": "RECOMMEND_INCLUDE_WITH_CONDITION",
+      "condition": "Include attack-only, attack-plus-defense, benchmark or analytical work when it evaluates AI-image origin/source verification errors under a stated attack or distortion protocol. Generic copyright watermark destruction without this endpoint needs evidence review.",
+      "policy_confidence": "high",
+      "future_recurrence": "high",
+      "over_inclusion_risk": "Absorbing generic copyright/steganography attacks merely using a diffusion tool.",
+      "under_inclusion_risk": "Losing important limitations of deployed forensic detectors.",
+      "options": [
+        {
+          "label": "A — Include endpoint-matched evaluations (recommended)",
+          "rationale": "Forensic reliability includes failures and attacks.",
+          "taxonomy_fit": "method, benchmark and analysis_study all fit; no new detector required.",
+          "precedent_impact": "Directly supported by WEvade and ImageDetectBench.",
+          "future_implications": "Continue tracking realistic forensic threat models.",
+          "scope_creep": "Low with explicit endpoint."
+        },
+        {
+          "label": "B — Require a new defense/detector",
+          "rationale": "Only constructive methods count.",
+          "taxonomy_fit": "Would artificially narrow existing research types.",
+          "precedent_impact": "Conflicts with included evasion and benchmark records.",
+          "future_implications": "Misses attack-only and comparative evaluation literature.",
+          "scope_creep": "Low volume but high under-coverage."
+        }
+      ],
+      "user_question": "",
+      "recommended_answer": "",
+      "yes_consequence": "",
+      "no_consequence": "",
+      "decision_rank": 0
+    },
+    {
+      "cluster_id": "HYBRID",
+      "cluster_name": "Proactive manipulation forensics",
+      "conceptual_boundary": "Premarking or generator intervention coupled to generative-edit localization or separately deployed passive detection.",
+      "included_precedent": [
+        {
+          "title": "AI-generated Image Detection: Passive or Watermark?",
+          "paper_id": "",
+          "doi": "10.48550/arxiv.2411.13553",
+          "primary_url": "https://openalex.org/W4404649743",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "benchmark"
+          ]
+        },
+        {
+          "title": "Evading Watermark based Detection of AI-Generated Content",
+          "paper_id": "",
+          "doi": "10.1145/3576915.3623189",
+          "primary_url": "https://doi.org/10.1145/3576915.3623189",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "analysis_study"
+          ]
+        },
+        {
+          "title": "EKILA: Synthetic Media Provenance and Attribution for Generative Art",
+          "paper_id": "",
+          "doi": "10.1109/cvprw59228.2023.00098",
+          "primary_url": "https://doi.org/10.1109/cvprw59228.2023.00098",
+          "tasks": [
+            "source_attribution"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method"
+          ]
+        },
+        {
+          "title": "Face X-Ray for More General Face Forgery Detection",
+          "paper_id": "",
+          "doi": "10.1109/cvpr42600.2020.00505",
+          "primary_url": "https://doi.org/10.1109/cvpr42600.2020.00505",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "deepfake"
+          ],
+          "research_types": [
+            "method"
+          ]
+        }
+      ],
+      "excluded_precedent": [
+        {
+          "title": "The Stable Signature: Rooting Watermarks in Latent Diffusion Models",
+          "exclusion_id": "exclusion-78b444d274874e47acbaee80631a942a",
+          "doi": "10.1109/iccv51070.2023.02053",
+          "reason": "out_of_scope",
+          "review_note": "ML",
+          "is_active": "true"
+        },
+        {
+          "title": "InvisMark: Invisible and Robust Watermarking for AI-Generated Image Provenance",
+          "exclusion_id": "exclusion-84f3cb6f4b844e938bebca64d8415fcf",
+          "doi": "10.1109/wacv61041.2025.00098",
+          "reason": "out_of_scope",
+          "review_note": "ML",
+          "is_active": "true"
+        }
+      ],
+      "hidden_rule_assessment": "UNRESOLVED_EXTENSION: engineering versus independent evaluation explains ordinary embedding precedents, but does not settle a system that modifies the generator to improve a separate passive detector or localizes later edits via premarking. EKILA prevents a blanket ban on active provenance; it is not direct precedent for marker-dependent spatial localization. Task and mechanism distinctions narrow, but do not eliminate, this question.",
+      "recommended_policy": "RECOMMEND_NEEDS_USER_POLICY_DECISION",
+      "condition": "Proposed default: include only a separately evaluated generative-edit localization or passive-detector improvement contribution, measured against edit masks or independent detector decisions. Payload accuracy, mark-region localization and generic image protection alone do not qualify. Disclose premarking/generator-control requirements.",
+      "policy_confidence": "moderate",
+      "future_recurrence": "high",
+      "over_inclusion_risk": "Mark recovery and ordinary tamper protection may be mislabeled as generative forensics.",
+      "under_inclusion_risk": "Missing systems that directly improve image forensic evidence.",
+      "options": [
+        {
+          "label": "A — Admit separately evaluated hybrid forensics (recommended)",
+          "rationale": "Focus on the downstream forensic contribution, with preconditions explicit.",
+          "taxonomy_fit": "Detection/localization fit only measured image forensics; mechanism tags would be a future change.",
+          "precedent_impact": "Extends between excluded embedding and included verification; no direct identical precedent.",
+          "future_implications": "Admits controlled-generation forensic systems under a bounded endpoint rule.",
+          "scope_creep": "Medium; independent metrics must be checked."
+        },
+        {
+          "label": "B — Exclude all premarking/generator-dependent hybrids",
+          "rationale": "Require naturally occurring evidence for manipulation forensics.",
+          "taxonomy_fit": "Would restrict mechanism, not task vocabulary.",
+          "precedent_impact": "Closest to embedding exclusions; broader active-provenance ban would conflict with EKILA.",
+          "future_implications": "Keeps FFIM/AdvMark-style interventions outside scope.",
+          "scope_creep": "Low, but useful forensic contributions omitted."
+        }
+      ],
+      "user_question": "Should hybrid systems qualify when they separately evaluate generative-edit localization or improvements to an independent passive detector, even when premarking or generator control is required?",
+      "recommended_answer": "Yes",
+      "yes_consequence": "Apply the stated endpoint condition in a future review; watermark-only region or payload results remain insufficient.",
+      "no_consequence": "Keep generator-controlled and premarked manipulation-forensics systems outside the proposed scope, while retaining independent verification/robustness studies.",
+      "decision_rank": 2
+    },
+    {
+      "cluster_id": "PROTECT",
+      "cluster_name": "Protection, ownership and governance without a forensic endpoint",
+      "conceptual_boundary": "Image/model IP protection, content transport, identity cloaking, consent infrastructure or metadata whose evaluated target is not synthetic-image forensic inference.",
+      "included_precedent": [
+        {
+          "title": "EKILA: Synthetic Media Provenance and Attribution for Generative Art",
+          "paper_id": "",
+          "doi": "10.1109/cvprw59228.2023.00098",
+          "primary_url": "https://doi.org/10.1109/cvprw59228.2023.00098",
+          "tasks": [
+            "source_attribution"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method"
+          ]
+        },
+        {
+          "title": "Towards Generated Image Provenance Analysis via Conceptual-Similar-Guided-SLIP Retrieval",
+          "paper_id": "",
+          "doi": "10.1109/lsp.2024.3388958",
+          "primary_url": "https://doi.org/10.1109/lsp.2024.3388958",
+          "tasks": [
+            "source_attribution"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method"
+          ]
+        }
+      ],
+      "excluded_precedent": [
+        {
+          "title": "Can Model Attribution Bridge AI's Accountability Gap in Safety-Critical Domains?",
+          "exclusion_id": "exclusion-f25e1b4e-a6fa-491e-b4eb-a26bfe607e97",
+          "doi": "10.1098/rsta.2025.0117",
+          "reason": "out_of_scope",
+          "review_note": "2026-09-04 focused corpus-scope audit: the publisher abstract reviews attribution of generic remotely deployed machine-learning services and establishes no synthetic-image forensic target.",
+          "is_active": "true"
+        },
+        {
+          "title": "DynEval: Holistic Evaluations of T2I Generative Models in the Wild",
+          "exclusion_id": "exclusion-7c618a08-1159-4b87-b057-5c82a36e3b2a",
+          "doi": "",
+          "reason": "out_of_scope",
+          "review_note": "2026-09-04 focused corpus-scope audit: the official paper and project evaluate T2I alignment and output quality against human preferences rather than authenticity detection attribution or forgery localization.",
+          "is_active": "true"
+        }
+      ],
+      "hidden_rule_assessment": "CURRENT_ENDPOINT_RULE, with limits: EKILA and CS-SLIP mean copyright motivation alone cannot exclude a paper. The distinction is image-to-model/training-source attribution versus ownership, consent, energy metadata or prevention without a forensic decision. Context-only inclusions elsewhere show historical exceptions, but do not establish scope for generic foundation-model governance.",
+      "recommended_policy": "RECOMMEND_EXCLUDE",
+      "condition": "Provisionally exclude when the cached contribution is only content/model protection, prevention, generic governance or watermark transport, with no evaluated synthetic-image detection, attribution or generative-edit localization. A concrete image-origin attribution component overrides this boundary and must be examined under VERIFY/ATTRIBUTION/HYBRID.",
+      "policy_confidence": "moderate",
+      "future_recurrence": "high",
+      "over_inclusion_risk": "Admitting all generative-model security, consent and image copyright literature.",
+      "under_inclusion_risk": "Overlooking actual visual attribution because it is motivated by copyright.",
+      "options": [
+        {
+          "label": "A — Require an image-forensic endpoint (recommended)",
+          "rationale": "Align contribution with the project purpose rather than the motivation.",
+          "taxonomy_fit": "Protection, quality, consent and energy metadata are not taxonomy tasks.",
+          "precedent_impact": "Retains EKILA/CS-SLIP on their attribution contribution; aligns with generic-service exclusion.",
+          "future_implications": "No generic security or provenance infrastructure expansion.",
+          "scope_creep": "Low."
+        },
+        {
+          "label": "B — Include provenance/security infrastructure",
+          "rationale": "Offer a broader trust-and-safety map.",
+          "taxonomy_fit": "Needs new non-forensic task or contextual scope conventions.",
+          "precedent_impact": "Some context-only inclusions exist, but generic-service and quality exclusions oppose a blanket expansion.",
+          "future_implications": "Large IP/security/governance corpus beyond generated-image forensics.",
+          "scope_creep": "Very high."
+        }
+      ],
+      "user_question": "",
+      "recommended_answer": "",
+      "yes_consequence": "",
+      "no_consequence": "",
+      "decision_rank": 0
+    },
+    {
+      "cluster_id": "FACE",
+      "cluster_name": "Image and frame-level face forensics",
+      "conceptual_boundary": "Face-only detection/attribution/localization with a possible image contribution; dataset origin alone cannot resolve eligibility.",
+      "included_precedent": [
+        {
+          "title": "Face X-Ray for More General Face Forgery Detection",
+          "paper_id": "",
+          "doi": "10.1109/cvpr42600.2020.00505",
+          "primary_url": "https://doi.org/10.1109/cvpr42600.2020.00505",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "deepfake"
+          ],
+          "research_types": [
+            "method"
+          ]
+        },
+        {
+          "title": "GAN Generated Fake Human Face Image Detection",
+          "paper_id": "",
+          "doi": "10.1109/iitcee59897.2024.10467257",
+          "primary_url": "https://doi.org/10.1109/iitcee59897.2024.10467257",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "deepfake"
+          ],
+          "research_types": [
+            "method"
+          ]
+        },
+        {
+          "title": "Forging the Unknown: Open-Set Deepfake Attribution via Adaptive Fingerprint Learning",
+          "paper_id": "curated:ed5f779be1e71edddcee",
+          "doi": "10.1007/978-3-032-31663-9_45",
+          "primary_url": "https://doi.org/10.1007/978-3-032-31663-9_45",
+          "tasks": [
+            "source_attribution"
+          ],
+          "image_scopes": [
+            "deepfake"
+          ],
+          "research_types": [
+            "method"
+          ]
+        }
+      ],
+      "excluded_precedent": [
+        {
+          "title": "Wavelet-Packet Powered Deepfake Image Detection.",
+          "exclusion_id": "exclusion-65b94ab70e6845ffaafb5779ed2dcc6d",
+          "doi": "",
+          "reason": "deepfake_only_not_core",
+          "review_note": "ML",
+          "is_active": "true"
+        },
+        {
+          "title": "FaceForensics++: Learning to Detect Manipulated Facial Images",
+          "exclusion_id": "exclusion-e65368f3147c43c5ab519a01037afd6d",
+          "doi": "10.1109/iccv.2019.00009",
+          "reason": "deepfake_only_not_core",
+          "review_note": "ML",
+          "is_active": "true"
+        },
+        {
+          "title": "Forensics Adapter: Unleashing CLIP for Generalizable Face Forgery Detection",
+          "exclusion_id": "exclusion-a6b1b904db49e1500107889210ef0b5d",
+          "doi": "10.48550/arxiv.2411.19715",
+          "reason": "deepfake_only_not_core",
+          "review_note": "2026-09-05 closed Ant/AI-edit gap audit: Face-forgery-only detector.",
+          "is_active": "true"
+        }
+      ],
+      "hidden_rule_assessment": "GENUINE_CONFLICT: the image-level principle is conceptually coherent but not consistently applied. Face X-Ray uses facial blending boundaries; excluded Forensics Adapter also targets facial blending boundaries, and Wavelet-Packet explicitly concerns images. Both detection task and image modality overlap. Dataset/benchmark status does not explain all exclusions. Historical scope drift is possible but undocumented; deepfake taxonomy alone is not blanket approval.",
+      "recommended_policy": "RECOMMEND_NEEDS_USER_POLICY_DECISION",
+      "condition": "Proposed default: accept independently evaluated still-image or image-frame forensic decisions, including facial generative editing, with the deepfake label. A video dataset is permitted only when a standalone image/frame contribution and image/frame evaluation are explicit; frame extraction alone and temporal-only/video-system metrics do not qualify.",
+      "policy_confidence": "high on conflict; moderate on individual modality",
+      "future_recurrence": "high",
+      "over_inclusion_risk": "Importing the entire video deepfake literature via frame extraction.",
+      "under_inclusion_risk": "Excluding substantive still-image face synthesis/manipulation forensics.",
+      "options": [
+        {
+          "label": "A — Image-level contribution regardless of face-only focus (recommended)",
+          "rationale": "Apply the project image boundary consistently.",
+          "taxonomy_fit": "Existing deepfake scope plus detection/attribution/localization suffice.",
+          "precedent_impact": "Fits Face X-Ray but conflicts with face-only exclusions; these remain unchanged until separate approval.",
+          "future_implications": "Admit substantive image/frame work; require modality evidence.",
+          "scope_creep": "Medium; video-only benchmarks must stay separate."
+        },
+        {
+          "label": "B — Exclude face-only, require a non-face generative-image component",
+          "rationale": "Keep the map focused on broader synthetic imagery.",
+          "taxonomy_fit": "Restricts use of the existing deepfake scope to mixed work.",
+          "precedent_impact": "Fits recent face-only exclusions but conflicts with existing image-face inclusions.",
+          "future_implications": "Far fewer new face-only papers; historical exceptions need separate policy treatment.",
+          "scope_creep": "Low expansion, substantial under-coverage."
+        },
+        {
+          "label": "C — Include all deepfake systems",
+          "rationale": "Treat deepfake as sufficient regardless of modality.",
+          "taxonomy_fit": "Would broaden beyond generated images to temporal/audio tasks.",
+          "precedent_impact": "Contradicts AGENTS.md and explicit video-only exclusions.",
+          "future_implications": "Opens a large video/audio detection literature.",
+          "scope_creep": "Very high."
+        }
+      ],
+      "user_question": "Should face-only work qualify when it independently evaluates still-image or image-frame forensics, while temporal-only systems and frame extraction without an image-level evaluation remain outside scope?",
+      "recommended_answer": "Yes",
+      "yes_consequence": "Apply the image-level condition prospectively; later review must check video/frame metrics and existing exclusion identities.",
+      "no_consequence": "Require a substantive non-face generated-image component for new face-only candidates; historical image-face inclusions remain exceptions until separately reviewed.",
+      "decision_rank": 1
+    },
+    {
+      "cluster_id": "MODALITY",
+      "cluster_name": "Text and temporal-only media boundaries",
+      "conceptual_boundary": "Text-only watermarking, video/audio interval decisions, or a video system with no established standalone image contribution.",
+      "included_precedent": [
+        {
+          "title": "Face X-Ray for More General Face Forgery Detection",
+          "paper_id": "",
+          "doi": "10.1109/cvpr42600.2020.00505",
+          "primary_url": "https://doi.org/10.1109/cvpr42600.2020.00505",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "deepfake"
+          ],
+          "research_types": [
+            "method"
+          ]
+        }
+      ],
+      "excluded_precedent": [
+        {
+          "title": "Training-free Detection of Text-to-video Generations via Over-coherence",
+          "exclusion_id": "exclusion-9f5d62eaf196470e9eff250d1e9baba9",
+          "doi": "",
+          "reason": "out_of_scope",
+          "review_note": "Official WACV 2026 proceedings describe text-to-video detection through temporal over-coherence; video-only method is outside generated-image scope. Evidence: https://openaccess.thecvf.com/content/WACV2026/html/Brokman_Training-free_Detection_of_Text-to-video_Generations_via_Over-coherence_WACV_2026_paper.html",
+          "is_active": "true"
+        }
+      ],
+      "hidden_rule_assessment": "CURRENT_RULE: AGENTS.md focuses on generated images, not audio/video. The temporal-only exclusions implement that rule. A video dataset may support an image method, so unclear frame-level evaluation is an evidence gap rather than automatic exclusion. Temporal diffusion steps and sequential edits to one image are not video.",
+      "recommended_policy": "RECOMMEND_INCLUDE_WITH_CONDITION",
+      "condition": "Include only an explicitly evaluated standalone image/frame forensic contribution; otherwise text-only, audio-only and temporal/video-only work is provisionally excluded. Per-frame payload recovery in a temporal watermark system is not independently evaluated image-origin detection.",
+      "policy_confidence": "high",
+      "future_recurrence": "high",
+      "over_inclusion_risk": "Treating every video frame as proof of an image contribution.",
+      "under_inclusion_risk": "Discarding valid image methods because their data originated in videos.",
+      "options": [
+        {
+          "label": "A — Standalone image contribution (recommended)",
+          "rationale": "Use the unit of forensic inference and evaluation.",
+          "taxonomy_fit": "Image detection/attribution/spatial localization, not time intervals.",
+          "precedent_impact": "Matches project boundary and temporal-only exclusions.",
+          "future_implications": "Mixed-modality studies need an independently evaluated image component.",
+          "scope_creep": "Low."
+        },
+        {
+          "label": "B — Any system processing frames",
+          "rationale": "Image pixels suffice for entry.",
+          "taxonomy_fit": "Temporal/audio tasks exceed current image taxonomy.",
+          "precedent_impact": "Contradicts the explicit image-only boundary.",
+          "future_implications": "Video benchmarks, talking-head and audio-visual methods flood scope.",
+          "scope_creep": "High."
+        }
+      ],
+      "user_question": "",
+      "recommended_answer": "",
+      "yes_consequence": "",
+      "no_consequence": "",
+      "decision_rank": 0
+    },
+    {
+      "cluster_id": "TRADITIONAL",
+      "cluster_name": "Classical-only manipulation",
+      "conceptual_boundary": "Copy-move, splicing and document/Photoshop-style edits without a demonstrated generative component.",
+      "included_precedent": [
+        {
+          "title": "IoT-Oriented Security for Small Sensor Systems Using DnCNN Denoising and Multimodal Feature Fusion for Image Forgery Detection",
+          "paper_id": "curated:3ea88dc6c3224d22d416",
+          "doi": "10.3390/s26041172",
+          "primary_url": "https://doi.org/10.3390/s26041172",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "traditional_manipulation"
+          ],
+          "research_types": [
+            "method"
+          ]
+        },
+        {
+          "title": "Copy-Move Forgery Detection (CMFD) Using Deep Learning for Image and Video Forensics",
+          "paper_id": "",
+          "doi": "10.3390/jimaging7030059",
+          "primary_url": "https://doi.org/10.3390/jimaging7030059",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "traditional_manipulation"
+          ],
+          "research_types": [
+            "method"
+          ]
+        },
+        {
+          "title": "FakeShield: Explainable Image Forgery Detection and Localization via Multi-Modal Large Language Models",
+          "paper_id": "curated:e69688740a4586c62c5d",
+          "doi": "",
+          "primary_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/4d4e0ab9d8ff180bf5b95c258842d16e-Abstract-Conference.html",
+          "tasks": [
+            "detection",
+            "localization"
+          ],
+          "image_scopes": [
+            "generative_editing",
+            "deepfake",
+            "traditional_manipulation"
+          ],
+          "research_types": [
+            "method",
+            "dataset"
+          ]
+        }
+      ],
+      "excluded_precedent": [
+        {
+          "title": "Localizing Perceptual Artifacts in Synthetic Images for Image Quality Assessment via Deep-Learning-Based Anomaly Detection",
+          "exclusion_id": "exclusion-e90e9f8a47eb43e2b53702037d6e5fe7",
+          "doi": "10.3390/electronics15050916",
+          "reason": "out_of_scope",
+          "review_note": "Publisher/Crossref abstract targets perceptual defects for image quality assurance and editing, not forensic origin detection or manipulation localization. Exclude consistently with existing fidelity-only scope decisions. Evidence: https://www.mdpi.com/2079-9292/15/5/916; https://api.crossref.org/works/10.3390/electronics15050916",
+          "is_active": "true"
+        }
+      ],
+      "hidden_rule_assessment": "GENUINE_CONFLICT_WITH_STATED_SCOPE: mixed generative/traditional papers are explained by a substantive generative component, but two current records are traditional_manipulation only: IoT-Oriented Security evaluates CASIA 2.0, and CMFD evaluates copy-move. Thus a blanket traditional-only exclusion is not established current practice. No clean traditional-only exclusion with an explicit, matching rationale was found; quality-artifact exclusions concern the task, not classical manipulation. Historical scope drift/legacy exceptions are plausible, not verified.",
+      "recommended_policy": "RECOMMEND_NEEDS_USER_POLICY_DECISION",
+      "condition": "Proposed default: require an explicit experimental task/protocol or substantive survey treatment of generative editing or synthetic-image forensics. A generative-model introduction, diffusion backbone, synthetic training mask, or a lone incidental comparator is insufficient. Do not remove the two historical classical-only inclusions in this task.",
+      "policy_confidence": "high on exception; moderate on prospective boundary",
+      "future_recurrence": "high",
+      "over_inclusion_risk": "Expanding into all image forgery, sensor and document authentication.",
+      "under_inclusion_risk": "Omitting reusable classical-forensics methods and benchmark infrastructure.",
+      "options": [
+        {
+          "label": "A — Substantive generative component required (recommended)",
+          "rationale": "Preserve the map purpose while admitting mixed forensics.",
+          "taxonomy_fit": "traditional_manipulation remains valid as a secondary scope.",
+          "precedent_impact": "Fits mixed papers but requires acknowledging two standalone historical exceptions.",
+          "future_implications": "Classical-only methods/codebases stay out unless generative coverage is substantive.",
+          "scope_creep": "Low."
+        },
+        {
+          "label": "B — Include classical manipulation broadly",
+          "rationale": "Interpret the traditional_manipulation taxonomy value as an independent scope.",
+          "taxonomy_fit": "Fits existing vocabulary.",
+          "precedent_impact": "Fits two current standalone inclusions but broadens the stated generated-image purpose.",
+          "future_implications": "Large copy-move, splicing and document-forensics literature becomes eligible.",
+          "scope_creep": "High."
+        },
+        {
+          "label": "C — Include classical benchmarks/infrastructure only",
+          "rationale": "Retain transferable resources but not all methods.",
+          "taxonomy_fit": "dataset/benchmark types provide a boundary, but method resources can be hybrid.",
+          "precedent_impact": "Does not fully explain the two included classical methods.",
+          "future_implications": "Adds another contribution-type exception requiring maintenance.",
+          "scope_creep": "Medium."
+        }
+      ],
+      "user_question": "Should new classical-manipulation papers require a substantive evaluated generative-image component, while existing classical-only inclusions remain unchanged pending a separate review?",
+      "recommended_answer": "Yes",
+      "yes_consequence": "Apply the stated generative-component threshold in later reconciliation; classical-only methods and resources do not qualify automatically.",
+      "no_consequence": "Define broader classical-forensics coverage before adding these candidates; neither the current taxonomy nor two exceptions specifies a maintainable limit.",
+      "decision_rank": 3
+    },
+    {
+      "cluster_id": "IMAGE",
+      "cluster_name": "Generative and mixed image forensics: evidence threshold",
+      "conceptual_boundary": "Substantive generated-image/edit detection, spatial localization, mixed benchmarks, rendering or specialized scientific imagery; unknown input provenance remains evidence uncertainty.",
+      "included_precedent": [
+        {
+          "title": "Weakly-Supervised Deepfake Localization in Diffusion-Generated Images",
+          "paper_id": "curated:9e6bc47bc75cd7b9b637",
+          "doi": "10.1109/wacv57701.2024.00614",
+          "primary_url": "https://doi.org/10.1109/wacv57701.2024.00614",
+          "tasks": [
+            "detection",
+            "localization"
+          ],
+          "image_scopes": [
+            "fully_generated",
+            "generative_editing",
+            "deepfake"
+          ],
+          "research_types": [
+            "method",
+            "dataset",
+            "analysis_study"
+          ]
+        },
+        {
+          "title": "Forensic Analysis of Synthetically Generated Western Blot Images",
+          "paper_id": "curated:d9ecbce63bbd80b54180",
+          "doi": "10.1109/access.2022.3179116",
+          "primary_url": "https://doi.org/10.1109/access.2022.3179116",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method",
+            "dataset",
+            "analysis_study"
+          ]
+        },
+        {
+          "title": "ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization",
+          "paper_id": "curated:4c4e9ffacf08b5eb2355",
+          "doi": "10.52202/085713-2167",
+          "primary_url": "https://doi.org/10.52202/085713-2167",
+          "tasks": [
+            "detection",
+            "localization"
+          ],
+          "image_scopes": [
+            "fully_generated",
+            "deepfake",
+            "traditional_manipulation"
+          ],
+          "research_types": [
+            "dataset",
+            "benchmark"
+          ]
+        }
+      ],
+      "excluded_precedent": [
+        {
+          "title": "Cascade learning from adversarial synthetic images for accurate pupil detection",
+          "exclusion_id": "exclusion-f7ba6941-52b6-4ea5-8228-6f67e18cd369",
+          "doi": "10.1016/j.patcog.2018.12.014",
+          "reason": "downstream_synthetic_data_only",
+          "review_note": "2026-09-04 focused corpus-scope audit: the publisher methodology uses GAN-refined synthetic eyes as training augmentation for pupil localization on real images rather than treating synthetic-image forensics as the target.",
+          "is_active": "true"
+        },
+        {
+          "title": "Localizing Perceptual Artifacts in Synthetic Images for Image Quality Assessment via Deep-Learning-Based Anomaly Detection",
+          "exclusion_id": "exclusion-e90e9f8a47eb43e2b53702037d6e5fe7",
+          "doi": "10.3390/electronics15050916",
+          "reason": "out_of_scope",
+          "review_note": "Publisher/Crossref abstract targets perceptual defects for image quality assurance and editing, not forensic origin detection or manipulation localization. Exclude consistently with existing fidelity-only scope decisions. Evidence: https://www.mdpi.com/2079-9292/15/5/916; https://api.crossref.org/works/10.3390/electronics15050916",
+          "is_active": "true"
+        }
+      ],
+      "hidden_rule_assessment": "CURRENT_RULE for a substantive generative component: current Tier 1 and mixed-forensics inclusions establish image-level detection/localization in both general and scientific domains. A diffusion detector/backbone is not evidence that the input manipulation is generative. Traditional-only eligibility remains the separate TRADITIONAL conflict; unclear candidates first need their evaluated manipulation types established.",
+      "recommended_policy": "RECOMMEND_INCLUDE_WITH_CONDITION",
+      "condition": "Require a named generative-image/edit evaluation protocol with corresponding detection, source-attribution or spatial manipulation results; for a survey, substantive coverage of that task. Multimodal papers require independently evaluated image forensics. Biomedical domain, neural rendering and use of language are not exclusions. Quality/aesthetic defects, downstream recognition and mere synthetic training-data use do not qualify.",
+      "policy_confidence": "high on rule; variable cached evidence",
+      "future_recurrence": "high",
+      "over_inclusion_risk": "Mistaking any diffusion model, synthetic training data or visual fraud for synthetic-image forensics.",
+      "under_inclusion_risk": "Missing generative editing, neural rendering, domain-specific or mixed benchmarks.",
+      "options": [
+        {
+          "label": "A — Substantive image-forensic evaluation (recommended)",
+          "rationale": "Match the contribution rather than the architecture or application domain.",
+          "taxonomy_fit": "Detection/source_attribution/localization with method/dataset/benchmark/survey/analysis_study all allowed.",
+          "precedent_impact": "Directly supported by current mixed-forensics and Western-blot inclusions.",
+          "future_implications": "Require a reproducible task/protocol for methods and benchmarks, substantive coverage for surveys.",
+          "scope_creep": "Low."
+        },
+        {
+          "label": "B — Any generative-AI mention or synthetic training data",
+          "rationale": "Use broad discovery language as final eligibility.",
+          "taxonomy_fit": "Confuses training method with image scope.",
+          "precedent_impact": "Contradicts pupil-detection and quality-only exclusions.",
+          "future_implications": "Imports general vision and classical manipulation papers indiscriminately.",
+          "scope_creep": "High."
+        }
+      ],
+      "user_question": "",
+      "recommended_answer": "",
+      "yes_consequence": "",
+      "no_consequence": "",
+      "decision_rank": 0
+    },
+    {
+      "cluster_id": "ATTRIBUTION",
+      "cluster_name": "Passive image-source and provenance attribution",
+      "conceptual_boundary": "Image-to-generator/training-source inference versus model-service authentication, parameter inference or legal infringement scoring.",
+      "included_precedent": [
+        {
+          "title": "ManiFPT: Defining and Analyzing Fingerprints of Generative Models",
+          "paper_id": "curated:34fdf09ae334914a2723",
+          "doi": "10.1109/cvpr52733.2024.01026",
+          "primary_url": "https://doi.org/10.1109/cvpr52733.2024.01026",
+          "tasks": [
+            "detection",
+            "source_attribution"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method"
+          ]
+        },
+        {
+          "title": "Towards Generated Image Provenance Analysis via Conceptual-Similar-Guided-SLIP Retrieval",
+          "paper_id": "",
+          "doi": "10.1109/lsp.2024.3388958",
+          "primary_url": "https://doi.org/10.1109/lsp.2024.3388958",
+          "tasks": [
+            "source_attribution"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method"
+          ]
+        },
+        {
+          "title": "EKILA: Synthetic Media Provenance and Attribution for Generative Art",
+          "paper_id": "",
+          "doi": "10.1109/cvprw59228.2023.00098",
+          "primary_url": "https://doi.org/10.1109/cvprw59228.2023.00098",
+          "tasks": [
+            "source_attribution"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method"
+          ]
+        }
+      ],
+      "excluded_precedent": [
+        {
+          "title": "Can Model Attribution Bridge AI's Accountability Gap in Safety-Critical Domains?",
+          "exclusion_id": "exclusion-f25e1b4e-a6fa-491e-b4eb-a26bfe607e97",
+          "doi": "10.1098/rsta.2025.0117",
+          "reason": "out_of_scope",
+          "review_note": "2026-09-04 focused corpus-scope audit: the publisher abstract reviews attribution of generic remotely deployed machine-learning services and establishes no synthetic-image forensic target.",
+          "is_active": "true"
+        },
+        {
+          "title": "Reverse Engineering of Generative Models: Inferring Model Hyperparameters From Generated Images",
+          "exclusion_id": "exclusion-7e31577d29a2427bac4e8985f6286cf4",
+          "doi": "10.1109/tpami.2023.3301451",
+          "reason": "out_of_scope",
+          "review_note": "ML",
+          "is_active": "true"
+        }
+      ],
+      "hidden_rule_assessment": "CURRENT_ENDPOINT_RULE: source-generator and training-image provenance are included, including retrieval and C2PA-assisted visual attribution. Generic service attribution is explicitly excluded. Reverse Engineering has only an opaque ML note; it cannot establish a blanket ban on image-based model analysis. Per-paper endpoint checks remain necessary.",
+      "recommended_policy": "RECOMMEND_INCLUDE_WITH_CONDITION",
+      "condition": "Require forensic source inference from generated images (generator, lineage, or responsible training-image/source provenance), evaluated against known source/reference truth. Generic query-only ownership tests, hyperparameter characterization or legal infringement labels alone do not suffice; visual source-recovery components must be identified.",
+      "policy_confidence": "moderate",
+      "future_recurrence": "high",
+      "over_inclusion_risk": "Expanding into all model IP, membership and legal infringement detection.",
+      "under_inclusion_risk": "Rejecting meaningful visual provenance because it concerns ownership or analysis rather than a detector.",
+      "options": [
+        {
+          "label": "A — Image-source inference (recommended)",
+          "rationale": "Keep attribution tied to an image and an identifiable source.",
+          "taxonomy_fit": "source_attribution; analysis_study need not propose a detector.",
+          "precedent_impact": "Consistent with ManiFPT, CS-SLIP and EKILA; does not overread opaque exclusions.",
+          "future_implications": "Allows passive source and lineage analysis with endpoint checks.",
+          "scope_creep": "Bounded."
+        },
+        {
+          "label": "B — All model/ownership attribution",
+          "rationale": "Include any identification of models or rights.",
+          "taxonomy_fit": "Generic model-service and legal tasks need broader scope.",
+          "precedent_impact": "Contradicts explicit generic-service exclusion.",
+          "future_implications": "Large model-security/IP literature enters.",
+          "scope_creep": "High."
+        }
+      ],
+      "user_question": "",
+      "recommended_answer": "",
+      "yes_consequence": "",
+      "no_consequence": "",
+      "decision_rank": 0
+    },
+    {
+      "cluster_id": "EVASION",
+      "cluster_name": "Attacks on passive image forensics",
+      "conceptual_boundary": "Attack-only, attack-plus-defense and red-team methods evaluated against passive synthetic-image detectors or source attributors.",
+      "included_precedent": [
+        {
+          "title": "Sanitizing Diffusion-Generated Images via Fingerprint Removal and Adversarial Perturbation for Forensic Evasion",
+          "paper_id": "curated:82a6421311c4d39076d9",
+          "doi": "10.1109/access.2025.3597641",
+          "primary_url": "https://doi.org/10.1109/access.2025.3597641",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method"
+          ]
+        },
+        {
+          "title": "Evasion on General GAN-Generated Image Detection by Disentangled Representation",
+          "paper_id": "curated:4b042ad660312ec3b338",
+          "doi": "10.1016/j.ins.2024.121267",
+          "primary_url": "https://doi.org/10.1016/j.ins.2024.121267",
+          "tasks": [
+            "detection"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method"
+          ]
+        }
+      ],
+      "excluded_precedent": [
+        {
+          "title": "Cascade learning from adversarial synthetic images for accurate pupil detection",
+          "exclusion_id": "exclusion-f7ba6941-52b6-4ea5-8228-6f67e18cd369",
+          "doi": "10.1016/j.patcog.2018.12.014",
+          "reason": "downstream_synthetic_data_only",
+          "review_note": "2026-09-04 focused corpus-scope audit: the publisher methodology uses GAN-refined synthetic eyes as training augmentation for pupil localization on real images rather than treating synthetic-image forensics as the target.",
+          "is_active": "true"
+        }
+      ],
+      "hidden_rule_assessment": "CURRENT_RULE: attack-only studies are already included. No-new-detector is not an exclusion rule. Attacking a generator to prevent unwanted synthesis is a different endpoint from attacking a forensic detector; the former belongs to PROTECT unless forensic evidence is also evaluated.",
+      "recommended_policy": "RECOMMEND_INCLUDE_WITH_CONDITION",
+      "condition": "Require measured evasion or robustness of an image synthetic-origin detector/source attributor, including an explicit threat model. No new detector or defense is required. Traditional-only and temporal-only targets follow their separate boundaries.",
+      "policy_confidence": "high",
+      "future_recurrence": "high",
+      "over_inclusion_risk": "Including generic adversarial ML or generation-prevention methods.",
+      "under_inclusion_risk": "Missing detector weaknesses essential to forensic reliability.",
+      "options": [
+        {
+          "label": "A — Include forensic attacks and defenses (recommended)",
+          "rationale": "Failures of a forensic system are part of its evidence base.",
+          "taxonomy_fit": "method or analysis_study; target task supplies taxonomy.",
+          "precedent_impact": "Directly matches Sanitizing and Evasion inclusions.",
+          "future_implications": "Continue including scoped red-team evaluations.",
+          "scope_creep": "Low."
+        },
+        {
+          "label": "B — Require constructive detection",
+          "rationale": "Exclude attack-only work.",
+          "taxonomy_fit": "Would constrain existing analysis/method coverage.",
+          "precedent_impact": "Contradicts current attack-only inclusions.",
+          "future_implications": "Misses vulnerabilities and realistic threat models.",
+          "scope_creep": "Low expansion; high under-coverage."
+        }
+      ],
+      "user_question": "",
+      "recommended_answer": "",
+      "yes_consequence": "",
+      "no_consequence": "",
+      "decision_rank": 0
+    }
+  ]
+}

@@ -1,0 +1,483 @@
+Apply the USER-APPROVED NARROWED scope policy to the 215 Tier 2 `CANDIDATE_ADD_NEEDS_SCOPE_REVIEW` papers.
+
+IMPORTANT: This supersedes the previously proposed Tier 2 policy-application instruction.
+
+The Synthetic Image Research Map must remain focused on:
+
+> AI-generated / synthetic image forensics, primarily Detection, Source Attribution, and Localization.
+
+Do NOT broaden the project into:
+
+* general watermarking;
+* active provenance;
+* general deepfake forensics;
+* classical image manipulation;
+* generic multimedia forensics.
+
+This is a POLICY APPLICATION task only.
+
+Do NOT add papers to the authoritative corpus yet.
+Do NOT modify the current 636-paper corpus.
+Do NOT modify taxonomy, exclusions, institutions, affiliations, locations, hierarchy, public exports, or frontend.
+Do NOT touch Tier 1 or Tier 3.
+Do NOT perform another literature search.
+Do NOT commit or push.
+
+## 1. Adopt the following authoritative scope rules
+
+### Policy A — Watermark / active fingerprint / proactive provenance
+
+EXCLUDE.
+
+Papers whose primary forensic mechanism depends on intentionally embedding, injecting, or controlling a watermark, fingerprint, signature, provenance token, credential, or similar active signal are outside the scope of this Research Map.
+
+This includes:
+
+* watermark embedding
+* watermark detection/verification
+* watermark robustness
+* watermark removal/evasion
+* active fingerprint injection
+* generator-side fingerprint construction
+* proactive provenance
+* cryptographic provenance
+* ownership/copyright protection
+* content authentication mechanisms
+* C2PA-like provenance mechanisms
+* recovery of deliberately embedded signatures
+
+Do NOT include such papers merely because:
+
+* they report a detection accuracy;
+* they recover an embedded signal;
+* they identify a source using an intentionally inserted fingerprint;
+* they evaluate robustness against attacks.
+
+The Research Map focuses on forensic inference from synthetic-image content/traces, not intentionally embedded provenance mechanisms.
+
+### Narrow exception
+
+If a paper contains a genuinely independent passive synthetic-image forensic method that:
+
+* does not require the watermark/fingerprint/provenance mechanism;
+* is independently evaluated;
+* and itself fits Detection, Source Attribution, or Localization;
+
+then that independent passive contribution may be reviewed separately.
+
+The presence of a watermark component must not by itself qualify the paper.
+
+## 2. Pure deepfake / face-forensics policy
+
+EXCLUDE pure deepfake work.
+
+Do NOT include papers solely because they perform:
+
+* face-swap detection
+* face reenactment detection
+* facial manipulation detection
+* facial forgery localization
+* identity manipulation detection
+* video deepfake detection
+* frame-level deepfake detection
+
+A method being applicable to individual video frames is NOT sufficient.
+
+Deepfake is not, by itself, part of the target scope.
+
+### Include only when there is a substantive synthetic-image component
+
+A paper may remain potentially in scope only when it substantively studies:
+
+* fully AI-generated images;
+* diffusion/GAN-generated imagery;
+* generative editing;
+* partial synthetic regions;
+* synthetic-image source attribution;
+* general AI-generated image detection/localization;
+
+and the deepfake experiments are only one component of that broader synthetic-image forensic contribution.
+
+Do not classify a pure face-forensics paper as in scope simply because a generative model created the face manipulation.
+
+## 3. Generative editing / partial synthesis
+
+INCLUDE when substantive.
+
+The following remain within scope:
+
+* diffusion-based image editing
+* generative inpainting
+* text-guided image editing
+* partial AI-generated regions
+* mixed real/synthetic images
+* generative-edit localization
+* detection of AI-generated modifications
+
+provided that the contribution directly fits:
+
+* Detection
+* Source Attribution
+* Localization
+
+This is distinct from classical manipulation.
+
+## 4. Classical manipulation
+
+EXCLUDE classical-only image forensics.
+
+Exclude new papers focused only on:
+
+* copy-move
+* splicing
+* classical compositing
+* retouching
+* conventional Photoshop manipulation
+* traditional image forgery
+
+A mixed benchmark or method may qualify only if AI-generated / generative manipulation is a substantive, independently evaluated component.
+
+Do not expand the map into general image-forensics literature.
+
+## 5. Passive source attribution remains core scope
+
+INCLUDE genuine passive image-to-generator/source inference, such as:
+
+* source generator attribution
+* model attribution
+* generator identification
+* reference-based attribution
+* passive fingerprint analysis from naturally occurring generation traces
+
+The key distinction is:
+
+PASSIVE forensic trace
+vs.
+INTENTIONALLY EMBEDDED fingerprint.
+
+Passive naturally occurring model traces remain in scope.
+
+Active injected signatures do not.
+
+## 6. Passive AI-generated-image detector robustness/evasion
+
+Papers analyzing or attacking passive AI-generated-image detectors may remain potentially in scope when their central object of study is an in-scope synthetic-image detector.
+
+For example:
+
+* robustness of AI-generated image detection
+* distortion sensitivity
+* adversarial evasion of passive synthetic-image detectors
+* detector bias/generalization analysis
+
+Do not extend this rule to watermark attacks or generic deepfake detector attacks that are otherwise outside project scope.
+
+## 7. Multimodal work
+
+Include only when there is a substantive independently evaluated IMAGE forensic contribution concerning AI-generated/synthetic images.
+
+Exclude papers where:
+
+* image is merely one input modality;
+* the primary task is misinformation classification;
+* the image branch has no standalone synthetic-image forensic contribution.
+
+## 8. Specialized domains
+
+Domain specialization alone is not exclusionary.
+
+Synthetic-image forensic work involving:
+
+* biomedical imagery
+* scientific images
+* Western blots
+* remote sensing
+* other specialized image domains
+
+may remain in scope when the actual task is AI-generated/synthetic image Detection, Attribution, or Localization.
+
+The criterion is the forensic task, not the application domain.
+
+## 9. Re-apply policy to all exactly 215 Tier 2 candidates
+
+Every candidate must receive exactly one:
+
+* `POLICY_INCLUDE`
+* `POLICY_EXCLUDE`
+* `PAPER_SPECIFIC_EVIDENCE_REQUIRED`
+
+There must be NO remaining `USER_POLICY_DECISION_REQUIRED`.
+
+The total must equal exactly 215.
+
+## 10. Apply the narrowed rule to the 11 existing clusters
+
+In particular:
+
+### Active embedding — 40
+
+Expected default:
+`POLICY_EXCLUDE`
+
+unless an independently evaluated passive contribution exists.
+
+### Watermark verification — 5
+
+Expected default:
+`POLICY_EXCLUDE`
+
+Watermark verification itself is no longer considered an in-scope endpoint.
+
+### Watermark robustness/evasion — 14
+
+Expected default:
+`POLICY_EXCLUDE`
+
+Do not retain these merely because existing precedent previously included some watermark evaluation papers.
+
+### Proactive hybrid forensics — 11
+
+Expected default:
+`POLICY_EXCLUDE`
+
+unless the paper contains a separable, independently evaluated passive synthetic-image forensic contribution.
+
+### Protection/ownership/governance — 27
+
+`POLICY_EXCLUDE`
+
+### Face-image/frame forensics — 60
+
+Re-evaluate under the new rule.
+
+Pure face/deepfake → `POLICY_EXCLUDE`.
+
+Only papers with a substantive broader AI-generated / generative-image forensic contribution may qualify.
+
+Do NOT use “independent frame-level evaluation” alone as an inclusion criterion.
+
+### Text/video crossover — 15
+
+Exclude video/deepfake-only work.
+
+Potentially retain only substantive general synthetic-image contributions.
+
+### Classical manipulation — 4
+
+`POLICY_EXCLUDE` unless substantive generative-image forensics is independently evaluated.
+
+### Generative/mixed image forensics — 32
+
+Potentially in scope.
+
+These deserve the most careful evidence application.
+
+### Passive source attribution — 4
+
+Potentially in scope when attribution is passive image-to-generator/model inference.
+
+Exclude active embedded provenance.
+
+### Passive-detector evasion — 3
+
+Potentially include only when the attacked detector is an in-scope AI-generated/synthetic-image detector.
+
+## 11. Do not preserve inconsistent historical precedent as policy
+
+Existing corpus decisions may contain legacy scope drift.
+
+Do NOT argue that a new watermark or pure-deepfake paper should be included merely because similar older papers already exist.
+
+The new policy is intentionally narrower.
+
+Record historical inconsistencies for later cleanup, but do NOT modify existing corpus records during this task.
+
+This policy is authoritative for NEW candidate reconciliation.
+
+## 12. Identify legacy-scope cleanup candidates separately
+
+Without modifying the corpus, produce a separate diagnostic list of existing 636-paper records that appear potentially inconsistent with the newly clarified scope because they are primarily:
+
+* watermark / active provenance;
+* pure deepfake;
+* classical manipulation.
+
+This is an AUDIT ONLY.
+
+Classify them as:
+
+* `LEGACY_SCOPE_REVIEW_WATERMARK`
+* `LEGACY_SCOPE_REVIEW_DEEPFAKE`
+* `LEGACY_SCOPE_REVIEW_CLASSICAL`
+
+Do NOT remove them.
+
+Do NOT modify their taxonomy or review decisions.
+
+The purpose is only to quantify possible historical scope drift for a later task.
+
+## 13. Rebuild the final Tier 2 queues
+
+Generate:
+
+### Queue A — POLICY_INCLUDE
+
+Papers clearly within the narrowed synthetic-image forensic scope.
+
+### Queue B — POLICY_EXCLUDE
+
+Papers clearly outside the narrowed scope.
+
+### Queue C — PAPER_SPECIFIC_EVIDENCE_REQUIRED
+
+Only papers whose saved evidence is genuinely insufficient to determine whether the synthetic/generative component is substantive.
+
+Queue C should not contain papers merely because the old project precedent was inconsistent.
+
+## 14. Make evidence-review questions concrete
+
+For every Queue C paper state exactly what must be verified, for example:
+
+* Does the method evaluate fully generated or generatively edited images beyond face manipulation?
+* Is the purported fingerprint naturally occurring or deliberately embedded?
+* Is source attribution passive from image traces?
+* Is generative editing a substantive benchmark component?
+* Is the image-forensics endpoint independent from watermark recovery?
+* Is the work video-only?
+
+Do not use vague “scope unclear” labels.
+
+## 15. Produce revised policy artifacts
+
+Update/create the Tier 2 policy-application artifacts without rewriting the historical systematic audit.
+
+Create:
+
+`data/manual/systematic_tier2_policy_application_2026_09.csv`
+
+`docs/systematic_tier2_policy_application_2026_09.md`
+
+Also create:
+
+`data/manual/legacy_scope_review_candidates_2026_09.csv`
+
+for the non-destructive existing-corpus diagnostic.
+
+## 16. Report the impact of the narrower scope
+
+For all 215 Tier 2 papers report:
+
+* POLICY_INCLUDE
+* POLICY_EXCLUDE
+* PAPER_SPECIFIC_EVIDENCE_REQUIRED
+
+Break down by the 11 policy clusters.
+
+Also report how many exclusions arise specifically from:
+
+* watermark / active provenance
+* pure deepfake
+* video-only deepfake
+* classical manipulation
+* generic protection/governance
+
+## 17. Repository integrity
+
+Verify ZERO changes to:
+
+* current 636-paper corpus
+* taxonomy
+* exclusions
+* institutions
+* affiliations
+* locations
+* hierarchy
+* public data
+* frontend
+* Tier 1
+* Tier 3
+* original systematic audit artifacts
+
+Only new policy-application, legacy-scope audit, scripts, and tests may change.
+
+## 18. Tests
+
+Add/adjust tests verifying:
+
+* exactly 215 Tier 2 rows
+* every row receives one of the three outcomes
+* no user-policy unresolved state remains
+* watermark-primary candidates default to exclusion
+* pure-deepfake candidates default to exclusion
+* generative-edit candidates are not accidentally excluded merely because they include manipulated regions
+* passive source attribution remains distinguishable from active fingerprinting
+* Queue totals sum to 215
+* legacy audit does not modify authoritative data
+* deterministic regeneration
+
+Run the full suite.
+
+Current baseline:
+
+`1,469 passed / 0 failed / 0 skipped`
+
+Final result must remain green.
+
+Run:
+
+`git diff --check`
+
+## 19. Final response
+
+Return:
+
+### Revised Tier 2 result
+
+* POLICY_INCLUDE: N
+* POLICY_EXCLUDE: N
+* PAPER_SPECIFIC_EVIDENCE_REQUIRED: N
+
+### Exclusion reasons
+
+* watermark / active provenance: N
+* pure deepfake / face-only: N
+* video-only deepfake: N
+* classical manipulation: N
+* protection/governance: N
+* other: N
+
+### Inclusion queue
+
+List all POLICY_INCLUDE papers.
+
+### Evidence queue
+
+List every evidence-review paper and exact unresolved question.
+
+### Legacy scope diagnostic
+
+For the existing 636-paper corpus report:
+
+* possible watermark-scope legacy papers: N
+* possible pure-deepfake legacy papers: N
+* possible classical-only legacy papers: N
+
+Do NOT remove them.
+
+### Repository integrity
+
+* corpus changed: NO
+* exclusions changed: NO
+* public data changed: NO
+* frontend changed: NO
+* Tier 1 changed: NO
+* Tier 3 changed: NO
+* full-suite result
+* reproducibility
+* `git diff --check`
+
+Do NOT add or remove papers.
+Do NOT commit.
+Do NOT push.
+
+The goal is to keep the Research Map narrowly focused on AI-generated / synthetic-image forensics rather than expanding into watermarking, general deepfake forensics, or classical image forensics.

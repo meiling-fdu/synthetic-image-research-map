@@ -1,0 +1,109 @@
+{
+  "clusters": {
+    "ATTRIBUTION": {
+      "PAPER_SPECIFIC_EVIDENCE_REQUIRED": 2,
+      "POLICY_EXCLUDE": 1,
+      "POLICY_INCLUDE": 1,
+      "total": 4
+    },
+    "EMBED": {
+      "PAPER_SPECIFIC_EVIDENCE_REQUIRED": 0,
+      "POLICY_EXCLUDE": 40,
+      "POLICY_INCLUDE": 0,
+      "total": 40
+    },
+    "EVASION": {
+      "PAPER_SPECIFIC_EVIDENCE_REQUIRED": 0,
+      "POLICY_EXCLUDE": 0,
+      "POLICY_INCLUDE": 3,
+      "total": 3
+    },
+    "FACE": {
+      "PAPER_SPECIFIC_EVIDENCE_REQUIRED": 5,
+      "POLICY_EXCLUDE": 55,
+      "POLICY_INCLUDE": 0,
+      "total": 60
+    },
+    "HYBRID": {
+      "PAPER_SPECIFIC_EVIDENCE_REQUIRED": 0,
+      "POLICY_EXCLUDE": 11,
+      "POLICY_INCLUDE": 0,
+      "total": 11
+    },
+    "IMAGE": {
+      "PAPER_SPECIFIC_EVIDENCE_REQUIRED": 24,
+      "POLICY_EXCLUDE": 0,
+      "POLICY_INCLUDE": 8,
+      "total": 32
+    },
+    "MODALITY": {
+      "PAPER_SPECIFIC_EVIDENCE_REQUIRED": 0,
+      "POLICY_EXCLUDE": 15,
+      "POLICY_INCLUDE": 0,
+      "total": 15
+    },
+    "PROTECT": {
+      "PAPER_SPECIFIC_EVIDENCE_REQUIRED": 0,
+      "POLICY_EXCLUDE": 27,
+      "POLICY_INCLUDE": 0,
+      "total": 27
+    },
+    "TRADITIONAL": {
+      "PAPER_SPECIFIC_EVIDENCE_REQUIRED": 0,
+      "POLICY_EXCLUDE": 4,
+      "POLICY_INCLUDE": 0,
+      "total": 4
+    },
+    "VERIFY": {
+      "PAPER_SPECIFIC_EVIDENCE_REQUIRED": 1,
+      "POLICY_EXCLUDE": 4,
+      "POLICY_INCLUDE": 0,
+      "total": 5
+    },
+    "WM_EVAL": {
+      "PAPER_SPECIFIC_EVIDENCE_REQUIRED": 0,
+      "POLICY_EXCLUDE": 14,
+      "POLICY_INCLUDE": 0,
+      "total": 14
+    }
+  },
+  "corpus_decisions_applied": 0,
+  "exclusion_reasons": {
+    "CLASSICAL_MANIPULATION": 4,
+    "OTHER": 1,
+    "PROTECTION_GOVERNANCE": 7,
+    "PURE_DEEPFAKE_FACE_ONLY": 55,
+    "VIDEO_ONLY_DEEPFAKE": 10,
+    "WATERMARK_ACTIVE_PROVENANCE": 94
+  },
+  "legacy": {
+    "LEGACY_SCOPE_REVIEW_CLASSICAL": 2,
+    "LEGACY_SCOPE_REVIEW_DEEPFAKE": 71,
+    "LEGACY_SCOPE_REVIEW_WATERMARK": 3
+  },
+  "legacy_confidence": {
+    "HIGH": 32,
+    "LOW": 43,
+    "MEDIUM": 1
+  },
+  "legacy_diagnostic_basis": {
+    "deepfake_only_taxonomy_scope_unverified": 43,
+    "face_or_video_evaluation_evidence": 27,
+    "face_primary_with_possible_broader_exception": 1,
+    "mechanism_evidence": 3,
+    "taxonomy_and_evaluation_evidence": 2
+  },
+  "legacy_disposition": {
+    "LIKELY_PURE_DEEPFAKE": 27,
+    "LIKELY_SCOPE_DRIFT": 5,
+    "METADATA_INSUFFICIENT": 43,
+    "POSSIBLE_BROADER_SYNTHETIC_IMAGE_WORK": 1
+  },
+  "outcomes": {
+    "PAPER_SPECIFIC_EVIDENCE_REQUIRED": 32,
+    "POLICY_EXCLUDE": 171,
+    "POLICY_INCLUDE": 12
+  },
+  "total": 215,
+  "user_policy_unresolved": 0
+}

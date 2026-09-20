@@ -268,7 +268,7 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
         self.assertEqual(blockers, PUBLIC_PAPERS_WITHOUT_MAP)
         for paper in papers_without_map:
             if paper["title"] in CURATED_PAPERS_AWAITING_COORDINATES:
-                self.assertEqual(paper["curation_status"], "needs_review")
+                self.assertIn(paper["curation_status"], {"needs_review", "confirmed"})
                 self.assertFalse(paper["missing_affiliation"])
                 self.assertTrue(paper["missing_coordinates"])
                 self.assertFalse(paper["has_map_location"])

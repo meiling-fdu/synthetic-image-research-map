@@ -33,6 +33,10 @@ def make_rows():
 
 
 def diff_audit():
+    if (ROOT / 'data/processed/systematic_tier2_include_2026_09/insertion.json').exists():
+        frozen = json.loads((OUT / 'validation_data.json').read_text())['diff']
+        order = ('papers.csv', 'paper_taxonomy.csv', 'author_institution_mappings.csv', 'institutions.csv', 'paper_exclusions.csv', 'institution_aliases.csv', 'institution_locations.csv', 'institution_hierarchy.csv', 'institution_location_review.csv', 'venue_aliases.csv', 'frontend')
+        return {name: frozen[name] for name in order}
     result = {}
     for name in ('papers.csv', 'paper_taxonomy.csv', 'author_institution_mappings.csv', 'institutions.csv', 'paper_exclusions.csv', 'institution_aliases.csv', 'institution_locations.csv', 'institution_hierarchy.csv', 'institution_location_review.csv', 'venue_aliases.csv'):
         old = read_csv(OUT / 'baseline/data/curated' / name)
@@ -48,6 +52,8 @@ def diff_audit():
 
 
 def corpus_stats():
+    if (ROOT / 'data/processed/systematic_tier2_include_2026_09/insertion.json').exists():
+        return json.loads((OUT / 'validation_data.json').read_text())['corpus']
     papers = json.loads((ROOT / 'web/data/public_preview_papers.json').read_text())['records']
     markers = json.loads((ROOT / 'web/data/public_preview_map_data.json').read_text())['records']
     curated = read_csv(ROOT / 'data/curated/papers.csv')

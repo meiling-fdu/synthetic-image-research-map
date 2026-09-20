@@ -1,0 +1,41 @@
+........................................................................ [  4%]
+........................................................................ [  9%]
+........................................................................ [ 14%]
+........................................................................ [ 19%]
+........................................................................ [ 24%]
+........................................................................ [ 29%]
+........................................................................ [ 34%]
+........................................................................ [ 39%]
+........................................................................ [ 44%]
+........................................................................ [ 49%]
+........................................................................ [ 53%]
+........................................................................ [ 58%]
+........................................................................ [ 63%]
+........................................................................ [ 68%]
+........................................................................ [ 73%]
+........................................................................ [ 78%]
+........................................................................ [ 83%]
+........................................................................ [ 88%]
+........................................................................ [ 93%]
+..............................F......................................... [ 98%]
+.............................                                            [100%]
+=================================== FAILURES ===================================
+_________ test_report_and_summary_regenerate_from_canonical_registries _________
+
+    def test_report_and_summary_regenerate_from_canonical_registries():
+        report, summary = policy.render(*policy.load_inputs())
+>       assert report == policy.REPORT.read_text()
+E       AssertionError: assert '# Tier 2 sco...plied here.\n' == '# Tier 2 sco...plied here.\n'
+E         
+E         Skipping 13927 identical leading characters in diff, use -v to show
+E           .csv).
+E         - 
+E         - **Mechanism check:** The cached Stable Signature abstract explicitly describes decoder fine-tuning, watermark extraction and a statistical source-model test with an image-origin accuracy/false-positive evaluation. It is not embedding-only and does not lack forensic metrics. InvisMark describes high-resolution embedding, UUID payloads, decoding and robustness. Thus the defensible inferred distinction is new mark construction plus its paired verification versus an independent forensic evaluatio...
+E         
+E         ...Full output truncated (683 lines hidden), use '-vv' to show
+
+tests/test_systematic_tier2_policy.py:68: AssertionError
+- generated xml file: /Users/meilinger/Desktop/synthetic-image-research-map/data/processed/systematic_tier2_policy_2026_09/full_suite.xml -
+=========================== short test summary info ============================
+FAILED tests/test_systematic_tier2_policy.py::test_report_and_summary_regenerate_from_canonical_registries
+1 failed, 1468 passed in 294.50s (0:04:54)
