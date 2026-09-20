@@ -1,0 +1,245 @@
+[
+  {
+    "candidate_id": "audit:07f15e7e8a78398a",
+    "doi": "10.1109/ICCV51701.2025.01063",
+    "arxiv_id": "2506.22802",
+    "openalex_url": "https://openalex.org/W4416507446",
+    "strong_matches": [],
+    "active_exclusion_matches": [],
+    "top_bounded_fuzzy_title_matches": [
+      {
+        "score": 0.7288,
+        "paper_id": "curated:34fdf09ae334914a2723",
+        "title": "ManiFPT: Defining and Analyzing Fingerprints of Generative Models"
+      },
+      {
+        "score": 0.5691,
+        "paper_id": "curated:1b08aef98983549221b1",
+        "title": "FingerprintNet: Synthesized Fingerprints for Generated Image Detection"
+      },
+      {
+        "score": 0.528,
+        "paper_id": "",
+        "title": "HRR: Hierarchical Retrospection Refinement for Generated Image Detection"
+      }
+    ],
+    "manual_checks": "No strong identifier, exact-title, author/year/venue, method/acronym, or active-exclusion match. ManiFPT is distinct prior work; bounded title similarity is approximately 0.729.",
+    "outcome": "MISSING_ADD"
+  },
+  {
+    "candidate_id": "audit:0b72dded38f87a65",
+    "doi": "",
+    "arxiv_id": "",
+    "openalex_url": "",
+    "strong_matches": [],
+    "active_exclusion_matches": [],
+    "top_bounded_fuzzy_title_matches": [
+      {
+        "score": 0.5962,
+        "paper_id": "curated:c9485f4d5346304272f2",
+        "title": "Frequency Masking for Universal Deepfake Detection"
+      },
+      {
+        "score": 0.5785,
+        "paper_id": "curated:1e9d05beedcfeea67d34",
+        "title": "The Microsoft-Northwestern-WITNESS Benchmark for Deepfake Detection"
+      },
+      {
+        "score": 0.5674,
+        "paper_id": "",
+        "title": "AdaptPrompt: Parameter-Efficient Adaptation of VLMs for Generalizable Deepfake Detection"
+      }
+    ],
+    "manual_checks": "No identifier or exact-title match; MMI-DD and SD² are absent from the current corpus and active exclusions. The closest bounded title match is approximately 0.596 and is a different work.",
+    "outcome": "MISSING_ADD"
+  },
+  {
+    "candidate_id": "audit:202541800aaec592",
+    "doi": "10.64336/001c.156299",
+    "arxiv_id": "2602.10343",
+    "openalex_url": "https://openalex.org/W7127885743",
+    "strong_matches": [],
+    "active_exclusion_matches": [],
+    "top_bounded_fuzzy_title_matches": [
+      {
+        "score": 0.6632,
+        "paper_id": "",
+        "title": "Visual Veracity: Advancing AI-Generated Image Detection with Convolutional Neural Networks"
+      },
+      {
+        "score": 0.6562,
+        "paper_id": "",
+        "title": "Analysis Survey on Deepfake detection and Recognition with Convolutional Neural Networks"
+      },
+      {
+        "score": 0.5543,
+        "paper_id": "",
+        "title": "DeepFake Face Image Detection based on Improved VGG Convolutional Neural Network"
+      }
+    ],
+    "manual_checks": "DOI, arXiv, OpenAlex, normalized title, author/year/venue, and active-exclusion checks are clear. The closest bounded title match is approximately 0.663 and unrelated.",
+    "outcome": "MISSING_ADD"
+  },
+  {
+    "candidate_id": "audit:854cc239481946ba",
+    "doi": "10.1007/s00138-026-01836-7",
+    "arxiv_id": "",
+    "openalex_url": "https://openalex.org/W7162851466",
+    "strong_matches": [],
+    "active_exclusion_matches": [],
+    "top_bounded_fuzzy_title_matches": [
+      {
+        "score": 0.5032,
+        "paper_id": "curated:c071c25bc2957d78569b",
+        "title": "Deep Learning for Deepfakes Creation and Detection: A Survey"
+      },
+      {
+        "score": 0.5,
+        "paper_id": "curated:db62aa9b0b1aab0c9f7a",
+        "title": "Artifact-Aware Explainable Deepfake Detection via Fake-Only High-Frequency Alignment Supervision"
+      },
+      {
+        "score": 0.487,
+        "paper_id": "",
+        "title": "Detecting AI-Generated Images Using Facial Similarity and Feature Extraction for Digital Security"
+      }
+    ],
+    "manual_checks": "DOI, OpenAlex, normalized title, DVID acronym, and exclusion checks are clear. A 2024 paper by the same authors has a different title, venue, DOI, and contribution.",
+    "outcome": "MISSING_ADD"
+  },
+  {
+    "candidate_id": "audit:cf16307ced603a1d",
+    "doi": "10.48550/arXiv.2607.05434",
+    "arxiv_id": "2607.05434",
+    "openalex_url": "https://openalex.org/W7167855108",
+    "strong_matches": [],
+    "active_exclusion_matches": [],
+    "top_bounded_fuzzy_title_matches": [
+      {
+        "score": 0.5632,
+        "paper_id": "curated:985a663b6aa851a89f6c",
+        "title": "PPM-CLIP: Probabilistic Prompt Modeling for Generalizable AI-Generated Image Detection"
+      },
+      {
+        "score": 0.5621,
+        "paper_id": "curated:3ec6b6d00f72f8b450e6",
+        "title": "Bi‐LORA: A Vision‐Language Approach for Synthetic Image Detection"
+      },
+      {
+        "score": 0.5506,
+        "paper_id": "curated:f4dc0d6926d1f0237453",
+        "title": "Leveraging Representations from Intermediate Encoder-Blocks for Synthetic Image Detection"
+      }
+    ],
+    "manual_checks": "No strong identifier, normalized-title, author/year/venue, method/acronym, or active-exclusion match; bounded fuzzy results are unrelated.",
+    "outcome": "MISSING_ADD"
+  },
+  {
+    "candidate_id": "audit:ea0d7f9972aa1b1c",
+    "doi": "10.1007/978-3-032-31927-2_7",
+    "arxiv_id": "2604.03833",
+    "openalex_url": "https://openalex.org/W7172139314",
+    "strong_matches": [],
+    "active_exclusion_matches": [],
+    "top_bounded_fuzzy_title_matches": [
+      {
+        "score": 0.5059,
+        "paper_id": "",
+        "title": "Any-Resolution AI-Generated Image Detection by Spectral Learning"
+      },
+      {
+        "score": 0.5051,
+        "paper_id": "",
+        "title": "A Hybrid CNN-LSTM Approach for Precision Deepfake Image Detection Based on Transfer Learning"
+      },
+      {
+        "score": 0.5026,
+        "paper_id": "curated:3e707a16418405139945",
+        "title": "Towards Generalizable AI-Generated Image Detection via Image-Adaptive Prompt Learning"
+      }
+    ],
+    "manual_checks": "Final DOI, arXiv version, OpenAlex work, normalized title, SPARK-IL acronym, author/year/venue, and active-exclusion checks establish one missing work.",
+    "outcome": "MISSING_ADD"
+  },
+  {
+    "candidate_id": "audit:f12e2be8d1320201",
+    "doi": "10.1007/s41060-026-01192-9",
+    "arxiv_id": "",
+    "openalex_url": "https://openalex.org/W7166514721",
+    "strong_matches": [],
+    "active_exclusion_matches": [],
+    "top_bounded_fuzzy_title_matches": [
+      {
+        "score": 0.6515,
+        "paper_id": "curated:c071c25bc2957d78569b",
+        "title": "Deep Learning for Deepfakes Creation and Detection: A Survey"
+      },
+      {
+        "score": 0.5556,
+        "paper_id": "curated:88b63de59a0eabcd1b02",
+        "title": "Incremental Learning for AI-Generated Image Detection"
+      },
+      {
+        "score": 0.5419,
+        "paper_id": "",
+        "title": "An Evaluation of Deep Learning-Based Computer Generated Image Detection Approaches"
+      }
+    ],
+    "manual_checks": "DOI, OpenAlex, normalized title, author/year/venue, survey identity, and active-exclusion checks found no current representation.",
+    "outcome": "MISSING_ADD"
+  },
+  {
+    "candidate_id": "audit:f293e205186b3f59",
+    "doi": "10.1109/ICCV51701.2025.00019",
+    "arxiv_id": "2506.23074",
+    "openalex_url": "https://openalex.org/W4416510385",
+    "strong_matches": [],
+    "active_exclusion_matches": [],
+    "top_bounded_fuzzy_title_matches": [
+      {
+        "score": 0.5641,
+        "paper_id": "curated:e8b546496836adcf6c1a",
+        "title": "Learning Generalizable Visual Representations for AI-Generated Image Detection"
+      },
+      {
+        "score": 0.539,
+        "paper_id": "curated:297bed46b62fdf89c9ab",
+        "title": "Progressive Open Space Expansion for Open-Set Model Attribution"
+      },
+      {
+        "score": 0.538,
+        "paper_id": "",
+        "title": "Learning on Gradients: Generalized Artifacts Representation for GAN-Generated Images Detection"
+      }
+    ],
+    "manual_checks": "DOI, arXiv, OpenAlex, normalized title, CDAL acronym, author/year/venue, and active-exclusion checks found no current representation.",
+    "outcome": "MISSING_ADD"
+  },
+  {
+    "candidate_id": "audit:f55fbb498b42444f",
+    "doi": "10.1007/s11263-024-02255-9",
+    "arxiv_id": "2410.23556",
+    "openalex_url": "https://openalex.org/W4405229107",
+    "strong_matches": [],
+    "active_exclusion_matches": [],
+    "top_bounded_fuzzy_title_matches": [
+      {
+        "score": 0.6038,
+        "paper_id": "curated:074bb9a77ee85d50090c",
+        "title": "Aperture: A Patch-Aware Framework for Joint Forgery Detection and Localization"
+      },
+      {
+        "score": 0.5792,
+        "paper_id": "curated:e69688740a4586c62c5d",
+        "title": "FakeShield: Explainable Image Forgery Detection and Localization via Multi-Modal Large Language Models"
+      },
+      {
+        "score": 0.5732,
+        "paper_id": "curated:ce36039d47fbcb9e4e7b",
+        "title": "ReAlign: Generalizable Image Forgery Detection via Reasoning-Aligned Representation"
+      }
+    ],
+    "manual_checks": "DOI, arXiv, OpenAlex, normalized title, HiFi-Net++/HiFi-IFDL method names, author/year/venue, and active-exclusion checks found no current representation.",
+    "outcome": "MISSING_ADD"
+  }
+]

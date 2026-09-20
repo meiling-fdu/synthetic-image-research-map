@@ -1,0 +1,271 @@
+{
+  "command": "git status --porcelain=v1 --untracked-files=all",
+  "counts": {
+    "total": 65,
+    "tracked_modified": 20,
+    "untracked": 45
+  },
+  "entries": [
+    {
+      "path": "data/curated/author_institution_mappings.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/curated/institution_location_review.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/curated/institutions.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/curated/papers.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/manual/missing_author_mappings_report.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/manual/systematic_tier2_high_priority_evidence_review_2026_09.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/institution_type_audit.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/data/curated/author_institution_mappings.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/data/curated/institution_aliases.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/data/curated/institution_hierarchy.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/data/curated/institution_location_review.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/data/curated/institution_locations.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/data/curated/institutions.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/data/curated/paper_exclusions.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/data/curated/paper_taxonomy.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/data/curated/papers.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/data/curated/venue_aliases.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/admin.css",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/admin.html",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/admin.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/app.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/data/public_preview_map_data.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/data/public_preview_papers.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/index.html",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/institution_display.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/institution_type_labels.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/keyword_suggestions.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/marker_interaction_helpers.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/marker_size_helpers.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/paper_details_helpers.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/paper_link_helpers.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/public_metadata.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/style.css",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/title_markup.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline_sha256.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/changed_files_manifest.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/diff_audit.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/identity_checks.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/insertion.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/planned_additions.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/preinsertion_identity_checks.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/reproducibility.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/reproduction_log.txt",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/validation_data.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/validation_summary.json",
+      "status": "??"
+    },
+    {
+      "path": "docs/key_paper_coverage_report.md",
+      "status": " M"
+    },
+    {
+      "path": "docs/missing_author_mappings_report.md",
+      "status": " M"
+    },
+    {
+      "path": "docs/public_preview_report.md",
+      "status": " M"
+    },
+    {
+      "path": "docs/systematic_tier2_high_priority_evidence_review_2026_09.md",
+      "status": "??"
+    },
+    {
+      "path": "scripts/integrate_systematic_tier2_high_priority_evidence.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/report_systematic_tier2_application.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/report_systematic_tier2_high_priority_evidence.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/report_systematic_tier2_include.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/report_systematic_tier2_policy.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/reproduce_systematic_tier2_high_priority_evidence.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/systematic_tier2_high_priority_evidence_data.py",
+      "status": "??"
+    },
+    {
+      "path": "tests/baseline_expectations.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_frontend_published_only_filter.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_manual_location_audit_20260827.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_paper_metadata_consistency_audit.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_paper_taxonomy_migration.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_systematic_tier2_high_priority_evidence.py",
+      "status": "??"
+    },
+    {
+      "path": "web/data/public_preview_map_data.json",
+      "status": " M"
+    },
+    {
+      "path": "web/data/public_preview_papers.json",
+      "status": " M"
+    }
+  ],
+  "no_commit_or_push": true
+}

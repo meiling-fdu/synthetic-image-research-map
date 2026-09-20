@@ -1,0 +1,58 @@
+{
+  "current_successor": {
+    "evidence_report_check": "passed",
+    "focused_tests": {
+      "failed": 0,
+      "passed": 7,
+      "skipped": 0
+    },
+    "full_repository_suite": {
+      "command": "PATH=/Users/meilinger/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin:/usr/bin:/bin PYTHONPYCACHEPREFIX=/tmp/sirm-pycache /usr/bin/python3 -m pytest -q",
+      "duration_seconds": 295.13,
+      "failed": 0,
+      "passed": 1497,
+      "skipped": 0
+    }
+  },
+  "deterministic_regeneration": {
+    "byte_identical": true,
+    "changed_after_first": [],
+    "changed_after_second": [],
+    "paths_checked": 20,
+    "rounds": 2
+  },
+  "historical_reproducibility": {
+    "systematic_620_paper_audit": "byte-identical",
+    "tier1_reconciliation": "byte-identical",
+    "tier2_636_paper_application_protected_changes": 0,
+    "tier2_636_paper_policy_protected_changes": 0,
+    "tier2_648_paper_inclusion": {
+      "active_exclusion_leaks": 0,
+      "duplicate_identity_pairs": 0,
+      "mapped_papers": 632,
+      "map_markers": 1486,
+      "public_papers": 648,
+      "published_only_papers": 538
+    }
+  },
+  "validators": {
+    "curated_database": {
+      "duplicate_candidates": 0,
+      "errors": 0,
+      "files_checked": 17,
+      "files_expected": 17,
+      "warnings": 215
+    },
+    "duplicate_curated_paper_identities": 0,
+    "git_diff_check": "passed",
+    "public_preview_map": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "public_preview_papers": {
+      "errors": 0,
+      "warnings": 24
+    }
+  },
+  "warning_note": "Validator warnings are retained review warnings; both validators completed with zero errors."
+}

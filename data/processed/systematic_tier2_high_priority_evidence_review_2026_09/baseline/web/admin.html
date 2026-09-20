@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Local Paper Curator · Synthetic Image Research Map</title>
+    <link rel="stylesheet" href="/admin.css?v=20260905-taxonomy-checkboxes">
+    <script src="/institution_type_labels.js?v=20260718-research-institute" defer></script>
+    <script src="/institution_display.js?v=20260825-institution-abbreviations" defer></script>
+    <script src="/title_markup.js?v=20260825-title-superscripts" defer></script>
+    <script src="/admin.js?v=20260905-taxonomy-checkboxes" defer></script>
+  </head>
+  <body>
+    <header class="masthead">
+      <div>
+        <p class="eyebrow">Maintainer-only · localhost</p>
+        <h1>Interactive Curation Console</h1>
+        <p class="lede">Review, correct, validate, and publish the data shown on the public map.</p>
+      </div>
+      <div class="masthead-actions">
+        <button class="primary-button" id="add-paper-toggle" type="button">Add paper</button>
+        <button class="release-button" id="global-publish-toggle" type="button">Publish changes</button>
+        <div class="status-pill" id="connection-status" data-state="loading" role="status">● Local curation connecting…</div>
+      </div>
+      <div class="global-search">
+        <label class="visually-hidden" for="global-search-input">Search papers, authors, and institutions</label>
+        <input id="global-search-input" type="search" placeholder="Search title, DOI, arXiv ID, author, institution…" autocomplete="off" aria-controls="global-search-results" aria-expanded="false">
+        <div class="global-search-results" id="global-search-results" role="listbox" hidden></div>
+        <span class="search-shortcut" aria-hidden="true">/</span>
+      </div>
+    </header>
+
+    <main>
+      <div class="notice" id="action-notice" role="status" hidden></div>
+
+      <nav class="console-nav" id="console-nav" aria-label="Curation console" hidden>
+        <button data-console-target="dashboard" type="button" aria-current="page">Dashboard</button>
+        <details class="nav-menu"><summary>Review</summary><div class="nav-menu-items" role="menu">
+          <button role="menuitem" data-console-target="scope-review" type="button">Scope review</button>
+          <button role="menuitem" data-console-target="publication-venues" type="button">Publication venues</button>
+          <button role="menuitem" data-console-target="high-risk" type="button">High-risk papers</button>
+          <button role="menuitem" data-console-target="marker-blockers" type="button">Marker blockers</button>
+          <button role="menuitem" data-console-target="key-coverage" type="button">Key-paper coverage</button>
+          <button role="menuitem" data-console-target="manual-import" type="button">Manual imports</button>
+        </div></details>
+        <details class="nav-menu"><summary>Papers</summary><div class="nav-menu-items" role="menu">
+          <button role="menuitem" data-console-target="add-paper" type="button">Add paper</button>
+          <button role="menuitem" data-console-target="papers" type="button">Candidate papers</button>
+          <button role="menuitem" data-console-target="arxiv-enrichment" type="button">arXiv enrichment</button>
+        </div></details>
+        <details class="nav-menu nav-menu-align-end"><summary>Authors &amp; Institutions</summary><div class="nav-menu-items" role="menu">
+          <button role="menuitem" data-console-target="papers" type="button">Authors</button>
+          <button role="menuitem" data-console-target="mappings" type="button">Author mappings</button>
+          <button role="menuitem" data-console-target="author-mapping-coverage" type="button">Author mapping coverage</button>
+          <button role="menuitem" data-console-target="institution-management" type="button">Institutions</button>
+          <button role="menuitem" data-console-target="location-review" type="button">Institution aliases &amp; locations</button>
+          <button role="menuitem" data-console-target="institution-audit" type="button">Institution cleanup</button>
+        </div></details>
+        <details class="nav-menu nav-menu-align-end"><summary>Validation</summary><div class="nav-menu-items" role="menu">
+          <button role="menuitem" data-console-target="validation" type="button">Curated validation</button>
+        </div></details>
+      </nav>
+
+      <section class="token-panel" id="token-panel" hidden>
+        <form id="token-form">
+          <label for="token-input">Admin token</label>
+          <div class="token-row">
+            <input id="token-input" name="token" type="password" autocomplete="off" required>
+            <button type="submit">Open browser</button>
+          </div>
+          <p>Copy the token printed by <code>python3 scripts/serve_admin.py</code>.</p>
+        </form>
+      </section>
+
+      <section class="dashboard-panel" id="dashboard-panel">
+        <div class="section-heading">
+          <div><p class="eyebrow">Work queue</p><h2>Action required</h2><p>Only unresolved items that need maintainer attention are shown.</p></div>
+          <button class="secondary-button" id="reload-review-queues" type="button">Refresh</button>
+        </div>
+        <div class="action-queue" id="dashboard-grid"><p>Action queue loads after authentication.</p></div>
+        <p class="action-queue-empty" id="action-queue-empty" hidden>No review actions are currently required.</p>
+        <section class="mapping-coverage-card" aria-labelledby="curation-dashboard-title">
+          <div class="section-heading">
+            <h3 id="curation-dashboard-title">Papers needing curation <span class="action-count" id="curation-dashboard-count">—</span></h3>
+            <button class="text-button" id="curation-dashboard-review" type="button">Review</button>
+          </div>
+          <p class="mapping-coverage-empty" id="curation-dashboard-summary" aria-live="polite">Curation state loads after authentication.</p>
+          <div class="table-wrap" id="curation-dashboard-table" hidden>
+            <table class="curation-paper-table">
+              <thead><tr><th>Title</th><th>Year</th><th>Publication venue</th><th>Curation status</th><th>Review status</th><th>Scope status</th><th>Curation note</th><th>Action</th></tr></thead>
+              <tbody id="curation-dashboard-rows"></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="mapping-coverage-card" aria-labelledby="mapping-coverage-dashboard-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Public-map impact</p>
+              <h3 id="mapping-coverage-dashboard-title">Priority papers</h3>
+              <p>The five most urgent papers with unresolved author mappings.</p>
+            </div>
+            <button class="text-button" data-console-target="author-mapping-coverage" type="button">View all</button>
+          </div>
+          <div id="mapping-coverage-summary" hidden></div>
+          <div class="mapping-coverage-empty-state" id="mapping-coverage-empty-state" hidden>
+            <p>Priority-paper report is unavailable.</p>
+            <button class="secondary-button" id="generate-mapping-report" type="button">Generate report</button>
+          </div>
+          <h4 class="visually-hidden" id="mapping-priority-heading">Priority papers</h4>
+          <div class="table-wrap" id="mapping-priority-table-wrap">
+            <table class="priority-paper-table">
+              <thead><tr><th>Paper</th><th>Issue</th><th>Public-map impact</th><th>Action</th></tr></thead>
+              <tbody id="mapping-priority-rows"></tbody>
+            </table>
+          </div>
+          <p id="mapping-priority-empty" class="mapping-coverage-empty"></p>
+        </section>
+        <section class="publish-status-card" aria-labelledby="dashboard-publish-title">
+          <div><p class="eyebrow">Release readiness</p><h3 id="dashboard-publish-title">Publish readiness</h3><p id="dashboard-release-state">Checking local release state…</p></div>
+          <dl class="publish-status-summary">
+            <div><dt>Changed files</dt><dd id="dashboard-changed-files">Check status</dd></div>
+            <div><dt>Validation</dt><dd id="dashboard-validation-status">Not run</dd></div>
+            <div><dt>Local preview</dt><dd id="dashboard-preview-status">Not refreshed</dd></div>
+            <div><dt>Git</dt><dd id="dashboard-git-summary">Not checked</dd></div>
+          </dl>
+          <div class="card-actions"><button class="secondary-button" id="dashboard-open-publish" type="button">View publish status</button></div>
+        </section>
+      </section>
+
+      <section class="workflow-panel" id="workflow-panel" hidden>
+        <div class="workflow-heading">
+          <div>
+            <p class="eyebrow">Release workflow</p>
+            <h2>Publish</h2>
+            <p>Review readiness, validate, and publish the current admin-managed changes.</p>
+          </div>
+          <div class="workflow-state" id="workflow-state" data-state="idle" role="status" aria-live="polite">No workflow run yet</div>
+        </div>
+        <div class="workflow-actions publish-actions">
+          <button class="secondary-button" id="show-git-status" type="button">Review changes</button>
+          <button class="primary-button workflow-command" id="publish-changes" type="button">Publish</button>
+          <details class="overflow-menu"><summary aria-label="More publish actions">More <span aria-hidden="true">⋯</span></summary><div class="overflow-menu-items">
+            <button class="secondary-button workflow-command" id="run-export-preview" type="button">Refresh preview</button>
+            <button class="secondary-button workflow-command" id="run-curated-validation" type="button">Run validation</button>
+            <button class="secondary-button workflow-command" id="run-public-validation" type="button">Validate public preview</button>
+            <button class="secondary-button workflow-command" id="run-full-refresh" type="button">Rebuild data</button>
+            <button class="secondary-button" id="reload-preview-data" type="button">Reload preview data</button>
+          </div></details>
+        </div>
+        <p class="workflow-guidance" id="workflow-guidance">Admin saves remain local. Publish Changes refreshes and validates first, then commits selected project data and pushes only after confirmation.</p>
+        <div class="notice" id="institution-cleanup-blocker" role="status" hidden><span></span> <button class="text-button" data-console-target="institution-audit" type="button">Open Institution Cleanup</button></div>
+        <details class="workflow-log-panel" id="workflow-log-panel">
+          <summary>Diagnostics and command output</summary>
+          <pre id="workflow-log">No command output yet.</pre>
+        </details>
+      </section>
+
+      <section class="arxiv-enrichment-panel" id="arxiv-enrichment-panel" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Paper metadata</p>
+            <h2>arXiv enrichment</h2>
+            <p>Review arXiv candidates for papers missing an ID. Discovery never edits curated data.</p>
+          </div>
+          <button class="primary-button" id="autofill-arxiv" type="button">Find candidates</button>
+        </div>
+        <div class="arxiv-enrichment-summary" id="arxiv-enrichment-summary" role="status">Load the queue to review missing arXiv IDs.</div>
+        <div class="notice" id="arxiv-enrichment-guidance">
+          Accept requires confirmation and writes only to <code>data/curated/paper_arxiv_links.csv</code>. Ignore records a separate review decision and does not create a link.
+        </div>
+        <div class="arxiv-enrichment-list" id="arxiv-enrichment-list"></div>
+        <p id="arxiv-enrichment-empty" hidden>No unresolved papers are missing arXiv IDs.</p>
+      </section>
+
+      <section class="add-paper-panel" id="add-paper-panel" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">OpenAlex-first workflow</p>
+            <h2>Add Paper</h2>
+            <p>Search OpenAlex for candidate metadata, confirm a record, or continue with manual entry.</p>
+          </div>
+          <button class="secondary-button" id="add-paper-close" type="button">Close</button>
+        </div>
+
+        <form class="openalex-search-form" id="openalex-search-form">
+          <label>Title
+            <input id="openalex-title" name="title" type="text">
+          </label>
+          <label>DOI
+            <input id="openalex-doi" name="doi" type="text" placeholder="10.xxxx/…">
+          </label>
+          <label>arXiv ID
+            <input id="openalex-arxiv-id" name="arxiv_id" type="text" placeholder="2401.01234">
+          </label>
+          <label>Paper URL
+            <input id="openalex-paper-url" name="paper_url" type="url" placeholder="https://…">
+          </label>
+          <div class="form-actions full-width">
+            <button class="primary-button" id="openalex-search-submit" type="submit">Search OpenAlex</button>
+            <button class="secondary-button" id="add-manually-button" type="button">Add manually instead</button>
+          </div>
+          <p class="form-error full-width" id="openalex-search-error" role="alert" hidden></p>
+        </form>
+
+        <div class="search-results" id="openalex-results" hidden>
+          <div class="section-heading">
+            <h3>OpenAlex candidates</h3>
+            <span id="openalex-result-count"></span>
+          </div>
+          <p class="openalex-search-debug" id="openalex-search-debug"></p>
+          <div id="openalex-result-list"></div>
+          <details class="weak-match-panel" id="openalex-weak-matches" hidden>
+            <summary id="openalex-weak-match-summary">Weak matches</summary>
+            <p>These candidates have low title similarity. Verify identifiers and metadata before using one.</p>
+            <div id="openalex-weak-result-list"></div>
+          </details>
+        </div>
+
+        <form class="paper-draft-form" id="paper-draft-form" hidden>
+          <div class="section-heading full-width">
+            <div>
+              <p class="eyebrow" id="paper-draft-origin">Curated paper draft</p>
+              <h3>Review paper metadata</h3>
+            </div>
+            <button class="secondary-button" id="paper-draft-cancel" type="button">Cancel draft</button>
+          </div>
+          <input id="paper-source-database" name="source_database" type="hidden">
+          <label>Title
+            <input id="paper-title" name="title" type="text" required>
+          </label>
+          <label>Year
+            <input id="paper-year" name="year" type="number" min="1000" max="9999" required>
+          </label>
+          <label class="full-width">Authors
+            <textarea id="paper-authors" name="authors" rows="2" placeholder="Separate authors with semicolons"></textarea>
+          </label>
+          <label class="full-width">Author affiliations
+            <textarea id="paper-affiliations" name="affiliations" rows="4" placeholder="One per line: Author 1; Author 2 | Institution | Raw affiliation text"></textarea>
+            <span class="field-help">OpenAlex candidates are prefilled automatically. For manual/arXiv records, add one line per institution.</span>
+          </label>
+          <label>Venue
+            <input id="paper-venue" name="venue" type="text">
+            <span class="field-help">Enter the source venue wording; the shared resolver stores its raw value and canonical identity.</span>
+          </label>
+          <label>DOI
+            <input id="paper-doi" name="doi" type="text">
+          </label>
+          <label>arXiv ID
+            <input id="paper-arxiv-id" name="arxiv_id" type="text">
+          </label>
+          <label>OpenAlex URL
+            <input id="paper-openalex-url" name="openalex_url" type="url" readonly>
+          </label>
+          <label>Paper URL
+            <input id="paper-url" name="paper_url" type="url">
+          </label>
+          <label>Publication type
+            <select id="paper-publication-type" name="publication_type" required>
+              <option value="conference">conference</option>
+              <option value="journal" selected>journal</option>
+              <option value="preprint">preprint</option>
+              <option value="book">book</option>
+            </select>
+          </label>
+          <fieldset id="paper-tasks" class="paper-category-field" aria-required="true">
+            <legend>Forensic Task</legend>
+            <div class="paper-category-options">
+              <label class="paper-category-option" for="paper-task-detection"><input class="paper-category-input" id="paper-task-detection" type="checkbox" name="tasks" value="detection"><span>Detection</span></label>
+              <label class="paper-category-option" for="paper-task-source-attribution"><input class="paper-category-input" id="paper-task-source-attribution" type="checkbox" name="tasks" value="source_attribution"><span>Source attribution</span></label>
+              <label class="paper-category-option" for="paper-task-localization"><input class="paper-category-input" id="paper-task-localization" type="checkbox" name="tasks" value="localization"><span>Localization</span></label>
+            </div>
+          </fieldset>
+          <fieldset id="paper-image-scopes" class="paper-category-field" aria-required="true">
+            <legend>Image Scope</legend>
+            <div class="paper-category-options paper-category-scope-options">
+              <div class="paper-category-scope-group">
+                <span class="paper-category-scope-heading">Core scope</span>
+                <label class="paper-category-option" for="paper-image-scope-fully-generated"><input class="paper-category-input" id="paper-image-scope-fully-generated" type="checkbox" name="image_scopes" value="fully_generated"><span>Fully Generated</span></label>
+                <label class="paper-category-option" for="paper-image-scope-generative-editing"><input class="paper-category-input" id="paper-image-scope-generative-editing" type="checkbox" name="image_scopes" value="generative_editing"><span>Generative Editing</span></label>
+              </div>
+              <div class="paper-category-scope-group is-extended">
+                <span class="paper-category-scope-heading">Extended scope</span>
+                <label class="paper-category-option" for="paper-image-scope-deepfake"><input class="paper-category-input" id="paper-image-scope-deepfake" type="checkbox" name="image_scopes" value="deepfake"><span>Deepfake</span></label>
+                <label class="paper-category-option" for="paper-image-scope-traditional-manipulation"><input class="paper-category-input" id="paper-image-scope-traditional-manipulation" type="checkbox" name="image_scopes" value="traditional_manipulation"><span>Traditional Manipulation</span></label>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset id="paper-research-types" class="paper-category-field" aria-required="true">
+            <legend>Research Type</legend>
+            <div class="paper-category-options">
+              <label class="paper-category-option" for="paper-research-type-method"><input class="paper-category-input" id="paper-research-type-method" type="checkbox" name="research_types" value="method"><span>Method</span></label>
+              <label class="paper-category-option" for="paper-research-type-dataset"><input class="paper-category-input" id="paper-research-type-dataset" type="checkbox" name="research_types" value="dataset"><span>Dataset</span></label>
+              <label class="paper-category-option" for="paper-research-type-benchmark"><input class="paper-category-input" id="paper-research-type-benchmark" type="checkbox" name="research_types" value="benchmark"><span>Benchmark</span></label>
+              <label class="paper-category-option" for="paper-research-type-survey"><input class="paper-category-input" id="paper-research-type-survey" type="checkbox" name="research_types" value="survey"><span>Survey</span></label>
+              <label class="paper-category-option" for="paper-research-type-analysis-study"><input class="paper-category-input" id="paper-research-type-analysis-study" type="checkbox" name="research_types" value="analysis_study"><span>Analysis study</span></label>
+            </div>
+          </fieldset>
+          <label>Scope status
+            <select id="paper-scope-status" name="scope_status">
+              <option value="in_scope">in_scope</option><option value="out_of_scope">out_of_scope</option>
+              <option value="uncertain">uncertain</option><option value="needs_review">needs_review</option>
+            </select>
+          </label>
+          <label>Review status
+            <select id="paper-review-status" name="review_status">
+              <option value="pending">pending</option>
+              <option value="reviewed">reviewed</option>
+            </select>
+          </label>
+          <label class="full-width">Abstract
+            <textarea id="paper-abstract" name="abstract" rows="6"></textarea>
+          </label>
+          <div class="duplicate-warning full-width" id="paper-duplicate-warning" hidden></div>
+          <div class="duplicate-warning full-width" id="paper-mapping-warning" hidden>
+            <strong>Missing author–institution mapping</strong>
+            <p>This paper cannot produce institution markers or author affiliation numbers.</p>
+            <label><input id="paper-acknowledge-missing-mappings" type="checkbox"> Save to the review queue without affiliation evidence.</label>
+          </div>
+          <p class="form-error full-width" id="paper-create-error" role="alert" hidden></p>
+          <div class="form-actions full-width">
+            <button class="primary-button" id="paper-create-submit" type="submit">Save to curated database</button>
+          </div>
+          <p class="workflow-note full-width">Saving also creates reviewable author–institution mapping candidates. Coordinates remain a separate review step, and saving here does not update public preview JSON.</p>
+        </form>
+      </section>
+
+      <section class="location-review-panel" id="institution-management-panel" hidden>
+        <div class="section-heading">
+          <div><p class="eyebrow">Canonical institution registry · local only</p><h2>Institution Management</h2><p>Identity, location, aliases, hierarchy, mapping reassignment, merge, and visibility are separate actions.</p></div>
+          <button class="secondary-button" id="institution-management-close" type="button">Close</button>
+        </div>
+        <p class="review-scope-help">Location edits never change institution IDs or author mappings. Global replacement uses a canonical target selector and a final source/target confirmation.</p>
+        <label class="search-field institution-management-search"><span>Search institutions</span><input id="institution-management-search" type="search" placeholder="Canonical name, alias, type, status…"></label>
+        <nav class="institution-pagination" aria-label="Institution pages above table">
+          <label>Rows per page <select class="institution-page-size"><option value="25">25</option><option value="50" selected>50</option><option value="100">100</option></select></label>
+          <span class="institution-page-status" role="status" aria-live="polite">Page 1 of 1</span>
+          <div class="institution-page-actions">
+            <button class="secondary-button" data-institution-page-action="first" type="button">First</button>
+            <button class="secondary-button" data-institution-page-action="previous" type="button">Previous</button>
+            <button class="secondary-button" data-institution-page-action="next" type="button">Next</button>
+            <button class="secondary-button" data-institution-page-action="last" type="button">Last</button>
+          </div>
+        </nav>
+        <div class="table-wrap institution-management-table-wrap" id="institution-management-table-wrap"><table><thead><tr><th>Institution identity</th><th>Aliases / hierarchy</th><th>Status / type</th><th>Usage</th><th>Separate actions</th></tr></thead><tbody id="institution-management-rows"></tbody></table></div>
+        <p class="empty-markers" id="institution-management-empty" role="status" hidden>No institutions match.</p>
+        <nav class="institution-pagination" aria-label="Institution pages below table">
+          <label>Rows per page <select class="institution-page-size"><option value="25">25</option><option value="50" selected>50</option><option value="100">100</option></select></label>
+          <span class="institution-page-status" role="status" aria-live="polite">Page 1 of 1</span>
+          <div class="institution-page-actions">
+            <button class="secondary-button" data-institution-page-action="first" type="button">First</button>
+            <button class="secondary-button" data-institution-page-action="previous" type="button">Previous</button>
+            <button class="secondary-button" data-institution-page-action="next" type="button">Next</button>
+            <button class="secondary-button" data-institution-page-action="last" type="button">Last</button>
+          </div>
+        </nav>
+      </section>
+
+      <dialog id="institution-identity-dialog">
+        <form id="institution-identity-form" method="dialog">
+          <div class="section-heading">
+            <div><p class="eyebrow">Canonical identity</p><h2>Edit institution identity</h2></div>
+          </div>
+          <input id="institution-identity-id" type="hidden">
+          <div class="location-form-grid">
+            <label class="full-width">Institution name
+              <input id="institution-identity-name" type="text" required>
+            </label>
+            <label class="full-width">Abbreviation
+              <input id="institution-identity-abbreviation" type="text" maxlength="24" placeholder="Optional, e.g. CERTH">
+            </label>
+            <label>Institution type
+              <select id="institution-identity-type"><option value="university">University</option><option value="research_unit">Research Institute</option><option value="company">Company</option><option value="other">Other</option></select>
+            </label>
+          </div>
+          <p class="form-error" id="institution-identity-error" role="alert" hidden></p>
+          <div class="form-actions"><button class="secondary-button" id="institution-identity-cancel" type="button">Cancel</button><button class="primary-button" type="submit">Save identity</button></div>
+        </form>
+      </dialog>
+
+      <section class="location-review-panel" id="location-review-panel" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Aliases, duplicates &amp; coordinates · local only</p>
+            <h2>Institution Alias and Location Review</h2>
+            <p>Review possible aliases and duplicates alongside location evidence. Suggestions never merge canonical institutions or reassign mappings; every alias addition requires explicit confirmation.</p>
+          </div>
+          <button class="secondary-button" id="location-review-close" type="button">Close</button>
+        </div>
+        <p class="review-scope-help">Review lists show unresolved paper-institution evidence and conservative canonical-name candidates. Existing canonical rows, aliases, location conflicts, and affected papers/mappings are shown as evidence only. Rejecting a candidate does not alter alias or canonical data. Canonical merges and mapping reassignment remain separate manual actions.</p>
+        <p class="review-counts" id="location-review-counts"></p>
+        <div class="location-summary" id="location-summary" aria-live="polite"></div>
+        <div class="location-review-workspace">
+          <aside class="location-queue">
+            <label class="search-field">
+              <span>Search queue</span>
+              <input id="location-search" type="search" placeholder="Institution, paper, author, status…">
+            </label>
+            <div class="location-status-filters" id="location-status-filters" aria-label="Filter institutions by review status"></div>
+            <ol id="location-review-list"></ol>
+            <p class="empty-markers" id="empty-location-reviews" hidden>No location-review rows match.</p>
+            <nav class="location-review-pagination" aria-label="Review result pages">
+              <button class="secondary-button" id="location-review-previous" type="button">Previous</button>
+              <span id="location-review-page-status" role="status"></span>
+              <button class="secondary-button" id="location-review-next" type="button">Next</button>
+            </nav>
+          </aside>
+          <article class="location-editor">
+            <div id="location-editor-placeholder">
+              <h3>Select a queued institution</h3>
+              <p>Its paper context, affiliation evidence, suggestions, and current review state will appear here.</p>
+            </div>
+            <form id="location-form" hidden>
+              <input id="location-queue-id" type="hidden">
+              <input id="location-institution-id" type="hidden">
+              <div class="location-form-grid">
+                <label class="full-width">Institution name
+                  <input id="confirmed-institution" type="text" required>
+                </label>
+                <label class="full-width">Abbreviation
+                  <input id="institution-abbreviation" type="text" maxlength="24" placeholder="Optional, e.g. CRIM">
+                </label>
+                <label class="full-width">Aliases
+                  <output id="institution-aliases" class="status-output">No aliases</output>
+                </label>
+                <label class="full-width">Add alias
+                  <input id="institution-new-alias" type="text" placeholder="Optional new alias">
+                </label>
+                <label class="full-width">Review status
+                  <output id="institution-review-status" class="status-output">Pending review</output>
+                </label>
+                <label class="full-width" id="canonical-institution-label" hidden>Location candidate
+                  <select id="canonical-institution"><option value="">Select confirmed institution…</option></select>
+                </label>
+                <label class="full-width" id="confirmed-location-record-label" hidden>Confirmed location record
+                  <select id="confirmed-location-record"></select>
+                </label>
+                <label>Confirmed city
+                  <input id="confirmed-city" type="text" aria-describedby="city-resolution-status">
+                </label>
+                <label>Confirmed region
+                  <input id="confirmed-region" type="text">
+                </label>
+                <label>Confirmed country
+                  <input id="confirmed-country" type="text">
+                </label>
+                <input id="confirmed-country-code" type="hidden">
+                <p class="full-width city-resolution-status" id="city-resolution-status" role="status" hidden></p>
+                <label>Latitude
+                  <input id="confirmed-lat" type="text" inputmode="decimal" autocomplete="off" aria-describedby="location-form-error">
+                </label>
+                <label>Longitude
+                  <input id="confirmed-lon" type="text" inputmode="decimal" autocomplete="off" aria-describedby="location-form-error">
+                </label>
+                <div class="full-width geocode-action-row">
+                  <button class="secondary-button" id="location-geocode" type="button">Find coordinates</button>
+                  <span>Uses the canonical ID, aliases, affiliation evidence, and current city, region, and country. Nothing changes until you select and confirm a consistent result.</span>
+                </div>
+              </div>
+              <details class="location-details"><summary>Details</summary><div class="location-context" id="location-context"></div></details>
+              <p class="workflow-note">Confirm a usable location or choose the appropriate review outcome. Saving does not run the exporter.</p>
+              <p class="form-error" id="location-form-error" role="alert" hidden></p>
+              <div class="location-form-actions">
+                <button class="secondary-button" id="location-save-identity" type="button">Save identity</button>
+                <button class="primary-button" id="location-confirm" type="submit">Confirm location</button>
+                <button class="secondary-button" id="location-confirm-alias" type="button" hidden>Confirm as alias</button>
+                <button class="secondary-button" id="location-mark-ambiguous" type="button" hidden>Mark ambiguous</button>
+                <button class="danger-button" id="location-ignore" type="button" hidden>Ignore institution</button>
+                <button class="danger-button" id="location-exclude" type="button" hidden>Exclude from public map</button>
+              </div>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <section class="workspace" id="workspace" hidden>
+        <aside class="browser-panel">
+          <div class="browser-toolbar">
+            <label class="search-field">
+              <span>Search papers</span>
+              <input id="search-input" type="search" placeholder="Title, author, institution, DOI, OpenAlex…" autocomplete="off">
+            </label>
+            <div class="filters">
+              <label>Year<select id="filter-year"><option value="">All years</option></select></label>
+              <label>Task<select id="filter-task"><option value="">All tasks</option></select></label>
+              <label>Coverage<select id="filter-coverage"><option value="">All coverage</option></select></label>
+              <label>Map location
+                <select id="filter-map">
+                  <option value="">Any</option>
+                  <option value="true">Has map location</option>
+                  <option value="false">No map location</option>
+                  <option value="missing_affiliations">Missing affiliations</option>
+                </select>
+              </label>
+              <label>Source<select id="filter-source"><option value="">All sources</option></select></label>
+              <label>Curation status
+                <select id="filter-curation-status">
+                  <option value="">All curation statuses</option>
+                  <option value="needs_review">Needs review</option>
+                  <option value="confirmed">Confirmed</option>
+                </select>
+              </label>
+              <label>Exclusion status
+                <select id="filter-exclusion">
+                  <option value="">Any</option>
+                  <option value="active">Actively excluded</option>
+                  <option value="restored">Restored/inactive</option>
+                  <option value="none">No exclusion record</option>
+                </select>
+              </label>
+            </div>
+            <p class="result-count" id="result-count" aria-live="polite"></p>
+          </div>
+          <ol class="paper-list" id="paper-list"></ol>
+          <div class="empty-state" id="empty-results" hidden>No papers match these filters.</div>
+        </aside>
+
+        <article class="detail-panel" id="detail-panel">
+          <div class="detail-placeholder" id="detail-placeholder">
+            <span>↖</span>
+            <p>Select a paper to inspect its metadata and institution markers.</p>
+          </div>
+          <div id="detail-content" hidden>
+            <div class="detail-heading">
+              <div>
+                <p class="eyebrow" id="detail-source"></p>
+                <h2 id="detail-title"></h2>
+              </div>
+              <div class="badge-row" id="detail-badges"></div>
+            </div>
+            <dl class="metadata-grid" id="metadata-grid"></dl>
+            <section class="paper-metadata-section" id="paper-metadata-section">
+              <div class="mapping-heading">
+                <div>
+                  <h3>Paper Metadata</h3>
+                  <p>Compare generated source metadata with the durable curated override.</p>
+                </div>
+                <button class="primary-button" id="metadata-edit-button" type="button">Edit metadata</button>
+              </div>
+              <div class="metadata-compare" id="metadata-compare"></div>
+              <form class="paper-draft-form" id="metadata-edit-form" hidden>
+                <input id="metadata-paper-id" type="hidden">
+                <label>Title<input id="metadata-title" required></label>
+                <label>Year<input id="metadata-year" type="number" min="1000" max="9999" required></label>
+                <label class="full-width">Authors<textarea id="metadata-authors" rows="2"></textarea></label>
+                <div id="metadata-venue-field" class="venue-combobox-field full-width">
+                  <span id="metadata-venue-label" class="field-label">Venue</span>
+                  <input id="metadata-venue" type="hidden">
+                  <input id="metadata-venue-id" type="hidden">
+                  <input id="metadata-venue-name" type="hidden">
+                  <input id="metadata-venue-acronym" type="hidden">
+                  <input id="metadata-venue-type" type="hidden">
+                  <div id="metadata-venue-combobox" class="venue-combobox">
+                    <button id="metadata-venue-button" class="venue-combobox-button" type="button" role="combobox" aria-labelledby="metadata-venue-label metadata-venue-value" aria-controls="metadata-venue-options" aria-expanded="false" aria-haspopup="listbox">
+                      <span id="metadata-venue-value">Select a canonical venue…</span><span aria-hidden="true">▾</span>
+                    </button>
+                    <div id="metadata-venue-panel" class="venue-combobox-panel" hidden>
+                      <label class="visually-hidden" for="metadata-venue-search">Search canonical venues</label>
+                      <input id="metadata-venue-search" type="search" role="searchbox" aria-controls="metadata-venue-options" placeholder="Search name, acronym, type, track, or alias…" autocomplete="off">
+                      <p id="metadata-venue-status" class="venue-combobox-status" role="status">Loading canonical venues…</p>
+                      <ul id="metadata-venue-options" class="venue-combobox-options" role="listbox" aria-labelledby="metadata-venue-label"></ul>
+                      <button id="metadata-venue-create" class="secondary-button venue-create-action" type="button" hidden>Create new canonical venue</button>
+                    </div>
+                  </div>
+                  <dl id="metadata-venue-summary" class="canonical-venue-summary" hidden></dl>
+                  <p id="metadata-venue-error" class="form-error" hidden></p>
+                  <details class="venue-provenance-audit">
+                    <summary>Venue provenance</summary>
+                    <p><strong>Historical raw venue:</strong> <span id="metadata-raw-venue-display">Not recorded</span></p>
+                    <input id="metadata-raw-venue" type="hidden">
+                    <label><input id="metadata-replace-raw-venue" type="checkbox"> Replace historical provenance with the selected canonical name</label>
+                  </details>
+                </div>
+                <label>Venue track
+                  <select id="metadata-venue-track" required>
+                    <option value="Main">Main</option>
+                    <option value="Workshop">Workshop</option>
+                    <option value="Findings">Findings</option>
+                    <option value="Poster">Poster</option>
+                    <option value="Industry">Industry</option>
+                    <option value="Demo">Demo</option><option value="Tutorial">Tutorial</option><option value="Challenge">Challenge</option><option value="Short Paper">Short Paper</option>
+                    <option value="Doctoral Consortium">Doctoral consortium</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <span id="metadata-venue-track-error" class="field-warning" hidden></span>
+                </label>
+                <label>DOI<input id="metadata-doi"></label>
+                <label>arXiv ID<input id="metadata-arxiv-id"></label>
+                <label>OpenAlex URL<input id="metadata-openalex-url" type="url"></label>
+                <label>Paper URL<input id="metadata-paper-url" type="url"></label>
+                <label>Publication type<select id="metadata-publication-type" required disabled>
+                  <option value="conference">conference</option><option value="journal">journal</option>
+                  <option value="preprint">preprint</option><option value="book">book</option>
+                </select><button id="metadata-publication-type-override" class="text-button" type="button">Override publication type</button><span id="metadata-publication-type-warning" class="field-warning" hidden></span></label>
+                <fieldset id="metadata-tasks" class="paper-category-field" aria-required="true">
+                  <legend>Forensic Task</legend>
+                  <div class="paper-category-options">
+                    <label class="paper-category-option" for="metadata-task-detection"><input class="paper-category-input" id="metadata-task-detection" type="checkbox" name="tasks" value="detection"><span>Detection</span></label>
+                    <label class="paper-category-option" for="metadata-task-source-attribution"><input class="paper-category-input" id="metadata-task-source-attribution" type="checkbox" name="tasks" value="source_attribution"><span>Source attribution</span></label>
+                    <label class="paper-category-option" for="metadata-task-localization"><input class="paper-category-input" id="metadata-task-localization" type="checkbox" name="tasks" value="localization"><span>Localization</span></label>
+                  </div>
+                </fieldset>
+                <fieldset id="metadata-image-scopes" class="paper-category-field" aria-required="true">
+                  <legend>Image Scope</legend>
+                  <div class="paper-category-options paper-category-scope-options">
+                    <div class="paper-category-scope-group">
+                      <span class="paper-category-scope-heading">Core scope</span>
+                      <label class="paper-category-option" for="metadata-image-scope-fully-generated"><input class="paper-category-input" id="metadata-image-scope-fully-generated" type="checkbox" name="image_scopes" value="fully_generated"><span>Fully Generated</span></label>
+                      <label class="paper-category-option" for="metadata-image-scope-generative-editing"><input class="paper-category-input" id="metadata-image-scope-generative-editing" type="checkbox" name="image_scopes" value="generative_editing"><span>Generative Editing</span></label>
+                    </div>
+                    <div class="paper-category-scope-group is-extended">
+                      <span class="paper-category-scope-heading">Extended scope</span>
+                      <label class="paper-category-option" for="metadata-image-scope-deepfake"><input class="paper-category-input" id="metadata-image-scope-deepfake" type="checkbox" name="image_scopes" value="deepfake"><span>Deepfake</span></label>
+                      <label class="paper-category-option" for="metadata-image-scope-traditional-manipulation"><input class="paper-category-input" id="metadata-image-scope-traditional-manipulation" type="checkbox" name="image_scopes" value="traditional_manipulation"><span>Traditional Manipulation</span></label>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset id="metadata-research-types" class="paper-category-field" aria-required="true">
+                  <legend>Research Type</legend>
+                  <div class="paper-category-options">
+                    <label class="paper-category-option" for="metadata-research-type-method"><input class="paper-category-input" id="metadata-research-type-method" type="checkbox" name="research_types" value="method"><span>Method</span></label>
+                    <label class="paper-category-option" for="metadata-research-type-dataset"><input class="paper-category-input" id="metadata-research-type-dataset" type="checkbox" name="research_types" value="dataset"><span>Dataset</span></label>
+                    <label class="paper-category-option" for="metadata-research-type-benchmark"><input class="paper-category-input" id="metadata-research-type-benchmark" type="checkbox" name="research_types" value="benchmark"><span>Benchmark</span></label>
+                    <label class="paper-category-option" for="metadata-research-type-survey"><input class="paper-category-input" id="metadata-research-type-survey" type="checkbox" name="research_types" value="survey"><span>Survey</span></label>
+                    <label class="paper-category-option" for="metadata-research-type-analysis-study"><input class="paper-category-input" id="metadata-research-type-analysis-study" type="checkbox" name="research_types" value="analysis_study"><span>Analysis study</span></label>
+                  </div>
+                </fieldset>
+                <label>Scope status<select id="metadata-scope-status">
+                  <option value="in_scope">in_scope</option><option value="out_of_scope">out_of_scope</option>
+                  <option value="uncertain">uncertain</option><option value="needs_review">needs_review</option>
+                </select></label>
+                <label>Curation status<select id="metadata-curation-status">
+                  <option value="confirmed">Confirmed</option>
+                  <option value="needs_review">Needs review</option>
+                </select></label>
+                <label>Review status<select id="metadata-review-status">
+                  <option value="reviewed">reviewed</option><option value="pending">pending</option><option value="needs_check">needs_check</option>
+                </select></label>
+                <label class="full-width">Abstract<textarea id="metadata-abstract" rows="5"></textarea></label>
+                <fieldset class="full-width">
+                  <legend>Publication venue review</legend>
+                  <label><input id="metadata-venue-review-confirmed" type="checkbox"> I verified this venue/type/track, including any flagged conflict</label>
+                  <label>Verification source and reason<textarea id="metadata-venue-review-note" rows="2" placeholder="Publisher URL and reason for keeping or correcting the venue"></textarea></label>
+                  <p class="field-help">Optional explicit review, separate from paper curation. Applies only to this saved bibliographic state; later venue/type/DOI changes reopen review.</p>
+                </fieldset>
+                <div class="metadata-save-status full-width" id="metadata-save-status" data-state="clean" role="status" aria-live="polite" aria-atomic="true">
+                  <span class="metadata-save-status-icon" aria-hidden="true"></span>
+                  <span id="metadata-save-status-text">No unsaved changes.</span>
+                </div>
+                <p class="form-error full-width" id="metadata-edit-error" role="alert" tabindex="-1" hidden></p>
+                <div class="form-actions full-width">
+                  <button class="primary-button" id="metadata-edit-submit" type="submit">Save curated override</button>
+                  <button class="secondary-button" id="metadata-edit-cancel" type="button">Cancel</button>
+                </div>
+              </form>
+              <dialog id="venue-create-dialog" class="review-dialog venue-create-dialog">
+                <form id="venue-create-form" method="dialog">
+                  <h3>Create new canonical venue</h3>
+                  <p class="muted">This writes a reviewed canonical identity and alias to <code>venue_aliases.csv</code>.</p>
+                  <label>Canonical full name<input id="venue-create-name" required></label>
+                  <label>Acronym, optional<input id="venue-create-acronym"></label>
+                  <label>Venue type<select id="venue-create-type" required><option value="conference">conference</option><option value="journal">journal</option><option value="preprint">preprint</option><option value="book">book</option></select></label>
+                  <label>Paper venue track<select id="venue-create-track"><option value="Main">Main</option><option value="Workshop">Workshop</option><option value="Findings">Findings</option><option value="Poster">Poster</option><option value="Industry">Industry</option><option value="Demo">Demo</option><option value="Tutorial">Tutorial</option><option value="Challenge">Challenge</option><option value="Short Paper">Short Paper</option><option value="Doctoral Consortium">Doctoral consortium</option><option value="Other">Other</option></select></label>
+                  <label class="full-width">Raw input or alias<input id="venue-create-alias" required></label>
+                  <label class="full-width">Review note, optional<textarea id="venue-create-note" rows="2"></textarea></label>
+                  <section id="venue-create-matches" class="venue-create-matches" hidden><h4>Possible existing venues</h4><ul></ul><label><input id="venue-create-confirm-similar" type="checkbox"> I reviewed these matches and confirm this is a distinct venue.</label></section>
+                  <p id="venue-create-error" class="form-error" hidden></p>
+                  <div class="dialog-actions"><button id="venue-create-cancel" type="button" class="secondary-button">Cancel</button><button id="venue-create-submit" type="submit" class="primary-button">Create and select venue</button></div>
+                </form>
+              </dialog>
+            </section>
+            <section class="notes-section">
+              <h3>Notes</h3>
+              <p id="detail-notes"></p>
+            </section>
+            <section class="scope-review-section">
+              <div>
+                <h3>Delete / Scope Review</h3>
+                <p>Record a durable exclusion without changing OpenAlex-derived processed CSV files.</p>
+              </div>
+              <button class="danger-button" id="detail-exclude-button" type="button">Delete / Exclude from site</button>
+              <button class="restore-button" id="detail-restore-button" type="button" hidden>Restore</button>
+            </section>
+            <section class="mappings-section">
+              <div class="mapping-heading">
+                <div>
+                  <h3>Author–Institution Mappings</h3>
+                  <p>Curated mappings are paper-level affiliation records. Map markers are derived later only when coordinates are available.</p>
+                </div>
+                <div class="form-actions">
+                  <button class="primary-button" id="mapping-add-button" type="button">Add mapping</button>
+                  <button class="secondary-button" id="mapping-replace-button" type="button">Replace all mappings</button>
+                </div>
+              </div>
+              <p class="mapping-paper-context" id="mapping-paper-context"></p>
+              <p class="form-error" id="mapping-diagnostic" role="status" hidden></p>
+              <h4 class="mapping-group-title">Current affiliations</h4>
+              <p class="mapping-group-help">Only active and needs-review mappings appear here.</p>
+              <div class="table-wrap">
+                <table class="mapping-table">
+                  <thead>
+                    <tr>
+                      <th>Institution</th>
+                      <th>Institution authors</th>
+                      <th>Raw affiliation</th>
+                      <th>Status</th>
+                      <th>Location</th>
+                      <th>Actions</th>
+                      <th class="mapping-order-heading">Order</th>
+                    </tr>
+                  </thead>
+                  <tbody id="mapping-table-body"></tbody>
+                </table>
+              </div>
+              <p class="empty-markers" id="empty-mappings" hidden>No current author–institution mappings are associated with this paper.</p>
+              <details class="historical-mappings" id="historical-mappings" hidden>
+                <summary>Historical mappings <span id="historical-mapping-count"></span></summary>
+                <p class="historical-mappings-help">These excluded or replaced records are retained for audit history. They are not current affiliations.</p>
+                <div class="table-wrap">
+                  <table class="mapping-table historical-mapping-table">
+                    <thead>
+                      <tr>
+                        <th>Institution</th>
+                        <th>Institution authors</th>
+                        <th>Raw affiliation</th>
+                        <th>Historical status</th>
+                        <th>Location</th>
+                        <th>Availability</th>
+                      </tr>
+                    </thead>
+                    <tbody id="historical-mapping-table-body"></tbody>
+                  </table>
+                </div>
+              </details>
+              <p class="form-error" id="mapping-panel-error" role="alert" hidden></p>
+            </section>
+            <section class="markers-section">
+              <div class="section-heading">
+                <div>
+                  <h3>Current exported/public evidence</h3>
+                  <p>These marker records are derived output and are shown separately from curated mappings.</p>
+                </div>
+                <span id="marker-count"></span>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Institution</th>
+                      <th>Institution authors</th>
+                      <th>Location</th>
+                      <th>Coordinates</th>
+                      <th>Resolution</th>
+                      <th>Review</th>
+                    </tr>
+                  </thead>
+                  <tbody id="marker-table-body"></tbody>
+                </table>
+              </div>
+              <p class="empty-markers" id="empty-markers" hidden>No current exported/public marker records are associated with this paper.</p>
+            </section>
+          </div>
+        </article>
+      </section>
+
+      <section class="review-queue-panel" id="high-risk-review-panel" hidden data-queue="high-risk">
+        <div class="section-heading"><div><p class="eyebrow">P0 / P1 / P2</p><h2>High-risk Marker Review</h2><p>Generated suspicious-marker evidence; actions persist only in the curated layer.</p></div></div>
+        <p class="review-scope-help">Review lists show unresolved paper-institution map evidence only. If a marker, author-institution mapping, institution identity, or location has already been confirmed or excluded in the curated layer, it is hidden from this list. This is not a paper-scope review. It checks whether a paper-institution map marker should be shown and whether its authors, institution identity, and location are correct.</p><p class="review-counts" data-role="counts"></p>
+        <div class="review-filters"><input type="search" data-role="search" placeholder="Title, institution, author, DOI, OpenAlex…"><select data-role="group"><option value="">All priorities</option></select><select data-role="action-filter"><option value="">All recommended actions</option></select><select data-role="type-filter"><option value="">All review types</option></select></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th><th>Public visibility</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
+      </section>
+
+      <section class="review-queue-panel" id="institution-audit-panel" hidden>
+        <div class="section-heading"><div><p class="eyebrow">Pre-publish consistency gate</p><h2>Institution Cleanup</h2><p>Resolve persistent institution findings through protected Admin APIs. The generated CSV remains reporting-only.</p></div></div>
+        <p class="review-counts" id="institution-audit-counts"></p>
+        <div class="review-filters"><input id="institution-audit-search" type="search" placeholder="Paper title, author, institution…"><select id="institution-audit-severity"><option value="">All severities</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select><select id="institution-audit-provenance"><option value="">All provenance</option><option value="manually_confirmed">Manual confirmed</option><option value="automatic_import">Automatic</option><option value="curated_import">Imported</option><option value="admin_accepted">Admin accepted</option><option value="unresolved">Unresolved</option></select><select id="institution-audit-issue"><option value="">All issue types</option><option value="confirmed_mapping_changed">Confirmed mapping changed</option><option value="author_institution_conflict">Author–institution conflict</option><option value="alias_missing">Alias missing</option><option value="parent_child_inconsistency">Parent-child inconsistency</option><option value="suspicious_replacement">Suspicious replacement</option></select><button class="primary-button" id="institution-cleanup-batch" type="button" disabled>Accept selected fixes</button><button class="secondary-button" id="institution-resolution-batch" type="button" disabled>Resolve selected cases</button></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th><span class="visually-hidden">Select</span></th><th>Severity</th><th>Paper</th><th>Author</th><th>Current active institutions</th><th>Historical/excluded institutions</th><th>Classification</th><th>Suggested institutions</th></tr></thead><tbody id="institution-audit-rows"></tbody></table><p id="institution-audit-empty"></p></div><article id="institution-audit-detail" class="review-detail">Select a paper-author review case.</article></div>
+        <details class="archived-findings" id="institution-archived-findings" hidden>
+          <summary>Archived findings <span id="institution-archived-count"></span></summary>
+          <p>Resolved and archived findings are retained for audit browsing. They are read-only and never actionable cleanup items.</p>
+          <div class="table-wrap"><table><thead><tr><th>Lifecycle</th><th>Paper</th><th>Author</th><th>Historical institution</th><th>Issue</th><th>Resolution</th><th>Updated</th></tr></thead><tbody id="institution-archived-rows"></tbody></table></div>
+        </details>
+      </section>
+
+      <section class="review-queue-panel" id="marker-blocker-review-panel" hidden data-queue="marker-blockers">
+        <div class="section-heading"><div><p class="eyebrow">Generated diagnostic</p><h2>Marker Blocker Review</h2><p>Resolve affiliations, coordinates, review confidence, scope, or metadata through curated editors.</p></div></div>
+        <p class="review-scope-help">One actionable record per paper with an unresolved map blocker. Already-mapped diagnostics and blockers resolved by current curated evidence are suppressed. This queue is distinct from individual high-risk markers.</p><p class="review-counts" data-role="counts"></p>
+        <div class="review-filters"><input type="search" data-role="search" placeholder="Search blocker queue…"><select data-role="group"><option value="">All blocker types</option></select></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th><th>Public visibility</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
+      </section>
+
+      <section class="review-queue-panel" id="key-coverage-review-panel" hidden data-queue="key-paper-coverage">
+        <div class="section-heading"><div><p class="eyebrow">Key-paper audit</p><h2>Key Paper Coverage Review</h2><p>Inspect missing stages and possible title-match failures without editing the generated audit.</p></div></div>
+        <p class="review-scope-help">One actionable record per key paper with an unresolved coverage stage. Covered papers, reviewed decisions, exclusions and superseded versions are suppressed; uncertain exact identities remain reviewable.</p><p class="review-counts" data-role="counts"></p>
+        <div class="review-filters"><input type="search" data-role="search" placeholder="Search coverage queue…"><select data-role="group"><option value="">All missing stages</option></select></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th><th>Public visibility</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
+      </section>
+
+      <section class="review-queue-panel" id="author-mapping-coverage-panel" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Read-only generated report</p>
+            <h2>Author Mapping Coverage</h2>
+            <p>Search and filter unresolved author–institution mapping coverage. Resolve records through the existing paper mapping editor.</p>
+          </div>
+          <div class="mapping-coverage-actions">
+            <a class="secondary-button button-link" href="/docs/missing_author_mappings_report.md" target="_blank" rel="noreferrer">Open full mapping report</a>
+            <button class="secondary-button" id="reload-mapping-coverage-full" type="button">Reload mapping coverage</button>
+          </div>
+        </div>
+        <p class="review-scope-help">Review lists show unresolved paper-institution map evidence only. If a marker, author-institution mapping, institution identity, or location has already been confirmed or excluded in the curated layer, it is hidden from this list. This is not a paper-scope review. It checks whether a paper-institution map marker should be shown and whether its authors, institution identity, and location are correct.</p><p class="review-counts" id="mapping-coverage-counts"></p>
+        <div class="review-filters">
+          <input id="mapping-coverage-search" type="search" placeholder="Search title, author, DOI, OpenAlex…">
+          <select id="mapping-coverage-status"><option value="warning">All warnings</option><option value="zero">Zero</option><option value="partial">Partial</option><option value="">All unresolved statuses</option></select>
+          <select id="mapping-coverage-triage"><option value="">All triage classes</option><option value="likely_auto_fixable">Likely auto-fixable</option><option value="needs_manual_review">Needs manual review</option></select>
+          <select id="mapping-coverage-sort"><option value="rank-asc">Rank: ascending</option><option value="rank-desc">Rank: descending</option><option value="missing-desc">Missing authors: most first</option><option value="missing-asc">Missing authors: least first</option></select>
+          <select id="mapping-coverage-key"><option value="">All papers</option><option value="true">Key papers</option><option value="false">Non-key papers</option></select>
+        </div>
+        <div class="mapping-coverage-empty-state" id="mapping-coverage-full-empty-state" hidden>
+          <p>Author mapping report has not been generated.</p>
+          <button class="primary-button" id="generate-mapping-report-full" type="button">Generate Report</button>
+        </div>
+        <div class="table-wrap" id="mapping-coverage-table-wrap">
+          <table class="mapping-coverage-table">
+            <thead><tr><th>Rank</th><th>Status</th><th>Priority</th><th>Paper title</th><th>Year</th><th>Mapped / total</th><th>Missing</th><th>Missing authors</th><th>Known institutions / evidence</th><th>Suggested action</th><th>Public impact</th><th>Markers</th><th>Key</th></tr></thead>
+            <tbody id="mapping-coverage-rows"></tbody>
+          </table>
+        </div>
+        <p id="mapping-coverage-empty" class="mapping-coverage-empty"></p>
+      </section>
+
+      <section class="review-queue-panel" id="manual-import-review-panel" hidden data-queue="manual-import">
+        <div class="section-heading"><div><p class="eyebrow">Candidate CSVs</p><h2>Manual Import Review</h2><p>Review available ready, weak-match, query-failed, no-match, and manual-review candidates.</p></div></div>
+        <p class="review-scope-help">One actionable record per import candidate, deduplicated across historical files. Already-imported papers, completed reviews, exclusions and inactive records are suppressed. Original diagnostic source references remain available in the detail.</p><p class="review-counts" data-role="counts"></p>
+        <div class="review-filters"><input type="search" data-role="search" placeholder="Search import candidates…"><select data-role="group"><option value="">All candidate statuses</option></select></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th><th>Public visibility</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
+      </section>
+    </main>
+
+    <dialog id="geocode-dialog" aria-labelledby="geocode-dialog-title">
+      <form id="geocode-form" method="dialog">
+        <p class="eyebrow">Assisted institution geocoding</p>
+        <h2 id="geocode-dialog-title">Select a location candidate</h2>
+        <p id="geocode-query"></p>
+        <p class="dialog-warning" id="geocode-replace-warning" hidden>Confirming will replace the latitude and longitude currently in the form.</p>
+        <fieldset id="geocode-candidates" class="geocode-candidates"></fieldset>
+        <p id="geocode-empty" hidden>No location candidates were found. Existing form values are unchanged.</p>
+        <p class="form-error" id="geocode-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="secondary-button" id="geocode-cancel" type="button">Cancel</button>
+          <button class="primary-button" id="geocode-confirm" aria-disabled="true" type="button" disabled>Use this location</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="scope-dialog">
+      <form id="scope-form">
+        <input id="scope-paper-id" type="hidden">
+        <input id="scope-mode" type="hidden">
+        <p class="eyebrow" id="scope-dialog-eyebrow">Delete / Scope Review</p>
+        <h2 id="scope-dialog-title">Exclude paper from site?</h2>
+        <p class="dialog-paper-title" id="scope-paper-title"></p>
+        <p class="dialog-warning" id="scope-exclusion-warning">This excludes the paper from public preview and map exports. It does not directly edit OpenAlex-derived processed CSV files. A durable exclusion record prevents the paper from reappearing in future exports.</p>
+        <p class="dialog-warning" id="scope-restore-warning" hidden>Restoring preserves the exclusion audit record but marks it inactive. Run the public preview exporter afterward to return an otherwise eligible paper to the site.</p>
+        <label id="scope-reason-label" for="scope-reason">Deletion reason
+          <select id="scope-reason" required>
+            <option value="">Select a reason…</option>
+            <option value="out_of_scope">out_of_scope</option>
+            <option value="downstream_synthetic_data_only">downstream_synthetic_data_only</option>
+            <option value="medical_or_agriculture_or_industrial_only">medical_or_agriculture_or_industrial_only</option>
+            <option value="remote_sensing_only">remote_sensing_only</option>
+            <option value="deepfake_only_not_core">deepfake_only_not_core</option>
+            <option value="policy_or_perception_only">policy_or_perception_only</option>
+            <option value="duplicate">duplicate</option>
+            <option value="retracted">retracted</option>
+            <option value="wrong_metadata">wrong_metadata</option>
+            <option value="other">other</option>
+          </select>
+        </label>
+        <label for="scope-note"><span id="scope-note-label">Review note</span>
+          <textarea id="scope-note" rows="4" required></textarea>
+        </label>
+        <p class="form-error" id="scope-form-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="secondary-button" id="scope-cancel" type="button">Cancel</button>
+          <button class="danger-button" id="scope-submit" type="submit">Confirm exclusion</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="institution-resolution-dialog" aria-labelledby="institution-resolution-title">
+      <form id="institution-resolution-form">
+        <p class="eyebrow">Institution cleanup resolution</p>
+        <h2 id="institution-resolution-title">Resolve review case</h2>
+        <dl class="metadata-grid">
+          <dt>Issue</dt><dd id="institution-resolution-issue"></dd>
+          <dt>Paper</dt><dd id="institution-resolution-paper"></dd>
+          <dt>Author</dt><dd id="institution-resolution-author"></dd>
+          <dt>Previous institution</dt><dd id="institution-resolution-previous"></dd>
+          <dt>Current institution</dt><dd id="institution-resolution-current"></dd>
+          <dt>Resolution action</dt><dd id="institution-resolution-action"></dd>
+        </dl>
+        <label>Resolution preset
+          <select id="institution-resolution-preset">
+            <option value="existing">Existing curated mapping is correct</option>
+            <option value="alias">Alias/name variation only</option>
+            <option value="parent">Parent-child relationship</option>
+            <option value="multiple">Multiple affiliation confirmed</option>
+            <option value="custom">Custom note</option>
+          </select>
+        </label>
+        <label>Review note <span id="institution-resolution-note-optional">(optional)</span>
+          <textarea id="institution-resolution-note" rows="4"></textarea>
+        </label>
+        <p class="form-error" id="institution-resolution-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="secondary-button" id="institution-resolution-cancel" type="button">Cancel</button>
+          <button class="primary-button" id="institution-resolution-submit" type="submit">Save resolution</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="institution-evidence-dialog" class="institution-evidence-dialog" aria-labelledby="institution-evidence-title">
+      <div class="institution-evidence-panel">
+        <div class="section-heading">
+          <div><p class="eyebrow">Institution cleanup evidence</p><h2 id="institution-evidence-title">Evidence inspection</h2></div>
+          <button class="secondary-button" id="institution-evidence-close" type="button">Close</button>
+        </div>
+        <div id="institution-evidence-content"></div>
+        <div class="dialog-actions" id="institution-evidence-actions"></div>
+      </div>
+    </dialog>
+
+    <dialog id="institution-merge-dialog" aria-labelledby="institution-merge-title">
+      <form id="institution-merge-form">
+        <p class="eyebrow">Global institution replacement</p>
+        <h2 id="institution-merge-title">Merge institution</h2>
+        <div id="institution-merge-target-step">
+          <p>Choose the canonical institution that should replace <strong id="institution-merge-source-label"></strong>.</p>
+          <label>Target institution
+            <input id="institution-merge-search" type="search" autocomplete="off" placeholder="Name, alias, or short ID" aria-controls="institution-merge-results">
+            <span class="field-help">The short ID is the 16-character value after <code>institution:</code>.</span>
+          </label>
+          <select id="institution-merge-results" size="7" aria-label="Matching canonical institutions"></select>
+          <div class="dialog-actions">
+            <button class="secondary-button" id="institution-merge-target-cancel" type="button">Cancel</button>
+            <button class="primary-button" id="institution-merge-resolve" type="button">Review merge</button>
+          </div>
+        </div>
+        <div id="institution-merge-confirm-step" hidden>
+          <dl class="metadata-grid">
+            <dt>Source</dt><dd><strong id="institution-merge-source-name"></strong><br><code id="institution-merge-source-id"></code></dd>
+            <dt>Target</dt><dd><strong id="institution-merge-target-name"></strong><br><code id="institution-merge-target-id"></code></dd>
+          </dl>
+          <fieldset id="institution-merge-location-resolution" hidden>
+            <legend>Resolve confirmed location conflict</legend>
+            <p>Both institutions have confirmed locations. Review both and choose which location the surviving institution should use.</p>
+            <label><input id="institution-merge-keep-target-location" type="radio" name="institution-merge-location-choice" value="keep_target"> Keep target location</label>
+            <div class="field-help" id="institution-merge-target-location"></div>
+            <label><input id="institution-merge-use-source-location" type="radio" name="institution-merge-location-choice" value="use_source"> Use source location</label>
+            <div class="field-help" id="institution-merge-source-location"></div>
+          </fieldset>
+          <p class="dialog-warning">This action replaces the source institution with the target institution across mappings, aliases, locations, review records, and other institution references.</p>
+          <div class="dialog-actions">
+            <button class="secondary-button" id="institution-merge-confirm-cancel" type="button">Cancel</button>
+            <button class="danger-button" id="institution-merge-submit" type="submit" disabled>Merge institution</button>
+          </div>
+        </div>
+        <p class="form-error" id="institution-merge-error" role="alert" hidden></p>
+      </form>
+    </dialog>
+
+    <dialog id="mapping-dialog">
+      <form id="mapping-form">
+        <input id="mapping-mode" type="hidden">
+        <input id="mapping-id" type="hidden">
+        <p class="eyebrow">Paper-level affiliation curation</p>
+        <h2 id="mapping-dialog-title">Add author–institution mapping</h2>
+        <p class="dialog-paper-title" id="mapping-dialog-paper"></p>
+        <p class="dialog-warning" id="mapping-exclude-warning" hidden>Excluding preserves this mapping as an audit row and removes it from the active curated set.</p>
+        <p class="dialog-warning" id="mapping-replace-warning" hidden>Every active curated mapping for this paper will be marked excluded. The mapping below becomes the first replacement row.</p>
+        <div class="mapping-fields" id="mapping-fields">
+          <label>Institution
+            <input id="mapping-institution" type="text" list="mapping-institution-options" required>
+            <input id="mapping-institution-id" type="hidden">
+            <datalist id="mapping-institution-options"></datalist>
+            <span class="field-help">Choose a canonical institution or enter a new name to add it to Needs Coordinates.</span>
+          </label>
+          <label>Location
+            <select id="mapping-location-id" disabled>
+              <option value="">Select an institution first</option>
+            </select>
+            <span class="field-help" id="mapping-location-help">Locations are confirmed offices belonging to the selected institution.</span>
+          </label>
+          <label class="full-width">Institution authors
+            <input id="mapping-authors" type="text" placeholder="Separate authors with semicolons" required>
+          </label>
+          <label class="full-width">Raw affiliation
+            <textarea id="mapping-raw-affiliation" rows="2"></textarea>
+          </label>
+          <label class="full-width">Mapping status
+            <select id="mapping-status">
+              <option value="active">active</option>
+              <option value="needs_review">needs_review</option>
+            </select>
+          </label>
+        </div>
+        <label id="mapping-transition-note-field" hidden>Transition justification
+          <textarea id="mapping-transition-note" rows="2"></textarea>
+        </label>
+        <label class="replace-confirmation" id="mapping-replace-confirmation" hidden>
+          <input id="mapping-confirm-replace" type="checkbox">
+          <span>I understand that all current active mappings will be replaced.</span>
+        </label>
+        <p class="form-error" id="mapping-form-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="secondary-button" id="mapping-cancel" type="button">Cancel</button>
+          <button class="primary-button" id="mapping-submit" type="submit">Save mapping</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>

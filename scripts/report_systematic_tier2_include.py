@@ -19,6 +19,12 @@ from paper_exclusions import active_exclusions, exclusions_with_curated_identiti
 CSV = ROOT / "data/manual/systematic_tier2_include_reconciliation_2026_09.csv"
 REPORT = ROOT / "docs/systematic_tier2_include_reconciliation_2026_09.md"
 FIELDS = ("candidate_id","title","policy_inclusion_rationale","reconciliation_outcome","paper_id","doi","arxiv_id","openalex_id","publication_status","version_relationship","primary_evidence","forensic_task","image_scope","research_type","affiliation_status","verified_affiliations","unresolved_fields","final_review_status","marker_count")
+SUCCESSOR_BASELINE = ROOT / "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline"
+
+def historical_state_path(relative):
+    """Read the frozen 648-paper state once a successor layer is present."""
+    candidate = SUCCESSOR_BASELINE / relative
+    return candidate if candidate.exists() else ROOT / relative
 
 def read_csv(path):
     with path.open(newline="") as h: return list(csv.DictReader(h))
@@ -29,8 +35,8 @@ def norm_title(value):
 def rows():
     proposals=json.loads((OUT/"planned_additions.json").read_text())["proposals"]
     queue={r["candidate_id"]:r for r in read_csv(ROOT/"data/processed/systematic_tier2_application_2026_09/queue_a_policy_include.csv")}
-    public=json.loads((ROOT/"web/data/public_preview_papers.json").read_text())["records"]
-    markers=json.loads((ROOT/"web/data/public_preview_map_data.json").read_text())["records"]
+    public=json.loads(historical_state_path("web/data/public_preview_papers.json").read_text())["records"]
+    markers=json.loads(historical_state_path("web/data/public_preview_map_data.json").read_text())["records"]
     result=[]
     for p in proposals:
         pid=p["paper_id"]; found=[r for r in public if r.get("paper_id")==pid]; assert len(found)==1
@@ -51,7 +57,7 @@ def diff_audit():
     names=("papers.csv","paper_taxonomy.csv","author_institution_mappings.csv","institutions.csv","institution_location_review.csv","institution_locations.csv","institution_aliases.csv","institution_hierarchy.csv","paper_exclusions.csv")
     out={}
     for name in names:
-        old=read_csv(OUT/"baseline/data/curated"/name); new=read_csv(ROOT/"data/curated"/name)
+        old=read_csv(OUT/"baseline/data/curated"/name); new=read_csv(historical_state_path(f"data/curated/{name}"))
         changed=[i for i,r in enumerate(old) if i>=len(new) or r!=new[i]]; assert not changed,(name,changed[:10])
         out[name]={"existing_rows":len(old),"existing_rows_changed":0,"new_rows":len(new)-len(old)}
     hashes=json.loads((OUT/"baseline_sha256.json").read_text())
@@ -61,10 +67,10 @@ def diff_audit():
     return out
 
 def corpus_stats():
-    papers=json.loads((ROOT/"web/data/public_preview_papers.json").read_text())["records"]
-    markers=json.loads((ROOT/"web/data/public_preview_map_data.json").read_text())["records"]
-    curated=read_csv(ROOT/"data/curated/papers.csv")
-    exclusions=active_exclusions(exclusions_with_curated_identities(read_csv(ROOT/"data/curated/paper_exclusions.csv"),curated))
+    papers=json.loads(historical_state_path("web/data/public_preview_papers.json").read_text())["records"]
+    markers=json.loads(historical_state_path("web/data/public_preview_map_data.json").read_text())["records"]
+    curated=read_csv(historical_state_path("data/curated/papers.csv"))
+    exclusions=active_exclusions(exclusions_with_curated_identities(read_csv(historical_state_path("data/curated/paper_exclusions.csv")),curated))
     leaks=[p["title"] for p in papers if matching_exclusion_rows(p,exclusions)]; assert not leaks
     dup=[]
     for i,a in enumerate(papers):

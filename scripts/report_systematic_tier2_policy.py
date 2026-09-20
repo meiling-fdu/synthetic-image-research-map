@@ -217,6 +217,13 @@ def integrity():
             'tests/test_paper_taxonomy_migration.py', 'tests/test_repository_baseline.py',
             'tests/test_frontend_published_only_filter.py',
         }
+    if (ROOT / 'data/processed/systematic_tier2_high_priority_evidence_review_2026_09/insertion.json').exists():
+        successor.update({
+            'data/manual/missing_author_mappings_report.csv',
+            'data/processed/institution_type_audit.csv',
+            'docs/missing_author_mappings_report.md',
+            'docs/public_preview_report.md',
+        })
     unexplained = [p for p in changed if p not in successor]
     return {'protected_files_checked': len(baseline), 'changed_count': len(unexplained),
             'changed_paths': unexplained, 'authorized_successor_changes': sorted(set(changed) & successor)}

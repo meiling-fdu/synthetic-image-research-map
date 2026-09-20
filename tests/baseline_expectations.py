@@ -6,19 +6,19 @@ data change and the identity and relationship invariants in
 ``test_repository_baseline.py``.
 """
 
-# Tier 2 inclusion curation: twelve additions, nine with reusable map locations.
-# Pre-existing rows and exclusions are unchanged; three additions await coordinates.
+# Tier 2 HIGH evidence curation: nine additions, five with reusable map locations.
+# Pre-existing rows and exclusions are unchanged; four additions await coordinates.
 CURRENT_REPOSITORY_BASELINE = {
-    "public_unique_papers": 648,
+    "public_unique_papers": 657,
     # Map source identities include one identity resolved to a canonical paper.
-    "public_map_source_papers": 633,
-    "public_papers_with_map": 632,
-    "public_papers_without_map": 16,
-    "total_institution_registry_rows": 731,
-    "active_canonical_institutions": 710,
+    "public_map_source_papers": 638,
+    "public_papers_with_map": 637,
+    "public_papers_without_map": 20,
+    "total_institution_registry_rows": 737,
+    "active_canonical_institutions": 716,
     "non_active_institution_registry_rows": 21,
-    # One paper–institution relationship has two markers (1486 markers total).
-    "public_paper_institution_relationships": 1485,
+    # One paper–institution relationship has two markers (1494 markers total).
+    "public_paper_institution_relationships": 1493,
     "institution_hierarchy_edges": 15,
     "institution_aliases": 120,
 }
@@ -38,7 +38,7 @@ RELEASE_REPOSITORY_BASELINE = {
     "institution_aliases": 80,
 }
 
-CANONICAL_INSTITUTION_STATUS_TOTALS = {'active': 710, 'ignored': 6, 'merged': 15}
+CANONICAL_INSTITUTION_STATUS_TOTALS = {'active': 716, 'ignored': 6, 'merged': 15}
 
 RELEASE_CANONICAL_INSTITUTION_STATUS_TOTALS = {
     "active": 650,
@@ -46,19 +46,19 @@ RELEASE_CANONICAL_INSTITUTION_STATUS_TOTALS = {
     "ignored": 6,
 }
 
-CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 528, 'company': 88, 'research_unit': 91, 'other': 24}
+CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 531, 'company': 88, 'research_unit': 93, 'other': 25}
 
-ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 520, 'company': 86, 'research_unit': 87, 'other': 17}
+ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 523, 'company': 86, 'research_unit': 89, 'other': 18}
 
-PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 615, 'research_unit': 130, 'other': 33, 'company': 132}
+PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 622, 'research_unit': 132, 'other': 34, 'company': 132}
 
 # Historical release artifacts are immutable; current effective venues have
 # changed since the 2026-08-24 checkpoint.
 RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint": 64, "book": 1}
 
-PUBLICATION_TYPE_TOTALS = {'conference': 376, 'preprint': 110, 'journal': 161, 'book': 1}
+PUBLICATION_TYPE_TOTALS = {'conference': 380, 'preprint': 111, 'journal': 165, 'book': 1}
 
-TASK_TOTALS = {'detection': 608, 'source_attribution': 79, 'localization': 29}
+TASK_TOTALS = {'detection': 615, 'source_attribution': 81, 'localization': 30}
 
 RELEASE_TASK_TOTALS = {
     "detection": 471,
@@ -95,6 +95,10 @@ INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS = {
 
 # Affiliation identity is reviewed; a defensible location is still pending.
 CURATED_PAPERS_AWAITING_COORDINATES = {
+    'Abductive Corroboration of Probabilistic AI Models for Forensic Synthetic Media Detection',
+    'Conditional Uncertainty-Aware Political Deepfake Detection with Stochastic Convolutional Neural Networks',
+    'Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey',
+    'Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision',
     'ImageTrust: Multi-Backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty',
     'Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification',
     'Scalable Black-Box Model Attribution for Images',
