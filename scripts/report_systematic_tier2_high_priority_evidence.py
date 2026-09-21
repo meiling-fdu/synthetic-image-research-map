@@ -33,6 +33,10 @@ from systematic_tier2_high_priority_evidence_data import DECISIONS, PAPERS
 
 CSV_PATH = ROOT / "data/manual/systematic_tier2_high_priority_evidence_review_2026_09.csv"
 REPORT_PATH = ROOT / "docs/systematic_tier2_high_priority_evidence_review_2026_09.md"
+SUCCESSOR_BASE = (
+    ROOT
+    / "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline"
+)
 FIELDS = (
     "candidate_id",
     "title",
@@ -68,6 +72,12 @@ def load_records(path: Path) -> list[dict[str, object]]:
     return json.loads(path.read_text(encoding="utf-8"))["records"]
 
 
+def frozen_high_path(relative: str) -> Path:
+    """Read the saved 657-paper HIGH state after a successor layer exists."""
+    successor_snapshot = SUCCESSOR_BASE / relative
+    return successor_snapshot if successor_snapshot.exists() else ROOT / relative
+
+
 def normalize_title(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", value.casefold()).strip()
 
@@ -91,7 +101,7 @@ def expected_rows() -> list[dict[str, str]]:
     }
     public = {
         row["paper_id"]: row
-        for row in load_records(ROOT / "web/data/public_preview_papers.json")
+        for row in load_records(frozen_high_path("web/data/public_preview_papers.json"))
         if row.get("paper_id")
     }
     new_names = set(new_institution_rows())
@@ -173,8 +183,14 @@ def expected_rows() -> list[dict[str, str]]:
 
 def identity_audit() -> list[dict[str, object]]:
     baseline = load_records(OUT / "baseline/web/data/public_preview_papers.json")
-    current = load_records(ROOT / "web/data/public_preview_papers.json")
-    baseline_exclusions = read_csv(OUT / "baseline/data/curated/paper_exclusions.csv")
+    current = load_records(frozen_high_path("web/data/public_preview_papers.json"))
+    baseline_curated = read_csv(OUT / "baseline/data/curated/papers.csv")
+    baseline_exclusions = active_exclusions(
+        exclusions_with_curated_identities(
+            read_csv(OUT / "baseline/data/curated/paper_exclusions.csv"),
+            baseline_curated,
+        )
+    )
     results: list[dict[str, object]] = []
     for paper in PAPERS:
         probe = {
@@ -206,8 +222,8 @@ def identity_audit() -> list[dict[str, object]]:
                     normalize_title(str(paper["title"])),
                     normalize_title(str(row.get("title", ""))),
                 ).ratio(),
-                row.get("paper_id", ""),
-                row.get("title", ""),
+                row.get("paper_id") or "",
+                row.get("title") or "",
             )
             for row in baseline
         )[-3:][::-1]
@@ -236,17 +252,17 @@ def identity_audit() -> list[dict[str, object]]:
 
 
 def duplicate_identity_audit() -> dict[str, object]:
-    papers = load_records(ROOT / "web/data/public_preview_papers.json")
+    papers = load_records(frozen_high_path("web/data/public_preview_papers.json"))
     duplicate_pairs: list[tuple[str, str]] = []
     for index, first in enumerate(papers):
         for second in papers[index + 1 :]:
             if records_share_any_identity(first, second):
                 duplicate_pairs.append((first["title"], second["title"]))
 
-    curated = read_csv(ROOT / "data/curated/papers.csv")
+    curated = read_csv(frozen_high_path("data/curated/papers.csv"))
     exclusions = active_exclusions(
         exclusions_with_curated_identities(
-            read_csv(ROOT / "data/curated/paper_exclusions.csv"), curated
+            read_csv(frozen_high_path("data/curated/paper_exclusions.csv")), curated
         )
     )
     leaks = [
@@ -282,8 +298,8 @@ def duplicate_identity_audit() -> dict[str, object]:
 
 
 def corpus_stats() -> dict[str, object]:
-    papers = load_records(ROOT / "web/data/public_preview_papers.json")
-    markers = load_records(ROOT / "web/data/public_preview_map_data.json")
+    papers = load_records(frozen_high_path("web/data/public_preview_papers.json"))
+    markers = load_records(frozen_high_path("web/data/public_preview_map_data.json"))
     return {
         "public": len(papers),
         "published": sum(
@@ -323,7 +339,7 @@ def diff_audit() -> dict[str, object]:
         "venue_aliases.csv",
     ):
         old = read_csv(OUT / "baseline/data/curated" / name)
-        new = read_csv(ROOT / "data/curated" / name)
+        new = read_csv(frozen_high_path("data/curated/" + name))
         changed = [index for index, row in enumerate(old) if index >= len(new) or row != new[index]]
         assert not changed, (name, changed[:10])
         added = len(new) - len(old)
@@ -335,7 +351,7 @@ def diff_audit() -> dict[str, object]:
         }
 
     baseline_papers = load_records(OUT / "baseline/web/data/public_preview_papers.json")
-    current_papers = load_records(ROOT / "web/data/public_preview_papers.json")
+    current_papers = load_records(frozen_high_path("web/data/public_preview_papers.json"))
     def public_key(row: dict[str, object]) -> tuple[str, str]:
         for field in ("paper_id", "doi", "arxiv_id", "openalex_url"):
             if row.get(field):
@@ -351,7 +367,7 @@ def diff_audit() -> dict[str, object]:
     assert not paper_changes, paper_changes[:10]
 
     baseline_markers = load_records(OUT / "baseline/web/data/public_preview_map_data.json")
-    current_markers = load_records(ROOT / "web/data/public_preview_map_data.json")
+    current_markers = load_records(frozen_high_path("web/data/public_preview_map_data.json"))
     current_markers_by_id = {row["id"]: row for row in current_markers}
     marker_changes = [
         row["id"]
@@ -369,7 +385,8 @@ def diff_audit() -> dict[str, object]:
     frontend_changed = [
         relative
         for relative in frontend
-        if hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() != hashes[relative]
+        if hashlib.sha256(frozen_high_path(relative).read_bytes()).hexdigest()
+        != hashes[relative]
     ]
     assert not frontend_changed, frontend_changed
     return {

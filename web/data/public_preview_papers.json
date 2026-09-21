@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-09-20T13:27:01Z"
+    "public_preview_generated_at": "2026-09-20T21:30:58Z"
   },
   "records": [
     {
@@ -66561,6 +66561,457 @@
       }
     },
     {
+      "paper_id": "curated:4589fc4d634db5d9f771",
+      "title": "Omni-IML: Towards Unified Interpretable Image Manipulation Localization",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "tasks": [
+        "localization"
+      ],
+      "image_scopes": [
+        "generative_editing",
+        "deepfake",
+        "traditional_manipulation"
+      ],
+      "research_types": [
+        "method",
+        "dataset"
+      ],
+      "venue": "International Conference on Learning Representations",
+      "venue_name": "International Conference on Learning Representations",
+      "venue_id": "venue:iclr",
+      "venue_acronym": "ICLR",
+      "venue_type": "conference",
+      "venue_track": "Main",
+      "raw_venue": "International Conference on Learning Representations",
+      "publisher": "",
+      "publication_type": "conference",
+      "venue_review_required": false,
+      "abstract": "Omni-IML is a generalist localization model spanning natural images, documents, faces, and scene text, together with the Omni-273k interpretation dataset. Its natural-image protocol independently evaluates GLIDE diffusion edits in CocoGlide alongside classical manipulation benchmarks.",
+      "abstract_source": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/49b80bb0eddf1e12a262ab6dfda2fcf6-Abstract-Conference.html",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "2411.14823",
+      "arxiv_url": "https://arxiv.org/abs/2411.14823",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/49b80bb0eddf1e12a262ab6dfda2fcf6-Abstract-Conference.html",
+      "formal_url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/49b80bb0eddf1e12a262ab6dfda2fcf6-Abstract-Conference.html",
+      "primary_url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/49b80bb0eddf1e12a262ab6dfda2fcf6-Abstract-Conference.html",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4404987440",
+      "is_arxiv_preprint": false,
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/49b80bb0eddf1e12a262ab6dfda2fcf6-Abstract-Conference.html",
+      "authors": [
+        {
+          "name": "Chenfan Qu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yiwu Zhong",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Fengjun Guo",
+          "affiliation_indices": [
+            3,
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Lianwen Jin",
+          "affiliation_indices": [
+            1,
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "source_database": "primary_source",
+      "metadata_source": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/49b80bb0eddf1e12a262ab6dfda2fcf6-Abstract-Conference.html",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "needs_review": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "South China University of Technology",
+        "Peking University",
+        "IntSig Information Co. Ltd",
+        "INTSIG-SCUT Joint Lab on Document Analysis and Recognition"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Guangdong",
+        "Beijing"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:70c61b84b1cd3ff9ad28",
+          "institution_id": "institution:3e9b289ae248f660",
+          "location_id": "location:3e9b289ae248f6600cee",
+          "institution": "South China University of Technology",
+          "institution_authors": [
+            "Chenfan Qu",
+            "Lianwen Jin"
+          ],
+          "raw_affiliation": "South China University of Technology",
+          "mapping_status": "active",
+          "affiliation_order": 1
+        },
+        {
+          "mapping_id": "mapping:dd76028047b44fd4d949",
+          "institution_id": "institution:46e4866d3b2954ab",
+          "location_id": "location:46e4866d3b2954ab314b",
+          "institution": "Peking University",
+          "institution_authors": [
+            "Yiwu Zhong"
+          ],
+          "raw_affiliation": "Peking University",
+          "mapping_status": "active",
+          "affiliation_order": 2
+        },
+        {
+          "mapping_id": "mapping:e8b625a533c5e28c49bf",
+          "institution_id": "institution:4be06805ebaa0400",
+          "location_id": "",
+          "institution": "IntSig Information Co. Ltd",
+          "institution_authors": [
+            "Fengjun Guo"
+          ],
+          "raw_affiliation": "INTSIG Information Co., Ltd.",
+          "mapping_status": "active",
+          "affiliation_order": 3
+        },
+        {
+          "mapping_id": "mapping:52e670a07a56ab8ff610",
+          "institution_id": "institution:75271ae0955f0ff5",
+          "location_id": "",
+          "institution": "INTSIG-SCUT Joint Lab on Document Analysis and Recognition",
+          "institution_authors": [
+            "Fengjun Guo",
+            "Lianwen Jin"
+          ],
+          "raw_affiliation": "INTSIG-SCUT Joint Lab on Document Analysis and Recognition",
+          "mapping_status": "active",
+          "affiliation_order": 4
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:3e9b289ae248f660",
+          "institution": "South China University of Technology",
+          "institution_type": "university",
+          "authors": [
+            "Chenfan Qu",
+            "Lianwen Jin"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:46e4866d3b2954ab",
+          "institution": "Peking University",
+          "institution_type": "university",
+          "authors": [
+            "Yiwu Zhong"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:4be06805ebaa0400",
+          "institution": "IntSig Information Co. Ltd",
+          "institution_type": "company",
+          "authors": [
+            "Fengjun Guo"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:75271ae0955f0ff5",
+          "institution": "INTSIG-SCUT Joint Lab on Document Analysis and Recognition",
+          "institution_type": "research_unit",
+          "authors": [
+            "Fengjun Guo",
+            "Lianwen Jin"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Chenfan Qu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:3e9b289ae248f660"
+          ]
+        },
+        {
+          "author": "Yiwu Zhong",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:46e4866d3b2954ab"
+          ]
+        },
+        {
+          "author": "Fengjun Guo",
+          "institution_indices": [
+            3,
+            4
+          ],
+          "institution_ids": [
+            "institution:4be06805ebaa0400",
+            "institution:75271ae0955f0ff5"
+          ]
+        },
+        {
+          "author": "Lianwen Jin",
+          "institution_indices": [
+            1,
+            4
+          ],
+          "institution_ids": [
+            "institution:3e9b289ae248f660",
+            "institution:75271ae0955f0ff5"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "International Conference on Learning Representations (ICLR)",
+      "venue_aliases": [
+        "International Conference on Learning Representations",
+        "International Conference on Learning Representations (ICLR)"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [
+        {
+          "institution_name": "South China University of Technology",
+          "institution_id": "institution:3e9b289ae248f660",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Guangdong",
+          "region_code": "",
+          "location_display": "Guangdong, China"
+        },
+        {
+          "institution_name": "Peking University",
+          "institution_id": "institution:46e4866d3b2954ab",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Beijing",
+          "region_code": "",
+          "location_display": "Beijing, China"
+        },
+        {
+          "institution_name": "IntSig Information Co. Ltd",
+          "institution_id": "institution:4be06805ebaa0400",
+          "institution_type": "other",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "region_code": "",
+          "location_display": ""
+        },
+        {
+          "institution_name": "INTSIG-SCUT Joint Lab on Document Analysis and Recognition",
+          "institution_id": "institution:75271ae0955f0ff5",
+          "institution_type": "other",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "region_code": "",
+          "location_display": ""
+        }
+      ],
+      "aggregated_institution_types": [
+        "university",
+        "company",
+        "research_unit"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 4,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "South China University of Technology",
+          "canonical_name": "South China University of Technology",
+          "institution_id": "institution:3e9b289ae248f660",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China"
+        },
+        {
+          "index": 2,
+          "name": "Peking University",
+          "canonical_name": "Peking University",
+          "institution_id": "institution:46e4866d3b2954ab",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Beijing",
+          "location_display": "Beijing, China"
+        },
+        {
+          "index": 3,
+          "name": "IntSig Information Co. Ltd",
+          "canonical_name": "IntSig Information Co. Ltd",
+          "institution_id": "institution:4be06805ebaa0400",
+          "institution_type": "company",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": ""
+        },
+        {
+          "index": 4,
+          "name": "INTSIG-SCUT Joint Lab on Document Analysis and Recognition",
+          "canonical_name": "INTSIG-SCUT Joint Lab on Document Analysis and Recognition",
+          "institution_id": "institution:75271ae0955f0ff5",
+          "institution_type": "research_unit",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": ""
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Chenfan Qu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:3e9b289ae248f660"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yiwu Zhong",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:46e4866d3b2954ab"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Fengjun Guo",
+          "indices": [
+            3,
+            4
+          ],
+          "institution_ids": [
+            "institution:4be06805ebaa0400",
+            "institution:75271ae0955f0ff5"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Lianwen Jin",
+          "indices": [
+            1,
+            4
+          ],
+          "institution_ids": [
+            "institution:3e9b289ae248f660",
+            "institution:75271ae0955f0ff5"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "image_scopes": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        }
+      },
+      "search_institution_ids": [
+        "institution:3e9b289ae248f660",
+        "institution:46e4866d3b2954ab",
+        "institution:4be06805ebaa0400",
+        "institution:75271ae0955f0ff5"
+      ],
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "arxiv": {
+            "status": "Verified",
+            "source": "arXiv"
+          },
+          "affiliations": {
+            "status": "Needs review"
+          }
+        }
+      }
+    },
+    {
       "paper_id": "curated:16646ad4b7b77cde2ad8",
       "title": "One for All: Synthesis-Free Fingerprint Learning for Attribution of In-the-Wild Synthetic Images",
       "in_scope": true,
@@ -87655,6 +88106,919 @@
         }
       ],
       "current_institution": null
+    },
+    {
+      "paper_id": "curated:0494fc6bdd34299fc7f8",
+      "title": "THEMIS: Towards Holistic Evaluation of MLLMs for Scientific Paper Fraud Forensics",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "tasks": [
+        "detection",
+        "localization"
+      ],
+      "image_scopes": [
+        "fully_generated",
+        "generative_editing",
+        "traditional_manipulation"
+      ],
+      "research_types": [
+        "dataset",
+        "benchmark",
+        "analysis_study"
+      ],
+      "venue": "International Conference on Learning Representations",
+      "venue_name": "International Conference on Learning Representations",
+      "venue_id": "venue:iclr",
+      "venue_acronym": "ICLR",
+      "venue_type": "conference",
+      "venue_track": "Main",
+      "raw_venue": "International Conference on Learning Representations",
+      "publisher": "",
+      "publication_type": "conference",
+      "venue_review_required": false,
+      "abstract": "THEMIS benchmarks multimodal language models on scientific-paper fraud across seven image scenarios and five fraud types. Its AI-Generated category separately evaluates entirely generated panels and targeted generative edits with classification, localization, and set-based metrics.",
+      "abstract_source": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/54130c88f35967381cb25ae8aaad1ebe-Abstract-Conference.html",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "2603.25089",
+      "arxiv_url": "https://arxiv.org/abs/2603.25089",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/54130c88f35967381cb25ae8aaad1ebe-Abstract-Conference.html",
+      "formal_url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/54130c88f35967381cb25ae8aaad1ebe-Abstract-Conference.html",
+      "primary_url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/54130c88f35967381cb25ae8aaad1ebe-Abstract-Conference.html",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7141348801",
+      "is_arxiv_preprint": false,
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/54130c88f35967381cb25ae8aaad1ebe-Abstract-Conference.html",
+      "authors": [
+        {
+          "name": "Tzu-Yen Ma",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Bo Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Zichen Tang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Junpeng Ding",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Haolin Tian",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yuanze Li",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Zhuodi Hao",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Zixin Ding",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Zirui Wang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xinyu Yu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Shiyao Peng",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yizhuo Zhao",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Ruomeng Jiang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yiling Huang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Peizhi Zhao",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jiayuan Chen",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Weisheng Tan",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Haocheng Gao",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yang Liu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jiacheng Liu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Zhongjun Yang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jiayu Huang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Haihong E",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "source_database": "primary_source",
+      "metadata_source": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/54130c88f35967381cb25ae8aaad1ebe-Abstract-Conference.html",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "needs_review": false,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Beijing University of Posts and Telecommunications"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Beijing"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:2540c87b6345fc734a25",
+          "institution_id": "institution:1502cb7c96ae3095",
+          "location_id": "location:1502cb7c96ae3095e27b",
+          "institution": "Beijing University of Posts and Telecommunications",
+          "institution_authors": [
+            "Tzu-Yen Ma",
+            "Bo Zhang",
+            "Zichen Tang",
+            "Junpeng Ding",
+            "Haolin Tian",
+            "Yuanze Li",
+            "Zhuodi Hao",
+            "Zixin Ding",
+            "Zirui Wang",
+            "Xinyu Yu",
+            "Shiyao Peng",
+            "Yizhuo Zhao",
+            "Ruomeng Jiang",
+            "Yiling Huang",
+            "Peizhi Zhao",
+            "Jiayuan Chen",
+            "Weisheng Tan",
+            "Haocheng Gao",
+            "Yang Liu",
+            "Jiacheng Liu",
+            "Zhongjun Yang",
+            "Jiayu Huang",
+            "Haihong E"
+          ],
+          "raw_affiliation": "Beijing University of Posts and Telecommunications",
+          "mapping_status": "active",
+          "affiliation_order": 1
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:1502cb7c96ae3095",
+          "institution": "Beijing University of Posts and Telecommunications",
+          "institution_type": "university",
+          "authors": [
+            "Tzu-Yen Ma",
+            "Bo Zhang",
+            "Zichen Tang",
+            "Junpeng Ding",
+            "Haolin Tian",
+            "Yuanze Li",
+            "Zhuodi Hao",
+            "Zixin Ding",
+            "Zirui Wang",
+            "Xinyu Yu",
+            "Shiyao Peng",
+            "Yizhuo Zhao",
+            "Ruomeng Jiang",
+            "Yiling Huang",
+            "Peizhi Zhao",
+            "Jiayuan Chen",
+            "Weisheng Tan",
+            "Haocheng Gao",
+            "Yang Liu",
+            "Jiacheng Liu",
+            "Zhongjun Yang",
+            "Jiayu Huang",
+            "Haihong E"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Tzu-Yen Ma",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Bo Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Zichen Tang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Junpeng Ding",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Haolin Tian",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Yuanze Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Zhuodi Hao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Zixin Ding",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Zirui Wang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Xinyu Yu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Shiyao Peng",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Yizhuo Zhao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Ruomeng Jiang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Yiling Huang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Peizhi Zhao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Jiayuan Chen",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Weisheng Tan",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Haocheng Gao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Yang Liu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Jiacheng Liu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Zhongjun Yang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Jiayu Huang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Haihong E",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "International Conference on Learning Representations (ICLR)",
+      "venue_aliases": [
+        "International Conference on Learning Representations",
+        "International Conference on Learning Representations (ICLR)"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [
+        {
+          "institution_name": "Beijing University of Posts and Telecommunications",
+          "institution_id": "institution:1502cb7c96ae3095",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Beijing",
+          "region_code": "",
+          "location_display": "Beijing, China"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 23,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Beijing University of Posts and Telecommunications",
+          "canonical_name": "Beijing University of Posts and Telecommunications",
+          "institution_id": "institution:1502cb7c96ae3095",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Beijing",
+          "location_display": "Beijing, China"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Tzu-Yen Ma",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Bo Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Zichen Tang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Junpeng Ding",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Haolin Tian",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yuanze Li",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Zhuodi Hao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Zixin Ding",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Zirui Wang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xinyu Yu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Shiyao Peng",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yizhuo Zhao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Ruomeng Jiang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yiling Huang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Peizhi Zhao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jiayuan Chen",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Weisheng Tan",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Haocheng Gao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yang Liu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jiacheng Liu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Zhongjun Yang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jiayu Huang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Haihong E",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "image_scopes": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        }
+      },
+      "search_institution_ids": [
+        "institution:1502cb7c96ae3095"
+      ],
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "arxiv": {
+            "status": "Verified",
+            "source": "arXiv"
+          },
+          "affiliations": {
+            "status": "Curated",
+            "source": "Manual curation"
+          }
+        }
+      }
     },
     {
       "paper_id": "curated:e9594b5466110ca009aa",
@@ -133091,6 +134455,323 @@
       }
     },
     {
+      "paper_id": "curated:eaa5d0c666669a4e702c",
+      "title": "ForgDiffuser: General Image Forgery Localization with Diffusion Models",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "tasks": [
+        "localization"
+      ],
+      "image_scopes": [
+        "generative_editing",
+        "traditional_manipulation"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "International Joint Conference on Artificial Intelligence",
+      "venue_name": "International Joint Conference on Artificial Intelligence",
+      "venue_id": "venue:ijcai",
+      "venue_acronym": "IJCAI",
+      "venue_type": "conference",
+      "venue_track": "Main",
+      "raw_venue": "Thirty-Fourth International Joint Conference on Artificial Intelligence",
+      "publisher": "",
+      "publication_type": "conference",
+      "venue_review_required": false,
+      "abstract": "ForgDiffuser conditions a diffusion decoder on forged images to generate localization masks. Its six-dataset evaluation separately reports localization on DALL-E 2 AutoSplice and BrushNet diffusion edits as well as traditional manipulation sets.",
+      "abstract_source": "https://www.ijcai.org/proceedings/2025/218",
+      "ai_summary": "",
+      "doi": "10.24963/ijcai.2025/218",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.24963/ijcai.2025/218",
+      "formal_url": "https://doi.org/10.24963/ijcai.2025/218",
+      "primary_url": "https://doi.org/10.24963/ijcai.2025/218",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4414359990",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.24963/ijcai.2025/218",
+      "authors": [
+        {
+          "name": "Mengxi Wang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Shaozhang Niu",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jiwei Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "source_database": "primary_source",
+      "metadata_source": "https://www.ijcai.org/proceedings/2025/218",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "needs_review": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Beijing University of Posts and Telecommunications",
+        "Southeast Digital Economy Development Institute"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Beijing"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:24b32b0cf5f8d84cd0b8",
+          "institution_id": "institution:1502cb7c96ae3095",
+          "location_id": "location:1502cb7c96ae3095e27b",
+          "institution": "Beijing University of Posts and Telecommunications",
+          "institution_authors": [
+            "Mengxi Wang",
+            "Shaozhang Niu",
+            "Jiwei Zhang"
+          ],
+          "raw_affiliation": "Beijing Key Lab of Intelligent Telecommunication Software and Multimedia, Beijing University of Posts and Telecommunications, China; Key Laboratory of Interactive Technology and Experience System, Ministry of Culture and Tourism (BUPT), China",
+          "mapping_status": "active",
+          "affiliation_order": 1
+        },
+        {
+          "mapping_id": "mapping:0e6daabf6e25ecde55a0",
+          "institution_id": "institution:16359f21ca62584c",
+          "location_id": "",
+          "institution": "Southeast Digital Economy Development Institute",
+          "institution_authors": [
+            "Shaozhang Niu"
+          ],
+          "raw_affiliation": "Southeast Digital Economy Development Institute, China",
+          "mapping_status": "active",
+          "affiliation_order": 2
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:1502cb7c96ae3095",
+          "institution": "Beijing University of Posts and Telecommunications",
+          "institution_type": "university",
+          "authors": [
+            "Mengxi Wang",
+            "Shaozhang Niu",
+            "Jiwei Zhang"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:16359f21ca62584c",
+          "institution": "Southeast Digital Economy Development Institute",
+          "institution_type": "research_unit",
+          "authors": [
+            "Shaozhang Niu"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Mengxi Wang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Shaozhang Niu",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095",
+            "institution:16359f21ca62584c"
+          ]
+        },
+        {
+          "author": "Jiwei Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "International Joint Conference on Artificial Intelligence (IJCAI)",
+      "venue_aliases": [
+        "International Joint Conference on Artificial Intelligence",
+        "Thirtieth International Joint Conference on Artificial Intelligence",
+        "IJCAI"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [
+        {
+          "institution_name": "Beijing University of Posts and Telecommunications",
+          "institution_id": "institution:1502cb7c96ae3095",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Beijing",
+          "region_code": "",
+          "location_display": "Beijing, China"
+        },
+        {
+          "institution_name": "Southeast Digital Economy Development Institute",
+          "institution_id": "institution:16359f21ca62584c",
+          "institution_type": "other",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "region_code": "",
+          "location_display": ""
+        }
+      ],
+      "aggregated_institution_types": [
+        "university",
+        "research_unit"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 3,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Beijing University of Posts and Telecommunications",
+          "canonical_name": "Beijing University of Posts and Telecommunications",
+          "institution_id": "institution:1502cb7c96ae3095",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Beijing",
+          "location_display": "Beijing, China"
+        },
+        {
+          "index": 2,
+          "name": "Southeast Digital Economy Development Institute",
+          "canonical_name": "Southeast Digital Economy Development Institute",
+          "institution_id": "institution:16359f21ca62584c",
+          "institution_type": "research_unit",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": ""
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Mengxi Wang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Shaozhang Niu",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095",
+            "institution:16359f21ca62584c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jiwei Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "image_scopes": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        }
+      },
+      "search_institution_ids": [
+        "institution:1502cb7c96ae3095",
+        "institution:16359f21ca62584c"
+      ],
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Needs review"
+          }
+        }
+      }
+    },
+    {
       "paper_id": "curated:5ad6cb3411820ff01a03",
       "title": "Forged Calamity: Benchmark for Cross-Domain Synthetic Disaster Detection in the Age of Diffusion",
       "in_scope": true,
@@ -134173,6 +135854,498 @@
         },
         "research_types": {
           "status": "reviewed"
+        }
+      }
+    },
+    {
+      "paper_id": "curated:4324e2f866acc354acea",
+      "title": "ForgerySleuth: Empowering Multimodal Large Language Models for Image Manipulation Detection",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "tasks": [
+        "detection",
+        "localization"
+      ],
+      "image_scopes": [
+        "generative_editing",
+        "traditional_manipulation"
+      ],
+      "research_types": [
+        "method",
+        "dataset"
+      ],
+      "venue": "Advances in Neural Information Processing Systems",
+      "venue_name": "Advances in Neural Information Processing Systems",
+      "venue_id": "venue:neurips",
+      "venue_acronym": "NeurIPS",
+      "venue_type": "conference",
+      "venue_track": "Main",
+      "raw_venue": "Advances in Neural Information Processing Systems",
+      "publisher": "",
+      "publication_type": "conference",
+      "venue_review_required": false,
+      "abstract": "ForgerySleuth combines a multimodal language model, trace encoder, and vision decoder to explain and segment manipulated regions, and introduces the ForgeryAnalysis dataset. It reports separate localization results on diffusion-edited COCOGlide and includes AutoSplice AIGC inputs.",
+      "abstract_source": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/e0e25d425450b6fc8e34380de71b3aee-Abstract-Conference.html",
+      "ai_summary": "",
+      "doi": "10.52202/085713-5121",
+      "arxiv_id": "2411.19466",
+      "arxiv_url": "https://arxiv.org/abs/2411.19466",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "https://doi.org/10.52202/085713-5121",
+      "formal_url": "https://doi.org/10.52202/085713-5121",
+      "primary_url": "https://doi.org/10.52202/085713-5121",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4405030341",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.52202/085713-5121",
+      "authors": [
+        {
+          "name": "Zhihao Sun",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Haoran Jiang",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Haoran Chen",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yixin Cao",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xipeng Qiu",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Zuxuan Wu",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yu-Gang Jiang",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "source_database": "primary_source",
+      "metadata_source": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/e0e25d425450b6fc8e34380de71b3aee-Abstract-Conference.html",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "needs_review": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Fudan University",
+        "Shanghai Collaborative Innovation Center of Intelligent Visual Computing"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Shanghai"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:23bd617fc71d371d7a0e",
+          "institution_id": "institution:baa1df7c4adddbda",
+          "location_id": "location:baa1df7c4adddbda8d0b",
+          "institution": "Fudan University",
+          "institution_authors": [
+            "Zhihao Sun",
+            "Haoran Jiang",
+            "Haoran Chen",
+            "Yixin Cao",
+            "Xipeng Qiu",
+            "Zuxuan Wu",
+            "Yu-Gang Jiang"
+          ],
+          "raw_affiliation": "Shanghai Key Lab of Intelligent Information Processing, School of Computer Science, Fudan University",
+          "mapping_status": "active",
+          "affiliation_order": 1
+        },
+        {
+          "mapping_id": "mapping:2c9257e09a8fc8d47bda",
+          "institution_id": "institution:848730cf4981629e",
+          "location_id": "",
+          "institution": "Shanghai Collaborative Innovation Center of Intelligent Visual Computing",
+          "institution_authors": [
+            "Zhihao Sun",
+            "Haoran Jiang",
+            "Haoran Chen",
+            "Yixin Cao",
+            "Xipeng Qiu",
+            "Zuxuan Wu",
+            "Yu-Gang Jiang"
+          ],
+          "raw_affiliation": "Shanghai Collaborative Innovation Center of Intelligent Visual Computing",
+          "mapping_status": "active",
+          "affiliation_order": 2
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution": "Fudan University",
+          "institution_type": "university",
+          "authors": [
+            "Zhihao Sun",
+            "Haoran Jiang",
+            "Haoran Chen",
+            "Yixin Cao",
+            "Xipeng Qiu",
+            "Zuxuan Wu",
+            "Yu-Gang Jiang"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:848730cf4981629e",
+          "institution": "Shanghai Collaborative Innovation Center of Intelligent Visual Computing",
+          "institution_type": "research_unit",
+          "authors": [
+            "Zhihao Sun",
+            "Haoran Jiang",
+            "Haoran Chen",
+            "Yixin Cao",
+            "Xipeng Qiu",
+            "Zuxuan Wu",
+            "Yu-Gang Jiang"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Zhihao Sun",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ]
+        },
+        {
+          "author": "Haoran Jiang",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ]
+        },
+        {
+          "author": "Haoran Chen",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ]
+        },
+        {
+          "author": "Yixin Cao",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ]
+        },
+        {
+          "author": "Xipeng Qiu",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ]
+        },
+        {
+          "author": "Zuxuan Wu",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ]
+        },
+        {
+          "author": "Yu-Gang Jiang",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "Advances in Neural Information Processing Systems (NeurIPS)",
+      "venue_aliases": [
+        "Advances in Neural Information Processing Systems",
+        "NeurIPS"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [
+        {
+          "institution_name": "Fudan University",
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Shanghai",
+          "region_code": "",
+          "location_display": "Shanghai, China"
+        },
+        {
+          "institution_name": "Shanghai Collaborative Innovation Center of Intelligent Visual Computing",
+          "institution_id": "institution:848730cf4981629e",
+          "institution_type": "other",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "region_code": "",
+          "location_display": ""
+        }
+      ],
+      "aggregated_institution_types": [
+        "university",
+        "research_unit"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 7,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Fudan University",
+          "canonical_name": "Fudan University",
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Shanghai",
+          "location_display": "Shanghai, China"
+        },
+        {
+          "index": 2,
+          "name": "Shanghai Collaborative Innovation Center of Intelligent Visual Computing",
+          "canonical_name": "Shanghai Collaborative Innovation Center of Intelligent Visual Computing",
+          "institution_id": "institution:848730cf4981629e",
+          "institution_type": "research_unit",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": ""
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Zhihao Sun",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Haoran Jiang",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Haoran Chen",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yixin Cao",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xipeng Qiu",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Zuxuan Wu",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yu-Gang Jiang",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda",
+            "institution:848730cf4981629e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "image_scopes": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        }
+      },
+      "search_institution_ids": [
+        "institution:baa1df7c4adddbda",
+        "institution:848730cf4981629e"
+      ],
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "arxiv": {
+            "status": "Verified",
+            "source": "arXiv"
+          },
+          "affiliations": {
+            "status": "Needs review"
+          }
         }
       }
     },
@@ -139636,6 +141809,436 @@
         }
       ],
       "current_institution": null
+    },
+    {
+      "paper_id": "curated:a867abd584976f8b2f41",
+      "title": "ILLUSION: Unveiling Truth with a Comprehensive Multi-Modal, Multi-Lingual Deepfake Dataset",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "tasks": [
+        "detection",
+        "source_attribution"
+      ],
+      "image_scopes": [
+        "fully_generated",
+        "deepfake"
+      ],
+      "research_types": [
+        "dataset",
+        "benchmark",
+        "analysis_study"
+      ],
+      "venue": "International Conference on Learning Representations",
+      "venue_name": "International Conference on Learning Representations",
+      "venue_id": "venue:iclr",
+      "venue_acronym": "ICLR",
+      "venue_type": "conference",
+      "venue_track": "Main",
+      "raw_venue": "International Conference on Learning Representations",
+      "publisher": "",
+      "publication_type": "conference",
+      "venue_review_required": false,
+      "abstract": "ILLUSION is a 1.3-million-sample multimodal and multilingual deepfake dataset spanning images, audio, video, and synchronized media. Its still-image protocols separately benchmark detection and source attribution on text-to-image systems, synthetic faces, and real-world Midjourney and ArtGuru images.",
+      "abstract_source": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/08f9de0232c0b485110237f6e6cf88f1-Abstract-Conference.html",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/08f9de0232c0b485110237f6e6cf88f1-Abstract-Conference.html",
+      "formal_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/08f9de0232c0b485110237f6e6cf88f1-Abstract-Conference.html",
+      "primary_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/08f9de0232c0b485110237f6e6cf88f1-Abstract-Conference.html",
+      "landing_page_url": "",
+      "openalex_url": "",
+      "is_arxiv_preprint": false,
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/08f9de0232c0b485110237f6e6cf88f1-Abstract-Conference.html",
+      "authors": [
+        {
+          "name": "Kartik Thakral",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Rishabh Ranjan",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Akanksha Singh",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Akshat Jain",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Mayank Vatsa",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Richa Singh",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "source_database": "primary_source",
+      "metadata_source": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/08f9de0232c0b485110237f6e6cf88f1-Abstract-Conference.html",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "needs_review": true,
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Indian Institute of Technology Jodhpur",
+        "Indian Institute of Science Education and Research Bhopal"
+      ],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:261ec633ee4618ec1b16",
+          "institution_id": "institution:fcc81f8f5be3121c",
+          "location_id": "",
+          "institution": "Indian Institute of Technology Jodhpur",
+          "institution_authors": [
+            "Kartik Thakral",
+            "Rishabh Ranjan",
+            "Akanksha Singh",
+            "Akshat Jain",
+            "Mayank Vatsa",
+            "Richa Singh"
+          ],
+          "raw_affiliation": "IIT Jodhpur, India",
+          "mapping_status": "active",
+          "affiliation_order": 1
+        },
+        {
+          "mapping_id": "mapping:8357e8c8680d88f1ee3f",
+          "institution_id": "institution:a3b35dea71f38dc7",
+          "location_id": "",
+          "institution": "Indian Institute of Science Education and Research Bhopal",
+          "institution_authors": [
+            "Akanksha Singh"
+          ],
+          "raw_affiliation": "IISER Bhopal, India",
+          "mapping_status": "active",
+          "affiliation_order": 2
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:fcc81f8f5be3121c",
+          "institution": "Indian Institute of Technology Jodhpur (IIT Jodhpur)",
+          "institution_type": "university",
+          "authors": [
+            "Kartik Thakral",
+            "Rishabh Ranjan",
+            "Akanksha Singh",
+            "Akshat Jain",
+            "Mayank Vatsa",
+            "Richa Singh"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Indian Institute of Technology Jodhpur"
+          ],
+          "canonical_name": "Indian Institute of Technology Jodhpur",
+          "canonical_institution_name": "Indian Institute of Technology Jodhpur",
+          "abbreviation": "IIT Jodhpur"
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:a3b35dea71f38dc7",
+          "institution": "Indian Institute of Science Education and Research Bhopal (IISER Bhopal)",
+          "institution_type": "university",
+          "authors": [
+            "Akanksha Singh"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Indian Institute of Science Education and Research Bhopal"
+          ],
+          "canonical_name": "Indian Institute of Science Education and Research Bhopal",
+          "canonical_institution_name": "Indian Institute of Science Education and Research Bhopal",
+          "abbreviation": "IISER Bhopal"
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Kartik Thakral",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:fcc81f8f5be3121c"
+          ]
+        },
+        {
+          "author": "Rishabh Ranjan",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:fcc81f8f5be3121c"
+          ]
+        },
+        {
+          "author": "Akanksha Singh",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:fcc81f8f5be3121c",
+            "institution:a3b35dea71f38dc7"
+          ]
+        },
+        {
+          "author": "Akshat Jain",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:fcc81f8f5be3121c"
+          ]
+        },
+        {
+          "author": "Mayank Vatsa",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:fcc81f8f5be3121c"
+          ]
+        },
+        {
+          "author": "Richa Singh",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:fcc81f8f5be3121c"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "International Conference on Learning Representations (ICLR)",
+      "venue_aliases": [
+        "International Conference on Learning Representations",
+        "International Conference on Learning Representations (ICLR)"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [
+        {
+          "institution_name": "Indian Institute of Technology Jodhpur",
+          "institution_id": "institution:fcc81f8f5be3121c",
+          "institution_type": "other",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "region_code": "",
+          "location_display": ""
+        },
+        {
+          "institution_name": "Indian Institute of Science Education and Research Bhopal",
+          "institution_id": "institution:a3b35dea71f38dc7",
+          "institution_type": "other",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "region_code": "",
+          "location_display": ""
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 6,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Indian Institute of Technology Jodhpur (IIT Jodhpur)",
+          "canonical_name": "Indian Institute of Technology Jodhpur",
+          "institution_id": "institution:fcc81f8f5be3121c",
+          "institution_type": "university",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": "",
+          "source_institution_names": [
+            "Indian Institute of Technology Jodhpur"
+          ],
+          "canonical_institution_name": "Indian Institute of Technology Jodhpur",
+          "abbreviation": "IIT Jodhpur"
+        },
+        {
+          "index": 2,
+          "name": "Indian Institute of Science Education and Research Bhopal (IISER Bhopal)",
+          "canonical_name": "Indian Institute of Science Education and Research Bhopal",
+          "institution_id": "institution:a3b35dea71f38dc7",
+          "institution_type": "university",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": "",
+          "source_institution_names": [
+            "Indian Institute of Science Education and Research Bhopal"
+          ],
+          "canonical_institution_name": "Indian Institute of Science Education and Research Bhopal",
+          "abbreviation": "IISER Bhopal"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Kartik Thakral",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:fcc81f8f5be3121c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Rishabh Ranjan",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:fcc81f8f5be3121c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Akanksha Singh",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:fcc81f8f5be3121c",
+            "institution:a3b35dea71f38dc7"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Akshat Jain",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:fcc81f8f5be3121c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Mayank Vatsa",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:fcc81f8f5be3121c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Richa Singh",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:fcc81f8f5be3121c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "image_scopes": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        }
+      },
+      "search_institution_ids": [
+        "institution:fcc81f8f5be3121c",
+        "institution:a3b35dea71f38dc7"
+      ],
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Needs review"
+          }
+        }
+      }
     },
     {
       "title": "Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective",
@@ -190812,6 +193415,441 @@
       }
     },
     {
+      "paper_id": "curated:02d97a81d39d3daa64c3",
+      "title": "DiffForensics: Leveraging Diffusion Prior to Image Forgery Detection and Localization",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "tasks": [
+        "detection",
+        "localization"
+      ],
+      "image_scopes": [
+        "generative_editing",
+        "deepfake",
+        "traditional_manipulation"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "Main",
+      "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "publisher": "",
+      "publication_type": "conference",
+      "venue_review_required": false,
+      "abstract": "DiffForensics combines frozen semantic features, denoising-diffusion pretraining, and edge-cue enhancement for image-level detection and pixel-level localization. Its evaluation separates traditional edits from deep-generative AutoSplice and OpenForensics inputs.",
+      "abstract_source": "https://openaccess.thecvf.com/content/CVPR2024/html/Yu_DiffForensics_Leveraging_Diffusion_Prior_to_Image_Forgery_Detection_and_Localization_CVPR_2024_paper.html",
+      "ai_summary": "",
+      "doi": "10.1109/cvpr52733.2024.01213",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/cvpr52733.2024.01213",
+      "formal_url": "https://doi.org/10.1109/cvpr52733.2024.01213",
+      "primary_url": "https://doi.org/10.1109/cvpr52733.2024.01213",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4402715936",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/cvpr52733.2024.01213",
+      "authors": [
+        {
+          "name": "Zeqin Yu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jiangqun Ni",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yuzhen Lin",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Haoyi Deng",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Bin Li",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "source_database": "primary_source",
+      "metadata_source": "https://openaccess.thecvf.com/content/CVPR2024/html/Yu_DiffForensics_Leveraging_Diffusion_Prior_to_Image_Forgery_Detection_and_Localization_CVPR_2024_paper.html",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "needs_review": false,
+      "has_map_location": true,
+      "map_record_count": 3,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Sun Yat-sen University",
+        "Peng Cheng Laboratory",
+        "Shenzhen University"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Guangdong"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:2e65cd97ca438d602b02",
+          "institution_id": "institution:5c85faa51cc57a24",
+          "location_id": "location:5c85faa51cc57a24f560",
+          "institution": "Sun Yat-sen University",
+          "institution_authors": [
+            "Zeqin Yu",
+            "Jiangqun Ni"
+          ],
+          "raw_affiliation": "School of Computer Science and Engineering, Sun Yat-sen University; School of Cyber Science and Technology, Sun Yat-sen University",
+          "mapping_status": "active",
+          "affiliation_order": 1
+        },
+        {
+          "mapping_id": "mapping:7f733fe6b67f38db522f",
+          "institution_id": "institution:aee00ab2f1fd8132",
+          "location_id": "location:a347635ea8ddea4aff4f",
+          "institution": "Peng Cheng Laboratory",
+          "institution_authors": [
+            "Jiangqun Ni"
+          ],
+          "raw_affiliation": "Department of New Networks, Peng Cheng Laboratory",
+          "mapping_status": "active",
+          "affiliation_order": 2
+        },
+        {
+          "mapping_id": "mapping:8e6b322c0102469a15d8",
+          "institution_id": "institution:ad9c8964d01f80d8",
+          "location_id": "location:ad9c8964d01f80d86e66",
+          "institution": "Shenzhen University",
+          "institution_authors": [
+            "Yuzhen Lin",
+            "Haoyi Deng",
+            "Bin Li"
+          ],
+          "raw_affiliation": "Guangdong Key Laboratory of Intelligent Information Processing, Shenzhen University",
+          "mapping_status": "active",
+          "affiliation_order": 3
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:5c85faa51cc57a24",
+          "institution": "Sun Yat-sen University",
+          "institution_type": "university",
+          "authors": [
+            "Zeqin Yu",
+            "Jiangqun Ni"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:aee00ab2f1fd8132",
+          "institution": "Peng Cheng Laboratory",
+          "institution_type": "research_unit",
+          "authors": [
+            "Jiangqun Ni"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:ad9c8964d01f80d8",
+          "institution": "Shenzhen University",
+          "institution_type": "university",
+          "authors": [
+            "Yuzhen Lin",
+            "Haoyi Deng",
+            "Bin Li"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Zeqin Yu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:5c85faa51cc57a24"
+          ]
+        },
+        {
+          "author": "Jiangqun Ni",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:5c85faa51cc57a24",
+            "institution:aee00ab2f1fd8132"
+          ]
+        },
+        {
+          "author": "Yuzhen Lin",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:ad9c8964d01f80d8"
+          ]
+        },
+        {
+          "author": "Haoyi Deng",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:ad9c8964d01f80d8"
+          ]
+        },
+        {
+          "author": "Bin Li",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:ad9c8964d01f80d8"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings",
+        "CVPRW",
+        "CVPR",
+        "2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [
+        {
+          "institution_name": "Sun Yat-sen University",
+          "institution_id": "institution:5c85faa51cc57a24",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Guangdong",
+          "region_code": "",
+          "location_display": "Guangdong, China"
+        },
+        {
+          "institution_name": "Peng Cheng Laboratory",
+          "institution_id": "institution:aee00ab2f1fd8132",
+          "institution_type": "research_unit",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Guangdong",
+          "region_code": "",
+          "location_display": "Guangdong, China"
+        },
+        {
+          "institution_name": "Shenzhen University",
+          "institution_id": "institution:ad9c8964d01f80d8",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Guangdong",
+          "region_code": "",
+          "location_display": "Guangdong, China"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university",
+        "research_unit"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 5,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Sun Yat-sen University",
+          "canonical_name": "Sun Yat-sen University",
+          "institution_id": "institution:5c85faa51cc57a24",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China"
+        },
+        {
+          "index": 2,
+          "name": "Peng Cheng Laboratory",
+          "canonical_name": "Peng Cheng Laboratory",
+          "institution_id": "institution:aee00ab2f1fd8132",
+          "institution_type": "research_unit",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China"
+        },
+        {
+          "index": 3,
+          "name": "Shenzhen University",
+          "canonical_name": "Shenzhen University",
+          "institution_id": "institution:ad9c8964d01f80d8",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Zeqin Yu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:5c85faa51cc57a24"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jiangqun Ni",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:5c85faa51cc57a24",
+            "institution:aee00ab2f1fd8132"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yuzhen Lin",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:ad9c8964d01f80d8"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Haoyi Deng",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:ad9c8964d01f80d8"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Bin Li",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:ad9c8964d01f80d8"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "image_scopes": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        }
+      },
+      "search_institution_ids": [
+        "institution:5c85faa51cc57a24",
+        "institution:aee00ab2f1fd8132",
+        "institution:ad9c8964d01f80d8"
+      ],
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Curated",
+            "source": "Manual curation"
+          }
+        }
+      }
+    },
+    {
       "title": "Diffusion Models as a Representation Learner for Deepfake Image Detection",
       "in_scope": true,
       "year": 2024,
@@ -200482,6 +203520,431 @@
         },
         "research_types": {
           "status": "reviewed"
+        }
+      }
+    },
+    {
+      "paper_id": "curated:586904a7f30b6a863602",
+      "title": "Image Manipulation Detection with Implicit Neural Representation and Limited Supervision",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "tasks": [
+        "detection",
+        "localization"
+      ],
+      "image_scopes": [
+        "generative_editing",
+        "traditional_manipulation"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "European Conference on Computer Vision",
+      "venue_name": "European Conference on Computer Vision",
+      "venue_id": "venue:eccv",
+      "venue_acronym": "ECCV",
+      "venue_type": "conference",
+      "venue_track": "Main",
+      "raw_venue": "European Conference on Computer Vision",
+      "publisher": "",
+      "publication_type": "conference",
+      "venue_review_required": false,
+      "abstract": "This work combines implicit-neural-representation preprocessing with weakly supervised and unsupervised manipulation detection. In addition to conventional benchmarks, it independently evaluates instruction-guided edits from IEdit and MagicBrush with image- and pixel-level metrics.",
+      "abstract_source": "https://doi.org/10.1007/978-3-031-73223-2_15",
+      "ai_summary": "",
+      "doi": "10.1007/978-3-031-73223-2_15",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1007/978-3-031-73223-2_15",
+      "formal_url": "https://doi.org/10.1007/978-3-031-73223-2_15",
+      "primary_url": "https://doi.org/10.1007/978-3-031-73223-2_15",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4404124998",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1007/978-3-031-73223-2_15",
+      "authors": [
+        {
+          "name": "Zhenfei Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Mingyang Li",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xin Li",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Ming-Ching Chang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jun-Wei Hsieh",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "source_database": "primary_source",
+      "metadata_source": "https://doi.org/10.1007/978-3-031-73223-2_15",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "needs_review": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University at Albany, State University of New York",
+        "Stanford University",
+        "National Yang Ming Chiao Tung University"
+      ],
+      "aggregated_country_names": [
+        "United States",
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "US",
+        "CN"
+      ],
+      "aggregated_regions": [
+        "California",
+        "Taiwan"
+      ],
+      "aggregated_region_codes": [
+        "TW"
+      ],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:b8ccf8613bcc239a1642",
+          "institution_id": "institution:c121cd267550901f",
+          "location_id": "",
+          "institution": "University at Albany, State University of New York",
+          "institution_authors": [
+            "Zhenfei Zhang",
+            "Xin Li",
+            "Ming-Ching Chang"
+          ],
+          "raw_affiliation": "University at Albany, State University of New York",
+          "mapping_status": "active",
+          "affiliation_order": 1
+        },
+        {
+          "mapping_id": "mapping:cfbdbfaa70a1783f46a6",
+          "institution_id": "institution:ed72534d79b73fac",
+          "location_id": "location:ed72534d79b73fac5b08",
+          "institution": "Stanford University",
+          "institution_authors": [
+            "Mingyang Li"
+          ],
+          "raw_affiliation": "Stanford University",
+          "mapping_status": "active",
+          "affiliation_order": 2
+        },
+        {
+          "mapping_id": "mapping:10c22f21f7583d69e642",
+          "institution_id": "institution:b99e56fd55395250",
+          "location_id": "location:b99e56fd553952504c88",
+          "institution": "National Yang Ming Chiao Tung University",
+          "institution_authors": [
+            "Jun-Wei Hsieh"
+          ],
+          "raw_affiliation": "National Yang Ming Chiao Tung University",
+          "mapping_status": "active",
+          "affiliation_order": 3
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:c121cd267550901f",
+          "institution": "University at Albany, State University of New York",
+          "institution_type": "university",
+          "authors": [
+            "Zhenfei Zhang",
+            "Xin Li",
+            "Ming-Ching Chang"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:ed72534d79b73fac",
+          "institution": "Stanford University",
+          "institution_type": "university",
+          "authors": [
+            "Mingyang Li"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:b99e56fd55395250",
+          "institution": "National Yang Ming Chiao Tung University",
+          "institution_type": "university",
+          "authors": [
+            "Jun-Wei Hsieh"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Zhenfei Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c121cd267550901f"
+          ]
+        },
+        {
+          "author": "Mingyang Li",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:ed72534d79b73fac"
+          ]
+        },
+        {
+          "author": "Xin Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c121cd267550901f"
+          ]
+        },
+        {
+          "author": "Ming-Ching Chang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c121cd267550901f"
+          ]
+        },
+        {
+          "author": "Jun-Wei Hsieh",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:b99e56fd55395250"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "European Conference on Computer Vision (ECCV)",
+      "venue_aliases": [
+        "European Conference on Computer Vision (ECCV)",
+        "European Conference on Computer Vision",
+        "European Conference on Computer Vision (ECCV) Workshops",
+        "Computer Vision – ECCV 2024 Workshops",
+        "ECCV"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [
+        {
+          "institution_name": "University at Albany, State University of New York",
+          "institution_id": "institution:c121cd267550901f",
+          "institution_type": "other",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "region_code": "",
+          "location_display": ""
+        },
+        {
+          "institution_name": "Stanford University",
+          "institution_id": "institution:ed72534d79b73fac",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "US",
+          "region": "California",
+          "region_code": "",
+          "location_display": "California, United States"
+        },
+        {
+          "institution_name": "National Yang Ming Chiao Tung University",
+          "institution_id": "institution:b99e56fd55395250",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Taiwan",
+          "region_code": "TW",
+          "location_display": "Taiwan, China"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 5,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University at Albany, State University of New York",
+          "canonical_name": "University at Albany, State University of New York",
+          "institution_id": "institution:c121cd267550901f",
+          "institution_type": "university",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": ""
+        },
+        {
+          "index": 2,
+          "name": "Stanford University",
+          "canonical_name": "Stanford University",
+          "institution_id": "institution:ed72534d79b73fac",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "",
+          "region": "California",
+          "location_display": "California, United States"
+        },
+        {
+          "index": 3,
+          "name": "National Yang Ming Chiao Tung University",
+          "canonical_name": "National Yang Ming Chiao Tung University",
+          "institution_id": "institution:b99e56fd55395250",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Taiwan",
+          "location_display": "Taiwan, China"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Zhenfei Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c121cd267550901f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Mingyang Li",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:ed72534d79b73fac"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xin Li",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c121cd267550901f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Ming-Ching Chang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c121cd267550901f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jun-Wei Hsieh",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:b99e56fd55395250"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "image_scopes": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        }
+      },
+      "search_institution_ids": [
+        "institution:c121cd267550901f",
+        "institution:ed72534d79b73fac",
+        "institution:b99e56fd55395250"
+      ],
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Needs review"
+          }
         }
       }
     },
@@ -214185,6 +217648,473 @@
         },
         "research_types": {
           "status": "reviewed"
+        }
+      }
+    },
+    {
+      "paper_id": "curated:a36f5ffcbe9ae454618f",
+      "title": "UnionFormer: Unified-Learning Transformer with Multi-View Representation for Image Manipulation Detection and Localization",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "tasks": [
+        "detection",
+        "localization"
+      ],
+      "image_scopes": [
+        "generative_editing",
+        "traditional_manipulation"
+      ],
+      "research_types": [
+        "method",
+        "dataset"
+      ],
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "Main",
+      "raw_venue": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "publisher": "",
+      "publication_type": "conference",
+      "venue_review_required": false,
+      "abstract": "UnionFormer unifies object, RGB, and noise views for concurrent image-manipulation detection and localization. Its evaluation includes CocoGlide diffusion edits and the paper's 512-image BDNIE set generated with Blended Diffusion for text-driven natural-image editing.",
+      "abstract_source": "https://openaccess.thecvf.com/content/CVPR2024/html/Li_UnionFormer_Unified-Learning_Transformer_with_Multi-View_Representation_for_Image_Manipulation_Detection_CVPR_2024_paper.html",
+      "ai_summary": "",
+      "doi": "10.1109/cvpr52733.2024.01190",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/cvpr52733.2024.01190",
+      "formal_url": "https://doi.org/10.1109/cvpr52733.2024.01190",
+      "primary_url": "https://doi.org/10.1109/cvpr52733.2024.01190",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4402727697",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/cvpr52733.2024.01190",
+      "authors": [
+        {
+          "name": "Shuaibo Li",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Wei Ma",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jianwei Guo",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Shibiao Xu",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Benchong Li",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xiaopeng Zhang",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "source_database": "primary_source",
+      "metadata_source": "https://openaccess.thecvf.com/content/CVPR2024/html/Li_UnionFormer_Unified-Learning_Transformer_with_Multi-View_Representation_for_Image_Manipulation_Detection_CVPR_2024_paper.html",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "needs_review": false,
+      "has_map_location": true,
+      "map_record_count": 3,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Beijing University of Technology",
+        "Institute of Automation, Chinese Academy of Sciences",
+        "Beijing University of Posts and Telecommunications"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Beijing"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:788d30fdc47c6a2f3e22",
+          "institution_id": "institution:f060d61d546153f2",
+          "location_id": "location:f060d61d546153f2f285",
+          "institution": "Beijing University of Technology",
+          "institution_authors": [
+            "Shuaibo Li",
+            "Wei Ma",
+            "Benchong Li"
+          ],
+          "raw_affiliation": "Beijing University of Technology",
+          "mapping_status": "active",
+          "affiliation_order": 1
+        },
+        {
+          "mapping_id": "mapping:5b5e39229ec5cd1c0d17",
+          "institution_id": "institution:966ff12833f90bb0",
+          "location_id": "location:966ff12833f90bb0ba7e",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_authors": [
+            "Shuaibo Li",
+            "Jianwei Guo",
+            "Xiaopeng Zhang"
+          ],
+          "raw_affiliation": "MAIS, Institute of Automation, Chinese Academy of Sciences",
+          "mapping_status": "active",
+          "affiliation_order": 2
+        },
+        {
+          "mapping_id": "mapping:e02c684efd7cd3b6dd02",
+          "institution_id": "institution:1502cb7c96ae3095",
+          "location_id": "location:1502cb7c96ae3095e27b",
+          "institution": "Beijing University of Posts and Telecommunications",
+          "institution_authors": [
+            "Shibiao Xu"
+          ],
+          "raw_affiliation": "Beijing University of Posts and Telecommunications",
+          "mapping_status": "active",
+          "affiliation_order": 3
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:f060d61d546153f2",
+          "institution": "Beijing University of Technology",
+          "institution_type": "university",
+          "authors": [
+            "Shuaibo Li",
+            "Wei Ma",
+            "Benchong Li"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_type": "research_unit",
+          "authors": [
+            "Shuaibo Li",
+            "Jianwei Guo",
+            "Xiaopeng Zhang"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:1502cb7c96ae3095",
+          "institution": "Beijing University of Posts and Telecommunications",
+          "institution_type": "university",
+          "authors": [
+            "Shibiao Xu"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Shuaibo Li",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:f060d61d546153f2",
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Wei Ma",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f060d61d546153f2"
+          ]
+        },
+        {
+          "author": "Jianwei Guo",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Shibiao Xu",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Benchong Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f060d61d546153f2"
+          ]
+        },
+        {
+          "author": "Xiaopeng Zhang",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings",
+        "CVPRW",
+        "CVPR",
+        "2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [
+        {
+          "institution_name": "Beijing University of Technology",
+          "institution_id": "institution:f060d61d546153f2",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Beijing",
+          "region_code": "",
+          "location_display": "Beijing, China"
+        },
+        {
+          "institution_name": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution_type": "research_unit",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Beijing",
+          "region_code": "",
+          "location_display": "Beijing, China"
+        },
+        {
+          "institution_name": "Beijing University of Posts and Telecommunications",
+          "institution_id": "institution:1502cb7c96ae3095",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Beijing",
+          "region_code": "",
+          "location_display": "Beijing, China"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university",
+        "research_unit"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 6,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Beijing University of Technology",
+          "canonical_name": "Beijing University of Technology",
+          "institution_id": "institution:f060d61d546153f2",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Beijing",
+          "location_display": "Beijing, China"
+        },
+        {
+          "index": 2,
+          "name": "Institute of Automation, Chinese Academy of Sciences",
+          "canonical_name": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution_type": "research_unit",
+          "country": "China",
+          "country_code": "",
+          "region": "Beijing",
+          "location_display": "Beijing, China"
+        },
+        {
+          "index": 3,
+          "name": "Beijing University of Posts and Telecommunications",
+          "canonical_name": "Beijing University of Posts and Telecommunications",
+          "institution_id": "institution:1502cb7c96ae3095",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Beijing",
+          "location_display": "Beijing, China"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Shuaibo Li",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:f060d61d546153f2",
+            "institution:966ff12833f90bb0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Wei Ma",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f060d61d546153f2"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jianwei Guo",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Shibiao Xu",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Benchong Li",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f060d61d546153f2"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xiaopeng Zhang",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "image_scopes": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        }
+      },
+      "search_institution_ids": [
+        "institution:f060d61d546153f2",
+        "institution:966ff12833f90bb0",
+        "institution:1502cb7c96ae3095"
+      ],
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Curated",
+            "source": "Manual curation"
+          }
         }
       }
     },
@@ -233615,6 +237545,323 @@
           }
         },
         "source": "OpenAlex"
+      }
+    },
+    {
+      "paper_id": "curated:ba6b96ed6f9b26f7235e",
+      "title": "Towards Generic Image Manipulation Detection with Weakly-Supervised Self-Consistency Learning",
+      "in_scope": true,
+      "year": 2023,
+      "publication_year": 2023,
+      "publication_date": "",
+      "tasks": [
+        "detection",
+        "localization"
+      ],
+      "image_scopes": [
+        "generative_editing",
+        "traditional_manipulation"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "IEEE/CVF International Conference on Computer Vision",
+      "venue_name": "IEEE/CVF International Conference on Computer Vision",
+      "venue_id": "venue:iccv",
+      "venue_acronym": "ICCV",
+      "venue_type": "conference",
+      "venue_track": "Main",
+      "raw_venue": "Proceedings of the IEEE/CVF International Conference on Computer Vision",
+      "publisher": "",
+      "publication_type": "conference",
+      "venue_review_required": false,
+      "abstract": "WSCL learns weakly supervised image-level manipulation detection and produces localization maps using multi-source and inter-patch consistency. It independently evaluates language-driven editing on GIER and IEdit, both before and after image-label fine-tuning.",
+      "abstract_source": "https://openaccess.thecvf.com/content/ICCV2023/html/Zhai_Towards_Generic_Image_Manipulation_Detection_with_Weakly-Supervised_Self-Consistency_Learning_ICCV_2023_paper.html",
+      "ai_summary": "",
+      "doi": "10.1109/iccv51070.2023.02046",
+      "arxiv_id": "2309.01246",
+      "arxiv_url": "https://arxiv.org/abs/2309.01246",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "https://doi.org/10.1109/iccv51070.2023.02046",
+      "formal_url": "https://doi.org/10.1109/iccv51070.2023.02046",
+      "primary_url": "https://doi.org/10.1109/iccv51070.2023.02046",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4390872411",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/iccv51070.2023.02046",
+      "authors": [
+        {
+          "name": "Yuanhao Zhai",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Tianyu Luan",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "David Doermann",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Junsong Yuan",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "source_database": "primary_source",
+      "metadata_source": "https://openaccess.thecvf.com/content/ICCV2023/html/Zhai_Towards_Generic_Image_Manipulation_Detection_with_Weakly-Supervised_Self-Consistency_Learning_ICCV_2023_paper.html",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "needs_review": false,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University at Buffalo (UB)"
+      ],
+      "aggregated_country_names": [
+        "United States"
+      ],
+      "aggregated_country_codes": [
+        "US"
+      ],
+      "aggregated_regions": [
+        "Amherst"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:8ed6384dbb2634de2f68",
+          "institution_id": "institution:612630c2527bff83",
+          "location_id": "location:ad81b7fe4ed998909c6e",
+          "institution": "University at Buffalo",
+          "institution_authors": [
+            "Yuanhao Zhai",
+            "Tianyu Luan",
+            "David Doermann",
+            "Junsong Yuan"
+          ],
+          "raw_affiliation": "University at Buffalo",
+          "mapping_status": "active",
+          "affiliation_order": 1
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:612630c2527bff83",
+          "institution": "University at Buffalo (UB)",
+          "institution_type": "university",
+          "authors": [
+            "Yuanhao Zhai",
+            "Tianyu Luan",
+            "David Doermann",
+            "Junsong Yuan"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University at Buffalo"
+          ],
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Yuanhao Zhai",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:612630c2527bff83"
+          ]
+        },
+        {
+          "author": "Tianyu Luan",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:612630c2527bff83"
+          ]
+        },
+        {
+          "author": "David Doermann",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:612630c2527bff83"
+          ]
+        },
+        {
+          "author": "Junsong Yuan",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:612630c2527bff83"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "IEEE/CVF International Conference on Computer Vision (ICCV)",
+      "venue_aliases": [
+        "IEEE/CVF International Conference on Computer Vision (ICCV)",
+        "IEEE/CVF International Conference on Computer Vision",
+        "IEEE/CVF International Conference on Computer Vision Workshops (ICCVW)",
+        "ICCVW",
+        "ICCV Workshops",
+        "ICCV"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [
+        {
+          "institution_name": "University at Buffalo (UB)",
+          "institution_id": "institution:612630c2527bff83",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "US",
+          "region": "Amherst",
+          "region_code": "",
+          "location_display": "Amherst, United States"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 4,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University at Buffalo (UB)",
+          "canonical_name": "University at Buffalo",
+          "institution_id": "institution:612630c2527bff83",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "",
+          "region": "Amherst",
+          "location_display": "Amherst, United States",
+          "source_institution_names": [
+            "University at Buffalo"
+          ],
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Yuanhao Zhai",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:612630c2527bff83"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Tianyu Luan",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:612630c2527bff83"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "David Doermann",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:612630c2527bff83"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Junsong Yuan",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:612630c2527bff83"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "image_scopes": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Primary-source review under the narrowed Tier 2 NORMAL evidence policy."
+        }
+      },
+      "search_institution_ids": [
+        "institution:612630c2527bff83"
+      ],
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "arxiv": {
+            "status": "Verified",
+            "source": "arXiv"
+          },
+          "affiliations": {
+            "status": "Curated",
+            "source": "Manual curation"
+          }
+        }
       }
     },
     {
@@ -272050,6 +276297,75 @@
       "normalized_names": [
         "bursa technical university btu",
         "btu"
+      ]
+    },
+    "institution:fcc81f8f5be3121c": {
+      "canonical_name": "Indian Institute of Technology Jodhpur (IIT Jodhpur)",
+      "institution_type": "university",
+      "parent_institution_id": "",
+      "parent_institution_name": "",
+      "parent_institution_type": "",
+      "names": [
+        "Indian Institute of Technology Jodhpur (IIT Jodhpur)",
+        "IIT Jodhpur"
+      ],
+      "normalized_names": [
+        "indian institute of technology jodhpur iit jodhpur",
+        "iit jodhpur"
+      ]
+    },
+    "institution:a3b35dea71f38dc7": {
+      "canonical_name": "Indian Institute of Science Education and Research Bhopal (IISER Bhopal)",
+      "institution_type": "university",
+      "parent_institution_id": "",
+      "parent_institution_name": "",
+      "parent_institution_type": "",
+      "names": [
+        "Indian Institute of Science Education and Research Bhopal (IISER Bhopal)",
+        "IISER Bhopal"
+      ],
+      "normalized_names": [
+        "indian institute of science education and research bhopal iiser bhopal",
+        "iiser bhopal"
+      ]
+    },
+    "institution:75271ae0955f0ff5": {
+      "canonical_name": "INTSIG-SCUT Joint Lab on Document Analysis and Recognition",
+      "institution_type": "research_unit",
+      "parent_institution_id": "",
+      "parent_institution_name": "",
+      "parent_institution_type": "",
+      "names": [
+        "INTSIG-SCUT Joint Lab on Document Analysis and Recognition"
+      ],
+      "normalized_names": [
+        "intsig scut joint lab on document analysis and recognition"
+      ]
+    },
+    "institution:848730cf4981629e": {
+      "canonical_name": "Shanghai Collaborative Innovation Center of Intelligent Visual Computing",
+      "institution_type": "research_unit",
+      "parent_institution_id": "",
+      "parent_institution_name": "",
+      "parent_institution_type": "",
+      "names": [
+        "Shanghai Collaborative Innovation Center of Intelligent Visual Computing"
+      ],
+      "normalized_names": [
+        "shanghai collaborative innovation center of intelligent visual computing"
+      ]
+    },
+    "institution:16359f21ca62584c": {
+      "canonical_name": "Southeast Digital Economy Development Institute",
+      "institution_type": "research_unit",
+      "parent_institution_id": "",
+      "parent_institution_name": "",
+      "parent_institution_type": "",
+      "names": [
+        "Southeast Digital Economy Development Institute"
+      ],
+      "normalized_names": [
+        "southeast digital economy development institute"
       ]
     }
   },

@@ -1,0 +1,343 @@
+ROUND 1
+$ integrate_systematic_tier2_normal_priority_evidence.py
+{
+  "created_at": "2026-09-20T00:00:00Z",
+  "evidence_confirmed": 9,
+  "evidence_excluded": 11,
+  "evidence_insufficient": 0,
+  "institutions_added": 5,
+  "location_reviews_added": 5,
+  "mappings_added": 21,
+  "papers_added": 9,
+  "taxonomy_rows_added": 9
+}
+$ refresh_public_preview.py --skip-search --user-agent SyntheticImageResearchMap-NormalPriorityEvidence/1.0
+[1/5] START: Export public preview JSON
+  /Library/Developer/CommandLineTools/usr/bin/python3 /Users/meilinger/Desktop/synthetic-image-research-map/scripts/export_public_preview.py --min-confidence medium --preserve-existing
+Public preview export summary:
+  Candidate records read: 1687
+  Preprint-version map records excluded in favor of formal publications: 4
+  Records excluded as out of scope: 0
+  Records excluded by task label: 0
+  Scoped records missing an institution: 0
+  Scoped records missing usable coordinates: 0
+  Records excluded for missing institution/location: 0
+  Records excluded below confidence threshold: 0
+  Records excluded because they need review: 2
+  Records excluded by curated paper exclusions: 28
+  Unique papers excluded by curated paper exclusions: 14
+  Records eligible before maximum: 1508
+  Unique papers eligible before maximum: 646
+  Eligible key-paper records before maximum: 572
+  Maximum cap applied: no
+  Records exported: 1508
+  Unique papers exported: 646
+  Key-paper records exported: 572
+  Paper-version overrides applied: 7
+  arXiv enrichment rows loaded: 2386
+  linked_to_arxiv rows available: 406
+  arXiv links applied: 141
+  Unmatched linked_to_arxiv rows: 265
+  Publication overrides loaded: 1
+  Publication overrides applied: 0
+  Unmatched publication overrides: 1
+  Unmatched publication override: Detection, Attribution and Localization of GAN Generated Images (2020)
+  Manual abstract rows loaded: 0
+  Exported records with non-empty abstract before preview filtering: 1440
+  Public preview records with non-empty abstract: 1312
+  Institution record overrides loaded: 9
+  Replace-mode papers: 4
+  Add-mode records: 0
+  Remove-mode records: 0
+  Automatic institution records removed by replacement: 5
+  Replacement institution records created: 9
+  Coordinate-missing override records: 0
+  Unmatched institution record overrides: 0
+  Institution-author overrides loaded: 1
+  Institution-author overrides applied: 1
+  Downstream rows processed: 1508
+  Curated mappings loaded: 1321
+  Curated coordinate-bearing markers created: 1170
+  Source-backed preliminary markers created: 8
+  Confirmed Institution Records newly map-eligible: 8
+  Preliminary relationships excluded for unresolved identity/location: 0/0
+  Existing markers replaced by curated mappings: 1313
+  Curated mappings missing/ambiguous coordinates: 28
+  Marker exclusion review decisions applied: 0
+  Retracted map records excluded after integration: 0
+  Output: web/data/public_preview_map_data.json
+Paper-level public preview export summary:
+  Paper preview records exported: 666
+  Preprint-only paper versions excluded in favor of formal publications: 14
+  Paper preview records with map locations: 645
+  Paper preview records missing affiliations: 0
+  Paper preview records missing coordinates: 15
+  Key papers matched into paper preview: 93
+  Papers excluded by curated paper exclusions: 27
+  Retracted paper records excluded after integration: 0
+  Paper preview records with non-empty abstract: 577
+  Local abstract rows loaded: 1860
+  Curated papers added / merged: 0 / 466
+  Curated mappings matched to preview papers: 1237
+  Confirmed paper-version merges applied: 3 (3 paper records, 0 marker records removed)
+  Location-review rows created / updated: 28 / 0
+  Output: web/data/public_preview_papers.json
+[1/5] COMPLETE: Export public preview JSON
+[2/5] START: Generate public preview quality report
+  /Library/Developer/CommandLineTools/usr/bin/python3 /Users/meilinger/Desktop/synthetic-image-research-map/scripts/report_public_preview.py
+Wrote public preview quality report: docs/public_preview_report.md
+Map records summarized: 1508
+[2/5] COMPLETE: Generate public preview quality report
+[3/5] START: Generate missing author mappings report
+  /Library/Developer/CommandLineTools/usr/bin/python3 /Users/meilinger/Desktop/synthetic-image-research-map/scripts/report_missing_author_mappings.py
+Wrote data/manual/missing_author_mappings_report.csv and docs/missing_author_mappings_report.md: 666 papers, 656 complete, 10 partial, 0 zero.
+[3/5] COMPLETE: Generate missing author mappings report
+[4/5] START: Generate key-paper coverage reports
+  /Library/Developer/CommandLineTools/usr/bin/python3 /Users/meilinger/Desktop/synthetic-image-research-map/scripts/audit_key_paper_coverage.py
+{
+  "public_papers": 666,
+  "unique_mapped_papers": 645,
+  "map_records": 1508,
+  "key_papers": 299,
+  "bibliography_covered": 287,
+  "candidate_only": 0,
+  "covered_as_map_marker": 286,
+  "covered_in_public_preview_paper_list": 1,
+  "excluded": 10,
+  "missing_from_candidate_pool": 0,
+  "possible_title_match_failure": 2
+}
+[4/5] COMPLETE: Generate key-paper coverage reports
+[5/5] START: Validate public preview
+  /Library/Developer/CommandLineTools/usr/bin/python3 /Users/meilinger/Desktop/synthetic-image-research-map/scripts/validate_public_preview.py
+Public preview validation: web/data/public_preview_map_data.json
+Total records: 1508
+Unique papers: 646
+Unique institutions: 633
+Errors: 0
+Warnings: 0
+
+Public preview validation: web/data/public_preview_papers.json
+Total records: 666
+Unique papers: 666
+Papers with map locations: 645
+Papers missing affiliations: 0
+Papers missing coordinates: 15
+Errors: 0
+Warnings: 24
+
+Issues:
+WARNING record[5] 'A Difference-in-Difference Approach to Detecting AI-Generated Images': author has no institution index: Kai Ye
+WARNING record[5] 'A Difference-in-Difference Approach to Detecting AI-Generated Images': author has no institution index: Chengchun Shi
+WARNING record[5] 'A Difference-in-Difference Approach to Detecting AI-Generated Images': author has no institution index: Jin Zhu
+WARNING record[63] 'Detective SAM: Adaptive AI-Image Forgery Localization': author has no institution index: Pin-Yu Chen
+WARNING record[108] 'Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection': author has no institution index: Wenwei Xie
+WARNING record[108] 'Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection': author has no institution index: Lu Ma
+WARNING record[108] 'Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection': author has no institution index: Xuansong Zhang
+WARNING record[108] 'Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection': author has no institution index: Wenjing Zhang
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Mikhail Erofeev
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Ruiyang Xia
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Qi Zhang
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Yaowen Xu
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Zhaofan Zou
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Hao Sun
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Cong Luo
+WARNING record[283] 'Denoising Trajectory Biases for Zero-Shot AI-Generated Image Detection': author has no institution index: Jingyuan Li
+WARNING record[283] 'Denoising Trajectory Biases for Zero-Shot AI-Generated Image Detection': author has no institution index: Lanchi Xie
+WARNING record[288] 'Detecting Generated Images by Fitting Natural Image Distributions': author has no institution index: Bo Han
+WARNING record[303] 'Epistemic Uncertainty for Generated Image Detection': author has no institution index: Yiu-ming Cheung
+WARNING record[303] 'Epistemic Uncertainty for Generated Image Detection': author has no institution index: Bo Han
+WARNING record[475] 'Evasion on General GAN-Generated Image Detection by Disentangled Representation': author has no institution index: Daniel S. Yeung
+WARNING record[581] "Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model": author has no institution index: Gopal Sarkarkar
+WARNING record[581] "Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model": author has no institution index: Shilpa Gedam
+WARNING record[653] 'What Makes Fake Images Detectable? Understanding Properties That Generalize': author has no institution index: Ser-Nam Lim
+
+Validation passed.
+[5/5] COMPLETE: Validate public preview
+
+Public preview refresh complete.
+Inspect these files before committing:
+  - web/data/public_preview_map_data.json
+  - web/data/public_preview_papers.json
+  - docs/key_paper_coverage_report.md
+  - data/manual/key_paper_coverage_report.csv
+  - docs/public_preview_report.md
+  - docs/missing_author_mappings_report.md
+  - data/manual/missing_author_mappings_report.csv
+No files were committed or pushed.
+$ report_systematic_tier2_normal_priority_evidence.py --write
+{"added_papers": 9, "mapped": 645, "markerless_added_papers": ["ILLUSION: Unveiling Truth with a Comprehensive Multi-Modal, Multi-Lingual Deepfake Dataset"], "markers": 1508, "public": 666, "published": 555}
+$ report_systematic_tier2_normal_priority_evidence.py --check
+{"added_papers": 9, "mapped": 645, "markerless_added_papers": ["ILLUSION: Unveiling Truth with a Comprehensive Multi-Modal, Multi-Lingual Deepfake Dataset"], "markers": 1508, "public": 666, "published": 555}
+
+ROUND 2
+$ integrate_systematic_tier2_normal_priority_evidence.py
+{
+  "created_at": "2026-09-20T00:00:00Z",
+  "evidence_confirmed": 9,
+  "evidence_excluded": 11,
+  "evidence_insufficient": 0,
+  "institutions_added": 5,
+  "location_reviews_added": 5,
+  "mappings_added": 21,
+  "papers_added": 9,
+  "taxonomy_rows_added": 9
+}
+$ refresh_public_preview.py --skip-search --user-agent SyntheticImageResearchMap-NormalPriorityEvidence/1.0
+[1/5] START: Export public preview JSON
+  /Library/Developer/CommandLineTools/usr/bin/python3 /Users/meilinger/Desktop/synthetic-image-research-map/scripts/export_public_preview.py --min-confidence medium --preserve-existing
+Public preview export summary:
+  Candidate records read: 1687
+  Preprint-version map records excluded in favor of formal publications: 4
+  Records excluded as out of scope: 0
+  Records excluded by task label: 0
+  Scoped records missing an institution: 0
+  Scoped records missing usable coordinates: 0
+  Records excluded for missing institution/location: 0
+  Records excluded below confidence threshold: 0
+  Records excluded because they need review: 2
+  Records excluded by curated paper exclusions: 28
+  Unique papers excluded by curated paper exclusions: 14
+  Records eligible before maximum: 1508
+  Unique papers eligible before maximum: 646
+  Eligible key-paper records before maximum: 572
+  Maximum cap applied: no
+  Records exported: 1508
+  Unique papers exported: 646
+  Key-paper records exported: 572
+  Paper-version overrides applied: 7
+  arXiv enrichment rows loaded: 2386
+  linked_to_arxiv rows available: 406
+  arXiv links applied: 141
+  Unmatched linked_to_arxiv rows: 265
+  Publication overrides loaded: 1
+  Publication overrides applied: 0
+  Unmatched publication overrides: 1
+  Unmatched publication override: Detection, Attribution and Localization of GAN Generated Images (2020)
+  Manual abstract rows loaded: 0
+  Exported records with non-empty abstract before preview filtering: 1440
+  Public preview records with non-empty abstract: 1312
+  Institution record overrides loaded: 9
+  Replace-mode papers: 4
+  Add-mode records: 0
+  Remove-mode records: 0
+  Automatic institution records removed by replacement: 5
+  Replacement institution records created: 9
+  Coordinate-missing override records: 0
+  Unmatched institution record overrides: 0
+  Institution-author overrides loaded: 1
+  Institution-author overrides applied: 1
+  Downstream rows processed: 1508
+  Curated mappings loaded: 1321
+  Curated coordinate-bearing markers created: 1170
+  Source-backed preliminary markers created: 8
+  Confirmed Institution Records newly map-eligible: 8
+  Preliminary relationships excluded for unresolved identity/location: 0/0
+  Existing markers replaced by curated mappings: 1313
+  Curated mappings missing/ambiguous coordinates: 28
+  Marker exclusion review decisions applied: 0
+  Retracted map records excluded after integration: 0
+  Output: web/data/public_preview_map_data.json
+Paper-level public preview export summary:
+  Paper preview records exported: 666
+  Preprint-only paper versions excluded in favor of formal publications: 14
+  Paper preview records with map locations: 645
+  Paper preview records missing affiliations: 0
+  Paper preview records missing coordinates: 15
+  Key papers matched into paper preview: 93
+  Papers excluded by curated paper exclusions: 27
+  Retracted paper records excluded after integration: 0
+  Paper preview records with non-empty abstract: 577
+  Local abstract rows loaded: 1860
+  Curated papers added / merged: 0 / 466
+  Curated mappings matched to preview papers: 1237
+  Confirmed paper-version merges applied: 3 (3 paper records, 0 marker records removed)
+  Location-review rows created / updated: 28 / 0
+  Output: web/data/public_preview_papers.json
+[1/5] COMPLETE: Export public preview JSON
+[2/5] START: Generate public preview quality report
+  /Library/Developer/CommandLineTools/usr/bin/python3 /Users/meilinger/Desktop/synthetic-image-research-map/scripts/report_public_preview.py
+Wrote public preview quality report: docs/public_preview_report.md
+Map records summarized: 1508
+[2/5] COMPLETE: Generate public preview quality report
+[3/5] START: Generate missing author mappings report
+  /Library/Developer/CommandLineTools/usr/bin/python3 /Users/meilinger/Desktop/synthetic-image-research-map/scripts/report_missing_author_mappings.py
+Wrote data/manual/missing_author_mappings_report.csv and docs/missing_author_mappings_report.md: 666 papers, 656 complete, 10 partial, 0 zero.
+[3/5] COMPLETE: Generate missing author mappings report
+[4/5] START: Generate key-paper coverage reports
+  /Library/Developer/CommandLineTools/usr/bin/python3 /Users/meilinger/Desktop/synthetic-image-research-map/scripts/audit_key_paper_coverage.py
+{
+  "public_papers": 666,
+  "unique_mapped_papers": 645,
+  "map_records": 1508,
+  "key_papers": 299,
+  "bibliography_covered": 287,
+  "candidate_only": 0,
+  "covered_as_map_marker": 286,
+  "covered_in_public_preview_paper_list": 1,
+  "excluded": 10,
+  "missing_from_candidate_pool": 0,
+  "possible_title_match_failure": 2
+}
+[4/5] COMPLETE: Generate key-paper coverage reports
+[5/5] START: Validate public preview
+  /Library/Developer/CommandLineTools/usr/bin/python3 /Users/meilinger/Desktop/synthetic-image-research-map/scripts/validate_public_preview.py
+Public preview validation: web/data/public_preview_map_data.json
+Total records: 1508
+Unique papers: 646
+Unique institutions: 633
+Errors: 0
+Warnings: 0
+
+Public preview validation: web/data/public_preview_papers.json
+Total records: 666
+Unique papers: 666
+Papers with map locations: 645
+Papers missing affiliations: 0
+Papers missing coordinates: 15
+Errors: 0
+Warnings: 24
+
+Issues:
+WARNING record[5] 'A Difference-in-Difference Approach to Detecting AI-Generated Images': author has no institution index: Kai Ye
+WARNING record[5] 'A Difference-in-Difference Approach to Detecting AI-Generated Images': author has no institution index: Chengchun Shi
+WARNING record[5] 'A Difference-in-Difference Approach to Detecting AI-Generated Images': author has no institution index: Jin Zhu
+WARNING record[63] 'Detective SAM: Adaptive AI-Image Forgery Localization': author has no institution index: Pin-Yu Chen
+WARNING record[108] 'Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection': author has no institution index: Wenwei Xie
+WARNING record[108] 'Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection': author has no institution index: Lu Ma
+WARNING record[108] 'Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection': author has no institution index: Xuansong Zhang
+WARNING record[108] 'Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection': author has no institution index: Wenjing Zhang
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Mikhail Erofeev
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Ruiyang Xia
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Qi Zhang
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Yaowen Xu
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Zhaofan Zou
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Hao Sun
+WARNING record[155] 'NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild': author has no institution index: Cong Luo
+WARNING record[283] 'Denoising Trajectory Biases for Zero-Shot AI-Generated Image Detection': author has no institution index: Jingyuan Li
+WARNING record[283] 'Denoising Trajectory Biases for Zero-Shot AI-Generated Image Detection': author has no institution index: Lanchi Xie
+WARNING record[288] 'Detecting Generated Images by Fitting Natural Image Distributions': author has no institution index: Bo Han
+WARNING record[303] 'Epistemic Uncertainty for Generated Image Detection': author has no institution index: Yiu-ming Cheung
+WARNING record[303] 'Epistemic Uncertainty for Generated Image Detection': author has no institution index: Bo Han
+WARNING record[475] 'Evasion on General GAN-Generated Image Detection by Disentangled Representation': author has no institution index: Daniel S. Yeung
+WARNING record[581] "Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model": author has no institution index: Gopal Sarkarkar
+WARNING record[581] "Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model": author has no institution index: Shilpa Gedam
+WARNING record[653] 'What Makes Fake Images Detectable? Understanding Properties That Generalize': author has no institution index: Ser-Nam Lim
+
+Validation passed.
+[5/5] COMPLETE: Validate public preview
+
+Public preview refresh complete.
+Inspect these files before committing:
+  - web/data/public_preview_map_data.json
+  - web/data/public_preview_papers.json
+  - docs/key_paper_coverage_report.md
+  - data/manual/key_paper_coverage_report.csv
+  - docs/public_preview_report.md
+  - docs/missing_author_mappings_report.md
+  - data/manual/missing_author_mappings_report.csv
+No files were committed or pushed.
+$ report_systematic_tier2_normal_priority_evidence.py --write
+{"added_papers": 9, "mapped": 645, "markerless_added_papers": ["ILLUSION: Unveiling Truth with a Comprehensive Multi-Modal, Multi-Lingual Deepfake Dataset"], "markers": 1508, "public": 666, "published": 555}
+$ report_systematic_tier2_normal_priority_evidence.py --check
+{"added_papers": 9, "mapped": 645, "markerless_added_papers": ["ILLUSION: Unveiling Truth with a Comprehensive Multi-Modal, Multi-Lingual Deepfake Dataset"], "markers": 1508, "public": 666, "published": 555}

@@ -1,0 +1,6612 @@
+"use strict";
+
+const state = {
+  token: "",
+  papers: [],
+  filtered: [],
+  selectedId: "",
+  selectedPaper: null,
+  selectedMappings: [],
+  locationReviews: [],
+  locationSummary: {},
+  confirmedLocations: [],
+  institutions: [],
+  institutionManagement: { query: "", page: 1, pageSize: 50 },
+  institutionAudit: { records: [], summary: {} },
+  institutionCleanupSelection: new Set(),
+  pendingInstitutionResolution: null,
+  institutionEvidenceCase: null,
+  institutionMerge: { source: null, target: null, submitting: false },
+  locationStatusFilter: "",
+  locationReviewPage: 1,
+  locationReviewPageSize: 50,
+  selectedLocationReviewId: "",
+  dashboard: {},
+  reviewQueues: {},
+  selectedReviewKeys: {},
+  authorMappingCoverage: null,
+  paperMetadata: null,
+  venues: [],
+  venuesLoading: false,
+  venuesLoaded: false,
+  selectedVenue: null,
+  venueSelectionConfirmed: false,
+  pendingVenueProposal: null,
+  publicationTypeOverride: false,
+  previousPublicationType: "",
+  metadataSave: { status: "clean", baseline: "", inFlight: false },
+  arxivEnrichment: { records: [], summary: {}, discovery: {} },
+  draftMappingCandidates: [],
+  selectedGeocodeCandidate: null,
+  geocodeCandidates: [],
+  geocodeInstitutionId: "",
+  geocodePurpose: "coordinates",
+  cityAutofill: { regionSource: "empty", countrySource: "empty", lastLookupKey: "" },
+  locationEditorMode: "review",
+  selectedInstitutionLocationId: "",
+  selectedInstitutionLocations: [],
+  locationSaveRunning: false,
+  workflowRunning: false,
+  release: { validation: "required", preview: "required", changedFiles: 0 },
+};
+
+const elements = {};
+let arxivAutofillPollTimer = null;
+let arxivAutofillPolling = false;
+let workflowStatusPollTimer = null;
+let metadataPreviewSyncPollTimer = null;
+let metadataPreviewSyncPollEpoch = 0;
+let metadataPreviewSyncPageActive = true;
+let noticeTimer = null;
+let paperSelectionSequence = 0;
+let activeVenueOptionIndex = -1;
+let institutionLocationSequence = 0;
+let geocodeRequestSequence = 0;
+let cityResolutionRequestSequence = 0;
+let cityResolutionTimer = null;
+let reviewSnapshotSequence = 0;
+const workflowCommandIds = [
+  "run-curated-validation",
+  "run-export-preview",
+  "run-public-validation",
+  "run-full-refresh",
+  "publish-changes",
+];
+
+if (typeof window !== "undefined") {
+  window.addEventListener("pagehide", () => {
+    metadataPreviewSyncPageActive = false;
+    stopMetadataPreviewSyncPolling();
+  });
+  window.addEventListener("pageshow", () => {
+    metadataPreviewSyncPageActive = true;
+  });
+}
+
+if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", () => {
+  initializeActionQueuePanels();
+  [
+    "connection-status",
+    "add-paper-toggle",
+    "global-publish-toggle",
+    "global-search-input",
+    "global-search-results",
+    "add-paper-panel",
+    "add-paper-close",
+    "openalex-search-form",
+    "openalex-title",
+    "openalex-doi",
+    "openalex-arxiv-id",
+    "openalex-paper-url",
+    "openalex-search-submit",
+    "openalex-search-error",
+    "openalex-results",
+    "openalex-result-count",
+    "openalex-result-list",
+    "openalex-search-debug",
+    "openalex-weak-matches",
+    "openalex-weak-match-summary",
+    "openalex-weak-result-list",
+    "add-manually-button",
+    "paper-draft-form",
+    "paper-draft-origin",
+    "paper-draft-cancel",
+    "paper-source-database",
+    "paper-title",
+    "paper-year",
+    "paper-authors",
+    "paper-affiliations",
+    "paper-venue",
+    "paper-doi",
+    "paper-arxiv-id",
+    "paper-openalex-url",
+    "paper-url",
+    "paper-publication-type",
+    "paper-tasks",
+    "paper-image-scopes",
+    "paper-research-types",
+    "paper-scope-status",
+    "paper-review-status",
+    "paper-abstract",
+    "paper-duplicate-warning",
+    "paper-mapping-warning",
+    "paper-acknowledge-missing-mappings",
+    "paper-create-error",
+    "paper-create-submit",
+    "token-panel",
+    "token-form",
+    "token-input",
+    "workspace",
+    "search-input",
+    "filter-year",
+    "filter-task",
+    "filter-coverage",
+    "filter-map",
+    "filter-source",
+    "filter-exclusion",
+    "filter-curation-status",
+    "result-count",
+    "paper-list",
+    "empty-results",
+    "detail-placeholder",
+    "detail-content",
+    "detail-source",
+    "detail-title",
+    "detail-badges",
+    "metadata-grid",
+    "detail-notes",
+    "detail-exclude-button",
+    "detail-restore-button",
+    "marker-count",
+    "marker-table-body",
+    "empty-markers",
+    "mapping-add-button",
+    "mapping-replace-button",
+    "mapping-paper-context",
+    "mapping-table-body",
+    "empty-mappings",
+    "historical-mappings",
+    "historical-mapping-count",
+    "historical-mapping-table-body",
+    "mapping-panel-error",
+    "mapping-diagnostic",
+    "mapping-dialog",
+    "mapping-form",
+    "mapping-mode",
+    "mapping-id",
+    "mapping-dialog-title",
+    "mapping-dialog-paper",
+    "mapping-exclude-warning",
+    "mapping-replace-warning",
+    "mapping-fields",
+    "mapping-institution",
+    "mapping-institution-id",
+    "mapping-institution-options",
+    "mapping-location-id",
+    "mapping-location-help",
+    "mapping-authors",
+    "mapping-raw-affiliation",
+    "mapping-status",
+    "mapping-transition-note-field",
+    "mapping-transition-note",
+    "mapping-replace-confirmation",
+    "mapping-confirm-replace",
+    "mapping-form-error",
+    "mapping-cancel",
+    "mapping-submit",
+    "action-notice",
+    "workflow-panel",
+    "workflow-state",
+    "workflow-guidance",
+    "workflow-log-panel",
+    "workflow-log",
+    "run-curated-validation",
+    "run-export-preview",
+    "run-public-validation",
+    "autofill-arxiv",
+    "arxiv-enrichment-panel",
+    "arxiv-enrichment-summary",
+    "arxiv-enrichment-list",
+    "arxiv-enrichment-empty",
+    "run-full-refresh",
+    "publish-changes",
+    "reload-preview-data",
+    "show-git-status",
+    "location-review-panel",
+    "institution-management-panel",
+    "institution-management-close",
+    "institution-management-search",
+    "institution-management-rows",
+    "institution-management-empty",
+    "institution-identity-dialog",
+    "institution-identity-form",
+    "institution-identity-id",
+    "institution-identity-name",
+    "institution-identity-abbreviation",
+    "institution-identity-type",
+    "institution-identity-error",
+    "institution-identity-cancel",
+    "institution-merge-dialog",
+    "institution-merge-form",
+    "institution-merge-target-step",
+    "institution-merge-confirm-step",
+    "institution-merge-source-label",
+    "institution-merge-search",
+    "institution-merge-results",
+    "institution-merge-target-cancel",
+    "institution-merge-resolve",
+    "institution-merge-source-name",
+    "institution-merge-source-id",
+    "institution-merge-target-name",
+    "institution-merge-target-id",
+    "institution-merge-location-resolution",
+    "institution-merge-keep-target-location",
+    "institution-merge-use-source-location",
+    "institution-merge-target-location",
+    "institution-merge-source-location",
+    "institution-merge-confirm-cancel",
+    "institution-merge-submit",
+    "institution-merge-error",
+    "location-review-close",
+    "location-summary",
+    "location-search",
+    "location-status-filters",
+    "location-review-list",
+    "location-review-counts",
+    "empty-location-reviews",
+    "location-review-previous",
+    "location-review-page-status",
+    "location-review-next",
+    "location-editor-placeholder",
+    "location-form",
+    "location-queue-id",
+    "location-institution-id",
+    "location-context",
+    "confirmed-institution",
+    "institution-abbreviation",
+    "institution-aliases",
+    "institution-new-alias",
+    "institution-review-status",
+    "canonical-institution-label",
+    "canonical-institution",
+    "confirmed-location-record-label",
+    "confirmed-location-record",
+    "confirmed-city",
+    "confirmed-region",
+    "confirmed-country",
+    "confirmed-country-code",
+    "city-resolution-status",
+    "confirmed-lat",
+    "confirmed-lon",
+    "location-form-error",
+    "location-confirm",
+    "location-save-identity",
+    "location-confirm-alias",
+    "location-geocode",
+    "location-mark-ambiguous",
+    "location-ignore",
+    "location-exclude",
+    "geocode-dialog",
+    "geocode-form",
+    "geocode-dialog-title",
+    "geocode-query",
+    "geocode-replace-warning",
+    "geocode-candidates",
+    "geocode-empty",
+    "geocode-error",
+    "geocode-cancel",
+    "geocode-confirm",
+    "scope-dialog",
+    "scope-form",
+    "scope-paper-id",
+    "scope-mode",
+    "scope-dialog-title",
+    "scope-paper-title",
+    "scope-exclusion-warning",
+    "scope-restore-warning",
+    "scope-reason-label",
+    "scope-reason",
+    "scope-note",
+    "scope-note-label",
+    "scope-form-error",
+    "scope-cancel",
+    "scope-submit",
+    "console-nav",
+    "dashboard-panel",
+    "dashboard-grid",
+    "curation-dashboard-count",
+    "curation-dashboard-review",
+    "curation-dashboard-summary",
+    "curation-dashboard-table",
+    "curation-dashboard-rows",
+    "action-queue-empty",
+    "reload-review-queues",
+    "dashboard-open-publish",
+    "dashboard-changed-files",
+    "dashboard-validation-status",
+    "dashboard-preview-status",
+    "dashboard-git-summary",
+    "dashboard-release-state",
+    "paper-metadata-section",
+    "metadata-edit-button",
+    "metadata-compare",
+    "metadata-edit-form",
+    "metadata-edit-submit",
+    "metadata-save-status",
+    "metadata-save-status-text",
+    "metadata-paper-id",
+    "metadata-title",
+    "metadata-year",
+    "metadata-authors",
+    "metadata-venue",
+    "metadata-venue-id",
+    "metadata-venue-name",
+    "metadata-venue-acronym",
+    "metadata-venue-type",
+    "metadata-venue-track",
+    "metadata-venue-combobox",
+    "metadata-venue-field",
+    "metadata-venue-button",
+    "metadata-venue-value",
+    "metadata-venue-panel",
+    "metadata-venue-search",
+    "metadata-venue-status",
+    "metadata-venue-options",
+    "metadata-venue-create",
+    "metadata-venue-summary",
+    "metadata-venue-error",
+    "metadata-raw-venue",
+    "metadata-raw-venue-display",
+    "metadata-replace-raw-venue",
+    "metadata-venue-review-confirmed",
+    "metadata-venue-review-note",
+    "metadata-doi",
+    "metadata-arxiv-id",
+    "metadata-openalex-url",
+    "metadata-paper-url",
+    "metadata-publication-type",
+    "metadata-publication-type-override",
+    "metadata-publication-type-warning",
+    "metadata-tasks",
+    "metadata-image-scopes",
+    "metadata-research-types",
+    "metadata-scope-status",
+    "metadata-curation-status",
+    "metadata-review-status",
+    "metadata-abstract",
+    "metadata-edit-error",
+    "metadata-edit-cancel",
+    "venue-create-dialog",
+    "venue-create-form",
+    "venue-create-name",
+    "venue-create-acronym",
+    "venue-create-type",
+    "venue-create-track",
+    "venue-create-alias",
+    "venue-create-note",
+    "venue-create-matches",
+    "venue-create-confirm-similar",
+    "venue-create-error",
+    "venue-create-cancel",
+    "venue-create-submit",
+    "high-risk-review-panel",
+    "institution-audit-panel",
+    "institution-audit-counts",
+    "institution-audit-search",
+    "institution-audit-severity",
+    "institution-audit-provenance",
+    "institution-audit-issue",
+    "institution-audit-rows",
+    "institution-audit-empty",
+    "institution-audit-detail",
+    "institution-archived-findings",
+    "institution-archived-count",
+    "institution-archived-rows",
+    "institution-cleanup-batch",
+    "institution-resolution-batch",
+    "institution-cleanup-blocker",
+    "institution-resolution-dialog",
+    "institution-resolution-form",
+    "institution-resolution-title",
+    "institution-resolution-issue",
+    "institution-resolution-paper",
+    "institution-resolution-author",
+    "institution-resolution-previous",
+    "institution-resolution-current",
+    "institution-resolution-action",
+    "institution-resolution-preset",
+    "institution-resolution-note",
+    "institution-resolution-note-optional",
+    "institution-resolution-error",
+    "institution-resolution-cancel",
+    "institution-resolution-submit",
+    "institution-evidence-dialog",
+    "institution-evidence-title",
+    "institution-evidence-content",
+    "institution-evidence-actions",
+    "institution-evidence-close",
+    "marker-blocker-review-panel",
+    "key-coverage-review-panel",
+    "manual-import-review-panel",
+    "author-mapping-coverage-panel",
+    "mapping-coverage-summary",
+    "mapping-coverage-empty-state",
+    "generate-mapping-report",
+    "mapping-priority-heading",
+    "mapping-priority-table-wrap",
+    "mapping-priority-rows",
+    "mapping-priority-empty",
+    "reload-mapping-coverage-full",
+    "mapping-coverage-search",
+    "mapping-coverage-status",
+    "mapping-coverage-triage",
+    "mapping-coverage-sort",
+    "mapping-coverage-key",
+    "mapping-coverage-full-empty-state",
+    "mapping-coverage-counts",
+    "generate-mapping-report-full",
+    "mapping-coverage-table-wrap",
+    "mapping-coverage-rows",
+    "mapping-coverage-empty",
+  ].forEach((id) => {
+    elements[id] = document.getElementById(id);
+  });
+
+  const query = new URLSearchParams(window.location.search);
+  state.token = query.get("token") || sessionStorage.getItem("adminToken") || "";
+  if (query.has("token")) {
+    sessionStorage.setItem("adminToken", state.token);
+    history.replaceState(null, "", `${window.location.pathname}${window.location.hash}`);
+  }
+
+  elements["token-form"].addEventListener("submit", (event) => {
+    event.preventDefault();
+    state.token = elements["token-input"].value.trim();
+    sessionStorage.setItem("adminToken", state.token);
+    loadApplication();
+  });
+  elements["search-input"].addEventListener("input", applyFilters);
+  [
+    "filter-year",
+    "filter-task",
+    "filter-coverage",
+    "filter-map",
+    "filter-source",
+    "filter-exclusion",
+    "filter-curation-status",
+  ].forEach((id) => elements[id].addEventListener("change", applyFilters));
+
+  elements["detail-exclude-button"].addEventListener("click", () => {
+    if (state.selectedPaper) openScopeDialog(state.selectedPaper, "exclude");
+  });
+  elements["detail-restore-button"].addEventListener("click", () => {
+    if (state.selectedPaper) openScopeDialog(state.selectedPaper, "restore");
+  });
+  elements["scope-cancel"].addEventListener("click", closeScopeDialog);
+  elements["scope-form"].addEventListener("submit", submitScopeDecision);
+  elements["add-paper-toggle"].addEventListener("click", openAddPaperPanel);
+  elements["global-publish-toggle"].addEventListener("click", () => navigateConsole("publish"));
+  elements["global-search-input"].addEventListener("input", renderGlobalSearch);
+  elements["global-search-input"].addEventListener("keydown", handleGlobalSearchKeydown);
+  elements["add-paper-close"].addEventListener("click", closeAddPaperPanel);
+  elements["openalex-search-form"].addEventListener("submit", searchOpenAlex);
+  elements["add-manually-button"].addEventListener("click", () => startPaperDraft({}, "manual"));
+  elements["paper-draft-cancel"].addEventListener("click", cancelPaperDraft);
+  elements["paper-draft-form"].addEventListener("submit", createPaper);
+  elements["paper-draft-form"].addEventListener("change", (event) => {
+    const group = event.target.closest?.(".paper-category-field");
+    if (group && selectedCheckboxValues(group.id).length) group.removeAttribute("aria-invalid");
+  });
+  elements["mapping-add-button"].addEventListener("click", () => {
+    if (state.selectedPaper) openMappingDialog("create");
+  });
+  elements["mapping-replace-button"].addEventListener("click", () => {
+    if (state.selectedPaper) openMappingDialog("replace");
+  });
+  elements["mapping-cancel"].addEventListener("click", closeMappingDialog);
+  elements["mapping-form"].addEventListener("submit", submitMapping);
+  elements["mapping-institution"].addEventListener("input", () => {
+    syncMappingInstitutionId();
+    renderMappingLocationOptions();
+  });
+  [
+    ["run-curated-validation", "/api/run-curated-validation", "Curated validation"],
+    ["run-export-preview", "/api/export-preview", "Preview export"],
+    ["run-public-validation", "/api/run-public-validation", "Public-preview validation"],
+    ["run-full-refresh", "/api/run-full-refresh", "Full refresh"],
+  ].forEach(([id, path, label]) => {
+    elements[id].addEventListener("click", () => runAdminWorkflow(path, label));
+  });
+  elements["autofill-arxiv"].addEventListener("click", autofillArxivIds);
+  elements["publish-changes"].addEventListener("click", () => {
+    const confirmed = window.confirm(
+      "Publish Changes will validate curated data, regenerate and validate every public-preview output, commit all changed admin-managed files (plus modified frontend assets), and push the current branch. Continue?"
+    );
+    if (confirmed) {
+      runAdminWorkflow(
+        "/api/publish-changes",
+        "Publish Changes",
+        { confirmed: true }
+      );
+    }
+  });
+  elements["reload-preview-data"].addEventListener("click", reloadPreviewData);
+  elements["show-git-status"].addEventListener("click", showGitStatus);
+  elements["location-review-close"].addEventListener("click", closeLocationReview);
+  elements["institution-audit-search"].addEventListener("input", renderInstitutionAudit);
+  elements["institution-audit-severity"].addEventListener("change", renderInstitutionAudit);
+  elements["institution-audit-provenance"].addEventListener("change", renderInstitutionAudit);
+  elements["institution-audit-issue"].addEventListener("change", renderInstitutionAudit);
+  elements["institution-cleanup-batch"].addEventListener("click", applySelectedInstitutionFixes);
+  elements["institution-resolution-batch"].addEventListener("click", openBatchInstitutionResolution);
+  elements["institution-resolution-preset"].addEventListener("change", applyInstitutionResolutionPreset);
+  elements["institution-resolution-cancel"].addEventListener("click", closeInstitutionResolutionDialog);
+  elements["institution-resolution-form"].addEventListener("submit", submitInstitutionResolution);
+  elements["institution-evidence-close"].addEventListener("click", closeInstitutionEvidence);
+  elements["institution-management-close"].addEventListener("click", () => {
+    elements["institution-management-panel"].hidden = true;
+  });
+  elements["institution-management-search"].addEventListener("input", () => {
+    state.institutionManagement.query = elements["institution-management-search"].value;
+    state.institutionManagement.page = 1;
+    renderInstitutionManagement();
+    scrollInstitutionManagementToTop();
+  });
+  document.querySelectorAll(".institution-page-size").forEach((select) => {
+    select.addEventListener("change", changeInstitutionPageSize);
+  });
+  document.querySelectorAll("[data-institution-page-action]").forEach((button) => {
+    button.addEventListener("click", changeInstitutionPage);
+  });
+  elements["institution-merge-search"].addEventListener("input", renderInstitutionMergeTargets);
+  elements["institution-merge-results"].addEventListener("change", selectInstitutionMergeResult);
+  elements["institution-merge-resolve"].addEventListener("click", resolveInstitutionMergeTarget);
+  elements["institution-merge-keep-target-location"].addEventListener("change", updateInstitutionMergeSubmitState);
+  elements["institution-merge-use-source-location"].addEventListener("change", updateInstitutionMergeSubmitState);
+  elements["institution-merge-target-cancel"].addEventListener("click", closeInstitutionMergeDialog);
+  elements["institution-merge-confirm-cancel"].addEventListener("click", closeInstitutionMergeDialog);
+  elements["institution-merge-form"].addEventListener("submit", submitInstitutionMerge);
+  elements["institution-merge-dialog"].addEventListener("cancel", (event) => {
+    if (state.institutionMerge.submitting) event.preventDefault();
+  });
+  elements["institution-identity-form"].addEventListener("submit", submitInstitutionIdentity);
+  elements["institution-identity-cancel"].addEventListener("click", () => elements["institution-identity-dialog"].close());
+  elements["location-search"].addEventListener("input", () => {
+    state.locationReviewPage = 1;
+    renderLocationReviewList();
+  });
+  elements["location-status-filters"].addEventListener("click", selectLocationStatusFilter);
+  elements["location-review-list"].addEventListener("click", selectLocationReviewResult);
+  elements["location-review-previous"].addEventListener("click", () => changeLocationReviewPage(-1));
+  elements["location-review-next"].addEventListener("click", () => changeLocationReviewPage(1));
+  elements["location-form"].addEventListener("submit", confirmLocation);
+  elements["location-save-identity"].addEventListener("click", saveLocationInstitutionIdentity);
+  elements["location-mark-ambiguous"].addEventListener("click", () => {
+    markLocationReview("ambiguous");
+  });
+  elements["location-ignore"].addEventListener("click", () => markLocationReview("ignore"));
+  elements["location-exclude"].addEventListener("click", () => markLocationReview("excluded"));
+  elements["location-confirm-alias"].addEventListener("click", confirmLocationAlias);
+  elements["canonical-institution"].addEventListener("change", renderLocationActions);
+  elements["location-form"].addEventListener("input", renderLocationActions);
+  elements["confirmed-city"].addEventListener("input", scheduleCityResolution);
+  elements["confirmed-city"].addEventListener("blur", () => {
+    if (cityResolutionTimer) clearTimeout(cityResolutionTimer);
+    const lookupKey = `${state.selectedInstitutionLocationId}|${elements["confirmed-city"].value.trim()}`;
+    if (lookupKey !== state.cityAutofill.lastLookupKey) resolveInstitutionCity();
+  });
+  for (const [elementId, sourceKey] of [
+    ["confirmed-region", "regionSource"],
+    ["confirmed-country", "countrySource"],
+  ]) {
+    elements[elementId].addEventListener("input", () => {
+      state.cityAutofill[sourceKey] = elements[elementId].value.trim() ? "manual" : "empty";
+    });
+  }
+  elements["confirmed-location-record"].addEventListener("change", selectConfirmedLocationRecord);
+  elements["location-geocode"].addEventListener("click", findInstitutionCoordinates);
+  elements["geocode-cancel"].addEventListener("click", closeGeocodeDialog);
+  elements["geocode-confirm"].addEventListener("click", confirmGeocodeCandidate);
+  elements["geocode-dialog"].addEventListener("close", () => {
+    resetGeocodeSelection();
+    state.geocodePurpose = "coordinates";
+  });
+  document.querySelectorAll("[data-console-target]").forEach((button) => {
+    button.addEventListener("click", () => navigateConsole(button.dataset.consoleTarget));
+  });
+  initializeNavigationMenus();
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "/" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) {
+      event.preventDefault();
+      elements["global-search-input"].focus();
+    }
+  });
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".global-search")) closeGlobalSearch();
+  });
+  elements["reload-review-queues"].addEventListener("click", loadDashboardAndQueues);
+  elements["reload-mapping-coverage-full"].addEventListener("click", loadAuthorMappingCoverage);
+  elements["generate-mapping-report"].addEventListener("click", generateAuthorMappingReport);
+  elements["generate-mapping-report-full"].addEventListener("click", generateAuthorMappingReport);
+  [
+    "mapping-coverage-search",
+    "mapping-coverage-status",
+    "mapping-coverage-triage",
+    "mapping-coverage-sort",
+    "mapping-coverage-key",
+  ].forEach((id) => elements[id].addEventListener("input", renderFullMappingCoverage));
+  elements["dashboard-open-publish"].addEventListener("click", () => navigateConsole("publish"));
+  elements["curation-dashboard-review"].addEventListener("click", reviewPapersNeedingCuration);
+  elements["metadata-edit-button"].addEventListener("click", openMetadataEditor);
+  elements["metadata-edit-cancel"].addEventListener("click", closeMetadataEditor);
+  elements["metadata-edit-form"].addEventListener("submit", saveMetadata);
+  elements["metadata-edit-form"].addEventListener("input", handleMetadataFormChange);
+  elements["metadata-edit-form"].addEventListener("change", handleMetadataFormChange);
+  elements["metadata-venue-button"].addEventListener("click", toggleVenueCombobox);
+  elements["metadata-venue-button"].addEventListener("keydown", handleVenueButtonKeydown);
+  elements["metadata-venue-search"].addEventListener("input", renderVenueOptions);
+  elements["metadata-venue-search"].addEventListener("keydown", handleVenueSearchKeydown);
+  elements["metadata-venue-options"].addEventListener("click", handleVenueOptionClick);
+  elements["metadata-venue-options"].addEventListener("mousemove", handleVenueOptionHover);
+  elements["metadata-venue-create"].addEventListener("click", openVenueCreationDialog);
+  elements["metadata-publication-type-override"].addEventListener("click", enablePublicationTypeOverride);
+  elements["metadata-publication-type"].addEventListener("change", handlePublicationTypeChange);
+  elements["venue-create-form"].addEventListener("submit", submitVenueCreation);
+  elements["venue-create-type"].addEventListener("change", updateVenueCreationTrackAvailability);
+  elements["venue-create-cancel"].addEventListener("click", closeVenueCreationDialog);
+  document.addEventListener("pointerdown", handleVenueOutsidePointerDown);
+  window.addEventListener("resize", positionVenueComboboxPanel);
+  window.addEventListener("scroll", positionVenueComboboxPanel, true);
+  document.querySelectorAll(".review-queue-panel").forEach((panel) => {
+    panel.querySelectorAll("input, select").forEach((control) => {
+      control.addEventListener("input", () => renderReviewQueue(panel.dataset.queue));
+      control.addEventListener("change", () => renderReviewQueue(panel.dataset.queue));
+    });
+  });
+
+  if (state.token) loadApplication();
+  else requestToken();
+});
+
+async function apiFetch(path, options = {}) {
+  const headers = { "X-Admin-Token": state.token, ...(options.headers || {}) };
+  if (options.body) headers["Content-Type"] = "application/json";
+  const response = await fetch(path, {
+    ...options,
+    headers,
+    cache: "no-store",
+  });
+  const payload = await response.json().catch(() => ({ error: "Invalid server response" }));
+  if (!response.ok) {
+    const serverMessage = payload.error || payload.errors?.join("; ") || "Request failed";
+    const error = new Error(
+      `${path} failed with HTTP ${response.status}: ${serverMessage}`
+    );
+    error.name = "AdminApiError";
+    error.path = path;
+    error.status = response.status;
+    error.payload = payload;
+    throw error;
+  }
+  return payload;
+}
+
+function isAuthenticationFailure(error) {
+  return error?.status === 401;
+}
+
+function rejectCurrentToken(message = "That token was not accepted.") {
+  sessionStorage.removeItem("adminToken");
+  state.token = "";
+  requestToken(message);
+}
+
+function reportApplicationLoadFailure(stage, error) {
+  const detail = error?.message || "Unknown error";
+  const path = error?.path ? ` (${error.path})` : "";
+  elements["token-panel"].hidden = true;
+  elements.workspace.hidden = false;
+  setConnection("error", "Connection error");
+  showNotice(`${stage}${path}: ${detail}`, "error");
+}
+
+async function loadApplication(preserveSelection = false) {
+  setConnection("loading", "● Local curation loading…");
+  elements["token-panel"].hidden = true;
+  let initialData;
+  try {
+    initialData = await Promise.all([
+      apiFetch("/api/status"),
+      apiFetch("/api/latest-validation-status"),
+      apiFetch("/api/location-review"),
+      apiFetch("/api/institutions"),
+      apiFetch("/api/admin/papers/autofill-arxiv/status"),
+      apiFetch("/api/git-status").catch(() => null),
+      apiFetch("/api/admin/papers/arxiv-enrichment").catch(() => null),
+    ]);
+  } catch (error) {
+    if (isAuthenticationFailure(error)) {
+      rejectCurrentToken();
+      return;
+    }
+    reportApplicationLoadFailure("Could not load admin data", error);
+    return;
+  }
+
+  const [status, workflowStatus, locationPayload, institutionPayload, autofillStatus, gitStatus, arxivEnrichment] = initialData;
+  try {
+    elements.workspace.hidden = false;
+    setConnection("ok", "● Local curation connected");
+    renderLatestWorkflowStatus(workflowStatus);
+    renderGitSummary(gitStatus);
+    applyLocationPayload(locationPayload);
+    state.institutions = institutionPayload.records || [];
+    renderInstitutionManagement();
+    renderArxivAutofillStatus(autofillStatus);
+    state.arxivEnrichment = arxivEnrichment?.data || state.arxivEnrichment;
+    renderArxivEnrichment();
+    if (autofillStatus.status === "running") scheduleArxivAutofillPoll();
+    elements["console-nav"].hidden = false;
+  } catch (error) {
+    reportApplicationLoadFailure("Frontend rendering failed while opening Admin workspace", error);
+    return;
+  }
+
+  try {
+    await loadDashboardAndQueues();
+  } catch (error) {
+    reportApplicationLoadFailure("Could not finish loading Admin review queues", error);
+    return;
+  }
+
+  try {
+    if (preserveSelection && state.selectedId) {
+      const stillPresent = state.papers.some((paper) => paper.display_id === state.selectedId);
+      if (stillPresent) await selectPaper(state.selectedId);
+    }
+  } catch (error) {
+    reportApplicationLoadFailure("Could not restore the selected paper", error);
+  }
+}
+
+async function loadDashboardAndQueues() {
+  const sequence = ++reviewSnapshotSequence;
+  const buttons = [elements["reload-review-queues"]];
+  buttons.forEach((button) => {
+    button.disabled = true;
+  });
+  try {
+    const payload = await apiFetch("/api/dashboard");
+    if (sequence !== reviewSnapshotSequence) return;
+    const snapshot = payload.data;
+    if (!snapshot?.action_queues || !snapshot?.action_required) {
+      throw new Error("Restart the Admin server to load the actionable-queue API.");
+    }
+    // Validate before replacing either side; an incomplete refresh is never a zero queue.
+    snapshot.action_required.forEach((metric) => {
+      const queue = snapshot.action_queues[metric.queue];
+      if (!queue || metric.value !== queue.records.length || queue.count !== queue.records.length) {
+        throw new Error(`Inconsistent review snapshot: ${metric.queue}`);
+      }
+    });
+    const curation = snapshot.papers_needing_curation;
+    if (!Array.isArray(snapshot.papers) || !curation || !Array.isArray(curation.records)) {
+      throw new Error("Restart the Admin server to load the effective paper-curation API.");
+    }
+    const expected = snapshot.papers.filter(paperNeedsCuration);
+    if (new Set(snapshot.papers.map(paper => paper.display_id)).size !== snapshot.papers.length
+        || curation.count !== expected.length || curation.records.length !== expected.length
+        || curation.records.some((paper, index) => JSON.stringify(paper) !== JSON.stringify(expected[index]))) {
+      throw new Error("Inconsistent paper-curation snapshot");
+    }
+    const queues = {};
+    snapshot.action_required.forEach((metric) => {
+      const name = metric.target === "key-coverage" ? "key-paper-coverage" : metric.target;
+      queues[name] = snapshot.action_queues[metric.queue];
+    });
+    state.dashboard = snapshot;
+    state.papers = snapshot.papers;
+    state.reviewQueues = queues;
+    state.authorMappingCoverage = snapshot.author_mapping_coverage;
+    Object.keys(state.reviewQueues).forEach(renderReviewQueue);
+    renderDashboard();
+    renderPapersNeedingCuration();
+    populateFilters();
+    applyFilters();
+    applyLocationPayload(snapshot.location_review);
+    renderMappingCoverage();
+  } catch (error) {
+    if (sequence === reviewSnapshotSequence) {
+      showNotice(`Review refresh failed; the last complete snapshot is retained: ${error.message}`, "error");
+    }
+  } finally {
+    if (sequence === reviewSnapshotSequence) buttons.forEach((button) => { button.disabled = false; });
+  }
+  // Auxiliary cleanup must not prevent the Action Required snapshot from loading.
+  try {
+    const paths = { "institution-audit": "/api/review/institution-cleanup" };
+    const payload = await apiFetch(paths["institution-audit"]);
+    if (sequence !== reviewSnapshotSequence) return;
+    state.institutionAudit = payload.data || { records: [], summary: {} };
+    renderInstitutionAudit();
+  } catch (error) {
+    if (sequence === reviewSnapshotSequence) showNotice(`Institution cleanup could not be loaded: ${error.message}`, "error");
+  }
+}
+
+function initializeActionQueuePanels() {
+  const source = document.getElementById("key-coverage-review-panel");
+  [
+    ["publication-venues", "Publication Venue Review", "Verify scholarly venue identity, publication type, acronym and paper-level track against the publication source."],
+    ["high-risk-papers", "High-risk Paper Review", "Paper-level coverage and metadata findings, separate from individual marker evidence."],
+    ["missing-locations", "Missing Institution Locations", "One actionable location review per active institution."],
+    ["missing-author-mappings", "Missing Author Mappings", "Papers with no resolved author mappings."],
+    ["missing-affiliations", "Missing Affiliations", "Papers still missing active institution evidence."],
+  ].forEach(([name, title, help]) => {
+    const panel = source.cloneNode(true);
+    panel.id = `${name}-review-panel`;
+    panel.dataset.queue = name;
+    panel.querySelector("h2").textContent = title;
+    panel.querySelector(".eyebrow").textContent = "Actionable review";
+    panel.querySelector(".section-heading p:last-child").textContent = help;
+    panel.querySelector(".review-scope-help").textContent = "Only effective unresolved records are actionable. Curated decisions, exclusions and inactive records take precedence over diagnostics.";
+    panel.querySelector('[data-role="search"]').placeholder = "Search review queue…";
+    panel.querySelector('[data-role="group"] option').textContent = "All review types";
+    if (name === "publication-venues") {
+      const headings = ["Paper title", "DOI", "Current type", "Current venue / ID", "Current acronym / track", "Proposed type", "Proposed venue / ID", "Proposed acronym / track", "Reason / evidence", "Action"];
+      const head = panel.querySelector("thead tr");
+      head.replaceChildren(...headings.map(label => {
+        const th = document.createElement("th"); th.textContent = label; return th;
+      }));
+    }
+    source.after(panel);
+  });
+}
+
+function paperNeedsCuration(paper) {
+  return paper.is_active_corpus === true && paper.curation_status === "needs_review";
+}
+
+function reviewPapersNeedingCuration() {
+  ["search-input", "filter-year", "filter-task", "filter-coverage", "filter-map",
+    "filter-source", "filter-exclusion"].forEach(id => { elements[id].value = ""; });
+  elements["filter-curation-status"].value = "needs_review";
+  applyFilters();
+  navigateConsole("papers");
+}
+
+async function openCurationPaper(id) {
+  navigateConsole("papers");
+  await selectPaper(id);
+  if (state.selectedId === id && state.paperMetadata) openMetadataEditor();
+}
+
+function renderPapersNeedingCuration() {
+  const { count, records } = state.dashboard.papers_needing_curation;
+  const visible = records.slice(0, 5);
+  elements["curation-dashboard-count"].textContent = formatNumber(count);
+  elements["curation-dashboard-summary"].textContent = count
+    ? `Showing ${visible.length} of ${count} papers. Review opens the complete Needs review list.`
+    : "No papers currently need curation.";
+  elements["curation-dashboard-table"].hidden = count === 0;
+  elements["curation-dashboard-rows"].replaceChildren();
+  visible.forEach(paper => {
+    const row = document.createElement("tr");
+    row.dataset.paperId = paper.display_id;
+    const titleCell = document.createElement("td");
+    const title = document.createElement("button");
+    title.type = "button";
+    title.className = "text-button";
+    renderPaperTitle(title, paper.title);
+    title.addEventListener("click", () => openCurationPaper(paper.display_id));
+    titleCell.append(title);
+    row.append(titleCell);
+    [paper.year, paper.venue_label || paper.venue_name || paper.venue,
+      humanize(paper.curation_status), humanize(paper.review_status), humanize(paper.scope_status),
+      paper.curation_note || paper.review_note || paper.notes].forEach((value, index) => {
+      const cell = document.createElement("td");
+      const content = document.createElement("span");
+      content.textContent = text(value) || "—";
+      if (index === 5) { cell.className = "curation-note"; content.title = text(value); }
+      cell.append(content);
+      row.append(cell);
+    });
+    const actionCell = document.createElement("td");
+    const action = document.createElement("button");
+    action.type = "button";
+    action.className = "text-button";
+    action.textContent = "Open/Edit";
+    action.setAttribute("aria-label", `Edit ${plainPaperTitle(paper.title)}`);
+    action.addEventListener("click", () => openCurationPaper(paper.display_id));
+    actionCell.append(action);
+    row.append(actionCell);
+    elements["curation-dashboard-rows"].append(row);
+  });
+}
+
+async function loadAuthorMappingCoverage({ showError = true } = {}) {
+  const buttons = [elements["reload-mapping-coverage-full"]].filter(Boolean);
+  buttons.forEach((button) => {
+    button.disabled = true;
+  });
+  try {
+    const payload = await apiFetch(
+      `/api/review/author-mapping-coverage?reload=${Date.now()}`
+    );
+    state.authorMappingCoverage = payload.data || {};
+  } catch (error) {
+    state.authorMappingCoverage = {
+      available: false,
+      message: "Author mapping report has not been generated.",
+      records: [],
+    };
+    if (showError) {
+      showNotice(
+        "Mapping coverage could not be loaded. Restart the local Admin server and generate the report.",
+        "error"
+      );
+    }
+  } finally {
+    buttons.forEach((button) => {
+      button.disabled = false;
+    });
+  }
+  renderMappingCoverage();
+}
+
+async function generateAuthorMappingReport() {
+  const buttons = [
+    elements["generate-mapping-report"],
+    elements["generate-mapping-report-full"],
+  ];
+  buttons.forEach((button) => {
+    button.disabled = true;
+    button.textContent = "Generating…";
+  });
+  try {
+    const payload = await apiFetch(
+      "/api/review/author-mapping-coverage/generate",
+      { method: "POST" }
+    );
+    state.authorMappingCoverage = payload.data || {};
+    renderMappingCoverage();
+    await loadDashboardAndQueues();
+    showNotice(payload.message || "Author mapping report generated.");
+  } catch (error) {
+    showNotice(`Author mapping report could not be generated: ${error.message}`, "error");
+  } finally {
+    buttons.forEach((button) => {
+      button.disabled = false;
+      button.textContent = "Generate Report";
+    });
+  }
+}
+
+function navigateConsole(target) {
+  const targets = {
+    dashboard: elements["dashboard-panel"],
+    papers: elements.workspace,
+    "add-paper": elements["add-paper-panel"],
+    "arxiv-enrichment": elements["arxiv-enrichment-panel"],
+    "scope-review": elements.workspace,
+    mappings: document.querySelector(".mappings-section"),
+    "institution-management": elements["institution-management-panel"],
+    "location-review": elements["location-review-panel"],
+    "high-risk": elements["high-risk-review-panel"],
+    "high-risk-papers": document.getElementById("high-risk-papers-review-panel"),
+    "missing-locations": document.getElementById("missing-locations-review-panel"),
+    "missing-author-mappings": document.getElementById("missing-author-mappings-review-panel"),
+    "missing-affiliations": document.getElementById("missing-affiliations-review-panel"),
+    "publication-venues": document.getElementById("publication-venues-review-panel"),
+    "institution-audit": elements["institution-audit-panel"],
+    "marker-blockers": elements["marker-blocker-review-panel"],
+    "key-coverage": elements["key-coverage-review-panel"],
+    "author-mapping-coverage": elements["author-mapping-coverage-panel"],
+    "manual-import": elements["manual-import-review-panel"],
+    validation: elements["workflow-panel"],
+    publish: elements["workflow-panel"],
+    workflows: elements["workflow-panel"],
+  };
+  if (target === "add-paper") openAddPaperPanel();
+  if (target === "location-review") openLocationReview({ direct: true });
+  if (target === "institution-management") openInstitutionManagement();
+  if (target === "arxiv-enrichment") loadArxivEnrichment();
+  const node = targets[target];
+  if (!node) return;
+  document.querySelectorAll("[data-console-target]").forEach((control) => {
+    if (control.dataset.consoleTarget === target) control.setAttribute("aria-current", "page");
+    else control.removeAttribute("aria-current");
+  });
+  document.querySelectorAll(".nav-menu").forEach((menu) => {
+    menu.dataset.childActive = String(Boolean(menu.querySelector('[aria-current="page"]')));
+    menu.open = false;
+  });
+  if ("hidden" in node) node.hidden = false;
+  node.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (["mappings", "scope-review"].includes(target) && !state.selectedPaper) {
+    showNotice("Select a paper first, then open its curation editor.", "error");
+  }
+}
+
+function renderDashboard() {
+  const metrics = state.dashboard.action_required || [];
+  const wanted = {
+    publication_venues: { title: "Publication venues", priority: 3, impact: "Verify publication type, canonical venue, abbreviation and track." },
+    marker_blockers: { title: "Marker blockers", priority: 1, impact: "Preventing papers from appearing correctly on the public map." },
+    identity_unresolved: { title: "Unresolved paper identities", priority: 2, impact: "Canonical papers cannot yet be resolved reliably." },
+    retracted_publications: { title: "Retracted or invalid publications", priority: 3, impact: "Publication status may make public display incorrect." },
+    missing_author_mappings: { title: "Missing author mappings", priority: 4, impact: "Author identities cannot yet be resolved reliably." },
+    missing_affiliations: { title: "Missing affiliations", priority: 4, impact: "Papers are missing institution context on the public map." },
+    missing_coordinates: { title: "Missing institution locations", priority: 5, impact: "Institutions cannot be placed on the map." },
+    high_risk_markers: { title: "High-risk markers", priority: 6, impact: "Paper-institution marker evidence needs review." },
+    high_risk_papers: { title: "High-risk papers", priority: 6, impact: "Paper-level coverage or metadata needs review." },
+    key_paper_coverage_queue: { title: "Key-paper coverage", priority: 7, impact: "Important corpus coverage needs maintainer review." },
+    manual_import_queue: { title: "Manual imports", priority: 7, impact: "Imported records still need cleanup or confirmation." },
+  };
+  const queue = metrics.filter((metric) =>
+    wanted[metric.key] && metric.target
+      && metric.available !== false && Number(metric.value) > 0
+  ).sort((left, right) => wanted[left.key].priority - wanted[right.key].priority);
+  elements["dashboard-grid"].replaceChildren();
+  elements["action-queue-empty"].hidden = queue.length !== 0;
+  queue.forEach((metric) => {
+    const copy = wanted[metric.key];
+    const row = document.createElement("button");
+    row.type = "button";
+    row.className = "action-queue-row";
+    row.setAttribute("aria-label", `${copy.title}: ${metric.value}. ${copy.impact} Review`);
+    const description = document.createElement("span");
+    const label = document.createElement("strong");
+    label.textContent = copy.title;
+    const impact = document.createElement("span");
+    impact.className = "action-impact";
+    impact.textContent = copy.impact;
+    description.append(label, impact);
+    const count = document.createElement("span");
+    count.className = "action-count";
+    count.textContent = formatNumber(metric.value);
+    const action = document.createElement("span");
+    action.className = "action-link";
+    action.textContent = "Review";
+    row.append(description, count, action);
+    row.addEventListener("click", () => navigateProjectHealthMetric(metric));
+    elements["dashboard-grid"].append(row);
+  });
+}
+
+function initializeNavigationMenus() {
+  const menus = [...document.querySelectorAll(".nav-menu")];
+  menus.forEach((menu, index) => {
+    const trigger = menu.querySelector("summary");
+    const popup = menu.querySelector(".nav-menu-items");
+    popup.id = popup.id || `admin-nav-menu-${index + 1}`;
+    trigger.setAttribute("aria-controls", popup.id);
+    trigger.setAttribute("aria-expanded", "false");
+    menu.addEventListener("toggle", () => {
+      trigger.setAttribute("aria-expanded", String(menu.open));
+      if (menu.open) menus.filter((other) => other !== menu).forEach((other) => { other.open = false; });
+    });
+    trigger.addEventListener("keydown", (event) => {
+      if (!["ArrowDown", "ArrowUp", "Escape"].includes(event.key)) return;
+      event.preventDefault();
+      if (event.key === "Escape") { menu.open = false; trigger.focus(); return; }
+      menu.open = true;
+      const items = [...popup.querySelectorAll('[role="menuitem"]')];
+      items[event.key === "ArrowUp" ? items.length - 1 : 0]?.focus();
+    });
+    popup.addEventListener("keydown", (event) => {
+      const items = [...popup.querySelectorAll('[role="menuitem"]')];
+      const current = items.indexOf(document.activeElement);
+      if (event.key === "Escape") { event.preventDefault(); menu.open = false; trigger.focus(); }
+      if (["ArrowDown", "ArrowUp"].includes(event.key)) {
+        event.preventDefault();
+        const delta = event.key === "ArrowDown" ? 1 : -1;
+        items[(current + delta + items.length) % items.length]?.focus();
+      }
+    });
+  });
+  document.addEventListener("click", (event) => {
+    menus.filter((menu) => !menu.contains(event.target)).forEach((menu) => { menu.open = false; });
+  });
+}
+
+function closeGlobalSearch() {
+  elements["global-search-results"].hidden = true;
+  elements["global-search-input"].setAttribute("aria-expanded", "false");
+}
+
+function renderGlobalSearch() {
+  const query = normalize(elements["global-search-input"].value);
+  const institutionQuery = canonicalInstitutionKey(
+    elements["global-search-input"].value
+  );
+  const results = elements["global-search-results"];
+  results.replaceChildren();
+  if (query.length < 2) { closeGlobalSearch(); return; }
+  const matches = state.papers.filter((paper) => normalize([
+    paperTitleSearchText(paper.title), paper.doi, paper.arxiv_id, paper.authors, paper.affiliations,
+    paper.institutions, paper.openalex_id,
+  ].map((value) => typeof value === "object" ? JSON.stringify(value) : text(value)).join(" ")).includes(query)).slice(0, 8);
+  matches.forEach((paper) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "global-search-result";
+    button.setAttribute("role", "option");
+    const title = document.createElement("strong");
+    renderPaperTitle(title, paper.title);
+    const meta = document.createElement("small");
+    meta.textContent = `Paper · ${text(paper.doi || paper.arxiv_id || paper.display_id) || "local record"}`;
+    button.append(title, meta);
+    button.addEventListener("click", () => {
+      elements["search-input"].value = plainPaperTitle(paper.title);
+      applyFilters();
+      navigateConsole("papers");
+      closeGlobalSearch();
+    });
+    results.append(button);
+  });
+  const institutionMatches = institutionQuery.length < 2 ? [] : state.institutions
+    .filter((institution) => [
+      institution.canonical_name,
+      institution.abbreviation,
+      ...(institution.aliases || []),
+    ].some((name) => canonicalInstitutionKey(name).includes(institutionQuery)))
+    .slice(0, Math.max(0, 8 - matches.length));
+  institutionMatches.forEach((institution) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "global-search-result";
+    button.setAttribute("role", "option");
+    const title = document.createElement("strong");
+    title.textContent = institutionContextLabel(institution) || institution.institution_id;
+    const meta = document.createElement("small");
+    meta.textContent = `Institution · ${humanize(institution.institution_type)}`;
+    button.append(title, meta);
+    button.addEventListener("click", () => {
+      navigateConsole("institutions");
+      elements["institution-management-search"].value =
+        text(institution.canonical_name);
+      state.institutionManagement.query = text(institution.canonical_name);
+      state.institutionManagement.page = 1;
+      openInstitutionManagement();
+      closeGlobalSearch();
+    });
+    results.append(button);
+  });
+  if (!matches.length && !institutionMatches.length) {
+    results.textContent = "No matching local records.";
+  }
+  results.hidden = false;
+  elements["global-search-input"].setAttribute("aria-expanded", "true");
+}
+
+function handleGlobalSearchKeydown(event) {
+  const options = [...elements["global-search-results"].querySelectorAll('[role="option"]')];
+  if (event.key === "Escape") { closeGlobalSearch(); elements["global-search-input"].focus(); }
+  if (event.key === "ArrowDown" && options.length) { event.preventDefault(); options[0].focus(); }
+}
+
+function navigateProjectHealthMetric(metric) {
+  if (metric.queue) {
+    const name = metric.target === "key-coverage" ? "key-paper-coverage" : metric.target;
+    const panel = queuePanel(name);
+    panel?.querySelectorAll(".review-filters input, .review-filters select").forEach((field) => { field.value = ""; });
+    clearReviewDetail(name);
+    renderReviewQueue(name);
+  }
+  const navigation = metric.navigation || {};
+  if (metric.target === "papers" && navigation.paper_filter === "missing_affiliations") {
+    elements["filter-map"].value = "missing_affiliations";
+    applyFilters();
+  }
+  if (metric.target === "author-mapping-coverage") {
+    elements["mapping-coverage-status"].value = navigation.mapping_status || "";
+    elements["mapping-coverage-sort"].value = navigation.mapping_sort || "rank-asc";
+    renderFullMappingCoverage();
+  }
+  if (metric.target === "location-review" && navigation.location_status) {
+    state.locationStatusFilter = navigation.location_status;
+    renderLocationSummary();
+    renderLocationReviewList();
+  }
+  navigateConsole(metric.target);
+}
+
+function mappingStatusBadge(status) {
+  const variants = { complete: "curated", partial: "restored", zero: "excluded" };
+  return makeBadge(humanize(status), variants[status] || "map");
+}
+
+function mappingTextCell(value) {
+  const cell = document.createElement("td");
+  cell.textContent = text(value) || "—";
+  return cell;
+}
+
+function mappingCoverageRow(row, { includeRank = false } = {}) {
+  const tr = document.createElement("tr");
+  if (includeRank) tr.append(mappingTextCell(row.priority_rank));
+
+  const statusCell = document.createElement("td");
+  statusCell.append(mappingStatusBadge(row.mapping_status));
+  const priorityCell = mappingTextCell(row.priority);
+
+  const titleCell = document.createElement("td");
+  titleCell.className = "mapping-report-title";
+  const titleButton = document.createElement("button");
+  titleButton.type = "button";
+  titleButton.className = "mapping-report-link";
+  renderPaperTitle(titleButton, row.title);
+  titleButton.addEventListener("click", () => openCoverageMappingEditor(row));
+  titleCell.append(titleButton);
+
+  const missingCell = document.createElement("td");
+  missingCell.className = "mapping-report-missing-authors";
+  if (row.missing_authors) {
+    const names = document.createElement("span");
+    names.textContent = text(row.missing_author_names) || "Unnamed authors";
+    const locateButton = document.createElement("button");
+    locateButton.type = "button";
+    locateButton.className = "secondary-button compact-action";
+    locateButton.textContent = "Map missing authors";
+    locateButton.addEventListener("click", () => {
+      openCoverageMappingEditor(row, { mapMissingAuthors: true });
+    });
+    missingCell.append(names, locateButton);
+  } else {
+    missingCell.textContent = "—";
+  }
+
+  const evidenceCell = document.createElement("td");
+  evidenceCell.className = "mapping-report-evidence";
+  const institutions = document.createElement("span");
+  institutions.textContent =
+    text(row.known_canonical_institutions) || "No canonical institution yet";
+  evidenceCell.append(institutions);
+  if (
+    row.existing_mapping_authors
+    || row.suggested_author_matches
+    || row.raw_affiliation_evidence
+    || row.doi
+    || row.arxiv_id
+    || row.openalex_id
+  ) {
+    const evidence = document.createElement("details");
+    const summary = document.createElement("summary");
+    summary.textContent = "Review evidence";
+    evidence.append(summary);
+    [
+      ["Mapping state", humanize(row.current_mapping_state)],
+      ["Mapped author text", row.existing_mapping_authors],
+      ["Suggested name reconciliation", row.suggested_author_matches],
+      ["Raw affiliation", row.raw_affiliation_evidence],
+      ["DOI", row.doi],
+      ["arXiv", row.arxiv_id],
+      ["OpenAlex", row.openalex_id],
+    ]
+      .filter(([, value]) => text(value))
+      .forEach(([label, value]) => {
+        const line = document.createElement("p");
+        const strong = document.createElement("strong");
+        strong.textContent = `${label}: `;
+        line.append(strong, document.createTextNode(text(value)));
+        evidence.append(line);
+      });
+    evidenceCell.append(evidence);
+  }
+
+  tr.append(statusCell, priorityCell, titleCell, mappingTextCell(row.year));
+  if (includeRank) {
+    tr.append(
+      mappingTextCell(
+        `${formatNumber(row.mapped_authors)} / ${formatNumber(row.total_authors)}`
+        + (row.non_institutional_authors ? `; ${formatNumber(row.non_institutional_authors)} reviewed without institution` : "")
+      )
+    );
+  }
+  tr.append(
+    mappingTextCell(row.missing_authors),
+    missingCell,
+    evidenceCell,
+    mappingTextCell(row.suggested_action),
+    mappingTextCell(row.public_impact),
+    mappingTextCell(row.marker_count),
+    mappingTextCell(row.is_key_paper ? "Yes" : "—")
+  );
+  return tr;
+}
+
+function priorityPaperRow(row) {
+  const tr = document.createElement("tr");
+  const paper = document.createElement("td");
+  renderPaperTitle(paper, row.title);
+  paper.className = "priority-paper-title";
+  const issue = mappingTextCell(
+    row.mapping_status === "zero"
+      ? "No resolved author mappings"
+      : `${formatNumber(row.missing_authors)} missing author mapping${Number(row.missing_authors) === 1 ? "" : "s"}`
+  );
+  const impact = mappingTextCell(row.public_impact || "May affect public-map coverage");
+  const action = document.createElement("td");
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "secondary-button compact-action";
+  button.textContent = "Review";
+  button.setAttribute("aria-label", `Review ${plainPaperTitle(row.title) || "priority paper"}`);
+  button.addEventListener("click", () => openCoverageMappingEditor(row));
+  action.append(button);
+  tr.append(paper, issue, impact, action);
+  return tr;
+}
+
+function renderMappingCoverage() {
+  const report = state.authorMappingCoverage;
+  const summaryNode = elements["mapping-coverage-summary"];
+  const priorityBody = elements["mapping-priority-rows"];
+  summaryNode.replaceChildren();
+  priorityBody.replaceChildren();
+  elements["mapping-coverage-counts"].textContent = report?.available
+    ? suppressionCountText(report)
+    : "";
+  if (!report?.available) {
+    summaryNode.hidden = true;
+    elements["mapping-coverage-empty-state"].hidden = false;
+    elements["mapping-priority-heading"].hidden = true;
+    elements["mapping-priority-table-wrap"].hidden = true;
+    elements["mapping-priority-empty"].textContent = "";
+    renderFullMappingCoverage();
+    return;
+  }
+  summaryNode.hidden = false;
+  elements["mapping-coverage-empty-state"].hidden = true;
+  elements["mapping-priority-heading"].hidden = false;
+  elements["mapping-priority-table-wrap"].hidden = false;
+  const summary = report.summary || {};
+  const priorityRows = (report.records || [])
+    .filter((row) => row.mapping_status !== "complete")
+    .slice(0, 5);
+  priorityRows.forEach((row) => priorityBody.append(priorityPaperRow(row)));
+  elements["mapping-priority-empty"].textContent = priorityRows.length
+    ? ""
+    : "No missing mappings are present in the report.";
+  renderFullMappingCoverage();
+}
+
+function renderFullMappingCoverage() {
+  const report = state.authorMappingCoverage;
+  const body = elements["mapping-coverage-rows"];
+  body.replaceChildren();
+  if (!report?.available) {
+    elements["mapping-coverage-full-empty-state"].hidden = false;
+    elements["mapping-coverage-table-wrap"].hidden = true;
+    elements["mapping-coverage-empty"].textContent = "";
+    return;
+  }
+  elements["mapping-coverage-full-empty-state"].hidden = true;
+  elements["mapping-coverage-table-wrap"].hidden = false;
+  const search = normalize(elements["mapping-coverage-search"].value);
+  const status = elements["mapping-coverage-status"].value;
+  const triage = elements["mapping-coverage-triage"].value;
+  const sort = elements["mapping-coverage-sort"].value;
+  const keyFilter = elements["mapping-coverage-key"].value;
+  const filtered = (report.records || []).filter((row) => {
+    if (status === "warning" && row.mapping_status === "complete") return false;
+    if (status && status !== "warning" && row.mapping_status !== status) return false;
+    if (triage && row.triage_status !== triage) return false;
+    if (keyFilter && String(Boolean(row.is_key_paper)) !== keyFilter) return false;
+    return !search || normalize(Object.values(row).join(" ")).includes(search);
+  });
+  filtered.sort((left, right) => {
+    if (sort === "rank-desc") return right.priority_rank - left.priority_rank;
+    if (sort === "missing-desc") {
+      return right.missing_authors - left.missing_authors
+        || left.priority_rank - right.priority_rank;
+    }
+    if (sort === "missing-asc") {
+      return left.missing_authors - right.missing_authors
+        || left.priority_rank - right.priority_rank;
+    }
+    return left.priority_rank - right.priority_rank;
+  });
+  filtered.forEach((row) => body.append(mappingCoverageRow(row, { includeRank: true })));
+  elements["mapping-coverage-empty"].textContent = filtered.length
+    ? `${formatNumber(filtered.length)} report rows`
+    : "No rows match these filters.";
+}
+
+function queuePanel(name) {
+  return document.querySelector(`.review-queue-panel[data-queue="${name}"]`);
+}
+
+function queueFields(name, row) {
+  if (name === "publication-venues") return [
+    row.title, row.doi, humanize(row.current_type),
+    [row.current_venue, row.current_venue_id].filter(Boolean).join(" · "),
+    [row.current_abbreviation, row.current_track].filter(Boolean).join(" · "),
+    humanize(row.proposed_type),
+    [row.proposed_name, row.proposed_venue_id].filter(Boolean).join(" · "),
+    [row.proposed_abbreviation, row.proposed_track].filter(Boolean).join(" · "),
+    [row.reason, row.evidence_url].filter(Boolean).join(" — "),
+  ];
+  return [
+    row.priority || row.priority_rank || "—",
+    row.title || row.requested_title,
+    row.year || row.candidate_year,
+    row.institution || row.institutions,
+    row.institution_authors,
+    row.review_type || row.blocker_type || row.missing_stage || "import candidate",
+    row.recommended_action,
+    row.current_public_preview_status || row.coverage_status || row.candidate_status || row.review_status,
+    row.public_visibility_label || "Not visible on map",
+  ];
+}
+
+function suppressionCountText(queue, unresolvedCount = null) {
+  const reasons = Object.entries(queue.suppression_reasons || {});
+  const breakdown = reasons.length
+    ? ` · ${reasons.map(([reason, count]) => `${humanize(reason)}: ${formatNumber(count)}`).join(" · ")}`
+    : "";
+  const unresolved = unresolvedCount === null
+    ? (queue.records || []).length
+    : unresolvedCount;
+  return `${formatNumber(unresolved)} unresolved · ${formatNumber(queue.hidden_resolved || 0)} hidden/resolved${breakdown}`;
+}
+
+function reviewRecordKey(row) {
+  return [
+    row.paper_id,
+    row.doi,
+    row.openalex_url || row.openalex_id,
+    row.title || row.requested_title,
+    row.year || row.candidate_year,
+    row.institution || row.institutions,
+    row.institution_authors,
+    row.review_type || row.blocker_type || row.missing_stage || row.candidate_status,
+  ].map((value) => normalize(value)).join("|");
+}
+
+function clearReviewDetail(name) {
+  delete state.selectedReviewKeys[name];
+  const detail = queuePanel(name)?.querySelector('[data-role="detail"]');
+  if (detail) detail.textContent = "Select a row.";
+}
+
+function queueGroupField(name) {
+  return {
+    "high-risk": "priority",
+    "marker-blockers": "blocker_type",
+    "key-paper-coverage": "missing_stage",
+    "manual-import": "candidate_status",
+  }[name] || "review_type";
+}
+
+function renderReviewQueue(name) {
+  const panel = queuePanel(name);
+  const queue = state.reviewQueues[name] || {};
+  if (!panel) return;
+  const records = queue.records || [];
+  const group = panel.querySelector('[data-role="group"]');
+  const previous = group.value;
+  const values = [...new Set(records.map((row) => text(row[queueGroupField(name)]) || "unknown"))].sort();
+  group.replaceChildren(new Option(group.options[0]?.textContent || "All", ""));
+  values.forEach((value) => group.append(new Option(value, value)));
+  group.value = previous;
+  const search = normalize(panel.querySelector('[data-role="search"]').value);
+  const actionFilter = panel.querySelector('[data-role="action-filter"]');
+  const typeFilter = panel.querySelector('[data-role="type-filter"]');
+  [actionFilter, typeFilter].filter(Boolean).forEach((select) => {
+    const field = select === actionFilter ? "recommended_action" : "review_type";
+    const selected = select.value;
+    const first = select.options[0]?.textContent || "All";
+    select.replaceChildren(new Option(first, ""));
+    [...new Set(records.map((row) => text(row[field])).filter(Boolean))].sort()
+      .forEach((value) => select.append(new Option(value, value)));
+    select.value = selected;
+  });
+  const filtered = records.filter((row) => {
+    if (group.value && text(row[queueGroupField(name)]) !== group.value) return false;
+    if (actionFilter?.value && text(row.recommended_action) !== actionFilter.value) return false;
+    if (typeFilter?.value && text(row.review_type) !== typeFilter.value) return false;
+    return !search || normalize(Object.values(row).join(" ")).includes(search);
+  });
+  const body = panel.querySelector('[data-role="rows"]');
+  body.replaceChildren();
+  const visibleKeys = new Set(filtered.map(reviewRecordKey));
+  if (
+    state.selectedReviewKeys[name]
+    && !visibleKeys.has(state.selectedReviewKeys[name])
+  ) clearReviewDetail(name);
+  const counts = panel.querySelector('[data-role="counts"]');
+  if (counts) counts.textContent = suppressionCountText(queue, filtered.length);
+  filtered.forEach((row) => {
+    const tr = document.createElement("tr");
+    queueFields(name, row).forEach((value) => {
+      const td = document.createElement("td");
+      td.textContent = text(value) || "—";
+      tr.append(td);
+    });
+    if (name === "publication-venues") {
+      const td = document.createElement("td");
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "secondary-button";
+      button.textContent = "Open / Edit";
+      button.addEventListener("click", event => {
+        event.stopPropagation();
+        openCurationPaper(row.display_id);
+      });
+      td.append(button); tr.append(td);
+    }
+    tr.tabIndex = 0;
+    tr.addEventListener("click", () => renderReviewDetail(name, row));
+    tr.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") renderReviewDetail(name, row);
+    });
+    body.append(tr);
+  });
+  const empty = panel.querySelector('[data-role="empty"]');
+  empty.textContent = !queue.available
+    ? "Diagnostic report is missing. Run the full refresh pipeline."
+    : filtered.length ? "" : "No rows match these filters.";
+}
+
+function renderInstitutionAudit() {
+  if (!elements["institution-audit-rows"]) return;
+  const audit = state.institutionAudit || { records: [], summary: {} };
+  const search = normalize(elements["institution-audit-search"].value);
+  const severity = elements["institution-audit-severity"].value;
+  const provenance = elements["institution-audit-provenance"].value;
+  const issueType = elements["institution-audit-issue"].value;
+  const records = (audit.records || []).filter((row) => {
+    if (row.status !== "open") return false;
+    if (severity && row.severity !== severity) return false;
+    if (provenance && !(row.provenance_values || []).includes(provenance)) return false;
+    if (issueType && !(row.issue_types || []).includes(issueType)) return false;
+    return !search || normalize(Object.values(row).join(" ")).includes(search);
+  });
+  const summary = audit.summary || {};
+  elements["institution-audit-counts"].textContent = `${audit.total_unresolved || 0} open · ${summary.high || 0} high · ${summary.medium || 0} medium · ${summary.low || 0} low · ${audit.resolved_count || 0} resolved · ${audit.archived_count || 0} archived`;
+  const blocker = elements["institution-cleanup-blocker"];
+  const blockingCount = audit.blocking_count || 0;
+  blocker.hidden = !(blockingCount > 0);
+  blocker.querySelector("span").textContent = blockingCount > 0
+    ? `Publishing is blocked by ${blockingCount} true institution-corruption finding${blockingCount === 1 ? "" : "s"}.`
+    : "";
+  elements["publish-changes"].disabled = blockingCount > 0;
+  const body = elements["institution-audit-rows"];
+  body.replaceChildren();
+  records.forEach((item) => {
+    const row = document.createElement("tr");
+    const selectionCell = document.createElement("td");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = state.institutionCleanupSelection.has(item.review_group_id);
+    checkbox.disabled = item.status !== "open" || !(item.queue_ids || []).length;
+    checkbox.setAttribute("aria-label", `Select review case for ${item.paper_title || item.review_group_id}`);
+    checkbox.addEventListener("click", (event) => event.stopPropagation());
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) state.institutionCleanupSelection.add(item.review_group_id);
+      else state.institutionCleanupSelection.delete(item.review_group_id);
+      updateInstitutionBatchActions();
+    });
+    selectionCell.append(checkbox);
+    row.append(selectionCell);
+    [item.severity, item.paper_title, item.author, (item.current_institutions || []).join("; "), (item.historical_institutions || []).join("; "), item.classification, (item.suggested_institutions || []).join("; ")].forEach((value, index) => {
+      const cell = document.createElement("td");
+      if (index === 1) renderPaperTitle(cell, value, "—");
+      else cell.textContent = text(value) || "—";
+      row.append(cell);
+    });
+    row.tabIndex = 0;
+    row.addEventListener("click", () => renderInstitutionAuditDetail(item));
+    row.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") renderInstitutionAuditDetail(item);
+    });
+    body.append(row);
+  });
+  updateInstitutionBatchActions();
+  elements["institution-audit-empty"].textContent = records.length ? "" : "No actionable open institution findings match these filters.";
+
+  const archived = audit.archived_records || [];
+  const archivedBody = elements["institution-archived-rows"];
+  archivedBody.replaceChildren();
+  archived.forEach((item) => {
+    const row = document.createElement("tr");
+    row.className = "archived-finding-row";
+    const resolution = (item.findings || []).map((finding) =>
+      [humanize(finding.resolution_action), finding.resolution_note]
+        .filter(Boolean).join(": ")
+    ).filter(Boolean).join(" | ");
+    [
+      humanize(item.status),
+      item.paper_title,
+      item.author,
+      (item.historical_institutions || []).join("; ") || item.current_institution,
+      (item.issue_types || []).map(humanize).join("; "),
+      resolution,
+      item.updated_at,
+    ].forEach((value, index) => {
+      const cell = document.createElement("td");
+      if (index === 1) renderPaperTitle(cell, value, "—");
+      else cell.textContent = text(value) || "—";
+      row.append(cell);
+    });
+    row.tabIndex = 0;
+    row.addEventListener("click", () => openInstitutionEvidence(item));
+    row.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") openInstitutionEvidence(item);
+    });
+    archivedBody.append(row);
+  });
+  elements["institution-archived-findings"].hidden = archived.length === 0;
+  elements["institution-archived-findings"].open = false;
+  elements["institution-archived-count"].textContent = `(${archived.length})`;
+}
+
+function selectedInstitutionCases() {
+  return (state.institutionAudit?.records || []).filter((item) =>
+    item.status === "open" && state.institutionCleanupSelection.has(item.review_group_id)
+  );
+}
+
+function updateInstitutionBatchActions() {
+  const selected = selectedInstitutionCases();
+  const fixable = selected.flatMap((item) => item.findings || []).some((finding) =>
+    finding.finding_status === "open" && finding.mapping_id && finding.suggested_institution_id
+  );
+  elements["institution-cleanup-batch"].disabled = !fixable;
+  elements["institution-resolution-batch"].disabled = selected.length === 0;
+}
+
+function auditDetailLine(label, value) {
+  const paragraph = document.createElement("p");
+  const strong = document.createElement("strong");
+  strong.textContent = `${label}: `;
+  paragraph.append(strong, document.createTextNode(text(value) || "—"));
+  return paragraph;
+}
+
+function renderInstitutionAuditDetail(item) {
+  const detail = elements["institution-audit-detail"];
+  detail.replaceChildren();
+  const heading = document.createElement("h3");
+  renderPaperTitle(heading, item.paper_title, "Institution review case");
+  const actions = document.createElement("div");
+  actions.className = "form-actions";
+  const evidenceButton = document.createElement("button");
+  evidenceButton.type = "button";
+  evidenceButton.className = "secondary-button";
+  evidenceButton.textContent = "View evidence";
+  evidenceButton.addEventListener("click", () => openInstitutionEvidence(item));
+  actions.append(evidenceButton);
+  if (item.mapping_change) {
+    const confirmChange = document.createElement("button");
+    confirmChange.type = "button";
+    confirmChange.className = "primary-button";
+    confirmChange.textContent = "Confirm intentional change";
+    confirmChange.addEventListener("click", () => resolveInstitutionAudit(item, "mapping_change_confirmed"));
+    const revertChange = document.createElement("button");
+    revertChange.type = "button";
+    revertChange.className = "danger-button";
+    revertChange.textContent = "Revert mapping";
+    revertChange.addEventListener("click", () => resolveInstitutionAudit(item, "mapping_reverted"));
+    actions.append(confirmChange, revertChange);
+    const change = item.mapping_change;
+    detail.append(
+      heading,
+      auditDetailLine("Paper ID", item.paper_id),
+      auditDetailLine("DOI / OpenAlex", [item.doi, item.openalex_url].filter(Boolean).join(" · ")),
+      auditDetailLine("Author", item.author),
+      auditDetailLine("Mapping ID", change.mapping_id),
+      auditDetailLine("Previous institution", `${change.previous_institution_name} (${change.previous_institution_id})`),
+      auditDetailLine("Current institution", `${change.new_institution_name} (${change.new_institution_id})`),
+      auditDetailLine("Raw affiliation", change.raw_affiliation),
+      auditDetailLine("Change source", change.change_source),
+      auditDetailLine("Actor", change.actor),
+      auditDetailLine("Timestamp", change.changed_at),
+      auditDetailLine("Why trusted", change.trust_reason),
+      auditDetailLine("Evidence", [change.evidence_source, change.evidence_url].filter(Boolean).join(" · ")),
+      auditDetailLine("Visible on public map", change.publicly_visible ? "Yes" : "No"),
+      actions,
+    );
+    return;
+  }
+  [["Accept suggestion", "accept_suggestion"], ["Keep multiple affiliations", "keep_multiple_affiliations"], ["Ignore finding", "ignore"]].forEach(([label, action]) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = action === "ignore" ? "secondary-button" : "primary-button";
+    button.textContent = label;
+    button.addEventListener("click", () => resolveInstitutionAudit(item, action));
+    actions.append(button);
+  });
+  const replace = document.createElement("button");
+  replace.type = "button";
+  replace.className = "secondary-button";
+  replace.textContent = "Replace mapping";
+  replace.addEventListener("click", async () => {
+    const finding = (item.findings || [item])[0];
+    const row = { ...finding, title: item.paper_title, institution: finding.current_institution };
+    if (await openRelatedPaper(row)) openMappingDialog("replace");
+  });
+  const institution = document.createElement("button");
+  institution.type = "button";
+  institution.className = "secondary-button";
+  institution.textContent = "Add alias / Open institution editor";
+  institution.addEventListener("click", () => {
+    elements["institution-management-search"].value = (item.current_institutions || [item.current_institution]).join(" ");
+    openInstitutionManagement();
+  });
+  const parent = document.createElement("button");
+  parent.type = "button";
+  parent.className = "secondary-button";
+  parent.textContent = "Set parent institution";
+  parent.addEventListener("click", () => {
+    elements["institution-management-search"].value = (item.current_institutions || [item.current_institution]).join(" ");
+    openInstitutionManagement();
+  });
+  actions.append(replace, institution, parent);
+  const manual = document.createElement("button");
+  manual.type = "button";
+  manual.className = "secondary-button";
+  manual.textContent = "Mark manually resolved";
+  manual.addEventListener("click", () => resolveInstitutionAudit(item, "manually_resolved"));
+  actions.append(manual);
+  detail.append(
+    heading,
+    auditDetailLine("Author", item.author),
+    auditDetailLine("Current active institutions", (item.current_institutions || []).join("; ")),
+    auditDetailLine("Historical/excluded institutions", (item.historical_institutions || []).join("; ")),
+    auditDetailLine("Suggested institutions", (item.suggested_institutions || []).join("; ")),
+    auditDetailLine("Evidence", (item.evidence || []).join(" | ")),
+    auditDetailLine("Classification", item.classification),
+    auditDetailLine("Provenance", (item.provenance_values || []).join("; ")),
+    auditDetailLine("Why flagged", (item.findings || []).map((finding) => finding.reason).join(" | ")),
+    actions,
+  );
+}
+
+function evidenceSection(title) {
+  const section = document.createElement("section");
+  section.className = "evidence-section";
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+  section.append(heading);
+  return section;
+}
+
+function appendEvidenceFields(section, fields) {
+  const list = document.createElement("dl");
+  list.className = "metadata-grid";
+  fields.forEach(([label, value]) => {
+    const term = document.createElement("dt");
+    term.textContent = label;
+    const detail = document.createElement("dd");
+    if (value instanceof Node) detail.append(value);
+    else detail.textContent = text(value) || "—";
+    list.append(term, detail);
+  });
+  section.append(list);
+}
+
+function evidenceList(values) {
+  const list = document.createElement("ul");
+  list.className = "evidence-list";
+  (values || []).forEach((value) => {
+    const item = document.createElement("li");
+    item.textContent = text(value);
+    list.append(item);
+  });
+  if (!list.children.length) {
+    const item = document.createElement("li");
+    item.textContent = "None recorded";
+    list.append(item);
+  }
+  return list;
+}
+
+function evidenceLink(label, url) {
+  const href = safeUrl(url);
+  if (!href) return text(label || url);
+  const link = document.createElement("a");
+  link.href = href;
+  link.target = "_blank";
+  link.rel = "noreferrer";
+  link.textContent = text(label) || href;
+  return link;
+}
+
+function paperTitleNode(value, fallback = "—") {
+  return renderPaperTitle(document.createElement("span"), value, fallback);
+}
+
+function openInstitutionEvidence(item) {
+  state.institutionEvidenceCase = item;
+  const evidence = item.evidence_detail || {};
+  const paper = evidence.paper || {};
+  const author = evidence.author || {};
+  const affiliation = evidence.affiliation || {};
+  const audit = evidence.audit || {};
+  const risk = audit.risk_factors || {};
+  const content = elements["institution-evidence-content"];
+  content.replaceChildren();
+  renderPaperTitle(
+    elements["institution-evidence-title"], item.paper_title, "Evidence inspection"
+  );
+
+  const paperSection = evidenceSection("Paper information");
+  appendEvidenceFields(paperSection, [
+    ["Title", paperTitleNode(paper.title)],
+    ["Year", paper.year],
+    ["Venue", paper.venue],
+    ["DOI", paper.doi],
+    ["arXiv identifier", paper.arxiv_id],
+    ["Paper link", evidenceLink("Open paper", paper.paper_url)],
+  ]);
+
+  const authorSection = evidenceSection("Author information");
+  appendEvidenceFields(authorSection, [["Author", author.name], ["Author ID", author.author_id]]);
+
+  const mappingsSection = evidenceSection("Current mappings");
+  (evidence.current_mappings || []).forEach((mapping) => {
+    const heading = document.createElement("h4");
+    heading.textContent = mapping.institution_name || "Current institution";
+    mappingsSection.append(heading);
+    appendEvidenceFields(mappingsSection, [
+      ["Institution ID", mapping.institution_id],
+      ["Provenance source", mapping.provenance_source || mapping.provenance],
+      ["Mapping status", mapping.mapping_status],
+      ["Review status", mapping.review_status],
+      ["Raw affiliation", mapping.raw_affiliation],
+    ]);
+  });
+  if (!(evidence.current_mappings || []).length) mappingsSection.append(evidenceList([]));
+
+  const historicalSection = evidenceSection("Historical/excluded mappings");
+  (evidence.historical_mappings || []).forEach((mapping) => {
+    const heading = document.createElement("h4");
+    heading.textContent = mapping.institution_name || "Historical institution";
+    historicalSection.append(heading);
+    appendEvidenceFields(historicalSection, [
+      ["Institution ID", mapping.institution_id],
+      ["Mapping status", mapping.mapping_status],
+      ["Provenance source", mapping.provenance_source || mapping.provenance],
+      ["Raw affiliation", mapping.raw_affiliation],
+    ]);
+  });
+  if (!(evidence.historical_mappings || []).length) historicalSection.append(evidenceList([]));
+
+  const affiliationSection = evidenceSection("Affiliation evidence");
+  const rawHeading = document.createElement("h4");
+  rawHeading.textContent = "Raw affiliation text";
+  affiliationSection.append(rawHeading);
+  (affiliation.raw_affiliations || []).forEach((value) => {
+    const raw = document.createElement("blockquote");
+    raw.className = "evidence-raw";
+    raw.textContent = value;
+    affiliationSection.append(raw);
+  });
+  if (!(affiliation.raw_affiliations || []).length) affiliationSection.append(evidenceList([]));
+  appendEvidenceFields(affiliationSection, [
+    ["Parsed institution candidates", (affiliation.parsed_candidates || []).join("; ")],
+    ["Original metadata sources", (affiliation.metadata_sources || []).join("; ")],
+    ["Confidence", (affiliation.confidence || []).join("; ")],
+  ]);
+
+  const relationshipSection = evidenceSection("Institution relationships");
+  (evidence.relationships || []).forEach((relationship) => {
+    const heading = document.createElement("h4");
+    heading.textContent = institutionContextLabel(relationship) || relationship.institution_id;
+    relationshipSection.append(heading);
+    appendEvidenceFields(relationshipSection, [
+      ["Institution ID", relationship.institution_id],
+      ["Aliases", (relationship.aliases || []).join("; ")],
+      ["Parent", relationship.parent ? `${institutionContextLabel(relationship.parent) || relationship.parent.institution_id} (${relationship.parent.institution_id})` : ""],
+      ["Children", (relationship.children || []).map((child) => `${institutionContextLabel(child) || child.institution_id} (${child.institution_id})`).join("; ")],
+    ]);
+  });
+  if (!(evidence.relationships || []).length) relationshipSection.append(evidenceList([]));
+
+  const auditSection = evidenceSection("Audit explanation and risk");
+  appendEvidenceFields(auditSection, [
+    ["Why flagged", (audit.why_flagged || []).join(" | ")],
+    ["Provenance", (risk.provenance || []).join("; ")],
+    ["Similarity score", (risk.similarity_scores || []).join("; ")],
+    ["Issue type", (risk.issue_types || []).join("; ")],
+    ["Severity", (risk.severities || []).join("; ")],
+  ]);
+
+  content.append(paperSection, authorSection, mappingsSection, historicalSection, affiliationSection, relationshipSection, auditSection);
+  if (evidence.comparison) {
+    const comparisonSection = evidenceSection("Suspicious replacement comparison");
+    const comparison = document.createElement("div");
+    comparison.className = "evidence-comparison";
+    const before = evidenceSection("Before");
+    appendEvidenceFields(before, [
+      ["Current mapping", (evidence.comparison.before || []).join("; ")],
+      ["Evidence", (evidence.comparison.evidence || []).join(" | ")],
+    ]);
+    const after = evidenceSection("After");
+    appendEvidenceFields(after, [
+      ["Suggested institution", (evidence.comparison.after || []).join("; ")],
+      ["Similarity / reason", (evidence.comparison.reason || []).join(" | ")],
+    ]);
+    comparison.append(before, after);
+    comparisonSection.append(comparison);
+    content.append(comparisonSection);
+  }
+  renderInstitutionEvidenceActions(item);
+  elements["institution-evidence-dialog"].showModal();
+}
+
+function closeInstitutionEvidence() {
+  state.institutionEvidenceCase = null;
+  elements["institution-evidence-dialog"].close();
+}
+
+function evidenceShortcut(label, handler, primary = false) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = primary ? "primary-button" : "secondary-button";
+  button.textContent = label;
+  button.addEventListener("click", handler);
+  return button;
+}
+
+function renderInstitutionEvidenceActions(item) {
+  const actions = elements["institution-evidence-actions"];
+  actions.replaceChildren();
+  if (item.status !== "open") {
+    const note = document.createElement("p");
+    note.className = "historical-mapping-availability";
+    note.textContent = `${humanize(item.status)} audit record — no cleanup actions available`;
+    actions.append(note);
+    return;
+  }
+  const resolutionAction = (label, action, primary = false) => evidenceShortcut(label, () => {
+    closeInstitutionEvidence();
+    resolveInstitutionAudit(item, action);
+  }, primary);
+  if (item.mapping_change) {
+    actions.append(
+      resolutionAction("Confirm intentional change", "mapping_change_confirmed", true),
+      resolutionAction("Revert mapping", "mapping_reverted"),
+    );
+    actions.lastElementChild.className = "danger-button";
+    return;
+  }
+  actions.append(
+    resolutionAction("Accept suggestion", "accept_suggestion", true),
+    resolutionAction("Keep multiple affiliations", "keep_multiple_affiliations"),
+    evidenceShortcut("Add alias", () => {
+      closeInstitutionEvidence();
+      elements["institution-management-search"].value = (item.current_institutions || []).join(" ");
+      openInstitutionManagement();
+    }),
+    evidenceShortcut("Set parent institution", () => {
+      closeInstitutionEvidence();
+      elements["institution-management-search"].value = (item.current_institutions || []).join(" ");
+      openInstitutionManagement();
+    }),
+    evidenceShortcut("Replace mapping", async () => {
+      closeInstitutionEvidence();
+      const finding = (item.findings || [item])[0];
+      const row = { ...finding, title: item.paper_title, institution: finding.current_institution };
+      if (await openRelatedPaper(row)) openMappingDialog("replace");
+    }),
+    resolutionAction("Mark manually resolved", "manually_resolved"),
+  );
+}
+
+function resolveInstitutionAudit(item, action) {
+  const queueIds = action === "accept_suggestion"
+    ? (item.findings || []).filter((finding) => finding.finding_status === "open" && finding.mapping_id && finding.suggested_institution_id).map((finding) => finding.queue_id)
+    : (item.queue_ids || [item.queue_id].filter(Boolean));
+  if (!queueIds.length) return;
+  openInstitutionResolutionDialog(item, action, queueIds);
+}
+
+const institutionResolutionNotes = {
+  existing: "Confirmed existing curated institution mapping after manual review.",
+  alias: "Resolved manually; alias/name variation only and existing mapping retained.",
+  parent: "Resolved manually; confirmed parent-child institution relationship.",
+  multiple: "Multiple affiliations confirmed after manual review.",
+  custom: "",
+};
+
+const institutionResolutionLabels = {
+  accept_suggestion: "Accept suggestion",
+  keep_multiple_affiliations: "Keep multiple affiliations",
+  ignore: "Ignore review case",
+  manually_resolved: "Mark manually resolved",
+  mapping_change_confirmed: "Confirm intentional change",
+  mapping_reverted: "Revert mapping",
+};
+
+function openInstitutionResolutionDialog(item, action, queueIds, batch = false) {
+  const destructive = action === "accept_suggestion" || action === "replace_mapping" || action === "mapping_reverted";
+  const requiresConfirmation = destructive || action === "mapping_change_confirmed";
+  state.pendingInstitutionResolution = { item, action, queueIds, batch, destructive, requiresConfirmation, restoreFocus: document.activeElement };
+  elements["institution-resolution-title"].textContent = batch
+    ? `Resolve ${item.batch_count} selected review cases`
+    : "Resolve institution review case";
+  elements["institution-resolution-issue"].textContent = (item.issue_types || [item.issue_type]).filter(Boolean).join(", ") || "—";
+  renderPaperTitle(elements["institution-resolution-paper"], item.paper_title, "—");
+  elements["institution-resolution-author"].textContent = text(item.author) || "—";
+  elements["institution-resolution-previous"].textContent = item.mapping_change
+    ? `${item.mapping_change.previous_institution_name} (${item.mapping_change.previous_institution_id})`
+    : "—";
+  elements["institution-resolution-current"].textContent = (item.current_institutions || [item.current_institution]).filter(Boolean).join("; ") || "—";
+  elements["institution-resolution-action"].textContent = institutionResolutionLabels[action] || humanize(action);
+  const preset = action === "keep_multiple_affiliations"
+    ? "multiple"
+    : item.classification === "alias issue"
+      ? "alias"
+      : item.classification === "parent-child issue"
+        ? "parent"
+        : "existing";
+  elements["institution-resolution-preset"].value = preset;
+  elements["institution-resolution-note"].required = requiresConfirmation;
+  elements["institution-resolution-note-optional"].hidden = requiresConfirmation;
+  elements["institution-resolution-submit"].className = action === "mapping_reverted" ? "danger-button" : "primary-button";
+  elements["institution-resolution-submit"].textContent = institutionResolutionLabels[action] || "Save resolution";
+  elements["institution-resolution-error"].hidden = true;
+  applyInstitutionResolutionPreset();
+  if (action === "mapping_change_confirmed" || action === "mapping_reverted") {
+    elements["institution-resolution-preset"].value = "custom";
+    applyInstitutionResolutionPreset();
+  }
+  elements["institution-resolution-dialog"].showModal();
+}
+
+function applyInstitutionResolutionPreset() {
+  const preset = elements["institution-resolution-preset"].value;
+  elements["institution-resolution-note"].value = institutionResolutionNotes[preset] || "";
+  if (preset === "custom") elements["institution-resolution-note"].focus();
+}
+
+function closeInstitutionResolutionDialog() {
+  const restoreFocus = state.pendingInstitutionResolution?.restoreFocus;
+  state.pendingInstitutionResolution = null;
+  elements["institution-resolution-dialog"].close();
+  if (restoreFocus?.isConnected) restoreFocus.focus();
+}
+
+function openBatchInstitutionResolution() {
+  const cases = selectedInstitutionCases();
+  const queueIds = cases.flatMap((item) => item.queue_ids || []);
+  if (!queueIds.length) return;
+  openInstitutionResolutionDialog({
+    batch_count: cases.length,
+    issue_types: [...new Set(cases.flatMap((item) => item.issue_types || []))],
+    paper_title: cases.map((item) => item.paper_title).filter(Boolean).join("; "),
+    author: cases.map((item) => item.author).filter(Boolean).join("; "),
+    current_institutions: [...new Set(cases.flatMap((item) => item.current_institutions || []))],
+    classification: "",
+  }, "manually_resolved", queueIds, true);
+}
+
+async function submitInstitutionResolution(event) {
+  event.preventDefault();
+  const pending = state.pendingInstitutionResolution;
+  if (!pending) return;
+  let note = elements["institution-resolution-note"].value.trim();
+  if (pending.requiresConfirmation && !note) {
+    elements["institution-resolution-error"].hidden = false;
+    elements["institution-resolution-error"].textContent = "A review note is required because this action changes a mapping.";
+    return;
+  }
+  if (pending.batch && note) note = `Batch resolution (${pending.item.batch_count} cases): ${note}`;
+  elements["institution-resolution-submit"].disabled = true;
+  try {
+    await apiFetch(pending.batch && pending.action === "accept_suggestion"
+      ? "/api/review/institution-cleanup/batch"
+      : "/api/review/institution-cleanup/action", {
+      method: "POST",
+      body: JSON.stringify({
+        queue_ids: pending.queueIds,
+        action: pending.action,
+        review_note: note,
+        confirmed: pending.requiresConfirmation,
+        expected_mapping_id: pending.item.mapping_change?.expected_mapping_id,
+        expected_institution_id: pending.item.mapping_change?.expected_institution_id,
+        expected_mapping_updated_at: pending.item.mapping_change?.expected_mapping_updated_at,
+        expected_review_updated_at: pending.item.mapping_change?.expected_review_updated_at,
+      }),
+    });
+    const payload = await apiFetch("/api/review/institution-cleanup");
+    state.institutionAudit = payload.data || { records: [], summary: {} };
+    state.institutionCleanupSelection.clear();
+    closeInstitutionResolutionDialog();
+    renderInstitutionAudit();
+    elements["institution-audit-detail"].textContent = "Review resolved. Select another paper-author review case.";
+    elements["institution-audit-search"].focus();
+    showNotice(pending.action === "mapping_reverted" ? "Institution mapping reverted and review resolved. The next Full Refresh or Publish run will re-audit it." : pending.action === "mapping_change_confirmed" ? "Intentional mapping change confirmed and review resolved. The next Full Refresh or Publish run will verify it remains stable." : pending.action === "accept_suggestion" ? "Institution mapping corrected and cleanup finding resolved." : "Institution cleanup decision saved.");
+  } catch (error) {
+    elements["institution-resolution-error"].hidden = false;
+    elements["institution-resolution-error"].textContent = error.message;
+  } finally {
+    elements["institution-resolution-submit"].disabled = false;
+  }
+}
+
+function applySelectedInstitutionFixes() {
+  const cases = selectedInstitutionCases();
+  const findings = cases.flatMap((item) => item.findings || []).filter((finding) =>
+    finding.finding_status === "open" && finding.mapping_id && finding.suggested_institution_id
+  );
+  const queueIds = findings.map((finding) => finding.queue_id);
+  if (!queueIds.length) return;
+  openInstitutionResolutionDialog({
+    batch_count: cases.length,
+    issue_types: [...new Set(cases.flatMap((item) => item.issue_types || []))],
+    paper_title: cases.map((item) => item.paper_title).filter(Boolean).join("; "),
+    author: cases.map((item) => item.author).filter(Boolean).join("; "),
+    current_institutions: [...new Set(cases.flatMap((item) => item.current_institutions || []))],
+    classification: "",
+  }, "accept_suggestion", queueIds, true);
+}
+
+function renderReviewDetail(name, row) {
+  const detail = queuePanel(name).querySelector('[data-role="detail"]');
+  state.selectedReviewKeys[name] = reviewRecordKey(row);
+  detail.replaceChildren();
+  const heading = document.createElement("h3");
+  renderPaperTitle(heading, row.title, "Review row");
+  const groups = [
+    ["Paper", [["Title", row.title || row.requested_title], ["Year", row.year || row.candidate_year], ["DOI", row.doi], ["OpenAlex", row.openalex_url || row.openalex_id]]],
+    ["Marker / Institution", [["Institution", row.institution || row.institutions], ["Institution authors", row.institution_authors], ["Location", [row.city, row.region, row.country].filter(Boolean).join(", ")]]],
+    ["Evidence", [["Evidence source", row.evidence_source || row.source_file], ["Evidence URL", row.evidence_url], ["Resolution", row.resolution_notes || row.notes]]],
+    ["Current curated status", [["Public visibility", row.public_visibility_label || "Not visible on map"], ["Status", row.current_public_preview_status || row.coverage_status || row.candidate_status || row.review_status], ["Review type", row.review_type || row.blocker_type || row.missing_stage]]],
+    ["Recommended action", [["Action", row.recommended_action], ["Priority", row.priority]]],
+  ];
+  const grouped = document.createElement("div");
+  grouped.className = "review-detail-groups";
+  groups.forEach(([label, fields]) => {
+    const section = document.createElement("section");
+    const groupHeading = document.createElement("h4");
+    groupHeading.textContent = label;
+    const dl = document.createElement("dl");
+    fields.filter(([, value]) => text(value)).forEach(([key, value]) => {
+      const dt = document.createElement("dt");
+      dt.textContent = key;
+      const dd = document.createElement("dd");
+      if (key === "Title") renderPaperTitle(dd, value, "—");
+      else dd.textContent = text(value);
+      dl.append(dt, dd);
+    });
+    section.append(groupHeading, dl);
+    grouped.append(section);
+  });
+  const extra = document.createElement("details");
+  extra.innerHTML = "<summary>Additional generated metadata</summary>";
+  const extraDl = document.createElement("dl");
+  Object.entries(row).filter(([, value]) => text(value)).forEach(([key, value]) => {
+    const dt = document.createElement("dt"); dt.textContent = humanize(key);
+    const dd = document.createElement("dd");
+    if (key.toLocaleLowerCase().includes("title")) renderPaperTitle(dd, value, "—");
+    else dd.textContent = text(value);
+    extraDl.append(dt, dd);
+  });
+  extra.append(extraDl);
+  const actions = document.createElement("div");
+  actions.className = "review-actions";
+  reviewActionsFor(name, row).forEach(([label, action]) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "secondary-button";
+    button.textContent = label;
+    button.addEventListener("click", () => handleReviewAction(name, row, action));
+    actions.append(button);
+  });
+  detail.append(heading, grouped, extra, actions);
+}
+
+function reviewActionsFor(name, row) {
+  if (name === "publication-venues") return [["Open / Edit", "open_metadata"]];
+  const common = [["Open metadata", "open_metadata"], ["Open scope review", "open_scope"]];
+  if (name === "missing-locations") return [["Open location review", "open_location_review"]];
+  if (["missing-author-mappings", "missing-affiliations"].includes(name)) return [["Open mapping editor", "replace_author_institution_mapping"], ["Open metadata", "open_metadata"]];
+  if (name === "high-risk-papers") return [["Open blocker review", "open_blockers"], ["No action after review", "no_action_after_review"], ...common];
+  if (name === "high-risk") return [
+    ["Confirm marker", "confirm_marker"],
+    ["Replace mapping", "replace_author_institution_mapping"],
+    ["Exclude wrong mapping", "exclude_wrong_mapping"],
+    ["Send to location review", "send_to_location_review"],
+    ["No action after review", "no_action_after_review"],
+    ...common,
+  ];
+  if (name === "marker-blockers") return [
+    ["Open mapping editor", "replace_author_institution_mapping"],
+    ["Send to location review", "send_to_location_review"],
+    ["Open high-risk review", "open_high_risk"],
+    ["No action after review", "no_action_after_review"],
+    ...common,
+  ];
+  if (name === "key-paper-coverage") return [
+    ["Open blocker review", "open_blockers"],
+    ["Open mapping editor", "replace_author_institution_mapping"],
+    ["Add manually", "add_manually"],
+    ["Confirm same paper", "no_action_after_review"],
+    ["Mark unresolved", "unresolved"],
+    ...common,
+  ];
+  return [
+    ["Use OpenAlex record", "use_openalex"],
+    ["Add manually", "add_manually"],
+    ["Retry search", "retry_search"],
+    ["Reject as out-of-scope", "open_scope"],
+    ["Mark weak match unresolved", "unresolved"],
+    ["No action after review", "no_action_after_review"],
+  ];
+}
+
+function findRelatedPaper(row) {
+  const doi = normalize(text(row.doi).replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, ""));
+  const openalex = normalize(
+    row.openalex_url
+      || (row.openalex_id ? `https://openalex.org/${row.openalex_id}` : "")
+  );
+  const paperId = normalize(row.paper_id);
+  const title = normalize(row.title);
+  const year = text(row.year);
+  return state.papers.find((paper) =>
+    (paperId && [paper.display_id, paper.paper_id].map(normalize).includes(paperId)) ||
+    (doi && normalize(text(paper.doi).replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, "")) === doi) ||
+    (openalex && normalize(paper.openalex_url) === openalex) ||
+    (title && normalize(paper.title) === title && text(paper.year || paper.publication_year) === year)
+  );
+}
+
+async function openRelatedPaper(row) {
+  const paper = findRelatedPaper(row);
+  if (!paper) {
+    showNotice("No matching paper is currently visible. Use Add Paper or refresh the preview.", "error");
+    return null;
+  }
+  navigateConsole("papers");
+  await selectPaper(paper.display_id);
+  return paper;
+}
+
+async function openCoverageMappingEditor(row, { mapMissingAuthors = false } = {}) {
+  const paper = await openRelatedPaper(row);
+  if (!paper) return;
+  navigateConsole("mappings");
+  if (mapMissingAuthors) {
+    openMappingDialog("create", {
+      institution_authors: row.missing_author_names,
+    });
+    elements["mapping-institution"].focus();
+    showNotice(
+      "Missing authors are prefilled. Add the verified institution and affiliation evidence."
+    );
+  }
+}
+
+async function handleReviewAction(name, row, action) {
+  if (action === "open_location_review") {
+    navigateConsole("location-review");
+    state.locationStatusFilter = "";
+    elements["location-search"].value = "";
+    selectLocationReview(row.queue_id);
+    return;
+  }
+  if (action === "open_high_risk") return navigateConsole("high-risk");
+  if (action === "open_blockers") return navigateConsole("marker-blockers");
+  if (action === "open_metadata") {
+    if (await openRelatedPaper(row)) openMetadataEditor();
+    return;
+  }
+  if (action === "open_scope") {
+    const paper = await openRelatedPaper(row);
+    if (paper) openScopeDialog(state.selectedPaper, "exclude");
+    else {
+      const note = window.prompt("Review note for this out-of-scope candidate:");
+      if (note) await saveReviewDecision(name, row, "exclude_paper_scope", note);
+    }
+    return;
+  }
+  if (action === "replace_author_institution_mapping") {
+    if (await openRelatedPaper(row)) openMappingDialog("replace");
+    return;
+  }
+  if (action === "send_to_location_review" && !text(row.institution)) {
+    openLocationReview();
+    elements["location-search"].value = text(row.title);
+    renderLocationReviewList();
+    showNotice("Opened the existing location queue filtered to this paper.");
+    return;
+  }
+  if (action === "use_openalex" || action === "add_manually") {
+    openAddPaperPanel();
+    const candidate = action === "use_openalex" ? {
+      ...row,
+      title: row.candidate_title || row.best_match_title || row.title,
+      year: row.candidate_year || row.best_match_year || row.year,
+      venue: row.venue || row.publication_venue,
+    } : row;
+    startPaperDraft(candidate, action === "use_openalex" ? "openalex" : "manual");
+    return;
+  }
+  if (action === "retry_search") {
+    openAddPaperPanel();
+    elements["openalex-title"].value = text(row.title);
+    elements["openalex-doi"].value = text(row.doi);
+    elements["openalex-paper-url"].value = text(row.openalex_url);
+    await searchOpenAlex({ preventDefault() {} });
+    return;
+  }
+  const note = window.prompt("Required review note:");
+  if (!note) return;
+  await saveReviewDecision(name, row, action, note);
+}
+
+async function saveReviewDecision(name, row, action, note) {
+  const endpoints = {
+    "high-risk": "/api/review/high-risk-markers/action",
+    "high-risk-papers": "/api/review/high-risk-markers/action",
+    "marker-blockers": "/api/review/marker-blockers/action",
+    "key-paper-coverage": "/api/review/key-paper-coverage/action",
+    "manual-import": "/api/review/manual-import/action",
+  };
+  try {
+    const payload = await apiFetch(endpoints[name], {
+      method: "POST",
+      body: JSON.stringify({
+        ...row,
+        action,
+        review_note: note,
+        target_type: row.institution ? "marker" : "paper",
+      }),
+    });
+    showNotice(payload.message);
+    await loadDashboardAndQueues();
+  } catch (error) {
+    showNotice(`Could not save review action: ${error.message}`, "error");
+  }
+}
+
+function applyLocationPayload(payload) {
+  state.locationReviews = payload.records || [];
+  state.confirmedLocations = payload.confirmed_locations || [];
+  state.locationSummary = payload.summary || {};
+  elements["location-review-counts"].textContent =
+    `${formatNumber(payload.total_unresolved || 0)} unresolved · `
+    + `${formatNumber((payload.records || []).length - (payload.total_unresolved || 0))} resolved and available`;
+  renderLocationSummary();
+  renderLocationReviewList();
+  if (state.locationEditorMode === "review" && state.selectedLocationReviewId) {
+    const selected = state.locationReviews.find(
+      (row) => row.queue_id === state.selectedLocationReviewId
+    );
+    if (selected) selectLocationReview(selected.queue_id);
+    else clearLocationEditor();
+  }
+}
+
+function patchLocationReviewRecord(updated, confirmedLocation = null) {
+  const queueId = text(updated?.queue_id);
+  const index = state.locationReviews.findIndex((row) => row.queue_id === queueId);
+  if (index < 0) return;
+  const previousFilteredRecords = filteredLocationReviewRecords();
+  const previousFilteredIndex = previousFilteredRecords.findIndex(
+    (row) => row.queue_id === queueId
+  );
+  state.locationReviews[index] = {
+    ...state.locationReviews[index],
+    ...updated,
+    ...(confirmedLocation ? { confirmed_location: confirmedLocation } : {}),
+  };
+  const counts = state.locationReviews.reduce((result, row) => {
+    result[row.review_status] = (result[row.review_status] || 0) + 1;
+    return result;
+  }, {});
+  Object.assign(state.locationSummary, {
+    total_queue_rows: state.locationReviews.length,
+    pending_review: counts.pending_review || 0,
+    needs_coordinates: state.locationReviews.filter(
+      (row) => locationReviewStatusLabel(row, row.confirmed_location) === "Needs coordinates"
+    ).length,
+    ambiguous: counts.ambiguous || 0,
+    confirmed: counts.confirmed || 0,
+    alias_of_confirmed: counts.alias_of_confirmed || 0,
+    ignore: counts.ignore || 0,
+    excluded: counts.excluded || 0,
+  });
+  const unresolved = (counts.pending_review || 0) + (counts.ambiguous || 0);
+  state.locationSummary.total_unresolved = unresolved;
+  elements["location-review-counts"].textContent =
+    `${formatNumber(unresolved)} unresolved · `
+    + `${formatNumber(state.locationReviews.length - unresolved)} resolved and available`;
+  renderLocationSummary();
+  if (
+    state.locationEditorMode === "review"
+    && state.selectedLocationReviewId === queueId
+    && !locationReviewMatches(state.locationReviews[index])
+  ) {
+    const remaining = filteredLocationReviewRecords();
+    const next = remaining[Math.min(
+      Math.max(previousFilteredIndex, 0),
+      Math.max(remaining.length - 1, 0)
+    )];
+    if (next) selectLocationReview(next.queue_id);
+    else clearLocationEditor();
+  } else if (state.locationEditorMode === "review" && state.selectedLocationReviewId === queueId) {
+    selectLocationReview(queueId);
+  } else {
+    renderLocationReviewList();
+  }
+}
+
+async function loadLocationReviews() {
+  const payload = await apiFetch("/api/location-review");
+  applyLocationPayload(payload);
+}
+
+function openInstitutionManagement() {
+  elements["institution-management-panel"].hidden = false;
+  renderInstitutionManagement();
+  elements["institution-management-panel"].scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+async function refreshInstitutions() {
+  const payload = await apiFetch("/api/institutions");
+  state.institutions = payload.records || [];
+  renderInstitutionManagement();
+}
+
+function institutionActionButton(label, action, institution) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = action === "ignore" || action === "merge" ? "danger-button" : "secondary-button";
+  button.textContent = label;
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    runInstitutionAction(action, institution);
+  });
+  return button;
+}
+
+function filteredInstitutionRecords() {
+  const searchValue = elements["institution-management-search"].value;
+  if (searchValue !== state.institutionManagement.query) {
+    state.institutionManagement.query = searchValue;
+    state.institutionManagement.page = 1;
+  }
+  const query = normalize(state.institutionManagement.query);
+  return state.institutions.filter((row) => normalize([
+    row.canonical_name, row.abbreviation, row.institution_type, row.institution_status,
+    ...(row.aliases || []), row.parent_institution_id, row.parent?.canonical_name,
+    ...(row.descendants || []).flatMap((descendant) => [
+      descendant.institution_id, descendant.canonical_name,
+    ]),
+  ].join(" ")).includes(query));
+}
+
+function institutionTotalPages(recordCount) {
+  return Math.ceil(recordCount / state.institutionManagement.pageSize);
+}
+
+function scrollInstitutionManagementToTop() {
+  const list = document.getElementById("institution-management-table-wrap");
+  if (list) list.scrollTop = 0;
+}
+
+function changeInstitutionPage(event) {
+  const totalPages = institutionTotalPages(filteredInstitutionRecords().length);
+  const action = event.currentTarget.dataset.institutionPageAction;
+  const currentPage = state.institutionManagement.page;
+  const targetPages = {
+    first: 1,
+    previous: Math.max(1, currentPage - 1),
+    next: Math.min(totalPages || 1, currentPage + 1),
+    last: totalPages || 1,
+  };
+  state.institutionManagement.page = targetPages[action] || currentPage;
+  renderInstitutionManagement();
+  scrollInstitutionManagementToTop();
+}
+
+function changeInstitutionPageSize(event) {
+  state.institutionManagement.pageSize = Number(event.currentTarget.value);
+  state.institutionManagement.page = 1;
+  renderInstitutionManagement();
+  scrollInstitutionManagementToTop();
+}
+
+function updateInstitutionPagination(recordCount, totalPages) {
+  const { page, pageSize } = state.institutionManagement;
+  document.querySelectorAll(".institution-page-size").forEach((select) => {
+    select.value = String(pageSize);
+  });
+  document.querySelectorAll(".institution-page-status").forEach((status) => {
+    status.textContent = `Page ${recordCount ? page : 0} of ${totalPages} · ${recordCount} institutions`;
+  });
+  document.querySelectorAll("[data-institution-page-action]").forEach((button) => {
+    const action = button.dataset.institutionPageAction;
+    button.disabled = !recordCount
+      || (action === "first" && page === 1)
+      || (action === "previous" && page <= 1)
+      || (action === "next" && page >= totalPages)
+      || (action === "last" && page === totalPages);
+  });
+}
+
+function renderInstitutionManagement() {
+  if (!elements["institution-management-rows"]) return;
+  const records = filteredInstitutionRecords();
+  const { page, pageSize } = state.institutionManagement;
+  const totalPages = institutionTotalPages(records.length);
+  const outOfRange = records.length > 0 && page > totalPages;
+  const pageStart = (page - 1) * pageSize;
+  const pageRecords = outOfRange ? [] : records.slice(pageStart, pageStart + pageSize);
+  const body = elements["institution-management-rows"];
+  body.replaceChildren();
+  pageRecords.forEach((institution) => {
+    const row = document.createElement("tr");
+    const identity = document.createElement("td");
+    identity.append(document.createTextNode(institutionContextLabel(institution)), document.createElement("br"), document.createTextNode(institution.institution_id));
+    const hierarchy = document.createElement("td");
+    const aliases = (institution.aliases || []).join(", ") || "No aliases";
+    const parent = institution.parent
+      ? `${institutionContextLabel(institution.parent)} (${institution.parent.institution_id})`
+      : "None";
+    const descendants = (institution.descendants || []).map(
+      (descendant) => `${institutionContextLabel(descendant)} (${descendant.institution_id})`,
+    ).join(", ") || "None";
+    hierarchy.textContent = `${aliases} · Parent: ${parent} · Descendants: ${descendants}`;
+    const status = document.createElement("td");
+    status.textContent = `${institution.institution_status} · ${InstitutionTypeLabels.label(institution.institution_type)}`;
+    if (institution.institution_type_rule) {
+      status.append(document.createElement("br"), document.createTextNode(
+        `Type provenance: ${institution.institution_type_rule}${institution.institution_type_evidence ? ` · ${institution.institution_type_evidence}` : ""}`,
+      ));
+    }
+    const usage = document.createElement("td");
+    const impact = institution.usage || {};
+    usage.textContent = `${impact.papers || 0} papers · ${impact.author_mappings || 0} mappings · ${impact.markers || 0} markers · ${(impact.authors || []).length} authors`;
+    const actions = document.createElement("td");
+    actions.className = "form-actions";
+    [
+      ["Edit identity", "identity"], ["Edit location", "location"],
+      ["Add alias", "alias"], ["Set parent", "parent"],
+      ["Merge", "merge"], ["Ignore", "ignore"],
+    ].forEach(([label, action]) => actions.append(institutionActionButton(label, action, institution)));
+    row.append(identity, hierarchy, status, usage, actions);
+    body.append(row);
+  });
+  updateInstitutionPagination(records.length, totalPages);
+  const empty = elements["institution-management-empty"];
+  empty.hidden = pageRecords.length !== 0;
+  if (!records.length) {
+    empty.textContent = state.institutionManagement.query.trim()
+      ? "No institutions match the current search."
+      : "No institutions are available.";
+  } else if (outOfRange) {
+    empty.textContent = `Page ${page} is out of range. Choose First, Previous, or Last.`;
+  }
+}
+
+async function postInstitutionAction(path, body) {
+  return apiFetch(path, { method: "POST", body: JSON.stringify(body) });
+}
+
+function patchInstitutionRecord(updated) {
+  const identifier = text(updated?.institution_id);
+  const index = state.institutions.findIndex(
+    (institution) => text(institution.institution_id) === identifier
+  );
+  if (index < 0) return;
+  state.institutions[index] = { ...state.institutions[index], ...updated };
+  renderInstitutionManagement();
+}
+
+function openInstitutionIdentityDialog(institution) {
+  elements["institution-identity-id"].value = institution.institution_id;
+  elements["institution-identity-name"].value = text(institution.canonical_name);
+  elements["institution-identity-abbreviation"].value = text(institution.abbreviation);
+  elements["institution-identity-type"].value = institution.institution_type;
+  elements["institution-identity-error"].hidden = true;
+  elements["institution-identity-dialog"].showModal();
+  elements["institution-identity-name"].focus();
+}
+
+async function submitInstitutionIdentity(event) {
+  event.preventDefault();
+  const identifier = elements["institution-identity-id"].value;
+  const current = state.institutions.find((row) => row.institution_id === identifier);
+  if (!current) return;
+  try {
+    const payload = await postInstitutionAction("/api/institution/identity", {
+      institution_id: identifier,
+      canonical_name: elements["institution-identity-name"].value.trim(),
+      abbreviation: elements["institution-identity-abbreviation"].value.trim(),
+      institution_type: elements["institution-identity-type"].value,
+      institution_status: current.institution_status,
+    });
+    patchInstitutionRecord(payload.data);
+    elements["institution-identity-dialog"].close();
+    showNotice("Institution identity saved.");
+  } catch (error) {
+    elements["institution-identity-error"].textContent = error.message;
+    elements["institution-identity-error"].hidden = false;
+  }
+}
+
+function shortInstitutionId(value) {
+  return text(value).trim().replace(/^institution:/i, "");
+}
+
+function normalizeInstitutionMergeId(value) {
+  const input = text(value).trim();
+  if (!input) return "";
+  const full = input.match(/^institution:([0-9a-f]{16})$/i);
+  if (full) return `institution:${full[1].toLocaleLowerCase()}`;
+  if (/^[0-9a-f]{16}$/i.test(input)) {
+    return `institution:${input.toLocaleLowerCase()}`;
+  }
+  if (/institution:/i.test(input) || /^[0-9a-f]+$/i.test(input)) {
+    throw new Error("Enter a valid 16-character short institution ID.");
+  }
+  return "";
+}
+
+function institutionMergeSearchText(institution) {
+  return [
+    institution.canonical_name,
+    institution.abbreviation,
+    ...(institution.aliases || []),
+    institution.institution_id,
+    shortInstitutionId(institution.institution_id),
+  ].join(" ").toLocaleLowerCase();
+}
+
+function availableInstitutionMergeTargets() {
+  const sourceId = text(state.institutionMerge.source?.institution_id);
+  return state.institutions.filter((institution) =>
+    institution.institution_id !== sourceId
+    && institution.institution_status === "active"
+  );
+}
+
+function renderInstitutionMergeTargets() {
+  const query = elements["institution-merge-search"].value.trim().toLocaleLowerCase();
+  const matches = availableInstitutionMergeTargets()
+    .filter((institution) => !query || institutionMergeSearchText(institution).includes(query))
+    .slice(0, 100);
+  const options = matches.map((institution) => {
+    const option = document.createElement("option");
+    option.value = institution.institution_id;
+    option.textContent = `${institutionContextLabel(institution)} — ${shortInstitutionId(institution.institution_id)}`;
+    return option;
+  });
+  elements["institution-merge-results"].replaceChildren(...options);
+}
+
+function selectInstitutionMergeResult() {
+  const selectedId = elements["institution-merge-results"].value;
+  if (selectedId) elements["institution-merge-search"].value = selectedId;
+  hideInstitutionMergeError();
+}
+
+function showInstitutionMergeError(message) {
+  elements["institution-merge-error"].textContent = message;
+  elements["institution-merge-error"].hidden = false;
+}
+
+function hideInstitutionMergeError() {
+  elements["institution-merge-error"].hidden = true;
+  elements["institution-merge-error"].textContent = "";
+}
+
+function closeInstitutionMergeDialog() {
+  if (state.institutionMerge.submitting) return;
+  elements["institution-merge-dialog"].close();
+  state.institutionMerge = { source: null, target: null, submitting: false };
+}
+
+function openInstitutionMergeDialog(source) {
+  state.institutionMerge = { source, target: null, submitting: false };
+  elements["institution-merge-form"].reset();
+  elements["institution-merge-source-label"].textContent = institutionContextLabel(source);
+  elements["institution-merge-target-step"].hidden = false;
+  elements["institution-merge-confirm-step"].hidden = true;
+  elements["institution-merge-submit"].disabled = true;
+  hideInstitutionMergeError();
+  renderInstitutionMergeTargets();
+  elements["institution-merge-dialog"].showModal();
+  elements["institution-merge-search"].focus();
+}
+
+function institutionMergeLocationText(institution) {
+  return (institution.locations || [])
+    .map((location) => [
+      location.city,
+      location.region,
+      location.country,
+      location.country_code,
+      location.lat && location.lon ? `${location.lat}, ${location.lon}` : "",
+    ].filter(Boolean).join(", "))
+    .join("; ");
+}
+
+function institutionMergeHasLocationConflict() {
+  const { source, target } = state.institutionMerge;
+  return Boolean(source?.locations?.length && target?.locations?.length);
+}
+
+function updateInstitutionMergeSubmitState() {
+  const requiresLocationChoice = institutionMergeHasLocationConflict();
+  const locationChoice = document.querySelector(
+    'input[name="institution-merge-location-choice"]:checked',
+  );
+  elements["institution-merge-submit"].disabled = Boolean(
+    !state.institutionMerge.target || (requiresLocationChoice && !locationChoice),
+  );
+}
+
+function resolveInstitutionMergeTarget() {
+  hideInstitutionMergeError();
+  try {
+    const input = elements["institution-merge-search"].value.trim();
+    if (!input) throw new Error("Choose or enter a target institution.");
+    const normalizedId = normalizeInstitutionMergeId(input);
+    let matches = [];
+    if (normalizedId) {
+      matches = state.institutions.filter((row) => row.institution_id === normalizedId);
+      if (!matches.length) throw new Error(`Unknown canonical institution ID: ${normalizedId}`);
+    } else {
+      const key = canonicalInstitutionKey(input);
+      matches = state.institutions.filter((row) => [
+        row.canonical_name,
+        row.abbreviation,
+        ...(row.aliases || []),
+      ].some((name) => canonicalInstitutionKey(name) === key));
+      if (!matches.length) throw new Error("No canonical institution matches that name or alias.");
+      if (matches.length > 1) throw new Error("That name or alias is ambiguous; select a canonical target from the results.");
+    }
+    const target = matches[0];
+    const source = state.institutionMerge.source;
+    if (target.institution_id === source.institution_id) {
+      throw new Error("Source and target institutions must differ.");
+    }
+    if (target.institution_status !== "active") {
+      throw new Error("The target institution must be active in the canonical registry.");
+    }
+    state.institutionMerge.target = target;
+    elements["institution-merge-source-name"].textContent = institutionContextLabel(source);
+    elements["institution-merge-source-id"].textContent = shortInstitutionId(source.institution_id);
+    elements["institution-merge-target-name"].textContent = institutionContextLabel(target);
+    elements["institution-merge-target-id"].textContent = shortInstitutionId(target.institution_id);
+    const locationConflict = institutionMergeHasLocationConflict();
+    elements["institution-merge-location-resolution"].hidden = !locationConflict;
+    elements["institution-merge-target-location"].textContent = institutionMergeLocationText(target);
+    elements["institution-merge-source-location"].textContent = institutionMergeLocationText(source);
+    elements["institution-merge-target-step"].hidden = true;
+    elements["institution-merge-confirm-step"].hidden = false;
+    updateInstitutionMergeSubmitState();
+    if (!locationConflict) elements["institution-merge-submit"].focus();
+  } catch (error) {
+    state.institutionMerge.target = null;
+    elements["institution-merge-submit"].disabled = true;
+    showInstitutionMergeError(error.message);
+  }
+}
+
+async function submitInstitutionMerge(event) {
+  event.preventDefault();
+  if (state.institutionMerge.submitting) return;
+  hideInstitutionMergeError();
+  const { source, target } = state.institutionMerge;
+  if (!source || !target) {
+    showInstitutionMergeError("Resolve a canonical target before merging.");
+    elements["institution-merge-submit"].disabled = true;
+    return;
+  }
+  const backendConfirmation =
+    `REPLACE ${source.canonical_name} WITH ${target.canonical_name} GLOBALLY`;
+  const locationChoice = document.querySelector(
+    'input[name="institution-merge-location-choice"]:checked',
+  );
+  if (institutionMergeHasLocationConflict() && !locationChoice) {
+    showInstitutionMergeError("Choose which confirmed location to keep.");
+    updateInstitutionMergeSubmitState();
+    return;
+  }
+  state.institutionMerge.submitting = true;
+  elements["institution-merge-submit"].disabled = true;
+  try {
+    await apiFetch("/api/institution/merge", {
+      method: "POST",
+      body: JSON.stringify({
+        source_institution_id: source.institution_id,
+        target_institution_id: target.institution_id,
+        confirmation: backendConfirmation,
+        location_resolution: locationChoice?.value || "",
+      }),
+    });
+    state.institutionMerge.submitting = false;
+    elements["institution-merge-dialog"].close();
+    state.institutionMerge = { source: null, target: null, submitting: false };
+    showNotice("Institution merge saved.");
+    try {
+      await Promise.all([refreshInstitutions(), loadLocationReviews()]);
+    } catch (refreshError) {
+      showNotice(`Institution merge saved, but refresh failed: ${refreshError.message}`, "error");
+    }
+  } catch (error) {
+    state.institutionMerge.submitting = false;
+    showInstitutionMergeError(`Merge failed: ${error.message}`);
+    updateInstitutionMergeSubmitState();
+  }
+}
+
+async function runInstitutionAction(action, institution) {
+  try {
+    if (action === "location") {
+      await openCanonicalInstitutionLocation(institution);
+      return;
+    }
+    if (action === "identity") {
+      openInstitutionIdentityDialog(institution);
+      return;
+    } else if (action === "alias") {
+      const aliasName = window.prompt("Alias to resolve to this canonical institution:");
+      if (!aliasName) return;
+      const payload = await postInstitutionAction("/api/institution/alias", { institution_id: institution.institution_id, alias_name: aliasName, review_note: "Confirmed in institution management." });
+      institution.aliases = [...new Set([...(institution.aliases || []), payload.data.alias_name])];
+      renderInstitutionManagement();
+    } else if (action === "parent") {
+      const parentId = window.prompt("Parent institution ID (blank removes parent):", institution.parent_institution_id || "");
+      if (parentId === null) return;
+      await postInstitutionAction("/api/institution/parent", { institution_id: institution.institution_id, parent_institution_id: parentId });
+      await refreshInstitutions();
+    } else if (action === "ignore") {
+      if (!window.confirm("This hides this institution from public outputs without deleting data.")) return;
+      const note = window.prompt("Review note for the audit trail:");
+      if (!note) return;
+      await postInstitutionAction("/api/institution/ignore", { institution_id: institution.institution_id, confirmation: true, review_note: note });
+      await refreshInstitutions();
+    } else if (action === "merge") {
+      openInstitutionMergeDialog(institution);
+      return;
+    }
+    showNotice(`Institution ${action} action saved.`);
+  } catch (error) {
+    showNotice(`Institution action failed: ${error.message}`, "error");
+  }
+}
+
+async function openCanonicalInstitutionLocation(institution) {
+  const identifier = text(institution?.institution_id);
+  if (!identifier) throw new Error("The selected canonical institution has no institution_id.");
+  const requestSequence = ++institutionLocationSequence;
+  geocodeRequestSequence += 1;
+  state.locationEditorMode = "canonical";
+  state.selectedInstitutionLocationId = identifier;
+  state.selectedLocationReviewId = "";
+  resetGeocodeSelection();
+  openLocationReview();
+  showLocationEditorPlaceholder(
+    "Loading institution location…",
+    `Loading canonical institution ${identifier}.`
+  );
+  elements["location-form"].hidden = true;
+  renderLocationReviewList();
+  try {
+    const payload = await apiFetch(`/api/institution?institution_id=${encodeURIComponent(identifier)}`);
+    if (!isActiveCanonicalLocationRequest(requestSequence, identifier)) return;
+    const detail = payload.data || {};
+    const editableIdentifier = text(detail.editable_institution_id);
+    if (!editableIdentifier || text(detail.institution?.institution_id) !== editableIdentifier) {
+      throw new Error("Loaded institution details do not identify one active canonical institution.");
+    }
+    selectCanonicalInstitutionLocation(detail);
+  } catch (error) {
+    if (!isActiveCanonicalLocationRequest(requestSequence, identifier)) return;
+    elements["location-form"].hidden = true;
+    showLocationEditorPlaceholder(
+      "Could not load institution location",
+      error.message
+    );
+  }
+}
+
+function isActiveCanonicalLocationRequest(requestSequence, identifier) {
+  return requestSequence === institutionLocationSequence &&
+    state.locationEditorMode === "canonical" &&
+    state.selectedInstitutionLocationId === identifier;
+}
+
+function showLocationEditorPlaceholder(title, message) {
+  const placeholder = elements["location-editor-placeholder"];
+  placeholder.hidden = false;
+  placeholder.querySelector("h3").textContent = title;
+  placeholder.querySelector("p").textContent = message;
+}
+
+function selectCanonicalInstitutionLocation(detail) {
+  const institution = detail.institution || {};
+  const identifier = text(institution.institution_id);
+  const locations = detail.locations || [];
+  const location = detail.current_location || detail.location || {};
+  const review = (detail.location_reviews || [])[0] || {};
+  state.locationEditorMode = "canonical";
+  state.selectedInstitutionLocationId = identifier;
+  state.selectedLocationReviewId = "";
+  state.selectedInstitutionLocations = locations;
+  clearLocationFields();
+  elements["location-editor-placeholder"].hidden = true;
+  elements["location-form"].hidden = false;
+  elements["location-form"].reset();
+  elements["location-queue-id"].value = "";
+  elements["location-institution-id"].value = identifier;
+  elements["confirmed-institution"].value = text(institution.canonical_name);
+  elements["institution-abbreviation"].value = text(institution.abbreviation);
+  elements["institution-aliases"].textContent = (detail.aliases || [])
+    .map((row) => row.alias_name).filter(Boolean).join("; ") || "No aliases";
+  elements["institution-new-alias"].value = "";
+  elements["institution-review-status"].textContent = locationReviewStatusLabel(review, location);
+  const canonicalSelect = elements["canonical-institution"];
+  canonicalSelect.replaceChildren(new Option(institution.canonical_name, institution.canonical_name));
+  canonicalSelect.value = institution.canonical_name;
+  elements["canonical-institution-label"].hidden = true;
+  const locationSelect = elements["confirmed-location-record"];
+  elements["confirmed-location-record-label"].hidden = false;
+  locationSelect.replaceChildren();
+  locations.forEach((record) => locationSelect.add(new Option(
+    mappingLocationLabel(record),
+    record.location_id
+  )));
+  locationSelect.add(new Option("Add another confirmed location…", ""));
+  locationSelect.value = text(location.location_id);
+  elements["confirmed-city"].value = text(location.city || review.suggested_city);
+  elements["confirmed-region"].value = text(location.region);
+  elements["confirmed-country"].value = text(location.country || review.suggested_country);
+  elements["confirmed-country-code"].value = text(location.country_code).toUpperCase();
+  elements["confirmed-lat"].value = text(location.lat);
+  elements["confirmed-lon"].value = text(location.lon);
+  resetCityAutofillSources();
+  setCityResolutionStatus("");
+  elements["location-form-error"].hidden = true;
+  renderLocationActions();
+  renderCanonicalLocationContext(detail);
+  elements["confirmed-city"].focus();
+  showNotice(`Editing location for ${institutionContextLabel(institution)}; identity and mappings remain unchanged.`);
+}
+
+function selectConfirmedLocationRecord() {
+  const locationId = elements["confirmed-location-record"].value;
+  const review = state.locationReviews.find(
+    (row) => row.queue_id === state.selectedLocationReviewId
+  );
+  const locations = state.locationEditorMode === "canonical"
+    ? state.selectedInstitutionLocations
+    : (review?.confirmed_locations || []);
+  const location = locations.find(
+    (record) => text(record.location_id) === locationId
+  ) || {};
+  for (const [elementId, field] of [
+    ["confirmed-city", "city"], ["confirmed-region", "region"],
+    ["confirmed-country", "country"], ["confirmed-country-code", "country_code"],
+    ["confirmed-lat", "lat"], ["confirmed-lon", "lon"],
+  ]) {
+    elements[elementId].value = text(location[field]);
+  }
+  resetCityAutofillSources();
+  setCityResolutionStatus("");
+  elements["confirmed-city"].focus();
+}
+
+function renderCanonicalLocationContext(detail) {
+  const institution = detail.institution || {};
+  const location = detail.current_location || detail.location || {};
+  const reviews = detail.location_reviews || [];
+  const fields = [
+    ["Canonical institution ID", institution.institution_id],
+    ["Current location review", reviews.map((row) => row.review_status).filter(Boolean).join("; ")],
+    ["Affiliation evidence", (detail.affiliation_evidence || []).map((row) => row.raw_affiliation).filter(Boolean).join("; ")],
+  ];
+  elements["location-context"].replaceChildren();
+  fields.forEach(([label, value]) => {
+    const paragraph = document.createElement("p");
+    const strong = document.createElement("strong");
+    strong.textContent = `${label}: `;
+    paragraph.append(strong, text(value) || "—");
+    elements["location-context"].append(paragraph);
+  });
+}
+
+function openLocationReview({ direct = false } = {}) {
+  if (direct && state.locationEditorMode !== "review") clearLocationEditor();
+  elements["location-review-panel"].hidden = false;
+  renderLocationSummary();
+  renderLocationReviewList();
+  elements["location-review-panel"].scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+}
+
+function closeLocationReview() {
+  elements["location-review-panel"].hidden = true;
+}
+
+function renderLocationSummary() {
+  const summary = state.locationSummary;
+  const items = [
+    ["Queue", summary.total_queue_rows],
+    ["Pending Review", summary.pending_review],
+    ["Needs Coordinates", summary.needs_coordinates],
+    ["Ambiguous", summary.ambiguous],
+    ["Confirmed", summary.confirmed],
+    ["Aliases", summary.alias_of_confirmed],
+    ["Ignored", summary.ignore],
+    ["Excluded", summary.excluded],
+    ["Confirmed locations", summary.confirmed_locations_count],
+  ];
+  elements["location-summary"].replaceChildren();
+  items.forEach(([label, value]) => {
+    const item = document.createElement("span");
+    const strong = document.createElement("strong");
+    strong.textContent = formatNumber(value);
+    item.append(strong, ` ${label}`);
+    elements["location-summary"].append(item);
+  });
+  const filters = [
+    ["", "All", summary.total_queue_rows],
+    ["pending_review", "Pending Review", summary.pending_review],
+    ["needs_coordinates", "Needs Coordinates", summary.needs_coordinates],
+    ["ambiguous", "Ambiguous", summary.ambiguous],
+    [
+      "confirmed",
+      "Confirmed",
+      (summary.confirmed || 0) + (summary.alias_of_confirmed || 0),
+    ],
+    ["ignore", "Ignored", summary.ignore],
+    ["excluded", "Excluded", summary.excluded],
+  ];
+  elements["location-status-filters"].replaceChildren();
+  filters.forEach(([value, label, count]) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = `${label} (${count || 0})`;
+    button.dataset.locationStatus = value;
+    button.dataset.active = String(state.locationStatusFilter === value);
+    button.setAttribute("aria-pressed", String(state.locationStatusFilter === value));
+    elements["location-status-filters"].append(button);
+  });
+}
+
+function locationReviewMatches(row, query = normalize(elements["location-search"].value)) {
+  if (
+    state.locationStatusFilter &&
+    !(
+      state.locationStatusFilter === "confirmed"
+        ? ["confirmed", "alias_of_confirmed"].includes(row.review_status)
+        : state.locationStatusFilter === "needs_coordinates"
+          ? row.actionable === true && !row.has_usable_confirmed_location
+          : row.review_status === state.locationStatusFilter
+    )
+  ) return false;
+  if (!query) return true;
+  return normalize([
+    row.institution,
+    row.canonical_institution_name,
+    row.abbreviation,
+    ...(row.aliases || []),
+    row.title,
+    row.year,
+    row.institution_authors,
+    row.raw_affiliation,
+    row.location_status,
+    row.coordinate_status,
+    row.review_status,
+    row.suggested_city,
+    row.suggested_country,
+  ].join(" ")).includes(query);
+}
+
+function filteredLocationReviewRecords() {
+  const query = normalize(elements["location-search"].value);
+  return state.locationReviews.filter((row) => locationReviewMatches(row, query));
+}
+
+function selectLocationStatusFilter(event) {
+  const button = event.target.closest("button[data-location-status]");
+  if (!button) return;
+  state.locationStatusFilter = button.dataset.locationStatus;
+  state.locationReviewPage = 1;
+  if (state.locationEditorMode === "review") {
+    const selected = state.locationReviews.find(
+      (row) => row.queue_id === state.selectedLocationReviewId
+    );
+    if (selected && !locationReviewMatches(selected)) clearLocationEditor();
+  }
+  renderLocationSummary();
+  renderLocationReviewList();
+}
+
+function selectLocationReviewResult(event) {
+  const button = event.target.closest("button[data-location-review-id]");
+  if (button) selectLocationReview(button.dataset.locationReviewId);
+}
+
+function changeLocationReviewPage(delta) {
+  const records = filteredLocationReviewRecords();
+  const pages = Math.max(1, Math.ceil(records.length / state.locationReviewPageSize));
+  state.locationReviewPage = Math.max(1, Math.min(pages, state.locationReviewPage + delta));
+  renderLocationReviewList();
+}
+
+function renderLocationReviewList() {
+  const records = filteredLocationReviewRecords();
+  const pages = Math.max(1, Math.ceil(records.length / state.locationReviewPageSize));
+  state.locationReviewPage = Math.min(state.locationReviewPage, pages);
+  const start = (state.locationReviewPage - 1) * state.locationReviewPageSize;
+  const visibleRecords = records.slice(start, start + state.locationReviewPageSize);
+  const list = elements["location-review-list"];
+  list.replaceChildren();
+  visibleRecords.forEach((row) => {
+    const item = document.createElement("li");
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.locationReviewId = row.queue_id;
+    button.dataset.selected =
+      row.queue_id === state.selectedLocationReviewId ? "true" : "false";
+    const institution = document.createElement("strong");
+    institution.textContent = text(row.institution) || "Unnamed institution";
+    const paper = document.createElement("span");
+    paper.textContent = [row.title, row.year].filter(Boolean).join(" · ") || "Paper unknown";
+    const status = document.createElement("small");
+    status.className = "institution-status-badge";
+    status.dataset.status = row.review_status || "pending_review";
+    status.textContent = humanize(row.review_status || "pending_review");
+    const diagnostic = document.createElement("small");
+    const candidateCount = (row.candidate_suggestions || []).length;
+    diagnostic.textContent = `Diagnostics: ${humanize(row.location_status)} · ${humanize(row.coordinate_status)}${candidateCount ? ` · ${candidateCount} alias/duplicate candidate${candidateCount === 1 ? "" : "s"}` : ""}`;
+    button.append(institution, paper, status, diagnostic);
+    item.append(button);
+    list.append(item);
+  });
+  elements["empty-location-reviews"].hidden = records.length !== 0;
+  elements["location-review-page-status"].textContent = records.length
+    ? `Page ${state.locationReviewPage} of ${pages} · ${records.length}`
+    : "No results";
+  elements["location-review-previous"].disabled = state.locationReviewPage <= 1;
+  elements["location-review-next"].disabled = state.locationReviewPage >= pages;
+}
+
+function selectLocationReview(queueId) {
+  const row = state.locationReviews.find((entry) => entry.queue_id === queueId);
+  if (!row) return;
+  institutionLocationSequence += 1;
+  geocodeRequestSequence += 1;
+  state.locationEditorMode = "review";
+  state.selectedInstitutionLocationId = text(row.institution_id);
+  state.selectedLocationReviewId = queueId;
+  state.selectedInstitutionLocations = [];
+  renderLocationReviewList();
+  elements["location-editor-placeholder"].hidden = true;
+  elements["location-form"].hidden = false;
+  elements["location-form"].reset();
+  const confirmedLocations = row.confirmed_locations || [];
+  const locationSelect = elements["confirmed-location-record"];
+  locationSelect.replaceChildren();
+  confirmedLocations.forEach((record) => locationSelect.add(new Option(
+    mappingLocationLabel(record),
+    record.location_id,
+  )));
+  elements["confirmed-location-record-label"].hidden = confirmedLocations.length === 0;
+  clearLocationFields();
+  elements["location-queue-id"].value = queueId;
+  elements["location-institution-id"].value = text(row.institution_id);
+  const confirmed = row.confirmed_location || {};
+  elements["confirmed-institution"].value =
+    text(row.canonical_institution_name || confirmed.institution || row.institution);
+  elements["institution-abbreviation"].value = text(row.abbreviation);
+  elements["institution-aliases"].textContent = (row.aliases || row.existing_aliases || []).join("; ") || "No aliases";
+  elements["institution-new-alias"].value = "";
+  elements["institution-review-status"].textContent = locationReviewStatusLabel(row, confirmed);
+  const canonicalSelect = elements["canonical-institution"];
+  canonicalSelect.replaceChildren(new Option("Select confirmed institution…", ""));
+  state.confirmedLocations
+    .slice()
+    .sort((a, b) => text(a.institution).localeCompare(text(b.institution)))
+    .forEach((location) => {
+      const entity = state.institutions.find(
+        (institution) => institution.institution_id === location.institution_id
+      );
+      canonicalSelect.add(new Option(
+        institutionContextLabel(entity || { canonical_name: location.institution }),
+        location.institution,
+      ));
+    });
+  const canonicalLocation = state.confirmedLocations.find(
+    (location) => text(location.institution_id) === text(row.institution_id)
+  );
+  canonicalSelect.value = text(
+    canonicalLocation?.institution || row.canonical_institution_name
+    || row.suggested_canonical_institution || row.matched_institution
+  );
+  elements["canonical-institution-label"].hidden = !(
+    ["pending_review", "ambiguous"].includes(row.review_status)
+    || (row.candidate_suggestions || []).length > 1
+  );
+  elements["confirmed-city"].value =
+    text(confirmed.city || row.suggested_city);
+  elements["confirmed-region"].value = text(confirmed.region);
+  elements["confirmed-country"].value =
+    text(confirmed.country || row.suggested_country);
+  elements["confirmed-country-code"].value =
+    text(confirmed.country_code).toUpperCase();
+  elements["confirmed-lat"].value = text(confirmed.lat);
+  elements["confirmed-lon"].value = text(confirmed.lon);
+  resetCityAutofillSources();
+  setCityResolutionStatus("");
+  if (confirmedLocations.length === 1) {
+    locationSelect.value = text(confirmedLocations[0].location_id);
+  } else {
+    locationSelect.value = "";
+  }
+  elements["location-form-error"].hidden = true;
+  renderLocationActions();
+  renderLocationContext(row);
+}
+
+function renderLocationActions() {
+  const selected = state.locationReviews.find(
+    (row) => row.queue_id === state.selectedLocationReviewId
+  );
+  const reviewMode = state.locationEditorMode === "review" && Boolean(selected);
+  const status = text(selected?.review_status || "pending_review");
+  const hasCanonicalInstitution = Boolean(
+    elements["canonical-institution"].value.trim()
+  );
+  const confirmed = selected?.confirmed_location || {};
+  const locationChanged = [
+    ["confirmed-city", "city"],
+    ["confirmed-region", "region"],
+    ["confirmed-country", "country"],
+    ["confirmed-country-code", "country_code"],
+    ["confirmed-lat", "lat"],
+    ["confirmed-lon", "lon"],
+  ].some(([elementId, field]) => (
+    text(elements[elementId].value).trim() !== text(confirmed[field]).trim()
+  ));
+  elements["location-save-identity"].hidden = !elements["location-institution-id"].value;
+  elements["location-confirm"].hidden = reviewMode
+    ? status === "alias_of_confirmed" || (status === "confirmed" && !locationChanged)
+    : false;
+  elements["location-confirm-alias"].hidden = !(
+    reviewMode
+    && ["pending_review", "ambiguous"].includes(status)
+    && hasCanonicalInstitution
+  );
+  elements["location-mark-ambiguous"].hidden = !(reviewMode && status === "pending_review");
+  elements["location-ignore"].hidden = !(reviewMode && status !== "ignore");
+  elements["location-exclude"].hidden = !(reviewMode && status !== "excluded");
+}
+
+async function saveLocationInstitutionIdentity() {
+  const identifier = elements["location-institution-id"].value.trim();
+  const institution = state.institutions.find((row) => row.institution_id === identifier);
+  if (!institution) {
+    showLocationFormError("This review row is not bound to a canonical institution.");
+    return;
+  }
+  elements["location-save-identity"].disabled = true;
+  try {
+    const payload = await postInstitutionAction("/api/institution/identity", {
+      institution_id: identifier,
+      canonical_name: elements["confirmed-institution"].value.trim(),
+      abbreviation: elements["institution-abbreviation"].value.trim(),
+      institution_type: institution.institution_type,
+      institution_status: institution.institution_status,
+    });
+    patchInstitutionRecord(payload.data);
+    const aliasName = elements["institution-new-alias"].value.trim();
+    if (aliasName) {
+      const aliasPayload = await postInstitutionAction("/api/institution/alias", {
+        institution_id: identifier,
+        alias_name: aliasName,
+        review_note: "Confirmed in Institution Alias and Location Review.",
+      });
+      const aliases = [...new Set([
+        ...(state.institutions.find((row) => row.institution_id === identifier)?.aliases || []),
+        aliasPayload.data.alias_name,
+      ])];
+      state.institutions.find((row) => row.institution_id === identifier).aliases = aliases;
+      elements["institution-aliases"].textContent = aliases.join("; ") || "No aliases";
+      elements["institution-new-alias"].value = "";
+    }
+    const selected = state.locationReviews.find(
+      (row) => row.queue_id === state.selectedLocationReviewId
+    );
+    if (selected) {
+      selected.canonical_institution_name = payload.data.canonical_name;
+      selected.abbreviation = payload.data.abbreviation;
+    }
+    renderLocationReviewList();
+    showNotice("Institution identity saved without reloading the review dataset.");
+  } catch (error) {
+    showLocationFormError(error.message);
+  } finally {
+    elements["location-save-identity"].disabled = false;
+  }
+}
+
+function locationReviewStatusLabel(review, location = {}) {
+  const status = text(review?.review_status || "pending_review");
+  const hasUsableLocation = Boolean(
+    review?.has_usable_confirmed_location
+    || (text(location?.lat) && text(location?.lon))
+  );
+  if (status === "pending_review" && !hasUsableLocation) return "Needs coordinates";
+  return humanize(status);
+}
+
+function renderLocationContext(row) {
+  const fields = [
+    ["Raw institution name", row.institution],
+    ["Detected language", row.detected_language],
+    ["Paper", row.title],
+    ["Institution authors", row.institution_authors],
+    ["Raw affiliation", row.raw_affiliation],
+    ["Evidence source", row.evidence_source],
+    ["Evidence URL", row.evidence_url],
+    ["Existing matched institution", row.matched_institution],
+    ["Suggested canonical institution", row.suggested_canonical_institution],
+    ["Match diagnostics", [row.match_method, row.similarity_score, row.confidence].filter(Boolean).join(" · ")],
+    ["External IDs", [row.openalex_institution_id, row.ror_id, row.wikidata_id].filter(Boolean).join(" · ")],
+    ["Affected papers", row.affected_papers || []],
+    ["Affected mappings", (row.affected_mappings || []).map((mapping) => [mapping.mapping_id, mapping.institution, mapping.mapping_status].filter(Boolean).join(" · ")).join("; ")],
+    ["Legacy diagnostics", [row.location_status, row.coordinate_status].filter(Boolean).map(humanize).join(" · ")],
+  ];
+  elements["location-context"].replaceChildren();
+  fields.forEach(([label, value]) => {
+    const wrapper = document.createElement("p");
+    const strong = document.createElement("strong");
+    strong.textContent = `${label}: `;
+    wrapper.append(strong);
+    if (label === "Paper") {
+      const title = renderPaperTitle(document.createElement("span"), value, "—");
+      wrapper.append(title);
+      if (row.year) wrapper.append(document.createTextNode(` · ${row.year}`));
+    } else if (label === "Affected papers") {
+      value.forEach((paper, index) => {
+        if (index) wrapper.append(document.createTextNode("; "));
+        wrapper.append(renderPaperTitle(document.createElement("span"), paper.title, "—"));
+        if (paper.year) wrapper.append(document.createTextNode(` · ${paper.year}`));
+      });
+      if (!value.length) wrapper.append("—");
+    } else if (label === "Evidence URL" && safeUrl(value)) {
+      wrapper.append(linkValue(value, value));
+    } else {
+      wrapper.append(text(value) || "—");
+    }
+    elements["location-context"].append(wrapper);
+  });
+  const candidates = row.candidate_suggestions || [];
+  if (candidates.length) {
+    const section = document.createElement("section");
+    section.className = "institution-candidate-evidence";
+    const heading = document.createElement("h4");
+    heading.textContent = "Possible canonical matches — review only";
+    section.append(heading);
+    candidates.forEach((candidate) => {
+      const card = document.createElement("article");
+      const title = document.createElement("strong");
+      title.textContent = candidate.canonical_institution_name;
+      const location = candidate.canonical_record || {};
+      const details = document.createElement("p");
+      details.textContent = [
+        candidate.evidence,
+        [location.city, location.region, location.country].filter(Boolean).join(", "),
+        location.lat !== undefined && location.lon !== undefined
+          ? `${location.lat}, ${location.lon}`
+          : "",
+        (candidate.aliases || []).length ? `Aliases: ${candidate.aliases.join("; ")}` : "",
+        (candidate.location_conflicts || []).length
+          ? `Conflict: ${candidate.location_conflicts.join(", ")}`
+          : "",
+      ].filter(Boolean).join(" · ");
+      const choose = document.createElement("button");
+      choose.type = "button";
+      choose.className = "secondary-button";
+      choose.textContent = "Select as canonical alias target";
+      choose.addEventListener("click", () => {
+        elements["canonical-institution"].value = candidate.canonical_institution_name;
+        renderLocationActions();
+      });
+      card.append(title, details, choose);
+      section.append(card);
+    });
+    elements["location-context"].append(section);
+  }
+}
+
+function clearLocationEditor() {
+  institutionLocationSequence += 1;
+  geocodeRequestSequence += 1;
+  cityResolutionRequestSequence += 1;
+  if (cityResolutionTimer) clearTimeout(cityResolutionTimer);
+  state.selectedInstitutionLocationId = "";
+  state.selectedLocationReviewId = "";
+  state.selectedInstitutionLocations = [];
+  state.locationEditorMode = "review";
+  showLocationEditorPlaceholder(
+    "Select a queued institution",
+    "Its paper context, affiliation evidence, suggestions, and current review state will appear here."
+  );
+  elements["location-form"].hidden = true;
+  renderLocationReviewList();
+}
+
+const COORDINATE_INPUT_PATTERN = /^[+-]?(?:\d+(?:[.,]\d+)?|[.,]\d+)$/;
+
+function normalizeCoordinateInput(value, label, minimum, maximum) {
+  const input = text(value).trim();
+  if (!COORDINATE_INPUT_PATTERN.test(input)) {
+    throw new Error(
+      `${label} must be a decimal number using either a dot or comma, without thousands separators.`
+    );
+  }
+  let normalized = input.replace(",", ".");
+  normalized = normalized.replace(/^([+-]?)\./, "$10.");
+  const numericValue = Number(normalized);
+  if (!Number.isFinite(numericValue) || numericValue < minimum || numericValue > maximum) {
+    throw new Error(`${label} must be between ${minimum} and ${maximum}.`);
+  }
+  return normalized;
+}
+
+function showLocationFormError(message, field = null) {
+  elements["location-form-error"].textContent = message;
+  elements["location-form-error"].hidden = false;
+  if (field) {
+    field.setAttribute("aria-invalid", "true");
+    field.focus();
+  }
+}
+
+function locationApiErrorMessage(error) {
+  const code = error?.payload?.error_code;
+  if (code === "institution_identity_change_not_allowed") {
+    return `Institution identity mismatch: ${error.message}`;
+  }
+  if (code === "inactive_institution") {
+    return `Inactive institution: ${error.message}`;
+  }
+  if (error?.payload?.field === "confirmed_lat"
+      || error?.payload?.field === "confirmed_lon"
+      || /latitude|longitude|coordinate/i.test(error?.message || "")) {
+    return `Invalid coordinates: ${error.message}`;
+  }
+  return error.message;
+}
+
+function clearLocationCoordinateErrors() {
+  elements["location-form-error"].hidden = true;
+  elements["location-form-error"].textContent = "";
+  elements["confirmed-lat"].removeAttribute("aria-invalid");
+  elements["confirmed-lon"].removeAttribute("aria-invalid");
+}
+
+function locationDraft() {
+  return {
+    queue_id: elements["location-queue-id"].value,
+    institution_id: elements["location-institution-id"].value,
+    confirmed_institution: elements["confirmed-institution"].value.trim(),
+    canonical_institution_name: elements["canonical-institution"].value,
+    detected_language: text(
+      state.locationReviews.find((row) => row.queue_id === elements["location-queue-id"].value)?.detected_language
+    ),
+    confirmed_city: elements["confirmed-city"].value.trim(),
+    confirmed_region: elements["confirmed-region"].value.trim(),
+    confirmed_country: elements["confirmed-country"].value.trim(),
+    confirmed_country_code:
+      elements["confirmed-country-code"].value.trim().toUpperCase(),
+    confirmed_lat: elements["confirmed-lat"].value.trim(),
+    confirmed_lon: elements["confirmed-lon"].value.trim(),
+  };
+}
+
+function validatedLocationDraft() {
+  clearLocationCoordinateErrors();
+  const coordinates = [
+    ["confirmed-lat", "Latitude", -90, 90],
+    ["confirmed-lon", "Longitude", -180, 180],
+  ];
+  for (const [fieldId, label, minimum, maximum] of coordinates) {
+    const field = elements[fieldId];
+    try {
+      field.value = normalizeCoordinateInput(field.value, label, minimum, maximum);
+    } catch (error) {
+      showLocationFormError(error.message, field);
+      return null;
+    }
+  }
+  return locationDraft();
+}
+
+function setLocationSaveRunning(running) {
+  state.locationSaveRunning = running;
+  elements["location-confirm"].disabled = running;
+}
+
+function scheduleCityResolution() {
+  cityResolutionRequestSequence += 1;
+  state.cityAutofill.lastLookupKey = "";
+  if (cityResolutionTimer) clearTimeout(cityResolutionTimer);
+  const city = elements["confirmed-city"].value.trim();
+  if (!city) {
+    setCityResolutionStatus("");
+    return;
+  }
+  setCityResolutionStatus("Waiting to resolve city…", "loading");
+  cityResolutionTimer = setTimeout(resolveInstitutionCity, 550);
+}
+
+function applyResolvedCity(candidate, { explicit = false } = {}) {
+  if (!candidate) return { protectedFields: [] };
+  const protectedFields = [];
+  if (text(candidate.city)) elements["confirmed-city"].value = text(candidate.city);
+  for (const [elementId, candidateField, sourceKey] of [
+    ["confirmed-region", "region", "regionSource"],
+    ["confirmed-country", "country", "countrySource"],
+  ]) {
+    const incoming = text(candidate[candidateField]);
+    if (!incoming && state.cityAutofill[sourceKey] === "auto") {
+      elements[elementId].value = "";
+      state.cityAutofill[sourceKey] = "empty";
+      continue;
+    }
+    if (!incoming) continue;
+    if (!explicit && state.cityAutofill[sourceKey] === "manual") {
+      if (elements[elementId].value.trim() !== incoming) protectedFields.push(candidateField);
+      continue;
+    }
+    elements[elementId].value = incoming;
+    state.cityAutofill[sourceKey] = explicit ? "manual" : "auto";
+  }
+  if (explicit || state.cityAutofill.countrySource !== "manual") {
+    elements["confirmed-country-code"].value = text(candidate.country_code).toUpperCase();
+  }
+  renderLocationActions();
+  return { protectedFields };
+}
+
+async function resolveInstitutionCity() {
+  resetGeocodeSelection();
+  cityResolutionTimer = null;
+  const institutionId = elements["location-institution-id"].value.trim();
+  const loadedInstitutionId = state.selectedInstitutionLocationId;
+  const city = elements["confirmed-city"].value.trim();
+  if (!city || !institutionId || institutionId !== loadedInstitutionId) return;
+  state.cityAutofill.lastLookupKey = `${institutionId}|${city}`;
+  const requestSequence = ++cityResolutionRequestSequence;
+  setCityResolutionStatus(`Resolving ${city}…`, "loading");
+  try {
+    const payload = await apiFetch("/api/institution/resolve-city", {
+      method: "POST",
+      body: JSON.stringify({
+        institution_id: institutionId,
+        loaded_institution_id: loadedInstitutionId,
+        city,
+        region: elements["confirmed-region"].value.trim(),
+        country: elements["confirmed-country"].value.trim(),
+        country_code: elements["confirmed-country-code"].value.trim().toUpperCase(),
+      }),
+    });
+    if (
+      requestSequence !== cityResolutionRequestSequence ||
+      city !== elements["confirmed-city"].value.trim() ||
+      institutionId !== state.selectedInstitutionLocationId ||
+      text(payload.data?.institution_id) !== institutionId
+    ) return;
+    const result = payload.data || {};
+    if (result.resolution_status === "resolved" && result.resolved_location) {
+      const { protectedFields } = applyResolvedCity(result.resolved_location);
+      if (protectedFields.length) {
+        setCityResolutionStatus(
+          `City resolved, but manually edited ${protectedFields.join(" and ")} was preserved. Use Find coordinates to review conflicting candidates.`,
+          "warning"
+        );
+      } else {
+        setCityResolutionStatus("Region/country fields updated from the city lookup. Save explicitly to persist.", "resolved");
+      }
+      return;
+    }
+    if (result.resolution_status === "ambiguous") {
+      setCityResolutionStatus("Multiple plausible cities were found. Choose a candidate; no fields were overwritten.", "warning");
+      renderGeocodeCandidates(result, "city");
+      return;
+    }
+    setCityResolutionStatus("No reliable city match was found. Keep editing manually or use Find coordinates.", "warning");
+  } catch (error) {
+    if (requestSequence !== cityResolutionRequestSequence) return;
+    setCityResolutionStatus(`City lookup failed: ${error.message}. Manual entry and Find coordinates remain available.`, "error");
+  }
+}
+
+function geocodeAddress() {
+  const entity = state.institutions.find(
+    (row) => row.institution_id === elements["location-institution-id"].value
+  );
+  const parent = state.institutions.find(
+    (row) => row.institution_id === entity?.parent_institution_id
+  );
+  return [
+    elements["confirmed-city"].value.trim(),
+    elements["confirmed-region"].value.trim(),
+    elements["confirmed-country"].value.trim(),
+    parent?.canonical_name,
+  ].filter(Boolean).join(", ");
+}
+
+function clearLocationFields() {
+  [
+    "confirmed-city",
+    "confirmed-region",
+    "confirmed-country",
+    "confirmed-country-code",
+    "confirmed-lat",
+    "confirmed-lon",
+  ].forEach((id) => {
+    elements[id].value = "";
+  });
+  elements["confirmed-lat"].removeAttribute("aria-invalid");
+  elements["confirmed-lon"].removeAttribute("aria-invalid");
+  resetGeocodeSelection();
+  resetCityAutofillSources();
+  setCityResolutionStatus("");
+}
+
+function resetCityAutofillSources() {
+  state.cityAutofill.regionSource = elements["confirmed-region"].value.trim()
+    ? "manual" : "empty";
+  state.cityAutofill.countrySource = elements["confirmed-country"].value.trim()
+    ? "manual" : "empty";
+  state.cityAutofill.lastLookupKey = "";
+}
+
+function setCityResolutionStatus(message, status = "") {
+  const output = elements["city-resolution-status"];
+  output.textContent = message;
+  output.hidden = !message;
+  if (status) output.dataset.state = status;
+  else delete output.dataset.state;
+}
+
+function candidateDetail(label, value) {
+  const row = document.createElement("span");
+  const heading = document.createElement("strong");
+  heading.textContent = `${label}: `;
+  row.append(heading);
+  if (text(value)) {
+    row.append(text(value));
+  } else {
+    const missing = document.createElement("em");
+    missing.className = "geocode-missing";
+    missing.textContent = "Unavailable — manual review required";
+    row.append(missing);
+  }
+  return row;
+}
+
+function eligibleGeocodeCandidate(candidate) {
+  return Boolean(candidate && candidate.selectable === true &&
+    !(candidate.conflicts || []).length);
+}
+
+function syncGeocodeConfirmation() {
+  const candidate = state.selectedGeocodeCandidate;
+  const valid = eligibleGeocodeCandidate(candidate) &&
+    state.geocodeCandidates.includes(candidate) &&
+    state.geocodeInstitutionId === state.selectedInstitutionLocationId &&
+    state.geocodeInstitutionId === elements["location-institution-id"].value &&
+    Boolean(state.geocodeInstitutionId);
+  elements["geocode-confirm"].disabled = !valid;
+  elements["geocode-confirm"].setAttribute("aria-disabled", String(!valid));
+  return valid;
+}
+
+function resetGeocodeSelection() {
+  state.selectedGeocodeCandidate = null;
+  state.geocodeCandidates = [];
+  state.geocodeInstitutionId = "";
+  syncGeocodeConfirmation();
+}
+
+function renderGeocodeCandidates(result, purpose = "coordinates") {
+  const candidates = result.candidates || [];
+  resetGeocodeSelection();
+  state.geocodeCandidates = candidates;
+  state.geocodeInstitutionId = state.selectedInstitutionLocationId;
+  state.geocodePurpose = purpose;
+  elements["geocode-dialog-title"].textContent = purpose === "city"
+    ? "Select a city candidate" : "Select a location candidate";
+  elements["geocode-query"].textContent = `Query: ${text(result.query)}`;
+  elements["geocode-candidates"].replaceChildren();
+  elements["geocode-candidates"].hidden = candidates.length === 0;
+  elements["geocode-empty"].hidden = candidates.length !== 0 && !result.no_safe_match;
+  elements["geocode-empty"].textContent = result.no_safe_match
+    ? "No location-consistent candidate was found. Conflicting results cannot be selected; refine the confirmed city, region, or country."
+    : "No location candidates were found. Existing form values are unchanged.";
+  elements["geocode-error"].hidden = true;
+  elements["geocode-confirm"].disabled = true;
+  elements["geocode-replace-warning"].hidden = !(
+    purpose === "coordinates" &&
+    (elements["confirmed-lat"].value.trim() || elements["confirmed-lon"].value.trim())
+  );
+  candidates.forEach((candidate, index) => {
+    const label = document.createElement("label");
+    label.className = "geocode-candidate";
+    if (candidate.selectable === false) label.classList.add("geocode-candidate-conflict");
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = "geocode-candidate";
+    radio.value = String(index);
+    radio.disabled = !eligibleGeocodeCandidate(candidate);
+    const content = document.createElement("span");
+    const title = document.createElement("strong");
+    title.textContent = text(candidate.institution_name || candidate.display_name);
+    const address = candidateDetail("Full address", candidate.address || candidate.display_name);
+    const coordinates = candidateDetail(
+      "Coordinates",
+      `${candidate.latitude}, ${candidate.longitude}`
+    );
+    const confidence = candidate.confidence === null || candidate.confidence === undefined
+      ? ""
+      : ` · relevance ${Number(candidate.confidence).toFixed(3)}`;
+    coordinates.append(`${confidence} · ${text(candidate.provider)}`);
+    content.append(
+      title,
+      address,
+      candidateDetail("City", candidate.city),
+      candidateDetail("Region/state", candidate.region),
+      candidateDetail("Country", candidate.country),
+      candidateDetail("ISO country code", candidate.country_code),
+      candidateDetail("Latitude", candidate.latitude),
+      candidateDetail("Longitude", candidate.longitude),
+      coordinates
+    );
+    if ((candidate.conflicts || []).length) {
+      content.append(candidateDetail("Evidence conflict", candidate.conflicts.join("; ")));
+    }
+    if ((candidate.ranking_factors || []).length) {
+      content.append(candidateDetail("Ranking evidence", candidate.ranking_factors.join("; ")));
+    }
+    if (safeUrl(candidate.map_url)) {
+      const mapLink = linkValue("Open in OpenStreetMap", candidate.map_url);
+      content.append(mapLink);
+    }
+    radio.addEventListener("change", () => {
+      if (!state.geocodeCandidates.includes(candidate)) return;
+      state.selectedGeocodeCandidate = candidate;
+      if (!radio.checked) state.selectedGeocodeCandidate = null;
+      syncGeocodeConfirmation();
+    });
+    label.append(radio, content);
+    elements["geocode-candidates"].append(label);
+  });
+  elements["geocode-dialog"].showModal();
+  (elements["geocode-candidates"].querySelector("input:not(:disabled)") || elements["geocode-cancel"]).focus();
+}
+
+async function findInstitutionCoordinates() {
+  resetGeocodeSelection();
+  const button = elements["location-geocode"];
+  const originalLabel = button.textContent;
+  button.disabled = true;
+  button.textContent = "Searching…";
+  elements["location-form-error"].hidden = true;
+  const institutionId = elements["location-institution-id"].value.trim();
+  const loadedInstitutionId = state.selectedInstitutionLocationId;
+  if (!institutionId || institutionId !== loadedInstitutionId) {
+    elements["location-form-error"].hidden = false;
+    elements["location-form-error"].textContent = "The location editor is not bound to the selected canonical institution.";
+    button.disabled = false;
+    button.textContent = originalLabel;
+    return;
+  }
+  const requestSequence = ++geocodeRequestSequence;
+  try {
+    const payload = await apiFetch("/api/institution/geocode", {
+      method: "POST",
+      body: JSON.stringify({
+        institution_id: institutionId,
+        loaded_institution_id: loadedInstitutionId,
+        city: elements["confirmed-city"].value.trim(),
+        region: elements["confirmed-region"].value.trim(),
+        country: elements["confirmed-country"].value.trim(),
+        country_code: elements["confirmed-country-code"].value.trim().toUpperCase(),
+      }),
+    });
+    if (
+      requestSequence !== geocodeRequestSequence ||
+      institutionId !== state.selectedInstitutionLocationId ||
+      text(payload.data?.institution_id) !== institutionId
+    ) return;
+    renderGeocodeCandidates(payload.data || {}, "coordinates");
+  } catch (error) {
+    elements["location-form-error"].hidden = false;
+    elements["location-form-error"].textContent = `Coordinate search failed: ${error.message}`;
+  } finally {
+    button.disabled = false;
+    button.textContent = originalLabel;
+  }
+}
+
+function closeGeocodeDialog() {
+  resetGeocodeSelection();
+  elements["geocode-dialog"].close();
+}
+
+function confirmGeocodeCandidate() {
+  const candidate = state.selectedGeocodeCandidate;
+  if (
+    !syncGeocodeConfirmation() || !elements["geocode-dialog"].open ||
+    !state.selectedInstitutionLocationId ||
+    state.selectedInstitutionLocationId !== elements["location-institution-id"].value
+  ) return;
+  if (state.geocodePurpose === "city") {
+    applyResolvedCity(candidate, { explicit: true });
+    setCityResolutionStatus("City, region, and country set from the selected candidate. Save explicitly to persist.", "resolved");
+    closeGeocodeDialog();
+    return;
+  }
+  const hasExisting = elements["confirmed-lat"].value.trim() || elements["confirmed-lon"].value.trim();
+  if (hasExisting && !window.confirm("Replace the existing latitude and longitude with the selected candidate?")) {
+    return;
+  }
+  elements["confirmed-lat"].value = candidate.latitude;
+  elements["confirmed-lon"].value = candidate.longitude;
+  elements["confirmed-city"].value = text(candidate.city);
+  elements["confirmed-region"].value = text(candidate.region);
+  elements["confirmed-country"].value = text(candidate.country);
+  elements["confirmed-country-code"].value = text(candidate.country_code).toUpperCase();
+  resetCityAutofillSources();
+  closeGeocodeDialog();
+}
+
+async function confirmLocation(event) {
+  event.preventDefault();
+  if (state.locationSaveRunning) return;
+  const draft = validatedLocationDraft();
+  if (!draft) return;
+  if (!draft.institution_id || draft.institution_id !== state.selectedInstitutionLocationId) {
+    showLocationFormError("The location editor is not bound to the selected canonical institution.");
+    return;
+  }
+  setLocationSaveRunning(true);
+  try {
+    const canonicalMode = state.locationEditorMode === "canonical";
+    const selectedReview = state.locationReviews.find(
+      (row) => row.queue_id === state.selectedLocationReviewId
+    );
+    const canonicalPersistence = canonicalMode
+      || selectedReview?.review_row_persisted === false;
+    const boundInstitutionId = state.selectedInstitutionLocationId;
+    const result = await apiFetch(canonicalPersistence
+      ? `/api/admin/institutions/${encodeURIComponent(boundInstitutionId)}/confirm-location`
+      : "/api/location-review/confirm", {
+      method: "POST",
+      body: JSON.stringify(canonicalPersistence ? {
+        location_id: elements["confirmed-location-record"].value,
+        create_new_location: canonicalMode
+          && !elements["confirmed-location-record"].value,
+        city: draft.confirmed_city,
+        region: draft.confirmed_region,
+        country: draft.confirmed_country,
+        country_code: draft.confirmed_country_code,
+        lat: draft.confirmed_lat,
+        lon: draft.confirmed_lon,
+        coordinate_status: "known",
+      } : draft),
+    });
+    showNotice(result.message);
+    if (canonicalPersistence) {
+      const institution = state.institutions.find(
+        (row) => row.institution_id === boundInstitutionId
+      );
+      if (institution) {
+        institution.location = result.data;
+        institution.locations = [
+          ...(institution.locations || []).filter(
+            (location) => location.location_id !== result.data.location_id
+          ),
+          result.data,
+        ];
+      }
+      state.selectedInstitutionLocations = institution?.locations || [result.data];
+      selectCanonicalInstitutionLocation({
+        institution,
+        locations: state.selectedInstitutionLocations,
+        current_location: result.data,
+        aliases: (institution?.aliases || []).map((alias_name) => ({ alias_name })),
+      });
+      renderInstitutionManagement();
+      await Promise.all([refreshInstitutions(), loadLocationReviews()]);
+    } else {
+      patchLocationReviewRecord(result.queue_row, result.location);
+    }
+  } catch (error) {
+    showLocationFormError(locationApiErrorMessage(error));
+  } finally {
+    setLocationSaveRunning(false);
+  }
+}
+
+async function markLocationReview(status) {
+  elements["location-form-error"].hidden = true;
+  const buttonIds = {
+    ambiguous: "location-mark-ambiguous",
+    ignore: "location-ignore",
+    excluded: "location-exclude",
+  };
+  const button = elements[buttonIds[status]];
+  button.disabled = true;
+  try {
+    const result = await apiFetch(
+      `/api/location-review/mark-${status}`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          queue_id: elements["location-queue-id"].value,
+        }),
+      }
+    );
+    showNotice(result.message);
+    patchLocationReviewRecord(result.queue_row);
+  } catch (error) {
+    elements["location-form-error"].hidden = false;
+    elements["location-form-error"].textContent = error.message;
+  } finally {
+    button.disabled = false;
+  }
+}
+
+async function confirmLocationAlias() {
+  const draft = locationDraft();
+  if (!draft.canonical_institution_name) {
+    elements["location-form-error"].hidden = false;
+    elements["location-form-error"].textContent = "Select a confirmed canonical institution.";
+    return;
+  }
+  const selected = state.locationReviews.find(
+    (row) => row.queue_id === draft.queue_id
+  );
+  const aliasName = text(selected?.institution) || "this institution name";
+  const confirmed = window.confirm(
+    `Add “${aliasName}” as a confirmed alias of “${draft.canonical_institution_name}”? This writes one alias row only; it does not merge canonical institutions or reassign mappings.`
+  );
+  if (!confirmed) return;
+  try {
+    const result = await apiFetch("/api/location-review/confirm-alias", {
+      method: "POST",
+      body: JSON.stringify(draft),
+    });
+    showNotice(result.message);
+    patchLocationReviewRecord(result.queue_row);
+    const institution = state.institutions.find(
+      (row) => row.institution_id === result.alias.institution_id
+    );
+    if (institution) {
+      institution.aliases = [...new Set([...(institution.aliases || []), result.alias.alias_name])];
+    }
+  } catch (error) {
+    elements["location-form-error"].hidden = false;
+    elements["location-form-error"].textContent = error.message;
+  }
+}
+
+function requestToken(message = "") {
+  elements.workspace.hidden = true;
+  elements["token-panel"].hidden = false;
+  elements["token-input"].value = "";
+  elements["token-input"].focus();
+  setConnection("locked", message || "Token required");
+}
+
+function setConnection(status, label) {
+  elements["connection-status"].dataset.state = status;
+  elements["connection-status"].textContent = label;
+}
+
+function showNotice(message, variant = "success") {
+  if (noticeTimer !== null) window.clearTimeout(noticeTimer);
+  elements["action-notice"].hidden = false;
+  elements["action-notice"].dataset.variant = variant;
+  elements["action-notice"].textContent = message;
+  if (variant === "success") {
+    noticeTimer = window.setTimeout(() => {
+      elements["action-notice"].hidden = true;
+      noticeTimer = null;
+    }, 4000);
+  }
+}
+
+function setWorkflowRunning(running, label = "") {
+  workflowCommandIds.forEach((id) => {
+    elements[id].disabled = running || (
+      id === "publish-changes"
+      && Number(state.institutionAudit?.summary?.high || 0) > 0
+    );
+  });
+  elements["reload-preview-data"].disabled = running;
+  elements["show-git-status"].disabled = running;
+  if (running) {
+    elements["workflow-state"].dataset.state = "running";
+    elements["workflow-state"].textContent = `${label} running…`;
+  }
+}
+
+function renderLatestWorkflowStatus(status) {
+  if (!status || status.state === "idle") {
+    elements["workflow-state"].dataset.state = "idle";
+    elements["workflow-state"].textContent = "No workflow run yet";
+    elements["dashboard-validation-status"].textContent = "Not run";
+    elements["dashboard-preview-status"].textContent = "Not refreshed";
+    state.release.validation = "required";
+    state.release.preview = "required";
+    updatePublishReadiness();
+    return;
+  }
+  if (status.state === "running") {
+    setWorkflowRunning(true, humanize(status.workflow));
+    const stage = text(status.current_stage);
+    const elapsed = Number(status.elapsed_seconds || 0).toFixed(1);
+    elements["workflow-state"].textContent = [
+      humanize(status.workflow),
+      stage || "running",
+      `${elapsed}s`,
+    ].join(" · ");
+    elements["workflow-log"].textContent = [
+      `${humanize(status.workflow)} is running…`,
+      stage ? `Stage: ${stage}` : "",
+      status.current_command ? `Command: ${status.current_command}` : "",
+      `Elapsed: ${elapsed}s`,
+    ].filter(Boolean).join("\n");
+    return;
+  }
+  setWorkflowRunning(false);
+  elements["workflow-state"].dataset.state =
+    status.state === "succeeded" ? "success" : "error";
+  elements["workflow-state"].textContent = [
+    humanize(status.workflow),
+    status.state,
+    status.result?.duration_seconds !== undefined
+      ? `${status.result.duration_seconds}s`
+      : "",
+  ].filter(Boolean).join(" · ");
+  elements["dashboard-validation-status"].textContent =
+    status.state === "succeeded" ? "Passed" : humanize(status.state);
+  elements["dashboard-preview-status"].textContent =
+    status.state === "succeeded" ? "Ready" : "Needs attention";
+  state.release.validation = status.state === "succeeded" ? "passed" : "failed";
+  state.release.preview = status.state === "succeeded" ? "ready" : "required";
+  updatePublishReadiness();
+  if (status.result) renderWorkflowLog(status.result);
+}
+
+function renderWorkflowLog(result, heading = "") {
+  const command = Array.isArray(result.command)
+    ? result.command.join("\n")
+    : text(result.command);
+  const changedFiles = (result.changed_files || []).length
+    ? result.changed_files.join("\n")
+    : "None detected";
+  const steps = (result.steps || []).map((step, index) =>
+    `${index + 1}. ${step.success ? "PASS" : "FAIL"} ${step.command} (${step.duration_seconds}s)`
+  ).join("\n") || "None";
+  elements["workflow-log"].textContent = [
+    heading,
+    `Success: ${result.success ? "yes" : "no"}`,
+    `Exit code: ${result.exit_code}`,
+    `Duration: ${result.duration_seconds}s`,
+    result.failed_stage ? `Failed stage: ${result.failed_stage}` : "",
+    result.failure_kind ? `Failure kind: ${result.failure_kind}` : "",
+    result.error_summary ? `Error summary: ${result.error_summary}` : "",
+    "Command(s):",
+    command || "—",
+    "Changed files:",
+    changedFiles,
+    "Validation/export steps executed:",
+    steps,
+    "Standard output:",
+    result.stdout_tail || "—",
+    "Standard error:",
+    result.stderr_tail || "—",
+  ].filter((part) => part !== "").join("\n");
+}
+
+async function runAdminWorkflow(path, label, payload = null) {
+  if (state.workflowRunning) return;
+  state.workflowRunning = true;
+  setWorkflowRunning(true, label);
+  elements["workflow-log"].textContent = `${label} is running…`;
+  startWorkflowStatusPolling();
+  try {
+    const result = await apiFetch(path, {
+      method: "POST",
+      ...(payload ? { body: JSON.stringify(payload) } : {}),
+    });
+    await finishAdminWorkflow(path, label, result);
+  } catch (error) {
+    if (path === "/api/publish-changes") {
+      const recovered = await recoverPublishResult();
+      if (recovered) {
+        await finishAdminWorkflow(path, label, recovered);
+        return;
+      }
+    }
+    elements["workflow-state"].dataset.state = "error";
+    elements["workflow-state"].textContent = `${label} failed`;
+    elements["workflow-log"].textContent =
+      error.payload?.stderr_tail || error.message;
+    elements["workflow-log-panel"].open = true;
+    showNotice(`${label} failed: ${error.message}`, "error");
+  } finally {
+    state.workflowRunning = false;
+    stopWorkflowStatusPolling();
+    setWorkflowRunning(false);
+  }
+}
+
+async function finishAdminWorkflow(path, label, result) {
+  renderWorkflowLog(result, label);
+  elements["workflow-log-panel"].open = true;
+  elements["workflow-state"].dataset.state =
+    result.success ? "success" : "error";
+  elements["workflow-state"].textContent =
+    `${label} ${result.success ? "succeeded" : "failed"} · ${result.duration_seconds}s`;
+  if (!result.success) {
+    const detail = result.error_summary || result.failed_stage || `exit code ${result.exit_code}`;
+    showNotice(`${label} failed: ${detail}`, "error");
+    return;
+  }
+  if (path === "/api/publish-changes") {
+    await loadApplication(true);
+    showNotice("Changes committed and pushed. GitHub Pages will update after deployment.");
+  } else if (path === "/api/export-preview" || path === "/api/run-full-refresh") {
+    await loadApplication(true);
+    showNotice(
+      "Local preview updated. Use Publish Changes when you are ready to commit and push."
+    );
+  } else {
+    showNotice(`${label} completed successfully.`);
+  }
+}
+
+function startWorkflowStatusPolling() {
+  stopWorkflowStatusPolling();
+  const poll = async () => {
+    if (!state.workflowRunning) return;
+    try {
+      renderLatestWorkflowStatus(await apiFetch("/api/latest-validation-status"));
+    } catch (_error) {
+      // The original POST remains authoritative; polling is diagnostic only.
+    }
+    if (state.workflowRunning) {
+      workflowStatusPollTimer = window.setTimeout(poll, 1000);
+    }
+  };
+  workflowStatusPollTimer = window.setTimeout(poll, 1000);
+}
+
+function stopWorkflowStatusPolling() {
+  if (workflowStatusPollTimer !== null) {
+    window.clearTimeout(workflowStatusPollTimer);
+    workflowStatusPollTimer = null;
+  }
+}
+
+async function recoverPublishResult() {
+  // A proxy or browser may close the long-held POST after the subprocess has
+  // started. Keep the UI locked and recover the authoritative backend result.
+  for (let attempt = 0; attempt < 1200; attempt += 1) {
+    try {
+      const status = await apiFetch("/api/latest-validation-status");
+      renderLatestWorkflowStatus(status);
+      if (status.workflow !== "publish_changes") return null;
+      if (status.state !== "running") return status.result || null;
+    } catch (_error) {
+      // A short status-read failure is not evidence that publishing failed.
+    }
+    await new Promise((resolve) => window.setTimeout(resolve, 1000));
+  }
+  return null;
+}
+
+async function refreshAfterMetadataSave(selectedId, payload, selectionSequence) {
+  const summary = payload?.data?.paper_summary;
+  const savedPaper = payload?.data?.paper;
+  // List and Dashboard update together via the validated snapshot below.
+  if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
+  if (!savedPaper || typeof savedPaper !== "object") {
+    throw new Error("The server response did not include the saved canonical metadata.");
+  }
+  state.selectedPaper = { ...state.selectedPaper, ...savedPaper, ...(summary || {}) };
+  state.paperMetadata = {
+    ...state.paperMetadata,
+    effective_record: savedPaper,
+    curated_record: savedPaper,
+  };
+  renderPaperDetail(state.selectedPaper);
+  renderMetadataComparison();
+  populateMetadataForm();
+  await loadDashboardAndQueues();
+}
+
+async function autofillArxivIds() {
+  const button = elements["autofill-arxiv"];
+  if (button.disabled) return;
+  button.disabled = true;
+  button.textContent = "Finding candidates…";
+  try {
+    await apiFetch("/api/admin/papers/autofill-arxiv", {
+      method: "POST",
+      body: JSON.stringify({}),
+    });
+    await pollArxivAutofillStatus();
+  } catch (error) {
+    if (error.status === 409) {
+      await pollArxivAutofillStatus();
+    } else {
+      restoreArxivAutofillButton();
+      showNotice(`arXiv candidate discovery failed: ${error.message}`, "error");
+    }
+  }
+}
+
+function restoreArxivAutofillButton() {
+  elements["autofill-arxiv"].disabled = false;
+  elements["autofill-arxiv"].textContent = "Find candidates";
+}
+
+function renderArxivAutofillStatus(status) {
+  const running = status?.status === "running";
+  const button = elements["autofill-arxiv"];
+  button.disabled = running;
+  button.textContent = running
+    ? "Finding candidates…"
+    : "Find candidates";
+  if (!status || status.status === "idle") return;
+  if (running) {
+    elements["arxiv-enrichment-summary"].textContent =
+      `Searching ${status.processed_lookups ?? 0} of ${status.papers_requiring_lookup ?? 0} missing papers`;
+    if (status.current_paper_title) {
+      elements["arxiv-enrichment-summary"].append(document.createTextNode(" · "));
+      elements["arxiv-enrichment-summary"].append(
+        renderPaperTitle(document.createElement("span"), status.current_paper_title)
+      );
+    }
+  }
+}
+
+function scheduleArxivAutofillPoll() {
+  if (arxivAutofillPollTimer !== null) return;
+  arxivAutofillPollTimer = window.setTimeout(() => {
+    arxivAutofillPollTimer = null;
+    pollArxivAutofillStatus();
+  }, 1500);
+}
+
+async function pollArxivAutofillStatus() {
+  if (arxivAutofillPolling) return;
+  arxivAutofillPolling = true;
+  try {
+    const status = await apiFetch("/api/admin/papers/autofill-arxiv/status");
+    renderArxivAutofillStatus(status);
+    if (status.status === "running") {
+      scheduleArxivAutofillPoll();
+    } else {
+      restoreArxivAutofillButton();
+      if (status.status === "completed") {
+        await loadArxivEnrichment();
+        showNotice("Candidate discovery completed. No curated links were changed.");
+      } else if (status.status === "failed") {
+        showNotice(`arXiv candidate discovery failed: ${status.final_error || "unknown error"}`, "error");
+      }
+    }
+  } catch (error) {
+    restoreArxivAutofillButton();
+    showNotice(`Could not read arXiv discovery progress: ${error.message}`, "error");
+  } finally {
+    arxivAutofillPolling = false;
+  }
+}
+
+async function loadArxivEnrichment() {
+  try {
+    const payload = await apiFetch("/api/admin/papers/arxiv-enrichment");
+    state.arxivEnrichment = payload.data || { records: [], summary: {}, discovery: {} };
+    renderArxivEnrichment();
+  } catch (error) {
+    showNotice(`Could not load arXiv enrichment: ${error.message}`, "error");
+  }
+}
+
+function renderArxivEnrichment() {
+  if (!elements["arxiv-enrichment-list"]) return;
+  const records = state.arxivEnrichment.records || [];
+  const summary = state.arxivEnrichment.summary || {};
+  elements["arxiv-enrichment-summary"].textContent =
+    `${summary.unresolved ?? records.length} unresolved · ${summary.with_candidates ?? 0} with candidates · ${summary.ignored ?? 0} ignored`;
+  elements["arxiv-enrichment-empty"].hidden = records.length !== 0;
+  elements["arxiv-enrichment-list"].replaceChildren();
+  records.forEach((paper) => {
+    const card = document.createElement("article");
+    card.className = "arxiv-enrichment-card";
+    const heading = document.createElement("h3");
+    renderPaperTitle(heading, paper.title);
+    const metadata = document.createElement("p");
+    metadata.className = "candidate-meta";
+    metadata.textContent = [paper.year, paper.doi && `DOI ${paper.doi}`, paper.openalex_url]
+      .filter(Boolean).join(" · ");
+    card.append(heading, metadata);
+    if (!(paper.candidates || []).length) {
+      const pending = document.createElement("p");
+      pending.textContent = "No candidate loaded. Run Find candidates to search arXiv.";
+      card.append(pending);
+    }
+    (paper.candidates || []).forEach((candidate) => {
+      const candidateCard = document.createElement("div");
+      candidateCard.className = "arxiv-candidate";
+      const link = document.createElement("a");
+      link.href = candidate.arxiv_url;
+      link.target = "_blank";
+      link.rel = "noreferrer";
+      link.textContent = `arXiv:${candidate.arxiv_id}`;
+      const evidence = document.createElement("dl");
+      [["Evidence", candidate.evidence], ["Source", candidate.source], ["Confidence", candidate.confidence]].forEach(([label, value]) => {
+        const term = document.createElement("dt");
+        term.textContent = label;
+        const detail = document.createElement("dd");
+        detail.textContent = value || "Unavailable";
+        evidence.append(term, detail);
+      });
+      const actions = document.createElement("div");
+      actions.className = "candidate-actions";
+      const accept = document.createElement("button");
+      accept.type = "button";
+      accept.className = "primary-button";
+      accept.textContent = "Accept";
+      accept.addEventListener("click", () => submitArxivDecision(paper, candidate, "accept"));
+      const ignore = document.createElement("button");
+      ignore.type = "button";
+      ignore.className = "secondary-button";
+      ignore.textContent = "Ignore";
+      ignore.addEventListener("click", () => submitArxivDecision(paper, candidate, "ignore"));
+      actions.append(accept, ignore);
+      candidateCard.append(link, evidence, actions);
+      card.append(candidateCard);
+    });
+    elements["arxiv-enrichment-list"].append(card);
+  });
+}
+
+async function submitArxivDecision(paper, candidate, action) {
+  const verb = action === "accept" ? "save this curated arXiv link" : "ignore this candidate";
+  if (!window.confirm(`Confirm you want to ${verb}?\n\n${plainPaperTitle(paper.title)}\narXiv:${candidate.arxiv_id}`)) return;
+  try {
+    const payload = await apiFetch("/api/admin/papers/arxiv-enrichment/action", {
+      method: "POST",
+      body: JSON.stringify({ ...paper, arxiv_id: candidate.arxiv_id, action, confirmed: true }),
+    });
+    await loadArxivEnrichment();
+    showNotice(payload.message || "arXiv enrichment decision saved.");
+  } catch (error) {
+    showNotice(`Could not save arXiv decision: ${error.message}`, "error");
+  }
+}
+
+async function reloadPreviewData() {
+  elements["reload-preview-data"].disabled = true;
+  try {
+    await loadApplication(true);
+    showNotice("Preview data reloaded from local public-preview JSON.");
+  } finally {
+    elements["reload-preview-data"].disabled = false;
+  }
+}
+
+async function showGitStatus() {
+  elements["show-git-status"].disabled = true;
+  try {
+    const result = await apiFetch("/api/git-status");
+    renderWorkflowLog(result, "git status --short");
+    elements["workflow-log-panel"].open = true;
+    renderGitSummary(result);
+  } catch (error) {
+    showNotice(`Could not read git status: ${error.message}`, "error");
+  } finally {
+    elements["show-git-status"].disabled = false;
+  }
+}
+
+function renderGitSummary(result) {
+  if (!result) return;
+  const changed = (result.changed_files || []).length
+    ? result.changed_files
+    : text(result.stdout_tail).split("\n").filter((line) => line.trim());
+  elements["dashboard-changed-files"].textContent = formatNumber(changed.length);
+  elements["dashboard-git-summary"].textContent = changed.length
+    ? "Unpublished changes"
+    : "Working tree clean";
+  state.release.changedFiles = changed.length;
+  elements["global-publish-toggle"].textContent = changed.length
+    ? `Publish changes · ${formatNumber(changed.length)}`
+    : "Publish changes";
+  updatePublishReadiness();
+}
+
+function updatePublishReadiness() {
+  const { validation, preview, changedFiles } = state.release;
+  let stage = "Published";
+  let action = "View publish status";
+  if (changedFiles > 0) { stage = "Changes detected"; action = "Review changes"; }
+  if (changedFiles > 0 && validation === "required") { stage = "Validation required"; action = "Run validation"; }
+  if (validation === "failed") { stage = "Validation failed"; action = "Inspect failure"; }
+  if (changedFiles > 0 && validation === "passed" && preview !== "ready") { stage = "Preview refresh required"; action = "Refresh preview"; }
+  if (changedFiles > 0 && validation === "passed" && preview === "ready") { stage = "Ready to publish"; action = "Publish changes"; }
+  elements["dashboard-release-state"].textContent = stage;
+  elements["dashboard-open-publish"].textContent = action;
+}
+
+function openAddPaperPanel() {
+  elements["add-paper-panel"].hidden = false;
+  elements["openalex-title"].focus();
+  elements["add-paper-panel"].scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function closeAddPaperPanel() {
+  elements["add-paper-panel"].hidden = true;
+  cancelPaperDraft();
+}
+
+async function searchOpenAlex(event) {
+  event.preventDefault();
+  const query = {
+    title: elements["openalex-title"].value.trim(),
+    doi: elements["openalex-doi"].value.trim(),
+    arxiv_id: elements["openalex-arxiv-id"].value.trim(),
+    paper_url: elements["openalex-paper-url"].value.trim(),
+  };
+  elements["openalex-search-error"].hidden = true;
+  elements["openalex-results"].hidden = true;
+  if (!Object.values(query).some(Boolean)) {
+    elements["openalex-search-error"].hidden = false;
+    elements["openalex-search-error"].textContent =
+      "Enter at least one title, DOI, arXiv ID, or paper URL.";
+    return;
+  }
+  elements["openalex-search-submit"].disabled = true;
+  elements["openalex-search-submit"].textContent = "Searching…";
+  try {
+    const payload = await apiFetch("/api/openalex/search-paper", {
+      method: "POST",
+      body: JSON.stringify(query),
+    });
+    renderOpenAlexResults(payload.results || [], payload.debug || {});
+    if (!payload.results?.length) {
+      elements["openalex-search-error"].hidden = false;
+      elements["openalex-search-error"].textContent =
+        "OpenAlex returned no candidates. You can add the paper manually instead.";
+    }
+  } catch (error) {
+    elements["openalex-search-error"].hidden = false;
+    elements["openalex-search-error"].textContent =
+      `${error.message} Manual entry remains available.`;
+  } finally {
+    elements["openalex-search-submit"].disabled = false;
+    elements["openalex-search-submit"].textContent = "Search OpenAlex";
+  }
+}
+
+function renderOpenAlexResults(results, debug = {}) {
+  const list = elements["openalex-result-list"];
+  list.replaceChildren();
+  const weakList = elements["openalex-weak-result-list"];
+  weakList.replaceChildren();
+  const variants = (debug.query_variants || []).map((variant) => variant.name).join(", ");
+  elements["openalex-search-debug"].textContent = [
+    variants ? `Queries: ${variants}` : "",
+    Number.isFinite(debug.raw_candidates_fetched)
+      ? `raw candidates: ${formatNumber(debug.raw_candidates_fetched)}`
+      : "",
+    Number.isFinite(debug.best_normalized_title_similarity)
+      ? `best title similarity: ${Number(debug.best_normalized_title_similarity).toFixed(3)}`
+      : "",
+    `exact DOI lookup: ${debug.doi_exact_lookup_attempted ? "yes" : "no"}`,
+    `exact arXiv lookup: ${debug.arxiv_exact_lookup_attempted ? "yes" : "no"}`,
+    debug.arxiv_fallback_used ? "arXiv fallback used" : "",
+  ].filter(Boolean).join(" · ");
+  results.forEach((candidate) => {
+    const card = document.createElement("article");
+    card.className = "openalex-result-card";
+
+    const heading = document.createElement("h4");
+    renderPaperTitle(heading, candidate.title, "Untitled OpenAlex record");
+    const meta = document.createElement("p");
+    meta.className = "candidate-meta";
+    meta.textContent = [
+      candidate.year,
+      candidate.venue,
+      humanize(candidate.publication_type),
+      candidate.similarity_score === null || candidate.similarity_score === undefined
+        ? ""
+        : `title similarity ${Number(candidate.similarity_score).toFixed(3)}`,
+    ].filter(Boolean).join(" · ");
+    const authors = document.createElement("p");
+    authors.textContent = authorListText(candidate.authors) || "Authors unavailable";
+    const identifiers = document.createElement("p");
+    identifiers.className = "candidate-identifiers";
+    identifiers.textContent = [
+      candidate.doi ? `DOI: ${candidate.doi}` : "",
+      candidate.openalex_url ? `OpenAlex: ${candidate.openalex_url}` : "",
+      candidate.primary_url ? `Primary URL: ${candidate.primary_url}` : "",
+    ].filter(Boolean).join("\n");
+    if (candidate.match_warning) {
+      const warning = document.createElement("span");
+      warning.className = "weak-match-warning";
+      warning.textContent = candidate.match_warning;
+      identifiers.append(document.createElement("br"), warning);
+    }
+    const abstract = document.createElement("p");
+    abstract.className = "candidate-abstract";
+    abstract.textContent = text(candidate.abstract) || "Abstract unavailable.";
+
+    const actions = document.createElement("div");
+    actions.className = "candidate-actions";
+    const useButton = document.createElement("button");
+    useButton.type = "button";
+    useButton.className = "primary-button";
+    const source = candidate.candidate_source === "arxiv" ? "arxiv" : "openalex";
+    useButton.textContent =
+      source === "arxiv" ? "Use this arXiv record" : "Use this OpenAlex record";
+    useButton.addEventListener("click", () => startPaperDraft(candidate, source));
+    const rejectButton = document.createElement("button");
+    rejectButton.type = "button";
+    rejectButton.className = "secondary-button";
+    rejectButton.textContent = "Not correct";
+    rejectButton.addEventListener("click", () => {
+      card.remove();
+      updateOpenAlexResultCount();
+    });
+    actions.append(useButton, rejectButton);
+    card.append(heading, meta, authors, identifiers, abstract, actions);
+    (candidate.match_strength === "weak" ? weakList : list).append(card);
+  });
+  const weakCount = weakList.children.length;
+  elements["openalex-weak-matches"].hidden = weakCount === 0;
+  elements["openalex-weak-match-summary"].textContent =
+    `Weak matches (${formatNumber(weakCount)})`;
+  elements["openalex-results"].hidden = results.length === 0;
+  updateOpenAlexResultCount();
+}
+
+function updateOpenAlexResultCount() {
+  const strongCount = elements["openalex-result-list"].children.length;
+  const weakCount = elements["openalex-weak-result-list"].children.length;
+  const count = strongCount + weakCount;
+  elements["openalex-result-count"].textContent =
+    `${formatNumber(strongCount)} strong · ${formatNumber(weakCount)} weak`;
+  elements["openalex-weak-matches"].hidden = weakCount === 0;
+  if (count === 0) elements["openalex-results"].hidden = true;
+}
+
+function startPaperDraft(candidate, source) {
+  state.draftMappingCandidates = Array.isArray(candidate.mapping_candidates)
+    ? candidate.mapping_candidates
+    : [];
+  if (
+    state.draftMappingCandidates.length === 0
+    && text(candidate.institution)
+    && text(candidate.institution_authors || candidate.authors)
+  ) {
+    const sourceAuthors = candidate.institution_authors || candidate.authors;
+    state.draftMappingCandidates = [{
+      institution: text(candidate.institution),
+      institution_authors: (Array.isArray(sourceAuthors)
+        ? sourceAuthors
+        : text(sourceAuthors).split(";")
+      ).map((author) => text(author).trim()).filter(Boolean),
+      raw_affiliation: text(
+        candidate.raw_affiliation || candidate.institution,
+      ),
+      provenance_source: text(
+        candidate.evidence_source || "Manual import review",
+      ),
+    }];
+  }
+  elements["paper-draft-form"].reset();
+  clearTaxonomyGroupValidation("paper");
+  elements["paper-source-database"].value = source;
+  elements["paper-draft-origin"].textContent =
+    source === "openalex"
+      ? "Confirmed OpenAlex draft"
+      : source === "arxiv"
+        ? "Confirmed arXiv fallback draft"
+        : "Manual paper draft";
+  elements["paper-title"].value = text(candidate.title);
+  elements["paper-year"].value = text(candidate.year);
+  elements["paper-authors"].value = authorListText(candidate.authors, "; ");
+  elements["paper-affiliations"].value = "";
+  elements["paper-venue"].value = text(candidate.venue);
+  elements["paper-doi"].value = text(candidate.doi);
+  elements["paper-arxiv-id"].value = text(candidate.arxiv_id);
+  elements["paper-openalex-url"].value = text(candidate.openalex_url);
+  elements["paper-url"].value = text(candidate.paper_url || candidate.primary_url);
+  elements["paper-publication-type"].value = normalizePublicationTypeForForm(
+    candidate.publication_type
+  );
+  elements["paper-abstract"].value = text(candidate.abstract);
+  elements["paper-scope-status"].value = "in_scope";
+  elements["paper-review-status"].value =
+    source === "openalex" ? "reviewed" : "pending";
+  elements["paper-duplicate-warning"].hidden = true;
+  elements["paper-mapping-warning"].hidden =
+    state.draftMappingCandidates.length !== 0;
+  elements["paper-acknowledge-missing-mappings"].checked = false;
+  elements["paper-create-error"].hidden = true;
+  elements["paper-draft-form"].hidden = false;
+  elements["paper-title"].focus();
+  elements["paper-draft-form"].scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function cancelPaperDraft() {
+  state.draftMappingCandidates = [];
+  elements["paper-draft-form"].reset();
+  clearTaxonomyGroupValidation("paper");
+  elements["paper-draft-form"].hidden = true;
+  elements["paper-duplicate-warning"].hidden = true;
+  elements["paper-mapping-warning"].hidden = true;
+  elements["paper-create-error"].hidden = true;
+}
+
+function selectedCheckboxValues(id) {
+  return [...elements[id].querySelectorAll('input[type="checkbox"]')]
+    .filter((input) => input.checked)
+    .map((input) => input.value)
+    .filter(Boolean);
+}
+
+function setCheckedValues(id, values) {
+  const selected = new Set(Array.isArray(values) ? values : String(values || "").split(";"));
+  elements[id].querySelectorAll('input[type="checkbox"]').forEach((input) => {
+    input.checked = selected.has(input.value);
+  });
+}
+
+function clearTaxonomyGroupValidation(prefix) {
+  [`${prefix}-tasks`, `${prefix}-image-scopes`, `${prefix}-research-types`]
+    .forEach((id) => elements[id].removeAttribute("aria-invalid"));
+}
+
+function validateTaxonomyGroups(prefix, { focus = false } = {}) {
+  const groupIds = [`${prefix}-tasks`, `${prefix}-image-scopes`, `${prefix}-research-types`];
+  const invalidGroups = groupIds.filter((id) => !selectedCheckboxValues(id).length);
+  groupIds.forEach((id) => {
+    elements[id].setAttribute("aria-invalid", String(invalidGroups.includes(id)));
+  });
+  if (focus && invalidGroups.length) {
+    elements[invalidGroups[0]].querySelector('input[type="checkbox"]')?.focus();
+  }
+  return invalidGroups.length === 0;
+}
+
+function paperDraftPayload() {
+  const manualCandidates = elements["paper-affiliations"].value
+    .split(/\r?\n/)
+    .map((line) => line.split("|").map((value) => value.trim()))
+    .filter((parts) => parts.length >= 2 && parts[0] && parts[1])
+    .map(([authors, institution, rawAffiliation = ""]) => ({
+      institution,
+      institution_authors: authors.split(";").map((author) => author.trim()).filter(Boolean),
+      raw_affiliation: rawAffiliation || institution,
+      provenance_source: "Manual Add Paper affiliation input",
+    }));
+  return {
+    source_database: elements["paper-source-database"].value,
+    title: elements["paper-title"].value.trim(),
+    year: elements["paper-year"].value.trim(),
+    authors: elements["paper-authors"].value.trim(),
+    venue: elements["paper-venue"].value.trim(),
+    doi: elements["paper-doi"].value.trim(),
+    arxiv_id: elements["paper-arxiv-id"].value.trim(),
+    openalex_url: elements["paper-openalex-url"].value.trim(),
+    paper_url: elements["paper-url"].value.trim(),
+    publication_type: elements["paper-publication-type"].value.trim(),
+    abstract: elements["paper-abstract"].value.trim(),
+    tasks: selectedCheckboxValues("paper-tasks"),
+    image_scopes: selectedCheckboxValues("paper-image-scopes"),
+    research_types: selectedCheckboxValues("paper-research-types"),
+    scope_status: elements["paper-scope-status"].value.trim(),
+    review_status: elements["paper-review-status"].value,
+    mapping_candidates: [
+      ...state.draftMappingCandidates,
+      ...manualCandidates,
+    ],
+    acknowledge_missing_mappings:
+      elements["paper-acknowledge-missing-mappings"].checked,
+  };
+}
+
+async function createPaper(event) {
+  event.preventDefault();
+  elements["paper-create-error"].hidden = true;
+  elements["paper-duplicate-warning"].hidden = true;
+  if (!validateTaxonomyGroups("paper", { focus: true })) {
+    elements["paper-create-error"].hidden = false;
+    elements["paper-create-error"].textContent =
+      "Select at least one value in every taxonomy dimension.";
+    return;
+  }
+  elements["paper-create-submit"].disabled = true;
+  try {
+    const draft = paperDraftPayload();
+    if (
+      draft.mapping_candidates.length === 0
+      && !draft.acknowledge_missing_mappings
+    ) {
+      elements["paper-mapping-warning"].hidden = false;
+      elements["paper-create-error"].hidden = false;
+      elements["paper-create-error"].textContent =
+        "Add author affiliation evidence or acknowledge the missing mapping.";
+      return;
+    }
+    const result = await apiFetch("/api/paper/create", {
+      method: "POST",
+      body: JSON.stringify(draft),
+    });
+    showNotice(result.message);
+    cancelPaperDraft();
+    await loadApplication();
+  } catch (error) {
+    if (error.status === 409 && error.payload?.duplicate_matches) {
+      renderDuplicateWarning(error.payload.duplicate_matches);
+    } else {
+      elements["paper-create-error"].hidden = false;
+      elements["paper-create-error"].textContent = error.message;
+    }
+  } finally {
+    elements["paper-create-submit"].disabled = false;
+  }
+}
+
+function renderDuplicateWarning(matches) {
+  const warning = elements["paper-duplicate-warning"];
+  warning.replaceChildren();
+  const heading = document.createElement("strong");
+  heading.textContent = "Duplicate paper blocked";
+  const intro = document.createElement("p");
+  intro.textContent =
+    "Edit or cancel this draft. Step 4 does not merge with existing records.";
+  const list = document.createElement("ul");
+  matches.forEach((match) => {
+    const item = document.createElement("li");
+    item.textContent = [
+      match.source,
+      match.title || "Untitled",
+      match.year,
+      match.doi,
+      match.openalex_url,
+    ].filter(Boolean).join(" · ");
+    list.append(item);
+  });
+  warning.append(heading, intro, list);
+  warning.hidden = false;
+}
+
+function populateFilters() {
+  setOptions("filter-year", uniqueValues("year", true));
+  setOptions("filter-task", [...new Set(state.papers.flatMap((paper) => paper.tasks || []))].sort());
+  setOptions("filter-coverage", uniqueValues("coverage_status"));
+  setOptions("filter-source", uniqueValues("source_database"));
+}
+
+function uniqueValues(field, numericDescending = false) {
+  const values = new Set(state.papers.map((paper) => text(paper[field])).filter(Boolean));
+  return [...values].sort((left, right) =>
+    numericDescending
+      ? Number(right) - Number(left)
+      : left.localeCompare(right, undefined, { sensitivity: "base" })
+  );
+}
+
+function setOptions(id, values) {
+  const select = elements[id];
+  const selected = select.value;
+  while (select.options.length > 1) select.remove(1);
+  values.forEach((value) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = humanize(value);
+    select.append(option);
+  });
+  if ([...select.options].some((option) => option.value === selected)) {
+    select.value = selected;
+  }
+}
+
+function exclusionStatus(paper) {
+  if (paper.has_active_exclusion) return "active";
+  if (paper.is_in_curated_exclusions) return "restored";
+  return "none";
+}
+
+function applyFilters() {
+  const query = normalize(elements["search-input"].value);
+  const filters = {
+    year: elements["filter-year"].value,
+    coverage_status: elements["filter-coverage"].value,
+    source_database: elements["filter-source"].value,
+  };
+  const mapFilter = elements["filter-map"].value;
+  const exclusionFilter = elements["filter-exclusion"].value;
+  const curationFilter = elements["filter-curation-status"].value;
+
+  state.filtered = state.papers.filter((paper) => {
+    if (curationFilter && (!paper.is_active_corpus || paper.curation_status !== curationFilter)) return false;
+    if (query && !normalize(paperTitleSearchText(paper.title)).includes(query)) return false;
+    if (Object.entries(filters).some(([field, expected]) =>
+      expected && text(paper[field]) !== expected
+    )) return false;
+    if (elements["filter-task"].value
+        && !(paper.tasks || []).includes(elements["filter-task"].value)) return false;
+    if (mapFilter === "missing_affiliations" && !paper.missing_affiliation) return false;
+    if (["true", "false"].includes(mapFilter) && String(Boolean(paper.has_map_location)) !== mapFilter) return false;
+    if (exclusionFilter && exclusionStatus(paper) !== exclusionFilter) return false;
+    return true;
+  });
+  renderPaperList();
+}
+
+function renderPaperList() {
+  const list = elements["paper-list"];
+  list.replaceChildren();
+  const fragment = document.createDocumentFragment();
+
+  state.filtered.forEach((paper) => {
+    const item = document.createElement("li");
+    const card = document.createElement("article");
+    card.className = "paper-card";
+    card.dataset.paperId = paper.display_id;
+    if (paper.display_id === state.selectedId) card.dataset.selected = "true";
+
+    const selectButton = document.createElement("button");
+    selectButton.type = "button";
+    selectButton.className = "paper-select";
+    selectButton.setAttribute("aria-label", `Inspect ${plainPaperTitle(paper.title) || "untitled paper"}`);
+    selectButton.addEventListener("click", () => selectPaper(paper.display_id));
+
+    const title = document.createElement("strong");
+    renderPaperTitle(title, paper.title);
+    const authors = document.createElement("span");
+    authors.textContent = authorListText(paper.authors) || "Authors unavailable";
+    const venue = document.createElement("span");
+    venue.textContent = text(paper.venue || paper.venue_name) || "Venue unavailable";
+    const identifiers = document.createElement("span");
+    identifiers.className = "paper-identifiers";
+    identifiers.textContent = [
+      paper.doi ? `DOI ${paper.doi}` : "",
+      paper.openalex_url ? `OpenAlex ${paper.openalex_url}` : "",
+    ].filter(Boolean).join(" · ") || "No DOI or OpenAlex URL";
+    const classification = document.createElement("span");
+    classification.className = "paper-meta";
+    classification.textContent = [
+      paper.year || paper.publication_year,
+      (paper.tasks || []).map(humanize).join(" + "),
+      text(paper.source_database),
+      text(paper.metadata_source),
+    ].filter(Boolean).join(" · ");
+    const coverage = document.createElement("span");
+    coverage.textContent = [
+      humanize(paper.coverage_status),
+      paper.has_map_location ? "published on map" : "not published on map",
+      `${formatNumber(paper.map_record_count)} published map record${paper.map_record_count === 1 ? "" : "s"}`,
+      `${formatNumber(paper.canonical_mapping_count)} retained canonical mapping${paper.canonical_mapping_count === 1 ? "" : "s"}`,
+      `exclusion: ${exclusionStatus(paper)}`,
+    ].join(" · ");
+    selectButton.append(title, authors, venue, identifiers, classification, coverage);
+
+    const footer = document.createElement("div");
+    footer.className = "paper-card-footer";
+    const badges = document.createElement("span");
+    badges.className = "card-badges";
+    if (paper.has_map_location) badges.append(makeBadge("Published on map", "map"));
+    if (paper.is_in_curated_papers) badges.append(makeBadge("Curated", "curated"));
+    if (paper.has_active_exclusion) badges.append(makeBadge("Actively excluded", "excluded"));
+    else if (paper.is_in_curated_exclusions) badges.append(makeBadge("Restored", "restored"));
+
+    const action = document.createElement("button");
+    action.type = "button";
+    action.dataset.paperId = paper.display_id;
+    if (paper.has_active_exclusion) {
+      action.className = "restore-button compact-action";
+      action.textContent = "Restore";
+      action.addEventListener("click", () => openScopeDialog(paper, "restore"));
+    } else {
+      action.className = "danger-button compact-action";
+      action.textContent = "Delete / Exclude from site";
+      action.addEventListener("click", () => openScopeDialog(paper, "exclude"));
+    }
+    footer.append(badges, action);
+    card.append(selectButton, footer);
+    item.append(card);
+    fragment.append(item);
+  });
+  list.append(fragment);
+  elements["result-count"].textContent =
+    `${formatNumber(state.filtered.length)} of ${formatNumber(state.papers.length)} papers`;
+  elements["empty-results"].hidden = state.filtered.length !== 0;
+}
+
+async function selectPaper(id) {
+  stopMetadataPreviewSyncPolling();
+  const selectionSequence = ++paperSelectionSequence;
+  state.selectedId = id;
+  state.selectedPaper = null;
+  state.selectedMappings = [];
+  clearPaperMetadata("Loading metadata…");
+  renderPaperList();
+  elements["detail-placeholder"].hidden = true;
+  elements["detail-content"].hidden = false;
+  elements["detail-title"].textContent = "Loading…";
+  elements["mapping-panel-error"].hidden = true;
+  try {
+    const [paperPayload, mappingsPayload, metadataPayload] = await Promise.all([
+      apiFetch(`/api/paper?id=${encodeURIComponent(id)}`),
+      apiFetch(`/api/paper/mappings?id=${encodeURIComponent(id)}`),
+      apiFetch(`/api/paper/metadata?id=${encodeURIComponent(id)}`),
+    ]);
+    if (selectionSequence !== paperSelectionSequence || state.selectedId !== id) return;
+    state.selectedPaper = paperPayload.paper;
+    state.selectedMappings = mappingsPayload.curated_mappings || [];
+    state.paperMetadata = metadataPayload.data;
+    renderPaperDetail(paperPayload.paper);
+    renderMappings(mappingsPayload);
+    renderMetadataComparison();
+    populateMetadataForm();
+  } catch (error) {
+    if (selectionSequence !== paperSelectionSequence || state.selectedId !== id) return;
+    state.selectedPaper = null;
+    state.selectedMappings = [];
+    clearPaperMetadata(`Could not load metadata: ${error.message}`, true);
+    elements["detail-title"].textContent = "Could not load paper";
+    elements["detail-notes"].textContent = error.message;
+    elements["mapping-panel-error"].hidden = false;
+    elements["mapping-panel-error"].textContent = error.message;
+  }
+}
+
+function clearPaperMetadata(message, isError = false) {
+  state.paperMetadata = null;
+  state.selectedVenue = null;
+  state.venueSelectionConfirmed = false;
+  state.publicationTypeOverride = false;
+  closeVenueCombobox();
+  elements["metadata-compare"].replaceChildren();
+  const status = document.createElement("p");
+  status.className = isError ? "form-error" : "muted";
+  status.textContent = message;
+  elements["metadata-compare"].append(status);
+  elements["metadata-edit-button"].disabled = true;
+  elements["metadata-edit-form"].hidden = true;
+  elements["metadata-paper-id"].value = "";
+  elements["metadata-edit-form"].querySelectorAll("input, textarea, select").forEach((control) => {
+    if (control.id === "metadata-paper-id") return;
+    if (control instanceof HTMLInputElement && ["checkbox", "radio"].includes(control.type)) {
+      control.checked = false;
+    } else {
+      control.value = "";
+    }
+  });
+  elements["metadata-venue-value"].textContent = "Select a canonical venue…";
+  elements["metadata-venue-summary"].hidden = true;
+  elements["metadata-publication-type"].disabled = true;
+  state.metadataSave = { status: "clean", baseline: "", inFlight: false };
+  renderMetadataSaveStatus("clean");
+}
+
+function renderMetadataComparison() {
+  const payload = state.paperMetadata || {};
+  const sources = [
+    ["Effective metadata", payload.effective_record],
+    ["Original public preview metadata", payload.public_preview_record],
+    ["Curated override metadata", payload.curated_record],
+  ];
+  elements["metadata-compare"].replaceChildren();
+  elements["metadata-edit-button"].disabled = false;
+  sources.forEach(([label, record]) => {
+    const details = document.createElement("details");
+    if (label === "Effective metadata") details.open = true;
+    const summary = document.createElement("summary");
+    summary.textContent = `${label}${record ? "" : " · none"}`;
+    const pre = document.createElement("pre");
+    pre.textContent = record ? JSON.stringify(record, null, 2) : "No record.";
+    details.append(summary, pre);
+    elements["metadata-compare"].append(details);
+  });
+}
+
+function metadataValue(record, field) {
+  const value = record?.[field];
+  if (field === "authors") return authorListText(value, "; ");
+  return Array.isArray(value) ? value.join("; ") : text(value);
+}
+
+function normalizePublicationTypeForForm(value) {
+  const normalized = text(value).trim().toLowerCase().replaceAll("_", "-");
+  if (["article", "article-journal", "journal-article", "journal article"].includes(normalized)) {
+    return "journal";
+  }
+  return normalized;
+}
+
+function normalizeVenueSearchText(value) {
+  return text(value)
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function publicationTypeForVenueType(value) {
+  return text(value).trim().toLocaleLowerCase();
+}
+
+function venueOptionMatches(option, query) {
+  const terms = normalizeVenueSearchText(query).split(/\s+/).filter(Boolean);
+  const searchable = normalizeVenueSearchText(option.search_text || [
+    option.venue_name,
+    option.venue_acronym,
+    option.venue_type,
+    option.venue_track,
+    ...(option.aliases || []),
+    ...(option.raw_variants || []),
+  ].join(" "));
+  return terms.every((term) => searchable.includes(term));
+}
+
+function visibleVenueOptionElements() {
+  return [...elements["metadata-venue-options"].querySelectorAll("[role='option']")];
+}
+
+function setActiveVenueOption(index, scroll = false) {
+  const options = visibleVenueOptionElements();
+  if (!options.length) {
+    activeVenueOptionIndex = -1;
+    elements["metadata-venue-search"].removeAttribute("aria-activedescendant");
+    return;
+  }
+  activeVenueOptionIndex = Math.max(0, Math.min(index, options.length - 1));
+  options.forEach((option, optionIndex) => {
+    const active = optionIndex === activeVenueOptionIndex;
+    option.classList.toggle("is-active", active);
+    if (active) {
+      elements["metadata-venue-search"].setAttribute("aria-activedescendant", option.id);
+      if (scroll) option.scrollIntoView({ block: "nearest" });
+    }
+  });
+}
+
+function renderVenueOptions() {
+  const query = elements["metadata-venue-search"].value;
+  const matches = state.venues.filter((option) => venueOptionMatches(option, query));
+  const fragment = document.createDocumentFragment();
+  matches.forEach((option, index) => {
+    const item = document.createElement("li");
+    item.id = `metadata-venue-option-${index}`;
+    item.role = "option";
+    item.dataset.venueId = option.venue_id;
+    item.setAttribute("aria-selected", String(option.venue_id === state.selectedVenue?.venue_id));
+    item.textContent = `${option.venue_label}${option.paper_count ? ` · ${option.paper_count} paper${option.paper_count === 1 ? "" : "s"}` : ""}`;
+    fragment.append(item);
+  });
+  elements["metadata-venue-options"].replaceChildren(fragment);
+  const hasQuery = Boolean(query.trim());
+  elements["metadata-venue-create"].hidden = !hasQuery || matches.length !== 0;
+  elements["metadata-venue-status"].textContent = state.venuesLoading
+    ? "Loading canonical venues…"
+    : matches.length
+      ? `${matches.length} canonical venue${matches.length === 1 ? "" : "s"}`
+      : hasQuery
+        ? "No canonical venue matches this search."
+        : "No canonical venues are available.";
+  const selectedIndex = matches.findIndex((option) => option.venue_id === state.selectedVenue?.venue_id);
+  setActiveVenueOption(selectedIndex >= 0 ? selectedIndex : 0, selectedIndex >= 0);
+}
+
+async function loadCanonicalVenues(force = false) {
+  if (state.venuesLoading || (state.venuesLoaded && !force)) return;
+  state.venuesLoading = true;
+  elements["metadata-venue-error"].hidden = true;
+  renderVenueOptions();
+  try {
+    const payload = await apiFetch("/api/venues");
+    state.venues = payload.data?.records || [];
+    state.venuesLoaded = true;
+    const selectedId = state.selectedVenue?.venue_id;
+    if (selectedId) {
+      state.selectedVenue = state.venues.find((option) => option.venue_id === selectedId)
+        || state.selectedVenue;
+    }
+  } catch (error) {
+    state.venuesLoaded = false;
+    elements["metadata-venue-error"].hidden = false;
+    elements["metadata-venue-error"].textContent = `Could not load canonical venues: ${error.message}`;
+  } finally {
+    state.venuesLoading = false;
+    renderVenueOptions();
+  }
+}
+
+function positionVenueComboboxPanel() {
+  const panel = elements["metadata-venue-panel"];
+  if (panel.hidden) return;
+  const buttonRect = elements["metadata-venue-button"].getBoundingClientRect();
+  const padding = 8;
+  const gap = 4;
+  const width = Math.min(Math.max(buttonRect.width, 320), window.innerWidth - padding * 2);
+  panel.style.width = `${width}px`;
+  const panelHeight = Math.min(panel.scrollHeight || 360, window.innerHeight - padding * 2);
+  const below = window.innerHeight - buttonRect.bottom - gap - padding;
+  const above = buttonRect.top - gap - padding;
+  const openAbove = below < Math.min(panelHeight, 260) && above > below;
+  const preferredTop = openAbove ? buttonRect.top - gap - panelHeight : buttonRect.bottom + gap;
+  panel.style.left = `${Math.min(Math.max(buttonRect.left, padding), window.innerWidth - padding - width)}px`;
+  panel.style.top = `${Math.min(Math.max(preferredTop, padding), window.innerHeight - padding - panelHeight)}px`;
+  panel.dataset.placement = openAbove ? "up" : "down";
+}
+
+function openVenueCombobox() {
+  elements["metadata-venue-panel"].hidden = false;
+  elements["metadata-venue-button"].setAttribute("aria-expanded", "true");
+  elements["metadata-venue-search"].value = "";
+  renderVenueOptions();
+  positionVenueComboboxPanel();
+  elements["metadata-venue-search"].focus();
+}
+
+function closeVenueCombobox(restoreFocus = false) {
+  elements["metadata-venue-panel"].hidden = true;
+  elements["metadata-venue-button"].setAttribute("aria-expanded", "false");
+  if (restoreFocus) elements["metadata-venue-button"].focus();
+}
+
+function toggleVenueCombobox() {
+  if (elements["metadata-venue-panel"].hidden) openVenueCombobox();
+  else closeVenueCombobox(true);
+}
+
+function handleVenueButtonKeydown(event) {
+  if (["ArrowDown", "ArrowUp", "Enter", " "].includes(event.key)) {
+    event.preventDefault();
+    openVenueCombobox();
+    if (event.key === "ArrowUp") setActiveVenueOption(visibleVenueOptionElements().length - 1, true);
+  } else if (event.key === "Escape") {
+    event.preventDefault();
+    closeVenueCombobox(true);
+  }
+}
+
+function handleVenueSearchKeydown(event) {
+  const options = visibleVenueOptionElements();
+  if (["ArrowDown", "ArrowUp"].includes(event.key)) {
+    event.preventDefault();
+    const direction = event.key === "ArrowDown" ? 1 : -1;
+    const next = options.length
+      ? (activeVenueOptionIndex + direction + options.length) % options.length
+      : -1;
+    setActiveVenueOption(next, true);
+  } else if (event.key === "Enter" && options[activeVenueOptionIndex]) {
+    event.preventDefault();
+    selectCanonicalVenueById(options[activeVenueOptionIndex].dataset.venueId);
+  } else if (event.key === "Escape") {
+    event.preventDefault();
+    closeVenueCombobox(true);
+  }
+}
+
+function handleVenueOptionClick(event) {
+  const option = event.target.closest("[data-venue-id]");
+  if (option) selectCanonicalVenueById(option.dataset.venueId);
+}
+
+function handleVenueOptionHover(event) {
+  const option = event.target.closest("[data-venue-id]");
+  if (option) setActiveVenueOption(visibleVenueOptionElements().indexOf(option));
+}
+
+function handleVenueOutsidePointerDown(event) {
+  if (!elements["metadata-venue-panel"]?.hidden
+      && !elements["metadata-venue-combobox"].contains(event.target)) {
+    closeVenueCombobox();
+  }
+}
+
+function renderSelectedVenueMetadata() {
+  const venue = state.selectedVenue;
+  elements["metadata-venue-summary"].replaceChildren();
+  elements["metadata-venue-summary"].hidden = !venue;
+  if (!venue) return;
+  [
+    ["Status", state.pendingVenueProposal ? "Proposed new venue · not yet created" : "Existing canonical venue"],
+    ["Canonical ID", venue.venue_id || "Assigned by the backend when saved"],
+    ["Type", venue.venue_type],
+    ["Acronym", venue.venue_acronym || "None"],
+  ]
+    .forEach(([label, value]) => {
+      const term = document.createElement("dt");
+      const description = document.createElement("dd");
+      term.textContent = label;
+      description.textContent = value;
+      elements["metadata-venue-summary"].append(term, description);
+    });
+}
+
+function selectCanonicalVenue(option, restoreFocus = true, explicitSelection = true) {
+  state.pendingVenueProposal = null;
+  state.selectedVenue = option;
+  state.venueSelectionConfirmed = explicitSelection;
+  elements["metadata-venue-id"].value = option.venue_id;
+  elements["metadata-venue-name"].value = option.venue_name;
+  elements["metadata-venue-acronym"].value = option.venue_acronym || "";
+  elements["metadata-venue-type"].value = option.venue_type;
+  // Track belongs to the paper. Selecting a canonical venue must preserve it.
+  if (!elements["metadata-venue-track"].value) {
+    elements["metadata-venue-track"].value = option.venue_type === "conference" ? "Main" : "";
+  }
+  elements["metadata-venue"].value = option.venue_name;
+  elements["metadata-venue-value"].textContent = option.venue_label;
+  state.publicationTypeOverride = false;
+  elements["metadata-publication-type"].value = publicationTypeForVenueType(option.venue_type);
+  state.previousPublicationType = elements["metadata-publication-type"].value;
+  setBookMetadataAvailability(false);
+  elements["metadata-publication-type"].disabled = true;
+  elements["metadata-publication-type-override"].textContent = "Override publication type";
+  updatePublicationTypeConflict();
+  renderSelectedVenueMetadata();
+  closeVenueCombobox(restoreFocus);
+  handleMetadataFormChange();
+}
+
+function selectCanonicalVenueById(venueId) {
+  const option = state.venues.find((venue) => venue.venue_id === venueId);
+  if (option) selectCanonicalVenue(option);
+}
+
+function enablePublicationTypeOverride() {
+  if (!state.selectedVenue) return;
+  state.publicationTypeOverride = true;
+  elements["metadata-publication-type"].disabled = false;
+  elements["metadata-publication-type"].focus();
+  elements["metadata-publication-type-override"].textContent = "Canonical type selected automatically";
+  updatePublicationTypeConflict();
+  handleMetadataFormChange();
+}
+
+function updatePublicationTypeConflict() {
+  const expected = state.selectedVenue
+    ? publicationTypeForVenueType(state.selectedVenue.venue_type)
+    : "";
+  const conflict = Boolean(
+    state.publicationTypeOverride
+    && expected
+    && elements["metadata-publication-type"].value !== expected
+  );
+  elements["metadata-publication-type-warning"].hidden = !conflict;
+  elements["metadata-publication-type-warning"].textContent = conflict
+    ? `Warning: this overrides canonical venue type ${state.selectedVenue.venue_type} (${expected}).`
+    : "";
+  return conflict;
+}
+
+const BOOK_INCOMPATIBLE_FORM_FIELDS = [
+  ["Venue", "metadata-venue-name"],
+  ["venue ID", "metadata-venue-id"],
+  ["venue acronym", "metadata-venue-acronym"],
+  ["venue type", "metadata-venue-type"],
+  ["venue track", "metadata-venue-track"],
+  ["raw venue", "metadata-raw-venue"],
+];
+
+function populatedBookIncompatibleFormFields() {
+  return BOOK_INCOMPATIBLE_FORM_FIELDS
+    .filter(([, id]) => elements[id].value.trim())
+    .map(([label, id]) => `${label}: “${elements[id].value.trim()}”`);
+}
+
+function clearBookIncompatibleFormFields() {
+  state.selectedVenue = null;
+  state.venueSelectionConfirmed = false;
+  state.pendingVenueProposal = null;
+  [
+    "metadata-venue", "metadata-venue-id", "metadata-venue-name",
+    "metadata-venue-acronym", "metadata-venue-type", "metadata-venue-track",
+    "metadata-raw-venue",
+  ].forEach((id) => { elements[id].value = ""; });
+  elements["metadata-venue-value"].textContent = "Unavailable for books";
+  elements["metadata-raw-venue-display"].textContent = "Not recorded";
+  elements["metadata-replace-raw-venue"].checked = false;
+  renderSelectedVenueMetadata();
+  closeVenueCombobox(false);
+}
+
+function setBookMetadataAvailability(isBook) {
+  elements["metadata-venue-field"].hidden = isBook;
+  elements["metadata-venue-button"].disabled = isBook;
+  elements["metadata-venue-track"].disabled = isBook || state.selectedVenue?.venue_type !== "conference";
+  const leavingBook = !isBook && state.previousPublicationType === "book";
+  elements["metadata-publication-type"].disabled = isBook
+    ? false
+    : state.selectedVenue
+      ? !state.publicationTypeOverride
+      : !leavingBook;
+  elements["metadata-publication-type-override"].hidden = isBook || !state.selectedVenue;
+}
+
+function handlePublicationTypeChange() {
+  const select = elements["metadata-publication-type"];
+  const nextType = select.value;
+  const previousType = state.previousPublicationType || nextType;
+  if (nextType === "book" && previousType !== "book") {
+    const incompatible = populatedBookIncompatibleFormFields();
+    if (incompatible.length && !window.confirm(
+      `Changing this record to book will clear these incompatible values:\n\n${incompatible.join("\n")}\n\nContinue?`,
+    )) {
+      select.value = previousType;
+      updatePublicationTypeConflict();
+      return;
+    }
+    clearBookIncompatibleFormFields();
+  }
+  if (
+    nextType !== "conference"
+    && state.selectedVenue?.venue_type === "conference"
+  ) {
+    state.selectedVenue = null;
+    state.venueSelectionConfirmed = false;
+    [
+      "metadata-venue", "metadata-venue-id", "metadata-venue-name",
+      "metadata-venue-acronym", "metadata-venue-type", "metadata-venue-track",
+    ].forEach((id) => { elements[id].value = ""; });
+    elements["metadata-venue-value"].textContent =
+      `Select a canonical ${nextType} venue…`;
+    renderSelectedVenueMetadata();
+  }
+  const isBook = nextType === "book";
+  if (isBook) clearBookIncompatibleFormFields();
+  setBookMetadataAvailability(isBook);
+  state.previousPublicationType = nextType;
+  updatePublicationTypeConflict();
+}
+
+function openVenueCreationDialog() {
+  const rawInput = elements["metadata-venue-search"].value.trim();
+  closeVenueCombobox();
+  elements["venue-create-form"].reset();
+  elements["venue-create-name"].value = rawInput;
+  elements["venue-create-alias"].value = rawInput;
+  elements["venue-create-track"].value = "Main";
+  updateVenueCreationTrackAvailability();
+  elements["venue-create-matches"].hidden = true;
+  elements["venue-create-error"].hidden = true;
+  elements["venue-create-dialog"].showModal();
+  elements["venue-create-name"].focus();
+}
+
+function updateVenueCreationTrackAvailability() {
+  const conference = elements["venue-create-type"].value === "conference";
+  elements["venue-create-track"].disabled = !conference;
+  elements["venue-create-track"].required = conference;
+  if (!conference) elements["venue-create-track"].value = "";
+}
+
+function closeVenueCreationDialog() {
+  elements["venue-create-dialog"].close();
+  elements["metadata-venue-button"].focus();
+}
+
+function renderVenueCreationMatches(matches) {
+  const section = elements["venue-create-matches"];
+  const list = section.querySelector("ul");
+  list.replaceChildren(...matches.map((match) => {
+    const item = document.createElement("li");
+    item.textContent = `${match.venue_label} · similarity ${Math.round(match.similarity * 100)}%`;
+    return item;
+  }));
+  section.hidden = matches.length === 0;
+}
+
+function submitVenueCreation(event) {
+  event.preventDefault();
+  const draft = {
+    venue_name: elements["venue-create-name"].value.trim(),
+    venue_acronym: elements["venue-create-acronym"].value.trim(),
+    venue_type: elements["venue-create-type"].value,
+    venue_track: elements["venue-create-track"].value,
+    raw_alias: elements["venue-create-alias"].value.trim(),
+    review_note: elements["venue-create-note"].value.trim(),
+    confirmed_similar: elements["venue-create-confirm-similar"].checked,
+    create_if_missing: true,
+  };
+  elements["venue-create-error"].hidden = true;
+  state.pendingVenueProposal = draft;
+  state.venueSelectionConfirmed = false;
+  state.selectedVenue = {
+    venue_id: "",
+    venue_name: draft.venue_name,
+    venue_acronym: draft.venue_acronym,
+    venue_type: draft.venue_type,
+    venue_track: draft.venue_track,
+    venue_label: `${draft.venue_name} · Proposed new ${draft.venue_type}`,
+  };
+  elements["metadata-venue-id"].value = "";
+  elements["metadata-venue-name"].value = draft.venue_name;
+  elements["metadata-venue-acronym"].value = draft.venue_acronym;
+  elements["metadata-venue-type"].value = draft.venue_type;
+  elements["metadata-venue-track"].value = draft.venue_track;
+  elements["metadata-venue"].value = draft.venue_name;
+  elements["metadata-venue-value"].textContent = state.selectedVenue.venue_label;
+  elements["metadata-publication-type"].value =
+    publicationTypeForVenueType(draft.venue_type);
+  elements["metadata-publication-type"].disabled = true;
+  renderSelectedVenueMetadata();
+  elements["venue-create-dialog"].close();
+  elements["metadata-venue-button"].focus();
+  handleMetadataFormChange();
+}
+
+function openMetadataEditor() {
+  if (!state.selectedPaper || !state.paperMetadata) {
+    showNotice("Select a paper before editing metadata.", "error");
+    return;
+  }
+  if (state.metadataSave.status === "error") {
+    elements["metadata-edit-error"].hidden = true;
+    renderMetadataSaveStatus(metadataFormIsDirty() ? "dirty" : "clean");
+  }
+  elements["metadata-edit-form"].hidden = false;
+  elements["metadata-title"].focus();
+}
+
+const METADATA_SNAPSHOT_FIELDS = [
+  "title", "year", "authors", "venue", "venue-id", "venue-name", "venue-acronym",
+  "venue-type", "venue-track", "raw-venue", "doi", "arxiv-id", "openalex-url",
+  "paper-url", "publication-type", "scope-status",
+  "curation-status", "review-status", "abstract", "review-note", "venue-review-note",
+];
+
+function metadataFormSnapshot() {
+  const values = Object.fromEntries(METADATA_SNAPSHOT_FIELDS.map((field) => {
+    const control = elements[`metadata-${field}`];
+    return [field, control ? control.value.trim() : ""];
+  }));
+  values.replace_raw_venue = elements["metadata-replace-raw-venue"].checked;
+  values.venue_review_confirmed = elements["metadata-venue-review-confirmed"].checked;
+  values.tasks = selectedCheckboxValues("metadata-tasks");
+  values.image_scopes = selectedCheckboxValues("metadata-image-scopes");
+  values.research_types = selectedCheckboxValues("metadata-research-types");
+  values.publication_type_override = state.publicationTypeOverride;
+  values.venue_selection_confirmed = state.venueSelectionConfirmed;
+  values.pending_venue_proposal = state.pendingVenueProposal;
+  return JSON.stringify(values);
+}
+
+function metadataFormIsDirty() {
+  return Boolean(state.metadataSave.baseline)
+    && metadataFormSnapshot() !== state.metadataSave.baseline;
+}
+
+function normalizeCurationStatus(value) {
+  const status = String(value || "").trim().toLowerCase();
+  if (["confirmed", "corrected_by_admin", "manually_confirmed", "manually_added"].includes(status)) {
+    return "confirmed";
+  }
+  if (!status || status === "needs_review" || status === "auto_imported") {
+    return "needs_review";
+  }
+  console.warn(`Unknown curation_status ${JSON.stringify(status)}; treating it as needing review.`);
+  return "needs_review";
+}
+
+function renderMetadataSaveStatus(status, message = "") {
+  state.metadataSave.status = status;
+  const statusElement = elements["metadata-save-status"];
+  if (!statusElement) return;
+  const copy = {
+    clean: "No unsaved changes.",
+    dirty: "Unsaved changes",
+    saving: "Saving curated override…",
+    success: "Curated override saved successfully.",
+    error: "Could not save curated override. Review the error below and retry.",
+  };
+  const icons = { clean: "○", dirty: "●", saving: "", success: "✓", error: "!" };
+  statusElement.dataset.state = status;
+  statusElement.querySelector(".metadata-save-status-icon").textContent = icons[status];
+  elements["metadata-save-status-text"].textContent = message || copy[status];
+  const saving = status === "saving";
+  elements["metadata-edit-submit"].disabled = saving || !metadataFormIsDirty();
+  elements["metadata-edit-cancel"].disabled = saving;
+  elements["metadata-edit-submit"].textContent = saving ? "Saving…" : "Save curated override";
+}
+
+function handleMetadataFormChange(event) {
+  if (state.metadataSave.inFlight) return;
+  elements["metadata-edit-error"].hidden = true;
+  if (event?.target?.matches?.('.paper-category-input[type="checkbox"]')) {
+    validateTaxonomyGroups("metadata");
+  }
+  renderMetadataSaveStatus(metadataFormIsDirty() ? "dirty" : "clean");
+}
+
+function populateMetadataForm() {
+  if (!state.selectedPaper || !state.paperMetadata) return;
+  const record = state.paperMetadata.effective_record || state.selectedPaper;
+  state.pendingVenueProposal = null;
+  state.venueSelectionConfirmed = false;
+  const fields = [
+    "title", "year", "authors", "venue", "doi", "arxiv_id", "openalex_url",
+    "paper_url", "publication_type", "scope_status",
+    "curation_status", "review_status", "abstract",
+  ];
+  fields.forEach((field) => {
+    const id = `metadata-${field.replaceAll("_", "-")}`;
+    if (elements[id]) {
+      elements[id].value = field === "publication_type"
+        ? normalizePublicationTypeForForm(record?.[field])
+        : field === "title"
+          ? plainPaperTitle(metadataValue(record, field))
+          : metadataValue(record, field);
+    }
+  });
+  setCheckedValues("metadata-tasks", record?.tasks);
+  setCheckedValues("metadata-image-scopes", record?.image_scopes);
+  setCheckedValues("metadata-research-types", record?.research_types);
+  validateTaxonomyGroups("metadata");
+  const venueId = metadataValue(record, "venue_id");
+  const venueName = metadataValue(record, "venue_name") || metadataValue(record, "venue");
+  state.selectedVenue = venueId ? {
+    venue_id: venueId,
+    venue_name: venueName,
+    venue_acronym: metadataValue(record, "venue_acronym"),
+    venue_type: metadataValue(record, "venue_type"),
+    venue_track: metadataValue(record, "venue_track") || "Main",
+    venue_label: metadataValue(record, "venue_label") || venueName,
+  } : null;
+  if (state.selectedVenue) {
+    selectCanonicalVenue(state.selectedVenue, false, false);
+    const expectedType = publicationTypeForVenueType(state.selectedVenue.venue_type);
+    const savedType = normalizePublicationTypeForForm(record?.publication_type);
+    if (savedType && savedType !== expectedType) {
+      state.publicationTypeOverride = true;
+      elements["metadata-publication-type"].value = savedType;
+      elements["metadata-publication-type"].disabled = false;
+      updatePublicationTypeConflict();
+    }
+  } else {
+    elements["metadata-venue-value"].textContent = venueName
+      ? `${venueName} · Needs canonical review`
+      : "Select a canonical venue…";
+    elements["metadata-venue"].value = venueName;
+    elements["metadata-publication-type"].disabled = true;
+    elements["metadata-venue-error"].hidden = !record?.venue_review_required;
+    elements["metadata-venue-error"].textContent = record?.venue_review_required
+      ? "This legacy venue could not be resolved unambiguously. Select an existing canonical venue or create a reviewed one."
+      : "";
+  }
+  if (record?.venue_review_required && record?.venue_review_reason) {
+    elements["metadata-venue-error"].hidden = false;
+    elements["metadata-venue-error"].textContent = record.venue_review_reason;
+  }
+  const rawVenue = metadataValue(record, "raw_venue");
+  elements["metadata-venue-review-confirmed"].checked = false;
+  elements["metadata-venue-review-note"].value = "";
+  elements["metadata-raw-venue"].value = rawVenue;
+  elements["metadata-raw-venue-display"].textContent = rawVenue || "Not recorded";
+  elements["metadata-replace-raw-venue"].checked = false;
+  const venueLoadSequence = paperSelectionSequence;
+  const venueLoadPaperId = state.selectedId;
+  void loadCanonicalVenues().then(() => {
+    if (venueLoadSequence !== paperSelectionSequence || venueLoadPaperId !== state.selectedId) return;
+    if (state.selectedVenue) {
+      const option = state.venues.find((venue) => venue.venue_id === state.selectedVenue.venue_id);
+      if (option) {
+        selectCanonicalVenue(option, false, false);
+        const savedType = normalizePublicationTypeForForm(record?.publication_type);
+        const expectedType = publicationTypeForVenueType(option.venue_type);
+        if (savedType && savedType !== expectedType) {
+          state.publicationTypeOverride = true;
+          elements["metadata-publication-type"].value = savedType;
+          elements["metadata-publication-type"].disabled = false;
+          updatePublicationTypeConflict();
+        }
+      }
+    }
+  });
+  elements["metadata-paper-id"].value = state.selectedId;
+  elements["metadata-curation-status"].value =
+    normalizeCurationStatus(metadataValue(record, "curation_status"));
+  elements["metadata-review-status"].value =
+    metadataValue(record, "review_status") || "reviewed";
+  elements["metadata-scope-status"].value =
+    metadataValue(record, "scope_status") || "in_scope";
+  elements["metadata-arxiv-id"].dataset.originalValue =
+    metadataValue(record, "arxiv_id").trim();
+  const isBook = elements["metadata-publication-type"].value === "book";
+  state.previousPublicationType = elements["metadata-publication-type"].value;
+  if (isBook) clearBookIncompatibleFormFields();
+  setBookMetadataAvailability(isBook);
+  elements["metadata-edit-error"].hidden = true;
+  state.metadataSave.baseline = metadataFormSnapshot();
+  state.metadataSave.inFlight = false;
+  renderMetadataSaveStatus("clean");
+}
+
+function closeMetadataEditor() {
+  populateMetadataForm();
+  elements["metadata-edit-form"].hidden = true;
+}
+
+function metadataPreviewSyncMessage(sync) {
+  if (sync?.status === "synchronized") return "Saved · Public preview synchronized";
+  if (sync?.status === "failed") return "Saved · Public preview sync failed";
+  return "Saved · Public preview updating…";
+}
+
+function stopMetadataPreviewSyncPolling() {
+  metadataPreviewSyncPollEpoch += 1;
+  if (metadataPreviewSyncPollTimer !== null) {
+    window.clearTimeout(metadataPreviewSyncPollTimer);
+    metadataPreviewSyncPollTimer = null;
+  }
+}
+
+function pollMetadataPreviewSync(selectedId, selectionSequence) {
+  stopMetadataPreviewSyncPolling();
+  if (!metadataPreviewSyncPageActive) return;
+  const pollEpoch = metadataPreviewSyncPollEpoch;
+  let lastStatusActive = true;
+  const schedule = (delay) => {
+    if (!metadataPreviewSyncPageActive || pollEpoch !== metadataPreviewSyncPollEpoch) return;
+    if (metadataPreviewSyncPollTimer !== null) window.clearTimeout(metadataPreviewSyncPollTimer);
+    metadataPreviewSyncPollTimer = window.setTimeout(poll, delay);
+  };
+  const poll = async () => {
+    metadataPreviewSyncPollTimer = null;
+    try {
+      const payload = await apiFetch("/api/public-preview-sync");
+      const sync = payload.data?.public_preview_sync;
+      if (!metadataPreviewSyncPageActive || pollEpoch !== metadataPreviewSyncPollEpoch) return;
+      if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
+      if (!state.metadataSave.inFlight && state.metadataSave.status === "success") {
+        renderMetadataSaveStatus("success", metadataPreviewSyncMessage(sync));
+      }
+      lastStatusActive = sync?.status === "dirty" || sync?.status === "running";
+      schedule(lastStatusActive ? 1000 : 10000);
+    } catch (_error) {
+      if (selectionSequence === paperSelectionSequence && state.selectedId === selectedId) {
+        schedule(lastStatusActive ? 1000 : 5000);
+      }
+    }
+  };
+  schedule(250);
+}
+
+async function saveMetadata(event) {
+  event.preventDefault();
+  if (state.metadataSave.inFlight || !metadataFormIsDirty()) return;
+  const selectedId = state.selectedId;
+  const selectionSequence = paperSelectionSequence;
+  if (!state.paperMetadata || !state.selectedPaper ||
+      !selectedId || elements["metadata-paper-id"].value !== selectedId) {
+    elements["metadata-edit-error"].hidden = false;
+    elements["metadata-edit-error"].textContent =
+      "Metadata is not loaded for the currently selected paper.";
+    renderMetadataSaveStatus("error");
+    elements["metadata-edit-error"].focus();
+    return;
+  }
+  const fields = [
+    "year", "authors", "doi", "arxiv_id", "openalex_url",
+    "paper_url", "publication_type", "scope_status",
+    "curation_status", "review_status", "abstract",
+  ];
+  const effective = state.paperMetadata.effective_record || state.selectedPaper;
+  const draft = { id: elements["metadata-paper-id"].value };
+  if (elements["metadata-venue-review-confirmed"].checked) {
+    draft.venue_review_confirmed = true;
+    draft.venue_review_note = elements["metadata-venue-review-note"].value.trim();
+    if (!draft.venue_review_note) {
+      elements["metadata-edit-error"].hidden = false;
+      elements["metadata-edit-error"].textContent = "Add a verification source/reason before confirming the venue review.";
+      elements["metadata-venue-review-note"].focus();
+      return;
+    }
+  }
+  fields.forEach((field) => {
+    const value = elements[`metadata-${field.replaceAll("_", "-")}`].value.trim();
+    if (value !== metadataValue(effective, field).trim()) draft[field] = value;
+  });
+  const submittedTitle = elements["metadata-title"].value.trim();
+  if (submittedTitle !== plainPaperTitle(metadataValue(effective, "title")).trim()) {
+    draft.title = submittedTitle;
+  }
+  draft.tasks = selectedCheckboxValues("metadata-tasks");
+  draft.image_scopes = selectedCheckboxValues("metadata-image-scopes");
+  draft.research_types = selectedCheckboxValues("metadata-research-types");
+  if (!validateTaxonomyGroups("metadata", { focus: true })) {
+    elements["metadata-edit-error"].hidden = false;
+    elements["metadata-edit-error"].textContent = "Select at least one value in every taxonomy dimension.";
+    return;
+  }
+  // Honor explicit curation state independently of review_status.
+  draft.curation_status = elements["metadata-curation-status"].value;
+  const publicationType = elements["metadata-publication-type"].value;
+  const isBook = publicationType === "book";
+  if (!state.selectedVenue && !isBook) {
+    elements["metadata-edit-error"].hidden = false;
+    elements["metadata-edit-error"].textContent =
+      "Select a canonical venue before saving metadata.";
+    renderMetadataSaveStatus("error");
+    elements["metadata-edit-error"].focus();
+    return;
+  }
+  const venueChanged = isBook
+    ? Boolean(metadataValue(effective, "venue_id"))
+    : elements["metadata-venue-id"].value !== metadataValue(effective, "venue_id");
+  const trackChanged = elements["metadata-venue-track"].value
+    !== (metadataValue(effective, "venue_track") || (elements["metadata-venue-type"].value === "conference" ? "Main" : ""));
+  if (venueChanged || trackChanged || state.venueSelectionConfirmed
+      || Object.hasOwn(draft, "publication_type")) Object.assign(draft, {
+    venue: isBook ? "" : elements["metadata-venue-name"].value,
+    venue_id: isBook ? "" : elements["metadata-venue-id"].value,
+    venue_name: isBook ? "" : elements["metadata-venue-name"].value,
+    venue_acronym: isBook ? "" : elements["metadata-venue-acronym"].value,
+    venue_type: isBook ? "" : elements["metadata-venue-type"].value,
+    venue_track: isBook ? "" : elements["metadata-venue-track"].value,
+    raw_venue: isBook ? "" : elements["metadata-replace-raw-venue"].checked
+      ? elements["metadata-venue-name"].value
+      : elements["metadata-raw-venue"].value,
+    replace_raw_venue: !isBook && elements["metadata-replace-raw-venue"].checked,
+    publication_type_override: state.publicationTypeOverride,
+    venue_selection_confirmed: state.venueSelectionConfirmed,
+  });
+  if (state.pendingVenueProposal) {
+    draft.venue_proposal = state.pendingVenueProposal;
+  }
+  if (isBook) draft.publication_type_override = false;
+  if (updatePublicationTypeConflict() && !window.confirm(
+    "Publication type conflicts with the selected canonical venue. Save this explicit override?",
+  )) return;
+  draft.arxiv_id_changed =
+    elements["metadata-arxiv-id"].value.trim()
+    !== elements["metadata-arxiv-id"].dataset.originalValue;
+  elements["metadata-edit-error"].hidden = true;
+  state.metadataSave.inFlight = true;
+  renderMetadataSaveStatus("saving");
+  try {
+    const payload = await apiFetch("/api/paper/metadata/update", {
+      method: "POST",
+      body: JSON.stringify(draft),
+    });
+    if (payload.success !== true || payload.saved !== true || !payload.data?.paper) {
+      const error = new Error(
+        payload.errors?.join("; ") || "The server did not confirm that metadata was saved."
+      );
+      error.payload = payload;
+      throw error;
+    }
+    if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
+    if (payload.data?.venue) {
+      state.pendingVenueProposal = null;
+      state.venuesLoaded = false;
+    }
+    await refreshAfterMetadataSave(selectedId, payload, selectionSequence);
+    if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
+    const previewSync = payload.data?.public_preview_sync;
+    renderMetadataSaveStatus(
+      "success",
+      metadataPreviewSyncMessage(previewSync),
+    );
+    pollMetadataPreviewSync(selectedId, selectionSequence);
+  } catch (error) {
+    if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
+    const possibleMatches = error.payload?.data?.possible_matches || [];
+    if (state.pendingVenueProposal && possibleMatches.length) {
+      const proposal = state.pendingVenueProposal;
+      elements["venue-create-name"].value = proposal.venue_name;
+      elements["venue-create-acronym"].value = proposal.venue_acronym;
+      elements["venue-create-type"].value = proposal.venue_type;
+      elements["venue-create-track"].value = proposal.venue_track;
+      elements["venue-create-alias"].value = proposal.raw_alias;
+      elements["venue-create-note"].value = proposal.review_note;
+      updateVenueCreationTrackAvailability();
+      renderVenueCreationMatches(possibleMatches);
+      elements["venue-create-error"].hidden = false;
+      elements["venue-create-error"].textContent =
+        "Review the possible matches. Select an existing venue, or confirm this is distinct.";
+      elements["venue-create-dialog"].showModal();
+    }
+    elements["metadata-edit-error"].hidden = false;
+    elements["metadata-edit-error"].textContent = error.message;
+    renderMetadataSaveStatus("error");
+    elements["metadata-edit-error"].focus();
+  } finally {
+    state.metadataSave.inFlight = false;
+    if (selectionSequence === paperSelectionSequence && state.selectedId === selectedId) {
+      elements["metadata-edit-submit"].disabled =
+        state.metadataSave.status === "success" || !metadataFormIsDirty();
+      elements["metadata-edit-cancel"].disabled = false;
+      elements["metadata-edit-submit"].textContent = "Save curated override";
+    }
+  }
+}
+
+function renderPaperDetail(paper) {
+  const sourceLabels = {
+    curated_only: "Curated-only record",
+    exclusion_only: "Exclusion audit record",
+    public_preview: "Public preview record",
+  };
+  elements["detail-source"].textContent = sourceLabels[paper.record_source] || "Admin record";
+  renderPaperTitle(elements["detail-title"], paper.title);
+  elements["detail-badges"].replaceChildren();
+  if (paper.has_map_location) elements["detail-badges"].append(makeBadge("Published on map", "map"));
+  if (paper.is_in_curated_papers) elements["detail-badges"].append(makeBadge("Curated", "curated"));
+  if (paper.has_active_exclusion) elements["detail-badges"].append(makeBadge("Actively excluded", "excluded"));
+  else if (paper.is_in_curated_exclusions) elements["detail-badges"].append(makeBadge("Restored exclusion", "restored"));
+
+  const metadata = [
+    ["Display ID", paper.display_id],
+    ["Year", paper.year || paper.publication_year],
+    ["Authors", authorListText(paper.authors)],
+    ["Venue", paper.venue_label || paper.venue || paper.venue_name],
+    ["Venue ID", paper.venue_id],
+    ["Raw venue", paper.raw_venue],
+    ["Venue track", humanize(paper.venue_track)],
+    ["DOI", linkValue(paper.doi, doiUrl(paper.doi))],
+    ["OpenAlex", linkValue(paper.openalex_url, paper.openalex_url)],
+    ["Paper URL", linkValue(paper.paper_url, paper.paper_url)],
+    ["Tasks", (paper.tasks || []).map(humanize).join(", ")],
+    ["Image scopes", (paper.image_scopes || []).map(humanize).join(", ")],
+    ["Research types", (paper.research_types || []).map(humanize).join(", ")],
+    ["Coverage", humanize(paper.coverage_status)],
+    ["Currently published paper", yesNo(paper.is_currently_published)],
+    ["Published on public map", yesNo(paper.has_map_location)],
+    ["Published map record count", paper.map_record_count],
+    ["Canonical mapping data retained", yesNo(paper.has_canonical_mapping_data)],
+    ["Canonical mapping count", paper.canonical_mapping_count],
+    ["Canonical location data retained", yesNo(paper.canonical_has_map_location)],
+    ["Canonical candidate map record count", paper.canonical_map_record_count],
+    ["Stale public paper pending removal", yesNo(paper.stale_public_paper_record)],
+    ["Stale map records pending removal", paper.stale_public_map_record_count],
+    ["Source database", paper.source_database],
+    ["Metadata source", paper.metadata_source],
+    ["Exclusion status", exclusionStatus(paper)],
+    ["Exclusion reasons", listText(paper.exclusion_reasons)],
+    ["Normalized title + year", paper.normalized_title_year_key],
+  ];
+  const grid = elements["metadata-grid"];
+  grid.replaceChildren();
+  metadata.forEach(([label, value]) => {
+    const dt = document.createElement("dt");
+    dt.textContent = label;
+    const dd = document.createElement("dd");
+    if (value instanceof Node) dd.append(value);
+    else dd.textContent = text(value) || "—";
+    grid.append(dt, dd);
+  });
+
+  elements["detail-notes"].textContent = text(paper.notes) || "No notes.";
+  elements["detail-exclude-button"].hidden = Boolean(paper.has_active_exclusion);
+  elements["detail-restore-button"].hidden = !paper.has_active_exclusion;
+  renderMarkers(paper.marker_records || []);
+}
+
+function renderMappings(payload) {
+  const paper = payload.paper || state.selectedPaper || {};
+  const mappings = payload.curated_mappings || [];
+  const currentStatuses = new Set(["active", "needs_review"]);
+  const currentMappings = mappings.filter((mapping) =>
+    currentStatuses.has(text(mapping.mapping_status).trim().toLowerCase())
+  );
+  const hasPersistedOrder = currentMappings.some((mapping) =>
+    text(mapping.affiliation_order).trim()
+  );
+  if (hasPersistedOrder) {
+    const orders = currentMappings.map((mapping) => Number(mapping.affiliation_order));
+    const validOrders = (
+      orders.every((order) => Number.isInteger(order) && order > 0)
+      && new Set(orders).size === orders.length
+      && [...orders].sort((left, right) => left - right).every(
+        (order, index) => order === index + 1
+      )
+    );
+    if (!validOrders) {
+      throw new Error(
+        "Persisted affiliation_order must be explicit, unique, and contiguous 1..N."
+      );
+    }
+    currentMappings.sort((left, right) => (
+      Number(left.affiliation_order) - Number(right.affiliation_order)
+    ));
+  }
+  const historicalMappings = mappings.filter((mapping) =>
+    !currentStatuses.has(text(mapping.mapping_status).trim().toLowerCase())
+  );
+  state.selectedMappings = mappings;
+  const diagnostic = payload.mapping_diagnostic || {};
+  elements["mapping-diagnostic"].hidden =
+    diagnostic.status !== "missing_mapping";
+  elements["mapping-diagnostic"].textContent = text(diagnostic.message);
+  renderPaperTitleContext(elements["mapping-paper-context"], paper.title, [
+    paper.year || paper.publication_year,
+    authorListText(paper.authors),
+    paper.doi ? `DOI ${paper.doi}` : "",
+    paper.openalex_url,
+  ]);
+
+  const body = elements["mapping-table-body"];
+  body.replaceChildren();
+  let draggedRow = null;
+  let originalOrder = [];
+  const expectedMappingIds = currentMappings.map((mapping) => text(mapping.mapping_id));
+
+  function restoreMappingRows(mappingIds) {
+    const rowsById = new Map(
+      [...body.rows].map((item) => [item.dataset.mappingId, item])
+    );
+    mappingIds.forEach((mappingId) => {
+      const item = rowsById.get(mappingId);
+      if (item) body.append(item);
+    });
+  }
+
+  async function persistDraggedOrder() {
+    if (!draggedRow) return;
+    const activeDraggedRow = draggedRow;
+    const previousMappingIds = [...originalOrder];
+    const mappingIds = [...body.rows].map((item) => item.dataset.mappingId);
+    const validPermutation = (
+      mappingIds.length === expectedMappingIds.length
+      && mappingIds.every(Boolean)
+      && new Set(mappingIds).size === mappingIds.length
+      && expectedMappingIds.every((mappingId) => mappingIds.includes(mappingId))
+    );
+    const changed = validPermutation && mappingIds.some((mappingId, index) => (
+      mappingId !== previousMappingIds[index]
+    ));
+    activeDraggedRow.classList.remove("mapping-row-dragging");
+    activeDraggedRow.draggable = false;
+    draggedRow = null;
+    originalOrder = [];
+    if (!validPermutation) {
+      restoreMappingRows(previousMappingIds);
+      elements["mapping-panel-error"].hidden = false;
+      elements["mapping-panel-error"].textContent =
+        "Affiliation order was not saved because the drag did not contain every mapping exactly once.";
+      return;
+    }
+    if (!changed) return;
+    try {
+      const result = await apiFetch("/api/paper/mappings/reorder", {
+        method: "POST",
+        body: JSON.stringify({id: state.selectedId, mapping_ids: mappingIds}),
+      });
+      const savedIds = result.mapping_ids || [];
+      const savedMappings = result.mappings || [];
+      const confirmed = (
+        savedIds.length === mappingIds.length
+        && savedIds.every((mappingId, index) => mappingId === mappingIds[index])
+        && savedMappings.length === mappingIds.length
+        && savedMappings.every((mapping, index) => (
+          text(mapping.mapping_id) === mappingIds[index]
+          && Number(mapping.affiliation_order) === index + 1
+        ))
+      );
+      if (!confirmed) {
+        throw new Error("The server did not confirm the complete persisted affiliation order.");
+      }
+      showNotice(result.message);
+      await loadSelectedMappings();
+    } catch (error) {
+      restoreMappingRows(previousMappingIds);
+      elements["mapping-panel-error"].hidden = false;
+      elements["mapping-panel-error"].textContent = error.message;
+      await loadSelectedMappings();
+    }
+  }
+
+  body.ondragover = (event) => {
+    if (draggedRow) event.preventDefault();
+  };
+  body.ondrop = (event) => {
+    if (!draggedRow) return;
+    event.preventDefault();
+    void persistDraggedOrder();
+  };
+  currentMappings.forEach((mapping) => {
+    const row = document.createElement("tr");
+    row.dataset.mappingId = text(mapping.mapping_id);
+    [
+      mapping.institution,
+      mapping.institution_authors,
+      mapping.raw_affiliation,
+      humanize(mapping.mapping_status),
+      humanize(mapping.location_status),
+    ].forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent = text(value) || "—";
+      row.append(cell);
+    });
+
+    const actions = document.createElement("td");
+    actions.className = "mapping-actions";
+    const edit = document.createElement("button");
+    edit.type = "button";
+    edit.className = "secondary-button compact-action";
+    edit.textContent = "Edit";
+    edit.addEventListener("click", () => openMappingDialog("update", mapping));
+    const exclude = document.createElement("button");
+    exclude.type = "button";
+    exclude.className = "danger-button compact-action";
+    exclude.textContent = "Exclude";
+    exclude.addEventListener("click", () => openMappingDialog("exclude", mapping));
+    actions.append(edit, exclude);
+    row.append(actions);
+
+    const orderCell = document.createElement("td");
+    orderCell.className = "mapping-order-cell";
+    const handle = document.createElement("button");
+    handle.type = "button";
+    handle.className = "mapping-order-handle";
+    handle.textContent = "⋮⋮";
+    handle.setAttribute("aria-label", `Reorder ${text(mapping.institution)}`);
+    handle.title = "Drag to reorder affiliation";
+    handle.addEventListener("pointerdown", () => {
+      row.draggable = true;
+    });
+    handle.addEventListener("pointerup", () => {
+      row.draggable = false;
+    });
+    handle.addEventListener("keydown", (event) => event.preventDefault());
+    row.addEventListener("dragstart", (event) => {
+      draggedRow = row;
+      originalOrder = [...body.rows].map((item) => item.dataset.mappingId);
+      row.classList.add("mapping-row-dragging");
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("text/plain", row.dataset.mappingId);
+    });
+    row.addEventListener("dragover", (event) => {
+      if (!draggedRow || draggedRow === row) return;
+      event.preventDefault();
+      const bounds = row.getBoundingClientRect();
+      const after = event.clientY > bounds.top + bounds.height / 2;
+      body.insertBefore(draggedRow, after ? row.nextSibling : row);
+    });
+    row.addEventListener("dragend", () => {
+      if (draggedRow) {
+        restoreMappingRows(originalOrder);
+        row.classList.remove("mapping-row-dragging");
+        row.draggable = false;
+        draggedRow = null;
+        originalOrder = [];
+      }
+    });
+    orderCell.append(handle);
+    row.append(orderCell);
+    body.append(row);
+  });
+
+  const historicalBody = elements["historical-mapping-table-body"];
+  historicalBody.replaceChildren();
+  historicalMappings.forEach((mapping) => {
+    const row = document.createElement("tr");
+    row.className = "historical-mapping-row";
+    [mapping.institution, mapping.institution_authors, mapping.raw_affiliation].forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent = text(value) || "—";
+      row.append(cell);
+    });
+
+    const status = document.createElement("td");
+    status.className = "historical-mapping-labels";
+    const labels = ["Excluded"];
+    labels.push("Retained for audit history");
+    labels.forEach((label) => {
+      const badge = document.createElement("span");
+      badge.className = "historical-mapping-label";
+      badge.textContent = label;
+      status.append(badge);
+    });
+    row.append(status);
+
+    const location = document.createElement("td");
+    location.textContent = humanize(mapping.location_status) || "—";
+    row.append(location);
+    const availability = document.createElement("td");
+    availability.className = "historical-mapping-availability";
+    availability.textContent = "Audit record — not a current affiliation";
+    row.append(availability);
+    historicalBody.append(row);
+  });
+
+  elements["empty-mappings"].hidden = currentMappings.length !== 0;
+  body.parentElement.hidden = currentMappings.length === 0;
+  elements["historical-mappings"].hidden = historicalMappings.length === 0;
+  elements["historical-mappings"].open = false;
+  elements["historical-mapping-count"].textContent = `(${historicalMappings.length})`;
+  elements["mapping-panel-error"].hidden = true;
+}
+
+function openMappingDialog(mode, mapping = {}) {
+  elements["mapping-form"].reset();
+  elements["mapping-mode"].value = mode;
+  elements["mapping-id"].value = text(mapping.mapping_id);
+  renderPaperTitleContext(
+    elements["mapping-dialog-paper"], state.selectedPaper?.title,
+    [`(${text(state.selectedPaper?.year || state.selectedPaper?.publication_year) || "year unknown"})`]
+  );
+  elements["mapping-institution"].value = text(mapping.institution);
+  elements["mapping-institution-id"].value = text(mapping.institution_id);
+  renderMappingInstitutionOptions();
+  renderMappingLocationOptions(text(mapping.location_id));
+  elements["mapping-authors"].value = text(mapping.institution_authors);
+  elements["mapping-raw-affiliation"].value = text(mapping.raw_affiliation);
+  elements["mapping-status"].value =
+    mapping.mapping_status === "needs_review" ? "needs_review" : "active";
+  elements["mapping-transition-note"].value = "";
+  elements["mapping-form-error"].hidden = true;
+
+  const excluding = mode === "exclude";
+  const replacing = mode === "replace";
+  elements["mapping-fields"].hidden = excluding;
+  elements["mapping-institution"].required = !excluding;
+  elements["mapping-authors"].required = !excluding;
+  elements["mapping-exclude-warning"].hidden = !excluding;
+  elements["mapping-replace-warning"].hidden = !replacing;
+  elements["mapping-transition-note-field"].hidden = !(excluding || replacing);
+  elements["mapping-transition-note"].required = excluding || replacing;
+  elements["mapping-replace-confirmation"].hidden = !replacing;
+  elements["mapping-confirm-replace"].required = replacing;
+
+  const titles = {
+    create: "Add author–institution mapping",
+    update: "Edit author–institution mapping",
+    exclude: "Exclude author–institution mapping",
+    replace: "Replace all author–institution mappings",
+  };
+  const submitLabels = {
+    create: "Save mapping",
+    update: "Update mapping",
+    exclude: "Exclude mapping",
+    replace: "Replace all mappings",
+  };
+  elements["mapping-dialog-title"].textContent = titles[mode];
+  elements["mapping-submit"].textContent = submitLabels[mode];
+  elements["mapping-submit"].className =
+    mode === "exclude" ? "danger-button" : "primary-button";
+  elements["mapping-dialog"].showModal();
+  (excluding
+    ? elements["mapping-transition-note"]
+    : elements["mapping-institution"]
+  ).focus();
+}
+
+function canonicalInstitutionKey(value) {
+  return text(value).normalize("NFKD").replace(/\p{M}+/gu, "")
+    .toLocaleLowerCase()
+    .match(/[\p{L}\p{N}_]+/gu)?.join(" ") || "";
+}
+
+function mappingInstitutionMatches(value) {
+  const key = canonicalInstitutionKey(value);
+  const exactOption = state.institutions.find((row) => (
+    canonicalInstitutionKey(mappingInstitutionOptionValue(row)) === key
+  ));
+  if (exactOption) return [exactOption];
+  return state.institutions.filter((row) => [
+    row.canonical_name,
+    row.abbreviation,
+    ...(row.aliases || []),
+  ].some((name) => canonicalInstitutionKey(name) === key));
+}
+
+function syncMappingInstitutionId() {
+  const matches = mappingInstitutionMatches(elements["mapping-institution"].value);
+  elements["mapping-institution-id"].value =
+    matches.length === 1 ? text(matches[0].institution_id) : "";
+}
+
+function mappingLocationLabel(location) {
+  const locality = [location.city, location.region, location.country]
+    .map(text).filter(Boolean).join(", ");
+  const coordinates = [location.lat, location.lon].map(text).filter(Boolean).join(", ");
+  return [locality, coordinates].filter(Boolean).join(" · ");
+}
+
+function validMappingLocations(institution) {
+  return (institution?.locations || []).filter((location) => (
+    text(location.coordinate_status) === "known"
+    && text(location.location_id)
+    && Number.isFinite(Number(location.lat))
+    && Number.isFinite(Number(location.lon))
+  ));
+}
+
+function renderMappingLocationOptions(selectedLocationId = "") {
+  const institution = selectedMappingInstitution();
+  const locations = validMappingLocations(institution);
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = !institution
+    ? "Select an institution first"
+    : locations.length
+      ? "Select a confirmed location"
+      : "No confirmed locations available";
+  const options = locations.map((location) => {
+    const option = document.createElement("option");
+    option.value = text(location.location_id);
+    option.textContent = mappingLocationLabel(location) || option.value;
+    return option;
+  });
+  elements["mapping-location-id"].replaceChildren(placeholder, ...options);
+  elements["mapping-location-id"].disabled = !institution || locations.length === 0;
+  const requested = text(selectedLocationId);
+  if (requested && locations.some((row) => text(row.location_id) === requested)) {
+    elements["mapping-location-id"].value = requested;
+  } else if (locations.length === 1) {
+    elements["mapping-location-id"].value = text(locations[0].location_id);
+  } else {
+    elements["mapping-location-id"].value = "";
+  }
+  elements["mapping-location-help"].textContent = locations.length > 1
+    ? "Multiple confirmed locations exist; choose the office supported by this paper."
+    : "Locations are confirmed offices belonging to the selected institution.";
+}
+
+function mappingInstitutionLocationLabel(institution) {
+  const location = institution.location || {};
+  return [
+    text(location.city),
+    text(location.region),
+    text(location.country),
+  ].filter(Boolean).join(", ");
+}
+
+function institutionContextLabel(institution) {
+  return InstitutionDisplay.formatRecord(institution);
+}
+
+function mappingInstitutionOptionValue(institution) {
+  const name = institutionContextLabel(institution);
+  const id = text(institution.institution_id);
+  return `${name} (${id})`;
+}
+
+function selectedMappingInstitution() {
+  const identifier = elements["mapping-institution-id"].value;
+  return state.institutions.find((row) => text(row.institution_id) === identifier);
+}
+
+function renderMappingInstitutionOptions() {
+  const options = state.institutions
+    .filter((row) => row.institution_status === "active")
+    .map((row) => {
+      const option = document.createElement("option");
+      option.value = mappingInstitutionOptionValue(row);
+      option.label = option.value;
+      return option;
+    });
+  elements["mapping-institution-options"].replaceChildren(...options);
+}
+
+function closeMappingDialog() {
+  elements["mapping-dialog"].close();
+}
+
+function mappingDraft() {
+  const selectedInstitution = selectedMappingInstitution();
+  return {
+    institution: selectedInstitution
+      ? text(selectedInstitution.canonical_name)
+      : elements["mapping-institution"].value.trim(),
+    institution_id: elements["mapping-institution-id"].value,
+    location_id: elements["mapping-location-id"].value,
+    institution_authors: elements["mapping-authors"].value.trim(),
+    raw_affiliation: elements["mapping-raw-affiliation"].value,
+    provenance_source: "manually_confirmed",
+    mapping_status: elements["mapping-status"].value,
+  };
+}
+
+async function submitMapping(event) {
+  event.preventDefault();
+  const mode = elements["mapping-mode"].value;
+  const draft = mappingDraft();
+  elements["mapping-form-error"].hidden = true;
+  if (mode !== "exclude" && !draft.institution_id) {
+    const matches = mappingInstitutionMatches(elements["mapping-institution"].value);
+    if (matches.length > 1) {
+      elements["mapping-form-error"].hidden = false;
+      elements["mapping-form-error"].textContent =
+        "Choose one of the canonical institution options; this institution name is ambiguous.";
+      return;
+    }
+  }
+  if (mode === "replace" && !elements["mapping-confirm-replace"].checked) {
+    elements["mapping-form-error"].hidden = false;
+    elements["mapping-form-error"].textContent =
+      "Confirm that all active mappings should be replaced.";
+    return;
+  }
+
+  const paths = {
+    create: "/api/paper/mapping/create",
+    update: "/api/paper/mapping/update",
+    exclude: "/api/paper/mapping/exclude",
+    replace: "/api/paper/mappings/replace-all",
+  };
+  let body = {
+    id: state.selectedId,
+    mapping_id: elements["mapping-id"].value,
+    ...draft,
+  };
+  if (mode === "exclude") {
+    body = {
+      id: state.selectedId,
+      mapping_id: elements["mapping-id"].value,
+      transition_note: elements["mapping-transition-note"].value.trim(),
+    };
+  }
+  if (mode === "replace") {
+    body = {
+      id: state.selectedId,
+      confirm_replace_all: true,
+      transition_note: elements["mapping-transition-note"].value.trim(),
+      mappings: [draft],
+    };
+  }
+  elements["mapping-submit"].disabled = true;
+  try {
+    const result = await apiFetch(paths[mode], {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+    closeMappingDialog();
+    showNotice(result.message);
+    await Promise.all([
+      loadSelectedMappings(),
+      refreshInstitutions(),
+      loadLocationReviews(),
+    ]);
+  } catch (error) {
+    elements["mapping-form-error"].hidden = false;
+    elements["mapping-form-error"].textContent =
+      error.status === 409
+        ? `${error.message}. Edit the existing mapping instead.`
+        : error.message;
+  } finally {
+    elements["mapping-submit"].disabled = false;
+  }
+}
+
+async function loadSelectedMappings() {
+  if (!state.selectedId) return;
+  try {
+    const payload = await apiFetch(
+      `/api/paper/mappings?id=${encodeURIComponent(state.selectedId)}`
+    );
+    renderMappings(payload);
+  } catch (error) {
+    elements["mapping-panel-error"].hidden = false;
+    elements["mapping-panel-error"].textContent = error.message;
+  }
+}
+
+function openScopeDialog(paper, mode) {
+  state.selectedPaper = paper;
+  elements["scope-form"].reset();
+  elements["scope-paper-id"].value = paper.display_id;
+  elements["scope-mode"].value = mode;
+  renderPaperTitleContext(elements["scope-paper-title"], paper.title, [
+    paper.openalex_url ? `OpenAlex ${paper.openalex_url}` : "",
+    paper.doi ? `DOI ${paper.doi}` : "",
+    text(paper.source_database) ? `Source ${text(paper.source_database)}` : "",
+    text(paper.venue || paper.venue_name) ? `Venue ${text(paper.venue || paper.venue_name)}` : "",
+  ]);
+  elements["scope-form-error"].hidden = true;
+  const restoring = mode === "restore";
+  elements["scope-dialog-title"].textContent = restoring
+    ? "Restore paper to future exports?"
+    : "Exclude paper from site?";
+  elements["scope-exclusion-warning"].hidden = restoring;
+  elements["scope-restore-warning"].hidden = !restoring;
+  elements["scope-reason-label"].hidden = restoring;
+  elements["scope-reason"].required = !restoring;
+  elements["scope-note-label"].textContent = restoring ? "Restore note" : "Review note";
+  elements["scope-submit"].textContent = restoring ? "Confirm restore" : "Confirm exclusion";
+  elements["scope-submit"].className = restoring ? "restore-button" : "danger-button";
+  elements["scope-dialog"].showModal();
+}
+
+function closeScopeDialog() {
+  elements["scope-dialog"].close();
+}
+
+async function submitScopeDecision(event) {
+  event.preventDefault();
+  const mode = elements["scope-mode"].value;
+  const note = elements["scope-note"].value.trim();
+  const reason = elements["scope-reason"].value;
+  if (!note || (mode === "exclude" && !reason)) {
+    elements["scope-form-error"].hidden = false;
+    elements["scope-form-error"].textContent =
+      mode === "exclude"
+        ? "Choose a deletion reason and enter a review note."
+        : "Enter a restore note.";
+    return;
+  }
+  elements["scope-submit"].disabled = true;
+  elements["scope-form-error"].hidden = true;
+  try {
+    const path = mode === "restore"
+      ? "/api/paper/restore"
+      : "/api/paper/delete-or-exclude";
+    const body = mode === "restore"
+      ? { id: elements["scope-paper-id"].value, restore_note: note }
+      : {
+          id: elements["scope-paper-id"].value,
+          reason,
+          review_note: note,
+        };
+    const result = await apiFetch(path, {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+    closeScopeDialog();
+    showNotice(result.message);
+    await loadApplication(true);
+  } catch (error) {
+    elements["scope-form-error"].hidden = false;
+    elements["scope-form-error"].textContent = error.message;
+  } finally {
+    elements["scope-submit"].disabled = false;
+  }
+}
+
+function renderMarkers(markers) {
+  elements["marker-count"].textContent =
+    `${formatNumber(markers.length)} record${markers.length === 1 ? "" : "s"}`;
+  const body = elements["marker-table-body"];
+  body.replaceChildren();
+  markers.forEach((marker) => {
+    const row = document.createElement("tr");
+    [
+      marker.institution,
+      listText(marker.institution_authors),
+      [marker.city, marker.country_code].filter(Boolean).join(", "),
+      coordinateText(marker),
+      [humanize(marker.resolution_method), humanize(marker.resolution_confidence)]
+        .filter(Boolean).join(" · "),
+      marker.needs_review ? "Needs review" : "No flag",
+    ].forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent = text(value) || "—";
+      row.append(cell);
+    });
+    body.append(row);
+  });
+  elements["empty-markers"].hidden = markers.length !== 0;
+  body.parentElement.hidden = markers.length === 0;
+}
+
+function makeBadge(label, variant) {
+  const badge = document.createElement("span");
+  badge.className = `badge badge-${variant}`;
+  badge.textContent = label;
+  return badge;
+}
+
+function linkValue(label, href) {
+  const cleanHref = safeUrl(href);
+  if (!label || !cleanHref) return text(label);
+  const link = document.createElement("a");
+  link.href = cleanHref;
+  link.target = "_blank";
+  link.rel = "noreferrer";
+  link.textContent = text(label);
+  return link;
+}
+
+function safeUrl(value) {
+  if (!value) return "";
+  try {
+    const url = new URL(value);
+    return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
+function doiUrl(doi) {
+  const value = text(doi).replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, "");
+  return value ? `https://doi.org/${encodeURI(value)}` : "";
+}
+
+function coordinateText(marker) {
+  const latitude = marker.latitude ?? marker.lat;
+  const longitude = marker.longitude ?? marker.lon;
+  if (latitude === null || latitude === undefined || longitude === null || longitude === undefined) return "";
+  return `${latitude}, ${longitude}`;
+}
+
+function listText(value) {
+  return Array.isArray(value) ? value.join(", ") : text(value);
+}
+
+function authorListText(value, separator = ", ") {
+  let authors = value;
+  if (typeof authors === "string" && /^[\[{]/.test(authors.trim())) {
+    try {
+      authors = JSON.parse(authors);
+    } catch (_error) {
+      authors = value;
+    }
+  }
+  if (!Array.isArray(authors)) authors = authors == null || authors === "" ? [] : [authors];
+  return authors.map((author) => {
+    if (author && typeof author === "object") {
+      return text(author.name || author.display_name || author.author).trim();
+    }
+    return text(author).trim();
+  }).filter((name) => name && name.toLocaleLowerCase() !== "[object object]").join(separator);
+}
+
+function normalize(value) {
+  return text(value).toLocaleLowerCase();
+}
+
+function plainPaperTitle(value) {
+  return TitleMarkup.plainText(text(value));
+}
+
+function paperTitleSearchText(value) {
+  return TitleMarkup.searchText(text(value));
+}
+
+function renderPaperTitle(element, value, fallback = "Untitled paper") {
+  return TitleMarkup.render(element, text(value), fallback);
+}
+
+function renderPaperTitleContext(element, title, suffixValues = []) {
+  renderPaperTitle(element, title);
+  const suffix = suffixValues.map(text).filter(Boolean).join(" · ");
+  if (suffix) element.append(document.createTextNode(` · ${suffix}`));
+  return element;
+}
+
+function text(value) {
+  if (value === null || value === undefined) return "";
+  return String(value);
+}
+
+function yesNo(value) {
+  return value ? "Yes" : "No";
+}
+
+function humanize(value) {
+  return text(value).replaceAll("_", " ");
+}
+
+function formatNumber(value) {
+  return Number(value || 0).toLocaleString();
+}

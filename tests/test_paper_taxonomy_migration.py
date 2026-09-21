@@ -32,19 +32,19 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
         cls.markers = json.loads((ROOT / "web/data/public_preview_map_data.json").read_text(encoding="utf-8"))["records"]
 
     def test_registry_covers_the_reconciled_public_corpus_not_papers_csv(self):
-        self.assertEqual(470, len(self.curated_papers))
-        self.assertEqual(657, len(self.registry))
-        self.assertEqual(657, len(self.public))
-        self.assertEqual(459, sum(bool(row["paper_id"]) for row in self.registry))
+        self.assertEqual(479, len(self.curated_papers))
+        self.assertEqual(666, len(self.registry))
+        self.assertEqual(666, len(self.public))
+        self.assertEqual(468, sum(bool(row["paper_id"]) for row in self.registry))
         self.assertEqual(198, sum(not row["paper_id"] for row in self.registry))
         summary = apply_paper_taxonomy_registry(
             [dict(row) for row in self.public],
             [dict(row) for row in self.markers],
             self.registry,
         )
-        self.assertEqual(657, summary["public_papers_matched"])
-        # The reviewed institution cleanup adds 22 located relationships.
-        self.assertEqual(1494, summary["map_records_matched"])
+        self.assertEqual(666, summary["public_papers_matched"])
+        # The NORMAL evidence successor adds 14 reviewed map records.
+        self.assertEqual(1508, summary["map_records_matched"])
 
     def test_curated_only_exclusions_do_not_enter_registry(self):
         public_ids = {row.get("paper_id") for row in self.public if row.get("paper_id")}
@@ -92,14 +92,14 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
 
     def test_localization_has_explicit_task_or_evaluation_evidence(self):
         localized = [row for row in self.registry if "localization" in row["tasks"].split(";")]
-        self.assertEqual(30, len(localized))
+        self.assertEqual(38, len(localized))
         for row in localized:
             evidence = row["tasks_evidence_excerpt"].casefold()
             self.assertTrue(any(term in evidence for term in ("local", "segmentation", "iou")), row["title"])
 
     def test_generative_editing_has_source_modification_evidence(self):
         edited = [row for row in self.registry if "generative_editing" in row["image_scopes"].split(";")]
-        self.assertEqual(39, len(edited))
+        self.assertEqual(47, len(edited))
         for row in edited:
             evidence = row["image_scopes_evidence_excerpt"].casefold()
             self.assertTrue(
@@ -109,9 +109,9 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
 
     def test_expected_counts_and_review_counts(self):
         expected = {
-            "tasks": Counter(detection=615, source_attribution=81, localization=30),
-            "image_scopes": Counter(fully_generated=558, generative_editing=39, deepfake=173, traditional_manipulation=15),
-            "research_types": Counter(method=565, dataset=128, benchmark=80, survey=24, analysis_study=74),
+            "tasks": Counter(detection=622, source_attribution=82, localization=38),
+            "image_scopes": Counter(fully_generated=560, generative_editing=47, deepfake=176, traditional_manipulation=23),
+            "research_types": Counter(method=572, dataset=133, benchmark=82, survey=24, analysis_study=76),
         }
         for field, counts in expected.items():
             actual = Counter(value for row in self.registry for value in row[field].split(";") if value)

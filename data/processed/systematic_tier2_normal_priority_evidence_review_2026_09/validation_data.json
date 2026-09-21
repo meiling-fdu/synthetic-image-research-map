@@ -1,0 +1,147 @@
+{
+  "corpus": {
+    "added_papers": 9,
+    "mapped": 645,
+    "markerless_added_papers": [
+      "ILLUSION: Unveiling Truth with a Comprehensive Multi-Modal, Multi-Lingual Deepfake Dataset"
+    ],
+    "markers": 1508,
+    "public": 666,
+    "published": 555
+  },
+  "diff": {
+    "curated": {
+      "author_institution_mappings.csv": {
+        "existing_rows": 1300,
+        "existing_rows_changed": 0,
+        "new_rows": 21
+      },
+      "institution_aliases.csv": {
+        "existing_rows": 120,
+        "existing_rows_changed": 0,
+        "new_rows": 0
+      },
+      "institution_hierarchy.csv": {
+        "existing_rows": 15,
+        "existing_rows_changed": 0,
+        "new_rows": 0
+      },
+      "institution_location_review.csv": {
+        "existing_rows": 656,
+        "existing_rows_changed": 0,
+        "new_rows": 5
+      },
+      "institution_locations.csv": {
+        "existing_rows": 520,
+        "existing_rows_changed": 0,
+        "new_rows": 0
+      },
+      "institutions.csv": {
+        "existing_rows": 737,
+        "existing_rows_changed": 0,
+        "new_rows": 5
+      },
+      "paper_exclusions.csv": {
+        "existing_rows": 56,
+        "existing_rows_changed": 0,
+        "new_rows": 0
+      },
+      "paper_taxonomy.csv": {
+        "existing_rows": 657,
+        "existing_rows_changed": 0,
+        "new_rows": 9
+      },
+      "papers.csv": {
+        "existing_rows": 470,
+        "existing_rows_changed": 0,
+        "new_rows": 9
+      },
+      "venue_aliases.csv": {
+        "existing_rows": 165,
+        "existing_rows_changed": 0,
+        "new_rows": 0
+      }
+    },
+    "frontend": {
+      "changed": 0,
+      "files_checked": 16
+    },
+    "public_marker_records": {
+      "existing_records": 1494,
+      "existing_records_changed": 0,
+      "new_records": 14
+    },
+    "public_paper_records": {
+      "existing_records": 657,
+      "existing_records_changed": 0,
+      "new_records": 9
+    }
+  },
+  "duplicates_and_exclusions": {
+    "active_exclusion_leaks": [],
+    "duplicate_arxiv": {},
+    "duplicate_doi": {},
+    "duplicate_normalized_title": {},
+    "duplicate_openalex": {},
+    "duplicate_scientific_work_pairs": []
+  },
+  "evidence_outcomes": {
+    "EVIDENCE_CONFIRMS_SCOPE": 9,
+    "EVIDENCE_EXCLUDES_SCOPE": 11
+  },
+  "identity_outcomes_for_confirmed_scope": {
+    "MISSING_ADD": 9
+  },
+  "locked_reviews": {
+    "evidence": {
+      "candidate_ids": [
+        "audit:29fa62c1fc9fd79d",
+        "audit:2fa7c05b3b864bfe",
+        "audit:305b25515850fed3",
+        "audit:3be864bb29fef423",
+        "audit:4f169a0ad566bd1d",
+        "audit:5485e42ab03970ce",
+        "audit:6338fbc2cd19a1bf",
+        "audit:67fabc63d5da6e37",
+        "audit:6de8f49b49f65330",
+        "audit:7aba8c4410d51d0a",
+        "audit:9089a0b84b74868b",
+        "audit:93f2de88b5a876c9",
+        "audit:a06bf41dfd2ab933",
+        "audit:b5b43c8e6e91325d",
+        "audit:b666c0f0f497632a",
+        "audit:bcd4cedccc0c34eb",
+        "audit:ced0c9f8fe10fbb9",
+        "audit:e094e552be6fbe85",
+        "audit:fa8eef7eb10763d0",
+        "audit:fed41b0363b5f8c1"
+      ],
+      "evidence_projection_sha256": "f4f4e5e0701e96315c1154ea8a7f65666ac42fa786c67e5ff65023006f1d631f",
+      "outcomes": {
+        "EVIDENCE_CONFIRMS_SCOPE": 9,
+        "EVIDENCE_EXCLUDES_SCOPE": 11
+      },
+      "priority": "NORMAL",
+      "queue": "queue_c_evidence_required.csv",
+      "rows": 20
+    },
+    "identity": {
+      "candidate_ids": [
+        "audit:29fa62c1fc9fd79d",
+        "audit:2fa7c05b3b864bfe",
+        "audit:4f169a0ad566bd1d",
+        "audit:93f2de88b5a876c9",
+        "audit:b5b43c8e6e91325d",
+        "audit:b666c0f0f497632a",
+        "audit:bcd4cedccc0c34eb",
+        "audit:ced0c9f8fe10fbb9",
+        "audit:fed41b0363b5f8c1"
+      ],
+      "identity_projection_sha256": "e70630e1d140ae6dbfcc7b664345a22828223506341a8f0b280c69fc99cbf74b",
+      "outcomes": {
+        "MISSING_ADD": 9
+      },
+      "rows": 9
+    }
+  }
+}

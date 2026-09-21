@@ -1,0 +1,102 @@
+{
+  "current_successor": {
+    "corpus": {
+      "map_markers": 1508,
+      "mapped_papers": 645,
+      "public_papers": 666,
+      "published_only_papers": 555
+    },
+    "evidence_outcomes": {
+      "EVIDENCE_CONFIRMS_SCOPE": 9,
+      "EVIDENCE_EXCLUDES_SCOPE": 11,
+      "EVIDENCE_STILL_INSUFFICIENT": 0
+    },
+    "identity_outcomes_for_confirmed_scope": {
+      "AMBIGUOUS_IDENTITY": 0,
+      "EXISTING_ALTERNATE_TITLE": 0,
+      "EXISTING_CURRENT": 0,
+      "EXISTING_EXCLUSION": 0,
+      "EXISTING_UPDATE_NEEDED": 0,
+      "MISSING_ADD": 9
+    }
+  },
+  "deterministic_regeneration": {
+    "byte_identical": true,
+    "changed_after_first": [],
+    "changed_after_second": [],
+    "generated_paths_checked": 19,
+    "matches_pre_run": true,
+    "protected_inputs_unchanged": true,
+    "protected_paths_checked": 10,
+    "rounds": 2
+  },
+  "focused_and_historical_tests": {
+    "failed": 0,
+    "passed": 62,
+    "skipped": 0
+  },
+  "full_repository_suite": {
+    "command": "PATH=/Users/meilinger/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin:$PATH PYTHONPYCACHEPREFIX=/tmp/sirm-pycache /usr/bin/python3 -m pytest -q",
+    "duration_seconds": 318.16,
+    "failed": 0,
+    "passed": 1505,
+    "skipped": 0
+  },
+  "historical_reproducibility": {
+    "systematic_620_paper_audit": "PASS",
+    "tier1_reconciliation": "PASS",
+    "tier2_636_paper_application": "PASS",
+    "tier2_636_paper_policy": "PASS",
+    "tier2_648_paper_inclusion": "PASS",
+    "tier2_657_paper_high_priority_evidence": "PASS"
+  },
+  "integrity": {
+    "active_exclusion_leaks": 0,
+    "duplicate_scientific_works": 0,
+    "frontend_source_files_changed": 0,
+    "pre_existing_authoritative_rows_changed": 0,
+    "pre_existing_public_marker_records_changed": 0,
+    "pre_existing_public_paper_records_changed": 0
+  },
+  "validators": {
+    "curated_database": {
+      "duplicate_candidates": 0,
+      "errors": 0,
+      "files_checked": 17,
+      "warnings": 215
+    },
+    "exclusions": {
+      "active_exclusions": 50,
+      "errors": 0,
+      "stale_public_records": 0,
+      "warnings": 2
+    },
+    "git_diff_check": "PASS",
+    "institution_location_exact_duplicate_findings": 0,
+    "metadata_consistency": {
+      "affiliation_mismatches": 0,
+      "legacy_fallback_risks": 0,
+      "papers_audited": 666,
+      "retired_institution_leaks": 0,
+      "true_inconsistencies": 0
+    },
+    "node_syntax": {
+      "web/admin.js": "PASS",
+      "web/app.js": "PASS"
+    },
+    "public_affiliation_consistency_mismatches": 0,
+    "public_preview_map": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "public_preview_papers": {
+      "errors": 0,
+      "warnings": 24
+    },
+    "taxonomy": {
+      "identities_audited": 666,
+      "needs_review": 0
+    }
+  },
+  "warning_note": "The curated, exclusion, and public-paper warnings match the retained predecessor review-warning classes; every validator completed with zero errors."
+}

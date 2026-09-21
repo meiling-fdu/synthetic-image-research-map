@@ -1,0 +1,43 @@
+{
+  "byte_identical": true,
+  "changed_after_first": [],
+  "changed_after_second": [],
+  "generated_paths_checked": 19,
+  "matches_pre_run": true,
+  "protected_inputs_unchanged": true,
+  "protected_paths_checked": 10,
+  "protected_sha256": {
+    "data/curated/institution_aliases.csv": "136e4f30b83176191d7092ec8c7afa02b8b93697abf52765c5dfaabf246ec5e5",
+    "data/curated/institution_hierarchy.csv": "39a9963217d4dda7e4eb9f411063dab337c04031d37c4cf96bfdd085099ae961",
+    "data/curated/institution_locations.csv": "0e991792cfd8f0a052a5a65756507f6b45f01da68669bf23423ecc5677df9308",
+    "data/curated/paper_exclusions.csv": "59749cddcc25612e4c9f2cb80841c849410193cdd03c688ec2231983814d2cc6",
+    "data/curated/venue_aliases.csv": "f481c21c88a906d0176c3a26a726077a747ec946f6211a19f20a6c145f88feae",
+    "data/processed/institution_type_audit.csv": "a9859d27af7717dad4c0cf1b50305d80c9493c871bc2e9e8b8a31147e4f9e533",
+    "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline_sha256.json": "6b5f83e68bffe430c925c871eb21f1760617cb998e3362f0f5e244b5af51c614",
+    "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/evidence_lock.json": "2bb5e5666da94169e970ad1ade2979d8b08fc75d49e8a308cdba26fafc9db9a3",
+    "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/identity_lock.json": "07e55e4f087129d2efc5e3d43f06aa604fd690db5e0b6b966a9eeb9769dcc37a",
+    "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/preinsertion_identity_checks.json": "f658e3d3337c2ea8dc59a4fbb6d19a8e262c1cd5e05cba16c894cb7299dfeb00"
+  },
+  "rounds": 2,
+  "sha256": {
+    "data/curated/author_institution_mappings.csv": "c542bdf0c43cc49bc448297c98b433f0b5c676fe0786d658027ccb6087844319",
+    "data/curated/institution_location_review.csv": "70134d39250af38df291e7e9247bdefe04e1c61e0e84c2f3bdeba28a288cc1af",
+    "data/curated/institutions.csv": "2c42e8fae87cada3d41392659904042245839047ecd6d9335cef7f7d7ac4f8c4",
+    "data/curated/paper_taxonomy.csv": "7593264dfe4bccefe56af7a741a327b15eab846f023152009cd1ee127bc11327",
+    "data/curated/papers.csv": "e07ad765d1081bc4569c9fc37e7e8599866f71416094e3cb7e2c89aad1baa177",
+    "data/manual/key_paper_coverage_report.csv": "26a576837aa11e798949add1d2a5ccf7d19026769731e73cf8d5c22d8af33b29",
+    "data/manual/missing_author_mappings_report.csv": "c7b13b88d9f92b29fbb080a75e5f102fcec15d7a09f1b50f0e5d54efa48678e2",
+    "data/manual/systematic_tier2_normal_priority_evidence_review_2026_09.csv": "7a286e0bff3b0ab7e426033eb0e42490a9f51bce20e7c813cdd4bbee8539579c",
+    "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/diff_audit.json": "8b6b8002135d7bffb30e55afa80241cdae4904e6441d222c2c8aa86ace677f53",
+    "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/identity_checks.json": "1eaef1dcbc2f505987247cc10c979fac451e53952145cddf25f5cb142e542089",
+    "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/insertion.json": "144e81d58e15a3ab55b31f786058b341ee4ec7dafa0f0fcf6d50fe2ad92de980",
+    "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/planned_additions.json": "e4620bc610423936b1275fda02e71a1aace69a123d2b19089d0c3b8fa156ae2d",
+    "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/validation_data.json": "de8383cd0afd56dafa3fa406eae997800dbc482ee130fabe557c3eef2c687b5e",
+    "docs/key_paper_coverage_report.md": "26b973878f08ef6d8a23b281737824a3da8e1c64debfbfd0980077eaa731e494",
+    "docs/missing_author_mappings_report.md": "b5ef67875a5ae104596d0bcb515cad1e9b8ec1334f14ae3abac677360b3c4bdd",
+    "docs/public_preview_report.md": "9e455de25a19e35a7fe22b53906d4c3af0b4aadaa64d17c10121bac194542778",
+    "docs/systematic_tier2_normal_priority_evidence_review_2026_09.md": "d01919f50aaa2a36e0cf70ec600a33ded466b698a3d8fc0299eb44215b4e0327",
+    "web/data/public_preview_map_data.json": "8b84eaba3a48cce585fd2fb278206575807900e08b132a280b910d741b2058cc",
+    "web/data/public_preview_papers.json": "fc5c911ab6e53f35e9d2211ce2941e454f49493d6a8f4bb0ed55dab205c34795"
+  }
+}

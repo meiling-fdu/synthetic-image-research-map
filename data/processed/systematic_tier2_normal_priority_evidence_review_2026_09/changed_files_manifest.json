@@ -1,0 +1,312 @@
+{
+  "command": "git status --porcelain=v1 --untracked-files=all",
+  "counts": {
+    "total": 64,
+    "tracked_modified": 17,
+    "untracked": 47
+  },
+  "entries": [
+    {
+      "path": "data/curated/author_institution_mappings.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/curated/institution_location_review.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/curated/institutions.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/curated/papers.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/manual/missing_author_mappings_report.csv",
+      "status": " M"
+    },
+    {
+      "path": "docs/key_paper_coverage_report.md",
+      "status": " M"
+    },
+    {
+      "path": "docs/missing_author_mappings_report.md",
+      "status": " M"
+    },
+    {
+      "path": "docs/public_preview_report.md",
+      "status": " M"
+    },
+    {
+      "path": "scripts/report_systematic_tier2_high_priority_evidence.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/baseline_expectations.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_frontend_published_only_filter.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_manual_location_audit_20260827.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_paper_metadata_consistency_audit.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_paper_taxonomy_migration.py",
+      "status": " M"
+    },
+    {
+      "path": "web/data/public_preview_map_data.json",
+      "status": " M"
+    },
+    {
+      "path": "web/data/public_preview_papers.json",
+      "status": " M"
+    },
+    {
+      "path": "data/manual/systematic_tier2_normal_priority_evidence_review_2026_09.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/data/curated/author_institution_mappings.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/data/curated/institution_aliases.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/data/curated/institution_hierarchy.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/data/curated/institution_location_review.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/data/curated/institution_locations.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/data/curated/institutions.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/data/curated/paper_exclusions.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/data/curated/paper_taxonomy.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/data/curated/papers.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/data/curated/venue_aliases.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/admin.css",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/admin.html",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/admin.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/app.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/data/public_preview_map_data.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/data/public_preview_papers.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/index.html",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/institution_display.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/institution_type_labels.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/keyword_suggestions.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/marker_interaction_helpers.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/marker_size_helpers.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/paper_details_helpers.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/paper_link_helpers.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/public_metadata.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/style.css",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/title_markup.js",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline_sha256.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/changed_files_manifest.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/diff_audit.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/evidence_lock.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/identity_checks.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/identity_lock.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/insertion.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/planned_additions.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/preinsertion_identity_checks.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/reproducibility.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/reproduction_log.txt",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/validation_data.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/validation_summary.json",
+      "status": "??"
+    },
+    {
+      "path": "docs/systematic_tier2_normal_priority_evidence_review_2026_09.md",
+      "status": "??"
+    },
+    {
+      "path": "scripts/integrate_systematic_tier2_normal_priority_evidence.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/report_systematic_tier2_normal_priority_evidence.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/reproduce_systematic_tier2_normal_priority_evidence.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/systematic_tier2_normal_priority_evidence_data.py",
+      "status": "??"
+    },
+    {
+      "path": "tests/test_systematic_tier2_normal_priority_evidence.py",
+      "status": "??"
+    }
+  ],
+  "generated_reports": [
+    "data/manual/missing_author_mappings_report.csv",
+    "docs/key_paper_coverage_report.md",
+    "docs/missing_author_mappings_report.md",
+    "docs/public_preview_report.md"
+  ],
+  "historical_compatibility": [
+    "scripts/report_systematic_tier2_high_priority_evidence.py"
+  ],
+  "no_commit_or_push": true,
+  "normal_evidence_layer": [
+    "data/manual/systematic_tier2_normal_priority_evidence_review_2026_09.csv",
+    "docs/systematic_tier2_normal_priority_evidence_review_2026_09.md",
+    "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/",
+    "scripts/systematic_tier2_normal_priority_evidence_data.py",
+    "scripts/integrate_systematic_tier2_normal_priority_evidence.py",
+    "scripts/report_systematic_tier2_normal_priority_evidence.py",
+    "scripts/reproduce_systematic_tier2_normal_priority_evidence.py",
+    "tests/test_systematic_tier2_normal_priority_evidence.py"
+  ],
+  "semantic_changes": {
+    "authoritative_append_files": [
+      "data/curated/papers.csv",
+      "data/curated/paper_taxonomy.csv",
+      "data/curated/author_institution_mappings.csv",
+      "data/curated/institutions.csv",
+      "data/curated/institution_location_review.csv"
+    ],
+    "confirmed_locations": [],
+    "frontend_source_files": [],
+    "institution_aliases": [],
+    "institution_hierarchy": [],
+    "paper_exclusions": [],
+    "public_exports": [
+      "web/data/public_preview_papers.json",
+      "web/data/public_preview_map_data.json"
+    ]
+  },
+  "successor_count_tests": [
+    "tests/baseline_expectations.py",
+    "tests/test_frontend_published_only_filter.py",
+    "tests/test_manual_location_audit_20260827.py",
+    "tests/test_paper_metadata_consistency_audit.py",
+    "tests/test_paper_taxonomy_migration.py"
+  ],
+  "task_scope": "Tier 2 NORMAL-priority evidence resolution only"
+}
