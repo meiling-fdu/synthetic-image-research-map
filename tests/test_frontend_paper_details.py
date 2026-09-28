@@ -550,11 +550,18 @@ assert.equal(other.getAttribute('aria-controls'), paperDetails.querySelector('.p
         self.assertIn('"paper-details-authors-overflow",', self.app)
 
     def test_formal_survey_nine_author_order_and_superscripts(self):
-        survey = next(p for p in self.papers if p.get('paper_id') == 'curated:c071c25bc2957d78569b')
         expected = ["Thanh Thi Nguyen", "Quoc Viet Hung Nguyen", "Dung Tien Nguyen",
                     "Duc Thanh Nguyen", "Thien Huynh-The", "Saeid Nahavandi",
                     "Thanh Tam Nguyen", "Quoc-Viet Pham", "Cuong M. Nguyen"]
-        self.exercise(self.markup(survey['authors'], 'card'), """
+        # Keep this renderer contract independent of current public membership.
+        # The source survey is retained in curated history after its reversible
+        # legacy-scope exclusion, so use the verified author/affiliation matrix
+        # directly as the UI fixture.
+        authors = [
+            {"name": name, "affiliation_indices": [affiliation]}
+            for name, affiliation in zip(expected, [1, 2, 1, 1, 3, 1, 4, 5, 6])
+        ]
+        self.exercise(self.markup(authors, 'card'), """
 assert.deepEqual(names(paperDetails), """ + json.dumps(expected[:8]) + """);
 assert.equal(paperDetails.querySelector('.paper-authors-overflow').hidden, true);
 assert.equal(paperDetails.querySelector('.paper-authors-overflow').querySelector('.paper-author').children[0], 'Cuong M. Nguyen');
@@ -564,7 +571,7 @@ for (const root of [resultsList, paperDetails]) {
   assert.deepEqual(visible(root).map(a => a.querySelector('sup').textContent), ['1','2','1','1','3','1','4','5','6']);
   assert.equal(root.querySelectorAll('.paper-author').length, 9);
 }
-""", self.markup(survey['authors']))
+""", self.markup(authors))
 
     def test_overflow_multi_affiliations_survive_repeated_toggles(self):
         record = next(p for p in self.papers if p['title'].startswith('SynerDetect:'))

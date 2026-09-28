@@ -4886,6 +4886,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             integrated_papers,
             integrated_maps,
             taxonomy_registry_rows,
+            exclusion_rows,
         )
         paper_summary.update(taxonomy_join_summary)
         add_paper_institution_search_ids(

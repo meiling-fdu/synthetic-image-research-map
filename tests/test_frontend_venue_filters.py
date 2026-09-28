@@ -501,7 +501,6 @@ process.stdout.write(JSON.stringify({{
             },
             "venue:icmr": {
                 "Main": "ACM International Conference on Multimedia Retrieval (ICMR)",
-                "Workshop": "ACM International Conference on Multimedia Retrieval (ICMR) · Workshop",
             },
         }
         for venue_id, expected_labels in expected.items():
@@ -514,6 +513,10 @@ process.stdout.write(JSON.stringify({{
                         {expected_labels},
                     )
                     continue
+                self.assertEqual(
+                    {paper.get("venue_track") for paper in matching},
+                    set(expected_labels),
+                )
                 labels_by_track = {
                     track: {
                         paper.get("venue_label") for paper in matching

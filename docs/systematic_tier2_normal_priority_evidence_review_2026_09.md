@@ -2,7 +2,7 @@
 
 This successor pass resolves only the 20 `NORMAL` rows from `queue_c_evidence_required.csv`. The frozen 12-paper HIGH-priority layer, 171 policy exclusions, Tier 3, and legacy cleanup remain outside this pass. The immutable predecessor is the 657-paper HIGH-priority successor corpus.
 
-The canonical ledger is [systematic_tier2_normal_priority_evidence_review_2026_09.csv](../data/manual/systematic_tier2_normal_priority_evidence_review_2026_09.csv). Counts below are generated from that CSV and the current public exports.
+The canonical ledger is [systematic_tier2_normal_priority_evidence_review_2026_09.csv](../data/manual/systematic_tier2_normal_priority_evidence_review_2026_09.csv). Counts below are generated from that CSV and the frozen 666-paper NORMAL-priority successor exports.
 
 ## Evidence resolution
 

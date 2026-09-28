@@ -6,19 +6,18 @@ data change and the identity and relationship invariants in
 ``test_repository_baseline.py``.
 """
 
-# Tier 2 NORMAL evidence curation: nine additions, eight with reusable map locations.
-# Pre-existing rows and exclusions are unchanged; one addition awaits coordinates.
+# Reversible legacy-scope cleanup: 43 identity-safe active exclusions; one
+# title/year collision remains blocked. Historical source rows stay retained.
 CURRENT_REPOSITORY_BASELINE = {
-    "public_unique_papers": 666,
+    "public_unique_papers": 623,
     # Map source identities include one identity resolved to a canonical paper.
-    "public_map_source_papers": 646,
-    "public_papers_with_map": 645,
+    "public_map_source_papers": 603,
+    "public_papers_with_map": 602,
     "public_papers_without_map": 21,
     "total_institution_registry_rows": 742,
     "active_canonical_institutions": 721,
     "non_active_institution_registry_rows": 21,
-    # One paper–institution relationship has two markers (1508 markers total).
-    "public_paper_institution_relationships": 1507,
+    "public_paper_institution_relationships": 1392,
     "institution_hierarchy_edges": 15,
     "institution_aliases": 120,
 }
@@ -50,15 +49,15 @@ CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 533, 'company': 88, 'research
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 525, 'company': 86, 'research_unit': 92, 'other': 18}
 
-PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 631, 'research_unit': 137, 'other': 34, 'company': 133}
+PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 592, 'research_unit': 131, 'other': 28, 'company': 127}
 
 # Historical release artifacts are immutable; current effective venues have
 # changed since the 2026-08-24 checkpoint.
 RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint": 64, "book": 1}
 
-PUBLICATION_TYPE_TOTALS = {'conference': 389, 'preprint': 111, 'journal': 165, 'book': 1}
+PUBLICATION_TYPE_TOTALS = {'conference': 375, 'preprint': 109, 'journal': 138, 'book': 1}
 
-TASK_TOTALS = {'detection': 622, 'source_attribution': 82, 'localization': 38}
+TASK_TOTALS = {'detection': 580, 'source_attribution': 79, 'localization': 36}
 
 RELEASE_TASK_TOTALS = {
     "detection": 471,

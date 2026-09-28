@@ -1,0 +1,348 @@
+{
+  "audit_source": "legacy_scope_cleanup_audit_2026_09",
+  "bookkeeping_artifacts": [
+    "data/processed/legacy_scope_exclusion_migration_2026_09/changed_files_manifest.json",
+    "data/processed/legacy_scope_exclusion_migration_2026_09/reproducibility.json"
+  ],
+  "command": "git status --porcelain=v1 -z --untracked-files=all",
+  "counts": {
+    "reported_entries": 59,
+    "reported_entries_excluding_manifest": 58,
+    "tracked_changes": 28,
+    "untracked": 31
+  },
+  "entries": [
+    {
+      "path": "data/curated/paper_exclusions.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/manual/key_paper_coverage_report.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/manual/legacy_scope_cleanup_audit_2026_09.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/manual/legacy_scope_exclusion_migration_2026_09.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/manual/missing_author_mappings_report.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/processed/institution_type_audit.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_2026_09/artifact_sha256.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_2026_09/high_confidence_scope_drift.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_2026_09/identity_resolution_summary.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_2026_09/needs_review.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_2026_09/validation_summary.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_audit_2026_09/baseline_sha256.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_audit_2026_09/recovered_categories_and_tail.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_audit_2026_09/recovered_deepfake_rows_003_035.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_audit_2026_09/recovered_deepfake_rows_036_071.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/changed_files_manifest.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/historical_verification.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/migration_plan.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/migration_plan_receipt.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/predecessor_666_snapshot.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/regeneration_sha256.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/reproducibility.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/restoration_receipt.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/taxonomy_current_counts.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/test_successor_migration.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/validation_evidence.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/validation_summary.json",
+      "status": "??"
+    },
+    {
+      "path": "docs/key_paper_coverage_report.md",
+      "status": " M"
+    },
+    {
+      "path": "docs/legacy_scope_cleanup_audit_2026_09.md",
+      "status": "??"
+    },
+    {
+      "path": "docs/legacy_scope_exclusion_migration_2026_09.md",
+      "status": "??"
+    },
+    {
+      "path": "docs/missing_author_mappings_report.md",
+      "status": " M"
+    },
+    {
+      "path": "docs/public_preview_report.md",
+      "status": " M"
+    },
+    {
+      "path": "docs/systematic_tier2_normal_priority_evidence_review_2026_09.md",
+      "status": " M"
+    },
+    {
+      "path": "scripts/audit_key_paper_coverage.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/build_legacy_audit.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/export_public_preview.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/frozen_predecessor_666.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/legacy_scope_cleanup_audit.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/legacy_scope_exclusion_migration.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/migrate_paper_taxonomy.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/paper_taxonomy_registry.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/report_systematic_tier2_application.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/report_systematic_tier2_normal_priority_evidence.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/report_systematic_tier2_policy.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/verify_key_paper_reconciliation.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/baseline_expectations.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_author_affiliation_evidence_repairs.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_formal_publication_authors.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_frontend_paper_details.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_frontend_published_only_filter.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_frontend_venue_filters.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_legacy_scope_cleanup_audit.py",
+      "status": "??"
+    },
+    {
+      "path": "tests/test_legacy_scope_exclusion_migration.py",
+      "status": "??"
+    },
+    {
+      "path": "tests/test_manual_location_audit_20260827.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_paper_metadata_consistency_audit.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_paper_taxonomy_migration.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_primary_paper_curation.py",
+      "status": " M"
+    },
+    {
+      "path": "web/data/public_preview_map_data.json",
+      "status": " M"
+    },
+    {
+      "path": "web/data/public_preview_papers.json",
+      "status": " M"
+    }
+  ],
+  "group_integrity": {
+    "all_entries_classified": true,
+    "classified_entry_count": 59,
+    "duplicate_group_entries": []
+  },
+  "groups": {
+    "A_authoritative_exclusion_changes": [
+      "data/curated/paper_exclusions.csv"
+    ],
+    "B_exporter_and_invariant_implementation": [
+      "scripts/audit_key_paper_coverage.py",
+      "scripts/export_public_preview.py",
+      "scripts/migrate_paper_taxonomy.py",
+      "scripts/paper_taxonomy_registry.py",
+      "scripts/verify_key_paper_reconciliation.py"
+    ],
+    "C_generated_623_paper_successor_outputs": [
+      "data/manual/key_paper_coverage_report.csv",
+      "data/manual/missing_author_mappings_report.csv",
+      "data/processed/institution_type_audit.csv",
+      "docs/key_paper_coverage_report.md",
+      "docs/missing_author_mappings_report.md",
+      "docs/public_preview_report.md",
+      "web/data/public_preview_map_data.json",
+      "web/data/public_preview_papers.json"
+    ],
+    "D_migration_restoration_and_audit_artifacts": [
+      "data/manual/legacy_scope_cleanup_audit_2026_09.csv",
+      "data/manual/legacy_scope_exclusion_migration_2026_09.csv",
+      "data/processed/legacy_scope_cleanup_2026_09/artifact_sha256.json",
+      "data/processed/legacy_scope_cleanup_2026_09/high_confidence_scope_drift.csv",
+      "data/processed/legacy_scope_cleanup_2026_09/identity_resolution_summary.json",
+      "data/processed/legacy_scope_cleanup_2026_09/needs_review.csv",
+      "data/processed/legacy_scope_cleanup_2026_09/validation_summary.json",
+      "data/processed/legacy_scope_cleanup_audit_2026_09/baseline_sha256.json",
+      "data/processed/legacy_scope_cleanup_audit_2026_09/recovered_categories_and_tail.json",
+      "data/processed/legacy_scope_cleanup_audit_2026_09/recovered_deepfake_rows_003_035.json",
+      "data/processed/legacy_scope_cleanup_audit_2026_09/recovered_deepfake_rows_036_071.json",
+      "data/processed/legacy_scope_exclusion_migration_2026_09/changed_files_manifest.json",
+      "data/processed/legacy_scope_exclusion_migration_2026_09/historical_verification.json",
+      "data/processed/legacy_scope_exclusion_migration_2026_09/migration_plan.csv",
+      "data/processed/legacy_scope_exclusion_migration_2026_09/migration_plan_receipt.json",
+      "data/processed/legacy_scope_exclusion_migration_2026_09/predecessor_666_snapshot.json",
+      "data/processed/legacy_scope_exclusion_migration_2026_09/regeneration_sha256.json",
+      "data/processed/legacy_scope_exclusion_migration_2026_09/reproducibility.json",
+      "data/processed/legacy_scope_exclusion_migration_2026_09/restoration_receipt.csv",
+      "data/processed/legacy_scope_exclusion_migration_2026_09/taxonomy_current_counts.json",
+      "data/processed/legacy_scope_exclusion_migration_2026_09/test_successor_migration.json",
+      "data/processed/legacy_scope_exclusion_migration_2026_09/validation_evidence.json",
+      "data/processed/legacy_scope_exclusion_migration_2026_09/validation_summary.json",
+      "docs/legacy_scope_cleanup_audit_2026_09.md",
+      "docs/legacy_scope_exclusion_migration_2026_09.md",
+      "scripts/legacy_scope_exclusion_migration.py"
+    ],
+    "E_successor_aware_tests": [
+      "tests/baseline_expectations.py",
+      "tests/test_author_affiliation_evidence_repairs.py",
+      "tests/test_formal_publication_authors.py",
+      "tests/test_frontend_paper_details.py",
+      "tests/test_frontend_published_only_filter.py",
+      "tests/test_frontend_venue_filters.py",
+      "tests/test_legacy_scope_cleanup_audit.py",
+      "tests/test_legacy_scope_exclusion_migration.py",
+      "tests/test_manual_location_audit_20260827.py",
+      "tests/test_paper_metadata_consistency_audit.py",
+      "tests/test_paper_taxonomy_migration.py",
+      "tests/test_primary_paper_curation.py"
+    ],
+    "F_historical_snapshot_support": [
+      "docs/systematic_tier2_normal_priority_evidence_review_2026_09.md",
+      "scripts/build_legacy_audit.py",
+      "scripts/frozen_predecessor_666.py",
+      "scripts/legacy_scope_cleanup_audit.py",
+      "scripts/report_systematic_tier2_application.py",
+      "scripts/report_systematic_tier2_normal_priority_evidence.py",
+      "scripts/report_systematic_tier2_policy.py"
+    ],
+    "unclassified": []
+  },
+  "manifest_content_hash_excluded_to_avoid_self_reference": true,
+  "no_commit_or_push": true,
+  "schema_version": 1,
+  "semantic_boundaries": {
+    "allowed_authoritative_file": "data/curated/paper_exclusions.csv",
+    "authoritative_files_changed": [
+      "data/curated/paper_exclusions.csv"
+    ],
+    "frontend_source_files_changed": [],
+    "protected_authoritative_files_changed": [],
+    "public_generated_outputs_changed": [
+      "web/data/public_preview_map_data.json",
+      "web/data/public_preview_papers.json"
+    ],
+    "tier3_files_changed": []
+  },
+  "task_scope": "44-paper reversible legacy-scope exclusion migration"
+}

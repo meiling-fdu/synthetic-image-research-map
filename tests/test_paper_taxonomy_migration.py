@@ -1,14 +1,22 @@
 import csv
 import json
+import tempfile
 import unittest
 from collections import Counter
 from pathlib import Path
 
 from scripts.paper_taxonomy_registry import (
+    PaperTaxonomyRegistryError,
     apply_paper_taxonomy_registry,
     read_paper_taxonomy_registry,
 )
-from scripts.migrate_paper_taxonomy import build_registry
+from scripts.paper_exclusions import (
+    all_identity_keys,
+    build_active_exclusion_index,
+    read_exclusion_rows,
+    record_is_excluded,
+)
+from scripts.migrate_paper_taxonomy import build_registry, write_registry
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,24 +42,60 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
     def test_registry_covers_the_reconciled_public_corpus_not_papers_csv(self):
         self.assertEqual(479, len(self.curated_papers))
         self.assertEqual(666, len(self.registry))
-        self.assertEqual(666, len(self.public))
+        self.assertEqual(623, len(self.public))
         self.assertEqual(468, sum(bool(row["paper_id"]) for row in self.registry))
         self.assertEqual(198, sum(not row["paper_id"] for row in self.registry))
         summary = apply_paper_taxonomy_registry(
             [dict(row) for row in self.public],
             [dict(row) for row in self.markers],
             self.registry,
+            read_exclusion_rows(),
         )
-        self.assertEqual(666, summary["public_papers_matched"])
-        # The NORMAL evidence successor adds 14 reviewed map records.
-        self.assertEqual(1508, summary["map_records_matched"])
+        self.assertEqual(623, summary["public_papers_matched"])
+        self.assertEqual(43, summary["registry_rows_suppressed_by_active_exclusion"])
+        self.assertEqual(1392, summary["map_records_matched"])
 
-    def test_curated_only_exclusions_do_not_enter_registry(self):
+    def test_curated_only_historical_taxonomy_rows_are_actively_excluded(self):
         public_ids = {row.get("paper_id") for row in self.public if row.get("paper_id")}
         curated_ids = {row["paper_id"] for row in self.curated_papers}
         curated_only = curated_ids - public_ids
-        self.assertEqual(11, len(curated_only))
-        self.assertTrue(curated_only.isdisjoint({row["paper_id"] for row in self.registry}))
+        self.assertEqual(23, len(curated_only))
+        historical = [
+            row
+            for row in self.registry
+            if row.get("paper_id") in curated_only
+        ]
+        active = build_active_exclusion_index(read_exclusion_rows())
+        # Twelve internally curated migration rows are suppressed; the
+        # thirteenth internal-ID candidate is the blocked LADLE-MM conflict and
+        # remains public.
+        self.assertEqual(12, len(historical))
+        self.assertTrue(all(record_is_excluded(row, active) for row in historical))
+
+    def test_historical_taxonomy_row_without_public_or_exclusion_still_fails(self):
+        with self.assertRaisesRegex(
+            PaperTaxonomyRegistryError,
+            "without an active exclusion",
+        ):
+            apply_paper_taxonomy_registry(
+                [dict(row) for row in self.public],
+                [dict(row) for row in self.markers],
+                self.registry,
+                [],
+            )
+
+    def test_title_only_exclusion_cannot_account_for_unmatched_taxonomy(self):
+        orphan = dict(self.registry[0])
+        orphan.update(taxonomy_id="taxonomy:unmatched", title="Unmatched taxonomy fixture", year="2026")
+        for key in ("paper_id", "doi", "arxiv_id", "openalex_url"):
+            orphan[key] = ""
+        exclusion = {"title": orphan["title"], "year": "2026", "is_active": "true"}
+        with self.assertRaisesRegex(PaperTaxonomyRegistryError, "without an active exclusion"):
+            apply_paper_taxonomy_registry(
+                [dict(row) for row in self.public],
+                [dict(row) for row in self.markers],
+                [*self.registry, orphan], [*read_exclusion_rows(), exclusion],
+            )
 
     def test_focused_scope_exclusions_leave_public_and_taxonomy_outputs(self):
         self.assertTrue(
@@ -125,20 +169,62 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
         )
         self.assertEqual(0, sum(row["taxonomy_status"] == "needs_review" for row in self.registry))
 
-    def test_registry_is_authoritative_on_rerun_including_reviewed_empty_values(self):
+    def test_current_round_trip_preserves_all_666_rows_and_43_excluded_rows(self):
         rebuilt = build_registry(
             ROOT / "web/data/public_preview_papers.json",
             ROOT / "data/curated/paper_taxonomy.csv",
         )
+        with tempfile.TemporaryDirectory() as directory:
+            serialized = Path(directory) / "taxonomy.csv"
+            write_registry(rebuilt, serialized)
+            reread = read_paper_taxonomy_registry(serialized)
+            self.assertEqual(self.registry, reread)
+            self.assertEqual(rebuilt, build_registry(
+                ROOT / "web/data/public_preview_papers.json", serialized
+            ))
+            summary = apply_paper_taxonomy_registry(
+                [dict(row) for row in self.public],
+                [dict(row) for row in self.markers], reread, read_exclusion_rows()
+            )
+            self.assertEqual(623, summary["public_papers_matched"])
+            self.assertEqual(43, summary["registry_rows_suppressed_by_active_exclusion"])
         dimensions = ("tasks", "image_scopes", "research_types")
+        active = build_active_exclusion_index(read_exclusion_rows())
         expected = {row["taxonomy_id"]: row for row in self.registry}
+        excluded = [row for row in rebuilt if record_is_excluded(row, active)]
+        self.assertEqual(666, len(rebuilt))
+        self.assertEqual(43, len(excluded))
+        self.assertTrue(
+            all(
+                any(
+                    not key.startswith("title_year:")
+                    for key in all_identity_keys(row)
+                )
+                for row in excluded
+            )
+        )
         self.assertEqual(set(expected), {row["taxonomy_id"] for row in rebuilt})
+        self.assertEqual(
+            [row["taxonomy_id"] for row in self.registry],
+            [row["taxonomy_id"] for row in rebuilt],
+        )
         for row in rebuilt:
             prior = expected[row["taxonomy_id"]]
             for dimension in dimensions:
                 self.assertEqual(prior[dimension], row[dimension])
                 self.assertEqual(prior[f"{dimension}_status"], row[f"{dimension}_status"])
                 self.assertEqual(prior[f"{dimension}_evidence_source"], row[f"{dimension}_evidence_source"])
+
+    def test_rebuild_rejects_nonpublic_prior_rows_without_active_exclusions(self):
+        with self.assertRaisesRegex(
+            ValueError,
+            "without an active strong-identity exclusion",
+        ):
+            build_registry(
+                ROOT / "web/data/public_preview_papers.json",
+                ROOT / "data/curated/paper_taxonomy.csv",
+                exclusions_path=None,
+            )
 
 
 class FrontendTaxonomyContractTests(unittest.TestCase):

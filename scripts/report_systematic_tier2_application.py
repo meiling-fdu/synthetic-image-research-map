@@ -312,6 +312,28 @@ def integrity():
             'docs/missing_author_mappings_report.md',
             'docs/public_preview_report.md',
         })
+    migration_snapshot = ROOT/'data/processed/legacy_scope_exclusion_migration_2026_09/predecessor_666_snapshot.json'
+    if migration_snapshot.exists():
+        # The 666-paper layer remains independently reproducible even though
+        # the current public export is its reversible 623-paper successor.
+        # Verify that frozen state before accepting this migration's narrow
+        # source/export/test changes as authorized successor changes.
+        from scripts.frozen_predecessor_666 import verify_predecessor
+        verify_predecessor()
+        successor.update({
+            'data/curated/paper_exclusions.csv',
+            'data/manual/key_paper_coverage_report.csv',
+            'scripts/audit_key_paper_coverage.py',
+            'scripts/export_public_preview.py',
+            'scripts/migrate_paper_taxonomy.py',
+            'scripts/paper_taxonomy_registry.py',
+            'scripts/verify_key_paper_reconciliation.py',
+            'tests/test_author_affiliation_evidence_repairs.py',
+            'tests/test_formal_publication_authors.py',
+            'tests/test_frontend_paper_details.py',
+            'tests/test_frontend_venue_filters.py',
+            'tests/test_primary_paper_curation.py',
+        })
     unexplained=[p for p in changed if p not in successor]
     return {'protected_files_checked':len(hashes),'changed_count':len(unexplained),'changed_paths':unexplained,
             'authorized_successor_changes':sorted(set(changed)&successor)}

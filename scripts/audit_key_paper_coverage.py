@@ -157,9 +157,19 @@ class PaperIndex:
         return None, '', '; '.join(dict.fromkeys(conflicts))
 
 
-def compute_audit(keys, candidates, candidate_markers, papers, markers, exclusions, decisions=()):
+def compute_audit(
+    keys,
+    candidates,
+    candidate_markers,
+    papers,
+    markers,
+    exclusions,
+    decisions=(),
+    predecessor_papers=(),
+):
     effective_keys = apply_decisions(keys, decisions)
     public = PaperIndex(papers)
+    predecessor = PaperIndex(predecessor_papers)
     candidate = PaperIndex(candidates)
     # Candidate map repeats papers; group identical paper metadata for lookup only.
     candidate_map_rows = list({json.dumps({k: r.get(k, '') for k in ('title', 'doi', 'arxiv_id', 'arxiv_url', 'openalex_url')}, sort_keys=True): r for r in candidate_markers}.values())
@@ -182,9 +192,26 @@ def compute_audit(keys, candidates, candidate_markers, papers, markers, exclusio
         original = keys[number - 1]
         decision = key.get('_reconciliation', {})
         pi, method, ambiguity = public.match(key)
+        predecessor_i, predecessor_method, predecessor_ambiguity = predecessor.match(key)
         ci, _, ca = candidate.match(key)
         mi, _, ma = candidate_map.match(key)
         excluded = matching_exclusion_rows(key, active)
+        # A reversible public exclusion can remove the only record carrying the
+        # checklist row's strong identifiers. Recover that already-established
+        # identity from the frozen 666-paper predecessor, then apply today's
+        # active exclusion by strong identity. This does not make title matching
+        # an exclusion rule: the title is used only to locate the former public
+        # record, whose DOI/arXiv/OpenAlex/internal ID is decisive.
+        if pi is None and not excluded and predecessor_i is not None:
+            predecessor_paper = predecessor_papers[predecessor_i]
+            predecessor_exclusions = matching_exclusion_rows(
+                predecessor_paper, active
+            )
+            if predecessor_exclusions:
+                excluded = predecessor_exclusions
+                method = f"predecessor_{predecessor_method}"
+        if pi is None and predecessor_ambiguity:
+            ambiguity = ambiguity or predecessor_ambiguity
         count = marker_counts[pi] if pi is not None else 0
         paper = papers[pi] if pi is not None else {}
         fuzzy = [('', 0.0)] * 3
@@ -257,7 +284,7 @@ def render_csv(rows):
     return output.getvalue()
 
 
-def render_markdown(rows, summary, fingerprint, errors):
+def render_markdown(rows, summary, fingerprint, errors, extra_inputs=()):
     def cell(value):
         return str(value).replace('|', '\\|').replace('\n', ' ')
     lines = ['# Key Paper Coverage Report', '',
@@ -268,7 +295,7 @@ def render_markdown(rows, summary, fingerprint, errors):
              'Exclusions follow the active authoritative exclusion registry. Totals count checklist rows; '
              'multiple checklist variants can refer to one public paper.', '',
              'Input SHA-256: `' + fingerprint + '`', '', '## Inputs', '']
-    lines += ['- `' + str(path) + '`' for path in INPUT_PATHS]
+    lines += ['- `' + str(path) + '`' for path in (*INPUT_PATHS, *extra_inputs)]
     lines += ['', '## Summary', '', '| Metric | Count |', '| --- | ---: |']
     lines += [f'| {key} | {value} |' for key, value in summary.items()]
     lines += ['', '## Integrity issues', ''] + (errors or ['None.'])
@@ -286,13 +313,36 @@ def expected_artifacts(root=ROOT):
     for path in INPUT_PATHS:
         digest.update(str(path).encode())
         digest.update((root / path).read_bytes())
+    predecessor_papers = []
+    extra_inputs = []
+    if root == ROOT:
+        snapshot = (
+            ROOT
+            / "data/processed/legacy_scope_exclusion_migration_2026_09"
+            / "predecessor_666_snapshot.json"
+        )
+        if snapshot.exists():
+            snapshot_relative = snapshot.relative_to(ROOT)
+            digest.update(str(snapshot_relative).encode())
+            digest.update(snapshot.read_bytes())
+            extra_inputs.append(snapshot_relative)
+            try:
+                from .frozen_predecessor_666 import predecessor_public_records
+            except ImportError:
+                from frozen_predecessor_666 import predecessor_public_records
+            predecessor_papers = predecessor_public_records()
     rows, summary, errors = compute_audit(
         load_csv(root / KEY_PATH), load_csv(root / OA_PATH), load_json_records(root / CANDIDATE_JSON),
         load_json_records(root / PREVIEW_PAPERS_JSON), load_json_records(root / PREVIEW_JSON),
         exclusions_with_curated_identities(read_exclusion_rows(root / EXCLUSIONS_PATH),
                                            load_csv(root / CURATED_PAPERS_PATH)),
-        load_json_records(root / RECONCILIATION_PATH))
-    return {OUT_PATH: render_csv(rows), MARKDOWN_PATH: render_markdown(rows, summary, digest.hexdigest(), errors)}, summary, errors
+        load_json_records(root / RECONCILIATION_PATH), predecessor_papers)
+    return {
+        OUT_PATH: render_csv(rows),
+        MARKDOWN_PATH: render_markdown(
+            rows, summary, digest.hexdigest(), errors, extra_inputs
+        ),
+    }, summary, errors
 
 
 def validate_artifacts(root=ROOT):

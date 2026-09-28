@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "focused_tests": {
+    "passed": 99,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "taxonomy round trip and exclusion-aware public join, migration and restoration, protected sets, LADLE-MM, changed-file manifest, predecessor receipts, and all nine historical layers"
+  },
+  "historical_reproducibility_tests": {
+    "status": "PASS",
+    "covered_by_focused_suite": true,
+    "layers": {
+      "620-paper systematic audit": {
+        "result": "PASS",
+        "manifest_entry_count": 670,
+        "byte_verified_count": 670,
+        "byte_verified_match_count": 670,
+        "byte_verified_mismatch_count": 0,
+        "verification_scope": "fully_byte_verified",
+        "verification_method": "Read and hash every original baseline manifest entry from its frozen copy. Separately hash retained successor layer artifacts.",
+        "manifest_path": "data/processed/systematic_literature_2026_09/baseline_sha256.json",
+        "retained_layer_artifact_byte_verified_count": 42
+      },
+      "Tier 1 reconciliation": {
+        "result": "PASS",
+        "manifest_entry_count": 203,
+        "byte_verified_count": 203,
+        "byte_verified_match_count": 203,
+        "byte_verified_mismatch_count": 0,
+        "verification_scope": "fully_byte_verified",
+        "verification_method": "Read and hash every original baseline manifest entry from its frozen copy. Separately hash retained successor layer artifacts.",
+        "manifest_path": "data/processed/systematic_tier1_2026_09/baseline_sha256.json",
+        "retained_layer_artifact_byte_verified_count": 842
+      },
+      "636-paper Tier 2 policy analysis": {
+        "result": "PASS",
+        "manifest_entry_count": 3914,
+        "byte_verified_count": 11,
+        "byte_verified_match_count": 11,
+        "byte_verified_mismatch_count": 0,
+        "verification_scope": "stored_hash_relationship_with_partial_byte_verification",
+        "verification_method": "Hash retained layer artifacts against the frozen immediate-predecessor manifest. The original baseline inventory is not claimed fully byte-verified; artifact and inventory counts have different scopes.",
+        "manifest_path": "data/processed/systematic_tier2_policy_2026_09/baseline_sha256.json"
+      },
+      "636-paper Tier 2 policy application": {
+        "result": "PASS",
+        "manifest_entry_count": 3931,
+        "byte_verified_count": 12,
+        "byte_verified_match_count": 12,
+        "byte_verified_mismatch_count": 0,
+        "verification_scope": "stored_hash_relationship_with_partial_byte_verification",
+        "verification_method": "Hash retained layer artifacts against the frozen immediate-predecessor manifest. The original baseline inventory is not claimed fully byte-verified; artifact and inventory counts have different scopes.",
+        "manifest_path": "data/processed/systematic_tier2_application_2026_09/baseline_sha256.json"
+      },
+      "648-paper inclusion successor": {
+        "result": "PASS",
+        "manifest_entry_count": 11,
+        "byte_verified_count": 11,
+        "byte_verified_match_count": 11,
+        "byte_verified_mismatch_count": 0,
+        "verification_scope": "fully_byte_verified",
+        "verification_method": "Read and hash every original baseline manifest entry from its frozen copy. Separately hash retained successor layer artifacts.",
+        "manifest_path": "data/processed/systematic_tier2_include_2026_09/baseline_sha256.json",
+        "retained_layer_artifact_byte_verified_count": 16
+      },
+      "657-paper HIGH evidence successor": {
+        "result": "PASS",
+        "manifest_entry_count": 28,
+        "byte_verified_count": 28,
+        "byte_verified_match_count": 28,
+        "byte_verified_mismatch_count": 0,
+        "verification_scope": "fully_byte_verified",
+        "verification_method": "Read and hash every original baseline manifest entry from its frozen copy. Separately hash retained successor layer artifacts.",
+        "manifest_path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline_sha256.json",
+        "retained_layer_artifact_byte_verified_count": 39
+      },
+      "666-paper NORMAL evidence successor": {
+        "result": "PASS",
+        "manifest_entry_count": 28,
+        "byte_verified_count": 28,
+        "byte_verified_match_count": 28,
+        "byte_verified_mismatch_count": 0,
+        "verification_scope": "fully_byte_verified",
+        "verification_method": "Read and hash every original baseline manifest entry from its frozen copy. Separately hash retained successor layer artifacts.",
+        "manifest_path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline_sha256.json",
+        "retained_layer_artifact_byte_verified_count": 41
+      },
+      "666-paper legacy-scope audit": {
+        "result": "PASS",
+        "manifest_entry_count": 4061,
+        "byte_verified_count": 11,
+        "byte_verified_match_count": 11,
+        "byte_verified_mismatch_count": 0,
+        "verification_scope": "stored_hash_relationship_with_partial_byte_verification",
+        "verification_method": "Hash retained layer artifacts against the frozen immediate-predecessor manifest. The original baseline inventory is not claimed fully byte-verified; artifact and inventory counts have different scopes.",
+        "manifest_path": "data/processed/legacy_scope_cleanup_audit_2026_09/baseline_sha256.json"
+      },
+      "666-paper immediate pre-migration predecessor": {
+        "result": "PASS",
+        "manifest_entry_count": 4061,
+        "byte_verified_count": 1017,
+        "byte_verified_match_count": 1017,
+        "byte_verified_mismatch_count": 0,
+        "historical_artifact_byte_verified_count": 1014,
+        "reconstructed_byte_verified_count": 3,
+        "verification_scope": "stored_hash_relationship_with_partial_byte_verification",
+        "verification_method": "Compare the complete frozen manifest with the legacy baseline manifest; hash every historical_artifact_sha256 file; reconstruct and hash public papers, map data, and exclusion registry bytes. Remaining manifest entries are not claimed as byte-verified.",
+        "changed": [],
+        "missing": [],
+        "corpus_counts": {
+          "public_papers": 666,
+          "published_only": 555,
+          "mapped_papers": 645,
+          "map_markers": 1508
+        }
+      }
+    }
+  },
+  "full_suite": {
+    "passed": 1532,
+    "failed": 0,
+    "skipped": 0,
+    "python_executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "node_executable": "/Users/meilinger/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "command": "PATH=/Users/meilinger/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin:/usr/bin:/bin:/usr/sbin:/sbin /usr/bin/python3 -m pytest -q",
+    "execution_scope": "outside sandbox; localhost HTTP test servers permitted",
+    "junit_sha256": "987728dedd3ad5091baeb01715207a064748de3f1f894c03ed1a59ffa4b726fd"
+  },
+  "validators": {
+    "paper_exclusions": {
+      "status": "PASS",
+      "rows": 98,
+      "active": 93,
+      "active_exclusion_leaks": 0,
+      "errors": 0,
+      "expected_warnings": 2
+    },
+    "curated_database": {
+      "status": "PASS",
+      "files_checked": 17,
+      "errors": 0,
+      "duplicate_candidates": 0,
+      "expected_legacy_review_warnings": 245
+    },
+    "taxonomy": {
+      "status": "PASS",
+      "public_rows": 623,
+      "historical_registry_rows": 666,
+      "rows_accounted_for_by_active_exclusion": 43,
+      "unexplained_rows": 0
+    },
+    "public_outputs": {
+      "status": "PASS",
+      "paper_errors": 0,
+      "paper_expected_author_index_warnings": 22,
+      "map_errors": 0,
+      "map_warnings": 0
+    },
+    "metadata": {
+      "status": "PASS",
+      "true_inconsistencies": 0,
+      "legacy_fallback_risks": 0,
+      "affiliation_audit_mismatches": 0,
+      "retired_institution_affiliation_leaks": 0
+    },
+    "affiliations": {
+      "status": "PASS",
+      "papers": 623,
+      "complete": 614,
+      "partial": 9,
+      "zero": 0
+    },
+    "institutions_and_locations": {
+      "status": "PASS",
+      "public_mismatches": 0,
+      "unresolved_high_confidence_findings": 0,
+      "pending_high_confidence_type_changes": 0,
+      "exact_duplicate_location_findings": 0
+    },
+    "duplicates": {
+      "status": "PASS",
+      "curated_identity_duplicates": 0,
+      "duplicate_active_exclusion_identities": 0,
+      "exclusions_matching_multiple_authoritative_works": 0
+    }
+  },
+  "migration_impact": {
+    "successful_migrated_papers": 43,
+    "marker_bearing_migrated_papers": 43,
+    "markerless_migrated_papers": 0,
+    "map_markers_removed": 116,
+    "published_migrated_papers": 41,
+    "non_published_migrated_papers": 2
+  },
+  "predecessor_reconstruction": {
+    "status": "PASS",
+    "manifest_entry_count": 4061,
+    "byte_verified_count": 1017,
+    "byte_verified_match_count": 1017,
+    "byte_verified_mismatch_count": 0,
+    "historical_artifact_byte_verified_count": 1014,
+    "reconstructed_byte_verified_count": 3,
+    "verification_scope": "stored_hash_relationship_with_partial_byte_verification",
+    "verification_method": "Compare the complete frozen manifest with the legacy baseline manifest; hash every historical_artifact_sha256 file; reconstruct and hash public papers, map data, and exclusion registry bytes. Remaining manifest entries are not claimed as byte-verified.",
+    "changed": [],
+    "missing": [],
+    "corpus_counts": {
+      "public_papers": 666,
+      "published_only": 555,
+      "mapped_papers": 645,
+      "map_markers": 1508
+    }
+  },
+  "deterministic_regeneration": {
+    "status": "PASS",
+    "standard_refresh_rounds": 2,
+    "migration_render_rounds": 2,
+    "byte_identical": true,
+    "paths_checked": 21,
+    "changed_after_second_round": [],
+    "includes_changed_file_manifest": true,
+    "verification_method": "Two offline standard refreshes plus migration renders compared the successor artifact hashes; finalized validation/bookkeeping receipts were then rendered and compared twice. Per-round hashes are stored in regeneration_sha256.json."
+  },
+  "git_diff_check": "PASS",
+  "validator_commands": {
+    "curated_database": {
+      "exit_code": 0,
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "scripts/validate_curated_database.py"
+      ]
+    },
+    "paper_exclusions": {
+      "exit_code": 0,
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "scripts/validate_paper_exclusions.py"
+      ]
+    },
+    "public_outputs": {
+      "exit_code": 0,
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "scripts/validate_public_preview.py"
+      ]
+    },
+    "metadata": {
+      "exit_code": 0,
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "scripts/audit_paper_metadata_consistency.py",
+        "--csv",
+        "/tmp/sirm-final-metadata.csv",
+        "--report",
+        "/tmp/sirm-final-metadata.md"
+      ]
+    },
+    "institutions": {
+      "exit_code": 0,
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "scripts/audit_institution_consistency.py",
+        "--output",
+        "/tmp/sirm-final-institutions.csv",
+        "--check"
+      ]
+    },
+    "institution_types": {
+      "exit_code": 0,
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "scripts/audit_institution_types.py",
+        "--output",
+        "/tmp/sirm-final-types.csv",
+        "--check"
+      ]
+    }
+  },
+  "runtime_environment_note": "The interrupted sandbox attempt hit socket.bind PermissionError; it is an environment failure and is superseded by the complete permitted run. Node was available in the final run."
+}

@@ -22,6 +22,12 @@ from integrate_systematic_tier2_normal_priority_evidence import (
     new_institution_rows,
     paper_id,
 )
+from frozen_predecessor_666 import (
+    load_snapshot as load_predecessor_snapshot,
+    predecessor_exclusion_rows,
+    predecessor_map_records,
+    predecessor_public_records,
+)
 from paper_exclusions import (
     active_exclusions,
     exclusions_with_curated_identities,
@@ -154,7 +160,7 @@ def expected_rows() -> list[dict[str, str]]:
     }
     public = {
         row["paper_id"]: row
-        for row in load_records(ROOT / "web/data/public_preview_papers.json")
+        for row in predecessor_public_records()
         if row.get("paper_id")
     }
     known_location_ids = {
@@ -238,7 +244,7 @@ def expected_rows() -> list[dict[str, str]]:
 
 def identity_audit() -> list[dict[str, object]]:
     baseline = load_records(OUT / "baseline/web/data/public_preview_papers.json")
-    current = load_records(ROOT / "web/data/public_preview_papers.json")
+    normal_successor = predecessor_public_records()
     baseline_curated = read_csv(OUT / "baseline/data/curated/papers.csv")
     baseline_exclusions = active_exclusions(
         exclusions_with_curated_identities(
@@ -266,7 +272,7 @@ def identity_audit() -> list[dict[str, object]]:
         ]
         current_matches = [
             row.get("paper_id")
-            for row in current
+            for row in normal_successor
             if row.get("paper_id") == paper_id(str(paper["candidate_id"]))
             or records_share_any_identity(probe, row)
         ]
@@ -307,7 +313,7 @@ def identity_audit() -> list[dict[str, object]]:
 
 
 def duplicate_identity_audit() -> dict[str, object]:
-    papers = load_records(ROOT / "web/data/public_preview_papers.json")
+    papers = predecessor_public_records()
     duplicate_pairs: list[tuple[str, str]] = []
     for index, first in enumerate(papers):
         for second in papers[index + 1 :]:
@@ -317,7 +323,7 @@ def duplicate_identity_audit() -> dict[str, object]:
     curated = read_csv(ROOT / "data/curated/papers.csv")
     exclusions = active_exclusions(
         exclusions_with_curated_identities(
-            read_csv(ROOT / "data/curated/paper_exclusions.csv"), curated
+            predecessor_exclusion_rows(), curated
         )
     )
     leaks = [
@@ -353,8 +359,8 @@ def duplicate_identity_audit() -> dict[str, object]:
 
 
 def corpus_stats() -> dict[str, object]:
-    papers = load_records(ROOT / "web/data/public_preview_papers.json")
-    markers = load_records(ROOT / "web/data/public_preview_map_data.json")
+    papers = predecessor_public_records()
+    markers = predecessor_map_records()
     return {
         "public": len(papers),
         "published": sum(
@@ -394,7 +400,11 @@ def diff_audit() -> dict[str, object]:
         "venue_aliases.csv",
     ):
         old = read_csv(OUT / "baseline/data/curated" / name)
-        new = read_csv(ROOT / "data/curated" / name)
+        new = (
+            predecessor_exclusion_rows()
+            if name == "paper_exclusions.csv"
+            else read_csv(ROOT / "data/curated" / name)
+        )
         changed = [index for index, row in enumerate(old) if index >= len(new) or row != new[index]]
         assert not changed, (name, changed[:10])
         added = len(new) - len(old)
@@ -406,7 +416,7 @@ def diff_audit() -> dict[str, object]:
         }
 
     baseline_papers = load_records(OUT / "baseline/web/data/public_preview_papers.json")
-    current_papers = load_records(ROOT / "web/data/public_preview_papers.json")
+    current_papers = predecessor_public_records()
     def public_key(row: dict[str, object]) -> tuple[str, str]:
         for field in ("paper_id", "doi", "arxiv_id", "openalex_url"):
             if row.get(field):
@@ -422,7 +432,7 @@ def diff_audit() -> dict[str, object]:
     assert not paper_changes, paper_changes[:10]
 
     baseline_markers = load_records(OUT / "baseline/web/data/public_preview_map_data.json")
-    current_markers = load_records(ROOT / "web/data/public_preview_map_data.json")
+    current_markers = predecessor_map_records()
     current_markers_by_id = {row["id"]: row for row in current_markers}
     marker_changes = [
         row["id"]
@@ -446,11 +456,16 @@ def diff_audit() -> dict[str, object]:
         "baseline": sorted(frontend),
         "current": current_frontend,
     }
-    frontend_changed = [
-        relative
-        for relative in frontend
-        if hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() != hashes[relative]
-    ]
+    predecessor_hashes = load_predecessor_snapshot()["tracked_pre_migration_sha256"]
+    frontend_changed = []
+    for relative in frontend:
+        predecessor_hash = predecessor_hashes.get(relative)
+        if predecessor_hash is None:
+            predecessor_hash = hashlib.sha256(
+                (OUT / "baseline" / relative).read_bytes()
+            ).hexdigest()
+        if predecessor_hash != hashes[relative]:
+            frontend_changed.append(relative)
     assert not frontend_changed, frontend_changed
     return {
         "curated": curated,
@@ -486,7 +501,7 @@ def render(rows: list[dict[str, str]], stats: dict[str, object], diff: dict[str,
         "",
         "This successor pass resolves only the 20 `NORMAL` rows from `queue_c_evidence_required.csv`. The frozen 12-paper HIGH-priority layer, 171 policy exclusions, Tier 3, and legacy cleanup remain outside this pass. The immutable predecessor is the 657-paper HIGH-priority successor corpus.",
         "",
-        "The canonical ledger is [systematic_tier2_normal_priority_evidence_review_2026_09.csv](../data/manual/systematic_tier2_normal_priority_evidence_review_2026_09.csv). Counts below are generated from that CSV and the current public exports.",
+        "The canonical ledger is [systematic_tier2_normal_priority_evidence_review_2026_09.csv](../data/manual/systematic_tier2_normal_priority_evidence_review_2026_09.csv). Counts below are generated from that CSV and the frozen 666-paper NORMAL-priority successor exports.",
         "",
         "## Evidence resolution",
         "",

@@ -8,6 +8,10 @@ import pytest
 
 from scripts.curated_export import integrate_curated_records
 from scripts.export_public_preview import add_public_detail_fields
+from scripts.frozen_predecessor_666 import (
+    predecessor_map_records,
+    predecessor_public_records,
+)
 from scripts.formal_author_curation import plan_formal_authors
 from scripts.report_missing_author_mappings import build_report_rows
 
@@ -110,7 +114,7 @@ def test_invalid_matrix_fails_before_any_write(matrix):
 
 def test_repository_formal_rosters_and_mapping_positions():
     audit = json.loads((ROOT / "docs/formal_publication_audit_2026-08-27.json").read_text())
-    papers = json.loads((ROOT / "web/data/public_preview_papers.json").read_text())["records"]
+    papers = predecessor_public_records()
     mappings = list(csv.DictReader((ROOT / "data/curated/author_institution_mappings.csv").open()))
     for case in audit["formal_papers"]:
         paper = next(p for p in papers if p.get("paper_id") == case["paper_id"])
@@ -129,7 +133,7 @@ def test_repository_formal_rosters_and_mapping_positions():
 def test_admin_candidates_preserved_but_only_verified_locations_export():
     audit = json.loads((ROOT / "docs/formal_publication_audit_2026-08-27.json").read_text())
     locations = list(csv.DictReader((ROOT / "data/curated/institution_locations.csv").open()))
-    markers = json.loads((ROOT / "web/data/public_preview_map_data.json").read_text())["records"]
+    markers = predecessor_map_records()
     for case in audit["manual_locations"]:
         submitted = case["submitted_location"]
         final = next(l for l in locations if l["location_id"] == submitted["location_id"])

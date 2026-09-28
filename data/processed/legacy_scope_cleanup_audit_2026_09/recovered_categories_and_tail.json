@@ -1,0 +1,93 @@
+[
+  {
+    "paper_identity": "curated:3ea88dc6c3224d22d416",
+    "title": "IoT-Oriented Security for Small Sensor Systems Using DnCNN Denoising and Multimodal Feature Fusion for Image Forgery Detection",
+    "primary_source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12944014/",
+    "decisive_datasets_tasks": "Sections 3.1 and 6.1 and Table 2 evaluate CASIA 2.0 for conventional splicing, copy-move, and compositing detection/localization; Section 6.2 identifies GenImage and diffusion-era evaluation only as future work.",
+    "mechanism": "Passive classical image-manipulation detection and localization from denoising, noise-residual, texture, and structural cues.",
+    "broader_synthetic_image_evidence": "No substantive modern generative-image experiment is reported; GenImage and diffusion evaluation are future work only.",
+    "final_audit_status": "LEGACY_SCOPE_DRIFT_HIGH_CONFIDENCE",
+    "confidence": "high",
+    "recommended_next_action": "MOVE_TO_EXCLUDED_ARCHIVE",
+    "exact_evidence_needed": "",
+    "rationale": "The evaluated contribution is classical-only image manipulation forensics, so it conflicts with the current narrowed synthetic-image scope while remaining a legitimate legacy inclusion under the earlier policy."
+  },
+  {
+    "paper_identity": "doi:10.3390/jimaging7030059",
+    "title": "Copy-Move Forgery Detection (CMFD) Using Deep Learning for Image and Video Forensics",
+    "primary_source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8321314/",
+    "decisive_datasets_tasks": "Section 3 and Tables 3-5 evaluate eight open-access classical copy-move datasets; Sections 4.1 and 6 define and assess only copy-move forgery detection.",
+    "mechanism": "Passive classical copy-move forgery detection with custom and transfer-learning convolutional models.",
+    "broader_synthetic_image_evidence": "No fully generated, diffusion-edited, or other modern generative-image benchmark is evaluated.",
+    "final_audit_status": "LEGACY_SCOPE_DRIFT_HIGH_CONFIDENCE",
+    "confidence": "high",
+    "recommended_next_action": "MOVE_TO_EXCLUDED_ARCHIVE",
+    "exact_evidence_needed": "",
+    "rationale": "The paper's experiments are limited to classical copy-move manipulation, which is outside the current narrowed scope."
+  },
+  {
+    "paper_identity": "doi:10.55041/ijsrem30215",
+    "title": "DeepFake Image Detection",
+    "primary_source": "https://doi.org/10.55041/ijsrem30215",
+    "decisive_datasets_tasks": "The accessible primary abstract describes a comparison of ResNet, InceptionV3, and DenseNet for deepfake image and face-forgery detection, but it does not name the experimental datasets or establish the evaluated manipulation classes.",
+    "mechanism": "Passive CNN-based deepfake image detection; the benchmark's face-only or broader scope remains unverified.",
+    "broader_synthetic_image_evidence": "No accessible primary dataset or experimental section establishes independent evaluation of broader fully generated or generatively edited images.",
+    "final_audit_status": "LEGACY_SCOPE_DRIFT_NEEDS_REVIEW",
+    "confidence": "low",
+    "recommended_next_action": "FURTHER_PRIMARY_REVIEW",
+    "exact_evidence_needed": "Which named datasets and manipulation classes are used in the primary experiments, and do they substantively include broader fully generated or generatively edited images beyond face-only deepfakes?",
+    "rationale": "The title, taxonomy, keywords, and abstract cannot determine whether the evaluated images are face-only or broader synthetic imagery without the primary experimental details."
+  },
+  {
+    "paper_identity": "title-sha256:a829f1665d646a9ae989",
+    "title": "AdaptPrompt: Parameter-Efficient Adaptation of VLMs for Generalizable Deepfake Detection",
+    "primary_source": "https://arxiv.org/abs/2512.17730",
+    "decisive_datasets_tasks": "The experimental dataset section introduces the balanced 200,000-image Diff-Gen corpus, including 100,000 diffusion-generated images across 20 LSUN categories, and the evaluation tables test generalization across 25 GAN, diffusion, and commercial generators.",
+    "mechanism": "Passive general synthetic-image detection using parameter-efficient visual-language-model prompt adaptation.",
+    "broader_synthetic_image_evidence": "Substantive independent experiments cover diverse non-face object and scene categories and multiple GAN, diffusion, and commercial image generators.",
+    "final_audit_status": "LEGACY_KEEP_IN_SCOPE",
+    "confidence": "high",
+    "recommended_next_action": "NO_ACTION",
+    "exact_evidence_needed": "",
+    "rationale": "The primary experiments directly evaluate broad AI-generated imagery rather than a face-only or video-only deepfake task."
+  },
+  {
+    "paper_identity": "doi:10.1109/cvprw59228.2023.00098",
+    "title": "EKILA: Synthetic Media Provenance and Attribution for Generative Art",
+    "primary_source": "https://openaccess.thecvf.com/content/CVPR2023W/WMF/html/Balan_EKILA_Synthetic_Media_Provenance_and_Attribution_for_Generative_Art_CVPRW_2023_paper.html",
+    "decisive_datasets_tasks": "Sections 4.1-4.3 and Table 1 evaluate passive query-to-training-image attribution with a 10-million-image LAION corpus plus 40 latent-diffusion queries and a 1-million-image IPF-Stock corpus plus 60 latent-diffusion queries using R@1, R@5, R@10, and mAP; Section 4.4 separately evaluates DreamBooth attribution.",
+    "mechanism": "Passive visual attribution from naturally occurring image similarity traces, combined with a separable C2PA/NFT provenance and rights framework.",
+    "broader_synthetic_image_evidence": "The paper contains a substantive, independently evaluated passive synthetic-image attribution contribution despite its additional active-provenance infrastructure.",
+    "final_audit_status": "LEGACY_KEEP_IN_SCOPE",
+    "confidence": "high",
+    "recommended_next_action": "NO_ACTION",
+    "exact_evidence_needed": "",
+    "rationale": "Its passive image-to-training-source attribution experiments satisfy the current source-attribution scope independently of the C2PA and tokenized-rights components."
+  },
+  {
+    "paper_identity": "doi:10.1145/3576915.3623189",
+    "title": "Evading Watermark based Detection of AI-Generated Content",
+    "primary_source": "https://arxiv.org/abs/2305.03807",
+    "decisive_datasets_tasks": "Section 7 trains and attacks HiDDeN and UDH embedded-bit watermark systems on COCO, ImageNet, and Conceptual Captions and evaluates a Stable Diffusion system carrying an intentionally embedded 136-bit watermark.",
+    "mechanism": "Active watermark detection and watermark-evasion analysis against intentionally embedded signals.",
+    "broader_synthetic_image_evidence": "The experiments do not establish an independent passive detector based on naturally occurring generator traces.",
+    "final_audit_status": "LEGACY_SCOPE_DRIFT_HIGH_CONFIDENCE",
+    "confidence": "high",
+    "recommended_next_action": "MOVE_TO_EXCLUDED_ARCHIVE",
+    "exact_evidence_needed": "",
+    "rationale": "The contribution studies evasion of active watermark-based detection, which falls outside the current passive synthetic-image forensic scope."
+  },
+  {
+    "paper_identity": "doi:10.48550/arxiv.2411.13553",
+    "title": "AI-generated Image Detection: Passive or Watermark?",
+    "primary_source": "https://arxiv.org/abs/2411.13553",
+    "decisive_datasets_tasks": "Table 1 and Sections 4-6 benchmark Stable Diffusion 2.1, DALL-E 3, DeepFloyd IF, and Hunyuan-DiT imagery and independently report five passive detectors under cross-dataset evaluation, common perturbations, and adversarial perturbations.",
+    "mechanism": "Comparative benchmark of passive synthetic-image detectors and active watermark detectors.",
+    "broader_synthetic_image_evidence": "The five passive detectors receive substantive independent evaluation on four fully generated-image datasets, separate from the watermark systems.",
+    "final_audit_status": "LEGACY_KEEP_IN_SCOPE",
+    "confidence": "high",
+    "recommended_next_action": "NO_ACTION",
+    "exact_evidence_needed": "",
+    "rationale": "The independently evaluated passive-forensics branch directly satisfies the current synthetic-image detection scope even though the benchmark also evaluates watermark systems."
+  }
+]

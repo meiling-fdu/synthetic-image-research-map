@@ -8,12 +8,17 @@ import pytest
 
 from scripts.curated_locations import location_review_payload, normalized_location_key
 from scripts.curated_mappings import load_mappings
-from scripts.paper_exclusions import read_exclusion_rows
+from scripts.frozen_predecessor_666 import (
+    predecessor_exclusion_rows,
+    predecessor_map_records,
+)
 from scripts.report_public_relationship_location_completeness import valid_coordinates
 from scripts.validate_curated_database import validate_institution_entities
 
 ROOT = Path(__file__).resolve().parents[1]
 CURATED = ROOT / "data/curated"
+PREDECESSOR_MAP_RECORDS = predecessor_map_records()
+PREDECESSOR_EXCLUSION_ROWS = predecessor_exclusion_rows()
 
 
 def rows(name):
@@ -26,7 +31,11 @@ def locations(key):
 
 
 def markers(key):
-    return [r for r in json.loads((ROOT / "web/data/public_preview_map_data.json").read_text())["records"] if r.get("institution_id") == "institution:" + key]
+    return [
+        row
+        for row in PREDECESSOR_MAP_RECORDS
+        if row.get("institution_id") == "institution:" + key
+    ]
 
 
 @pytest.mark.parametrize("key,city,lat,lon,rejected", [
@@ -117,7 +126,9 @@ def test_all_supported_manual_decisions_survive_with_original_identity():
 
 def test_prior_supported_records_and_current_review_candidates_preserved():
     decisions = json.loads((ROOT / "docs/remaining_institution_location_audit_2026-08-27.json").read_text())
-    payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
+    payload = location_review_payload(
+        mappings=load_mappings(), exclusions=PREDECESSOR_EXCLUSION_ROWS
+    )
     # The historical cases remain traceable after the later manual review. The
     # Current pending rows are source-backed affiliations retained across the
     # later targeted paper audits; they intentionally have no guessed coordinates.
@@ -163,7 +174,9 @@ def test_location_integrity_and_scoped_naming():
     "1f939a5a9221dfb6", "6ed8b18e4c077bfc",
 ])
 def test_final_manual_location_pass_resolves_prior_actionable_cases(key):
-    payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
+    payload = location_review_payload(
+        mappings=load_mappings(), exclusions=PREDECESSOR_EXCLUSION_ROWS
+    )
     review, = [r for r in payload["records"] if r["institution_id"] == "institution:" + key]
     assert review["review_status"] in {"confirmed", "alias_of_confirmed"}
     assert review["location_status"] == "known"
@@ -216,7 +229,7 @@ def test_final_public_textual_locations_preserve_evidence_after_manual_confirmat
 
 def test_audited_legacy_centroid_markers_are_replaced_not_duplicated():
     audit = json.loads((ROOT / "docs/audited_marker_replacements_2026-08-27.json").read_text())
-    exported = json.loads((ROOT / "web/data/public_preview_map_data.json").read_text())["records"]
+    exported = PREDECESSOR_MAP_RECORDS
     ids = {r["id"] for r in exported}
     assert len(audit["transitions"]) == 11
     for transition in audit["transitions"]:

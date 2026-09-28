@@ -297,11 +297,16 @@ def build_registry_row(row: Mapping[str, Any], prior: Mapping[str, str] | None) 
     return result
 
 
-def load_prior(path: Path) -> dict[str, dict[str, str]]:
+def read_prior_rows(path: Path) -> list[dict[str, str]]:
     if not path.exists():
-        return {}
+        return []
     with path.open(encoding="utf-8-sig", newline="") as handle:
-        rows = [dict(row) for row in csv.DictReader(handle)]
+        return [dict(row) for row in csv.DictReader(handle)]
+
+
+def index_prior_rows(
+    rows: Sequence[dict[str, str]],
+) -> dict[str, dict[str, str]]:
     index: dict[str, dict[str, str]] = {}
     for row in rows:
         for key in all_identity_keys(row):
@@ -312,11 +317,28 @@ def load_prior(path: Path) -> dict[str, dict[str, str]]:
     return index
 
 
+def load_prior(path: Path) -> dict[str, dict[str, str]]:
+    return index_prior_rows(read_prior_rows(path))
+
+
 def match_prior(row: Mapping[str, Any], prior: Mapping[str, dict[str, str]]) -> dict[str, str] | None:
     matches = {id(prior[key]): prior[key] for key in all_identity_keys(row) if key in prior}
     if len(matches) > 1:
         raise ValueError(f"public paper matches multiple prior taxonomy rows: {row.get('title')!r}")
     return next(iter(matches.values()), None)
+
+
+def is_strongly_excluded(
+    row: Mapping[str, Any],
+    active_exclusion_index: Mapping[str, Sequence[Mapping[str, Any]]],
+) -> bool:
+    """Return whether an active exclusion matches a stable row identifier."""
+    strong_keys = [
+        key for key in all_identity_keys(row) if not key.startswith("title_year:")
+    ]
+    return bool(strong_keys) and any(
+        key in active_exclusion_index for key in strong_keys
+    )
 
 
 def build_registry(
@@ -327,6 +349,7 @@ def build_registry(
     papers = json.loads(public_path.read_text(encoding="utf-8")).get("records")
     if not isinstance(papers, list):
         raise ValueError(f"{public_path} has no records array")
+    active_exclusion_index: Mapping[str, Sequence[Mapping[str, Any]]] = {}
     if exclusions_path is not None:
         active_exclusion_index = build_active_exclusion_index(
             read_exclusion_rows(exclusions_path)
@@ -336,8 +359,49 @@ def build_registry(
             for paper in papers
             if not record_is_excluded(paper, active_exclusion_index)
         ]
-    prior = load_prior(prior_path)
-    rows = [build_registry_row(paper, match_prior(paper, prior)) for paper in papers]
+    prior_rows = read_prior_rows(prior_path)
+    prior = index_prior_rows(prior_rows)
+    rebuilt_by_prior: dict[int, dict[str, str]] = {}
+    new_rows: list[dict[str, str]] = []
+    for paper in papers:
+        prior_row = match_prior(paper, prior)
+        # A round trip must not refresh historical curated identity text from
+        # normalized public metadata. Only new identities need classification.
+        rebuilt = dict(prior_row) if prior_row is not None else build_registry_row(paper, None)
+        if prior_row is None:
+            new_rows.append(rebuilt)
+            continue
+        prior_id = id(prior_row)
+        if prior_id in rebuilt_by_prior:
+            raise ValueError(
+                "multiple public papers match one prior taxonomy row: "
+                f"{prior_row.get('title')!r}"
+            )
+        rebuilt_by_prior[prior_id] = rebuilt
+
+    # Taxonomy is historical curated data. Keep its stable ordering and retain
+    # a nonpublic row only when a durable active exclusion accounts for the
+    # same scientific identity through paper ID, DOI, OpenAlex ID, or arXiv ID.
+    rows: list[dict[str, str]] = []
+    unexplained: list[dict[str, str]] = []
+    for prior_row in prior_rows:
+        rebuilt = rebuilt_by_prior.get(id(prior_row))
+        if rebuilt is not None:
+            rows.append(rebuilt)
+        elif is_strongly_excluded(prior_row, active_exclusion_index):
+            rows.append(dict(prior_row))
+        else:
+            unexplained.append(prior_row)
+    if unexplained:
+        raise ValueError(
+            "prior taxonomy audit contains identities outside the public corpus "
+            "without an active strong-identity exclusion: "
+            + "; ".join(
+                str(row.get("title") or row.get("taxonomy_id"))
+                for row in unexplained[:8]
+            )
+        )
+    rows.extend(new_rows)
     ids = [row["taxonomy_id"] for row in rows]
     duplicates = sorted({value for value in ids if ids.count(value) > 1})
     if duplicates:
@@ -373,7 +437,11 @@ def main() -> int:
         write_registry(rows, args.registry)
     reused = sum(bool(row["paper_id"]) for row in rows)
     reviews = sum(row["taxonomy_status"] == "needs_review" for row in rows)
-    print(f"Audited {len(rows)} public paper identities ({reused} reused curated decisions, {len(rows) - reused} public-only); {reviews} need taxonomy review.")
+    print(
+        f"Audited {len(rows)} taxonomy identities "
+        f"({reused} with curated paper IDs, {len(rows) - reused} without); "
+        f"{reviews} need taxonomy review."
+    )
     return 0
 
 

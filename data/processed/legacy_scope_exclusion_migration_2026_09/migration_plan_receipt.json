@@ -1,0 +1,36 @@
+{
+  "audit_source": "legacy_scope_cleanup_audit_2026_09",
+  "candidate_queue": "data/processed/legacy_scope_cleanup_2026_09/high_confidence_scope_drift.csv",
+  "candidate_queue_sha256": "0edf6b156a8a5b6cf865e4dc7fe04cfc28035a49c0d5da76aa1dafc8399f170f",
+  "category_counts": {
+    "classical_manipulation": 2,
+    "pure_deepfake": 41,
+    "watermark_provenance": 1
+  },
+  "fuzzy_title_matches": 0,
+  "identity_basis_counts": {
+    "doi": 31,
+    "paper_id": 13
+  },
+  "identity_status_counts": {
+    "IDENTITY_LOCKED": 44
+  },
+  "locked_at": "2026-09-27T11:20:56Z",
+  "migration_plan_sha256": "9e965109a714ad43a77e880ea8ef01114ddc8b2fa0fe2632daf3c1a86d8a5553",
+  "pre_migration_exclusion_state_counts": {
+    "CONFLICTING_EXCLUSION_IDENTITY": 1,
+    "EXISTING_INACTIVE_EXCLUSION": 1,
+    "NO_EXISTING_EXCLUSION": 42
+  },
+  "proposed_action_counts": {
+    "BLOCK_EXCLUSION_CONFLICT": 1,
+    "NEW_ACTIVE_EXCLUSION": 42,
+    "REACTIVATE_EXISTING_EXCLUSION": 1
+  },
+  "protected_sets": {
+    "LEGACY_KEEP_IN_SCOPE": 16,
+    "LEGACY_SCOPE_DRIFT_NEEDS_REVIEW": 16
+  },
+  "rows": 44,
+  "schema_version": 1
+}

@@ -1,0 +1,58 @@
+{
+  "audit": "legacy_scope_cleanup_audit_2026_09",
+  "audit_only": true,
+  "authoritative_corpus_changed": false,
+  "categories": {
+    "classical_manipulation": {
+      "high_confidence_drift": 2,
+      "keep": 0,
+      "needs_review": 0,
+      "reviewed": 2
+    },
+    "pure_deepfake": {
+      "high_confidence_drift": 41,
+      "keep": 14,
+      "needs_review": 16,
+      "reviewed": 71
+    },
+    "watermark_provenance": {
+      "high_confidence_drift": 1,
+      "keep": 2,
+      "needs_review": 0,
+      "reviewed": 3
+    }
+  },
+  "corpus_counts": {
+    "map_markers": 1508,
+    "mapped_papers": 645,
+    "public_papers": 666,
+    "published_only": 555
+  },
+  "exclusions_changed": false,
+  "frontend_changed": false,
+  "historical_successor_layers_byte_preserved": {
+    "620_paper_systematic_audit": true,
+    "636_paper_tier_2_policy": true,
+    "648_paper_inclusion": true,
+    "657_paper_high_evidence": true,
+    "666_paper_normal_evidence": true,
+    "tier_1": true
+  },
+  "identity_resolution": {
+    "IDENTITY_RESOLVABLE_BY_STRONG_ID": 46,
+    "INTERNAL_ID_RESOLVED": 30
+  },
+  "protected_baseline_files_changed": 0,
+  "protected_baseline_files_missing": 0,
+  "protected_baseline_files_verified": 4061,
+  "public_data_changed": false,
+  "reviewed": 76,
+  "status_counts": {
+    "LEGACY_KEEP_IN_SCOPE": 16,
+    "LEGACY_SCOPE_DRIFT_HIGH_CONFIDENCE": 44,
+    "LEGACY_SCOPE_DRIFT_NEEDS_REVIEW": 16
+  },
+  "tier3_changed": false,
+  "unauthorized_workspace_changes": 0,
+  "unique_papers": 76
+}

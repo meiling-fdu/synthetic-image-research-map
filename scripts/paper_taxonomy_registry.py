@@ -10,10 +10,12 @@ from typing import Any, Dict, Mapping, Sequence
 try:
     from .curated_export import PaperIdentityCache, PaperIdentityIndex
     from .curated_schema import PAPER_TAXONOMY_COLUMNS
+    from .paper_exclusions import all_identity_keys, build_active_exclusion_index
     from .paper_taxonomy import taxonomy_from_record
 except ImportError:
     from curated_export import PaperIdentityCache, PaperIdentityIndex
     from curated_schema import PAPER_TAXONOMY_COLUMNS
+    from paper_exclusions import all_identity_keys, build_active_exclusion_index
     from paper_taxonomy import taxonomy_from_record
 
 
@@ -102,13 +104,14 @@ def apply_paper_taxonomy_registry(
     papers: Sequence[Dict[str, Any]],
     map_records: Sequence[Dict[str, Any]],
     registry_rows: Sequence[Mapping[str, Any]],
+    exclusion_rows: Sequence[Mapping[str, Any]] = (),
 ) -> Dict[str, int]:
-    """Join taxonomy after public paper identity reconciliation, with exact coverage."""
-    if len(registry_rows) != len(papers):
-        raise PaperTaxonomyRegistryError(
-            "paper-taxonomy registry/public membership mismatch: "
-            f"{len(registry_rows)} registry rows for {len(papers)} public papers"
-        )
+    """Join taxonomy with exact coverage of public or actively excluded works.
+
+    The registry is historical curated data, so a reversible public exclusion
+    must not delete its taxonomy row. Every registry row must still resolve to
+    exactly one public paper or to an active strong-identity exclusion.
+    """
     cache = PaperIdentityCache()
     registry_index = PaperIdentityIndex(registry_rows, cache)
     matched_registry: set[int] = set()
@@ -122,9 +125,24 @@ def apply_paper_taxonomy_registry(
         row = matches[0]
         matched_registry.add(id(row))
         paper.update(public_taxonomy_fields(row))
-    if len(matched_registry) != len(registry_rows):
+    unmatched_registry = [
+        row for row in registry_rows if id(row) not in matched_registry
+    ]
+    active_exclusion_index = build_active_exclusion_index(exclusion_rows)
+    unexplained_registry = [
+        row
+        for row in unmatched_registry
+        if not any(
+            key in active_exclusion_index
+            for key in all_identity_keys(row)
+            if not key.startswith("title_year:")
+        )
+    ]
+    if unexplained_registry:
         raise PaperTaxonomyRegistryError(
-            "paper-taxonomy registry contains identities outside the public corpus"
+            "paper-taxonomy registry contains identities outside the public corpus "
+            "without an active exclusion: "
+            + "; ".join(str(row.get("title") or row.get("taxonomy_id")) for row in unexplained_registry[:8])
         )
 
     paper_index = PaperIdentityIndex(papers, cache)
@@ -145,5 +163,6 @@ def apply_paper_taxonomy_registry(
     return {
         "registry_rows": len(registry_rows),
         "public_papers_matched": len(matched_registry),
+        "registry_rows_suppressed_by_active_exclusion": len(unmatched_registry),
         "map_records_matched": len(map_records),
     }

@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "audit_source": "legacy_scope_cleanup_audit_2026_09",
+  "successor": "623-paper reversible legacy-scope exclusion successor",
+  "predecessor": "666-paper immediate pre-migration snapshot",
+  "changes": [
+    {
+      "classification": "CURRENT_SUCCESSOR_EXPECTATION",
+      "file": "tests/baseline_expectations.py",
+      "new_source_of_truth": "current generated public paper and map outputs",
+      "old_assumption": "the current public corpus was the 666-paper NORMAL evidence successor",
+      "reason": "repository-wide current-count invariants must describe the 623-paper successor"
+    },
+    {
+      "classification": "HISTORICAL_SNAPSHOT_REDIRECT",
+      "file": "tests/test_author_affiliation_evidence_repairs.py",
+      "new_source_of_truth": "hash-verified frozen 666-paper predecessor public records",
+      "old_assumption": "historically reviewed author records were always present in the current public export",
+      "reason": "active exclusions change visibility without invalidating the completed author-evidence review"
+    },
+    {
+      "classification": "HISTORICAL_SNAPSHOT_REDIRECT",
+      "file": "tests/test_formal_publication_authors.py",
+      "new_source_of_truth": "hash-verified frozen 666-paper predecessor public and map records",
+      "old_assumption": "formal-publication audit fixtures were always present in current public outputs",
+      "reason": "the audit must continue to verify retained author and location curation after public suppression"
+    },
+    {
+      "classification": "EXCLUSION_AWARE_INVARIANT",
+      "file": "tests/test_frontend_paper_details.py",
+      "new_source_of_truth": "verified retained author/affiliation fixture independent of current public membership",
+      "old_assumption": "an excluded deepfake survey had to remain public to test author disclosure rendering",
+      "reason": "the renderer contract is independent of whether its historical fixture is publicly visible"
+    },
+    {
+      "classification": "CURRENT_SUCCESSOR_EXPECTATION",
+      "file": "tests/test_frontend_published_only_filter.py",
+      "new_source_of_truth": "current generated publication-type totals",
+      "old_assumption": "the current export contained 666 papers and 555 published works",
+      "reason": "filter counts must match the current 623-paper successor"
+    },
+    {
+      "classification": "CURRENT_SUCCESSOR_EXPECTATION",
+      "file": "tests/test_frontend_venue_filters.py",
+      "new_source_of_truth": "the exact venue-track sets and labels represented in the current public export",
+      "old_assumption": "every historically corrected venue track remained current-public",
+      "reason": "current track membership and label uniqueness must remain exact while active exclusions govern historical membership"
+    },
+    {
+      "classification": "HISTORICAL_SNAPSHOT_REDIRECT",
+      "file": "tests/test_manual_location_audit_20260827.py",
+      "new_source_of_truth": "frozen 666-paper predecessor map and exclusion state",
+      "old_assumption": "historically audited markers and exclusion state were identical to current public state",
+      "reason": "the historical location audit must verify its reviewed corpus layer after reversible suppression"
+    },
+    {
+      "classification": "CURRENT_SUCCESSOR_EXPECTATION",
+      "file": "tests/test_paper_metadata_consistency_audit.py",
+      "new_source_of_truth": "current generated paper, publication, relationship, and marker totals",
+      "old_assumption": "metadata consistency ran against 666 current-public papers",
+      "reason": "the invariant is unchanged but its current population is 623 papers"
+    },
+    {
+      "classification": "EXCLUSION_AWARE_INVARIANT",
+      "file": "tests/test_paper_taxonomy_migration.py",
+      "new_source_of_truth": "current public identities plus active strong-identity exclusions",
+      "old_assumption": "every historical taxonomy row had to match a current public paper",
+      "reason": "historical taxonomy is retained; an unmatched row still fails unless an active exclusion accounts for it"
+    },
+    {
+      "classification": "EXCLUSION_AWARE_INVARIANT",
+      "file": "tests/test_primary_paper_curation.py",
+      "new_source_of_truth": "current public output, active exclusions, and frozen predecessor identity records",
+      "old_assumption": "every reconciled checklist identity remained discoverable in the current public output",
+      "reason": "three newly suppressed key papers must count as excluded rather than missing"
+    }
+  ],
+  "authoritative_data_changed_to_satisfy_tests": false
+}

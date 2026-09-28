@@ -61,10 +61,10 @@ def test_current_reconciliation_counts_existing_exclusions_instead_of_missing_pa
     from scripts.verify_key_paper_reconciliation import verify_current_curation
     report = verify_current_curation()
     totals = report['final_audit']
-    assert totals['bibliography_covered'] == 287
-    assert totals['covered_as_map_marker'] == 286
+    assert totals['bibliography_covered'] == 284
+    assert totals['covered_as_map_marker'] == 283
     assert totals['covered_in_public_preview_paper_list'] == 1
-    assert totals['excluded'] == 10
+    assert totals['excluded'] == 13
     assert totals['possible_title_match_failure'] == 2
     for row in report['exclusion_identity_traces']:
         assert row['exclusion_effective_date'].startswith('2026-07-13')

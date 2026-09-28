@@ -6,11 +6,13 @@ import shutil
 import subprocess
 import sys
 from copy import deepcopy
+from functools import lru_cache
 from pathlib import Path
 
 import pytest
 
 from scripts.export_public_preview import add_public_detail_fields
+from scripts.frozen_predecessor_666 import predecessor_public_records
 from scripts.public_relationships import ReviewedRelationshipResolver
 from scripts.author_affiliation_reviews import (
     ACTION, AuthorReviewIndex, annotate_author, affiliation_counts,
@@ -43,10 +45,18 @@ def csv_rows(name):
         return list(csv.DictReader(handle))
 
 
+@lru_cache(maxsize=1)
+def evidence_baseline_records():
+    """Return the verified 666-paper state reviewed by this evidence pass."""
+    return predecessor_public_records()
+
+
 def paper(prefix):
-    return next(row for row in json.loads(
-        (PUBLIC / "public_preview_papers.json").read_text()
-    )["records"] if row["title"].casefold().startswith(prefix.casefold()))
+    return next(
+        row
+        for row in evidence_baseline_records()
+        if row["title"].casefold().startswith(prefix.casefold())
+    )
 
 
 def indices(row):
@@ -142,7 +152,7 @@ def test_every_new_mapping_has_exact_author_positions_and_unique_order():
 
 
 def test_unindexed_roster_remains_visible_and_has_durable_review_notes():
-    records = json.loads((PUBLIC / "public_preview_papers.json").read_text())["records"]
+    records = evidence_baseline_records()
     unresolved = {a["name"] for p in records for a in p["authors"] if not a["affiliation_indices"]}
     reviewed_unindexed = {
         *CURRENT_NON_INSTITUTIONAL_AUTHORS,
@@ -291,7 +301,7 @@ def test_new_supported_mapping_can_supersede_an_unresolved_review():
 
 
 def test_final_repository_author_states_follow_formal_rosters():
-    records = json.loads((PUBLIC / "public_preview_papers.json").read_text())["records"]
+    records = evidence_baseline_records()
     noninstitutional = {a["name"] for p in records for a in p["authors"] if is_non_institutional(a)}
     assert noninstitutional == CURRENT_NON_INSTITUTIONAL_AUTHORS
     unresolved = {a["name"] for p in records for a in p["authors"] if a["affiliation_status"] == "unresolved"}
