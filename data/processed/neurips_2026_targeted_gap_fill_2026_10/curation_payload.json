@@ -1,0 +1,360 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-10-01",
+  "track": "",
+  "year": "2026",
+  "venue": {
+    "venue": "Advances in Neural Information Processing Systems",
+    "venue_id": "venue:neurips",
+    "venue_name": "Advances in Neural Information Processing Systems",
+    "venue_acronym": "NeurIPS",
+    "venue_type": "conference",
+    "venue_track": "",
+    "raw_venue": "NeurIPS 2026 production listing",
+    "publication_type": "conference"
+  },
+  "papers": [
+    {
+      "paper_id": "curated:07f4e313ba7a093fc94a",
+      "title": "BIAS-ID: A Framework for Analyzing Transformation Biases in AI-Generated Image Detectors",
+      "authors": [
+        "Jonas Ricker",
+        "Asja Fischer",
+        "Erwin Quiring"
+      ],
+      "abstract": "Given the surge of harmful AI-generated imagery online, reliably distinguishing authentic images from generated ones has become an urgent research topic. While many proposed detection methods perform well under controlled settings, they often collapse when tested on real-world data. A potential root cause are subtle biases in the detectors’ training data. As a result, detectors may rely on spurious correlations instead of learning true forensic artifacts. While a recent line of work has identified the problem, there is not yet an established protocol to evaluate how biased a detector actually is. In this work, we therefore take a step back: First, we discuss what it means for a detector to be biased, and how this differs from a lack of robustness. Second, we propose BIAS-ID, a transparent framework for analyzing and quantifying the presence of transformation biases in AI-generated image detectors. We validate our framework by performing an evaluation of six detectors across two datasets, revealing that several state-of-the-art detection methods are strongly affected by biases. Our results highlight the importance of bias-aware evaluation for developing reliable AI-generated image detectors.",
+      "tasks": "detection",
+      "image_scopes": "fully_generated",
+      "research_types": "analysis_study",
+      "poster_id": "139597",
+      "arxiv_id": "2605.31153",
+      "metadata_source": "https://arxiv.org/abs/2605.31153",
+      "affiliations": [
+        {
+          "institution": "Ruhr University Bochum",
+          "institution_id": "institution:8f8dd64c6339c8ff",
+          "authors": [
+            "Jonas Ricker",
+            "Asja Fischer"
+          ],
+          "raw_affiliation": "Ruhr University Bochum"
+        },
+        {
+          "institution": "fbeta GmbH",
+          "institution_id": "institution:83e6f2d65c0db260",
+          "authors": [
+            "Erwin Quiring"
+          ],
+          "raw_affiliation": "_fbeta; legal entity verified as fbeta GmbH"
+        }
+      ],
+      "resources": {},
+      "curation_notes": "Analysis/evaluation framework in detection context; not classified as a new detector method."
+    },
+    {
+      "paper_id": "curated:15bf88ecaf61cad7b226",
+      "title": "Post-hoc Selective Classification for Reliable Synthetic Image Detection",
+      "authors": [
+        "Kaixiang Zheng",
+        "Jacob H. Seidman"
+      ],
+      "abstract": "As synthetic images become increasingly realistic, reliable synthetic image detection techniques are of pressing need to prevent their misuse. Despite satisfactory in-distribution performance, deep neural network-based synthetic image detectors (SIDs) lack reliability in deployment and often fail in the presence of common covariate shifts, resulting in poor detection accuracy. To avoid the risk caused by potential errors, we adopt a selective classification (SC) strategy by allowing SIDs to abstain from making low confidence predictions. For practicality, we focus on post-hoc methods which perform confidence estimation on a given SID without retraining. However, we show that conventional logit-based confidence score functions (CSFs) exhibit pathological behavior under covariate shifts, leading to SC performance close to or even worse than random guessing. To address this, we propose a simple yet effective SC framework for Reliable Synthetic Image Detection (ReSIDe). First, we generalize the notion of logits to an SID’s intermediate layers from a centroid matching perspective, extending the use of logit-based CSFs to any layer of an SID. Then, we introduce a preference optimization algorithm that aggregates confidence scores extracted from different layers to a final confidence estimate by minimizing an upper bound of the area under the risk-coverage curve (AURC). Extensive experimental results show that ReSIDe significantly boosts the SC performance of various logit-based CSFs under common covariate shifts, achieving up to 69.55% AURC reduction.",
+      "tasks": "detection",
+      "image_scopes": "fully_generated",
+      "research_types": "method",
+      "poster_id": "151954",
+      "arxiv_id": "2605.08574",
+      "metadata_source": "https://arxiv.org/abs/2605.08574",
+      "affiliations": [
+        {
+          "institution": "University of Waterloo",
+          "institution_id": "institution:7417258b2e3d3491",
+          "authors": [
+            "Kaixiang Zheng"
+          ],
+          "raw_affiliation": "University of Waterloo"
+        },
+        {
+          "institution": "Reality Defender",
+          "institution_id": "institution:bee736a063ba04b8",
+          "authors": [
+            "Kaixiang Zheng",
+            "Jacob H. Seidman"
+          ],
+          "raw_affiliation": "Reality Defender; Kaixiang Zheng work completed during internship"
+        }
+      ],
+      "resources": {},
+      "curation_notes": "Public GenImage reused; implementation explicitly not released."
+    },
+    {
+      "paper_id": "curated:62f8713f970aa4a95432",
+      "title": "FARE: Forensic Acceptance Region Estimation for Catching Bait-and-Switch Image Generators",
+      "authors": [
+        "Kai Yao",
+        "Marc Juarez"
+      ],
+      "abstract": "Modern AI image generators are increasingly deployed as opaque APIs, where customers can query the deployed service, but cannot inspect model weights or architecture. This creates a practical challenge: a provider may pass governance certification with one generator and later silently switch to a cheaper and lower-quality one for deployment, compromising public trust or even safety in high-stakes domains. We study integrity auditing at deployment time and propose FARE (Forensic Acceptance Region Estimation). A certified generator is enrolled by training FARE on images sampled from that generator. After deployment, FARE can determine whether a generated image is consistent with the enrolled generator---using only that image. FARE's features are based on image generator-specific artifacts that have been proposed for forensic applications. FARE amplifies these features during training by finding hard samples that tighten the acceptance region and increase sensitivity to subtle changes in the certified generator. Across generator swaps, including substitutions with similar model versions and model variants, FARE is effective at detecting swaps, consistently outperforming existing baselines at strict operating points, and remains effective under the exact-model and decision-only attacks evaluated in this work.",
+      "tasks": "source_attribution",
+      "image_scopes": "fully_generated",
+      "research_types": "method",
+      "poster_id": "151260",
+      "arxiv_id": "2609.30982",
+      "metadata_source": "https://arxiv.org/abs/2609.30982",
+      "affiliations": [
+        {
+          "institution": "University of Edinburgh",
+          "institution_id": "institution:9ffc21de60b360ff",
+          "authors": [
+            "Kai Yao",
+            "Marc Juarez"
+          ],
+          "raw_affiliation": "University of Edinburgh"
+        }
+      ],
+      "resources": {
+        "code_url": "https://github.com/kaikaiyao/FARE"
+      },
+      "curation_notes": "Passive enrolled-generator verification from intrinsic artifacts; no watermark or embedded fingerprint."
+    },
+    {
+      "paper_id": "curated:712c58079f762c994ad5",
+      "title": "Beyond Real or Fake: A Dual-Channel Authenticity and Reasoning Protocol for Photographic Assessment",
+      "authors": [
+        "Xiaoxiao (Shaun) Li",
+        "Ruinan Jin",
+        "Lili Meng",
+        "Miaosen Wang",
+        "Athula Balachandran",
+        "Pei Cao"
+      ],
+      "abstract": "Forensic verification often uses a binary “real vs. fake” label that groups fully synthetic, tampered, and AI-retouched images despite their different consequences. We study these modifications through two complementary channels: a camera channel sensitive to capture and processing traces, and a semantic channel capturing scene content. The channels provide continuous evidence rather than deterministic signatures of manipulation history. We instantiate this perspective in 2CAP (2-Channel Authenticity Protocol), pairing a contrastively trained camera encoder with a frozen semantic encoder for (i) reference-free four-class classification through reliability-weighted cross-attention fusion and (ii) reference-based evidence generation. For the latter, query-reference channel similarities and a patch-level saliency map guide a frozen Vision Language Model (VLM) through an Observe–Generate–Refine loop, without forensic instruction tuning of the VLM. On the evaluated benchmark, 2CAP achieves overall AUC .963 and F1 .844; retouching F1 improves from .868 for the strongest compared baseline to .961. Across five VLM configurations, shared-parser paired evaluation shows model-dependent effects: evidence improves change-type accuracy over evidence-free refinement. These results support manipulation-type discrimination while delimiting the benefits of frozen-VLM refinement.",
+      "tasks": "detection",
+      "image_scopes": "fully_generated;generative_editing",
+      "research_types": "method",
+      "poster_id": "154533",
+      "arxiv_id": "",
+      "metadata_source": "https://research.google/pubs/beyond-real-or-fake-a-dual-channel-authenticity-and-reasoning-protocol-for-photographic-assessment/",
+      "affiliations": [
+        {
+          "institution": "Google Research",
+          "institution_id": "institution:35e36dc1a5213fa3",
+          "authors": [
+            "Xiaoxiao (Shaun) Li",
+            "Miaosen Wang"
+          ],
+          "raw_affiliation": "Google"
+        },
+        {
+          "institution": "YouTube",
+          "institution_id": "institution:9f33cf7a7f5c997f",
+          "authors": [
+            "Ruinan Jin",
+            "Athula Balachandran"
+          ],
+          "raw_affiliation": "YouTube"
+        },
+        {
+          "institution": "Google DeepMind",
+          "institution_id": "institution:2b6e51bec93e86c1",
+          "authors": [
+            "Lili Meng",
+            "Pei Cao"
+          ],
+          "raw_affiliation": "DeepMind"
+        }
+      ],
+      "resources": {},
+      "curation_notes": "Formal four-class camera/retouched/tampered/fully-synthetic assessment. Manipulation-type classification is not source attribution."
+    },
+    {
+      "paper_id": "curated:2a62f662dfd346b3f5cb",
+      "title": "SIGMA: Semantic-Difference Instruction-Grounding Mask Annotator for Text-Driven Image Manipulation Localization",
+      "authors": [
+        "Peiyu Zhuang",
+        "Jianquan Yang",
+        "Haodong Li",
+        "Zhuoying Cai",
+        "Ruitao Xie",
+        "Jishen Zeng",
+        "Baoying Chen",
+        "Jiwu Huang",
+        "Xiaochun Cao"
+      ],
+      "abstract": "Text-driven image editing has advanced rapidly, but reliably localizing these manipulations requires image manipulation localization (IML) models trained on large pixel-annotated datasets, and there is still no low-cost way to obtain such training data at scale. We observe that these data already exist in disguise: public editing datasets contain millions of structurally identical (original, edited) pairs to IML training samples, lacking only pixel-level masks. Recovering these masks automatically is non-trivial: pixel differencing is overwhelmed by diffusion-induced perturbations across all pixels, and instruction-only grounding localizes only what the prompt describes, missing unintended editor side-effects. We propose SIGMA (Semantic-difference Instruction-Grounding Mask Annotator), which performs semantic-feature differencing in a vision foundation backbone and injects an instruction-derived spatial prior into this visual stream via bidirectional cross-modal refinement, amplifying the difference signal at intended-edit regions when the editor faithfully realizes user intent. SIGMA is trained in two complementary stages: Stage I supervises on inpainting masks; Stage II closes the diffusion-domain shift via VAE-roundtrip noise calibration, EMA self-training, and an edit-noise disentanglement loss. SIGMA outperforms existing automatic mask generators on five benchmarks (+12.20% F1, +11.16% IoU). When applied to public editing corpora, it produces a ~1.1M IML training set that improves six diverse detectors by +18.34% F1 across five datasets, turning previously unused editing data into a model-agnostic supervisory resource for IML. We'll release the full codebase as soon as the paper is accepted.",
+      "tasks": "localization",
+      "image_scopes": "generative_editing",
+      "research_types": "method",
+      "poster_id": "151764",
+      "arxiv_id": "2605.27924",
+      "metadata_source": "https://arxiv.org/abs/2605.27924",
+      "affiliations": [],
+      "resources": {},
+      "curation_notes": "Approximately 1.1M derived masks described; public release only promised. Affiliation matrix unresolved in saved evidence, so no author–institution rows are guessed."
+    },
+    {
+      "paper_id": "curated:baafdb8ac5488ceea198",
+      "title": "SALART-VQA: Diagnosing Whether VLMs Understand Salient Artifacts in Generated Images",
+      "authors": [
+        "Xiaoxiao Sun",
+        "Ruotian Zhang",
+        "Junzhe Huang",
+        "James Burgess",
+        "Serena Yeung-Levy"
+      ],
+      "abstract": "Vision-language models (VLMs) are increasingly used to detect whether AI-generated images contain visible artifacts, yet their ability to analyze such artifacts remains poorly understood. A correct image-level decision can still hide important failures: a model may correctly flag an artifact while relying on the wrong visual cue, selecting the wrong region, or describing a defect that the image does not support. To evaluate these behaviors directly, we introduce SalArt-VQA, a diagnostic benchmark for fine-grained SALient ARTifact understanding in AI-generated images. SalArt-VQA contains 950 images and 3,681 human-authored multiple-choice questions spanning artifact images, matched real reference images, and paired generated reference images. Four aligned question types evaluate presence detection, semantic localization, spatial grounding, and evidence-grounded defect identification, while the reference splits test calibration and abstention when the annotated defect is absent. Across 20 VLMs, SalArt-VQA reveals failures that image-level detection accuracy hides: the strongest model reaches 99.37% detection recall on artifact images but answers all four artifact-side questions correctly on only 53.26% of images. Comparing artifact images with artifact-free references reveals a sensitivity-calibration tradeoff: sensitive models often make unsupported artifact claims, while conservative models avoid false alarms largely by missing real artifacts. These results show that high artifact detection accuracy alone does not imply grounded artifact understanding. SalArt-VQA exposes these hidden failure modes and provides a fine-grained evaluation of whether VLM artifact claims are supported by local visual evidence.",
+      "tasks": "",
+      "image_scopes": "fully_generated",
+      "research_types": "dataset;benchmark;analysis_study",
+      "poster_id": "139139",
+      "arxiv_id": "2606.12671",
+      "metadata_source": "https://arxiv.org/abs/2606.12671",
+      "affiliations": [
+        {
+          "institution": "Stanford University",
+          "institution_id": "institution:ed72534d79b73fac",
+          "authors": [
+            "Xiaoxiao Sun",
+            "James Burgess",
+            "Serena Yeung-Levy"
+          ],
+          "raw_affiliation": "Stanford University"
+        },
+        {
+          "institution": "Zhejiang University",
+          "institution_id": "institution:e433baf78e80004b",
+          "authors": [
+            "Ruotian Zhang"
+          ],
+          "raw_affiliation": "Zhejiang University"
+        },
+        {
+          "institution": "University of Queensland",
+          "institution_id": "institution:4e8fcecdf830caa3",
+          "authors": [
+            "Junzhe Huang"
+          ],
+          "raw_affiliation": "University of Queensland"
+        }
+      ],
+      "resources": {
+        "dataset_url": "https://huggingface.co/datasets/salartvqa/SalArt-VQA",
+        "dataset_revision": "eacc6d39661b04c0ac2abdcd8ed2c5d37d9ed6f4",
+        "dataset_status": "public_non_gated_download_verified",
+        "image_count": 950,
+        "question_count": 3681
+      },
+      "curation_notes": "No root task: formal presence detection is visible-artifact VQA inside generated imagery, not synthetic-vs-real detection. Current task-gated public exporter will omit this curated record."
+    },
+    {
+      "paper_id": "curated:36755a9ffdcb1829037c",
+      "title": "Can Pixels Alone Reveal Image Origin? Minimax Limits and Learnable Interfaces for Passive Provenance",
+      "authors": [
+        "Kai Yao"
+      ],
+      "abstract": "Passive image provenance asks whether pixels alone can reveal where an image came from: a human, an aggregate AI class, or a particular generator. This becomes a robustness problem once a source image can be edited before the verifier sees it. We study the problem as source-target verification under adversarial distribution shift. Our first result gives the exact best-case limit for any image-only verifier: the largest robust target-acceptance gap equals the minimum total-variation distance between the target distribution and the set of attacked source distributions. This quantity depends on the source, target, and edit class, not on the verifier architecture. Our second result explains why deployed public verifiers can fail before this statistical limit is reached. If the verifier can be emulated on the attack region to error ε, then a surrogate black-box attack reaches target acceptance within 2ε plus optimization error of the white-box optimum; score-revealing logistic and softmax heads over public features are identifiable, and approximate score access gives stable recovery bounds. A finite-state experiment checks the minimax identity where both sides are computable. On same-prompt real/diffusion benchmarks, the evaluated public CLIP verifiers fail under targeted pixel attacks, while a ResNet-18 victim exhibits partial fake-to-real transfer. Binary feedback with abstention reduces measured attack success, but positive empirical gap upper bounds do not establish robustness. These results motivate separate evaluation of the source-target statistical ceiling and the information released by a deployed verifier.",
+      "tasks": "source_attribution",
+      "image_scopes": "fully_generated",
+      "research_types": "analysis_study",
+      "poster_id": "154460",
+      "arxiv_id": "2609.30997",
+      "metadata_source": "https://arxiv.org/abs/2609.30997",
+      "affiliations": [
+        {
+          "institution": "University of Edinburgh",
+          "institution_id": "institution:9ffc21de60b360ff",
+          "authors": [
+            "Kai Yao"
+          ],
+          "raw_affiliation": "School of Informatics, University of Edinburgh"
+        }
+      ],
+      "resources": {
+        "code_url": "https://github.com/kaikaiyao/pixels-alone-provenance",
+        "dataset_status": "no_new_dataset_images_and_checkpoints_not_redistributed"
+      },
+      "curation_notes": "Passive source-target provenance/verification; no active signal, watermark, or embedded fingerprint."
+    }
+  ],
+  "mirror_update": {
+    "paper_id": "curated:8fe7cb0db76df68a5e38",
+    "title": "MIRROR: Manifold Ideal Reference ReconstructOR for AI-Generated Image Detection",
+    "poster_id": "149292",
+    "arxiv_id": "2602.02222",
+    "metadata_source": "https://neurips.cc/virtual/2026/poster/149292",
+    "canonical_code_url": "https://github.com/handsome-rich/MIRROR",
+    "dataset_status": "Human-AIGI: Coming soon; not a released public dataset."
+  },
+  "new_institutions": [
+    {
+      "institution_id": "institution:83e6f2d65c0db260",
+      "canonical_name": "fbeta GmbH",
+      "abbreviation": "fbeta",
+      "institution_type": "company"
+    },
+    {
+      "institution_id": "institution:9f33cf7a7f5c997f",
+      "canonical_name": "YouTube",
+      "abbreviation": "",
+      "institution_type": "company"
+    },
+    {
+      "institution_id": "institution:4e8fcecdf830caa3",
+      "canonical_name": "University of Queensland",
+      "abbreviation": "",
+      "institution_type": "university"
+    }
+  ],
+  "location_reviews": [
+    {
+      "institution_id": "institution:83e6f2d65c0db260",
+      "institution": "fbeta GmbH",
+      "paper_id": "curated:07f4e313ba7a093fc94a",
+      "authors": [
+        "Erwin Quiring"
+      ],
+      "raw_affiliation": "_fbeta; legal entity verified as fbeta GmbH",
+      "evidence_source": "Paper PDF and official legal imprint",
+      "evidence_url": "https://fbeta.de/impressum/",
+      "suggested_city": "Berlin",
+      "suggested_country": "Germany",
+      "confidence": "high"
+    },
+    {
+      "institution_id": "institution:9f33cf7a7f5c997f",
+      "institution": "YouTube",
+      "paper_id": "curated:712c58079f762c994ad5",
+      "authors": [
+        "Ruinan Jin",
+        "Athula Balachandran"
+      ],
+      "raw_affiliation": "YouTube",
+      "evidence_source": "Authoritative paper PDF first page",
+      "evidence_url": "https://research.google/pubs/beyond-real-or-fake-a-dual-channel-authenticity-and-reasoning-protocol-for-photographic-assessment/",
+      "suggested_city": "",
+      "suggested_country": "",
+      "confidence": "medium"
+    },
+    {
+      "institution_id": "institution:4e8fcecdf830caa3",
+      "institution": "University of Queensland",
+      "paper_id": "curated:baafdb8ac5488ceea198",
+      "authors": [
+        "Junzhe Huang"
+      ],
+      "raw_affiliation": "University of Queensland",
+      "evidence_source": "Authoritative arXiv author-affiliation block",
+      "evidence_url": "https://arxiv.org/abs/2606.12671",
+      "suggested_city": "",
+      "suggested_country": "",
+      "confidence": "medium"
+    }
+  ],
+  "dataset_decisions": {
+    "Human-AIGI": "coming_soon_not_added",
+    "SalArt-VQA": "public_release_verified_link_in_audit_no_standalone_registry",
+    "ManipBench": "release_promised_not_added",
+    "MLLM-Edit": "release_unverified_not_added",
+    "SIGMA_masks": "release_promised_not_added"
+  }
+}

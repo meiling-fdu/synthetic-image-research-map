@@ -1,0 +1,589 @@
+{
+  "artifact": "NeurIPS 2026 targeted gap-fill final reconciliation",
+  "as_of": "2026-09-30",
+  "generated_only_from_saved_evidence": true,
+  "source_artifacts": [
+    "/tmp/neurips2026_detection_sources.json",
+    "/tmp/neurips2026_benchmark_sources.json",
+    "/tmp/neurips2026_scope_sources.json",
+    "/tmp/neurips2026_initial_local_matches.json"
+  ],
+  "candidate_count": 17,
+  "decision_counts": {
+    "EXISTING_CURRENT": 0,
+    "EXISTING_UPDATE_NEEDED": 1,
+    "MISSING_ADD": 7,
+    "HOLD_SCOPE": 2,
+    "AMBIGUOUS": 7,
+    "EXCLUDE": 0
+  },
+  "validation": {
+    "exactly_17_unique_candidates": true,
+    "exactly_one_allowed_decision_per_candidate": true,
+    "all_required_columns_present": true,
+    "all_acceptance_statuses_separate_and_verified_from_production_listing": true,
+    "all_tracks_left_pending": true,
+    "only_existing_registry_identity_is_mirror": true,
+    "counts_sum_to_17": true
+  },
+  "records": [
+    {
+      "candidate_number": 1,
+      "canonical_title": "BIAS-ID: A Framework for Analyzing Transformation Biases in AI-Generated Image Detectors",
+      "doi": null,
+      "arxiv_id": "2605.31153",
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 139597",
+      "production_url": "https://neurips.cc/virtual/2026/poster/139597",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Exact arXiv ID 2605.31153 and normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "IN_SCOPE",
+      "root_tasks": [
+        "detection"
+      ],
+      "research_types": [
+        "analysis_study"
+      ],
+      "dataset_benchmark_status": "No new dataset. Evaluates existing RAISE-1k/Synthbuster and CLIC2020/SynthCLIC material; no public BIAS-ID dataset release verified.",
+      "final_reconciliation_action": "MISSING_ADD",
+      "concise_evidence_note": "Acceptance: exact title in the production NeurIPS 2026 listing (poster 139597). Metadata: arXiv 2605.31153 establishes an analysis/evaluation framework for passive AI-generated-image detectors. No current-registry identity match.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2605.31153",
+        "https://arxiv.org/html/2605.31153",
+        "https://arxiv.org/pdf/2605.31153",
+        "https://fbeta.de/impressum/",
+        "https://www.erwinquiring.com/"
+      ],
+      "saved_pass": "detection",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 2,
+      "canonical_title": "DEDCA: Test-Time Adaptation for Generalized AI-Generated Image Detection",
+      "doi": null,
+      "arxiv_id": null,
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 151979",
+      "production_url": "https://neurips.cc/virtual/2026/poster/151979",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Official NeurIPS 2026 production poster 151979 plus normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "PROVISIONALLY_IN_SCOPE_PENDING_PAPER",
+      "root_tasks": [],
+      "research_types": [],
+      "dataset_benchmark_status": "Unverified; no paper/project source or usable public dataset established.",
+      "final_reconciliation_action": "AMBIGUOUS",
+      "concise_evidence_note": "Acceptance is independently verified by production poster 151979. Complete authors, abstract, identifiers, affiliations, contribution type, and dataset/code status remain unavailable, so title-only metadata is insufficient for curation.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026"
+      ],
+      "saved_pass": "detection",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 3,
+      "canonical_title": "MIRROR: Manifold Ideal Reference ReconstructOR for AI-Generated Image Detection",
+      "doi": null,
+      "arxiv_id": "2602.02222",
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 149292",
+      "production_url": "https://neurips.cc/virtual/2026/poster/149292",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": "curated:8fe7cb0db76df68a5e38",
+      "exact_identity_match_method": "Exact arXiv ID 2602.02222 (primary); MIRROR acronym and accepted-title variant corroborate the same existing paper.",
+      "scope_decision": "IN_SCOPE",
+      "root_tasks": [
+        "detection"
+      ],
+      "research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "dataset_benchmark_status": "Human-AIGI is introduced but the current source says Coming soon; it is not a publicly released dataset and must not receive a public dataset record. Existing paper taxonomy may remain method/dataset/benchmark.",
+      "final_reconciliation_action": "EXISTING_UPDATE_NEEDED",
+      "concise_evidence_note": "Exact arXiv ID 2602.02222 resolves to curated:8fe7cb0db76df68a5e38. Production poster 149292 verifies NeurIPS 2026 acceptance and the accepted title drops “Generalizable”; update the existing node only.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2602.02222",
+        "https://arxiv.org/html/2602.02222",
+        "https://arxiv.org/pdf/2602.02222",
+        "https://github.com/handsome-rich/MIRROR",
+        "https://github.com/349793927/MIRROR"
+      ],
+      "saved_pass": "detection",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 3,
+        "matched_paper_ids": [
+          "curated:8fe7cb0db76df68a5e38"
+        ]
+      }
+    },
+    {
+      "candidate_number": 4,
+      "canonical_title": "Post-hoc Selective Classification for Reliable Synthetic Image Detection",
+      "doi": null,
+      "arxiv_id": "2605.08574",
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 151954",
+      "production_url": "https://neurips.cc/virtual/2026/poster/151954",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Exact arXiv ID 2605.08574 and normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "IN_SCOPE",
+      "root_tasks": [
+        "detection"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "dataset_benchmark_status": "No new dataset. Reuses public GenImage; no independent dataset release. Saved evidence says the implementation is proprietary/no public release.",
+      "final_reconciliation_action": "MISSING_ADD",
+      "concise_evidence_note": "Acceptance: production poster 151954. Metadata: arXiv 2605.08574 supplies complete paper identity and formal passive synthetic-image detection contribution. No current-registry identity match.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2605.08574",
+        "https://arxiv.org/html/2605.08574",
+        "https://arxiv.org/pdf/2605.08574"
+      ],
+      "saved_pass": "detection",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 5,
+      "canonical_title": "SAGE: Semantic-Agnostic Image Embedding for Generalized AI-Generated Image Detection",
+      "doi": null,
+      "arxiv_id": null,
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 149194",
+      "production_url": "https://neurips.cc/virtual/2026/poster/149194",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Official NeurIPS 2026 production poster 149194 plus normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "PROVISIONALLY_IN_SCOPE_PENDING_PAPER",
+      "root_tasks": [],
+      "research_types": [],
+      "dataset_benchmark_status": "Unverified; no paper/project source or usable public dataset established.",
+      "final_reconciliation_action": "AMBIGUOUS",
+      "concise_evidence_note": "Acceptance is independently verified by production poster 149194. Complete bibliographic and technical metadata remain unavailable; do not curate from title alone.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026"
+      ],
+      "saved_pass": "detection",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 6,
+      "canonical_title": "The road reaches every place, the short cut only one: Self-Adversarial Shortcut Mitigation for AI-Generated Image Detection",
+      "doi": null,
+      "arxiv_id": null,
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 151317",
+      "production_url": "https://neurips.cc/virtual/2026/poster/151317",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Official NeurIPS 2026 production poster 151317 plus normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "PROVISIONALLY_IN_SCOPE_PENDING_PAPER",
+      "root_tasks": [],
+      "research_types": [],
+      "dataset_benchmark_status": "Unverified; no paper/project source or usable public dataset established.",
+      "final_reconciliation_action": "AMBIGUOUS",
+      "concise_evidence_note": "Acceptance is independently verified by production poster 151317. Complete bibliographic and technical metadata remain unavailable; do not curate from title alone.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026"
+      ],
+      "saved_pass": "detection",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 7,
+      "canonical_title": "Too Aligned to be Real: Detecting AI-Generated Images via Cross-modal Alignment Shift",
+      "doi": null,
+      "arxiv_id": null,
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 150179",
+      "production_url": "https://neurips.cc/virtual/2026/poster/150179",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Official NeurIPS 2026 production poster 150179 plus normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "PROVISIONALLY_IN_SCOPE_PENDING_PAPER",
+      "root_tasks": [],
+      "research_types": [],
+      "dataset_benchmark_status": "Unverified; no paper/project source or usable public dataset established.",
+      "final_reconciliation_action": "AMBIGUOUS",
+      "concise_evidence_note": "Acceptance is independently verified by production poster 150179. Complete bibliographic and technical metadata remain unavailable; do not curate from title alone.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026"
+      ],
+      "saved_pass": "detection",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 8,
+      "canonical_title": "Unified Forensic Preference Learning for Generalizable Synthetic Image Detection",
+      "doi": null,
+      "arxiv_id": null,
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 150807",
+      "production_url": "https://neurips.cc/virtual/2026/poster/150807",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Official NeurIPS 2026 production poster 150807 plus normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "PROVISIONALLY_IN_SCOPE_PENDING_PAPER",
+      "root_tasks": [
+        "detection"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "dataset_benchmark_status": "Unverified; no paper/project source or usable public dataset established.",
+      "final_reconciliation_action": "AMBIGUOUS",
+      "concise_evidence_note": "Acceptance is independently verified by production poster 150807. An official author publication page contains two conflicting author lists for the identical title, while abstract and primary paper identity remain unavailable; accepted-version metadata is unresolved.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026"
+      ],
+      "saved_pass": "benchmark",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 9,
+      "canonical_title": "FARE: Forensic Acceptance Region Estimation for Catching Bait-and-Switch Image Generators",
+      "doi": null,
+      "arxiv_id": "2609.30982",
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 151260",
+      "production_url": "https://neurips.cc/virtual/2026/poster/151260",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Exact arXiv ID 2609.30982 and normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "IN_SCOPE",
+      "root_tasks": [
+        "source_attribution"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "dataset_benchmark_status": "No new dataset. Reuses FFHQ generator pool, CommunityForensics, and DiffusionDB prompts; public code is available, but no independent dataset release was verified.",
+      "final_reconciliation_action": "MISSING_ADD",
+      "concise_evidence_note": "Acceptance: production poster 151260. Metadata: arXiv 2609.30982 establishes passive single-source generator/service verification from intrinsic artifacts, which maps to source attribution/provenance. No current-registry identity match.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2609.30982",
+        "https://arxiv.org/html/2609.30982v1"
+      ],
+      "saved_pass": "benchmark",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 10,
+      "canonical_title": "Beyond Real or Fake: A Dual-Channel Authenticity and Reasoning Protocol for Photographic Assessment",
+      "doi": null,
+      "arxiv_id": null,
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 154533",
+      "production_url": "https://neurips.cc/virtual/2026/poster/154533",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Official NeurIPS 2026 production poster 154533 plus normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "IN_SCOPE",
+      "root_tasks": [
+        "detection"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "dataset_benchmark_status": "No public dataset/benchmark release verified from saved evidence.",
+      "final_reconciliation_action": "MISSING_ADD",
+      "concise_evidence_note": "Acceptance: production poster 154533. The official Google Research publication page supplies the complete title, author list, abstract, and a formal real/synthetic/tampered/AI-retouched photographic assessment method. No current-registry identity match.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://research.google/pubs/beyond-real-or-fake-a-dual-channel-authenticity-and-reasoning-protocol-for-photographic-assessment/"
+      ],
+      "saved_pass": "benchmark",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 11,
+      "canonical_title": "MLLM-Edit: Benchmarking Image Forgery Detection and Localization under MLLM-based Editing",
+      "doi": null,
+      "arxiv_id": null,
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 139518",
+      "production_url": "https://neurips.cc/virtual/2026/poster/139518",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Official NeurIPS 2026 production poster 139518 plus normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "PROVISIONALLY_IN_SCOPE_PENDING_PAPER",
+      "root_tasks": [
+        "detection",
+        "localization"
+      ],
+      "research_types": [
+        "benchmark"
+      ],
+      "dataset_benchmark_status": "Benchmark is named in the title, but no paper/project or actual downloadable release was identified; public release is unverified.",
+      "final_reconciliation_action": "AMBIGUOUS",
+      "concise_evidence_note": "Acceptance is independently verified by production poster 139518. No primary paper, authors, abstract, identifiers, or release artifact were recovered in the saved pass, so both full metadata and benchmark availability remain unresolved.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026"
+      ],
+      "saved_pass": "benchmark",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 12,
+      "canonical_title": "ManipShield: A Unified Framework for Image Manipulation Detection, Localization and Explanation",
+      "doi": null,
+      "arxiv_id": "2511.14259",
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 148836",
+      "production_url": "https://neurips.cc/virtual/2026/poster/148836",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Exact arXiv ID 2511.14259 and normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "IN_SCOPE_METADATA_AMBIGUOUS",
+      "root_tasks": [
+        "detection",
+        "localization"
+      ],
+      "research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "dataset_benchmark_status": "ManipBench is introduced (over 450K AI-edited images; 100K richer annotations), but the paper says data/model “will be released upon publication”; no usable public dataset was verified. Do not link the unrelated robotics ManipBench.",
+      "final_reconciliation_action": "AMBIGUOUS",
+      "concise_evidence_note": "Acceptance: production poster 148836. arXiv 2511.14259 establishes in-scope generative-edit detection/localization, but arXiv v3 lists nine authors while the saved NeurIPS author page lists seven, omitting Qiang Hu and Jing Liu. Hold until accepted-version authors are authoritative.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2511.14259",
+        "https://arxiv.org/html/2511.14259v3"
+      ],
+      "saved_pass": "benchmark",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 13,
+      "canonical_title": "SIGMA: Semantic-Difference Instruction-Grounding Mask Annotator for Text-Driven Image Manipulation Localization",
+      "doi": null,
+      "arxiv_id": "2605.27924",
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 151764",
+      "production_url": "https://neurips.cc/virtual/2026/poster/151764",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Exact arXiv ID 2605.27924 and normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "IN_SCOPE",
+      "root_tasks": [
+        "localization"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "dataset_benchmark_status": "The paper derives about 1.1M training masks, but code/data release is only promised; no public mask dataset or code artifact was verified. Do not create a released-dataset record.",
+      "final_reconciliation_action": "MISSING_ADD",
+      "concise_evidence_note": "Acceptance: production poster 151764. Metadata: arXiv 2605.27924 establishes a semantic-difference/instruction-grounding mask annotation method for text-driven generative image manipulation localization. No current-registry identity match.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2605.27924",
+        "https://arxiv.org/html/2605.27924v1"
+      ],
+      "saved_pass": "benchmark",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 14,
+      "canonical_title": "SALART-VQA: Diagnosing Whether VLMs Understand Salient Artifacts in Generated Images",
+      "doi": null,
+      "arxiv_id": "2606.12671",
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 139139",
+      "production_url": "https://neurips.cc/virtual/2026/poster/139139",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Exact arXiv ID 2606.12671 and normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "IN_SCOPE_ANALYSIS_BENCHMARK",
+      "root_tasks": [],
+      "research_types": [
+        "dataset",
+        "benchmark",
+        "analysis_study"
+      ],
+      "dataset_benchmark_status": "SalArt-VQA is publicly downloadable now: non-gated Hugging Face dataset salartvqa/SalArt-VQA, verified revision eacc6d39661b04c0ac2abdcd8ed2c5d37d9ed6f4, with 950 images, 3,681 questions, five Parquet shards, release manifest, and checksums.",
+      "final_reconciliation_action": "MISSING_ADD",
+      "concise_evidence_note": "Acceptance: production poster 139139. Metadata: arXiv 2606.12671 and the verified dataset establish a diagnostic generated-image artifact-understanding benchmark. Its “presence detection” concerns visible artifact presence, not the repository’s synthetic-vs-real detection root task, so no detector root task is assigned.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2606.12671",
+        "https://arxiv.org/html/2606.12671v1"
+      ],
+      "saved_pass": "benchmark",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 15,
+      "canonical_title": "Can Pixels Alone Reveal Image Origin? Minimax Limits and Learnable Interfaces for Passive Provenance",
+      "doi": null,
+      "arxiv_id": "2609.30997",
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 154460",
+      "production_url": "https://neurips.cc/virtual/2026/poster/154460",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Exact arXiv ID 2609.30997 and normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "IN_SCOPE",
+      "root_tasks": [
+        "source_attribution"
+      ],
+      "research_types": [
+        "analysis_study"
+      ],
+      "dataset_benchmark_status": "No new dataset. Public code/configurations are available, while source images and checkpoints are not redistributed.",
+      "final_reconciliation_action": "MISSING_ADD",
+      "concise_evidence_note": "Acceptance: production poster 154460, corroborated by the paper. arXiv 2609.30997 materially formulates and evaluates passive provenance/source-target verification on real and multiple diffusion generators, including generator-specific target labels. No current-registry identity match.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://neurips.cc/virtual/2026/poster/154460",
+        "https://arxiv.org/abs/2609.30997",
+        "https://arxiv.org/html/2609.30997v1",
+        "https://arxiv.org/pdf/2609.30997",
+        "https://github.com/kaikaiyao/pixels-alone-provenance",
+        "https://informatics.ed.ac.uk/news/latest-news/deepfake-detection-techniques-vulnerable-to-attack-study-finds"
+      ],
+      "saved_pass": "scope",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 16,
+      "canonical_title": "Can We Model the Artifacts Explicitly? Disentangle Artifacts via Pairwise Edit Relations for Image Manipulation Localization",
+      "doi": null,
+      "arxiv_id": null,
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 155638",
+      "production_url": "https://neurips.cc/virtual/2026/poster/155638",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Official NeurIPS 2026 production poster 155638 plus normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "HOLD_UNTIL_GENERATIVE_AI_SCOPE_VERIFIED",
+      "root_tasks": [],
+      "research_types": [],
+      "dataset_benchmark_status": "Unverified; no primary paper or public release established.",
+      "final_reconciliation_action": "HOLD_SCOPE",
+      "concise_evidence_note": "Acceptance is verified by production poster 155638. Saved evidence lacks a public abstract/PDF proving that AI/generative editing is materially represented rather than generic manipulation, so scope cannot be inferred from the title.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://neurips.cc/virtual/2026/poster/155638"
+      ],
+      "saved_pass": "scope",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    },
+    {
+      "candidate_number": 17,
+      "canonical_title": "RiSE: Residual Subspace Expert for Generalizable Text-Centric Image Forgery Localization",
+      "doi": null,
+      "arxiv_id": null,
+      "openreview_id": null,
+      "production_neurips_identity": "NeurIPS 2026 poster 153544",
+      "production_url": "https://neurips.cc/virtual/2026/poster/153544",
+      "neurips_2026_acceptance_status": "VERIFIED_PRODUCTION_LISTING",
+      "track": "pending",
+      "existing_authoritative_paper_id": null,
+      "exact_identity_match_method": "Official NeurIPS 2026 production poster 153544 plus normalized exact title checked against the current registry; no existing identity match.",
+      "scope_decision": "HOLD_UNTIL_GENERATIVE_AI_SCOPE_VERIFIED",
+      "root_tasks": [],
+      "research_types": [],
+      "dataset_benchmark_status": "Unverified; no primary paper or public release established.",
+      "final_reconciliation_action": "HOLD_SCOPE",
+      "concise_evidence_note": "Acceptance is verified by production poster 153544. Saved evidence lacks a public abstract/PDF proving a generative-AI text/image editing setting rather than ordinary text-centric forgery, so scope cannot be inferred from the title.",
+      "evidence_sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://neurips.cc/virtual/2026/poster/153544"
+      ],
+      "saved_pass": "scope",
+      "local_match_summary": {
+        "exact_match_count": 0,
+        "method_match_count": 0,
+        "matched_paper_ids": []
+      }
+    }
+  ]
+}

@@ -65,6 +65,11 @@ VALIDATION_EVIDENCE_PATH = OUT / "validation_evidence.json"
 VALIDATION_SUMMARY_PATH = OUT / "validation_summary.json"
 REPRODUCIBILITY_PATH = OUT / "reproducibility.json"
 CHANGED_MANIFEST_PATH = OUT / "changed_files_manifest.json"
+CHANGED_STATUS_SNAPSHOT_PATH = OUT / "changed_files_status_snapshot.json"
+# Captured in baseline commit c160a7d; never replace with later worktree status.
+CHANGED_STATUS_SNAPSHOT_SHA256 = (
+    "0ad484117f640414055f25c6b03837ae5de0803084bcea69c26f4447a7f3d0ab"
+)
 TEST_SUCCESSOR_MIGRATION_PATH = OUT / "test_successor_migration.json"
 HISTORICAL_VERIFICATION_PATH = OUT / "historical_verification.json"
 TAXONOMY_SUMMARY_PATH = OUT / "taxonomy_current_counts.json"
@@ -1380,9 +1385,33 @@ def git_status_entries() -> list[dict[str, str]]:
     return sorted(entries, key=lambda item: (item["path"], item["status"]))
 
 
-def build_changed_files_manifest() -> dict[str, Any]:
-    entries = git_status_entries()
+def load_changed_files_status_snapshot() -> list[dict[str, str]]:
+    """Read the hash-locked input for the completed migration's receipt."""
+    raw = CHANGED_STATUS_SNAPSHOT_PATH.read_bytes()
+    if sha256_bytes(raw) != CHANGED_STATUS_SNAPSHOT_SHA256:
+        raise AssertionError("changed-files status snapshot hash mismatch")
+    return json.loads(raw)["entries"]
+
+
+def build_changed_files_manifest(
+    entries: Sequence[Mapping[str, str]] | None = None,
+) -> dict[str, Any]:
+    """Classify historical input, or explicitly supplied status, without filtering.
+
+    Live status changes on staging, committing, or starting unrelated work. It
+    cannot reproduce a completed migration receipt. Callers inspecting today's
+    worktree may explicitly pass git_status_entries(); --check and --render use
+    the frozen input and require no Git checkout.
+    """
+    if entries is None:
+        entries = load_changed_files_status_snapshot()
+    entries = sorted(
+        (dict(entry) for entry in entries),
+        key=lambda item: (item["path"], item["status"]),
+    )
     paths = {entry["path"] for entry in entries}
+    if len(paths) != len(entries):
+        raise AssertionError("changed-files status contains duplicate paths")
     migration_prefix = OUT.relative_to(ROOT).as_posix() + "/"
     audit_artifact_prefixes = (
         "data/processed/legacy_scope_cleanup_2026_09/",

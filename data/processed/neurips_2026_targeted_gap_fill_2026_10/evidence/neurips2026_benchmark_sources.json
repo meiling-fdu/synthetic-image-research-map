@@ -1,0 +1,373 @@
+{
+  "as_of": "2026-09-30",
+  "status": "interim",
+  "acceptance_source": "https://neurips.cc/Downloads/2026",
+  "production_listing_verified": true,
+  "track": null,
+  "search_queries": [
+    "\"Unified Forensic Preference Learning\"",
+    "\"FARE: Forensic Acceptance Region\"",
+    "\"Beyond Real or Fake\" \"Photographic\"",
+    "\"MLLM-Edit: Benchmarking\"",
+    "\"ManipShield\"",
+    "\"SALART-VQA\"",
+    "\"SIGMA\" \"Semantic-Difference\"",
+    "\"ManipBench\" github",
+    "\"SIGMA\" \"Zhuang\" \"github\" \"2026\"",
+    "\"MLLM-Edit\" dataset"
+  ],
+  "candidates": [
+    {
+      "title": "Unified Forensic Preference Learning for Generalizable Synthetic Image Detection",
+      "neurips_id": "150807",
+      "production_url": "https://neurips.cc/virtual/2026/poster/150807",
+      "acceptance": "VERIFIED_PRODUCTION_LISTING",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "track": null,
+      "arxiv_id": null,
+      "authors": [],
+      "proposed_tasks": [
+        "detection"
+      ],
+      "proposed_research_types": [
+        "method"
+      ],
+      "decision": "AMBIGUOUS",
+      "existing_paper_id": null,
+      "scope": "pending_abstract",
+      "sources": [
+        "https://neurips.cc/Downloads/2026"
+      ],
+      "unresolved": [
+        "Track and proceedings DOI/OpenReview identity not confirmed; production poster direct fetch inaccessible.",
+        "Author institutional publication page https://sites.google.com/site/indexlzhu/publication-list lists identical title twice with conflicting author lists: Yingjin Li; Shuaibo Li; Zhijie Qiu; Fuxiang Zhai; Sixiang Chen; Zhaolu Kang; Wei Ma; Lei Zhu versus Laixin Zhang; Shuaibo Li; Wei Ma; Jianyu Lai; Lei Zhu; Hongbin Zha. Do not choose without production/OpenReview/PDF confirmation.",
+        "Abstract, identifier, affiliations, code/data unavailable."
+      ],
+      "affiliations": [],
+      "dataset_action": "none_unverified"
+    },
+    {
+      "title": "FARE: Forensic Acceptance Region Estimation for Catching Bait-and-Switch Image Generators",
+      "neurips_id": "151260",
+      "production_url": "https://neurips.cc/virtual/2026/poster/151260",
+      "acceptance": "VERIFIED_PRODUCTION_LISTING",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "track": null,
+      "arxiv_id": "2609.30982",
+      "authors": [
+        "Kai Yao",
+        "Marc Juarez"
+      ],
+      "proposed_tasks": [
+        "source_attribution"
+      ],
+      "proposed_research_types": [
+        "method"
+      ],
+      "decision": "MISSING_ADD",
+      "existing_paper_id": null,
+      "scope": "include",
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2609.30982",
+        "https://arxiv.org/html/2609.30982v1"
+      ],
+      "unresolved": [
+        "Track and proceedings DOI/OpenReview identity not confirmed; production poster direct fetch inaccessible."
+      ],
+      "affiliations": [
+        {
+          "authors": [
+            "Kai Yao",
+            "Marc Juarez"
+          ],
+          "institution": "University of Edinburgh",
+          "source": "https://arxiv.org/html/2609.30982v1"
+        }
+      ],
+      "dataset_action": "none_unverified",
+      "code_url": "https://github.com/kaikaiyao/FARE",
+      "contribution": "Passive single-source verification of an output image against an enrolled certified generator, using intrinsic forensic artifacts, constrained convolution, patch scoring, and hard-example training; no watermark inserted.",
+      "datasets": [
+        "FFHQ generator pool",
+        "CommunityForensics",
+        "DiffusionDB prompts"
+      ],
+      "abstract": "Modern AI image generators are increasingly deployed as opaque APIs, where customers can query the deployed service, but cannot inspect model weights or architecture. This creates a practical challenge: a provider may pass governance certification with one generator and later silently switch to a cheaper and lower-quality one for deployment, compromising public trust or even safety in high-stakes domains. We study integrity auditing at deployment time and propose FARE (Forensic Acceptance Region Estimation). A certified generator is enrolled by training FARE on images sampled from that generator. After deployment, FARE can determine whether a generated image is consistent with the enrolled generator---using only that image. FARE's features are based on image generator-specific artifacts that have been proposed for forensic applications. FARE amplifies these features during training by finding hard samples that tighten the acceptance region and increase sensitivity to subtle changes in the certified generator. Across generator swaps, including substitutions with similar model versions and model variants, FARE is effective at detecting swaps, consistently outperforming existing baselines at strict operating points, and remains effective under the exact-model and decision-only attacks evaluated in this work.",
+      "raw_source_file": "/tmp/neurips_bench_2609.30982.html"
+    },
+    {
+      "title": "Beyond Real or Fake: A Dual-Channel Authenticity and Reasoning Protocol for Photographic Assessment",
+      "neurips_id": "154533",
+      "production_url": "https://neurips.cc/virtual/2026/poster/154533",
+      "acceptance": "VERIFIED_PRODUCTION_LISTING",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "track": null,
+      "arxiv_id": null,
+      "authors": [
+        "Xiaoxiao (Shaun) Li",
+        "Ruinan Jin",
+        "Lili Meng",
+        "Miaosen Wang",
+        "Athula Balachandran",
+        "Pei Cao"
+      ],
+      "proposed_tasks": [
+        "detection"
+      ],
+      "proposed_research_types": [
+        "method"
+      ],
+      "decision": "MISSING_ADD",
+      "existing_paper_id": null,
+      "scope": "include",
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://research.google/pubs/beyond-real-or-fake-a-dual-channel-authenticity-and-reasoning-protocol-for-photographic-assessment/"
+      ],
+      "unresolved": [
+        "Track and proceedings DOI/OpenReview identity not confirmed; production poster direct fetch inaccessible.",
+        "PDF download unresolved; affiliations/code/data/strong external identifiers not yet recovered."
+      ],
+      "affiliations": [],
+      "dataset_action": "none_unverified",
+      "contribution": "2CAP pairs camera-trace and semantic encoders for real/synthetic/tampered/AI-retouched classification and reference-assisted VLM evidence. Manipulation type is not generator attribution."
+    },
+    {
+      "title": "MLLM-Edit: Benchmarking Image Forgery Detection and Localization under MLLM-based Editing",
+      "neurips_id": "139518",
+      "production_url": "https://neurips.cc/virtual/2026/poster/139518",
+      "acceptance": "VERIFIED_PRODUCTION_LISTING",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "track": null,
+      "arxiv_id": null,
+      "authors": [],
+      "proposed_tasks": [
+        "detection",
+        "localization"
+      ],
+      "proposed_research_types": [
+        "benchmark"
+      ],
+      "decision": "AMBIGUOUS",
+      "existing_paper_id": null,
+      "scope": "pending_abstract",
+      "sources": [
+        "https://neurips.cc/Downloads/2026"
+      ],
+      "unresolved": [
+        "Track and proceedings DOI/OpenReview identity not confirmed; production poster direct fetch inaccessible.",
+        "No paper/project/arXiv identified via exact-title and acronym searches; author list and abstract unavailable. Benchmark release cannot be verified."
+      ],
+      "affiliations": [],
+      "dataset_action": "none_unverified"
+    },
+    {
+      "title": "ManipShield: A Unified Framework for Image Manipulation Detection, Localization and Explanation",
+      "neurips_id": "148836",
+      "production_url": "https://neurips.cc/virtual/2026/poster/148836",
+      "acceptance": "VERIFIED_PRODUCTION_LISTING",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "track": null,
+      "arxiv_id": "2511.14259",
+      "authors": [
+        "Zitong Xu",
+        "Huiyu Duan",
+        "Xiaoyu Wang",
+        "Zhaolin Cai",
+        "Kaiwei Zhang",
+        "Qiang Hu",
+        "Jing Liu",
+        "Xiongkuo Min",
+        "Guangtao Zhai"
+      ],
+      "proposed_tasks": [
+        "detection",
+        "localization"
+      ],
+      "proposed_research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "decision": "MISSING_ADD",
+      "existing_paper_id": null,
+      "scope": "include",
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2511.14259",
+        "https://arxiv.org/html/2511.14259v3"
+      ],
+      "unresolved": [
+        "Track and proceedings DOI/OpenReview identity not confirmed; production poster direct fetch inaccessible.",
+        "Latest arXiv v3 has nine authors; minxiongkuo.github.io NeurIPS2026 author list has seven (omits Qiang Hu and Jing Liu). Production metadata needed to settle accepted-version authors.",
+        "Both data/model release merely promised in arXiv; search ManipBench mostly returns unrelated CoRL robotics benchmark. Do not link that dataset."
+      ],
+      "affiliations": [
+        {
+          "authors": [
+            "Zitong Xu",
+            "Huiyu Duan",
+            "Zhaolin Cai",
+            "Kaiwei Zhang",
+            "Qiang Hu",
+            "Xiongkuo Min",
+            "Guangtao Zhai"
+          ],
+          "institution": "Shanghai Jiao Tong University",
+          "source": "https://arxiv.org/pdf/2511.14259"
+        },
+        {
+          "authors": [
+            "Xiaoyu Wang"
+          ],
+          "institution": "University of Electronic Science and Technology of China",
+          "source": "https://arxiv.org/pdf/2511.14259"
+        },
+        {
+          "authors": [
+            "Jing Liu"
+          ],
+          "institution": "Tianjin University",
+          "source": "https://arxiv.org/pdf/2511.14259"
+        }
+      ],
+      "dataset_action": "hold_release_unverified",
+      "contribution": "MLLM method for AI-edited-image detection, bounding-box localization and explanations; ManipBench includes 455K images from 25 editing models and 100K richer annotations.",
+      "abstract": "With the rapid advancement of generative models, powerful image editing methods now enable diverse and highly realistic image manipulations that far surpass traditional deepfake techniques, posing new challenges for manipulation detection. Existing image manipulation detection and localization (IMDL) benchmarks suffer from limited content diversity, narrow generative-model coverage, and insufficient interpretability, which hinders the generalization and explanation capabilities of current manipulation detection methods. To address these limitations, we introduce \\textbf{ManipBench}, a large-scale benchmark for image manipulation detection and localization focusing on AI-edited images. ManipBench contains over 450K manipulated images produced by 25 state-of-the-art image editing models across 12 manipulation categories, among which 100K images are further annotated with bounding boxes, judgment cues, and textual explanations to support interpretable detection. Building upon ManipBench, we propose \\textbf{ManipShield}, an all-in-one model based on a Multimodal Large Language Model (MLLM) that leverages contrastive LoRA fine-tuning and task-specific decoders to achieve unified image manipulation detection, localization, and explanation. Extensive experiments on ManipBench and several public datasets demonstrate that ManipShield achieves state-of-the-art performance and exhibits strong generality to unseen manipulation models. Both ManipBench and ManipShield will be released upon publication.",
+      "raw_source_file": "/tmp/neurips_bench_2511.14259.html"
+    },
+    {
+      "title": "SIGMA: Semantic-Difference Instruction-Grounding Mask Annotator for Text-Driven Image Manipulation Localization",
+      "neurips_id": "151764",
+      "production_url": "https://neurips.cc/virtual/2026/poster/151764",
+      "acceptance": "VERIFIED_PRODUCTION_LISTING",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "track": null,
+      "arxiv_id": "2605.27924",
+      "authors": [
+        "Peiyu Zhuang",
+        "Jianquan Yang",
+        "Haodong Li",
+        "Zhuoying Cai",
+        "Ruitao Xie",
+        "Jishen Zeng",
+        "Baoying Chen",
+        "Jiwu Huang",
+        "Xiaochun Cao"
+      ],
+      "proposed_tasks": [
+        "localization"
+      ],
+      "proposed_research_types": [
+        "method"
+      ],
+      "decision": "MISSING_ADD",
+      "existing_paper_id": null,
+      "scope": "include",
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2605.27924",
+        "https://arxiv.org/html/2605.27924v1"
+      ],
+      "unresolved": [
+        "Track and proceedings DOI/OpenReview identity not confirmed; production poster direct fetch inaccessible.",
+        "Paper promises code on acceptance; no public mask dataset or code URL verified.",
+        "PDF affiliation layout to verify before mapping: Sun Yat-sen Shenzhen; Shenzhen University; Shenzhen University of Advanced Technology; Shenzhen Institute of Advanced Technology CAS; Alibaba Group; Shenzhen MSU-BIT University."
+      ],
+      "affiliations": [],
+      "dataset_action": "hold_release_unverified",
+      "contribution": "Automatic mask annotation method combining semantic-feature differencing and instruction grounding; diffusion calibration and self-training; derives approximately 1.1M masks and tests downstream IML models.",
+      "abstract": "Text-driven image editing has advanced rapidly, but reliably localizing these manipulations requires image manipulation localization (IML) models trained on large pixel-annotated datasets, and there is still no low-cost way to obtain such training data at scale. We observe that these data already exist in disguise: public editing datasets contain millions of structurally identical (original, edited) pairs to IML training samples, lacking only pixel-level masks. Recovering these masks automatically is non-trivial: pixel differencing is overwhelmed by diffusion-induced perturbations across all pixels, and instruction-only grounding localizes only what the prompt describes, missing unintended editor side-effects. We propose SIGMA (Semantic-difference Instruction-Grounding Mask Annotator), which performs semantic-feature differencing in a vision foundation backbone and injects an instruction-derived spatial prior into this visual stream via bidirectional cross-modal refinement, amplifying the difference signal at intended-edit regions when the editor faithfully realizes user intent. SIGMA is trained in two complementary stages: Stage I supervises on inpainting masks; Stage II closes the diffusion-domain shift via VAE-roundtrip noise calibration, EMA self-training, and an edit-noise disentanglement loss. SIGMA outperforms existing automatic mask generators on five benchmarks (+12.20% F1, +11.16% IoU). When applied to public editing corpora, it produces a ~1.1M IML training set that improves six diverse detectors by +18.34% F1 across five datasets, turning previously unused editing data into a model-agnostic supervisory resource for IML. We'll release the full codebase as soon as the paper is accepted.",
+      "raw_source_file": "/tmp/neurips_bench_2605.27924.html"
+    },
+    {
+      "title": "SALART-VQA: Diagnosing Whether VLMs Understand Salient Artifacts in Generated Images",
+      "neurips_id": "139139",
+      "production_url": "https://neurips.cc/virtual/2026/poster/139139",
+      "acceptance": "VERIFIED_PRODUCTION_LISTING",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "track": null,
+      "arxiv_id": "2606.12671",
+      "authors": [
+        "Xiaoxiao Sun",
+        "Ruotian Zhang",
+        "Junzhe Huang",
+        "James Burgess",
+        "Serena Yeung-Levy"
+      ],
+      "proposed_tasks": [],
+      "proposed_research_types": [
+        "dataset",
+        "benchmark",
+        "analysis_study"
+      ],
+      "decision": "MISSING_ADD",
+      "existing_paper_id": null,
+      "scope": "include",
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2606.12671",
+        "https://arxiv.org/html/2606.12671v1"
+      ],
+      "unresolved": [
+        "Track and proceedings DOI/OpenReview identity not confirmed; production poster direct fetch inaccessible."
+      ],
+      "affiliations": [
+        {
+          "authors": [
+            "Xiaoxiao Sun",
+            "James Burgess",
+            "Serena Yeung-Levy"
+          ],
+          "institution": "Stanford University",
+          "source": "https://arxiv.org/html/2606.12671v1"
+        },
+        {
+          "authors": [
+            "Ruotian Zhang"
+          ],
+          "institution": "Zhejiang University",
+          "source": "https://arxiv.org/html/2606.12671v1"
+        },
+        {
+          "authors": [
+            "Junzhe Huang"
+          ],
+          "institution": "University of Queensland",
+          "source": "https://arxiv.org/html/2606.12671v1"
+        }
+      ],
+      "dataset_action": "public_release_verified_link_in_provenance_only",
+      "contribution": "VQA diagnostic benchmark of visible artifact presence, semantic localization, spatial grounding and defect identification. Artifact presence is not necessarily synthetic-vs-real classification; clean generated references are included. Task mapping needs review against taxonomy definitions.",
+      "dataset_url": "https://huggingface.co/datasets/salartvqa/SalArt-VQA",
+      "dataset_evidence": {
+        "public": true,
+        "gated": false,
+        "revision": "eacc6d39661b04c0ac2abdcd8ed2c5d37d9ed6f4",
+        "updated": "2026-09-30T00:58:25+00:00",
+        "image_count": 950,
+        "question_count": 3681,
+        "files": [
+          "data/test-00000-of-00005.parquet",
+          "data/test-00001-of-00005.parquet",
+          "data/test-00002-of-00005.parquet",
+          "data/test-00003-of-00005.parquet",
+          "data/test-00004-of-00005.parquet",
+          "release.json",
+          "checksums.sha256"
+        ],
+        "verification": "hf datasets info salartvqa/SalArt-VQA --format json succeeded 2026-09-30"
+      },
+      "abstract": "Vision-language models (VLMs) are increasingly used to detect whether AI-generated images contain visible artifacts, yet their ability to analyze such artifacts remains poorly understood. A correct image-level decision can still hide important failures: a model may correctly flag an artifact while relying on the wrong visual cue, selecting the wrong region, or describing a defect that the image does not support. To evaluate these behaviors directly, we introduce SalArt-VQA, a diagnostic benchmark for fine-grained SALient ARTifact understanding in AI-generated images. SalArt-VQA contains 950 images and 3,681 human-authored multiple-choice questions spanning artifact images, matched real reference images, and paired generated reference images. Four aligned question types evaluate presence detection, semantic localization, spatial grounding, and evidence-grounded defect identification, while the reference splits test calibration and abstention when the annotated defect is absent. Across 20 VLMs, SalArt-VQA reveals failures that image-level detection accuracy hides: the strongest model reaches 99.37% detection recall on artifact images but answers all four artifact-side questions correctly on only 53.26% of images. Comparing artifact images with artifact-free references reveals a sensitivity-calibration tradeoff: sensitive models often make unsupported artifact claims, while conservative models avoid false alarms largely by missing real artifacts. These results show that high artifact detection accuracy alone does not imply grounded artifact understanding. SalArt-VQA exposes these hidden failure modes and provides a fine-grained evaluation of whether VLM artifact claims are supported by local visual evidence.",
+      "raw_source_file": "/tmp/neurips_bench_2606.12671.html"
+    }
+  ]
+}

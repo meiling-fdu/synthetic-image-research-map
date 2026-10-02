@@ -1,0 +1,585 @@
+{
+  "retrieved_at": "2026-09-30",
+  "baseline": {
+    "curated_papers": 479,
+    "public_papers": 623,
+    "published_papers": 514
+  },
+  "candidate_count": 7,
+  "findings": [
+    {
+      "candidate_title": "BIAS-ID: A Framework for Analyzing Transformation Biases in AI-Generated Image Detectors",
+      "canonical_title": "BIAS-ID: A Framework for Analyzing Transformation Biases in AI-Generated Image Detectors",
+      "neurips_id": "139597",
+      "neurips_url": "https://neurips.cc/virtual/2026/poster/139597",
+      "acceptance_verified": true,
+      "acceptance_source": "https://neurips.cc/Downloads/2026",
+      "acceptance_note": "Exact title and production poster identity in official Downloads listing. Poster detail page inaccessible (403 via curl and cache miss via web reader).",
+      "track": null,
+      "track_status": "pending",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "arxiv_id": "2605.31153",
+      "doi": null,
+      "openreview_id": null,
+      "authors": [
+        "Jonas Ricker",
+        "Asja Fischer",
+        "Erwin Quiring"
+      ],
+      "abstract": "Given the surge of harmful AI-generated imagery online, reliably distinguishing authentic images from generated ones has become an urgent research topic. While many proposed detection methods perform well under controlled settings, they often collapse when tested on real-world data. A potential root cause are subtle biases in the detectors’ training data. As a result, detectors may rely on spurious correlations instead of learning true forensic artifacts. While a recent line of work has identified the problem, there is not yet an established protocol to evaluate how biased a detector actually is. In this work, we therefore take a step back: First, we discuss what it means for a detector to be biased, and how this differs from a lack of robustness. Second, we propose BIAS-ID, a transparent framework for analyzing and quantifying the presence of transformation biases in AI-generated image detectors. We validate our framework by performing an evaluation of six detectors across two datasets, revealing that several state-of-the-art detection methods are strongly affected by biases. Our results highlight the importance of bias-aware evaluation for developing reliable AI-generated image detectors.",
+      "scope": "in_scope",
+      "tasks": [
+        "detection"
+      ],
+      "research_types": [
+        "analysis_study"
+      ],
+      "existing_paper_id": null,
+      "decision": "MISSING_ADD",
+      "dataset_action": "No new dataset record",
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2605.31153",
+        "https://arxiv.org/html/2605.31153",
+        "https://arxiv.org/pdf/2605.31153",
+        "https://fbeta.de/impressum/",
+        "https://www.erwinquiring.com/"
+      ],
+      "unresolved": [
+        "NeurIPS track",
+        "OpenReview identifier",
+        "proceedings DOI",
+        "official accepted-version PDF",
+        "Public BIAS-ID code release",
+        "fbeta geocode if mapping required"
+      ],
+      "identity_reconciliation": {
+        "doi": "unavailable",
+        "arxiv": "no match in curated or public records",
+        "official_identity": "no existing match",
+        "normalized_exact_title": "no match",
+        "method_acronym": "no matching candidate",
+        "exclusions": "no match"
+      },
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "method_contribution": "BIAS-ID measures directed score shift and aggregated transform sensitivity to distinguish systematic transformation bias from ordinary detector fragility. Evaluates six detectors under compression, resizing, rotation and color transformations.",
+      "datasets_benchmarks": [
+        "RAISE-1k plus extended Synthbuster",
+        "CLIC2020 plus SynthCLIC"
+      ],
+      "code_url": null,
+      "code_availability": "No official public BIAS-ID code URL located in paper or author-source searches; paper describes extensible PyTorch framework.",
+      "affiliations": [
+        {
+          "authors": [
+            "Jonas Ricker",
+            "Asja Fischer"
+          ],
+          "institution": "Ruhr University Bochum",
+          "institution_id": "institution:8f8dd64c6339c8ff",
+          "city": "Bochum",
+          "country": "Germany",
+          "source": "https://arxiv.org/pdf/2605.31153",
+          "page": 1
+        },
+        {
+          "authors": [
+            "Erwin Quiring"
+          ],
+          "institution": "_fbeta",
+          "canonical_legal_name": "fbeta GmbH",
+          "institution_id": null,
+          "city": "Berlin",
+          "country": "Germany",
+          "source": "https://arxiv.org/pdf/2605.31153",
+          "page": 1,
+          "institution_source": "https://fbeta.de/impressum/",
+          "address": "Akazienstr. 31, 10823 Berlin, Germany",
+          "geocode": "not collected; do not invent"
+        }
+      ],
+      "evidence_note": "New passive synthetic-image detector analysis study. PDF first page verifies all authors and both institutions; fbeta official imprint verifies company identity and Berlin location."
+    },
+    {
+      "candidate_title": "DEDCA: Test-Time Adaptation for Generalized AI-Generated Image Detection",
+      "canonical_title": "DEDCA: Test-Time Adaptation for Generalized AI-Generated Image Detection",
+      "neurips_id": "151979",
+      "neurips_url": "https://neurips.cc/virtual/2026/poster/151979",
+      "acceptance_verified": true,
+      "acceptance_source": "https://neurips.cc/Downloads/2026",
+      "acceptance_note": "Exact title and production poster identity in official Downloads listing. Poster detail page inaccessible (403 via curl and cache miss via web reader).",
+      "track": null,
+      "track_status": "pending",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "arxiv_id": null,
+      "doi": null,
+      "openreview_id": null,
+      "authors": [],
+      "abstract": null,
+      "scope": "provisionally in_scope by title; paper metadata inaccessible",
+      "tasks": [],
+      "research_types": [],
+      "existing_paper_id": null,
+      "decision": "AMBIGUOUS",
+      "dataset_action": "No new dataset record",
+      "sources": [
+        "https://neurips.cc/Downloads/2026"
+      ],
+      "unresolved": [
+        "NeurIPS track",
+        "OpenReview identifier",
+        "proceedings DOI",
+        "official accepted-version PDF",
+        "Complete authors and order",
+        "abstract",
+        "full-text contribution/scope verification",
+        "datasets",
+        "code",
+        "affiliations"
+      ],
+      "identity_reconciliation": {
+        "doi": "unavailable",
+        "arxiv": "unavailable",
+        "official_identity": "no local match",
+        "normalized_exact_title": "no match",
+        "method_acronym": "no matching candidate",
+        "fuzzy": "no credible alternative title found",
+        "exclusions": "no match"
+      },
+      "evidence_note": "Acceptance is verified independently; insufficient bibliographic/technical metadata to add safely. Exact-title, acronym+task, arXiv/OpenReview searches produced no additional primary source."
+    },
+    {
+      "candidate_title": "MIRROR: Manifold Ideal Reference ReconstructOR for AI-Generated Image Detection",
+      "canonical_title": "MIRROR: Manifold Ideal Reference ReconstructOR for AI-Generated Image Detection",
+      "neurips_id": "149292",
+      "neurips_url": "https://neurips.cc/virtual/2026/poster/149292",
+      "acceptance_verified": true,
+      "acceptance_source": "https://neurips.cc/Downloads/2026",
+      "acceptance_note": "Exact title and production poster identity in official Downloads listing. Poster detail page inaccessible (403 via curl and cache miss via web reader).",
+      "track": null,
+      "track_status": "pending",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "arxiv_id": "2602.02222",
+      "doi": null,
+      "openreview_id": null,
+      "authors": [
+        "Ruiqi Liu",
+        "Manni Cui",
+        "Ziheng Qin",
+        "Zhiyuan Yan",
+        "Ruoxin Chen",
+        "Yi Han",
+        "Zhiheng Li",
+        "Junkai Chen",
+        "ZhiJin Chen",
+        "Kaiqing Lin",
+        "Jialiang Shen",
+        "Lubin Weng",
+        "Jing Dong",
+        "Yan Wang",
+        "Shu Wu"
+      ],
+      "abstract": "High-fidelity generative models have narrowed the perceptual gap between synthetic and real images, posing serious threats to media security. Most existing AI-generated image (AIGI) detectors rely on artifact-based classification and struggle to generalize to evolving generative traces. In contrast, human judgment relies on stable real-world regularities, with deviations from the human cognitive manifold serving as a more generalizable signal of forgery. Motivated by this insight, we reformulate AIGI detection as a Reference-Comparison problem that verifies consistency with the real-image manifold rather than fitting specific forgery cues. We propose MIRROR (Manifold Ideal Reference ReconstructOR), a framework that explicitly encodes reality priors using a learnable discrete memory bank. MIRROR projects an input into a manifold-consistent ideal reference via sparse linear combination, and uses the resulting residuals as robust detection signals. To evaluate whether detectors reach the “superhuman crossover” required to replace human experts, we introduce the Human-AIGI benchmark, featuring a psychophysically curated human-imperceptible subset. Across 14 benchmarks, MIRROR consistently outperforms prior methods, achieving gains of 2.1% on six standard benchmarks and 8.1% on seven in-the-wild benchmarks. On Human-AIGI, MIRROR reaches 89.6% accuracy across 27 generators, surpassing both lay users and visual experts, and further approaching the human perceptual limit as pretrained backbones scale. The code is publicly available at: https://github.com/349793927/MIRROR",
+      "scope": "in_scope",
+      "tasks": [
+        "detection"
+      ],
+      "research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "existing_paper_id": "curated:8fe7cb0db76df68a5e38",
+      "decision": "EXISTING_UPDATE_NEEDED",
+      "dataset_action": "Preserve existing paper taxonomy method;dataset;benchmark; record Human-AIGI release pending. No new standalone dataset record or public dataset link.",
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2602.02222",
+        "https://arxiv.org/html/2602.02222",
+        "https://arxiv.org/pdf/2602.02222",
+        "https://github.com/handsome-rich/MIRROR",
+        "https://github.com/349793927/MIRROR"
+      ],
+      "unresolved": [
+        "NeurIPS track",
+        "OpenReview identifier",
+        "proceedings DOI",
+        "official accepted-version PDF",
+        "Human-AIGI public dataset release",
+        "MIRROR training code release"
+      ],
+      "identity_reconciliation": {
+        "doi": "unavailable",
+        "arxiv": "curated:8fe7cb0db76df68a5e38",
+        "official_identity": "no existing match",
+        "normalized_exact_title": "MIRROR title changed by dropping Generalizable; same acronym and arXiv identity",
+        "method_acronym": "MIRROR confirmed",
+        "exclusions": "no match"
+      },
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "method_contribution": "MIRROR reconstructs ideal references from a learned real-image manifold memory bank and classifies comparison residuals and reconstruction perplexity; Human-AIGI evaluates human-imperceptible synthetic images.",
+      "datasets_benchmarks": [
+        "Human-AIGI (proposed, no verified public release)",
+        "AIGCDetectBenchmark",
+        "GenImage",
+        "UnivFakeDetect",
+        "Synthbuster",
+        "EvalGEN",
+        "DRCT-2M",
+        "Chameleon",
+        "SynthWildx",
+        "WildRF",
+        "AIGIBench",
+        "CO-SPY",
+        "RR-Dataset",
+        "BFree-Online"
+      ],
+      "code_url": "https://github.com/handsome-rich/MIRROR",
+      "code_availability": "Public inference.py and models present; original URL https://github.com/349793927/MIRROR redirects to handsome-rich/MIRROR; training code still Coming soon.",
+      "affiliations": [
+        {
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_id": "institution:966ff12833f90bb0",
+          "location_id": "location:966ff12833f90bb0ba7e",
+          "institution_authors": "Ruiqi Liu; Ziheng Qin; Zhiheng Li; Junkai Chen; ZhiJin Chen; Lubin Weng; Jing Dong; Shu Wu",
+          "raw_affiliation": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_city": "Beijing",
+          "institution_country": "China"
+        },
+        {
+          "institution": "University of Chinese Academy of Sciences",
+          "institution_id": "institution:69309405e04976ec",
+          "location_id": "location:69309405e04976ecd5ee",
+          "institution_authors": "Ruiqi Liu",
+          "raw_affiliation": "University of Chinese Academy of Sciences",
+          "institution_city": "Beijing",
+          "institution_country": "China"
+        },
+        {
+          "institution": "Huazhong University of Science and Technology",
+          "institution_id": "institution:e540a2485c3e954f",
+          "location_id": "location:2f98d63098d9234687eb",
+          "institution_authors": "Manni Cui",
+          "raw_affiliation": "Huazhong University of Science and Technology",
+          "institution_city": "Wuhan",
+          "institution_country": "China"
+        },
+        {
+          "institution": "Tencent Youtu Lab",
+          "institution_id": "institution:3e78e883c14f8bb8",
+          "location_id": "location:3e78e883c14f8bb839b1",
+          "institution_authors": "Ruoxin Chen",
+          "raw_affiliation": "Tencent Youtu Lab",
+          "institution_city": "Shanghai",
+          "institution_country": "China"
+        },
+        {
+          "institution": "Southwest University",
+          "institution_id": "institution:d473cbf12de5fb53",
+          "location_id": "location:682519f38b7e9a7c6e4d",
+          "institution_authors": "Yi Han",
+          "raw_affiliation": "Southwest University",
+          "institution_city": "Chongqing",
+          "institution_country": "China"
+        },
+        {
+          "institution": "Peking University",
+          "institution_id": "institution:46e4866d3b2954ab",
+          "location_id": "location:46e4866d3b2954ab314b",
+          "institution_authors": "Zhiyuan Yan",
+          "raw_affiliation": "Peking University",
+          "institution_city": "Beijing",
+          "institution_country": "China"
+        },
+        {
+          "institution": "The University of Sydney",
+          "institution_id": "institution:1984e5f97afb62d8",
+          "location_id": "location:1984e5f97afb62d8d7b0",
+          "institution_authors": "Jialiang Shen",
+          "raw_affiliation": "The University of Sydney",
+          "institution_city": "Sydney",
+          "institution_country": "Australia"
+        },
+        {
+          "institution": "Shenzhen University",
+          "institution_id": "institution:ad9c8964d01f80d8",
+          "location_id": "location:ad9c8964d01f80d86e66",
+          "institution_authors": "Kaiqing Lin",
+          "raw_affiliation": "Shenzhen University",
+          "institution_city": "Shenzhen",
+          "institution_country": "China"
+        },
+        {
+          "institution": "Tsinghua University",
+          "institution_id": "institution:4ae45b121fe12e9c",
+          "location_id": "location:4ae45b121fe12e9c10b4",
+          "institution_authors": "Yan Wang",
+          "raw_affiliation": "Tsinghua University",
+          "institution_city": "Beijing",
+          "institution_country": "China"
+        }
+      ],
+      "affiliation_evidence": "arXiv HTML author block confirms all current mapping assignments and Ruiqi Liu dual affiliation. Current first-page mappings already cite authoritative PDF. PDF download via web failed due 28MB size; HTML source is official arXiv.",
+      "proposed_changes": [
+        "Upgrade arXiv preprint venue/status to NeurIPS 2026 conference",
+        "Use official NeurIPS canonical title dropping Generalizable while retaining arXiv title provenance",
+        "Use production poster URL",
+        "Leave venue_track empty",
+        "Reuse complete existing ordered authors and all nine institution mappings (16 author-affiliation assignments)",
+        "Record canonical code redirect and Human-AIGI release pending in audit metadata"
+      ],
+      "evidence_note": "Strong arXiv match; existing authors and affiliations agree with current official arXiv HTML. Update one node, no duplicate. Official accepted title omits Generalizable."
+    },
+    {
+      "candidate_title": "Post-hoc Selective Classification for Reliable Synthetic Image Detection",
+      "canonical_title": "Post-hoc Selective Classification for Reliable Synthetic Image Detection",
+      "neurips_id": "151954",
+      "neurips_url": "https://neurips.cc/virtual/2026/poster/151954",
+      "acceptance_verified": true,
+      "acceptance_source": "https://neurips.cc/Downloads/2026",
+      "acceptance_note": "Exact title and production poster identity in official Downloads listing. Poster detail page inaccessible (403 via curl and cache miss via web reader).",
+      "track": null,
+      "track_status": "pending",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "arxiv_id": "2605.08574",
+      "doi": null,
+      "openreview_id": null,
+      "authors": [
+        "Kaixiang Zheng",
+        "Jacob H. Seidman"
+      ],
+      "abstract": "As synthetic images become increasingly realistic, reliable synthetic image detection techniques are of pressing need to prevent their misuse. Despite satisfactory in-distribution performance, deep neural network-based synthetic image detectors (SIDs) lack reliability in deployment and often fail in the presence of common covariate shifts, resulting in poor detection accuracy. To avoid the risk caused by potential errors, we adopt a selective classification (SC) strategy by allowing SIDs to abstain from making low confidence predictions. For practicality, we focus on post-hoc methods which perform confidence estimation on a given SID without retraining. However, we show that conventional logit-based confidence score functions (CSFs) exhibit pathological behavior under covariate shifts, leading to SC performance close to or even worse than random guessing. To address this, we propose a simple yet effective SC framework for Reliable Synthetic Image Detection (ReSIDe). First, we generalize the notion of logits to an SID’s intermediate layers from a centroid matching perspective, extending the use of logit-based CSFs to any layer of an SID. Then, we introduce a preference optimization algorithm that aggregates confidence scores extracted from different layers to a final confidence estimate by minimizing an upper bound of the area under the risk-coverage curve (AURC). Extensive experimental results show that ReSIDe significantly boosts the SC performance of various logit-based CSFs under common covariate shifts, achieving up to 69.55% AURC reduction.",
+      "scope": "in_scope",
+      "tasks": [
+        "detection"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "existing_paper_id": null,
+      "decision": "MISSING_ADD",
+      "dataset_action": "No new dataset record",
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://arxiv.org/abs/2605.08574",
+        "https://arxiv.org/html/2605.08574",
+        "https://arxiv.org/pdf/2605.08574"
+      ],
+      "unresolved": [
+        "NeurIPS track",
+        "OpenReview identifier",
+        "proceedings DOI",
+        "official accepted-version PDF"
+      ],
+      "identity_reconciliation": {
+        "doi": "unavailable",
+        "arxiv": "no match in curated or public records",
+        "official_identity": "no existing match",
+        "normalized_exact_title": "no match",
+        "method_acronym": "no matching candidate",
+        "exclusions": "no match"
+      },
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "method_contribution": "ReSIDe performs post-hoc selective classification for synthetic-image detectors: intermediate-layer generalized logits via centroid matching, followed by preference-optimized aggregation of confidence scores to reduce area under risk-coverage curve.",
+      "datasets_benchmarks": [
+        "GenImage; held-out shift-specific subsets for blur, unseen classes, low resolution, FGSM, JPEG, unseen generators"
+      ],
+      "code_url": null,
+      "code_availability": "Explicitly proprietary and will not be released; paper reproducibility checklist.",
+      "affiliations": [
+        {
+          "authors": [
+            "Kaixiang Zheng"
+          ],
+          "institution": "University of Waterloo",
+          "institution_id": "institution:7417258b2e3d3491",
+          "source": "https://arxiv.org/pdf/2605.08574",
+          "page": 1
+        },
+        {
+          "authors": [
+            "Jacob H. Seidman"
+          ],
+          "institution": "Reality Defender",
+          "institution_id": "institution:bee736a063ba04b8",
+          "source": "https://arxiv.org/pdf/2605.08574",
+          "page": 1
+        },
+        {
+          "authors": [
+            "Kaixiang Zheng"
+          ],
+          "institution": "Reality Defender",
+          "institution_id": "institution:bee736a063ba04b8",
+          "source": "https://arxiv.org/pdf/2605.08574",
+          "page": 1,
+          "evidence": "Footnote: work done during internship at Reality Defender. Preserve as additional work affiliation if repository supports."
+        }
+      ],
+      "evidence_note": "New passive detection reliability method; complete metadata and affiliations in PDF; public GenImage reused, no independent new release."
+    },
+    {
+      "candidate_title": "SAGE: Semantic-Agnostic Image Embedding for Generalized AI-Generated Image Detection",
+      "canonical_title": "SAGE: Semantic-Agnostic Image Embedding for Generalized AI-Generated Image Detection",
+      "neurips_id": "149194",
+      "neurips_url": "https://neurips.cc/virtual/2026/poster/149194",
+      "acceptance_verified": true,
+      "acceptance_source": "https://neurips.cc/Downloads/2026",
+      "acceptance_note": "Exact title and production poster identity in official Downloads listing. Poster detail page inaccessible (403 via curl and cache miss via web reader).",
+      "track": null,
+      "track_status": "pending",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "arxiv_id": null,
+      "doi": null,
+      "openreview_id": null,
+      "authors": [],
+      "abstract": null,
+      "scope": "provisionally in_scope by title; paper metadata inaccessible",
+      "tasks": [],
+      "research_types": [],
+      "existing_paper_id": null,
+      "decision": "AMBIGUOUS",
+      "dataset_action": "No new dataset record",
+      "sources": [
+        "https://neurips.cc/Downloads/2026"
+      ],
+      "unresolved": [
+        "NeurIPS track",
+        "OpenReview identifier",
+        "proceedings DOI",
+        "official accepted-version PDF",
+        "Complete authors and order",
+        "abstract",
+        "full-text contribution/scope verification",
+        "datasets",
+        "code",
+        "affiliations"
+      ],
+      "identity_reconciliation": {
+        "doi": "unavailable",
+        "arxiv": "unavailable",
+        "official_identity": "no local match",
+        "normalized_exact_title": "no match",
+        "method_acronym": "no matching candidate",
+        "fuzzy": "no credible alternative title found",
+        "exclusions": "no match"
+      },
+      "evidence_note": "Acceptance is verified independently; insufficient bibliographic/technical metadata to add safely. Exact-title, acronym+task, arXiv/OpenReview searches produced no additional primary source."
+    },
+    {
+      "candidate_title": "The road reaches every place, the short cut only one: Self-Adversarial Shortcut Mitigation for AI-Generated Image Detection",
+      "canonical_title": "The road reaches every place, the short cut only one: Self-Adversarial Shortcut Mitigation for AI-Generated Image Detection",
+      "neurips_id": "151317",
+      "neurips_url": "https://neurips.cc/virtual/2026/poster/151317",
+      "acceptance_verified": true,
+      "acceptance_source": "https://neurips.cc/Downloads/2026",
+      "acceptance_note": "Exact title and production poster identity in official Downloads listing. Poster detail page inaccessible (403 via curl and cache miss via web reader).",
+      "track": null,
+      "track_status": "pending",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "arxiv_id": null,
+      "doi": null,
+      "openreview_id": null,
+      "authors": [],
+      "abstract": null,
+      "scope": "provisionally in_scope by title; paper metadata inaccessible",
+      "tasks": [],
+      "research_types": [],
+      "existing_paper_id": null,
+      "decision": "AMBIGUOUS",
+      "dataset_action": "No new dataset record",
+      "sources": [
+        "https://neurips.cc/Downloads/2026"
+      ],
+      "unresolved": [
+        "NeurIPS track",
+        "OpenReview identifier",
+        "proceedings DOI",
+        "official accepted-version PDF",
+        "Complete authors and order",
+        "abstract",
+        "full-text contribution/scope verification",
+        "datasets",
+        "code",
+        "affiliations"
+      ],
+      "identity_reconciliation": {
+        "doi": "unavailable",
+        "arxiv": "unavailable",
+        "official_identity": "no local match",
+        "normalized_exact_title": "no match",
+        "method_acronym": "no matching candidate",
+        "fuzzy": "no credible alternative title found",
+        "exclusions": "no match"
+      },
+      "evidence_note": "Acceptance is verified independently; insufficient bibliographic/technical metadata to add safely. Exact-title, acronym+task, arXiv/OpenReview searches produced no additional primary source."
+    },
+    {
+      "candidate_title": "Too Aligned to be Real: Detecting AI-Generated Images via Cross-modal Alignment Shift",
+      "canonical_title": "Too Aligned to be Real: Detecting AI-Generated Images via Cross-modal Alignment Shift",
+      "neurips_id": "150179",
+      "neurips_url": "https://neurips.cc/virtual/2026/poster/150179",
+      "acceptance_verified": true,
+      "acceptance_source": "https://neurips.cc/Downloads/2026",
+      "acceptance_note": "Exact title and production poster identity in official Downloads listing. Poster detail page inaccessible (403 via curl and cache miss via web reader).",
+      "track": null,
+      "track_status": "pending",
+      "year": 2026,
+      "venue": "NeurIPS",
+      "arxiv_id": null,
+      "doi": null,
+      "openreview_id": null,
+      "authors": [],
+      "abstract": null,
+      "scope": "provisionally in_scope by title; paper metadata inaccessible",
+      "tasks": [],
+      "research_types": [],
+      "existing_paper_id": null,
+      "decision": "AMBIGUOUS",
+      "dataset_action": "No new dataset record",
+      "sources": [
+        "https://neurips.cc/Downloads/2026"
+      ],
+      "unresolved": [
+        "NeurIPS track",
+        "OpenReview identifier",
+        "proceedings DOI",
+        "official accepted-version PDF",
+        "Complete authors and order",
+        "abstract",
+        "full-text contribution/scope verification",
+        "datasets",
+        "code",
+        "affiliations"
+      ],
+      "identity_reconciliation": {
+        "doi": "unavailable",
+        "arxiv": "unavailable",
+        "official_identity": "no local match",
+        "normalized_exact_title": "no match",
+        "method_acronym": "no matching candidate",
+        "fuzzy": "no credible alternative title found",
+        "exclusions": "no match"
+      },
+      "evidence_note": "Acceptance is verified independently; insufficient bibliographic/technical metadata to add safely. Exact-title, acronym+task, arXiv/OpenReview searches produced no additional primary source."
+    }
+  ],
+  "raw_sources": [
+    "/tmp/neurips2026_downloads.html",
+    "/tmp/neurips2026_arxiv_2605.31153.html",
+    "/tmp/neurips2026_arxiv_2602.02222.html",
+    "/tmp/neurips2026_arxiv_2605.08574.html"
+  ]
+}

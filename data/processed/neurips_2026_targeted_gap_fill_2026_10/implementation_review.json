@@ -1,0 +1,99 @@
+{
+  "status": "staged_not_applied",
+  "locked_counts": {
+    "MISSING_ADD": 7,
+    "EXISTING_UPDATE_NEEDED": 1,
+    "AMBIGUOUS": 7,
+    "HOLD_SCOPE": 2
+  },
+  "unrelated_paper_changes": 0,
+  "duplicate_new_identities": 0,
+  "mirror_id": "curated:8fe7cb0db76df68a5e38",
+  "mirror_proposed_field_changes": {
+    "title": {
+      "before": "MIRROR: Manifold Ideal Reference ReconstructOR for Generalizable AI-Generated Image Detection",
+      "after": "MIRROR: Manifold Ideal Reference ReconstructOR for AI-Generated Image Detection"
+    },
+    "venue": {
+      "before": "arXiv",
+      "after": "Advances in Neural Information Processing Systems"
+    },
+    "venue_id": {
+      "before": "venue:arxiv",
+      "after": "venue:neurips"
+    },
+    "venue_name": {
+      "before": "arXiv",
+      "after": "Advances in Neural Information Processing Systems"
+    },
+    "venue_acronym": {
+      "before": "",
+      "after": "NeurIPS"
+    },
+    "venue_type": {
+      "before": "preprint",
+      "after": "conference"
+    },
+    "raw_venue": {
+      "before": "arXiv",
+      "after": "NeurIPS 2026 production listing"
+    },
+    "paper_url": {
+      "before": "",
+      "after": "https://neurips.cc/virtual/2026/poster/149292"
+    },
+    "publication_type": {
+      "before": "preprint",
+      "after": "conference"
+    },
+    "abstract": {
+      "before": "High-fidelity generative models have narrowed the perceptual gap between synthetic and real images, posing serious threats to media security. Most existing AI-generated image (AIGI) detectors rely on artifact-based classification and struggle to generalize to evolving generative traces. In contrast, human judgment relies on stable real-world regularities, with deviations from the human cognitive manifold serving as a more generalizable signal of forgery. Motivated by this insight, we reformulate AIGI detection as a Reference-Comparison problem that verifies consistency with the real-image manifold rather than fitting specific forgery cues. We propose MIRROR (Manifold Ideal Reference ReconstructOR), a framework that explicitly encodes reality priors using a learnable discrete memory bank. MIRROR projects an input into a manifold-consistent ideal reference via sparse linear combination, and uses the resulting residuals as robust detection signals. To evaluate whether detectors reach the \"superhuman crossover\" required to replace human experts, we introduce the Human-AIGI benchmark, featuring a psychophysically curated human-imperceptible subset. Across 14 benchmarks, MIRROR consistently outperforms prior methods, achieving gains of 2.1% on six standard benchmarks and 8.1% on seven in-the-wild benchmarks. On Human-AIGI, MIRROR reaches 89.6% accuracy across 27 generators, surpassing both lay users and visual experts, and further approaching the human perceptual limit as pretrained backbones scale. The code is publicly available at: https://github.com/349793927/MIRROR",
+      "after": "High-fidelity generative models have narrowed the perceptual gap between synthetic and real images, posing serious threats to media security. Most existing AI-generated image (AIGI) detectors rely on artifact-based classification and struggle to generalize to evolving generative traces. In contrast, human judgment relies on stable real-world regularities, with deviations from the human cognitive manifold serving as a more generalizable signal of forgery. Motivated by this insight, we reformulate AIGI detection as a Reference-Comparison problem that verifies consistency with the real-image manifold rather than fitting specific forgery cues. We propose MIRROR (Manifold Ideal Reference ReconstructOR), a framework that explicitly encodes reality priors using a learnable discrete memory bank. MIRROR projects an input into a manifold-consistent ideal reference via sparse linear combination, and uses the resulting residuals as robust detection signals. To evaluate whether detectors reach the \"superhuman crossover\" required to replace human experts, we introduce the Human-AIGI benchmark, featuring a psychophysically curated human-imperceptible subset. Across 14 benchmarks, MIRROR consistently outperforms prior methods, achieving gains of 2.1% on six standard benchmarks and 8.1% on seven in-the-wild benchmarks. On Human-AIGI, MIRROR reaches 89.6% accuracy across 27 generators, surpassing both lay users and visual experts, and further approaching the human perceptual limit as pretrained backbones scale. The code is publicly available at: https://github.com/handsome-rich/MIRROR"
+    },
+    "metadata_source": {
+      "before": "manual",
+      "after": "https://neurips.cc/virtual/2026/poster/149292"
+    },
+    "updated_at": {
+      "before": "2026-09-04T22:26:13Z",
+      "after": "2026-10-01T00:00:00Z"
+    }
+  },
+  "actual_counts": {
+    "public_papers": 623,
+    "formally_published": 514,
+    "curated_papers": 479,
+    "taxonomy_rows": 666,
+    "mapped_unique_papers": 603,
+    "paper_layer_located": 602
+  },
+  "staged_counts": {
+    "curated_papers": 486,
+    "taxonomy_rows": 672
+  },
+  "validation": {
+    "actual_errors": 0,
+    "actual_curated_warnings": 245,
+    "staged_errors": 8,
+    "staged_curated_warnings": 246,
+    "new_warning": "SIGMA author–institution assignments unresolved in saved evidence",
+    "staged_errors_explanation": "All eight conference records have unverified tracks. Existing validator requires a supported nonempty track.",
+    "actual_public_affiliation_warnings": 22
+  },
+  "dataset_registry": "No standalone dataset registry exists; release evidence and resource URLs are preserved in the durable payload and source audit.",
+  "migration_checks": [
+    "Exact seven additions and only MIRROR changed",
+    "No new duplicate identities against curated and public records",
+    "No unrelated curated rows modified in staged files",
+    "Deterministic repeated staging",
+    "Conflicting arXiv identity rejected",
+    "Application refused before any authoritative write under current track policy"
+  ],
+  "targeted_tests": {
+    "passed": 34,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "Existing conference track, taxonomy, published-only frontend, and export metadata regressions against unchanged authoritative data"
+  },
+  "full_suite": "Not run: 7+1 migration staged but blocked by mandatory conference track policy"
+}

@@ -1,0 +1,84 @@
+{
+  "artifact": "NeurIPS 2026 targeted gap-fill action plan",
+  "as_of": "2026-10-01",
+  "precondition_artifact": "data/manual/neurips_2026_targeted_gap_fill_reconciliation.json",
+  "locked_decision_counts": {
+    "EXISTING_CURRENT": 0,
+    "EXISTING_UPDATE_NEEDED": 1,
+    "MISSING_ADD": 7,
+    "HOLD_SCOPE": 2,
+    "AMBIGUOUS": 7,
+    "EXCLUDE": 0
+  },
+  "curated_mutation": {
+    "add_papers": [
+      {
+        "title": "BIAS-ID: A Framework for Analyzing Transformation Biases in AI-Generated Image Detectors",
+        "paper_id": "curated:07f4e313ba7a093fc94a"
+      },
+      {
+        "title": "Post-hoc Selective Classification for Reliable Synthetic Image Detection",
+        "paper_id": "curated:15bf88ecaf61cad7b226"
+      },
+      {
+        "title": "FARE: Forensic Acceptance Region Estimation for Catching Bait-and-Switch Image Generators",
+        "paper_id": "curated:62f8713f970aa4a95432"
+      },
+      {
+        "title": "Beyond Real or Fake: A Dual-Channel Authenticity and Reasoning Protocol for Photographic Assessment",
+        "paper_id": "curated:712c58079f762c994ad5"
+      },
+      {
+        "title": "SIGMA: Semantic-Difference Instruction-Grounding Mask Annotator for Text-Driven Image Manipulation Localization",
+        "paper_id": "curated:2a62f662dfd346b3f5cb"
+      },
+      {
+        "title": "SALART-VQA: Diagnosing Whether VLMs Understand Salient Artifacts in Generated Images",
+        "paper_id": "curated:baafdb8ac5488ceea198"
+      },
+      {
+        "title": "Can Pixels Alone Reveal Image Origin? Minimax Limits and Learnable Interfaces for Passive Provenance",
+        "paper_id": "curated:36755a9ffdcb1829037c"
+      }
+    ],
+    "update_papers": [
+      {
+        "title": "MIRROR: Manifold Ideal Reference ReconstructOR for AI-Generated Image Detection",
+        "paper_id": "curated:8fe7cb0db76df68a5e38"
+      }
+    ],
+    "taxonomy_rows_added": 6,
+    "taxonomy_note": "SALART-VQA retains no root task and is therefore curated but omitted from the task-gated public export and paper_taxonomy registry.",
+    "new_institutions": [
+      "fbeta GmbH",
+      "YouTube",
+      "University of Queensland"
+    ],
+    "track_representation": "Blank: unverified metadata, not a track category. Current validator rejects missing conference tracks; application is blocked until this policy conflict is resolved."
+  },
+  "dataset_actions": {
+    "SalArt-VQA": "Public non-gated release link preserved in reconciliation/audit; repository has no standalone dataset registry.",
+    "Human-AIGI": "Do not add; Coming soon.",
+    "ManipBench": "Do not add; release promised but unavailable.",
+    "SIGMA masks": "Do not add; release promised but unavailable.",
+    "MLLM-Edit": "Do not add; release unverified."
+  },
+  "expected_semantics": {
+    "public_papers": "623 -> 629 (six task-bearing additions; SALART-VQA is taskless)",
+    "published_only": "514 -> 521 (six public conference additions plus MIRROR preprint upgrade)",
+    "curated_papers": "479 -> 486",
+    "taxonomy_rows": "666 -> 672"
+  },
+  "do_not_apply": [
+    "DEDCA: Test-Time Adaptation for Generalized AI-Generated Image Detection",
+    "SAGE: Semantic-Agnostic Image Embedding for Generalized AI-Generated Image Detection",
+    "The road reaches every place, the short cut only one: Self-Adversarial Shortcut Mitigation for AI-Generated Image Detection",
+    "Too Aligned to be Real: Detecting AI-Generated Images via Cross-modal Alignment Shift",
+    "Unified Forensic Preference Learning for Generalizable Synthetic Image Detection",
+    "MLLM-Edit: Benchmarking Image Forgery Detection and Localization under MLLM-based Editing",
+    "ManipShield: A Unified Framework for Image Manipulation Detection, Localization and Explanation",
+    "Can We Model the Artifacts Explicitly? Disentangle Artifacts via Pairwise Edit Relations for Image Manipulation Localization",
+    "RiSE: Residual Subspace Expert for Generalizable Text-Centric Image Forgery Localization"
+  ],
+  "mutation_strategy": "Build and validate staged CSVs; atomically replace each curated target only after all staged files pass assertions; then regenerate derived exports."
+}

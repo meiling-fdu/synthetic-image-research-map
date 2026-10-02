@@ -1,0 +1,1397 @@
+{
+  "as_of": "2026-10-02",
+  "website_publication": {
+    "commit": "3c0a5fbc25d7434cf4c80de27aae16fc8761a921",
+    "push_result": "Everything up-to-date; exit 0",
+    "origin_main_verified_sha": "3c0a5fbc25d7434cf4c80de27aae16fc8761a921",
+    "ahead": 0,
+    "behind": 0
+  },
+  "outcome": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA",
+  "scope": {
+    "additions": 7,
+    "updates": 1,
+    "additional_candidates": 0,
+    "locked_reconciliation_unchanged": true
+  },
+  "original_untracked_inventory": [
+    {
+      "path": "data/manual/neurips_2026_targeted_gap_fill_reconciliation.json",
+      "category": "reconciliation output",
+      "role": "Immutable locked 17-candidate decisions; only 7 additions and MIRROR revisited.",
+      "sha256": "5889b6d6dc614a913c0d74c9a8109ea318dbb0065ec4c35b25cbcd68b36455c9",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/action_plan.json",
+      "category": "reconciliation output",
+      "role": "Locked mutation plan and task-gated count predictions.",
+      "sha256": "d144e8c158036ef64a20fdcc0743b35112b0aee2c74999be57d0454090a9a412",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/curation_payload.json",
+      "category": "curation input",
+      "role": "Seven draft records, MIRROR patch and reviewed metadata; not applied.",
+      "sha256": "29519ff1c25b289d6053b8c8de0a5ea7ef96268f6b920e71300b4834142eebd7",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/manifest.json",
+      "category": "processed/generated intermediate artifact",
+      "role": "Original-to-durable evidence paths and hashes.",
+      "sha256": "1d022ec66b049082f6a8c60bc5c2fde73c82b9d5d4916dc2dd3db5a17391d14a",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/neurips2026_benchmark_sources.json",
+      "category": "source evidence",
+      "role": "Saved benchmark verification notes.",
+      "sha256": "2523dc43942b797da392e314ae4ab98c2b5ce7c12058fd57be8b53662fc3287c",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/neurips2026_beyond_p1p2.txt",
+      "category": "source evidence",
+      "role": "Paper-time PDF first-two-page text.",
+      "sha256": "0d98053dc8bbbf06ac05a543efbaaad8f1a4df6308f23287e1048238e7311545",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/neurips2026_beyond_page1.png",
+      "category": "source evidence",
+      "role": "Saved first-page paper affiliation evidence.",
+      "sha256": "848586e8a15990d45c375eb4ac9d12f3535b95deebe18af382b0e519d9aa1288",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/neurips2026_detection_sources.json",
+      "category": "source evidence",
+      "role": "Saved detection-paper source findings.",
+      "sha256": "6bb4f0fd4a1997abe642ea4464773be9a7542c88e9fb11f205209c4b0510bc5f",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/neurips2026_initial_local_matches.json",
+      "category": "processed/generated intermediate artifact",
+      "role": "Historical local identity matching results.",
+      "sha256": "2cc82c0b04faad6340818b130c0c3bad3ac1a0fd983a45c8e822fba06bfe1fdb",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/neurips2026_scope_sources.json",
+      "category": "source evidence",
+      "role": "Saved scope/source-attribution/localization findings.",
+      "sha256": "d786041b7f56bc9e06d4ea633532be9834dc2c05ee05335b9ea06697002dd292",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/implementation_review.json",
+      "category": "reconciliation output",
+      "role": "Previous staging review, MIRROR field delta and validation results.",
+      "sha256": "c62a2a849d61b6d482ae364cf18e31b6f59a7d867a639f65016754ba5f5595cb",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/predecessor_623_snapshot.json",
+      "category": "processed/generated intermediate artifact",
+      "role": "Pre-migration identities, counts and hash receipt.",
+      "sha256": "8147af9691540516df5dc37ea69264b5eccbbf66937afda42b24c2df2a1ba309",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/author_institution_mappings.csv",
+      "category": "processed/generated intermediate artifact",
+      "role": "Unapplied preview of author_institution_mappings.csv; exact staged bytes reproduced in a temporary directory.",
+      "sha256": "e62548e888ecc1f9f641d72cb5d96677bff5f65b317c05e8b35abc8a1bffacf7",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/institution_location_review.csv",
+      "category": "processed/generated intermediate artifact",
+      "role": "Unapplied preview of institution_location_review.csv; exact staged bytes reproduced in a temporary directory.",
+      "sha256": "5be5edf91dd6871e7ef0d3a8c30223170c1a3964299a20a0f5fe7cb5310e78ae",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/institutions.csv",
+      "category": "processed/generated intermediate artifact",
+      "role": "Unapplied preview of institutions.csv; exact staged bytes reproduced in a temporary directory.",
+      "sha256": "d382870d097f16bdc9c7ef5335fbc206f4ce523b99dcf5cd59d475ccbfec839c",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/paper_taxonomy.csv",
+      "category": "processed/generated intermediate artifact",
+      "role": "Unapplied preview of paper_taxonomy.csv; exact staged bytes reproduced in a temporary directory.",
+      "sha256": "bdbe0986cc9bafb35132daa406b33aac56a8d4ba29d285fc233186b38d77b81d",
+      "unchanged": true
+    },
+    {
+      "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/papers.csv",
+      "category": "processed/generated intermediate artifact",
+      "role": "Unapplied preview of papers.csv; exact staged bytes reproduced in a temporary directory.",
+      "sha256": "0497ed59f0f5cc7dd4af36c1f839c7eca631356cdc295400bc8e5c4b3135136b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/neurips_2026_implementation_review.md",
+      "category": "documentation",
+      "role": "Previous implementation block and validation report.",
+      "sha256": "273d040eecf25c5386890b0d81f1351d741734cce1e1bf941d9d8039522eade2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/neurips_2026_targeted_gap_fill.md",
+      "category": "documentation",
+      "role": "Human-readable locked reconciliation.",
+      "sha256": "0fa962a7e3a7d8cc54c3c9ae02950cf5348288f703728772e0218e72ee5d44a6",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/curate_neurips_2026_targeted_gap_fill.py",
+      "category": "script",
+      "role": "Locked deterministic staging/apply script with missing-track refusal.",
+      "sha256": "af96ce78956f62121b5d28311bac4c0f96a2a6b6da293891d26aad6f358d4560",
+      "unchanged": true
+    }
+  ],
+  "source_manifest": "data/raw/neurips_2026_metadata_recheck_2026_10_02/manifest.json",
+  "official_export": {
+    "total_source_records": 9109,
+    "reviewed_records": 8,
+    "published_fields": [
+      "type",
+      "name",
+      "virtualsite_url",
+      "speakers/authors",
+      "abstract"
+    ],
+    "no_track_field": true,
+    "poster_pages_http_status": 403,
+    "poster_page_message": "The NeurIPS 2026 conference site is currently closed.",
+    "proceedings_index_latest_volume": 2025,
+    "proceedings_2026_http_status": 404
+  },
+  "entries": [
+    {
+      "candidate_number": 1,
+      "canonical_title": "BIAS-ID: A Framework for Analyzing Transformation Biases in AI-Generated Image Detectors",
+      "locked_action": "MISSING_ADD",
+      "stable_paper_id": "curated:07f4e313ba7a093fc94a",
+      "official_neurips_title": "BIAS-ID: A Framework for Analyzing Transformation Biases in AI-Generated Image Detectors",
+      "official_export_record": {
+        "type": "Poster",
+        "name": "BIAS-ID: A Framework for Analyzing Transformation Biases in AI-Generated Image Detectors",
+        "virtualsite_url": "https://neurips.cc/virtual/2026/poster/139597",
+        "speakers/authors": "Jonas Ricker (Ruhr University Bochum), Asja Fischer (Ruhr University Bochum), Erwin Quiring (fbeta)",
+        "abstract": "Given the surge of harmful AI-generated imagery online, reliably distinguishing authentic images from generated ones has become an urgent research topic. While many proposed detection methods perform well under controlled settings, they often collapse when tested on real-world data. A potential root cause are subtle biases in the detectors' training data. As a result, detectors may rely on spurious correlations instead of learning true forensic artifacts. While a recent line of work has identified the problem, there is not yet an established protocol to evaluate how biased a detector actually is. In this work, we therefore take a step back: First, we discuss what it means for a detector to be biased, and how this differs from a lack of robustness. Second, we propose BIAS-ID, a transparent framework for analyzing and quantifying the presence of transformation biases in AI-generated image detectors. We validate our framework by performing an evaluation of six detectors across two datasets, revealing that several state-of-the-art detection methods are strongly affected by biases. Our results highlight the importance of bias-aware evaluation for developing reliable AI-generated image detectors."
+      },
+      "official_authors_in_order": [
+        "Jonas Ricker",
+        "Asja Fischer",
+        "Erwin Quiring"
+      ],
+      "paper_authors_in_order": [
+        "Jonas Ricker",
+        "Asja Fischer",
+        "Erwin Quiring"
+      ],
+      "paper_title": "BIAS-ID: A Framework for Analyzing Transformation Biases in AI-Generated Image Detectors",
+      "arxiv_id": "2605.31153",
+      "arxiv_version": "v1",
+      "arxiv_identifier_doi": "10.48550/arXiv.2605.31153",
+      "conference_doi": null,
+      "proceedings_url": null,
+      "venue": "NeurIPS 2026",
+      "publication_status": "Listed in official 2026 poster metadata; proceedings not located; no current database publication upgrade applied.",
+      "official_track": null,
+      "track_status": "NOT_PUBLISHED_IN_ACCESSIBLE_OFFICIAL_METADATA",
+      "main_conference_vs_workshop": "Unresolved: presentation type Poster is not a conference track or authoritative main/workshop assignment.",
+      "required_missing_fields": [
+        "authoritative NeurIPS 2026 conference track"
+      ],
+      "optional_unavailable_fields": [
+        "conference DOI",
+        "proceedings URL"
+      ],
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://neurips.cc/virtual/2026/poster/139597",
+        "https://arxiv.org/abs/2605.31153"
+      ],
+      "manual_review": true,
+      "unblocked": false,
+      "author_status": "Author order matches the locked primary-paper metadata.",
+      "current_identity_matches": []
+    },
+    {
+      "candidate_number": 3,
+      "canonical_title": "MIRROR: Manifold Ideal Reference ReconstructOR for AI-Generated Image Detection",
+      "locked_action": "EXISTING_UPDATE_NEEDED",
+      "stable_paper_id": "curated:8fe7cb0db76df68a5e38",
+      "official_neurips_title": "MIRROR: Manifold Ideal Reference ReconstructOR for AI-Generated Image Detection",
+      "official_export_record": {
+        "type": "Poster",
+        "name": "MIRROR: Manifold Ideal Reference ReconstructOR for AI-Generated Image Detection",
+        "virtualsite_url": "https://neurips.cc/virtual/2026/poster/149292",
+        "speakers/authors": "Ruiqi Liu (Institute of Automation, Chinese Academy of Sciences), Manni Cui (Huazhong University of Science and Technology), Ziheng Qin (Institute of automation, Chinese academy of science, Chinese Academy of Sciences), Zhiyuan Yan (Peking University), Ruoxin Chen (Tencent YouTu Lab), Yi Han (Southwest University), Zhiheng Li (State Key Laboratory of Multimodal Artificial Intelligence Systems, Institute of Automation, Chinese), Junkai Chen (Institute of automation, Chinese academy of science, Chinese Academy of Sciences), ZhiJin Chen (University of the Chinese Academy of Sciences), Kaiqing Lin (Shenzhen University), Jialiang Shen (Baidu), Lubin Weng (Institute of automation, Chinese academy of science, Chinese Academy of Sciences), Yan Wang (sensetime), Shu Wu (Institute of automation, Chinese academy of science, Chinese Academy of Sciences)",
+        "abstract": "High-fidelity generative models have narrowed the perceptual gap between synthetic and real images, putting media security under increasing pressure. Most AI-generated image (AIGI) detectors classify by artifact and fail to generalise to new generators. We argue that anchoring detection on the stationary real-image distribution gives a more generalisable signal than chasing the non-stationary forgery distribution, and cast AIGI detection as a Reference-Comparison problem that checks consistency against a learned real-domain feature subspace rather than fitting specific forgery cues. We propose **MIRROR** (**M**anifold **I**deal **R**eference **R**econstruct**OR**), which encodes real-image priors in a learnable discrete memory bank, projects an input onto these prototypes via sparse linear combination to form a manifold-consistent ideal reference, and uses the Comparison Residual and Reconstruction Perplexity as detection signals. To mark the Superhuman Crossover where detectors surpass human experts, we build the Human-AIGI benchmark with a psychophysically curated human-imperceptible subset. Across 14 benchmarks, MIRROR improves over prior methods by 2.1% on six standard benchmarks and 8.1% on seven in-the-wild benchmarks. On Human-AIGI it reaches 89.6% fake accuracy over 27 generators, sitting between the computer-vision-expert and AIGI-detection-expert reference levels, and the gap to the AIGI-detection-expert level closes further as the pretrained backbone scales."
+      },
+      "official_authors_in_order": [
+        "Ruiqi Liu",
+        "Manni Cui",
+        "Ziheng Qin",
+        "Zhiyuan Yan",
+        "Ruoxin Chen",
+        "Yi Han",
+        "Zhiheng Li",
+        "Junkai Chen",
+        "ZhiJin Chen",
+        "Kaiqing Lin",
+        "Jialiang Shen",
+        "Lubin Weng",
+        "Yan Wang",
+        "Shu Wu"
+      ],
+      "paper_authors_in_order": [
+        "Ruiqi Liu",
+        "Manni Cui",
+        "Ziheng Qin",
+        "Zhiyuan Yan",
+        "Ruoxin Chen",
+        "Yi Han",
+        "Zhiheng Li",
+        "Junkai Chen",
+        "ZhiJin Chen",
+        "Kaiqing Lin",
+        "Jialiang Shen",
+        "Lubin Weng",
+        "Jing Dong",
+        "Yan Wang",
+        "Shu Wu"
+      ],
+      "paper_title": "MIRROR: Manifold Ideal Reference ReconstructOR for Generalizable AI-Generated Image Detection",
+      "arxiv_id": "2602.02222",
+      "arxiv_version": "v1",
+      "arxiv_identifier_doi": "10.48550/arXiv.2602.02222",
+      "conference_doi": null,
+      "proceedings_url": null,
+      "venue": "NeurIPS 2026",
+      "publication_status": "Listed in official 2026 poster metadata; proceedings not located; no current database publication upgrade applied.",
+      "official_track": null,
+      "track_status": "NOT_PUBLISHED_IN_ACCESSIBLE_OFFICIAL_METADATA",
+      "main_conference_vs_workshop": "Unresolved: presentation type Poster is not a conference track or authoritative main/workshop assignment.",
+      "required_missing_fields": [
+        "authoritative NeurIPS 2026 conference track",
+        "authoritative resolution of 14-vs-15 author discrepancy before changing the MIRROR author list"
+      ],
+      "optional_unavailable_fields": [
+        "conference DOI",
+        "proceedings URL"
+      ],
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://neurips.cc/virtual/2026/poster/149292",
+        "https://arxiv.org/abs/2602.02222"
+      ],
+      "manual_review": true,
+      "unblocked": false,
+      "author_status": "CONFLICT: official export omits Jing Dong; arXiv v1 and existing authoritative record contain 15 authors.",
+      "identity_note": "Same exact arXiv identity; preserve curated:8fe7cb0db76df68a5e38 and current authors. No new MIRROR identity.",
+      "current_identity_matches": [
+        "curated:8fe7cb0db76df68a5e38"
+      ]
+    },
+    {
+      "candidate_number": 4,
+      "canonical_title": "Post-hoc Selective Classification for Reliable Synthetic Image Detection",
+      "locked_action": "MISSING_ADD",
+      "stable_paper_id": "curated:15bf88ecaf61cad7b226",
+      "official_neurips_title": "Post-hoc Selective Classification for Reliable Synthetic Image Detection",
+      "official_export_record": {
+        "type": "Poster",
+        "name": "Post-hoc Selective Classification for Reliable Synthetic Image Detection",
+        "virtualsite_url": "https://neurips.cc/virtual/2026/poster/151954",
+        "speakers/authors": "Kaixiang Zheng (University of Waterloo), Jacob Seidman (Reality Defender)",
+        "abstract": "As synthetic images become increasingly realistic, reliable synthetic image detection techniques are of pressing need to prevent their misuse. Despite satisfactory in-distribution performance, deep neural network-based synthetic image detectors (SIDs) lack reliability in deployment and often fail in the presence of common covariate shifts, resulting in poor detection accuracy. To avoid the risk caused by potential errors, we adopt a selective classification (SC) strategy by allowing SIDs to abstain from making low confidence predictions. For practicality, we focus on post-hoc methods which perform confidence estimation on a given SID without retraining. However, we show that conventional logit-based confidence score functions (CSFs) exhibit pathological behavior under covariate shifts, leading to SC performance close to or even worse than random guessing. To address this, we propose a simple yet effective SC framework for **Re**liable **S**ynthetic **I**mage **De**tection (ReSIDe). First, we generalize the notion of logits to an SID's intermediate layers from a centroid matching perspective, extending the use of logit-based CSFs to any layer of an SID. Then, we introduce a preference optimization algorithm that aggregates confidence scores extracted from different layers to a final confidence estimate by minimizing an upper bound of the area under the risk-coverage curve (AURC). Extensive experimental results show that ReSIDe significantly boosts the SC performance of various logit-based CSFs under common covariate shifts, achieving up to 69.55% AURC reduction."
+      },
+      "official_authors_in_order": [
+        "Kaixiang Zheng",
+        "Jacob Seidman"
+      ],
+      "paper_authors_in_order": [
+        "Kaixiang Zheng",
+        "Jacob H. Seidman"
+      ],
+      "paper_title": "Post-hoc Selective Classification for Reliable Synthetic Image Detection",
+      "arxiv_id": "2605.08574",
+      "arxiv_version": "v1",
+      "arxiv_identifier_doi": "10.48550/arXiv.2605.08574",
+      "conference_doi": null,
+      "proceedings_url": null,
+      "venue": "NeurIPS 2026",
+      "publication_status": "Listed in official 2026 poster metadata; proceedings not located; no current database publication upgrade applied.",
+      "official_track": null,
+      "track_status": "NOT_PUBLISHED_IN_ACCESSIBLE_OFFICIAL_METADATA",
+      "main_conference_vs_workshop": "Unresolved: presentation type Poster is not a conference track or authoritative main/workshop assignment.",
+      "required_missing_fields": [
+        "authoritative NeurIPS 2026 conference track"
+      ],
+      "optional_unavailable_fields": [
+        "conference DOI",
+        "proceedings URL"
+      ],
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://neurips.cc/virtual/2026/poster/151954",
+        "https://arxiv.org/abs/2605.08574"
+      ],
+      "manual_review": true,
+      "unblocked": false,
+      "author_status": "Same author order; official export renders Jacob Seidman, while the primary paper and locked input render Jacob H. Seidman. Preserve both source renderings.",
+      "current_identity_matches": []
+    },
+    {
+      "candidate_number": 9,
+      "canonical_title": "FARE: Forensic Acceptance Region Estimation for Catching Bait-and-Switch Image Generators",
+      "locked_action": "MISSING_ADD",
+      "stable_paper_id": "curated:62f8713f970aa4a95432",
+      "official_neurips_title": "FARE: Forensic Acceptance Region Estimation for Catching Bait-and-Switch Image Generators",
+      "official_export_record": {
+        "type": "Poster",
+        "name": "FARE: Forensic Acceptance Region Estimation for Catching Bait-and-Switch Image Generators",
+        "virtualsite_url": "https://neurips.cc/virtual/2026/poster/151260",
+        "speakers/authors": "Kai Yao (University of Edinburgh), Marc Juarez (University of Edinburgh)",
+        "abstract": "Modern AI image generators are increasingly deployed as opaque APIs, where customers can query the deployed service, but cannot inspect model weights or architecture. This creates a practical challenge: a provider may pass governance certification with one generator and later silently switch to a cheaper and lower-quality one for deployment, compromising public trust or even safety in high-stakes domains. We study integrity auditing at deployment time and propose FARE (Forensic Acceptance Region Estimation). A certified generator is enrolled by training FARE on images sampled from that generator. After deployment, FARE can determine whether a generated image is consistent with the enrolled generator-using only that image. FARE's features are based on image generator-specific artifacts that have been proposed for forensic applications. FARE amplifies these features during training by finding hard samples that tighten the acceptance region and increase sensitivity to subtle changes in the certified generator. Across generator swaps, including substitutions with similar model versions and model variants, FARE is effective at detecting swaps, consistently outperforming existing baselines at strict operating points, and remains effective under adaptive attacks that actively manipulate images to evade swap detection."
+      },
+      "official_authors_in_order": [
+        "Kai Yao",
+        "Marc Juarez"
+      ],
+      "paper_authors_in_order": [
+        "Kai Yao",
+        "Marc Juarez"
+      ],
+      "paper_title": "FARE: Forensic Acceptance Region Estimation for Catching Bait-and-Switch Image Generators",
+      "arxiv_id": "2609.30982",
+      "arxiv_version": "v1",
+      "arxiv_identifier_doi": "10.48550/arXiv.2609.30982",
+      "conference_doi": null,
+      "proceedings_url": null,
+      "venue": "NeurIPS 2026",
+      "publication_status": "Listed in official 2026 poster metadata; proceedings not located; no current database publication upgrade applied.",
+      "official_track": null,
+      "track_status": "NOT_PUBLISHED_IN_ACCESSIBLE_OFFICIAL_METADATA",
+      "main_conference_vs_workshop": "Unresolved: presentation type Poster is not a conference track or authoritative main/workshop assignment.",
+      "required_missing_fields": [
+        "authoritative NeurIPS 2026 conference track"
+      ],
+      "optional_unavailable_fields": [
+        "conference DOI",
+        "proceedings URL"
+      ],
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://neurips.cc/virtual/2026/poster/151260",
+        "https://arxiv.org/abs/2609.30982"
+      ],
+      "manual_review": true,
+      "unblocked": false,
+      "author_status": "Author order matches the locked primary-paper metadata.",
+      "current_identity_matches": []
+    },
+    {
+      "candidate_number": 10,
+      "canonical_title": "Beyond Real or Fake: A Dual-Channel Authenticity and Reasoning Protocol for Photographic Assessment",
+      "locked_action": "MISSING_ADD",
+      "stable_paper_id": "curated:712c58079f762c994ad5",
+      "official_neurips_title": "Beyond Real or Fake: A Dual-Channel Authenticity and Reasoning Protocol for Photographic Assessment",
+      "official_export_record": {
+        "type": "Poster",
+        "name": "Beyond Real or Fake: A Dual-Channel Authenticity and Reasoning Protocol for Photographic Assessment",
+        "virtualsite_url": "https://neurips.cc/virtual/2026/poster/154533",
+        "speakers/authors": "Xiaoxiao Li, Ruinan Jin (University of British Columbia), Lili Meng (Google), Miaosen Wang (Google DeepMind), Athula Balachandran (Google), PEI CAO (YouTube)",
+        "abstract": "Forensic verification has converged on a binary \"real vs. fake\" label that conflates fully synthetic, tampered, and AI-retouched images despite their very different consequences. We argue that GenAI manipulations decompose along two complementary channels: a camera channel of sensor fingerprints (destroyed by neural processing), and a semantic channel of scene-level coherence (disrupted by content edits). Each manipulation type leaves a distinctive two-channel signature. We instantiate this taxonomy in 2CAP (2-Channel Authenticity Protocol), pairing a contrastively-trained camera encoder with a frozen semantic encoder to serve two applications on a shared backbone: (i) four-class authenticity classification via cross-attention fusion with learnable reliability weights; and (ii) evidence generation, where an authentic image serves as a reference for a query and the two encoders produce per-channel alignment scores together with a patch-level saliency map. These signals are supplied as privileged context to a frozen Vision Language Model (VLM) through an Observe-Generate-Refine loop, yielding explanations with localization without forensic fine-tuning. On a multi-source benchmark, 2CAP attains the best classification performance, including strong retouching detection where existing methods fail, and improves explanation quality."
+      },
+      "official_authors_in_order": [
+        "Xiaoxiao Li",
+        "Ruinan Jin",
+        "Lili Meng",
+        "Miaosen Wang",
+        "Athula Balachandran",
+        "PEI CAO"
+      ],
+      "paper_authors_in_order": [
+        "Xiaoxiao (Shaun) Li",
+        "Ruinan Jin",
+        "Lili Meng",
+        "Miaosen Wang",
+        "Athula Balachandran",
+        "Pei Cao"
+      ],
+      "paper_title": "Beyond Real or Fake: A Dual-Channel Authenticity and Reasoning Protocol for Photographic Assessment",
+      "arxiv_id": null,
+      "arxiv_version": null,
+      "arxiv_identifier_doi": null,
+      "conference_doi": null,
+      "proceedings_url": null,
+      "venue": "NeurIPS 2026",
+      "publication_status": "Listed in official 2026 poster metadata; proceedings not located; no current database publication upgrade applied.",
+      "official_track": null,
+      "track_status": "NOT_PUBLISHED_IN_ACCESSIBLE_OFFICIAL_METADATA",
+      "main_conference_vs_workshop": "Unresolved: presentation type Poster is not a conference track or authoritative main/workshop assignment.",
+      "required_missing_fields": [
+        "authoritative NeurIPS 2026 conference track"
+      ],
+      "optional_unavailable_fields": [
+        "conference DOI",
+        "proceedings URL"
+      ],
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://neurips.cc/virtual/2026/poster/154533",
+        "https://research.google/pubs/beyond-real-or-fake-a-dual-channel-authenticity-and-reasoning-protocol-for-photographic-assessment/"
+      ],
+      "manual_review": true,
+      "unblocked": false,
+      "author_status": "Same six-person order with display-name/capitalization differences: Xiaoxiao Li vs Xiaoxiao (Shaun) Li; PEI CAO vs Pei Cao. Google paper page verifies the locked rendering.",
+      "affiliation_note": "Official event-profile affiliations differ from the saved PDF first page. Paper-time affiliations remain authoritative; do not overwrite them from profiles.",
+      "current_identity_matches": []
+    },
+    {
+      "candidate_number": 13,
+      "canonical_title": "SIGMA: Semantic-Difference Instruction-Grounding Mask Annotator for Text-Driven Image Manipulation Localization",
+      "locked_action": "MISSING_ADD",
+      "stable_paper_id": "curated:2a62f662dfd346b3f5cb",
+      "official_neurips_title": "SIGMA: Semantic-Difference Instruction-Grounding Mask Annotator for Text-Driven Image Manipulation Localization",
+      "official_export_record": {
+        "type": "Poster",
+        "name": "SIGMA: Semantic-Difference Instruction-Grounding Mask Annotator for Text-Driven Image Manipulation Localization",
+        "virtualsite_url": "https://neurips.cc/virtual/2026/poster/151764",
+        "speakers/authors": "Peiyu Zhuang (SUN YAT-SEN UNIVERSITY), Jianquan Yang (SUN YAT-SEN UNIVERSITY), Haodong Li (Shenzhen University), Zhuoying Cai (SUN YAT-SEN UNIVERSITY), Ruitao Xie (Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences, Chinese Academy of Sciences), Jishen Zeng (Alibaba Group), Baoying Chen (Alibaba Group), Jiwu Huang (Shenzhen MSU-BIT University), XIAOCHUN CAO (SUN YAT-SEN UNIVERSITY)",
+        "abstract": "Text-driven image editing has advanced rapidly, but reliably localizing these manipulations requires image manipulation localization (IML) models trained on large pixel-annotated datasets, and there is still no low-cost way to obtain such training data at scale. We observe that these data already exist in disguise: public editing datasets contain millions of structurally identical $\\textit{(original, edited)}$ pairs to IML training samples, lacking only pixel-level masks. Recovering these masks automatically is non-trivial: pixel differencing is overwhelmed by diffusion-induced perturbations across all pixels, and instruction-only grounding localizes only what the prompt describes, missing unintended editor side-effects. We propose $\\textbf{SIGMA}$ ($\\textbf{S}$emantic-difference $\\textbf{I}$nstruction-$\\textbf{G}$rounding $\\textbf{M}$ask $\\textbf{A}$nnotator), which performs semantic-feature differencing in a vision foundation backbone and injects an instruction-derived spatial prior into this visual stream via bidirectional cross-modal refinement, amplifying the difference signal at intended-edit regions when the editor faithfully realizes user intent. SIGMA is trained in two complementary stages: Stage I supervises on inpainting masks; Stage II closes the diffusion-domain shift via VAE-roundtrip noise calibration, EMA self-training, and an edit-noise disentanglement loss. SIGMA outperforms existing automatic mask generators on five benchmarks ($\\textbf{+12.20\\%}$ F1, $\\textbf{+11.16\\%}$ IoU). When applied to public editing corpora, it produces a $\\sim$1.1M IML training set that improves six diverse detectors by $\\textbf{+18.34\\%}$ F1 across five datasets, turning previously unused editing data into a model-agnostic supervisory resource for IML. For reproducibility, our anonymized code is available at https://anonymous.4open.science/r/SIGMA-14FE."
+      },
+      "official_authors_in_order": [
+        "Peiyu Zhuang",
+        "Jianquan Yang",
+        "Haodong Li",
+        "Zhuoying Cai",
+        "Ruitao Xie",
+        "Jishen Zeng",
+        "Baoying Chen",
+        "Jiwu Huang",
+        "XIAOCHUN CAO"
+      ],
+      "paper_authors_in_order": [
+        "Peiyu Zhuang",
+        "Jianquan Yang",
+        "Haodong Li",
+        "Zhuoying Cai",
+        "Ruitao Xie",
+        "Jishen Zeng",
+        "Baoying Chen",
+        "Jiwu Huang",
+        "Xiaochun Cao"
+      ],
+      "paper_title": "SIGMA: Semantic-Difference Instruction-Grounding Mask Annotator for Text-Driven Image Manipulation Localization",
+      "arxiv_id": "2605.27924",
+      "arxiv_version": "v1",
+      "arxiv_identifier_doi": "10.48550/arXiv.2605.27924",
+      "conference_doi": null,
+      "proceedings_url": null,
+      "venue": "NeurIPS 2026",
+      "publication_status": "Listed in official 2026 poster metadata; proceedings not located; no current database publication upgrade applied.",
+      "official_track": null,
+      "track_status": "NOT_PUBLISHED_IN_ACCESSIBLE_OFFICIAL_METADATA",
+      "main_conference_vs_workshop": "Unresolved: presentation type Poster is not a conference track or authoritative main/workshop assignment.",
+      "required_missing_fields": [
+        "authoritative NeurIPS 2026 conference track"
+      ],
+      "optional_unavailable_fields": [
+        "conference DOI",
+        "proceedings URL"
+      ],
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://neurips.cc/virtual/2026/poster/151764",
+        "https://arxiv.org/abs/2605.27924"
+      ],
+      "manual_review": true,
+      "unblocked": false,
+      "author_status": "Same nine-person order; official export capitalizes XIAOCHUN CAO. Primary-paper rendering retained.",
+      "current_identity_matches": []
+    },
+    {
+      "candidate_number": 14,
+      "canonical_title": "SALART-VQA: Diagnosing Whether VLMs Understand Salient Artifacts in Generated Images",
+      "locked_action": "MISSING_ADD",
+      "stable_paper_id": "curated:baafdb8ac5488ceea198",
+      "official_neurips_title": "SALART-VQA: Diagnosing Whether VLMs Understand Salient Artifacts in Generated Images",
+      "official_export_record": {
+        "type": "Poster",
+        "name": "SALART-VQA: Diagnosing Whether VLMs Understand Salient Artifacts in Generated Images",
+        "virtualsite_url": "https://neurips.cc/virtual/2026/poster/139139",
+        "speakers/authors": "Xiaoxiao Sun (Stanford University), Ruotian Zhang (Zhejiang University), Junzhe Huang (The University of Queensland), James Burgess (Stanford University), Serena Yeung-Levy (Stanford University)",
+        "abstract": "Vision-language models (VLMs) are increasingly used to detect whether AI-generated images contain visible artifacts, yet their ability to analyze such artifacts remains poorly understood. A correct image-level decision can still hide important failures: a model may correctly flag an artifact while relying on the wrong visual cue, selecting the wrong region, or describing a defect that the image does not support. To evaluate these behaviors directly, we introduce SalArt-VQA, a diagnostic benchmark for fine-grained salient artifact understanding in AI-generated images. SalArt-VQA contains 950 images and 3,681 human-authored multiple-choice questions spanning artifact images, matched real reference images, and paired generated reference images. Four aligned question types evaluate presence detection, semantic localization, spatial grounding, and evidence-grounded defect identification, while the reference splits test calibration and abstention when the annotated defect is absent. Across 20 VLMs, SalArt-VQA reveals failures that image-level detection accuracy hides: the strongest model reaches 99.37% detection recall on artifact images but answers all four artifact-side questions correctly on only 53.26% of images. Comparing artifact images with defect-absent references reveals a sensitivity–calibration tradeoff: sensitive models often make unsupported artifact claims, while conservative models avoid false alarms largely by missing real artifacts. These results show that high artifact detection accuracy alone does not imply grounded artifact understanding. SalArt-VQA exposes these hidden failure modes and provides a fine-grained evaluation of whether VLM artifact claims are supported by local visual evidence."
+      },
+      "official_authors_in_order": [
+        "Xiaoxiao Sun",
+        "Ruotian Zhang",
+        "Junzhe Huang",
+        "James Burgess",
+        "Serena Yeung-Levy"
+      ],
+      "paper_authors_in_order": [
+        "Xiaoxiao Sun",
+        "Ruotian Zhang",
+        "Junzhe Huang",
+        "James Burgess",
+        "Serena Yeung-Levy"
+      ],
+      "paper_title": "SalArt-VQA: Diagnosing Whether VLMs Understand Salient Artifacts in Generated Images",
+      "arxiv_id": "2606.12671",
+      "arxiv_version": "v1",
+      "arxiv_identifier_doi": "10.48550/arXiv.2606.12671",
+      "conference_doi": null,
+      "proceedings_url": null,
+      "venue": "NeurIPS 2026",
+      "publication_status": "Listed in official 2026 poster metadata; proceedings not located; no current database publication upgrade applied.",
+      "official_track": null,
+      "track_status": "NOT_PUBLISHED_IN_ACCESSIBLE_OFFICIAL_METADATA",
+      "main_conference_vs_workshop": "Unresolved: presentation type Poster is not a conference track or authoritative main/workshop assignment.",
+      "required_missing_fields": [
+        "authoritative NeurIPS 2026 conference track"
+      ],
+      "optional_unavailable_fields": [
+        "conference DOI",
+        "proceedings URL"
+      ],
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://neurips.cc/virtual/2026/poster/139139",
+        "https://arxiv.org/abs/2606.12671"
+      ],
+      "manual_review": true,
+      "unblocked": false,
+      "author_status": "Author order matches the locked primary-paper metadata.",
+      "current_identity_matches": []
+    },
+    {
+      "candidate_number": 15,
+      "canonical_title": "Can Pixels Alone Reveal Image Origin? Minimax Limits and Learnable Interfaces for Passive Provenance",
+      "locked_action": "MISSING_ADD",
+      "stable_paper_id": "curated:36755a9ffdcb1829037c",
+      "official_neurips_title": "Can Pixels Alone Reveal Image Origin? Minimax Limits and Learnable Interfaces for Passive Provenance",
+      "official_export_record": {
+        "type": "Poster",
+        "name": "Can Pixels Alone Reveal Image Origin? Minimax Limits and Learnable Interfaces for Passive Provenance",
+        "virtualsite_url": "https://neurips.cc/virtual/2026/poster/154460",
+        "speakers/authors": "Kai Yao (University of Edinburgh)",
+        "abstract": "Passive image provenance asks whether pixels alone can reveal where an image came from: a human, an aggregate AI class, or a particular generator. This becomes a robustness problem once a source image can be edited before the verifier sees it. We study the problem as source--target verification under adversarial distribution shift. Our first result gives the exact best-case limit for any image-only verifier: the largest robust target-acceptance gap equals the minimum total-variation distance between the target distribution and the set of attacked source distributions. This quantity depends on the source, target, and edit class, not on the verifier architecture. Our second result explains why deployed public verifiers can fail before this statistical limit is reached. If the verifier can be emulated on the attack region to error $\\varepsilon$, then a surrogate black-box attack reaches target acceptance within $2\\varepsilon$ plus optimization error of the white-box optimum; score-revealing logistic and softmax heads over public features are identifiable, and approximate score access gives stable recovery bounds. Experiments on same-prompt real/diffusion benchmarks support this separation. Public CLIP-based interfaces collapse under targeted attacks, and stronger clean or adversarial retraining does not restore positive operational separation. In our evaluated settings, positive empirical upper bounds on the robust gap appear only under private low-bandwidth binary interfaces with abstention. The main lesson is simple: robust passive provenance requires both a source--target statistical analysis and an interface-aware evaluation of what the verifier reveals."
+      },
+      "official_authors_in_order": [
+        "Kai Yao"
+      ],
+      "paper_authors_in_order": [
+        "Kai Yao"
+      ],
+      "paper_title": "Can Pixels Alone Reveal Image Origin? Minimax Limits and Learnable Interfaces for Passive Provenance",
+      "arxiv_id": "2609.30997",
+      "arxiv_version": "v1",
+      "arxiv_identifier_doi": "10.48550/arXiv.2609.30997",
+      "conference_doi": null,
+      "proceedings_url": null,
+      "venue": "NeurIPS 2026",
+      "publication_status": "Listed in official 2026 poster metadata; proceedings not located; no current database publication upgrade applied.",
+      "official_track": null,
+      "track_status": "NOT_PUBLISHED_IN_ACCESSIBLE_OFFICIAL_METADATA",
+      "main_conference_vs_workshop": "Unresolved: presentation type Poster is not a conference track or authoritative main/workshop assignment.",
+      "required_missing_fields": [
+        "authoritative NeurIPS 2026 conference track"
+      ],
+      "optional_unavailable_fields": [
+        "conference DOI",
+        "proceedings URL"
+      ],
+      "sources": [
+        "https://neurips.cc/Downloads/2026",
+        "https://neurips.cc/virtual/2026/poster/154460",
+        "https://arxiv.org/abs/2609.30997"
+      ],
+      "manual_review": true,
+      "unblocked": false,
+      "author_status": "Author order matches the locked primary-paper metadata.",
+      "current_identity_matches": []
+    }
+  ],
+  "sigma_affiliation_resolution": {
+    "status": "PAPER_TIME_AFFILIATION_EVIDENCE_RESOLVED_NOT_APPLIED",
+    "source": "https://arxiv.org/pdf/2605.27924v1",
+    "page": 1,
+    "source_sha256": "0d6b5a9fe13a59b1bc4bde49be709d142cc716e74bb8bcc59f195f25bb7984fb",
+    "visual_review": true,
+    "groups": [
+      {
+        "marker": "1",
+        "authors": [
+          "Peiyu Zhuang",
+          "Jianquan Yang",
+          "Zhuoying Cai",
+          "Xiaochun Cao"
+        ],
+        "raw_affiliation": "Shenzhen Campus of Sun Yat-sen University, China",
+        "existing_institutions": [
+          {
+            "name": "Shenzhen Campus of Sun Yat-sen University",
+            "institution_id": "institution:9ab7959736f7be0d"
+          }
+        ]
+      },
+      {
+        "marker": "2",
+        "authors": [
+          "Haodong Li"
+        ],
+        "raw_affiliation": "Guangdong Provincial Key Laboratory of Intelligent Information Processing and Shenzhen Key Laboratory of Media Security, Shenzhen University, Shenzhen, China",
+        "existing_institutions": [
+          {
+            "name": "Shenzhen University",
+            "institution_id": "institution:ad9c8964d01f80d8"
+          }
+        ]
+      },
+      {
+        "marker": "3",
+        "authors": [
+          "Ruitao Xie"
+        ],
+        "raw_affiliation": "Shenzhen University of Advanced Technology and Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences, China",
+        "existing_institutions": [
+          {
+            "name": "Shenzhen University of Advanced Technology",
+            "institution_id": "institution:498778a17add497f"
+          },
+          {
+            "name": "Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences",
+            "institution_id": "institution:2251558d3f3716fa"
+          }
+        ]
+      },
+      {
+        "marker": "4",
+        "authors": [
+          "Jishen Zeng",
+          "Baoying Chen"
+        ],
+        "raw_affiliation": "Alibaba Group, China",
+        "existing_institutions": [
+          {
+            "name": "Alibaba Group",
+            "institution_id": "institution:73f449eb6a3c05d3"
+          }
+        ]
+      },
+      {
+        "marker": "5",
+        "authors": [
+          "Jiwu Huang"
+        ],
+        "raw_affiliation": "Shenzhen MSU-BIT University, China",
+        "existing_institutions": [
+          {
+            "name": "Shenzhen MSU-BIT University",
+            "institution_id": "institution:11d4e5b507bbbada"
+          }
+        ]
+      }
+    ],
+    "note": "10 author-institution associations across 9 authors and 6 existing institutions. No names merged, new institutions created, coordinates inferred, or mappings applied. Original staged CSV warning remains until a valid complete migration is authorized by authoritative track metadata."
+  },
+  "before_counts": {
+    "public_papers": 623,
+    "published_only": 514,
+    "mapped_papers_in_paper_export": 602,
+    "paper_institution_relationships": 1392,
+    "curated_papers": 479,
+    "taxonomy_rows": 666,
+    "public_forensic_task_memberships": {
+      "detection": 580,
+      "source_attribution": 79,
+      "localization": 36
+    }
+  },
+  "after_counts": {
+    "public_papers": 623,
+    "published_only": 514,
+    "mapped_papers_in_paper_export": 602,
+    "paper_institution_relationships": 1392,
+    "curated_papers": 479,
+    "taxonomy_rows": 666,
+    "public_forensic_task_memberships": {
+      "detection": 580,
+      "source_attribution": 79,
+      "localization": 36
+    }
+  },
+  "applied": false,
+  "count_caveat": "630 requires all seven additions to pass the public gate. Locked SalArt-VQA is taskless; existing plan predicts six public additions (629 total), not a verified applied result. No export or taxonomy-policy change was made.",
+  "validation": {
+    "targeted_pytest": {
+      "passed": 34,
+      "failed": 0,
+      "seconds": 6.62
+    },
+    "locked_migration_checks": {
+      "checks": [
+        "locked 7 additions + only MIRROR update",
+        "duplicate identities rejected by unchanged migration builder",
+        "no unsupported Pending track category",
+        "all five saved staged CSVs exactly reproducible",
+        "deterministic repeated staging",
+        "staged keys, counts and references valid",
+        "unchanged validator still rejects missing conference track"
+      ],
+      "staged_counts": {
+        "papers.csv": 486,
+        "paper_taxonomy.csv": 672,
+        "author_institution_mappings.csv": 1333,
+        "institutions.csv": 745,
+        "institution_location_review.csv": 664
+      },
+      "staged_errors": [
+        {
+          "level": "ERROR",
+          "filename": "papers.csv",
+          "row_number": 401,
+          "message": "conference venue requires a supported venue_track"
+        },
+        {
+          "level": "ERROR",
+          "filename": "papers.csv",
+          "row_number": 481,
+          "message": "conference venue requires a supported venue_track"
+        },
+        {
+          "level": "ERROR",
+          "filename": "papers.csv",
+          "row_number": 482,
+          "message": "conference venue requires a supported venue_track"
+        },
+        {
+          "level": "ERROR",
+          "filename": "papers.csv",
+          "row_number": 483,
+          "message": "conference venue requires a supported venue_track"
+        },
+        {
+          "level": "ERROR",
+          "filename": "papers.csv",
+          "row_number": 484,
+          "message": "conference venue requires a supported venue_track"
+        },
+        {
+          "level": "ERROR",
+          "filename": "papers.csv",
+          "row_number": 485,
+          "message": "conference venue requires a supported venue_track"
+        },
+        {
+          "level": "ERROR",
+          "filename": "papers.csv",
+          "row_number": 486,
+          "message": "conference venue requires a supported venue_track"
+        },
+        {
+          "level": "ERROR",
+          "filename": "papers.csv",
+          "row_number": 487,
+          "message": "conference venue requires a supported venue_track"
+        }
+      ],
+      "staged_warning_count": 246,
+      "duplicate_candidates": [],
+      "sigma_warning": [
+        {
+          "level": "WARNING",
+          "filename": "papers.csv",
+          "row_number": 485,
+          "message": "in-scope paper has no active or needs_review author–institution mapping"
+        }
+      ]
+    },
+    "current_curated": {
+      "errors": 0,
+      "warnings": 245,
+      "duplicate_candidates": 0
+    },
+    "full_suite": {
+      "passed": 1536,
+      "failed": 2,
+      "warnings": 2,
+      "seconds": 350.16,
+      "remaining_failures": [
+        "tests/test_legacy_scope_exclusion_migration.py::test_ledger_report_and_validation_are_generated_from_locked_sources",
+        "tests/test_legacy_scope_exclusion_migration.py::test_changed_files_manifest_classifies_every_path_once"
+      ],
+      "classification": "PRE_EXISTING: both independently reproduced in the pre-task source archive; tests and validators unchanged."
+    },
+    "original_protected_hashes": {
+      "checked": 129,
+      "unchanged": 129
+    },
+    "website_saved_data_hashes": {
+      "checked": 105,
+      "unchanged": 105
+    }
+  },
+  "git": {
+    "staged": false,
+    "neurips_commit_created": false,
+    "additional_push": false,
+    "original_20_files_unchanged": true,
+    "new_evidence_and_audit_files": 25,
+    "original_untracked_files": 20,
+    "total_untracked_files": 45,
+    "tracked_modifications": 0
+  },
+  "repository_hygiene": {
+    "as_of": "2026-10-02",
+    "migration_state": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA",
+    "reopen_condition": "New authoritative NeurIPS 2026 metadata resolves the required conference-track fields; no search, staging, or application is part of hygiene cleanup.",
+    "inventory_scope": "All 45 untracked files at hygiene task start; hashes describe that pre-cleanup state, including the two audit files subsequently extended with this inventory.",
+    "classification_counts": {
+      "KEEP_VERSIONED_AUDIT": 11,
+      "KEEP_VERSIONED_EVIDENCE": 28,
+      "GENERATED_INTERMEDIATE": 5,
+      "KEEP_VERSIONED_SCRIPT": 1,
+      "LOCAL_RAW_EVIDENCE": 0,
+      "TEMPORARY": 0,
+      "UNKNOWN": 0
+    },
+    "inventory": [
+      {
+        "path": "data/manual/neurips_2026_targeted_gap_fill_reconciliation.json",
+        "classification": "KEEP_VERSIONED_AUDIT",
+        "sha256_before_hygiene": "5889b6d6dc614a913c0d74c9a8109ea318dbb0065ec4c35b25cbcd68b36455c9",
+        "bytes_before_hygiene": 29292,
+        "reason": "Locked identities and reviewed decisions; authoritative input, not a cache."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/action_plan.json",
+        "classification": "KEEP_VERSIONED_AUDIT",
+        "sha256_before_hygiene": "d144e8c158036ef64a20fdcc0743b35112b0aee2c74999be57d0454090a9a412",
+        "bytes_before_hygiene": 4151,
+        "reason": "Frozen action plan and task-gated predictions; no application."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/curation_payload.json",
+        "classification": "KEEP_VERSIONED_AUDIT",
+        "sha256_before_hygiene": "29519ff1c25b289d6053b8c8de0a5ea7ef96268f6b920e71300b4834142eebd7",
+        "bytes_before_hygiene": 23059,
+        "reason": "Reviewed curation input required by the locked script."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/manifest.json",
+        "classification": "KEEP_VERSIONED_AUDIT",
+        "sha256_before_hygiene": "1d022ec66b049082f6a8c60bc5c2fde73c82b9d5d4916dc2dd3db5a17391d14a",
+        "bytes_before_hygiene": 1749,
+        "reason": "Original source paths and hashes; provenance receipt."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/neurips2026_benchmark_sources.json",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "2523dc43942b797da392e314ae4ab98c2b5ce7c12058fd57be8b53662fc3287c",
+        "bytes_before_hygiene": 20068,
+        "reason": "Original reviewed source or paper-page evidence; provenance retained by the evidence manifest."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/neurips2026_beyond_p1p2.txt",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "0d98053dc8bbbf06ac05a543efbaaad8f1a4df6308f23287e1048238e7311545",
+        "bytes_before_hygiene": 12856,
+        "reason": "Original reviewed source or paper-page evidence; provenance retained by the evidence manifest."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/neurips2026_beyond_page1.png",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "848586e8a15990d45c375eb4ac9d12f3535b95deebe18af382b0e519d9aa1288",
+        "bytes_before_hygiene": 373958,
+        "reason": "Original reviewed source or paper-page evidence; provenance retained by the evidence manifest."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/neurips2026_detection_sources.json",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "6bb4f0fd4a1997abe642ea4464773be9a7542c88e9fb11f205209c4b0510bc5f",
+        "bytes_before_hygiene": 28280,
+        "reason": "Original reviewed source or paper-page evidence; provenance retained by the evidence manifest."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/neurips2026_initial_local_matches.json",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "2cc82c0b04faad6340818b130c0c3bad3ac1a0fd983a45c8e822fba06bfe1fdb",
+        "bytes_before_hygiene": 23098,
+        "reason": "As-of identity comparison evidence; retain historical results."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/evidence/neurips2026_scope_sources.json",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "d786041b7f56bc9e06d4ea633532be9834dc2c05ee05335b9ea06697002dd292",
+        "bytes_before_hygiene": 13714,
+        "reason": "Original reviewed source or paper-page evidence; provenance retained by the evidence manifest."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/implementation_review.json",
+        "classification": "KEEP_VERSIONED_AUDIT",
+        "sha256_before_hygiene": "c62a2a849d61b6d482ae364cf18e31b6f59a7d867a639f65016754ba5f5595cb",
+        "bytes_before_hygiene": 6348,
+        "reason": "Historical implementation and validation audit."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/metadata_recheck_2026_10_02.json",
+        "classification": "KEEP_VERSIONED_AUDIT",
+        "sha256_before_hygiene": "fde0a08ddb7933fb3f858e46f6e511a1693798a91925882fd6a869d0fcd861df",
+        "bytes_before_hygiene": 48884,
+        "reason": "Central structured recheck evidence and affiliation resolution."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/predecessor_623_snapshot.json",
+        "classification": "KEEP_VERSIONED_AUDIT",
+        "sha256_before_hygiene": "8147af9691540516df5dc37ea69264b5eccbbf66937afda42b24c2df2a1ba309",
+        "bytes_before_hygiene": 420163,
+        "reason": "Pre-migration identities and hashes required for reproducible comparison."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/author_institution_mappings.csv",
+        "classification": "GENERATED_INTERMEDIATE",
+        "sha256_before_hygiene": "e62548e888ecc1f9f641d72cb5d96677bff5f65b317c05e8b35abc8a1bffacf7",
+        "bytes_before_hygiene": 629669,
+        "reason": "Reproducible unapplied CSV preview; retained locally under an exact ignore rule."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/institution_location_review.csv",
+        "classification": "GENERATED_INTERMEDIATE",
+        "sha256_before_hygiene": "5be5edf91dd6871e7ef0d3a8c30223170c1a3964299a20a0f5fe7cb5310e78ae",
+        "bytes_before_hygiene": 335073,
+        "reason": "Reproducible unapplied CSV preview; retained locally under an exact ignore rule."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/institutions.csv",
+        "classification": "GENERATED_INTERMEDIATE",
+        "sha256_before_hygiene": "d382870d097f16bdc9c7ef5335fbc206f4ce523b99dcf5cd59d475ccbfec839c",
+        "bytes_before_hygiene": 117011,
+        "reason": "Reproducible unapplied CSV preview; retained locally under an exact ignore rule."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/paper_taxonomy.csv",
+        "classification": "GENERATED_INTERMEDIATE",
+        "sha256_before_hygiene": "bdbe0986cc9bafb35132daa406b33aac56a8d4ba29d285fc233186b38d77b81d",
+        "bytes_before_hygiene": 766017,
+        "reason": "Reproducible unapplied CSV preview; retained locally under an exact ignore rule."
+      },
+      {
+        "path": "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/papers.csv",
+        "classification": "GENERATED_INTERMEDIATE",
+        "sha256_before_hygiene": "0497ed59f0f5cc7dd4af36c1f839c7eca631356cdc295400bc8e5c4b3135136b",
+        "bytes_before_hygiene": 931112,
+        "reason": "Reproducible unapplied CSV preview; retained locally under an exact ignore rule."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2602.02222.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "e380cfac7b5214eb4426457d553b5a7f85f3f3b3957dd4ab69889c3e055545b0",
+        "bytes_before_hygiene": 44597,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2605.08574.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "133f733c17978b5454b970a3cab77cf84d8ce883dd153eadbd7bd154e9349942",
+        "bytes_before_hygiene": 42236,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2605.27924.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "54cff20ae15493227c06a966fc2b8a072deccc620c8ca4d41d57c1fe2e2f53db",
+        "bytes_before_hygiene": 44021,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2605.31153.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "51de10a8f8efc442936b45111a4c61fa1122004f3f294d6e79bd160eccecd1a6",
+        "bytes_before_hygiene": 41137,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2606.12671.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "438fa790803b3e725ea7fa13069009450a6c33d7ad2b393a504f412dc74eb533",
+        "bytes_before_hygiene": 43325,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2609.30982.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "b0c1cf818b6635dd1209cdf2a26281b7a08b6acb9b23cf4f4a038cddb74e0e4b",
+        "bytes_before_hygiene": 42239,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2609.30997.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "e4b0b538a94498ffce016b49e304723f208bc3599317771c63a247bf2adaebf0",
+        "bytes_before_hygiene": 43259,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/beyond-google.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "ad96f4c3de854fc41074ebc2038dd1ecaefd99a77749437b0d97cece640d20b5",
+        "bytes_before_hygiene": 144853,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/downloads-2026-posters.json",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "0cb1439b32e84e0bc153be6ddfdb724952a5bacd2fff06c016938f4d3d87643d",
+        "bytes_before_hygiene": 17183604,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/downloads-2026.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "e6c875cc1b1f01cd72283d0be024a60024e214997140482380d163b142e8006e",
+        "bytes_before_hygiene": 1376294,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/manifest.json",
+        "classification": "KEEP_VERSIONED_AUDIT",
+        "sha256_before_hygiene": "f87c7d4a9fa45598201ff1ccd7bb4a3a8a73ab8bb608aae44b58856a4a5cd045",
+        "bytes_before_hygiene": 11229,
+        "reason": "Retrieval URLs, dates, statuses, hashes, and local paths."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-139139.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "793a797f3d90006fadec3feb1205a29d489c45b05db7e73cc9e6d1bd1429830d",
+        "bytes_before_hygiene": 49838,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-139597.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "f21904f200586f2bc044ab4dca68ee528fed1643df1be59bad0b9d47a87f70d2",
+        "bytes_before_hygiene": 49838,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-149292.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "1b7fb8f0a9171b51f6f13077b84334b3e5b6a75f9d2ff212621f31863315ce39",
+        "bytes_before_hygiene": 49838,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-151260.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "677b103378dc5a6549972a09937a4dabae81167fa294a4656946c527dadbe903",
+        "bytes_before_hygiene": 49838,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-151764.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "8b8626bb3dcf0be1e0193b945476a08064fa7adb46b7e21d1cc90584a13fc155",
+        "bytes_before_hygiene": 49838,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-151954.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "efa39c6a66887b1fc81742041572493f6413ecc5d6c5321a53b6e1be35b165c5",
+        "bytes_before_hygiene": 49838,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-154460.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "19218c3d672c7b737f6fe7499e58d253f31b9f3a4317e0b36c0ef60a7202b42b",
+        "bytes_before_hygiene": 49838,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-154533.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "ac3e3bfd5b3bd4620520cad086c1fd7102c929fc4e192de4b5542df09588cccf",
+        "bytes_before_hygiene": 49838,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/proceedings-2026.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "b93488eca6e606b6a169db2c12d968d2d973b6f2e7db9fbb3d077565131c3f40",
+        "bytes_before_hygiene": 23,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/proceedings-index.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "73c3c2732d2af27c72f7d7d5422598a778c2f5aebeaf10437fc3fe71ba079e5e",
+        "bytes_before_hygiene": 17341,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/sigma-2605.27924v1.pdf",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "0d6b5a9fe13a59b1bc4bde49be709d142cc716e74bb8bcc59f195f25bb7984fb",
+        "bytes_before_hygiene": 9522235,
+        "reason": "Primary-paper affiliation evidence; comparable external PDFs are already versioned in data/raw/."
+      },
+      {
+        "path": "data/raw/neurips_2026_metadata_recheck_2026_10_02/sigma-full.html",
+        "classification": "KEEP_VERSIONED_EVIDENCE",
+        "sha256_before_hygiene": "021af8c10e86de1726f27a91979cd9d16964f53bd368c73780a2aabfe1ed52af",
+        "bytes_before_hygiene": 287961,
+        "reason": "Dated primary-source response; bytes cannot be reconstructed from a changing live URL."
+      },
+      {
+        "path": "docs/neurips_2026_implementation_review.md",
+        "classification": "KEEP_VERSIONED_AUDIT",
+        "sha256_before_hygiene": "273d040eecf25c5386890b0d81f1351d741734cce1e1bf941d9d8039522eade2",
+        "bytes_before_hygiene": 8823,
+        "reason": "Earlier implementation audit, retained as historical provenance."
+      },
+      {
+        "path": "docs/neurips_2026_metadata_recheck_2026-10-02.md",
+        "classification": "KEEP_VERSIONED_AUDIT",
+        "sha256_before_hygiene": "b8af6fd56bc2d28147745fb743ba28e6b0bc91c4c8b0afafb1179caae5ac28a3",
+        "bytes_before_hygiene": 14920,
+        "reason": "Central human-readable blocked-migration and hygiene audit."
+      },
+      {
+        "path": "docs/neurips_2026_targeted_gap_fill.md",
+        "classification": "KEEP_VERSIONED_AUDIT",
+        "sha256_before_hygiene": "0fa962a7e3a7d8cc54c3c9ae02950cf5348288f703728772e0218e72ee5d44a6",
+        "bytes_before_hygiene": 14740,
+        "reason": "Original locked reconciliation and source decisions."
+      },
+      {
+        "path": "scripts/curate_neurips_2026_targeted_gap_fill.py",
+        "classification": "KEEP_VERSIONED_SCRIPT",
+        "sha256_before_hygiene": "af96ce78956f62121b5d28311bac4c0f96a2a6b6da293891d26aad6f358d4560",
+        "bytes_before_hygiene": 25271,
+        "reason": "Deterministic locked staging/apply script; remains frozen and unapplied."
+      }
+    ],
+    "tracked_pdf_precedent": {
+      "raw_pdf_count": 31,
+      "examples": [
+        "data/raw/primary_curation_2026_09_08/2311.00962.pdf",
+        "data/raw/primary_curation_2026_09_08/2503.11195.pdf"
+      ]
+    },
+    "ignore_rules": [
+      "/data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/author_institution_mappings.csv",
+      "/data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/institution_location_review.csv",
+      "/data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/institutions.csv",
+      "/data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/paper_taxonomy.csv",
+      "/data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/papers.csv"
+    ],
+    "deleted_files": [],
+    "moved_files": [],
+    "preservation_note": "All original source captures, locked decisions, inputs, scripts and previews remain byte-identical; only this structured audit and the central human-readable audit are extended.",
+    "ignore_file": ".git/info/exclude",
+    "ignore_policy_note": "Five local-only, exact file exclusions. Tracked .gitignore remains byte-identical to the historical baseline; no snapshot assertion is relaxed.",
+    "legacy_manifest_repair": {
+      "root_cause": "Historical migration manifest regenerated from current git status instead of the captured migration status.",
+      "pre_fix_focused_result": {
+        "passed": 0,
+        "failed": 2
+      },
+      "clean_status_reproduction": "changed-files manifest is stale",
+      "historical_commit": "c160a7dd6b8b403ed6e268108ee2fe4ab6fb3311",
+      "historical_entries": 59,
+      "historical_tracked_changes": 28,
+      "historical_untracked": 31,
+      "historical_manifest_sha256": "86fb27f3d915d84aacbc254f99ec2e8e84534272dfe90e66ac09e059345eb20f",
+      "status_snapshot": "data/processed/legacy_scope_exclusion_migration_2026_09/changed_files_status_snapshot.json",
+      "status_snapshot_sha256": "0ad484117f640414055f25c6b03837ae5de0803084bcea69c26f4447a7f3d0ab",
+      "regeneration_rounds": 2,
+      "byte_identical_to_historical_manifest": true,
+      "historical_ledger_report_validation_reproducibility_manifest_unchanged": true,
+      "original_assertions_unchanged": true,
+      "regression_file": "tests/test_legacy_scope_changed_files_manifest.py",
+      "new_regression_cases": 13,
+      "initial_related_result": {
+        "passed": 153,
+        "failed": 2,
+        "skipped": 0,
+        "warnings": 2
+      },
+      "initial_related_failures_resolved_by": [
+        "Revert tracked .gitignore change; use five exact local info/exclude entries.",
+        "Run localhost integration test with required socket permission."
+      ]
+    },
+    "cleanup_validation": {
+      "focused": {
+        "passed": 15,
+        "failed": 0,
+        "skipped": 0,
+        "warnings": 0,
+        "duration_seconds": 15.84,
+        "scope": "Two original failing tests plus 13 new manifest regression cases."
+      },
+      "related": {
+        "passed": 155,
+        "failed": 0,
+        "skipped": 0,
+        "warnings": 2,
+        "duration_seconds": 208.45,
+        "files": [
+          "tests/test_legacy_scope_changed_files_manifest.py",
+          "tests/test_legacy_scope_exclusion_migration.py",
+          "tests/test_legacy_scope_cleanup_audit.py",
+          "tests/test_systematic_tier2_application.py",
+          "tests/test_author_affiliation_evidence_repairs.py",
+          "tests/test_formal_publication_authors.py",
+          "tests/test_manual_location_audit_20260827.py",
+          "tests/test_primary_paper_curation.py",
+          "tests/test_pending_institution_resolution.py",
+          "tests/test_workshop_venue_audit.py",
+          "tests/test_authoritative_institution_audit.py"
+        ]
+      },
+      "syntax": "py_compile passed for the changed script and new regression file.",
+      "whitespace": "git diff --check passed; all four new/extended audit/input/test files also checked with git diff --no-index --check.",
+      "unchanged_warnings": [
+        "PytestReturnNotNoneWarning: imported test_successor_migration_payload helper returns dict.",
+        "PytestReturnNotNoneWarning: imported test_successor_migration_text helper returns str."
+      ],
+      "full_suite": {
+        "passed": 1551,
+        "failed": 0,
+        "skipped": 0,
+        "warnings": 2,
+        "duration_seconds": 406.44,
+        "command": "python3 -m pytest -q --tb=short",
+        "required_environment": "Existing HTTP integration tests require permission to bind localhost sockets; Node runtime is on PATH."
+      }
+    },
+    "final_integrity": {
+      "counts": {
+        "public_papers": 623,
+        "published_only": 514,
+        "mapped_papers": 602,
+        "map_markers": 1392
+      },
+      "saved_checksums_matched": 105,
+      "saved_checksums_total": 105,
+      "original_untracked_files_retained": 45,
+      "original_untracked_files_byte_identical": 43,
+      "extended_audit_files": [
+        "data/processed/neurips_2026_targeted_gap_fill_2026_10/metadata_recheck_2026_10_02.json",
+        "docs/neurips_2026_metadata_recheck_2026-10-02.md"
+      ],
+      "source_capture_hashes_matched": 22,
+      "original_evidence_hashes_matched": 6,
+      "migration_applied": false,
+      "locked_decisions_changed": false,
+      "data_validator_changed": false
+    },
+    "final_git_state": {
+      "tracked_modifications": [
+        "scripts/legacy_scope_exclusion_migration.py"
+      ],
+      "untracked_count": 42,
+      "untracked_neurips_version_worthy_count": 40,
+      "untracked_manifest_fix_files": [
+        "data/processed/legacy_scope_exclusion_migration_2026_09/changed_files_status_snapshot.json",
+        "tests/test_legacy_scope_changed_files_manifest.py"
+      ],
+      "newly_ignored_local_previews": [
+        "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/author_institution_mappings.csv",
+        "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/institution_location_review.csv",
+        "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/institutions.csv",
+        "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/paper_taxonomy.csv",
+        "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/papers.csv"
+      ],
+      "local_ignore_file": ".git/info/exclude",
+      "tracked_gitignore_changed": false,
+      "staged_files": [],
+      "commits_created": 0,
+      "pushes_performed": 0,
+      "head": "3c0a5fbc25d7434cf4c80de27aae16fc8761a921",
+      "unrelated_files": []
+    },
+    "verdict": "FULL SUITE GREEN — COMMIT-READY"
+  },
+  "commit_preparation": {
+    "as_of": "2026-10-02",
+    "scope_files": 43,
+    "manifest_fix_files": 3,
+    "neurips_version_worthy_files": 40,
+    "source_or_test_edits_after_full_suite": false,
+    "documentation_updates": "Record staged raw-source whitespace findings and commit-time validation in the two existing audit files.",
+    "migration_applied": false,
+    "cached_whitespace_check": {
+      "exit_code": 2,
+      "finding_count": 6332,
+      "finding_types": {
+        "trailing whitespace.": 6331,
+        "new blank line at EOF.": 1
+      },
+      "files": {
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2602.02222.html": 6,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2605.08574.html": 6,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2605.27924.html": 6,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2605.31153.html": 6,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2606.12671.html": 6,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2609.30982.html": 6,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/arxiv-2609.30997.html": 6,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/beyond-google.html": 2148,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/downloads-2026.html": 465,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-139139.html": 453,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-139597.html": 453,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-149292.html": 453,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-151260.html": 453,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-151764.html": 453,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-151954.html": 453,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-154460.html": 453,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/poster-154533.html": 453,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/proceedings-index.html": 47,
+        "data/raw/neurips_2026_metadata_recheck_2026_10_02/sigma-full.html": 6
+      },
+      "all_findings_in_unchanged_raw_html": true,
+      "non_raw_files_check_passed": true,
+      "source_bytes_preserved": true,
+      "whitespace_rules_changed": false
+    },
+    "focused_tests": {
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0,
+      "warnings": 0,
+      "duration_seconds": 11.9
+    },
+    "related_tests": {
+      "passed": 155,
+      "failed": 0,
+      "skipped": 0,
+      "warnings": 2,
+      "duration_seconds": 157.7
+    },
+    "syntax_checks_passed": true,
+    "prior_full_suite": {
+      "passed": 1551,
+      "failed": 0,
+      "skipped": 0,
+      "warnings": 2,
+      "rerun": false,
+      "reason": "No functional source or test edits since the verified full-suite run; only the two existing audit files were extended with commit-time checks."
+    }
+  }
+}

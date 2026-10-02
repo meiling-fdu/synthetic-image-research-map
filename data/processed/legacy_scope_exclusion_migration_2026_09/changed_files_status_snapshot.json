@@ -1,0 +1,246 @@
+{
+  "capture_command": "git status --porcelain=v1 -z --untracked-files=all",
+  "entries": [
+    {
+      "path": "data/curated/paper_exclusions.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/manual/key_paper_coverage_report.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/manual/legacy_scope_cleanup_audit_2026_09.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/manual/legacy_scope_exclusion_migration_2026_09.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/manual/missing_author_mappings_report.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/processed/institution_type_audit.csv",
+      "status": " M"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_2026_09/artifact_sha256.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_2026_09/high_confidence_scope_drift.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_2026_09/identity_resolution_summary.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_2026_09/needs_review.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_2026_09/validation_summary.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_audit_2026_09/baseline_sha256.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_audit_2026_09/recovered_categories_and_tail.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_audit_2026_09/recovered_deepfake_rows_003_035.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_cleanup_audit_2026_09/recovered_deepfake_rows_036_071.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/changed_files_manifest.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/historical_verification.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/migration_plan.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/migration_plan_receipt.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/predecessor_666_snapshot.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/regeneration_sha256.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/reproducibility.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/restoration_receipt.csv",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/taxonomy_current_counts.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/test_successor_migration.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/validation_evidence.json",
+      "status": "??"
+    },
+    {
+      "path": "data/processed/legacy_scope_exclusion_migration_2026_09/validation_summary.json",
+      "status": "??"
+    },
+    {
+      "path": "docs/key_paper_coverage_report.md",
+      "status": " M"
+    },
+    {
+      "path": "docs/legacy_scope_cleanup_audit_2026_09.md",
+      "status": "??"
+    },
+    {
+      "path": "docs/legacy_scope_exclusion_migration_2026_09.md",
+      "status": "??"
+    },
+    {
+      "path": "docs/missing_author_mappings_report.md",
+      "status": " M"
+    },
+    {
+      "path": "docs/public_preview_report.md",
+      "status": " M"
+    },
+    {
+      "path": "docs/systematic_tier2_normal_priority_evidence_review_2026_09.md",
+      "status": " M"
+    },
+    {
+      "path": "scripts/audit_key_paper_coverage.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/build_legacy_audit.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/export_public_preview.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/frozen_predecessor_666.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/legacy_scope_cleanup_audit.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/legacy_scope_exclusion_migration.py",
+      "status": "??"
+    },
+    {
+      "path": "scripts/migrate_paper_taxonomy.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/paper_taxonomy_registry.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/report_systematic_tier2_application.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/report_systematic_tier2_normal_priority_evidence.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/report_systematic_tier2_policy.py",
+      "status": " M"
+    },
+    {
+      "path": "scripts/verify_key_paper_reconciliation.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/baseline_expectations.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_author_affiliation_evidence_repairs.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_formal_publication_authors.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_frontend_paper_details.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_frontend_published_only_filter.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_frontend_venue_filters.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_legacy_scope_cleanup_audit.py",
+      "status": "??"
+    },
+    {
+      "path": "tests/test_legacy_scope_exclusion_migration.py",
+      "status": "??"
+    },
+    {
+      "path": "tests/test_manual_location_audit_20260827.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_paper_metadata_consistency_audit.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_paper_taxonomy_migration.py",
+      "status": " M"
+    },
+    {
+      "path": "tests/test_primary_paper_curation.py",
+      "status": " M"
+    },
+    {
+      "path": "web/data/public_preview_map_data.json",
+      "status": " M"
+    },
+    {
+      "path": "web/data/public_preview_papers.json",
+      "status": " M"
+    }
+  ],
+  "schema_version": 1,
+  "scope_note": "Frozen status entries from the completed 44-paper migration receipt, extracted verbatim from the baseline commit. These statuses describe that historical working tree, not the current checkout. Groups and counts are regenerated by the classifier, not copied from the receipt.",
+  "source_commit": "c160a7dd6b8b403ed6e268108ee2fe4ab6fb3311",
+  "source_path": "data/processed/legacy_scope_exclusion_migration_2026_09/changed_files_manifest.json",
+  "source_sha256": "86fb27f3d915d84aacbc254f99ec2e8e84534272dfe90e66ac09e059345eb20f"
+}

@@ -1,0 +1,147 @@
+                                                                                                                      Li et al.
+
+
+
+
+                       Beyond Real or Fake:
+       A Dual-Channel Authenticity and Reasoning Protocol for
+                    Photographic Assessment
+                                   Xiaoxiao Li             Ruinan Jin          Lili Meng
+                                  Miaosen Wang         Athula Balachandran      Pei Cao
+                                              Google     YouTube    DeepMind
+
+
+
+
+Abstract
+Forensic verification often uses a binary “real vs. fake” label that groups fully synthetic, tampered, and AI-retouched
+images despite their different consequences. We study these modifications through two complementary channels:
+a camera channel sensitive to capture and processing traces, and a semantic channel capturing scene content. The
+channels provide continuous evidence rather than deterministic signatures of manipulation history. We instantiate this
+perspective in 2CAP (2-Channel Authenticity Protocol), pairing a contrastively trained camera encoder with a frozen
+semantic encoder for (i) reference-free four-class classification through reliability-weighted cross-attention fusion
+and (ii) reference-based evidence generation. For the latter, query-reference channel similarities and a patch-level
+saliency map guide a frozen Vision Language Model (VLM) through an Observe–Generate–Refine loop, without
+forensic instruction tuning of the VLM. On the evaluated benchmark, 2CAP achieves overall AUC .963 and F1 .844;
+retouching F1 improves from .868 for the strongest compared baseline to .961. Across five VLM configurations, shared-
+parser paired evaluation shows model-dependent effects: evidence improves change-type accuracy over evidence-free
+refinement. These results support manipulation-type discrimination while delimiting the benefits of frozen-VLM
+refinement.
+
+
+
+1 Introduction
+When generative AI (GenAI) tools modify a photorealistic image, they do not all break it the same way. A portrait
+restyled by a lighting-enhancement model [1][2] may still depict the same person while altering the original capture
+traces; a news photograph with an inserted object [3] may retain camera-related cues in unedited regions while changing
+local semantic content; a fully synthesized scene [4] has no camera capture of the depicted scene, yet may remain
+semantically coherent. These scenarios can demand different responses, which a binary authenticity label alone does
+not express.
+   Cryptographic provenance (C2PA [5]) addresses authenticity at capture time but cannot reach legacy or stripped
+content. Computational forensics fills this gap, but the field has organized around binary classification, across both
+forgery localization [6][7][8] and AI-generated image detection [9][10][11][12][13], grouping AI-generated, edited,
+and retouched images under a single “fake” label regardless of how or why they were modified. This loses the
+structured evidence that journalism, legal proceedings, identity verification, and content moderation actually need: what
+was changed, and does it matter under a given policy? We argue that useful forensic systems must not only detect
+modifications, but characterize GenAI modification type by distinguishing (i) retouching (camera-parameter restyling
+intended to preserve scene content), (ii) tampering (localized semantic edits), and (iii) full synthesis (no camera capture).
+   We organize photographic assessment around two complementary evidence channels: a camera channel sensitive to
+capture and processing cues, and a semantic channel encoding scene content and relationships. We adopt camera-
+captured, GenAI-retouched, locally tampered, and fully synthetic images as four prototypical image-formation and
+editing regimes (Fig. 1(a)). They distinguish questions that binary real/fake detection conflates: whether an image
+
+
+                                                             1
+                                                                                                                                                                                                               Li et al.
+
+
+
+            (a)
+                                                                                              𝑪𝒄𝒂𝒎 (Camera Channel)
+
+
+                                                                                              𝑪𝒔𝒆𝒎 (Semantic Channel)
+
+
+
+
+                                        PRESERVED                             CORRUPTED                     CORRUPTED                               CORRUPTED
+                             ?
+
+
+                                           PRESERVED                              PRESERVED                                 LOCALLY CORRUPTED                                FULLY CORRUPTED
+
+                                  Footprint-reserved Trans.                      GenAI Retouching                  GenAI Tampering                                Fully Synthetic
+
+                                                                                                                                     Observe–Generate–Refine loop
+ (b)                                                                                (c)                                                                                                        𝑥𝑞       𝑥𝑟𝑒𝑓
+                                                                                                                                                Sec 3.4                 Prompt:
+                             Semantic                                                                                                                                   Compare
+                                                                                                                                     Eq(5)
+                             Encoder                                                                                                                                    𝑥𝑞 and 𝑥𝑟𝑒𝑓 . ...
+
+
+
+
+                                                        Authenticity?
+                                              Fusion
+                                                                          True                                                                                                      Frozen VLMs
+                                                                                                                     𝑆𝑠𝑒𝑚                           Rethink &
+                                                                                                                                                     Revise
+                                                                                                                                                                                                    …
+                                                                                                                   Alignment      Alignment
+                                                                        Sec            Verified            Eq(4)     Scores     Saliency Maps
+                             Camera          Sec
+        User-provided                                                   4.2        reference 𝑥𝑟𝑒𝑓
+                             Encoder         3.3
+
+
+                                                                                                                                                          Consistent?
+       reference 𝑥𝑟𝑒𝑓                                                                                                                                                           Explanation: The        Localization
+                             Sec 3.2
+  (to be camera-validated)                                                                                                                                                      query image is highly
+                                                                                                                                 Privileged 2-                                  consistent with the
+                              /                                                                                      𝑆𝑐𝑎𝑚
+                                                                                                                               channel context                                  reference image in
+                                                                                                                                                                                terms of…
+                                                                                                                                                                                                    Sec 4.3
+                                                                                 Query Image 𝑥𝑞
+
+
+Figure 1: 2CAP overview. (a) Prototypical two-channel evidence. Camera-related processing traces and semantic content provide
+complementary cues; their responses can overlap across modification types. Benign processing may also alter camera traces, and
+synthesis need not introduce visible semantic inconsistencies. (b) Reference-free authenticity classification (Q1). The two encoders
+feed a reliability-weighted fusion module that predicts camera-captured, retouched, tampered, or fully synthetic. (c) Reference-based
+evidence generation (Q2). Query-reference alignment scores and a patch-level saliency map guide a frozen VLM through an
+Observe-Generate-Refine loop (Sec. 3.4).
+originates from camera capture, whether its photographic appearance has been restyled, and whether its scene content
+has been modified or generated. These distinctions define an operational benchmark for evaluating the information
+contributed by the two channels across forms of image creation and editing.
+   Practical workflows also compose operations: local content editing followed by denoising and recompression can
+affect both semantic correspondence and camera-related traces. We therefore use the four regimes as reference cases for
+studying complementary evidence, rather than as an exhaustive partition of processing histories. Channel responses
+can overlap: benign processing can weaken capture cues, and synthesis can remain semantically coherent. Continuous
+query–reference alignment measurements describe such responses relative to a corresponding reference, while four-class
+prediction remains a dataset-defined task on joint image features.
+   We propose 2CAP (2-Channel Authenticity Protocol), which implements this evidence-based formulation with two
+encoders feeding two complementary applications. The shared backbone consists of a contrastively-trained camera
+encoder that maps images into a learned space of camera-related processing cues, paired with a frozen SigLIP2 [14]
+semantic encoder. (1) Reference-free authenticity classification (Fig. 1(b)): a cross-attention fusion module with
+learnable reliability weights adaptively combines the two channels per single image to produce a four-class verdict over
+camera, retouched, tampered, and fully synthetic. (2) Reference-based evidence generation (Fig. 1(c)): given a query
+image and a trusted corresponding reference, we treat per-channel alignment scores and a patch-level saliency map as
+privileged context that a frozen VLM cannot compute on its own, and feed them through a structured Observe-Generate-
+Refine (OGR) loop based on the iterative self-refinement paradigm of Madaan et al. [15] to obtain an explanation and a
+localized bounding box.
+Contributions. (1) A new problem formulation. We move image forensics beyond binary real/fake classification by
+organizing assessment around camera-related and semantic evidence across four prototypical regimes. We evaluate
+four-class discrimination using the joint features and inspect pairwise channel scores for camera, retouched, and
+tampered images. (2) A new detection capability. We instantiate this formulation in 2CAP, a cross-attention fusion
+framework with learnable reliability weights that achieves the highest overall AUC and F1 among the compared methods
+on our benchmark. (3) Forensic explanation without VLM fine-tuning. We show that frozen VLMs can produce
+structured forensic evidence without any forensic SFT data: channel similarity scores and saliency maps, provided
+as privileged context through an OGR loop, yield model- and metric-dependent improvements over evidence-free
+
+
+                                                                                                       2
+
