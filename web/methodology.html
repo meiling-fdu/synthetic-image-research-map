@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Methodology · Synthetic Image Forensics Research Map</title>
+    <meta name="description" content="Scope, curation, paper identity, affiliation coverage, metadata verification, and citation guidance for the Synthetic Image Forensics Research Map.">
+    <link rel="canonical" href="https://meiling-fdu.github.io/synthetic-image-research-map/web/methodology.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Methodology · Synthetic Image Forensics Research Map">
+    <meta property="og:description" content="Scope, curation, paper identity, affiliation coverage, metadata verification, and citation guidance for the Synthetic Image Forensics Research Map.">
+    <meta property="og:url" content="https://meiling-fdu.github.io/synthetic-image-research-map/web/methodology.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Methodology · Synthetic Image Forensics Research Map">
+    <meta name="twitter:description" content="Scope, curation, paper identity, affiliation coverage, metadata verification, and citation guidance for the Synthetic Image Forensics Research Map.">
+    <link rel="stylesheet" href="style.css?v=20261001-academic-1">
+  </head>
+  <body class="methodology-page">
+    <a class="methodology-skip" href="#methodology-content">Skip to methodology</a>
+    <header class="methodology-header">
+      <a href="./">← Research map</a>
+      <p class="methodology-brand">Synthetic Image Forensics Research Map</p>
+      <h1>Methodology</h1>
+      <p>A maintained guide to the literature and its mapped affiliations.</p>
+      <nav class="project-link-list" aria-label="Methodology sections">
+        <a href="#scope">Scope</a><a href="#taxonomy">Taxonomy</a>
+        <a href="#collection">Curation</a><a href="#identity">Paper identity</a>
+        <a href="#mapping">Affiliations</a><a href="#coverage">Coverage</a>
+        <a href="#verification">Verification</a><a href="#corrections">Corrections</a>
+        <a href="#data-access">Data access</a><a href="#how-to-cite">How to cite</a>
+      </nav>
+    </header>
+    <main id="methodology-content" class="panel methodology-content" tabindex="-1">
+      <section id="scope" aria-labelledby="scope-heading">
+        <h2 id="scope-heading">Scope</h2>
+        <p>The core resource covers AI-generated / synthetic-image forensics: Detection, Source Attribution, and Localization. Fully generated images are the main focus. Generative editing is included when clearly tied to synthetic-image forensic research.</p>
+        <p>Generic deepfake research, watermarking, active provenance, fingerprint embedding, and unrelated classical manipulation work are not automatically in scope. Audio-only and video-only research is outside the scope. This is a maintained discovery resource, not an exhaustive bibliography.</p>
+      </section>
+      <section id="taxonomy" aria-labelledby="taxonomy-heading">
+        <h2 id="taxonomy-heading">Taxonomy</h2>
+        <dl>
+          <dt>Forensic Task</dt>
+          <dd>Detection identifies generated images; Source Attribution identifies their origin; Localization identifies generated or manipulated regions. Localization requires an explicit objective and evaluation; a visualization or auxiliary mask alone does not establish the task.</dd>
+          <dt>Image Scope</dt>
+          <dd>Fully Generated and Generative Editing describe the core image scopes. Deepfake and Traditional Manipulation labels distinguish retained historical or mixed-scope work; these labels do not expand the core inclusion boundary.</dd>
+          <dt>Research Type</dt>
+          <dd>Method, Dataset, Benchmark, Survey, and Analysis Study describe the contribution. Surveys and reviews are distinguished from primary contributions.</dd>
+        </dl>
+        <p>These are separate dimensions, and a paper can carry multiple labels in each. Uncertain dimensions remain reviewable. Task counts can overlap and need not sum to the total number of unique papers.</p>
+      </section>
+      <section id="collection" aria-labelledby="collection-heading">
+        <h2 id="collection-heading">Paper collection and curation</h2>
+        <p>OpenAlex supplies discovery and candidate metadata. Source-linked paper reviews, coverage checklists, and maintained corrections supplement that discovery. Candidate records are review material; discovery alone does not establish inclusion or verification.</p>
+        <p>Manually curated decisions cover scope, bibliography, taxonomy, duplicate versions, and affiliations. Raw source evidence, processed candidate metadata, and maintained decisions are kept separately. The public paper records combine eligible records with these reviewed decisions, preserving provenance and unresolved metadata status.</p>
+      </section>
+      <section id="identity" aria-labelledby="identity-heading">
+        <h2 id="identity-heading">Paper identity and deduplication</h2>
+        <p>Stable paper identities use project paper IDs and available DOI, arXiv, or OpenAlex identifiers, with normalized title and year as a fallback. Confirmed version relationships link preprints to formal publications; similarity alone does not authorize a curated merge.</p>
+        <p>When versions are merged, the formal publication supplies its bibliographic metadata and author order. The preprint can contribute its arXiv link, a missing abstract, and affiliation evidence. Earlier version metadata remains traceable in the public record’s merged versions.</p>
+      </section>
+      <section id="mapping" aria-labelledby="mapping-heading">
+        <h2 id="mapping-heading">Affiliation and institution mapping</h2>
+        <p>Affiliations belong to authors on a particular paper. Multiple affiliations are preserved; the first author’s location does not stand for the whole paper. Maintained institution identities, reviewed aliases, and confirmed locations determine eligible map relationships.</p>
+        <p>One paper may map to multiple institutions. Institution Records represent paper–institution relationships, while Unique Papers lists each paper once. Institution hierarchies and reviewed search relationships can broaden an institution search; matching through a descendant is explained in the results.</p>
+      </section>
+      <section id="coverage" aria-labelledby="coverage-heading">
+        <h2 id="coverage-heading">Map coverage limitations</h2>
+        <p>A marker requires source-backed affiliation evidence and a confirmed institution identity and location with usable coordinates. Papers with unresolved affiliations or locations can remain in the paper list without a mapped marker.</p>
+        <p>Geographic totals and Top Mapped Institutions therefore reflect mapped affiliation coverage in the current filtered view. They are not measures of institutional quality or impact. Circle size represents unique papers at a mapped location in that view. Localization and mixed / multiple tasks share the existing purple marker color; Unknown indicates no known dominant task.</p>
+      </section>
+      <section id="verification" aria-labelledby="verification-heading">
+        <h2 id="verification-heading">Metadata verification</h2>
+        <p>Paper Details exposes the public statuses Verified, Curated, Needs review, and Source metadata, together with available source information. The overall status comes from paper-level review. Field-level questions, such as a venue or affiliation needing review, remain local to that field.</p>
+        <p>Bibliographic review, taxonomy review, and map eligibility are separate. A verified bibliography can still have incomplete affiliation coverage. Missing optional metadata is not filled by inference, and a status label is not an assessment of a paper’s scientific quality.</p>
+      </section>
+      <section id="corrections" aria-labelledby="corrections-heading">
+        <h2 id="corrections-heading">Updates and corrections</h2>
+        <p>The map’s Last updated date comes from the successful public data export. Maintained corrections are applied before validated public files are published; browsing the static site does not change the data.</p>
+        <p>Use Report metadata issue in Paper Details to prepare a source-linked report, or <a href="https://github.com/meiling-fdu/synthetic-image-research-map/issues">open a GitHub issue</a> for a missing paper or other correction. Include the paper’s DOI or arXiv link and evidence for the proposed change. Reports are reviewed before publication.</p>
+      </section>
+      <section id="data-access" aria-labelledby="data-access-heading">
+        <h2 id="data-access-heading">Data access</h2>
+        <p>Download <a href="data/public_preview_papers.json">public paper records (JSON)</a> and <a href="data/public_preview_map_data.json">map relationships (JSON)</a>. Export CSV on the map downloads the current results in the selected view. A paper can contribute more than one row to an Institution Records export.</p>
+        <p>Keyword search covers bibliographic text, taxonomy, DOI, arXiv identifiers, and available abstracts. Recognized identifiers are matched exactly after normalization. Relevance ranks exact titles first, then exact identifiers, title prefixes, and term matches in titles, authors, institutions, venues, taxonomy, and abstracts. Publication year and stable title/identity ordering break ties. An explicit sort choice is retained; without one, keyword searches use relevance and browsing uses newest year first.</p>
+        <p>For implementation details, see the <a href="../docs/data_collection.md">collection documentation</a>, <a href="../docs/data_schema.md">data schema</a>, <a href="../docs/public_preview_report.md">quality report</a>, and <a href="https://github.com/meiling-fdu/synthetic-image-research-map">repository</a>.</p>
+        <p><strong>Licensing:</strong> the repository currently specifies no project code license or data redistribution license. This page makes no license grant for the code or reused research metadata; licensing remains a maintainer decision. Map attribution and upstream source notices remain available on the map.</p>
+      </section>
+      <section id="how-to-cite" aria-labelledby="citation-heading">
+        <h2 id="citation-heading">How to cite</h2>
+        <blockquote>Meiling Li. <cite>Synthetic Image Forensics Research Map.</cite> <a href="https://meiling-fdu.github.io/synthetic-image-research-map/">Project website</a>.</blockquote>
+        <p>Include the website URL and your access date. For reproducible analyses, also record the repository revision and preserve the exported data used. No archival DOI or formal release version is specified for this resource.</p>
+        <p><a href="../CITATION.cff">Download citation metadata (CITATION.cff)</a>. Cite individual papers separately; Copy citation in Paper Details uses available publication metadata and prefers a DOI link, then arXiv, then the available paper URL.</p>
+      </section>
+    </main>
+    <footer><span>Maintained by Meiling Li</span><a href="./">Return to the research map</a></footer>
+  </body>
+</html>

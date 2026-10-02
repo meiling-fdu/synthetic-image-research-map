@@ -234,7 +234,21 @@
     return true;
   }
 
+  function citationText({ authors = [], title = "", venue = "", year = "", url = "" } = {}) {
+    const clean = (value) => {
+      const text = String(value ?? "").replace(/\s+/g, " ").trim();
+      return /^(unknown(?: publication venue)?|not available|n\/a)$/i.test(text) ? "" : text;
+    };
+    const sentence = (value) => value ? `${value.replace(/[.]+$/, "")}.` : "";
+    const publication = [clean(venue), /^\d{4}$/.test(String(year)) ? String(year) : ""]
+      .filter(Boolean).join(", ");
+    return [sentence(authors.map(clean).filter(Boolean).join(", ")),
+      clean(title) ? `"${clean(title).replace(/[.]+$/, "")}."` : "",
+      sentence(publication), clean(url)].filter(Boolean).join(" ");
+  }
+
   return {
+    citationText,
     namesMatch,
     metadataStatusView,
     publicationMetadata,

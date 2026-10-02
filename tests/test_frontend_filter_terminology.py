@@ -116,7 +116,7 @@ process.stdout.write(JSON.stringify({{
         self.assertEqual(result["restored"]["publicationType"], "journal")
         self.assertEqual(
             result["serialized"],
-            "dataset=preview&research_types=survey&publication_type=journal",
+            "dataset=preview&research_types=survey&publication_type=journal&view=institutions",
         )
 
     def test_active_chip_renames_only_the_user_facing_category(self):

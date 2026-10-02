@@ -119,7 +119,7 @@ process.stdout.write(JSON.stringify({
             asset: self.html.split(f'{asset}?v=', 1)[1].split('"', 1)[0]
             for asset in (
                 "style.css",
-                "synthetic-image-detection-attribution-landscape-logo.png",
+                "paper_search_helpers.js",
                 "paper_details_helpers.js",
                 "paper_link_helpers.js",
                 "marker_size_helpers.js",
@@ -565,7 +565,7 @@ process.stdout.write(JSON.stringify({
         self.assertIn("${resultBadges(record)}", institution)
         self.assertNotIn("resultBadges(record, true)", institution)
 
-    def test_sort_control_uses_shared_compact_dropdown_without_changing_options(self):
+    def test_sort_control_uses_shared_compact_dropdown_with_relevance(self):
         self.assertIn(
             '<select id="sort-control" class="sort-control-compact" disabled>',
             self.html,
@@ -586,7 +586,7 @@ process.stdout.write(JSON.stringify({
         sort_options = self.html.split(
             '<select id="sort-control" class="sort-control-compact" disabled>', 1
         )[1].split("</select>", 1)[0]
-        self.assertEqual(sort_options.count('<option value="'), 5)
+        self.assertEqual(sort_options.count('<option value="'), 6)
 
     def test_counts_states_list_semantics_and_nested_controls(self):
         render = self.function("renderResults", "selectResultsView")

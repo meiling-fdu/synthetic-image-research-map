@@ -20,7 +20,7 @@ class MapHelpTests(unittest.TestCase):
         for label in ('Detection', 'Source Attribution', 'Localization', 'Image Scope', 'Research Type',
                       'Institution Records', 'Unique Papers', 'without mapped institutions', 'Copy link', 'Export CSV'):
             self.assertIn(label, help_text)
-        self.assertIn('href="../docs/data_collection.md">Data Methodology', help_text)
+        self.assertIn('href="methodology.html">Methodology', help_text)
         self.assertIn('href="#site-information-heading"', help_text)
         self.assertNotIn('role="dialog"', help_text)
 

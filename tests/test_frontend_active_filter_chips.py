@@ -183,7 +183,9 @@ console.log(JSON.stringify({{
             self.app,
         )
         self.assertIn("resetFilterValues({ resetSort: true });", self.app)
-        self.assertIn("if (resetSort) sortControl.value", reset)
+        self.assertIn("if (resetSort) {", reset)
+        self.assertIn('sortControl.value = "year-desc"', reset)
+        self.assertIn("explicitSortSelection = false", reset)
 
     def test_sync_runs_in_shared_pipeline_without_another_dataset_scan(self):
         render_start = self.app.index("function renderRecordsForGeneration")

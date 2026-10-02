@@ -177,6 +177,7 @@ let activeInstitutionFilter = null;
 let requestedPaperIdentity = 'paper:kept';
 const interactionState = {{detailMode: 'empty', pinnedMapMarkerId: null}};
 let resultsView = 'papers';
+let explicitSortSelection = true;
 const sortControl = {{value: 'title-asc'}};
 let lastKnownFilterState = null;
 let lastFilterChange = null;

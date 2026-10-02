@@ -154,7 +154,7 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
         for asset in (
             "style.css",
             "app.js",
-            "assets/synthetic-image-detection-attribution-landscape-logo.png",
+            "paper_search_helpers.js",
         ):
             with self.subTest(asset=asset):
                 self.assertRegex(

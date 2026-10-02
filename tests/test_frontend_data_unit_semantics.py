@@ -29,9 +29,9 @@ class FrontendDataUnitSemanticsTests(unittest.TestCase):
             ["Institution Records", "Unique Papers", "Unique Institutions", "Countries"],
         )
         for heading in (
-            "Unique Papers by Forensic Task",
-            "Top Institutions by Unique Papers",
-            "Unique Papers by Year",
+            "Papers by Forensic Task",
+            "Top Mapped Institutions",
+            "Papers by Year",
         ):
             self.assertIn(heading, self.html)
 

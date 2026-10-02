@@ -33,7 +33,7 @@ class FrontendSortDropdownTests(unittest.TestCase):
         self.assertIn("data-filter-dropdown", sort_markup)
         self.assertIn('id="sort-control-label" class="filter-label"', sort_markup)
         self.assertIn('id="sort-control" class="sort-control-compact"', sort_markup)
-        self.assertEqual(sort_markup.count('<option value="'), 5)
+        self.assertEqual(sort_markup.count('<option value="'), 6)
 
         initialization = self.app[
             self.app.index("filterDropdowns = ["):

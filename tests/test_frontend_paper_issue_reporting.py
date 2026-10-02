@@ -143,7 +143,7 @@ console.log(JSON.stringify(context));
             self.app.index("\nfunction showCopyPaperLinkFeedback")
         ]
         self.assertIn('document.createElement("a")', action)
-        self.assertIn('reportLink.textContent = "Report issue"', action)
+        self.assertIn('reportLink.textContent = "Report metadata issue"', action)
         self.assertIn('reportLink.target = "_blank"', action)
         self.assertIn('reportLink.rel = "noopener noreferrer"', action)
         self.assertIn("opens in a new tab", action)

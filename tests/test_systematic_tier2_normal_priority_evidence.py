@@ -4,6 +4,7 @@ from collections import Counter
 import json
 import sys
 from pathlib import Path
+from public_refinement_snapshot import historical_normal_priority_diff
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,7 +23,6 @@ from report_systematic_tier2_normal_priority_evidence import (  # noqa: E402
     CSV_PATH,
     REPORT_PATH,
     corpus_stats,
-    diff_audit,
     duplicate_identity_audit,
     expected_rows,
     identity_audit,
@@ -101,8 +101,8 @@ def test_preinsertion_identity_and_final_duplicate_checks_are_clean():
     assert not any(duplicate_identity_audit().values())
 
 
-def test_authoritative_append_is_exact_and_preserves_existing_rows():
-    diff = diff_audit()
+def test_authoritative_append_is_exact_and_preserves_existing_rows(tmp_path, monkeypatch):
+    diff = historical_normal_priority_diff(tmp_path, monkeypatch)
     assert {
         name: values["new_rows"]
         for name, values in diff["curated"].items()
@@ -189,9 +189,9 @@ def test_frozen_high_predecessor_remains_reproducible():
     }
 
 
-def test_report_reproduces_byte_for_byte():
+def test_report_reproduces_byte_for_byte(tmp_path, monkeypatch):
     rows = read_csv(CSV_PATH)
     assert rows == expected_rows()
     assert REPORT_PATH.read_text(encoding="utf-8") == render(
-        rows, corpus_stats(), diff_audit()
+        rows, corpus_stats(), historical_normal_priority_diff(tmp_path, monkeypatch)
     )

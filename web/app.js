@@ -247,7 +247,10 @@ let currentFilteredRecords = [];
 let currentFilteredPaperRecords = [];
 let currentDisplayedResults = [];
 let institutionMatchContextByRecord = new WeakMap();
-let resultsView = "institutions";
+let resultsView = "papers";
+let explicitSortSelection = false;
+let relevanceFieldsByRecord = new WeakMap();
+let relevanceScoresByRecord = new WeakMap();
 let visibleMarkerEntries = [];
 let visibleMarkerEntryByInstitutionKey = new Map();
 let activeInstitutionFilter = null;
@@ -1077,11 +1080,12 @@ function currentViewState() {
     paper: requestedPaperIdentity,
     view: resultsView,
     sort: sortControl.value,
+    sortExplicit: explicitSortSelection,
   };
 }
 
 function currentFilterConstraintState() {
-  const { view, sort, marker, paper, ...filters } = currentViewState();
+  const { view, sort, sortExplicit, marker, paper, ...filters } = currentViewState();
   return filters;
 }
 
@@ -1135,8 +1139,10 @@ function serializeViewState(state, datasetParameter = "") {
     institution_label: state.institution ? state.institutionLabel : "",
     marker: state.marker,
     paper: state.paper,
-    view: state.view !== "institutions" ? state.view : "",
-    sort: state.sort !== "year-desc" ? state.sort : "",
+    // Shared links always name the view so future default changes cannot alter it.
+    view: state.view,
+    sort: state.sortExplicit === true
+      || (state.sortExplicit === undefined && state.sort !== "year-desc") ? state.sort : "",
   };
   URL_STATE_PARAMETER_ORDER.forEach((key) => {
     const value = String(values[key] ?? "").trim();
@@ -1171,8 +1177,9 @@ function parseViewState(search) {
     institutionLabel: params.get("institution_label") || "",
     marker: params.get("marker") || "",
     paper: params.get("paper") || "",
-    view: params.get("view") || "institutions",
-    sort: params.get("sort") || "year-desc",
+    view: params.get("view") || "papers",
+    sort: params.get("sort") || (params.get("keyword")?.trim() ? "relevance" : "year-desc"),
+    sortExplicit: Boolean(params.get("sort")),
   };
 }
 
@@ -1220,7 +1227,7 @@ function setRestoredSelectValue(select, value, { dynamic = false } = {}) {
 }
 
 function setResultsViewState(view) {
-  resultsView = ["institutions", "papers"].includes(view) ? view : "institutions";
+  resultsView = ["institutions", "papers"].includes(view) ? view : "papers";
   resultsViewButtons.forEach((button) => {
     button.setAttribute(
       "aria-pressed",
@@ -1273,6 +1280,8 @@ function restoreViewState(state) {
     interactionState.selectionSource = "deep-link";
   }
   if (selectContainsValue(sortControl, state.sort)) sortControl.value = state.sort;
+  explicitSortSelection = state.sortExplicit !== false && selectContainsValue(sortControl, state.sort);
+  syncAutomaticSort();
   setResultsViewState(state.view);
   filterDropdowns.forEach(syncFilterDropdown);
 }
@@ -1801,6 +1810,14 @@ function compareTextValues(first, second) {
 }
 
 function compareRecordsForSort(first, second, sortMode) {
+  if (sortMode === "relevance") {
+    const scoreOrder = recordRelevance(second) - recordRelevance(first);
+    const yearOrder = (getRecordYear(second) ?? -Infinity) - (getRecordYear(first) ?? -Infinity);
+    const titleOrder = compareTextValues(recordTitle(first), recordTitle(second));
+    return scoreOrder || yearOrder || titleOrder
+      || compareTextValues(paperIdentity(first), paperIdentity(second))
+      || compareTextValues(recordSearchCacheId(first), recordSearchCacheId(second));
+  }
   const firstYear = getRecordYear(first);
   const secondYear = getRecordYear(second);
   if (sortMode === "year-asc" || sortMode === "year-desc") {
@@ -2337,6 +2354,7 @@ function recordSearchText(record) {
     TitleMarkup.searchText(recordTitle(record)),
     ...authors,
     publicationYear(record),
+    record.abstract,
     record.country,
     record.country_code,
     record.region,
@@ -2350,7 +2368,31 @@ function recordSearchText(record) {
     ...getTasks(record).map(formatPublicTask),
     ...getImageScopes(record).map((scope) => IMAGE_SCOPE_LABELS[scope]),
     ...getPaperCategories(record).map(getEntryTypeLabel),
-  ].filter(Boolean).join(" "));
+  ].filter(Boolean).join(" ")) + " " + PaperSearchHelpers.identifierSearchText(record);
+}
+
+function recordRelevance(record) {
+  if (!relevanceScoresByRecord.has(record)) {
+    if (!relevanceFieldsByRecord.has(record)) {
+      const text = (values) => normalizedSearchText(values.filter(Boolean).join(" "));
+      relevanceFieldsByRecord.set(record, {
+        title: normalizedSearchText(TitleMarkup.searchText(recordTitle(record))),
+        identifiers: PaperSearchHelpers.identifiers(record),
+        authors: text(recordAuthors(record)),
+        institutions: text([recordInstitution(record), ...(record.aggregated_institutions || [])]),
+        venue: text([getRecordVenue(record), record.venue_acronym, ...(record.venue_aliases || [])]),
+        taxonomy: text([...getTasks(record).map(formatPublicTask),
+          ...getImageScopes(record).map((scope) => IMAGE_SCOPE_LABELS[scope]),
+          ...getPaperCategories(record).map(getEntryTypeLabel)]),
+        abstract: normalizedSearchText(record.abstract),
+        year: text([publicationYear(record)]),
+      });
+    }
+    relevanceScoresByRecord.set(record, PaperSearchHelpers.relevanceScore(
+      relevanceFieldsByRecord.get(record), keywordFilter.value, normalizedSearchText,
+    ));
+  }
+  return relevanceScoresByRecord.get(record);
 }
 
 function recordSearchCacheId(record) {
@@ -2410,6 +2452,8 @@ function buildInstitutionSearchRelationshipIndex(relationships) {
 function invalidateFilteringDataCaches() {
   filteringDataCacheGeneration += 1;
   normalizedRecordSearchTextById.clear();
+  relevanceFieldsByRecord = new WeakMap();
+  relevanceScoresByRecord = new WeakMap();
   cachedInstitutionFilterIndexes = null;
   if (searchTextPrewarmHandle) {
     if (searchTextPrewarmHandle.idle && typeof cancelIdleCallback === "function") {
@@ -3836,7 +3880,7 @@ function appendCopyPaperLinkAction(record = null, relatedEntries = []) {
   ));
   reportLink.target = "_blank";
   reportLink.rel = "noopener noreferrer";
-  reportLink.textContent = "Report issue";
+  reportLink.textContent = "Report metadata issue";
   reportLink.setAttribute(
     "aria-label", "Report a metadata issue for this paper (opens in a new tab)",
   );
@@ -3846,7 +3890,53 @@ function appendCopyPaperLinkAction(record = null, relatedEntries = []) {
   status.setAttribute("aria-live", "polite");
   if (requestedPaperIdentity) container.append(button, reportLink, status);
   else container.append(reportLink);
+  if (record) {
+    const citationButton = document.createElement("button");
+    citationButton.type = "button";
+    citationButton.className = "copy-paper-link-button";
+    citationButton.dataset.copyCitation = paperCitation(record);
+    citationButton.textContent = "Copy citation";
+    const citationStatus = document.createElement("span");
+    citationStatus.className = "visually-hidden";
+    citationStatus.dataset.copyCitationStatus = "";
+    citationStatus.setAttribute("role", "status");
+    citationStatus.setAttribute("aria-live", "polite");
+    container.prepend(citationButton, citationStatus);
+  }
   paperDetailsContent.append(container);
+}
+
+function paperCitation(record) {
+  const doi = normalizedDoi(record.doi) || normalizedDoi(record.doi_url);
+  const arxiv = PaperSearchHelpers.identifiers(record).find((id) => id.startsWith("arxiv:"));
+  const url = doi ? safeHttpUrl(`https://doi.org/${doi}`)
+    : arxiv ? `https://arxiv.org/abs/${arxiv.slice(6)}` : safeHttpUrl(recordPaperUrl(record));
+  return PaperDetailsHelpers.citationText({
+    authors: recordAuthors(record),
+    title: TitleMarkup.plainText(recordTitle(record)),
+    venue: getRecordVenue(record) ? paperDetailsPublication(record).venue : "",
+    year: record.publication_year ?? record.year,
+    url,
+  });
+}
+
+async function copyPaperCitation(button) {
+  const status = button.parentElement.querySelector("[data-copy-citation-status]");
+  try {
+    await writeViewUrlToClipboard(button.dataset.copyCitation);
+    status.textContent = "Citation copied to clipboard.";
+    button.textContent = "Copied";
+    button.classList.add("is-copied");
+  } catch (_error) {
+    status.textContent = "Unable to copy the citation.";
+    button.textContent = "Copy citation";
+    button.classList.remove("is-copied");
+  }
+  window.clearTimeout(button.citationFeedbackTimer);
+  button.citationFeedbackTimer = window.setTimeout(() => {
+    button.textContent = "Copy citation";
+    button.classList.remove("is-copied");
+  }, 1800);
 }
 
 function showCopyPaperLinkFeedback(message, copied = false) {
@@ -5461,6 +5551,8 @@ function renderRecords() {
 function renderRecordsForGeneration({ generation = null } = {}) {
   const activeGeneration = generation ?? invalidateResultsRenderPipeline();
   if (activeGeneration !== resultsRenderGeneration) return;
+  syncAutomaticSort();
+  relevanceScoresByRecord = new WeakMap();
   syncKnownFilterState();
   closeActiveInstitutionTooltip();
   markerHoverIntent.cancel();
@@ -5477,10 +5569,7 @@ function renderRecordsForGeneration({ generation = null } = {}) {
   const resolvedInstitutionIdentity = directlyResolvedInstitutionIdentities.size === 1
     ? [...directlyResolvedInstitutionIdentities][0]
     : "";
-  const keywordTerms = normalizedKeyword
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
+  const keywordTerms = PaperSearchHelpers.queryTerms(keywordFilter.value, normalizedSearchText);
   const hierarchyIndex = filterIndexes.hierarchy;
   const searchRelationshipIndex = filterIndexes.searchRelationships;
   const selectedIdentity = activeInstitutionFilter?.identity || resolvedInstitutionIdentity;
@@ -6324,13 +6413,23 @@ function scheduleKeywordRender() {
   });
 }
 
+function syncAutomaticSort() {
+  if (!explicitSortSelection) {
+    sortControl.value = keywordFilter.value.trim() ? "relevance" : "year-desc";
+    syncFilterDropdownForSelect(sortControl);
+  }
+}
+
 function resetFilterValues({ resetSort = false } = {}) {
   keywordSuggestions.close();
   keywordFilter.value = "";
   resetMultiSelect(taskFilter);
   resetMultiSelect(imageScopeFilter);
   resetMultiSelect(entryTypeFilter);
-  if (resetSort) sortControl.value = "year-desc";
+  if (resetSort) {
+    sortControl.value = "year-desc";
+    explicitSortSelection = false;
+  }
   venueFilter.value = "all";
   venueTypeFilter.value = "all";
   countryFilter.value = "all";
@@ -6400,9 +6499,9 @@ function focusResultsRecoveryDestination() {
 function undoLastFilterChange() {
   if (!lastFilterChange) return;
   const previousFilters = lastFilterChange.before;
-  const { view, sort, marker, paper } = currentViewState();
+  const { view, sort, sortExplicit, marker, paper } = currentViewState();
   lastFilterChange = null;
-  restoreViewState({ ...previousFilters, view, sort, marker, paper });
+  restoreViewState({ ...previousFilters, view, sort, sortExplicit, marker, paper });
   lastKnownFilterState = currentFilterConstraintState();
   requestUrlStateSync("push");
   renderRecords();
@@ -6471,6 +6570,7 @@ keywordFilter.addEventListener("input", (event) => {
 keywordFilter.addEventListener("focus", () => { keywordHistoryStarted = false; });
 keywordFilter.addEventListener("blur", () => { keywordHistoryStarted = false; });
 function handleFilterControlChange(event) {
+  if (event.currentTarget === sortControl) explicitSortSelection = true;
   const filterKeys = new Map([
     [taskFilter, "tasks"],
     [imageScopeFilter, "image-scopes"],
@@ -6551,6 +6651,11 @@ maxYearFilter.addEventListener("keydown", (event) => {
     const showAllMarkerPapers = event.target.closest("[data-show-all-marker-papers]");
     if (showAllMarkerPapers) {
       showAllInstitutionPapers(showAllMarkerPapers.dataset.showAllMarkerPapers);
+      return;
+    }
+    const copyCitation = event.target.closest("[data-copy-citation]");
+    if (copyCitation) {
+      void copyPaperCitation(copyCitation);
       return;
     }
     const copyPaperLink = event.target.closest("[data-copy-paper-link]");

@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 import pytest
+from public_refinement_snapshot import assert_historical_integrity_with_public_refinement
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location('tier2_policy_report', ROOT / 'scripts/report_systematic_tier2_policy.py')
@@ -87,4 +88,5 @@ def test_generation_is_deterministic_and_does_not_write_manual_files(tmp_path):
 
 
 def test_pre_task_repository_files_are_byte_identical():
-    assert policy.integrity()['changed_paths'] == []
+    baseline = json.loads((policy.PROCESSED / 'baseline_sha256.json').read_text())
+    assert_historical_integrity_with_public_refinement(policy.integrity, baseline)

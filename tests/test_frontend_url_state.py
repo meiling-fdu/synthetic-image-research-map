@@ -73,7 +73,7 @@ console.log(JSON.stringify({{query, parsed: parseViewState(query)}}));
         self.assertEqual(parsed["paper"], "doi:10.1000/example")
         self.assertEqual((parsed["view"], parsed["sort"]), ("papers", "title-asc"))
 
-    def test_defaults_are_omitted_but_explicit_dataset_is_preserved(self):
+    def test_filter_defaults_are_omitted_and_dataset_and_view_are_explicit(self):
         helpers = self.serialization_helpers()
         result = self.run_node(f"""
 {helpers}
@@ -81,7 +81,7 @@ const defaults = {{
   keyword: '', tasks: 'all', imageScopes: 'all', researchTypes: 'all', publicationType: 'all',
   venue: 'all', country: 'all', institutionType: 'all', version: 'all', publishedOnly: false,
   yearStart: 2017, yearEnd: 2026, yearMinimum: 2017, yearMaximum: 2026,
-  institution: '', institutionLabel: '', paper: '', view: 'institutions', sort: 'year-desc',
+  institution: '', institutionLabel: '', paper: '', view: 'papers', sort: 'year-desc',
 }};
 console.log(JSON.stringify({{
   preserved: serializeViewState(defaults, 'preview'),
@@ -89,15 +89,18 @@ console.log(JSON.stringify({{
   invalidYears: parseViewState('?year_start=soon&year_end=20240'),
 }}));
 """)
-        self.assertEqual(result["preserved"], "dataset=preview")
-        self.assertEqual(result["absent"], "")
+        self.assertEqual(result["preserved"], "dataset=preview&view=papers")
+        self.assertEqual(result["absent"], "view=papers")
         self.assertIsNone(result["invalidYears"]["yearStart"])
         self.assertIsNone(result["invalidYears"]["yearEnd"])
 
     def test_restoration_sets_dynamic_controls_years_institution_view_and_sort(self):
         start = self.app.index("function selectContainsValue")
         end = self.app.index("\nfunction requestUrlStateSync", start)
-        restoration = self.app[start:end]
+        restoration = self.app[start:end] + self.app[
+            self.app.index("function syncAutomaticSort"):
+            self.app.index("function resetFilterValues")
+        ]
         result = self.run_node(f"""
 function option(value) {{ return {{value, textContent: value}}; }}
 function select(values, value = 'all') {{
@@ -132,7 +135,9 @@ const resultsViewButtons = [
   {{dataset: {{resultsView: 'institutions'}}, setAttribute(name, value) {{ this.pressed = value; }}}},
   {{dataset: {{resultsView: 'papers'}}, setAttribute(name, value) {{ this.pressed = value; }}}},
 ];
-let resultsView = 'institutions';
+let resultsView = 'papers';
+let explicitSortSelection = false;
+function syncFilterDropdownForSelect() {{}}
 let activeInstitutionFilter = null;
 let requestedPaperIdentity = '';
 let syncYears = 0;

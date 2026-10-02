@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
       name="description"
-      content="An interactive research map of AI-generated image detection and source attribution papers, researchers, and institutions."
+      content="Explore AI-generated and synthetic-image forensics research: detection, source attribution, and localization, with curated papers and mapped affiliations."
     >
-    <title>Synthetic Image Detection &amp; Attribution Landscape</title>
+    <title>Synthetic Image Forensics Research Map</title>
+    <link rel="canonical" href="https://meiling-fdu.github.io/synthetic-image-research-map/web/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Synthetic Image Forensics Research Map">
+    <meta property="og:description" content="Explore AI-generated and synthetic-image forensics research: detection, source attribution, and localization, with curated papers and mapped affiliations.">
+    <meta property="og:url" content="https://meiling-fdu.github.io/synthetic-image-research-map/web/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Synthetic Image Forensics Research Map">
+    <meta name="twitter:description" content="Explore AI-generated and synthetic-image forensics research: detection, source attribution, and localization, with curated papers and mapped affiliations.">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link
       rel="stylesheet"
@@ -15,42 +23,40 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20260906-feature-freeze-1">
+    <link rel="stylesheet" href="style.css?v=20261001-academic-1">
   </head>
   <body>
     <header class="site-header">
       <div class="site-header-inner">
       <div class="header-brand">
-        <h1 class="visually-hidden">Synthetic Image Detection &amp; Attribution Landscape</h1>
-        <img
-          class="header-logo"
-          src="assets/synthetic-image-detection-attribution-landscape-logo.png?v=20260906-feature-freeze-1"
-          alt="Synthetic Image Detection &amp; Attribution Landscape"
-          width="1149"
-          height="393"
-        >
+        <h1 class="header-title">Synthetic Image Forensics Research Map</h1>
+        <p class="header-tagline">Detection · Source Attribution · Localization</p>
       </div>
 
-      <section class="header-statistics" aria-label="Filtered unique-paper statistics">
+      <div class="header-statistics-group">
+      <p id="statistics-context" class="statistics-context">Current view</p>
+      <section class="header-statistics" aria-label="Unique-paper statistics in the current filtered view">
         <article class="header-chart task-chart">
-          <h2>Unique Papers by Forensic Task</h2>
+          <h2>Papers by Forensic Task</h2>
           <div id="task-chart-content" class="header-chart-content" aria-live="polite">
             <p class="chart-empty">Loading…</p>
           </div>
         </article>
         <article class="header-chart institution-chart">
-          <h2>Top Institutions by Unique Papers</h2>
+          <h2 title="Unique papers associated with mapped affiliations in the current view; not a quality or impact ranking." aria-describedby="institution-chart-description">Top Mapped Institutions</h2>
+          <p id="institution-chart-description" class="visually-hidden">Counts represent unique papers associated with mapped affiliations in the current filtered view, not a quality or impact ranking.</p>
           <div id="institution-chart-content" class="header-chart-content" aria-live="polite">
             <p class="chart-empty">Loading…</p>
           </div>
         </article>
         <article class="header-chart year-chart">
-          <h2>Unique Papers by Year</h2>
+          <h2>Papers by Year</h2>
           <div id="year-chart-content" class="header-chart-content" aria-live="polite">
             <p class="chart-empty">Loading…</p>
           </div>
         </article>
       </section>
+      </div>
 
       <div class="header-repository-block">
         <a
@@ -100,7 +106,7 @@
               <input
                 id="keyword-filter"
                 type="search"
-                placeholder="Title, Author, Institution..."
+                placeholder="Title, author, institution, DOI, arXiv..."
                 autocomplete="off"
                 role="combobox"
                 aria-autocomplete="list"
@@ -294,24 +300,21 @@
               </p>
             </div>
             <div class="map-status-row">
-              <p class="map-encoding-legend" aria-label="Circle size represents unique papers in the current view; circle color represents dominant task">
+              <div class="map-encoding-legend" role="group" aria-label="Map legend">
                 <span class="map-encoding-item">
                   <span class="marker-size-examples" aria-hidden="true">
                     <i class="marker-size-example small"></i>
                     <i class="marker-size-example medium"></i>
                     <i class="marker-size-example large"></i>
                   </span>
-                  Circle Size = Unique Papers in Current View
+                  Larger circles = more unique papers in the current filtered view
                 </span>
-                <span class="map-encoding-item">
-                  <span class="marker-color-examples" aria-hidden="true">
-                    <i class="marker-color-example detection"></i>
-                    <i class="marker-color-example source-attribution"></i>
-                    <i class="marker-color-example mixed"></i>
-                  </span>
-                  Circle Color = Dominant Task
-                </span>
-              </p>
+                <span class="map-encoding-item">Color: dominant task</span>
+                <span class="map-encoding-item"><i class="marker-color-example detection" aria-hidden="true"></i>Detection</span>
+                <span class="map-encoding-item"><i class="marker-color-example source-attribution" aria-hidden="true"></i>Source Attribution</span>
+                <span class="map-encoding-item"><i class="marker-color-example mixed" aria-hidden="true"></i>Localization or Mixed / multiple tasks (shared color)</span>
+                <span class="map-encoding-item"><i class="marker-color-example unknown" aria-hidden="true"></i>Unknown</span>
+              </div>
               <p id="map-status" class="map-status" role="status">
                 Loading research map data...
               </p>
@@ -327,7 +330,7 @@
                     <li><strong>Circles:</strong> size shows unique papers in the current view; color shows the dominant forensic task.</li>
                     <li><strong>Current view:</strong> filters narrow the results, Copy link shares the current state, and Export CSV downloads the current results.</li>
                   </ul>
-                  <p><a href="#site-information-heading">About, Methodology, and Scope</a> · <a href="../docs/data_collection.md">Data Methodology</a></p>
+                  <p><a href="#site-information-heading">About, Methodology, and Scope</a> · <a href="methodology.html">Methodology</a></p>
                 </div>
               </details>
             </div>
@@ -365,7 +368,7 @@
         <section class="panel results-panel" aria-labelledby="results-heading">
           <div class="results-heading-row">
             <div class="results-heading-group">
-              <h2 id="results-heading">Filtered Records</h2>
+              <h2 id="results-heading">Unique Papers</h2>
             <p id="results-count" role="status" aria-live="polite" tabindex="-1">Loading…</p>
             </div>
             <div class="results-view-toggle" role="group" aria-label="Results View">
@@ -373,12 +376,12 @@
               <button
                 type="button"
                 data-results-view="institutions"
-                aria-pressed="true"
+                aria-pressed="false"
               >Institution Records</button>
               <button
                 type="button"
                 data-results-view="papers"
-                aria-pressed="false"
+                aria-pressed="true"
               >Unique Papers</button>
             </div>
             <div class="results-actions">
@@ -386,6 +389,7 @@
                 <span id="sort-control-label" class="filter-label">Sort By</span>
                 <select id="sort-control" class="sort-control-compact" disabled>
                   <option value="year-desc">Year: Newest First</option>
+                  <option value="relevance">Relevance</option>
                   <option value="year-asc">Year: Oldest First</option>
                   <option value="venue-asc">Publication Venue: A–Z</option>
                   <option value="title-asc">Title: A–Z</option>
@@ -436,16 +440,19 @@
         <header class="site-information-header">
           <h2 id="site-information-heading" tabindex="-1">About, Methodology, and Scope</h2>
           <p>
-            An academic map of synthetic-image detection and source-attribution
-            research, curated from source metadata and manual review.
+            Synthetic Image Forensics Research Map is an academic resource for
+            exploring papers and affiliations, curated from source metadata and manual review.
           </p>
         </header>
         <div class="site-information-grid">
           <section>
             <h3>Scope</h3>
             <p>
-              The dataset covers detection and attribution of AI-generated images,
-              including separately labeled deepfake, image-editing, and survey work.
+              AI-generated / synthetic-image forensics: Detection, Source Attribution,
+              and Localization, focused on fully generated images. Generative editing
+              is included when clearly tied to synthetic-image forensics. Generic deepfake
+              research, watermarking, active provenance, fingerprint embedding, and
+              unrelated classical manipulation work are not automatically in scope.
             </p>
           </section>
           <section>
@@ -470,10 +477,12 @@
           </section>
         </div>
         <nav class="project-link-list" aria-label="Public data and documentation">
+          <a href="methodology.html">Methodology</a>
+          <a href="methodology.html#how-to-cite">How to cite</a>
           <a href="data/public_preview_map_data.json">Map Data JSON</a>
           <a href="data/public_preview_papers.json">Paper Data JSON</a>
           <a href="../docs/public_preview_report.md">Quality Report</a>
-          <a href="../docs/data_collection.md">Data Methodology</a>
+          <a href="../docs/data_collection.md">Collection implementation</a>
         </nav>
       </section>
     </main>
@@ -514,15 +523,16 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="title_markup.js?v=20260906-feature-freeze-1"></script>
-    <script src="paper_details_helpers.js?v=20260906-feature-freeze-1"></script>
-    <script src="paper_link_helpers.js?v=20260906-feature-freeze-1"></script>
-    <script src="marker_size_helpers.js?v=20260906-feature-freeze-1"></script>
-    <script src="marker_interaction_helpers.js?v=20260906-feature-freeze-1"></script>
-    <script src="public_metadata.js?v=20260906-feature-freeze-1"></script>
-    <script src="institution_type_labels.js?v=20260906-feature-freeze-1"></script>
-    <script src="institution_display.js?v=20260906-feature-freeze-1"></script>
-    <script src="keyword_suggestions.js?v=20260906-feature-freeze-1"></script>
-    <script src="app.js?v=20260906-feature-freeze-1"></script>
+    <script src="title_markup.js?v=20261001-academic-1"></script>
+    <script src="paper_details_helpers.js?v=20261001-academic-1"></script>
+    <script src="paper_link_helpers.js?v=20261001-academic-1"></script>
+    <script src="paper_search_helpers.js?v=20261001-academic-1"></script>
+    <script src="marker_size_helpers.js?v=20261001-academic-1"></script>
+    <script src="marker_interaction_helpers.js?v=20261001-academic-1"></script>
+    <script src="public_metadata.js?v=20261001-academic-1"></script>
+    <script src="institution_type_labels.js?v=20261001-academic-1"></script>
+    <script src="institution_display.js?v=20261001-academic-1"></script>
+    <script src="keyword_suggestions.js?v=20261001-academic-1"></script>
+    <script src="app.js?v=20261001-academic-1"></script>
   </body>
 </html>

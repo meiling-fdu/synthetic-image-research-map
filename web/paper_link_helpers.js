@@ -179,5 +179,6 @@
     deduplicatePaperLinks,
     paperVersionLinks,
     publishedVersionUrl,
+    normalizedDoi,
   };
 }));

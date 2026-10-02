@@ -22,9 +22,9 @@ class PublicHeaderMetadataTests(unittest.TestCase):
         cls.metadata_javascript = (ROOT / "web/public_metadata.js").read_text(encoding="utf-8")
 
     def test_visible_title_and_maintainer_copy(self):
-        project_name = "Synthetic Image Detection &amp; Attribution Landscape"
-        self.assertIn(f'<h1 class="visually-hidden">{project_name}</h1>', self.html)
-        self.assertIn(f'alt="{project_name}"', self.html)
+        project_name = "Synthetic Image Forensics Research Map"
+        self.assertIn(f'<h1 class="header-title">{project_name}</h1>', self.html)
+        self.assertIn("Detection · Source Attribution · Localization", self.html)
         self.assertNotIn("<h1>\n          <span>", self.html)
         self.assertIn("Maintained by Meiling Li", self.html)
 

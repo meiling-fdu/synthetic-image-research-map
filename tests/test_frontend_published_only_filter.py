@@ -164,7 +164,7 @@ const state = {{keyword:'', task:'all', paperType:'all', publicationType:'all',
 const query = serializeViewState(state);
 process.stdout.write(JSON.stringify({{query, restored:parseViewState(query)}}));
 """)
-        self.assertEqual(result["query"], "published_only=1")
+        self.assertEqual(result["query"], "published_only=1&view=institutions")
         self.assertTrue(result["restored"]["publishedOnly"])
         self.assertFalse(self.run_node(f"""
 {order}

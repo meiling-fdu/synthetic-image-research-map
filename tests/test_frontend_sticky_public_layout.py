@@ -21,9 +21,9 @@ class FrontendStickyPublicLayoutTests(unittest.TestCase):
         ]
         for content in (
             'class="header-brand"',
-            "Unique Papers by Forensic Task",
-            "Top Institutions by Unique Papers",
-            "Unique Papers by Year",
+            "Papers by Forensic Task",
+            "Top Mapped Institutions",
+            "Papers by Year",
             "GitHub Repository",
             'id="data-updated"',
         ):
@@ -76,8 +76,8 @@ class FrontendStickyPublicLayoutTests(unittest.TestCase):
         self.assertIn("Unique Papers", summary)
         self.assertIn("Unique Institutions", summary)
         self.assertIn("Countries", summary)
-        self.assertIn("Circle Size = Unique Papers in Current View", summary)
-        self.assertIn("Circle Color = Dominant Task", summary)
+        self.assertIn("Larger circles = more unique papers in the current filtered view", summary)
+        self.assertIn("Color: dominant task", summary)
         self.assertIn('id="map-status"', summary)
 
     def test_desktop_filter_clears_header_and_map_summary_does_not_stack(self):

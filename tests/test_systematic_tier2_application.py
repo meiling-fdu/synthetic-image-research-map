@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 import pytest
+from public_refinement_snapshot import assert_historical_integrity_with_public_refinement
 
 ROOT=Path(__file__).resolve().parents[1]
 SPEC=importlib.util.spec_from_file_location('tier2_application',ROOT/'scripts/report_systematic_tier2_application.py')
@@ -170,4 +171,4 @@ def test_pre_application_baseline_includes_and_preserves_previous_policy_pass():
     baseline=json.loads((p.OUT/'baseline_sha256.json').read_text())
     assert 'data/manual/systematic_tier2_scope_policy_clusters_2026_09.csv' in baseline
     assert 'docs/systematic_tier2_scope_policy_review_2026_09.md' in baseline
-    assert p.integrity()['changed_paths']==[]
+    assert_historical_integrity_with_public_refinement(p.integrity, baseline)

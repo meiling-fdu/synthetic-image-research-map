@@ -25,7 +25,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             "Record Version",
             "Institution Type",
             "Publication Year",
-            "Filtered Records",
+            "Unique Papers",
             "Institution Records",
             "Unique Papers",
             "Institution Records",
@@ -174,14 +174,14 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         self.assertIn("@media (max-width: 820px)", self.css)
         self.assertNotIn("dataset-overview-heading", self.css)
 
-    def test_header_uses_structural_logo_desktop_and_constrained_modes(self):
+    def test_header_uses_text_brand_desktop_and_constrained_modes(self):
         header = self.css[
             self.css.index(".site-header {"):
             self.css.index(".header-repository-link {")
         ]
         self.assertIn('grid-template-areas: "hero statistics repository"', header)
         self.assertIn(".header-brand", header)
-        self.assertIn(".header-logo", header)
+        self.assertIn(".header-title", header)
         self.assertIn("grid-area: repository", header)
         statistics = self.css[
             self.css.index(".header-statistics {"):
@@ -201,8 +201,8 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             desktop,
         )
         self.assertIn("height: 96px", header)
-        self.assertIn("height: 100%", header)
-        self.assertIn("object-fit: contain", header)
+        self.assertIn("line-height: 1.15", header)
+        self.assertIn(".header-tagline", header)
         self.assertIn("height: 112px", desktop)
         self.assertIn(
             "grid-template-columns: minmax(0, 0.9fr) "
@@ -235,20 +235,13 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             self.css.index(".marker-size-examples {")
         ]
         self.assertIn("gap: 4px 16px", legend)
-        self.assertIn("white-space: nowrap", legend)
+        self.assertIn("min-width: 0", legend)
 
-    def test_logo_replaces_visible_title_and_duplicate_task_legend(self):
-        project_name = "Synthetic Image Detection &amp; Attribution Landscape"
-        logo = (
-            ROOT / "web" / "assets"
-            / "synthetic-image-detection-attribution-landscape-logo.png"
-        )
-        self.assertTrue(logo.is_file())
-        self.assertIn(f'<h1 class="visually-hidden">{project_name}</h1>', self.html)
-        self.assertIn(f'alt="{project_name}"', self.html)
-        self.assertIn('class="header-logo"', self.html)
-        self.assertIn('width="1149"', self.html)
-        self.assertIn('height="393"', self.html)
+    def test_text_brand_replaces_outdated_wordmark_without_duplicate_legend(self):
+        project_name = "Synthetic Image Forensics Research Map"
+        self.assertIn(f'<h1 class="header-title">{project_name}</h1>', self.html)
+        self.assertIn("Detection · Source Attribution · Localization", self.html)
+        self.assertNotIn('class="header-logo"', self.html)
         self.assertNotIn('class="task-legend"', self.html)
         self.assertNotIn(".task-legend", self.css)
         self.assertNotIn(".legend-dot", self.css)
@@ -369,7 +362,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             ("Map Data JSON", "data/public_preview_map_data.json"),
             ("Paper Data JSON", "data/public_preview_papers.json"),
             ("Quality Report", "../docs/public_preview_report.md"),
-            ("Data Methodology", "../docs/data_collection.md"),
+            ("Collection implementation", "../docs/data_collection.md"),
         ):
             self.assertIn(f'href="{href}">{label}</a>', self.html)
 
