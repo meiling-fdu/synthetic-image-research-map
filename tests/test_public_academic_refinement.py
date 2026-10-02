@@ -1,6 +1,7 @@
 import json
 from html.parser import HTMLParser
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import unittest
@@ -43,7 +44,10 @@ class PublicAcademicRefinementTests(unittest.TestCase):
     def test_brand_scope_legend_and_current_view(self):
         html = (ROOT / "web/index.html").read_text()
         self.assertIn('<title>Synthetic Image Forensics Research Map</title>', html)
-        self.assertIn('<h1 class="header-title">Synthetic Image Forensics Research Map</h1>', html)
+        heading = re.search(r'<h1 class="header-title">(.*?)</h1>', html, re.S)
+        self.assertIsNotNone(heading)
+        self.assertEqual(re.sub(r'<[^>]+>', '', heading.group(1)).strip(),
+                         'Synthetic Image Forensics Research Map')
         scope = " ".join(html.split('<h3>Scope</h3>')[1].split('</section>')[0].split())
         for text in ("fully generated images", "clearly tied to synthetic-image forensics",
                      "not automatically in scope", "watermarking", "active provenance", "fingerprint embedding"):

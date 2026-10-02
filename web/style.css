@@ -120,12 +120,36 @@ footer {
   gap: 5px;
 }
 
+.header-lockup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.header-mark {
+  display: block;
+  flex: 0 0 auto;
+  width: 72px;
+  height: auto;
+  /* Blend the original artwork's light background into the header surface. */
+  mix-blend-mode: multiply;
+}
+
 .header-title {
+  min-width: 0;
   margin: 0;
   color: var(--accent-dark);
+  font-family: inherit;
   font-size: clamp(1rem, 1.5vw, 1.4rem);
-  line-height: 1.15;
-  font-weight: 750;
+  line-height: 1.2;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+
+.header-title-accent {
+  display: block;
+  color: var(--detection);
 }
 
 .header-tagline {
@@ -1981,6 +2005,14 @@ input:disabled {
     height: 112px;
   }
 
+  .header-lockup {
+    gap: 12px;
+  }
+
+  .header-mark {
+    width: 96px;
+  }
+
   .header-chart-content,
   .institution-chart-list,
   .year-chart-bars {
@@ -3236,7 +3268,11 @@ footer a {
   }
 
   .header-title {
-    font-size: 0.95rem;
+    font-size: 1.25rem;
+  }
+
+  .header-mark {
+    width: 60px;
   }
 
   .header-repository-block {
@@ -3496,7 +3532,15 @@ footer a {
   }
 
   .header-title {
-    font-size: 0.8rem;
+    font-size: 0.875rem;
+  }
+
+  .header-lockup {
+    gap: 8px;
+  }
+
+  .header-mark {
+    width: 52px;
   }
 
   .header-tagline {

@@ -201,7 +201,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             desktop,
         )
         self.assertIn("height: 96px", header)
-        self.assertIn("line-height: 1.15", header)
+        self.assertIn("line-height: 1.2", header)
         self.assertIn(".header-tagline", header)
         self.assertIn("height: 112px", desktop)
         self.assertIn(
@@ -239,7 +239,9 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
 
     def test_text_brand_replaces_outdated_wordmark_without_duplicate_legend(self):
         project_name = "Synthetic Image Forensics Research Map"
-        self.assertIn(f'<h1 class="header-title">{project_name}</h1>', self.html)
+        heading = re.search(r'<h1 class="header-title">(.*?)</h1>', self.html, re.S)
+        self.assertIsNotNone(heading)
+        self.assertEqual(re.sub(r'<[^>]+>', '', heading.group(1)).strip(), project_name)
         self.assertIn("Detection · Source Attribution · Localization", self.html)
         self.assertNotIn('class="header-logo"', self.html)
         self.assertNotIn('class="task-legend"', self.html)

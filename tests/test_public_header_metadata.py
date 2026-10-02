@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import subprocess
 import tempfile
 import unittest
@@ -23,7 +24,9 @@ class PublicHeaderMetadataTests(unittest.TestCase):
 
     def test_visible_title_and_maintainer_copy(self):
         project_name = "Synthetic Image Forensics Research Map"
-        self.assertIn(f'<h1 class="header-title">{project_name}</h1>', self.html)
+        heading = re.search(r'<h1 class="header-title">(.*?)</h1>', self.html, re.S)
+        self.assertIsNotNone(heading)
+        self.assertEqual(re.sub(r'<[^>]+>', '', heading.group(1)).strip(), project_name)
         self.assertIn("Detection · Source Attribution · Localization", self.html)
         self.assertNotIn("<h1>\n          <span>", self.html)
         self.assertIn("Maintained by Meiling Li", self.html)
