@@ -1,0 +1,46 @@
+{
+  "baseline_head": "cfce65abe3465d6d5c1817912c865e4ea9fe2e61",
+  "observed_head": "ecfde6b1fc459a748e34114634fbf21cb9286f65",
+  "reason": "Separate committed homepage-branding work since the interrupted audit baseline; this audit neither created nor reverted the commit. Protected corpus checksums still match.",
+  "baseline_file_differences": [
+    {
+      "path": "tests/test_frontend_public_labels_layout.py",
+      "baseline_sha256": "85a5fc1c5f3931f8c5bfcfb25f6c6f100c95f038dcf97fa6c55c4150eef048e3",
+      "current_sha256": "ee8006f1b89419a9663fe773bc3753c08f2f8f13fe3ccda2b41448fd79d0dc03",
+      "matches_committed_head": true
+    },
+    {
+      "path": "tests/test_public_academic_refinement.py",
+      "baseline_sha256": "afe7fe13882e09c379b0340b680e7f5cbe8e9ad068631bf285d542fd55ca89a3",
+      "current_sha256": "728d130fe2ca69dea1cbf685228cfb933ea3abbcb43bc1cce649578bd83d8dd3",
+      "matches_committed_head": true
+    },
+    {
+      "path": "tests/test_public_header_metadata.py",
+      "baseline_sha256": "b27e351db9f5af3fd38276e1f19b7fc3f8da8e6497dd93097239872f31095184",
+      "current_sha256": "bd4fa0e10048d8cf24a8d1ba3175f66d821f6562e83d49e432a318e05eb20163",
+      "matches_committed_head": true
+    },
+    {
+      "path": "web/index.html",
+      "baseline_sha256": "b145905803bbdbdde2f8b16c02bfef5fa9950a0a323dd0741be68b651f1d15c5",
+      "current_sha256": "790482cfb1b53032ef7dad9cb49cccc198f1afd81963f7d1c17e1b6db1da853e",
+      "matches_committed_head": true
+    },
+    {
+      "path": "web/style.css",
+      "baseline_sha256": "760a8dc73bbaf32d630de78c2290e81e8ce601850a4dd83378a4cba0ce79036b",
+      "current_sha256": "a2b05c8dfb423e8e5a9c44f67723b5c261295ec2235494f1809e1408a81be867",
+      "matches_committed_head": true
+    }
+  ],
+  "committed_paths_since_baseline": [
+    "M\ttests/test_frontend_public_labels_layout.py",
+    "M\ttests/test_public_academic_refinement.py",
+    "M\ttests/test_public_header_metadata.py",
+    "A\tweb/assets/README.md",
+    "A\tweb/assets/synthetic-image-forensics-mark.png",
+    "M\tweb/index.html",
+    "M\tweb/style.css"
+  ]
+}

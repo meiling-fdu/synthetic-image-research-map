@@ -17,6 +17,11 @@ import json
 from pathlib import Path
 from typing import Any, Mapping
 
+try:
+    from .gap_migration_history import historical_text
+except ImportError:
+    from gap_migration_history import historical_text
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SNAPSHOT_PATH = (
@@ -77,7 +82,9 @@ def load_snapshot() -> dict[str, Any]:
 
 
 def _load_payload(path: Path) -> dict[str, Any]:
-    payload = json.loads(path.read_text(encoding="utf-8"))
+    # The approved gap successor preserves the exact former 623-paper inputs.
+    # Reconstruction below still verifies the original 666-paper byte hashes.
+    payload = json.loads(historical_text(path))
     if not isinstance(payload, dict) or not isinstance(payload.get("records"), list):
         raise AssertionError(f"{path} must contain a records array")
     return payload

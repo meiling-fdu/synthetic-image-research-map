@@ -1,0 +1,2593 @@
+[
+  {
+    "title": "Where Detectors Fail: Probing Generative Space for Generalizable AI-Generated Image Detection",
+    "official_url": "https://proceedings.mlr.press/v306/cao26s.html",
+    "authors": [
+      "Zijie Cao",
+      "Weijie Tu",
+      "Yao Xiao",
+      "Weijian Deng",
+      "Weiyan Chen",
+      "Liang Lin",
+      "Pengxu Wei"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "2605.24906",
+    "method_name": "PROBE",
+    "paper_id": "https://proceedings.mlr.press/v306/cao26s.html",
+    "candidate_tasks": [
+      "detection"
+    ],
+    "candidate_image_scopes": [
+      "fully_generated"
+    ],
+    "candidate_research_types": [
+      "method"
+    ],
+    "scope_reason": "Explores hard regions of generator space to train generalizable synthetic-image detectors.",
+    "evidence": [
+      {
+        "url": "https://proceedings.mlr.press/v306/cao26s.html",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/f44fc626846b44fa4906.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p01.json"
+        ],
+        "note": ""
+      },
+      {
+        "url": "https://arxiv.org/abs/2605.24906",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/b9d830b2694e009b5b23.gz"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "high",
+    "manual_review": true,
+    "decision_required": "",
+    "status": "MISSING_HIGH_CONFIDENCE",
+    "actionable_set": "A",
+    "alternate_versions": [
+      {
+        "url": "https://arxiv.org/abs/2605.24906",
+        "arxiv_id": "2605.24906",
+        "relationship": "same work, earlier manuscript; official PMLR metadata canonical"
+      }
+    ],
+    "proceedings_identity": "pmlr-v306-cao26s",
+    "pages": "11477-11495",
+    "discovery_refs": [
+      "icml2026_screening.json#selected/5"
+    ],
+    "abstract": "Detecting AI-generated images (AIGI) remains challenging because detectors often fail to generalize to unseen generators. Although existing methods are trained on large datasets, their performance still degrades when generation settings change, indicating that data scale alone is insufficient and that limited coverage of generative variations during training is a key factor. Studies on generative model editing show that small changes in internal representations can produce diverse and meaningful image variations, many of which are not explored under standard sampling. Leveraging this insight, we propose PROBE (Probing Robustness via Boundary Exploration), a framework that improves detector generalization by actively exploring challenging regions of the generative process. Instead of treating the generator as a fixed data source, PROBE uses the detector as a critic to steer the generator through manifold-level modifications, producing realistic samples that are difficult to classify. These samples expose failure cases that are uncommon under standard data sampling strategies and are used to refine the detector. Experimental results across multiple benchmarks indicate that PROBE enhances generalization to unseen generators, resulting in more generalizable AIGI detection performance.",
+    "candidate_id": "gap-e1c1b108b05d",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "Reduce the Artifact Bias for More Generalizable AI-Generated Image Detection",
+          "paper_id": "curated:685065a3632a185a230d",
+          "score": 0.7211
+        },
+        {
+          "title": "PGC: Peak-Guided Calibration for Generalizable AI-Generated Image Detection",
+          "paper_id": "curated:a570863c3a6ac227b56c",
+          "score": 0.7123
+        },
+        {
+          "title": "High-Resolution Contrastive Framework for Generalizable AI-Generated Image Detection",
+          "paper_id": "curated:70f6d63927384365006f",
+          "score": 0.7051
+        }
+      ],
+      "author_year_matches": [
+        {
+          "title": "Exploiting the Source-Asymmetry Confidence Gap for Generalizable AI-Generated Image Detection",
+          "paper_id": "curated:10b24e1d35ca792385ac",
+          "shared_authors": [
+            "pengxuwei",
+            "weiyanchen",
+            "yaoxiao",
+            "zijiecao"
+          ]
+        },
+        {
+          "title": "Unveiling Perceptual Artifacts: A Fine-Grained Benchmark for Interpretable AI-Generated Image Detection",
+          "paper_id": "curated:64635535d7b7b6a12a32",
+          "shared_authors": [
+            "lianglin",
+            "pengxuwei",
+            "weijiandeng",
+            "weiyanchen",
+            "yaoxiao",
+            "zijiecao"
+          ]
+        },
+        {
+          "title": "Are High-Quality AI-Generated Images More Difficult for Models to Detect?",
+          "paper_id": "curated:7693a9c0107feaf90e10",
+          "shared_authors": [
+            "lianglin",
+            "pengxuwei",
+            "weiyanchen",
+            "yaoxiao",
+            "zijiecao"
+          ]
+        }
+      ],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "2605.24906",
+        "title": "Where Detectors Fail: Probing Generative Space for Generalizable AI-Generated Image Detection",
+        "paper_id": "https://proceedings.mlr.press/v306/cao26s.html",
+        "method_name": "PROBE",
+        "authors": [
+          "Zijie Cao",
+          "Weijie Tu",
+          "Yao Xiao",
+          "Weijian Deng",
+          "Weiyan Chen",
+          "Liang Lin",
+          "Pengxu Wei"
+        ],
+        "year": 2026
+      },
+      "conclusion": "Absent after all seven checks; no accepted identity match. Empty IDs are unavailable, not proof of absence. Shared authors/acronyms and fuzzy titles are reviewed suggestions, never automatic merges.",
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded. Same-group SACG work uses post-hoc confidence calibration; PROBE trains through generator-space exploration. Distinct work identities."
+    },
+    "scope_detail": [
+      "general_synthetic_images"
+    ],
+    "metadata_missing": [
+      "doi",
+      "track"
+    ],
+    "version_note": "PMLR includes Weiyan Chen in fifth position; saved arXiv 2605.24906 lists six authors without Chen. Preserve both version author lists and use PMLR order for the formal record."
+  },
+  {
+    "title": "DNA: Uncovering Universal Latent Forgery Knowledge",
+    "official_url": "https://proceedings.mlr.press/v306/dou26b.html",
+    "authors": [
+      "Jingtong Dou",
+      "Chuancheng Shi",
+      "Anqi Yi",
+      "Shiming Guo",
+      "Wenhua Wu",
+      "Yemin Wang",
+      "Li Zhang",
+      "Fei Shen",
+      "Tat-Seng Chua"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "2601.22515",
+    "method_name": "DNA",
+    "paper_id": "https://proceedings.mlr.press/v306/dou26b.html",
+    "candidate_tasks": [
+      "detection"
+    ],
+    "candidate_image_scopes": [
+      "fully_generated"
+    ],
+    "candidate_research_types": [
+      "method",
+      "dataset",
+      "benchmark"
+    ],
+    "scope_reason": "Passive pretrained-unit forensics plus a new high-fidelity synthetic image benchmark HIFI-Gen.",
+    "evidence": [
+      {
+        "url": "https://proceedings.mlr.press/v306/dou26b.html",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/7035461665515d858dc8.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p04.json"
+        ],
+        "note": ""
+      },
+      {
+        "url": "https://arxiv.org/abs/2601.22515",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/051c3d5914447233a502.gz"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "high",
+    "manual_review": true,
+    "decision_required": "",
+    "status": "MISSING_HIGH_CONFIDENCE",
+    "actionable_set": "A",
+    "alternate_versions": [
+      {
+        "url": "https://arxiv.org/abs/2601.22515",
+        "arxiv_id": "2601.22515",
+        "relationship": "same work, earlier manuscript; official PMLR metadata canonical"
+      }
+    ],
+    "proceedings_identity": "pmlr-v306-dou26b",
+    "pages": "26250-26268",
+    "discovery_refs": [
+      "icml2026_screening.json#selected/18"
+    ],
+    "abstract": "As generative AI achieves hyper-realism, superficial artifact detection has become obsolete. While prevailing methods rely on resource-intensive fine-tuning of black-box backbones, we propose that forgery detection capability is already encoded within pre-trained models rather than requiring end-to-end retraining. To elicit this intrinsic capability, we propose the discriminative neural anchors (DNA) framework, which employs a coarse-to-fine excavation mechanism. First, by analyzing feature decoupling and attention distribution shifts, we pinpoint critical intermediate layers where the focus of the model logically transitions from global semantics to local anomalies. Subsequently, we introduce a triadic fusion scoring metric paired with a curvature-truncation strategy to strip away semantic redundancy, precisely isolating the forgery-discriminative units (FDUs) inherently imprinted with sensitivity to forgery traces. Moreover, we introduce HIFI-Gen, a high-fidelity synthetic benchmark built upon the very latest models, to address the lag in existing datasets. Experiments demonstrate that by solely relying on these anchors, DNA achieves superior detection performance even under few-shot conditions. Furthermore, it exhibits remarkable robustness across diverse architectures and against unseen generative models, validating that waking up latent neurons is more effective than extensive fine-tuning.",
+    "candidate_id": "gap-847aa30be0f5",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [
+        {
+          "title": "DNA: Dual-Stage Native Attribution for Generated Image Source Tracing",
+          "paper_id": "curated:0b6c1b00c1b39838db42"
+        }
+      ],
+      "title_similarity_top3": [
+        {
+          "title": "Towards Generalizable Detector for Generated Image",
+          "paper_id": "curated:0b5e852ad2faa5d89eb5",
+          "score": 0.4494
+        },
+        {
+          "title": "Reducing the Content Bias for AI-generated Image Detection",
+          "paper_id": "https://openalex.org/W4409262730",
+          "score": 0.4468
+        },
+        {
+          "title": "Frequency Masking for Universal Deepfake Detection",
+          "paper_id": "curated:c9485f4d5346304272f2",
+          "score": 0.427
+        }
+      ],
+      "author_year_matches": [],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "2601.22515",
+        "title": "DNA: Uncovering Universal Latent Forgery Knowledge",
+        "paper_id": "https://proceedings.mlr.press/v306/dou26b.html",
+        "method_name": "DNA",
+        "authors": [
+          "Jingtong Dou",
+          "Chuancheng Shi",
+          "Anqi Yi",
+          "Shiming Guo",
+          "Wenhua Wu",
+          "Yemin Wang",
+          "Li Zhang",
+          "Fei Shen",
+          "Tat-Seng Chua"
+        ],
+        "year": 2026
+      },
+      "conclusion": "Absent after all seven checks; no accepted identity match. Empty IDs are unavailable, not proof of absence. Shared authors/acronyms and fuzzy titles are reviewed suggestions, never automatic merges.",
+      "human_adjudication": "Acronym collision with DNA: Dual-Stage Native Attribution for Generated Image Source Tracing (curated:0b6c1b00c1b39838db42). Different full title, authors, arXiv ID and forensic task; no identity merge."
+    },
+    "scope_detail": [
+      "general_synthetic_images"
+    ],
+    "metadata_missing": [
+      "doi",
+      "track"
+    ],
+    "version_note": "PMLR and arXiv 2601.22515 have different author ordering; preserve both and use PMLR order for the formal record."
+  },
+  {
+    "title": "Deep Residual Injection for Full-Spectrum Forensic Signal Perception in Multimodal Large Language Models",
+    "official_url": "https://proceedings.mlr.press/v306/lin26an.html",
+    "authors": [
+      "Kaiqing Lin",
+      "Zhiyuan Yan",
+      "Ruoxin Chen",
+      "Ke-Yue Zhang",
+      "Yue Zhou",
+      "Caiyong Piao",
+      "Bin Li",
+      "Taiping Yao",
+      "Bo Wang",
+      "Youchang Xiao",
+      "Shouhong Ding"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "2606.15880",
+    "method_name": "Deep-VRM",
+    "paper_id": "https://proceedings.mlr.press/v306/lin26an.html",
+    "candidate_tasks": [
+      "detection"
+    ],
+    "candidate_image_scopes": [
+      "fully_generated"
+    ],
+    "candidate_research_types": [
+      "method"
+    ],
+    "scope_reason": "Residual injection learns generator artifacts for standalone synthetic-image authenticity detection.",
+    "evidence": [
+      {
+        "url": "https://proceedings.mlr.press/v306/lin26an.html",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/c07a82c1ae9d34b4a15c.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p04.json"
+        ],
+        "note": ""
+      },
+      {
+        "url": "https://arxiv.org/abs/2606.15880",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/2d7b6ca1802d6ee49d90.gz"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "high",
+    "manual_review": true,
+    "decision_required": "",
+    "status": "MISSING_HIGH_CONFIDENCE",
+    "actionable_set": "A",
+    "alternate_versions": [
+      {
+        "url": "https://arxiv.org/abs/2606.15880",
+        "arxiv_id": "2606.15880",
+        "relationship": "same work, earlier manuscript; official PMLR metadata canonical"
+      }
+    ],
+    "proceedings_identity": "pmlr-v306-lin26an",
+    "pages": "75039-75054",
+    "discovery_refs": [
+      "icml2026_screening.json#selected/64"
+    ],
+    "abstract": "Multimodal large language models (MLLMs) have been increasingly adopted in forensics for their robust semantic understanding. As AI-generated images become realistic, semantic-level inconsistencies alone are often insufficient for reliable detection. This motivates a critical question: whether MLLMs can achieve full-spectrum forensic signal perception, i.e., capturing low-level generator artifacts without sacrificing pre-trained semantic knowledge. We then conduct a layer-wise analysis of forensic signal perception in MLLMs and find that semantic information is mainly encoded in the early-to-middle layers, and directly fine-tuning MLLMs for artifact learning causes rapid semantic forgetting. Based on this insight, we propose Deep Visual Residual MLLM (Deep-VRM) to preserve early semantic processing while injecting artifact-specific visual signals as a residual path into an intermediate layer , where they are fused with semantic token representations and propagated through subsequent trainable layers. This enables later layers to jointly model semantic reasoning and signal-level forensic cues, and surprisingly, the model learns to adaptively leverage different levels of forensic signals depending on the input, achieving robust and generalizable detection performance. Extensive experiments show that our method achieves state-of-the-art across all benchmarks.",
+    "candidate_id": "gap-9e3410359ab4",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "FakeShield: Explainable Image Forgery Detection and Localization via Multi-Modal Large Language Models",
+          "paper_id": "curated:e69688740a4586c62c5d",
+          "score": 0.5556
+        },
+        {
+          "title": "Detecting AI-Generated Content on Social Media with Multi-Modal Language Models",
+          "paper_id": "curated:d4a9b3a3cef9bfbd0e32",
+          "score": 0.5157
+        },
+        {
+          "title": "Towards Explainable Fake Image Detection with Multi-Modal Large Language Models",
+          "paper_id": "curated:911d693997183535a4ac",
+          "score": 0.475
+        }
+      ],
+      "author_year_matches": [
+        {
+          "title": "AgentFoX: LLM-Driven Agentic Multi-Expert Fusion with Explainability for AI-Generated Image Detection",
+          "paper_id": "curated:77504e19116765d4b160",
+          "shared_authors": [
+            "binli",
+            "kaiqinglin",
+            "yuezhou"
+          ]
+        },
+        {
+          "title": "All Patches Matter, More Patches Better: Enhance AI-Generated Image Detection via Panoptic Patch Learning",
+          "paper_id": "curated:386ccd052b812587c286",
+          "shared_authors": [
+            "keyuezhang",
+            "ruoxinchen",
+            "shouhongding",
+            "taipingyao",
+            "zhiyuanyan"
+          ]
+        },
+        {
+          "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+          "paper_id": "curated:aa7dceb70828cdd6ad39",
+          "shared_authors": [
+            "zhiyuanyan"
+          ]
+        },
+        {
+          "title": "Breaking Manifold Continuity: Vector Quantized Modeling for Real-Centric Deepfake Detection",
+          "paper_id": "curated:7287cadbc4b8408fd16b",
+          "shared_authors": [
+            "keyuezhang",
+            "shouhongding",
+            "taipingyao"
+          ]
+        },
+        {
+          "title": "Enabling Your Forensic Detector Know How Well It Performs on Distorted Samples",
+          "paper_id": "curated:4dc0918500a96fe26b23",
+          "shared_authors": [
+            "binli"
+          ]
+        },
+        {
+          "title": "GenShield: Unified Detection and Artifact Correction for AI-Generated Images",
+          "paper_id": "curated:d6fe2666a64b0c70ff6b",
+          "shared_authors": [
+            "shouhongding",
+            "taipingyao"
+          ]
+        },
+        {
+          "title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+          "paper_id": "curated:7a5ce57b121b69752867",
+          "shared_authors": [
+            "bowang",
+            "ruoxinchen",
+            "shouhongding",
+            "taipingyao",
+            "youchangxiao"
+          ]
+        },
+        {
+          "title": "MIRROR: Manifold Ideal Reference ReconstructOR for Generalizable AI-Generated Image Detection",
+          "paper_id": "curated:8fe7cb0db76df68a5e38",
+          "shared_authors": [
+            "kaiqinglin",
+            "ruoxinchen",
+            "zhiyuanyan"
+          ]
+        },
+        {
+          "title": "Semantic Visual Anomaly Detection and Reasoning in AI-Generated Images",
+          "paper_id": "curated:368fa53bc0f254e0eb1a",
+          "shared_authors": [
+            "binli"
+          ]
+        },
+        {
+          "title": "Simplicity Prevails: The Emergence of Generalizable AIGI Detection in Visual Foundation Models",
+          "paper_id": "curated:82639cc5cbe0ca7acb90",
+          "shared_authors": [
+            "binli",
+            "kaiqinglin",
+            "yuezhou"
+          ]
+        },
+        {
+          "title": "TranX-Adapter: Bridging Artifacts and Semantics Within MLLMs for Robust AI-Generated Image Detection",
+          "paper_id": "curated:3514b00c17a56ec752cd",
+          "shared_authors": [
+            "shouhongding"
+          ]
+        },
+        {
+          "title": "Zooming In on Fakes: A Novel Dataset for Localized AI-Generated Image Detection with Forgery Amplification Approach",
+          "paper_id": "https://openalex.org/W7138473655",
+          "shared_authors": [
+            "taipingyao"
+          ]
+        },
+        {
+          "title": "AIGI-Holmes: Towards Explainable and Generalizable AI-Generated Image Detection via Multimodal Large Language Models",
+          "paper_id": "curated:2465f28a94bb45bec499",
+          "shared_authors": [
+            "shouhongding"
+          ]
+        },
+        {
+          "title": "AlignGemini: Generalizable AI-Generated Image Detection Through Task-Model Alignment",
+          "paper_id": "curated:d92aa7577ebf2b3a6dc3",
+          "shared_authors": [
+            "kaiqinglin",
+            "keyuezhang",
+            "ruoxinchen",
+            "shouhongding",
+            "taipingyao"
+          ]
+        },
+        {
+          "title": "Breaking Latent Prior Bias in Detectors for Generalizable AIGC Image Detection",
+          "paper_id": "curated:7cfe39b3bc63f5b55f51",
+          "shared_authors": [
+            "binli",
+            "kaiqinglin",
+            "yuezhou"
+          ]
+        },
+        {
+          "title": "Dual Data Alignment Makes AI-Generated Image Detector Easier Generalizable",
+          "paper_id": "curated:f40ecaaf5d0212852b79",
+          "shared_authors": [
+            "keyuezhang",
+            "ruoxinchen",
+            "shouhongding",
+            "taipingyao",
+            "zhiyuanyan"
+          ]
+        },
+        {
+          "title": "Exploring the Collaborative Advantage of Low-Level Information on Generalizable AI-Generated Image Detection",
+          "paper_id": "curated:aeef1407856fae4547e6",
+          "shared_authors": [
+            "shouhongding"
+          ]
+        },
+        {
+          "title": "Orthogonal Subspace Decomposition for Generalizable AI-Generated Image Detection",
+          "paper_id": "curated:1f9d168cc6c4c445a231",
+          "shared_authors": [
+            "keyuezhang",
+            "shouhongding",
+            "taipingyao",
+            "zhiyuanyan"
+          ]
+        },
+        {
+          "title": "PiD: Generalized AI-Generated Images Detection with Pixelwise Decomposition Residuals",
+          "paper_id": "curated:95953a73a0e2e1f14ccb",
+          "shared_authors": [
+            "shouhongding",
+            "taipingyao",
+            "zhiyuanyan"
+          ]
+        },
+        {
+          "title": "Seeing Before Reasoning: A Unified Framework for Generalizable and Explainable Fake Image Detection",
+          "paper_id": "curated:bc6c90117b018745ac0c",
+          "shared_authors": [
+            "binli",
+            "kaiqinglin",
+            "keyuezhang",
+            "ruoxinchen",
+            "shouhongding",
+            "taipingyao",
+            "yuezhou",
+            "zhiyuanyan"
+          ]
+        }
+      ],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "2606.15880",
+        "title": "Deep Residual Injection for Full-Spectrum Forensic Signal Perception in Multimodal Large Language Models",
+        "paper_id": "https://proceedings.mlr.press/v306/lin26an.html",
+        "method_name": "Deep-VRM",
+        "authors": [
+          "Kaiqing Lin",
+          "Zhiyuan Yan",
+          "Ruoxin Chen",
+          "Ke-Yue Zhang",
+          "Yue Zhou",
+          "Caiyong Piao",
+          "Bin Li",
+          "Taiping Yao",
+          "Bo Wang",
+          "Youchang Xiao",
+          "Shouhong Ding"
+        ],
+        "year": 2026
+      },
+      "conclusion": "Absent after all seven checks; no accepted identity match. Empty IDs are unavailable, not proof of absence. Shared authors/acronyms and fuzzy titles are reviewed suggestions, never automatic merges.",
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded. Same-group Forensic-Chat (2509.25502) and AlignGemini (2512.06746) have distinct methods, titles and manuscripts: conversational artifact perception and two-branch task-model specialization, versus intermediate residual injection. MIRROR is frozen and is not reopened."
+    },
+    "scope_detail": [
+      "general_synthetic_images"
+    ],
+    "metadata_missing": [
+      "doi",
+      "track"
+    ]
+  },
+  {
+    "title": "PRPO: Paragraph-level Policy Optimization for Vision-Language Deepfake Detection",
+    "official_url": "https://proceedings.mlr.press/v306/nguyen26f.html",
+    "authors": [
+      "Tuan Nguyen",
+      "Naseem Khan",
+      "Khang Tran",
+      "Hai Phan",
+      "Issa Khalil"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "",
+    "method_name": "PRPO",
+    "paper_id": "https://proceedings.mlr.press/v306/nguyen26f.html",
+    "candidate_tasks": [
+      "detection"
+    ],
+    "candidate_image_scopes": [],
+    "candidate_research_types": [
+      "method"
+    ],
+    "scope_reason": "Official abstract establishes image forensics but does not resolve the narrowed synthetic-image boundary.",
+    "evidence": [
+      {
+        "url": "https://proceedings.mlr.press/v306/nguyen26f.html",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/7df114b7c665207aaae6.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p05.json"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "medium",
+    "manual_review": true,
+    "decision_required": "Decide whether the reasoning-annotated dataset and reported image results independently cover general generated images rather than only face/deepfake-video frames.",
+    "status": "MISSING_NEEDS_SCOPE_REVIEW",
+    "actionable_set": "B",
+    "alternate_versions": [],
+    "proceedings_identity": "pmlr-v306-nguyen26f",
+    "pages": "92466-92496",
+    "discovery_refs": [
+      "icml2026_screening.json#selected/83"
+    ],
+    "abstract": "The rapid rise of synthetic media has made deepfake detection a critical challenge for online safety and trust. Progress remains constrained by the scarcity of large, high-quality datasets. Although multimodal large language models (LLMs) exhibit strong reasoning capabilities, their performance on deepfake detection is poor, often producing explanations that are misaligned with visual evidence or hallucinatory. To address this limitation, we introduce a reasoning-annotated dataset for deepfake detection and propose Paragraph-level Relative Policy Optimization (PRPO), a reinforcement learning algorithm that aligns LLM reasoning with image content at the paragraph level. Experiments show that PRPO improves detection accuracy by a wide margin and achieves the highest reasoning score of 4.55/5.0. Ablation studies further demonstrate that PRPO significantly outperforms GRPO under test-time conditions. These results underscore the importance of grounding multimodal reasoning in visual evidence to enable more reliable and interpretable deepfake detection.",
+    "candidate_id": "gap-97036bf7d3f3",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "CLIPping the Deception: Adapting Vision-Language Models for Universal Deepfake Detection",
+          "paper_id": "curated:253c210194ac9348f9e6",
+          "score": 0.5306
+        },
+        {
+          "title": "AntifakePrompt: Prompt-Tuned Vision-Language Models Are Fake Image Detectors",
+          "paper_id": "curated:718ce9e82d185c331bdf",
+          "score": 0.5294
+        },
+        {
+          "title": "AdaptPrompt: Parameter-Efficient Adaptation of VLMs for Generalizable Deepfake Detection",
+          "paper_id": "https://openalex.org/W7117078863",
+          "score": 0.527
+        }
+      ],
+      "author_year_matches": [],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "",
+        "title": "PRPO: Paragraph-level Policy Optimization for Vision-Language Deepfake Detection",
+        "paper_id": "https://proceedings.mlr.press/v306/nguyen26f.html",
+        "method_name": "PRPO",
+        "authors": [
+          "Tuan Nguyen",
+          "Naseem Khan",
+          "Khang Tran",
+          "Hai Phan",
+          "Issa Khalil"
+        ],
+        "year": 2026
+      },
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded."
+    },
+    "scope_detail": [
+      "mixed_forensic_scope"
+    ],
+    "metadata_missing": [
+      "doi",
+      "arxiv_id",
+      "track"
+    ]
+  },
+  {
+    "title": "RA-Det: Towards Universal Detection of AI-Generated Images via Robustness Asymmetry",
+    "official_url": "https://proceedings.mlr.press/v306/wang26ad.html",
+    "authors": [
+      "Xinchang Wang",
+      "Yunhao Chen",
+      "Yuechen Zhang",
+      "Congcong Bian",
+      "Zihao Guo",
+      "Xingjun Ma",
+      "Hui Li"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "2603.01544",
+    "method_name": "RA-Det",
+    "paper_id": "https://proceedings.mlr.press/v306/wang26ad.html",
+    "candidate_tasks": [
+      "detection"
+    ],
+    "candidate_image_scopes": [
+      "fully_generated"
+    ],
+    "candidate_research_types": [
+      "method"
+    ],
+    "scope_reason": "Perturbation-induced feature drift detects images from fourteen generative models; no embedding or watermark.",
+    "evidence": [
+      {
+        "url": "https://proceedings.mlr.press/v306/wang26ad.html",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p05.json",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p11.json"
+        ],
+        "note": ""
+      },
+      {
+        "url": "https://arxiv.org/abs/2603.01544",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p13.json"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "high",
+    "manual_review": true,
+    "decision_required": "",
+    "status": "MISSING_HIGH_CONFIDENCE",
+    "actionable_set": "A",
+    "alternate_versions": [
+      {
+        "url": "https://arxiv.org/abs/2603.01544",
+        "arxiv_id": "2603.01544",
+        "relationship": "same work, earlier manuscript; official PMLR metadata canonical"
+      }
+    ],
+    "proceedings_identity": "pmlr-v306-wang26ad",
+    "pages": "125515-125532",
+    "discovery_refs": [
+      "icml2026_screening.json#selected/109"
+    ],
+    "candidate_id": "gap-923484c8a9ee",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "Training-Free Detection of AI-Generated Images via Cropping Robustness",
+          "paper_id": "curated:af61771eb41bc0b60a3c",
+          "score": 0.697
+        },
+        {
+          "title": "Zero-Shot Detection of AI-Generated Image via RAW-RGB Alignment",
+          "paper_id": "curated:56e7bf42d58694239b64",
+          "score": 0.629
+        },
+        {
+          "title": "Interpretable and Reliable Detection of AI-Generated Images via Grounded Reasoning in MLLMs",
+          "paper_id": "curated:4e85e48ae9823f177aac",
+          "score": 0.6267
+        }
+      ],
+      "author_year_matches": [
+        {
+          "title": "ImageAttributionBench: How Far Are We from Generalizable Attribution?",
+          "paper_id": "curated:d59bffe554500b241a3e",
+          "shared_authors": [
+            "xingjunma"
+          ]
+        }
+      ],
+      "curated_manual_matches": [
+        {
+          "path": "data/manual/key_papers_enriched.csv",
+          "line": 86,
+          "matched_on": [
+            "title"
+          ]
+        }
+      ],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "2603.01544",
+        "title": "RA-Det: Towards Universal Detection of AI-Generated Images via Robustness Asymmetry",
+        "paper_id": "https://proceedings.mlr.press/v306/wang26ad.html",
+        "method_name": "RA-Det",
+        "authors": [
+          "Xinchang Wang",
+          "Yunhao Chen",
+          "Yuechen Zhang",
+          "Congcong Bian",
+          "Zihao Guo",
+          "Xingjun Ma",
+          "Hui Li"
+        ],
+        "year": 2026
+      },
+      "conclusion": "Absent after all seven checks; no accepted identity match. Empty IDs are unavailable, not proof of absence. Shared authors/acronyms and fuzzy titles are reviewed suggestions, never automatic merges.",
+      "human_adjudication": "Historical row data/manual/key_papers_enriched.csv:86 contains RA-Det only as a rejected low-similarity search suggestion for the distinct DRCT work (2024). It is neither an accepted RA-Det identity nor an exclusion. Author/year/title comparisons do not establish a duplicate."
+    },
+    "scope_detail": [
+      "general_synthetic_images"
+    ],
+    "metadata_missing": [
+      "doi",
+      "track"
+    ],
+    "version_note": "PMLR and arXiv report different improvement figures (12.92% and 7.81%). Do not blend results across versions; this audit imports neither result."
+  },
+  {
+    "title": "Order within Chaos: Capturing Intrinsic Energy Anomalies for AI-Manipulated Image Forgery Localization",
+    "official_url": "https://proceedings.mlr.press/v306/wang26iy.html",
+    "authors": [
+      "Yiming Wang",
+      "Baiqi Wu",
+      "Qingming Li",
+      "Jiahao Chen",
+      "Tong Zhang",
+      "Shouling Ji"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "2606.02178",
+    "method_name": "FLAME",
+    "paper_id": "https://proceedings.mlr.press/v306/wang26iy.html",
+    "candidate_tasks": [
+      "localization"
+    ],
+    "candidate_image_scopes": [
+      "generative_editing"
+    ],
+    "candidate_research_types": [
+      "method"
+    ],
+    "scope_reason": "Pixel-level masks explicitly localize diffusion-generated editing regions. EditStream is a synthesis pipeline; no unsupported standalone dataset label.",
+    "evidence": [
+      {
+        "url": "https://proceedings.mlr.press/v306/wang26iy.html",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/f0a7329c389104ccfb6f.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p04.json"
+        ],
+        "note": ""
+      },
+      {
+        "url": "https://arxiv.org/abs/2606.02178",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/b9197d99543010a07e7b.gz"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "high",
+    "manual_review": true,
+    "decision_required": "",
+    "status": "MISSING_HIGH_CONFIDENCE",
+    "actionable_set": "A",
+    "alternate_versions": [
+      {
+        "url": "https://arxiv.org/abs/2606.02178",
+        "arxiv_id": "2606.02178",
+        "relationship": "same work, earlier manuscript; official PMLR metadata canonical"
+      }
+    ],
+    "proceedings_identity": "pmlr-v306-wang26iy",
+    "pages": "131220-131246",
+    "discovery_refs": [
+      "icml2026_screening.json#selected/118"
+    ],
+    "abstract": "Recent advancements in generative AI have led to image editing models capable of producing realistic forgeries that evade traditional image forgery localization methods, as these approaches depend on physical noise absent in synthetic data. To address this challenge, we theoretically demonstrate that the diffusion process inherently suppresses local high-frequency variance, creating a statistical energy gap that is distinguishable from the natural entropy of optical imaging. Guided by this insight, we propose FLAME, a unified framework that utilizes a LAD map to capture these intrinsic anomalies, coupled with a parameter-efficient adapter for SAM to achieve precise, pixel-level forgery localization. Furthermore, to bridge the lag between forensic benchmarks and evolving generative models, we introduce EditStream, an automated pipeline for continuous, instruction-based training data synthesis. Extensive experiments demonstrate that FLAME establishes a new state-of-the-art, significantly outperforming previous methods on AI-generated forgery datasets while effectively generalizing to unseen generative architectures. Our code is available at https://github.com/phoenixnir/FLAME.",
+    "candidate_id": "gap-ae64f73095cc",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "Detective SAM: Adaptive AI-Image Forgery Localization",
+          "paper_id": "curated:9a208cddb21ddfe2317a",
+          "score": 0.5185
+        },
+        {
+          "title": "Rethinking the Use of Vision Transformers for AI-Generated Image Detection",
+          "paper_id": "curated:07fc38c7a0fb83f3f931",
+          "score": 0.5098
+        },
+        {
+          "title": "Language-Guided Hierarchical Fine-Grained Image Forgery Detection and Localization",
+          "paper_id": "curated:614691667df5cf7a50f0",
+          "score": 0.5062
+        }
+      ],
+      "author_year_matches": [
+        {
+          "title": "Unveiling Perceptual Artifacts: A Fine-Grained Benchmark for Interpretable AI-Generated Image Detection",
+          "paper_id": "curated:64635535d7b7b6a12a32",
+          "shared_authors": [
+            "jiahaochen"
+          ]
+        },
+        {
+          "title": "Are High-Quality AI-Generated Images More Difficult for Models to Detect?",
+          "paper_id": "curated:7693a9c0107feaf90e10",
+          "shared_authors": [
+            "jiahaochen"
+          ]
+        }
+      ],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "2606.02178",
+        "title": "Order within Chaos: Capturing Intrinsic Energy Anomalies for AI-Manipulated Image Forgery Localization",
+        "paper_id": "https://proceedings.mlr.press/v306/wang26iy.html",
+        "method_name": "FLAME",
+        "authors": [
+          "Yiming Wang",
+          "Baiqi Wu",
+          "Qingming Li",
+          "Jiahao Chen",
+          "Tong Zhang",
+          "Shouling Ji"
+        ],
+        "year": 2026
+      },
+      "conclusion": "Absent after all seven checks; no accepted identity match. Empty IDs are unavailable, not proof of absence. Shared authors/acronyms and fuzzy titles are reviewed suggestions, never automatic merges.",
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded."
+    },
+    "scope_detail": [
+      "generative_edit"
+    ],
+    "metadata_missing": [
+      "doi",
+      "track"
+    ]
+  },
+  {
+    "title": "Supervised Contrastive Learning for Few-Shot AI-Generated Image Detection and Attribution",
+    "official_url": "https://arxiv.org/abs/2511.16541",
+    "authors": [
+      "Jaime Álvarez Urueña",
+      "David Camacho",
+      "Javier Huertas Tato"
+    ],
+    "year": 2025,
+    "venue": "arXiv",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "2511.16541",
+    "method_name": "",
+    "paper_id": "arxiv:2511.16541",
+    "candidate_tasks": [
+      "detection",
+      "source_attribution"
+    ],
+    "candidate_image_scopes": [
+      "fully_generated"
+    ],
+    "candidate_research_types": [
+      "method"
+    ],
+    "scope_reason": "A standalone image detector with explicit open-set source attribution AUC and OSCR evaluations; passive learned embeddings.",
+    "evidence": [
+      {
+        "url": "https://arxiv.org/abs/2511.16541",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/cd26ad1627b8f3da0f30.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p07.json"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "high",
+    "manual_review": true,
+    "decision_required": "",
+    "status": "MISSING_HIGH_CONFIDENCE",
+    "actionable_set": "A",
+    "alternate_versions": [],
+    "abstract": "Abstract:The rapid advancement of generative artificial intelligence has enabled the creation of synthetic images that are increasingly indistinguishable from authentic content, posing significant challenges for digital media integrity. This problem is compounded by the accelerated release cycle of novel generative models, which renders traditional detection approaches (reliant on periodic retraining) computationally infeasible and operationally impractical.\nThis work proposes a novel two-stage detection framework designed to address the generalization challenge inherent in synthetic image detection. The first stage employs a vision deep learning model trained via supervised contrastive learning to extract discriminative embeddings from input imagery. Critically, this model was trained on a strategically partitioned subset of available generators, with specific architectures withheld from training to rigorously ablate cross-generator generalization capabilities. The second stage utilizes a k-nearest neighbors (k-NN) classifier operating on the learned embedding space, trained in a few-shot learning paradigm incorporating limited samples from previously unseen test generators.\nWith merely 150 images per class in the few-shot learning regime, which are easily obtainable from current generation models, the proposed framework achieves an average detection accuracy of 91.3%, representing a 5.2 percentage point improvement over existing approaches . For the source attribution task, the proposed approach obtains improvements of of 14.70% and 4.27% in AUC and OSCR respectively on an open set classification context, marking a significant advancement toward robust, scalable forensic attribution systems capable of adapting to the evolving generative AI landscape without requiring exhaustive retraining protocols.",
+    "candidate_id": "gap-c20ac70e43cc",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "Incremental Learning for AI-Generated Image Detection",
+          "paper_id": "curated:88b63de59a0eabcd1b02",
+          "score": 0.656
+        },
+        {
+          "title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+          "paper_id": "curated:55bc4360e3d312e696b7",
+          "score": 0.6182
+        },
+        {
+          "title": "Vision Transformer-Based Framework for AI-Generated Image Detection in Interior Design",
+          "paper_id": "https://openalex.org/W4409032835",
+          "score": 0.6144
+        }
+      ],
+      "author_year_matches": [
+        {
+          "title": "Bi‐LORA: A Vision‐Language Approach for Synthetic Image Detection",
+          "paper_id": "curated:3ec6b6d00f72f8b450e6",
+          "shared_authors": [
+            "davidcamacho"
+          ]
+        }
+      ],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "2511.16541",
+        "title": "Supervised Contrastive Learning for Few-Shot AI-Generated Image Detection and Attribution",
+        "paper_id": "arxiv:2511.16541",
+        "method_name": "",
+        "authors": [
+          "Jaime Álvarez Urueña",
+          "David Camacho",
+          "Javier Huertas Tato"
+        ],
+        "year": 2025
+      },
+      "conclusion": "Absent after all seven checks; no accepted identity match. Empty IDs are unavailable, not proof of absence. Shared authors/acronyms and fuzzy titles are reviewed suggestions, never automatic merges.",
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded."
+    },
+    "scope_detail": [
+      "general_synthetic_images"
+    ],
+    "metadata_missing": [
+      "doi",
+      "track"
+    ]
+  },
+  {
+    "title": "Learning Continuous Source Responses For Generalizable AI-Generated Image Detection",
+    "official_url": "https://arxiv.org/abs/2609.14316",
+    "authors": [
+      "Manni Cui",
+      "Ruiqi Liu",
+      "Zijian Yu",
+      "Hao Tan",
+      "Zibo Wei",
+      "Zian Wang",
+      "Ziheng Qin",
+      "Huijia Zhu",
+      "Weiqiang Wang",
+      "Jun Lan",
+      "Shu Wu"
+    ],
+    "year": 2026,
+    "venue": "arXiv",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "2609.14316",
+    "method_name": "CuRe",
+    "paper_id": "arxiv:2609.14316",
+    "candidate_tasks": [
+      "detection"
+    ],
+    "candidate_image_scopes": [
+      "fully_generated"
+    ],
+    "candidate_research_types": [
+      "method"
+    ],
+    "scope_reason": "Continuous source-response regression improves binary image authenticity classification; it does not output generator identities.",
+    "evidence": [
+      {
+        "url": "https://arxiv.org/abs/2609.14316",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/524ad6f1ba42aae0a9f3.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p09.json"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "high",
+    "manual_review": true,
+    "decision_required": "",
+    "status": "MISSING_HIGH_CONFIDENCE",
+    "actionable_set": "A",
+    "alternate_versions": [],
+    "abstract": "Abstract:Advances in image generation have made synthetic images increasingly difficult to distinguish from real photographs, raising concerns about the trustworthiness of visual media. Existing AI-generated image detectors often perform well on in-domain data, but their robustness and cross-generator generalization remain limited. These limitations are commonly attributed to overfitting to shortcut cues. Although many methods seek to suppress shortcut learning, most retain binary classification as the training task without reconsidering how the task itself shapes the learned representations. We introduce CuRe, a framework for learning Continuous Source Responses that revisits authenticity detection from the perspective of the training task. CuRe reformulates backbone adaptation as regression of real-generated mixing ratios, providing finer supervision that encourages the model to capture authenticity-related variation beyond binary endpoint separation. We further select a compact source-response subspace to suppress nuisance variation and limit the final classifier's access to potential shortcut cues. Across ten public benchmarks, CuRe achieves an average balanced accuracy of 89.7%, exceeding the second-best method by 5.2 percentage points. Further experiments demonstrate consistent generalization gains across visual backbones and strong robustness to common image degradations. Code is available at this https URL",
+    "candidate_id": "gap-7ac7fada32cf",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "All-Around Forgery Clues for Generalizable AI-Generated Image Detection",
+          "paper_id": "curated:d6f1c90d69e8b0e68e4f",
+          "score": 0.7647
+        },
+        {
+          "title": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection",
+          "paper_id": "curated:b460935b64c35e1d074a",
+          "score": 0.7237
+        },
+        {
+          "title": "Semantic Artifact Logit Fusion for Generalizable AI-Generated Image Detection",
+          "paper_id": "curated:98044fc98e006607991c",
+          "score": 0.7183
+        }
+      ],
+      "author_year_matches": [
+        {
+          "title": "All Patches Are Not Equal: Focusing on a Single Exposed Patch for AI-Generated Image Detection",
+          "paper_id": "curated:2b5013b99aa5e4de2621",
+          "shared_authors": [
+            "ruiqiliu"
+          ]
+        },
+        {
+          "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+          "paper_id": "curated:aa7dceb70828cdd6ad39",
+          "shared_authors": [
+            "ruiqiliu",
+            "shuwu"
+          ]
+        },
+        {
+          "title": "FakeXplain: AI-Generated Image Detection via Human-Aligned Grounded Reasoning",
+          "paper_id": "curated:411724cd949b78c1af6a",
+          "shared_authors": [
+            "huijiazhu",
+            "junlan",
+            "weiqiangwang"
+          ]
+        },
+        {
+          "title": "Gamma: Generalizable AI-Generated Image Detection via Multi-Task and Manipulation-Augmented Supervision",
+          "paper_id": "curated:e2c0dacc159564e9e575",
+          "shared_authors": [
+            "huijiazhu",
+            "junlan"
+          ]
+        },
+        {
+          "title": "GAP-SAM: A Global Artifact Prior for Generalizable AI-Generated Image Manipulation Localization",
+          "paper_id": "curated:bada2e715200e9fccb7a",
+          "shared_authors": [
+            "junlan",
+            "zijianyu"
+          ]
+        },
+        {
+          "title": "Generalizable and Adaptive Continual Learning Framework for AI-Generated Image Detection",
+          "paper_id": "curated:9ec7092e57766741468f",
+          "shared_authors": [
+            "huijiazhu",
+            "junlan",
+            "weiqiangwang"
+          ]
+        },
+        {
+          "title": "GlobalForge: Towards Robust AI-Generated Image Detection",
+          "paper_id": "curated:807cbb7fa6b003585c72",
+          "shared_authors": [
+            "mannicui",
+            "ruiqiliu",
+            "shuwu",
+            "zianwang",
+            "zihengqin"
+          ]
+        },
+        {
+          "title": "HydraPrompt: An Adaptive and Asymmetric Framework of Vision-Language Models for Synthetic Image Detection",
+          "paper_id": "curated:8fb6db301d8dd737db1b",
+          "shared_authors": [
+            "haotan"
+          ]
+        },
+        {
+          "title": "Locate-Then-Examine: Grounded Region Reasoning Improves Detection of AI-Generated Images",
+          "paper_id": "curated:cf55e35fcf11e09fdd12",
+          "shared_authors": [
+            "huijiazhu",
+            "junlan",
+            "weiqiangwang"
+          ]
+        },
+        {
+          "title": "M <sup>2</sup> EA: Multi-VAE Manifold Envelope Alignment for Challenging AI-Generated Image Detection",
+          "paper_id": "curated:5ceb080eeeacfdf0cb8f",
+          "shared_authors": [
+            "ruiqiliu"
+          ]
+        },
+        {
+          "title": "MIRROR: Manifold Ideal Reference ReconstructOR for Generalizable AI-Generated Image Detection",
+          "paper_id": "curated:8fe7cb0db76df68a5e38",
+          "shared_authors": [
+            "mannicui",
+            "ruiqiliu",
+            "shuwu",
+            "zihengqin"
+          ]
+        },
+        {
+          "title": "NTIRE 2026 Challenge on Robust AI-Generated Image Detection in the Wild",
+          "paper_id": "curated:834f0ca01f478a33b278",
+          "shared_authors": [
+            "haotan",
+            "junlan",
+            "zijianyu"
+          ]
+        },
+        {
+          "title": "Scaling Up AI-Generated Image Detection with Generator-Aware Prototypes",
+          "paper_id": "curated:beb92721c8ba0d0c4231",
+          "shared_authors": [
+            "zihengqin"
+          ]
+        },
+        {
+          "title": "Veritas++: Value-Aware On-Policy Distillation for Perception-Enhanced AIGI Detection",
+          "paper_id": "curated:a63eb96d10b885596d73",
+          "shared_authors": [
+            "haotan",
+            "huijiazhu",
+            "junlan",
+            "weiqiangwang",
+            "zijianyu"
+          ]
+        },
+        {
+          "title": "Can VLMs Detect and Localize Fine-Grained AI-Edited Images?",
+          "paper_id": "curated:4bafe8e39a3e39ed2088",
+          "shared_authors": [
+            "weiqiangwang"
+          ]
+        },
+        {
+          "title": "DINO-Detect: A Simple yet Effective Framework for Blur-Robust AI-Generated Image Detection",
+          "paper_id": "curated:3856fee42acad070127f",
+          "shared_authors": [
+            "ruiqiliu"
+          ]
+        },
+        {
+          "title": "Interpretable and Reliable Detection of AI-Generated Images via Grounded Reasoning in MLLMs",
+          "paper_id": "curated:4e85e48ae9823f177aac",
+          "shared_authors": [
+            "huijiazhu",
+            "junlan",
+            "weiqiangwang"
+          ]
+        },
+        {
+          "title": "Towards Explainable Fake Image Detection with Multi-Modal Large Language Models",
+          "paper_id": "curated:911d693997183535a4ac",
+          "shared_authors": [
+            "huijiazhu",
+            "junlan",
+            "weiqiangwang"
+          ]
+        },
+        {
+          "title": "WildFake: A Large-Scale and Hierarchical Dataset for AI-Generated Images Detection",
+          "paper_id": "curated:61211bdca508937e8a4f",
+          "shared_authors": [
+            "huijiazhu",
+            "junlan",
+            "weiqiangwang"
+          ]
+        }
+      ],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "2609.14316",
+        "title": "Learning Continuous Source Responses For Generalizable AI-Generated Image Detection",
+        "paper_id": "arxiv:2609.14316",
+        "method_name": "CuRe",
+        "authors": [
+          "Manni Cui",
+          "Ruiqi Liu",
+          "Zijian Yu",
+          "Hao Tan",
+          "Zibo Wei",
+          "Zian Wang",
+          "Ziheng Qin",
+          "Huijia Zhu",
+          "Weiqiang Wang",
+          "Jun Lan",
+          "Shu Wu"
+        ],
+        "year": 2026
+      },
+      "conclusion": "Absent after all seven checks; no accepted identity match. Empty IDs are unavailable, not proof of absence. Shared authors/acronyms and fuzzy titles are reviewed suggestions, never automatic merges.",
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded. GlobalForge (2607.14684) uses local-information bottlenecks/global structural reasoning, versus continuous mixing-ratio regression here. MIRROR remains frozen."
+    },
+    "scope_detail": [
+      "general_synthetic_images"
+    ],
+    "metadata_missing": [
+      "doi",
+      "track"
+    ]
+  },
+  {
+    "title": "A Multi-View and Confusion-Guided Ensemble Framework for Robust Synthetic Image Attribution",
+    "official_url": "https://arxiv.org/abs/2609.11188",
+    "authors": [
+      "Zuomin Qu"
+    ],
+    "year": 2026,
+    "venue": "arXiv",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "2609.11188",
+    "method_name": "",
+    "paper_id": "arxiv:2609.11188",
+    "candidate_tasks": [
+      "source_attribution"
+    ],
+    "candidate_image_scopes": [
+      "fully_generated"
+    ],
+    "candidate_research_types": [
+      "method"
+    ],
+    "scope_reason": "Standalone arXiv method report on the DLMMDD generator-attribution challenge; conference proceedings identity not verified.",
+    "evidence": [
+      {
+        "url": "https://arxiv.org/abs/2609.11188",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/14368c4ab7bdeab35ea3.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p01.json"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "medium",
+    "manual_review": true,
+    "decision_required": "Decide whether this participant method report warrants its own scholarly work record, distinct from the challenge overview and other teams; if accepted, use arXiv 2026 until official workshop publication is verified.",
+    "status": "MISSING_NEEDS_SCOPE_REVIEW",
+    "actionable_set": "B",
+    "alternate_versions": [],
+    "abstract": "Abstract:Synthetic image attribution (SIA) has become increasingly important with the rapid advancement of text-to-image generation models. However, accurately identifying the source model of a generated image remains challenging due to the growing similarity among modern diffusion-based generators and the presence of diverse post-processing operations. In this report, we present a multi-view and confusion-guided ensemble framework for the Synthetic Image Attribution Challenge of the DLMMDD Workshop at ICANN 2026. Our approach integrates multiple complementary architectures, including FFT-ConvNeXt, DINOv2, CLIP, and Xception, to capture diverse attribution cues from frequency, semantic, and forensic perspectives. To improve robustness against unknown degradations and image manipulations, extensive data augmentation strategies are employed during training, simulating realistic post-processing operations such as compression, resizing, grayscale conversion, and blur. Furthermore, we analyze the confusion patterns of the ensemble model and observe severe ambiguity between Stable Diffusion 3 and Stable Diffusion 3.5. To address this issue, we introduce a dedicated binary expert classifier that is selectively activated under low-confidence conditions. We additionally apply class-adaptive confidence calibration to improve the discrimination of challenging classes such as Tencent Hunyuan. The proposed framework achieved 99.53% on the public leaderboard and 99.20% on the private leaderboard. The source code and implementation details are publicly available at this https URL.",
+    "candidate_id": "gap-244d54f4c08b",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "BOSC: A Backdoor-Based Framework for Open Set Synthetic Image Attribution",
+          "paper_id": "https://openalex.org/W4412624408",
+          "score": 0.6667
+        },
+        {
+          "title": "LoRAX: LoRA eXpandable Networks for Continual Synthetic Image Attribution",
+          "paper_id": "https://openalex.org/W4414827699",
+          "score": 0.6154
+        },
+        {
+          "title": "RIGID: A Training-Free and Model-Agnostic Framework for Robust AI-Generated Image Detection",
+          "paper_id": "curated:4b406d0cf578db643214",
+          "score": 0.5641
+        }
+      ],
+      "author_year_matches": [],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "2609.11188",
+        "title": "A Multi-View and Confusion-Guided Ensemble Framework for Robust Synthetic Image Attribution",
+        "paper_id": "arxiv:2609.11188",
+        "method_name": "",
+        "authors": [
+          "Zuomin Qu"
+        ],
+        "year": 2026
+      },
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded."
+    },
+    "scope_detail": [
+      "general_synthetic_images"
+    ],
+    "metadata_missing": [
+      "doi",
+      "track"
+    ]
+  },
+  {
+    "title": "Hybrid Semantic and Spectral Ensemble for Robust Synthetic Image Source Attribution",
+    "official_url": "https://arxiv.org/abs/2607.22808",
+    "authors": [
+      "Md. Ajwad Hossain"
+    ],
+    "year": 2026,
+    "venue": "arXiv",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "2607.22808",
+    "method_name": "",
+    "paper_id": "arxiv:2607.22808",
+    "candidate_tasks": [
+      "source_attribution"
+    ],
+    "candidate_image_scopes": [
+      "fully_generated"
+    ],
+    "candidate_research_types": [
+      "method"
+    ],
+    "scope_reason": "Independent passive attribution ensemble evaluated on ten source generators; workshop acceptance is an author claim, not a verified proceedings identity.",
+    "evidence": [
+      {
+        "url": "https://arxiv.org/abs/2607.22808",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/a25f6588cff2ddf4f004.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p01.json"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "medium",
+    "manual_review": true,
+    "decision_required": "Decide whether this challenge participant report qualifies as a standalone method contribution; preserve it separately from Qu’s report and do not claim a formal ICANN workshop publication without its official record.",
+    "status": "MISSING_NEEDS_SCOPE_REVIEW",
+    "actionable_set": "B",
+    "alternate_versions": [],
+    "abstract": "Abstract:The rapid advancement of text-to-image (T2I) models has necessitated robust Synthetic Image Source Attribution (SIA) methodologies. A critical challenge in SIA is the distribution shift between pristine training images and real-world deployed images, which undergo unknown post-processing operations such as JPEG compression and blurring. In this work, proposed for the DLMMDD Challenge at ICANN 2026, we introduce a dual-branch ensemble framework fusing Semantic Deep Learning with Mathematical Forensic Feature Extraction. The semantic branch employs EfficientNet-B0 regularized with Exponential Moving Averaging (EMA) and Label Smoothing. The forensic branch extracts 126 mathematical features -- including SVD spectral profiles and Local Binary Patterns -- from high-pass noise residuals, compressed via Truncated SVD and classified with XGBoost. Evaluated on a dataset of 10 generators where 55% of the test set is degraded, our approach achieves a private leaderboard accuracy of 95.60%. Furthermore, the entire pipeline is highly computationally efficient, requiring no GPU acceleration and executing end-to-end on a standard CPU in under 6.5 hours, highlighting the practicality and scalability of mathematical forensics for real-world deployment.",
+    "candidate_id": "gap-6f54ea382cde",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "Open Set Synthetic Image Source Attribution",
+          "paper_id": "curated:5a91cc922c8a3c4c3d0c",
+          "score": 0.6667
+        },
+        {
+          "title": "Are CLIP Features All You Need for Universal Synthetic Image Origin Attribution?",
+          "paper_id": "curated:8bc69db49ef4b9db3cd6",
+          "score": 0.5816
+        },
+        {
+          "title": "Representation and Reference Selection in Training-Free Synthetic Image Attribution",
+          "paper_id": "curated:c84b04cb8e921be753db",
+          "score": 0.5714
+        }
+      ],
+      "author_year_matches": [],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "2607.22808",
+        "title": "Hybrid Semantic and Spectral Ensemble for Robust Synthetic Image Source Attribution",
+        "paper_id": "arxiv:2607.22808",
+        "method_name": "",
+        "authors": [
+          "Md. Ajwad Hossain"
+        ],
+        "year": 2026
+      },
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded."
+    },
+    "scope_detail": [
+      "general_synthetic_images"
+    ],
+    "metadata_missing": [
+      "doi",
+      "track"
+    ]
+  },
+  {
+    "title": "Beyond Spectral Peaks: Interpreting the Cues Behind Synthetic Image Detection",
+    "official_url": "https://www.cmsworkshops.com/ICASSP2026/view_paper.php?PaperNum=13550&bare=1",
+    "authors": [
+      "Sara Mandelli",
+      "Diego Vila-Portela",
+      "David Vázquez-Padín",
+      "Paolo Bestagini",
+      "Fernando Pérez-González"
+    ],
+    "year": 2026,
+    "venue": "ICASSP",
+    "track": "Information Forensics and Security; IFS-P18.6 poster",
+    "doi": "",
+    "arxiv_id": "2510.05633",
+    "method_name": "",
+    "paper_id": "arxiv:2510.05633",
+    "candidate_tasks": [
+      "detection"
+    ],
+    "candidate_image_scopes": [
+      "fully_generated"
+    ],
+    "candidate_research_types": [
+      "method",
+      "analysis_study"
+    ],
+    "scope_reason": "Direct analysis of spectral cues used by synthetic-image detectors, with an interpretable linear detector.",
+    "evidence": [
+      {
+        "url": "https://arxiv.org/abs/2510.05633",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/e8d510819d0e22d7823b.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p07.json"
+        ],
+        "note": ""
+      },
+      {
+        "url": "https://www.cmsworkshops.com/ICASSP2026/view_paper.php?PaperNum=13550&bare=1",
+        "kind": "primary",
+        "review_depth": "official_program",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/07ae2fe03845e90efc73.gz"
+        ],
+        "note": "Program verifies title and ordered authors; DOI not verified."
+      }
+    ],
+    "confidence": "high",
+    "manual_review": true,
+    "decision_required": "",
+    "status": "MISSING_HIGH_CONFIDENCE",
+    "actionable_set": "A",
+    "alternate_versions": [],
+    "abstract": "Abstract:Over the years, the forensics community has proposed several deep learning-based detectors to mitigate the risks of generative AI. Recently, frequency-domain artifacts (particularly periodic peaks in the magnitude spectrum), have received significant attention, as they have been often considered a strong indicator of synthetic image generation. However, state-of-the-art detectors are typically used as black-boxes, and it still remains unclear whether they truly rely on these peaks. This limits their interpretability and trust. In this work, we conduct a systematic study to address this question. We propose a strategy to remove spectral peaks from images and analyze the impact of this operation on several detectors. In addition, we introduce a simple linear detector that relies exclusively on frequency peaks, providing a fully interpretable baseline free from the confounding influence of deep learning. Our findings reveal that most detectors are not fundamentally dependent on spectral peaks, challenging a widespread assumption in the field and paving the way for more transparent and reliable forensic tools.",
+    "candidate_id": "gap-6052b6ee0021",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "LEGION: Learning to Ground and Explain for Synthetic Image Detection",
+          "paper_id": "curated:14272073fa5bc0e301b5",
+          "score": 0.592
+        },
+        {
+          "title": "FUSE: Unifying Spectral and Semantic Cues for Robust AI-Generated Image Detection",
+          "paper_id": "curated:48d8ffca3a1741cf11d3",
+          "score": 0.5588
+        },
+        {
+          "title": "Forgery-aware Adaptive Transformer for Generalizable Synthetic Image Detection",
+          "paper_id": "https://openalex.org/W4402753859",
+          "score": 0.5547
+        }
+      ],
+      "author_year_matches": [
+        {
+          "title": "WILD: A New In-the-Wild Image Linkage Dataset for Synthetic Image Attribution",
+          "paper_id": "curated:90ac5206f85eaebc7203",
+          "shared_authors": [
+            "paolobestagini",
+            "saramandelli"
+          ]
+        }
+      ],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "2510.05633",
+        "title": "Beyond Spectral Peaks: Interpreting the Cues Behind Synthetic Image Detection",
+        "paper_id": "arxiv:2510.05633",
+        "method_name": "",
+        "authors": [
+          "Sara Mandelli",
+          "Diego Vila-Portela",
+          "David Vázquez-Padín",
+          "Paolo Bestagini",
+          "Fernando Pérez-González"
+        ],
+        "year": 2026
+      },
+      "conclusion": "Absent after all seven checks; no accepted identity match. Empty IDs are unavailable, not proof of absence. Shared authors/acronyms and fuzzy titles are reviewed suggestions, never automatic merges.",
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded."
+    },
+    "scope_detail": [
+      "general_synthetic_images"
+    ],
+    "metadata_missing": [
+      "doi"
+    ]
+  },
+  {
+    "title": "EditTrack: Detecting and Attributing AI-assisted Image Editing",
+    "official_url": "https://arxiv.org/abs/2510.01173",
+    "authors": [
+      "Zhengyuan Jiang",
+      "Yuyang Zhang",
+      "Moyang Guo",
+      "Neil Zhenqiang Gong"
+    ],
+    "year": 2025,
+    "venue": "arXiv",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "2510.01173",
+    "method_name": "EditTrack",
+    "paper_id": "arxiv:2510.01173",
+    "candidate_tasks": [
+      "detection",
+      "source_attribution"
+    ],
+    "candidate_image_scopes": [
+      "generative_editing"
+    ],
+    "candidate_research_types": [
+      "method"
+    ],
+    "scope_reason": "Given base and suspicious images, identifies AI edits and the editing model using five models and six image datasets; no injected watermark.",
+    "evidence": [
+      {
+        "url": "https://arxiv.org/abs/2510.01173",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p07.json"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "high",
+    "manual_review": true,
+    "decision_required": "",
+    "status": "MISSING_HIGH_CONFIDENCE",
+    "actionable_set": "A",
+    "alternate_versions": [],
+    "publication_note": "OpenReview submission found, but acceptance not verified; retain preprint venue.",
+    "candidate_id": "gap-3d4856c630d6",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "Detecting Origin Attribution for Text-to-Image Diffusion Models",
+          "paper_id": "curated:161b6d5ca391d238f7e9",
+          "score": 0.5688
+        },
+        {
+          "title": "Detecting and Simulating Artifacts in GAN Fake Images",
+          "paper_id": "https://openalex.org/W3012472557",
+          "score": 0.56
+        },
+        {
+          "title": "DE-FAKE: Detection and Attribution of Fake Images Generated by Text-to-Image Generation Models",
+          "paper_id": "https://openalex.org/W4388858946",
+          "score": 0.5564
+        }
+      ],
+      "author_year_matches": [
+        {
+          "title": "Transfer Learning of Real Image Features with Soft Contrastive Loss for Fake Image Detection",
+          "paper_id": "curated:dc9126cc128e1b228717",
+          "shared_authors": [
+            "yuyangzhang"
+          ]
+        },
+        {
+          "title": "AI-generated Image Detection: Passive or Watermark?",
+          "paper_id": "https://openalex.org/W4404649743",
+          "shared_authors": [
+            "moyangguo",
+            "neilzhenqianggong",
+            "zhengyuanjiang"
+          ]
+        }
+      ],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "2510.01173",
+        "title": "EditTrack: Detecting and Attributing AI-assisted Image Editing",
+        "paper_id": "arxiv:2510.01173",
+        "method_name": "EditTrack",
+        "authors": [
+          "Zhengyuan Jiang",
+          "Yuyang Zhang",
+          "Moyang Guo",
+          "Neil Zhenqiang Gong"
+        ],
+        "year": 2025
+      },
+      "conclusion": "Absent after all seven checks; no accepted identity match. Empty IDs are unavailable, not proof of absence. Shared authors/acronyms and fuzzy titles are reviewed suggestions, never automatic merges.",
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded."
+    },
+    "scope_detail": [
+      "generative_edit"
+    ],
+    "metadata_missing": [
+      "doi",
+      "track"
+    ]
+  },
+  {
+    "title": "A comprehensive survey on visual forensics for AI-Generated image detection",
+    "official_url": "https://www.cjig.cn/en/article/doi/10.11834/jig.250624/",
+    "authors": [
+      "Li JiaYe",
+      "Zhang MinQing",
+      "Huang SiYuan",
+      "Feng Pei",
+      "Liu Lang"
+    ],
+    "year": 2026,
+    "venue": "Journal of Image and Graphics",
+    "track": "",
+    "doi": "10.11834/jig.250624",
+    "arxiv_id": "",
+    "method_name": "",
+    "paper_id": "doi:10.11834/jig.250624",
+    "candidate_tasks": [
+      "detection"
+    ],
+    "candidate_image_scopes": [
+      "fully_generated"
+    ],
+    "candidate_research_types": [
+      "survey"
+    ],
+    "scope_reason": "Survey centrally reviews visual forensic detection of GAN/diffusion-generated images; online-first publisher DOI establishes identity.",
+    "evidence": [
+      {
+        "url": "https://www.cjig.cn/en/article/doi/10.11834/jig.250624/",
+        "kind": "primary",
+        "review_depth": "publisher_metadata_and_full_text",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/a35f640f39dac073b639.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p02.json"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "high",
+    "manual_review": true,
+    "decision_required": "",
+    "status": "MISSING_HIGH_CONFIDENCE",
+    "actionable_set": "A",
+    "alternate_versions": [],
+    "publication_note": "Online first 27 January 2026, pages 1–26; preserve publisher author rendering.",
+    "candidate_id": "gap-844d4535b37b",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "Rethinking the Use of Vision Transformers for AI-Generated Image Detection",
+          "paper_id": "curated:07fc38c7a0fb83f3f931",
+          "score": 0.6822
+        },
+        {
+          "title": "Incremental Learning for AI-Generated Image Detection",
+          "paper_id": "curated:88b63de59a0eabcd1b02",
+          "score": 0.6786
+        },
+        {
+          "title": "Learning Generalizable Visual Representations for AI-Generated Image Detection",
+          "paper_id": "curated:e8b546496836adcf6c1a",
+          "score": 0.6667
+        }
+      ],
+      "author_year_matches": [],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "10.11834/jig.250624",
+        "arxiv_id": "",
+        "title": "A comprehensive survey on visual forensics for AI-Generated image detection",
+        "paper_id": "doi:10.11834/jig.250624",
+        "method_name": "",
+        "authors": [
+          "Li JiaYe",
+          "Zhang MinQing",
+          "Huang SiYuan",
+          "Feng Pei",
+          "Liu Lang"
+        ],
+        "year": 2026
+      },
+      "conclusion": "Absent after all seven checks; no accepted identity match. Empty IDs are unavailable, not proof of absence. Shared authors/acronyms and fuzzy titles are reviewed suggestions, never automatic merges.",
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded."
+    },
+    "scope_detail": [
+      "general_synthetic_images"
+    ],
+    "metadata_missing": [
+      "arxiv_id",
+      "track"
+    ]
+  },
+  {
+    "title": "Synthetic Images at MediaEval 2025: Advancing detection of generative AI in real-world online images",
+    "official_url": "https://2025.multimediaeval.com/paper47.pdf",
+    "authors": [
+      "Olga Papadopoulou",
+      "Manos Schinas",
+      "Riccardo Corvi",
+      "Dimitrios Karageorgiou",
+      "Christos Koutlis",
+      "Fabrizio Guillaro",
+      "Efstratios Gavves",
+      "Hannes Mareen",
+      "Luisa Verdoliva",
+      "Symeon Papadopoulos"
+    ],
+    "year": 2025,
+    "venue": "MediaEval 2025 Workshop",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "",
+    "method_name": "",
+    "paper_id": "https://2025.multimediaeval.com/paper47.pdf",
+    "candidate_tasks": [
+      "detection",
+      "localization"
+    ],
+    "candidate_image_scopes": [
+      "fully_generated",
+      "generative_editing"
+    ],
+    "candidate_research_types": [
+      "benchmark"
+    ],
+    "scope_reason": "Official scholarly task-overview paper specifies generated-image detection and AI-edit mask localization protocols. Not a Kaggle page or a duplicate of component datasets SAGI/TGIF.",
+    "evidence": [
+      {
+        "url": "https://2025.multimediaeval.com/paper47.pdf",
+        "kind": "primary",
+        "review_depth": "full_paper",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/c6a0429c0cfeba5793c4.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p02.json"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "high",
+    "manual_review": true,
+    "decision_required": "",
+    "status": "MISSING_HIGH_CONFIDENCE",
+    "actionable_set": "A",
+    "alternate_versions": [],
+    "candidate_id": "gap-ff14127991ec",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "Online Detection of AI-Generated Images",
+          "paper_id": "https://openalex.org/W4390189958",
+          "score": 0.5042
+        },
+        {
+          "title": "EKILA: Synthetic Media Provenance and Attribution for Generative Art",
+          "paper_id": "https://openalex.org/W4385801341",
+          "score": 0.5
+        },
+        {
+          "title": "A Debiased Reconstruction-Based Framework for Training-Free Detection of AI-Generated Images",
+          "paper_id": "curated:1eb949d2e1adca5bb6cf",
+          "score": 0.497
+        }
+      ],
+      "author_year_matches": [
+        {
+          "title": "AI-Generated Image Detection: Challenges and Recent Advances",
+          "paper_id": "curated:98bed92571e23d5df139",
+          "shared_authors": [
+            "christoskoutlis",
+            "dimitrioskarageorgiou",
+            "luisaverdoliva",
+            "manosschinas",
+            "riccardocorvi",
+            "symeonpapadopoulos"
+          ]
+        },
+        {
+          "title": "Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3",
+          "paper_id": "curated:92fe1dfd435209b21ff4",
+          "shared_authors": [
+            "luisaverdoliva"
+          ]
+        },
+        {
+          "title": "Automated In-the-Wild Data Collection for Continual AI Generated Image Detection",
+          "paper_id": "curated:1bf124f8f57f00dddd01",
+          "shared_authors": [
+            "christoskoutlis",
+            "dimitrioskarageorgiou",
+            "olgapapadopoulou",
+            "symeonpapadopoulos"
+          ]
+        },
+        {
+          "title": "Navigating the Challenges of AI-Generated Image Detection in the Wild: What Truly Matters?",
+          "paper_id": "https://openalex.org/W4414739373",
+          "shared_authors": [
+            "christoskoutlis",
+            "dimitrioskarageorgiou",
+            "olgapapadopoulou",
+            "symeonpapadopoulos"
+          ]
+        },
+        {
+          "title": "Quality-Aware Calibration for AI-Generated Image Detection in the Wild",
+          "paper_id": "curated:bb388762c1cb4bd3bf4a",
+          "shared_authors": [
+            "fabrizioguillaro",
+            "luisaverdoliva"
+          ]
+        },
+        {
+          "title": "TGIF2: Extended Text-Guided Inpainting Forgery Dataset and Benchmark",
+          "paper_id": "curated:65b4acebdefa6c9c0799",
+          "shared_authors": [
+            "dimitrioskarageorgiou",
+            "hannesmareen",
+            "symeonpapadopoulos"
+          ]
+        },
+        {
+          "title": "Understanding Why Foundation Models Work for Diffusion-Generated Image Detection",
+          "paper_id": "curated:dab7806aa2ff9f95d58d",
+          "shared_authors": [
+            "luisaverdoliva"
+          ]
+        },
+        {
+          "title": "A Bias-Free Training Paradigm for More General AI-Generated Image Detection",
+          "paper_id": "curated:3da39d6e1e1f36089901",
+          "shared_authors": [
+            "fabrizioguillaro",
+            "luisaverdoliva"
+          ]
+        },
+        {
+          "title": "AI-GenBench: A New Ongoing Benchmark for AI-Generated Image Detection",
+          "paper_id": "curated:c9c2682178c0f22b648f",
+          "shared_authors": [
+            "luisaverdoliva"
+          ]
+        },
+        {
+          "title": "Any-Resolution AI-Generated Image Detection by Spectral Learning",
+          "paper_id": "https://openalex.org/W4413144629",
+          "shared_authors": [
+            "dimitrioskarageorgiou",
+            "efstratiosgavves",
+            "symeonpapadopoulos"
+          ]
+        },
+        {
+          "title": "Composite Data Augmentations for Synthetic Image Detection Against Real-World Perturbations",
+          "paper_id": "curated:425eb6ebf5e06a7836a8",
+          "shared_authors": [
+            "christoskoutlis",
+            "symeonpapadopoulos"
+          ]
+        },
+        {
+          "title": "RADAR: Reasoning AI-Generated Image Detection for Semantic Fakes",
+          "paper_id": "curated:0bbace72b7a0991bc2b2",
+          "shared_authors": [
+            "efstratiosgavves"
+          ]
+        },
+        {
+          "title": "TextureCrop: Enhancing Synthetic Image Detection Through Texture-Based Cropping",
+          "paper_id": "curated:56e9e085bbe0342dab35",
+          "shared_authors": [
+            "christoskoutlis",
+            "symeonpapadopoulos"
+          ]
+        },
+        {
+          "title": "Detecting Multimedia Generated by Large AI Models: A Survey",
+          "paper_id": "https://openalex.org/W4391563741",
+          "shared_authors": [
+            "luisaverdoliva"
+          ]
+        },
+        {
+          "title": "Did You Note My Palette? Unveiling Synthetic Images Through Color Statistics",
+          "paper_id": "curated:19c7b91816312d2877c9",
+          "shared_authors": [
+            "luisaverdoliva"
+          ]
+        },
+        {
+          "title": "Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images",
+          "paper_id": "curated:3312da81174f7d411081",
+          "shared_authors": [
+            "symeonpapadopoulos"
+          ]
+        },
+        {
+          "title": "Exploring the Adversarial Robustness of CLIP for AI-generated Image Detection",
+          "paper_id": "https://openalex.org/W4405845641",
+          "shared_authors": [
+            "fabrizioguillaro",
+            "luisaverdoliva"
+          ]
+        },
+        {
+          "title": "Leveraging Representations from Intermediate Encoder-Blocks for Synthetic Image Detection",
+          "paper_id": "curated:f4dc0d6926d1f0237453",
+          "shared_authors": [
+            "christoskoutlis",
+            "symeonpapadopoulos"
+          ]
+        },
+        {
+          "title": "Raising the Bar of AI-generated Image Detection with CLIP",
+          "paper_id": "https://openalex.org/W4402915983",
+          "shared_authors": [
+            "luisaverdoliva",
+            "riccardocorvi"
+          ]
+        },
+        {
+          "title": "SIDBench: A Python Framework for Reliably Assessing Synthetic Image Detection Methods",
+          "paper_id": "curated:960c6a53879767054f0c",
+          "shared_authors": [
+            "manosschinas",
+            "symeonpapadopoulos"
+          ]
+        },
+        {
+          "title": "Synthetic Image Verification in the Era of Generative Artificial Intelligence: What Works and What Isn’t There yet",
+          "paper_id": "https://openalex.org/W4393972628",
+          "shared_authors": [
+            "luisaverdoliva",
+            "riccardocorvi"
+          ]
+        },
+        {
+          "title": "Zero-Shot Detection of AI-Generated Images",
+          "paper_id": "curated:b4ea75d79604aba80b50",
+          "shared_authors": [
+            "luisaverdoliva"
+          ]
+        }
+      ],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "",
+        "title": "Synthetic Images at MediaEval 2025: Advancing detection of generative AI in real-world online images",
+        "paper_id": "https://2025.multimediaeval.com/paper47.pdf",
+        "method_name": "",
+        "authors": [
+          "Olga Papadopoulou",
+          "Manos Schinas",
+          "Riccardo Corvi",
+          "Dimitrios Karageorgiou",
+          "Christos Koutlis",
+          "Fabrizio Guillaro",
+          "Efstratios Gavves",
+          "Hannes Mareen",
+          "Luisa Verdoliva",
+          "Symeon Papadopoulos"
+        ],
+        "year": 2025
+      },
+      "conclusion": "Absent after all seven checks; no accepted identity match. Empty IDs are unavailable, not proof of absence. Shared authors/acronyms and fuzzy titles are reviewed suggestions, never automatic merges.",
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded."
+    },
+    "scope_detail": [
+      "general_synthetic_images"
+    ],
+    "metadata_missing": [
+      "doi",
+      "arxiv_id",
+      "track"
+    ]
+  },
+  {
+    "title": "ViGText: Deepfake Image Detection with Vision-Language Model Explanations and Graph Neural Networks",
+    "official_url": "https://www.ndss-symposium.org/ndss-paper/vigtext-deepfake-image-detection-with-vision-language-model-explanations-and-graph-neural-networks/",
+    "authors": [
+      "Ahmad ALBarqawi",
+      "Mahmoud Nazzal",
+      "Issa Khalil",
+      "Abdallah Khreishah",
+      "NhatHai Phan"
+    ],
+    "year": 2026,
+    "venue": "NDSS",
+    "track": "",
+    "doi": "10.14722/ndss.2026.230303",
+    "arxiv_id": "",
+    "method_name": "ViGText",
+    "paper_id": "doi:10.14722/ndss.2026.230303",
+    "candidate_tasks": [
+      "detection"
+    ],
+    "candidate_image_scopes": [
+      "fully_generated",
+      "deepfake"
+    ],
+    "candidate_research_types": [
+      "method"
+    ],
+    "scope_reason": "Independent general-image diffusion-detection experiments satisfy scope despite additional face-robustness evaluations.",
+    "evidence": [
+      {
+        "url": "https://www.ndss-symposium.org/ndss-paper/vigtext-deepfake-image-detection-with-vision-language-model-explanations-and-graph-neural-networks/",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p07.json",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p12.json"
+        ],
+        "note": ""
+      },
+      {
+        "url": "https://www.ndss-symposium.org/wp-content/uploads/2026-s303-paper.pdf",
+        "kind": "primary",
+        "review_depth": "full_paper",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p13.json",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p14.json"
+        ],
+        "note": "Page 1 DOI/year and section V.A: independent SD dataset spans people, nature, objects, illustrations and art; face experiments remain separately labeled."
+      }
+    ],
+    "confidence": "high",
+    "manual_review": true,
+    "decision_required": "",
+    "status": "MISSING_HIGH_CONFIDENCE",
+    "actionable_set": "A",
+    "alternate_versions": [],
+    "candidate_id": "gap-fb883d3f464b",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "A Deepfake Image Detection Method Based on a Multi-Graph Attention Network",
+          "paper_id": "curated:53154d830e337fce1fad",
+          "score": 0.5772
+        },
+        {
+          "title": "Deepfake Image Detection using CNNs and Transfer Learning",
+          "paper_id": "https://openalex.org/W4285362588",
+          "score": 0.5735
+        },
+        {
+          "title": "Visual Veracity: Advancing AI-Generated Image Detection with Convolutional Neural Networks",
+          "paper_id": "https://openalex.org/W4396886753",
+          "score": 0.5697
+        }
+      ],
+      "author_year_matches": [],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "10.14722/ndss.2026.230303",
+        "arxiv_id": "",
+        "title": "ViGText: Deepfake Image Detection with Vision-Language Model Explanations and Graph Neural Networks",
+        "paper_id": "doi:10.14722/ndss.2026.230303",
+        "method_name": "ViGText",
+        "authors": [
+          "Ahmad ALBarqawi",
+          "Mahmoud Nazzal",
+          "Issa Khalil",
+          "Abdallah Khreishah",
+          "NhatHai Phan"
+        ],
+        "year": 2026
+      },
+      "conclusion": "Absent after all seven checks; no accepted identity match. Empty IDs are unavailable, not proof of absence. Shared authors/acronyms and fuzzy titles are reviewed suggestions, never automatic merges.",
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded."
+    },
+    "scope_detail": [
+      "general_synthetic_images",
+      "face_deepfake"
+    ],
+    "metadata_missing": [
+      "arxiv_id",
+      "track"
+    ]
+  },
+  {
+    "title": "AdaParse: Personalized Fingerprinting for Visual Generative Model Reverse Engineering",
+    "official_url": "https://github.com/lizhuoxun/AdaParse",
+    "authors": [
+      "Yu Zheng",
+      "Zhuoxun Li",
+      "Bingyao Yu",
+      "Jie Zhou",
+      "Jiwen Lu"
+    ],
+    "year": 2026,
+    "venue": "IEEE Transactions on Information Forensics and Security",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "",
+    "method_name": "AdaParse",
+    "paper_id": "https://github.com/lizhuoxun/AdaParse",
+    "candidate_tasks": [
+      "source_attribution"
+    ],
+    "candidate_image_scopes": [
+      "fully_generated"
+    ],
+    "candidate_research_types": [
+      "method"
+    ],
+    "scope_reason": "Passive extraction of hyperparameter-specific traces, evaluated on 123/124-model benchmark; no generator watermark insertion.",
+    "evidence": [
+      {
+        "url": "https://github.com/lizhuoxun/AdaParse",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/adaparse_pdf_text.json",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p11.json",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p12.json",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p13.json",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p14.json"
+        ],
+        "note": ""
+      },
+      {
+        "url": "https://raw.githubusercontent.com/lizhuoxun/AdaParse/main/paper/AdaParse.pdf",
+        "kind": "author_primary",
+        "review_depth": "full_paper",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/0f57901467d617f93751.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/adaparse_pdf_text.json"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "medium",
+    "manual_review": true,
+    "decision_required": "Decide whether passive prediction of generator architecture/loss hyperparameters qualifies as source attribution under the map taxonomy; do not label it active fingerprint embedding. Verify publisher metadata before formal import.",
+    "status": "MISSING_NEEDS_SCOPE_REVIEW",
+    "actionable_set": "B",
+    "alternate_versions": [],
+    "publication_note": "TIFS acceptance reported on official author repository; publisher endpoint 11422036 inaccessible, DOI not verified.",
+    "candidate_id": "gap-d5c62e3fe662",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "ManiFPT: Defining and Analyzing Fingerprints of Generative Models",
+          "paper_id": "curated:34fdf09ae334914a2723",
+          "score": 0.5263
+        },
+        {
+          "title": "Riemannian-Geometric Fingerprints of Generative Models",
+          "paper_id": "curated:807b1bfdfd16bf98be30",
+          "score": 0.512
+        },
+        {
+          "title": "FingerprintNet: Synthesized Fingerprints for Generated Image Detection",
+          "paper_id": "curated:1b08aef98983549221b1",
+          "score": 0.5036
+        }
+      ],
+      "author_year_matches": [
+        {
+          "title": "CoDA: Color Distribution Probing for Efficient and Generalizable AI-Generated Image Detection",
+          "paper_id": "curated:e29203ef9599b73d8733",
+          "shared_authors": [
+            "jiezhou"
+          ]
+        },
+        {
+          "title": "Toward Generalizable Forgery Detection and Reasoning",
+          "paper_id": "curated:038a578e520799c8671e",
+          "shared_authors": [
+            "bingyaoyu"
+          ]
+        },
+        {
+          "title": "UniGenDet: A Unified Generative-Discriminative Framework for Co-Evolutionary Image Generation and Generated Image Detection",
+          "paper_id": "curated:1babf622ee5d19e20e1a",
+          "shared_authors": [
+            "bingyaoyu",
+            "jiezhou",
+            "jiwenlu",
+            "yuzheng"
+          ]
+        },
+        {
+          "title": "D <sup>3</sup> QE: Learning Discrete Distribution Discrepancy-Aware Quantization Error for Autoregressive-Generated Image Detection",
+          "paper_id": "curated:3e94d8fc69e41aade2cc",
+          "shared_authors": [
+            "bingyaoyu",
+            "jiezhou",
+            "jiwenlu",
+            "yuzheng"
+          ]
+        },
+        {
+          "title": "Learning Counterfactually Decoupled Attention for Open-World Model Attribution",
+          "paper_id": "curated:fe33db0fb528b93deddc",
+          "shared_authors": [
+            "bingyaoyu",
+            "jiezhou",
+            "jiwenlu",
+            "yuzheng"
+          ]
+        },
+        {
+          "title": "Secret Lies in Color: Enhancing AI-Generated Images Detection with Color Distribution Analysis",
+          "paper_id": "curated:b2fccf1dd66cc2d64374",
+          "shared_authors": [
+            "jiezhou"
+          ]
+        }
+      ],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "",
+        "title": "AdaParse: Personalized Fingerprinting for Visual Generative Model Reverse Engineering",
+        "paper_id": "https://github.com/lizhuoxun/AdaParse",
+        "method_name": "AdaParse",
+        "authors": [
+          "Yu Zheng",
+          "Zhuoxun Li",
+          "Bingyao Yu",
+          "Jie Zhou",
+          "Jiwen Lu"
+        ],
+        "year": 2026
+      },
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded."
+    },
+    "scope_detail": [
+      "general_synthetic_images"
+    ],
+    "metadata_missing": [
+      "doi",
+      "arxiv_id",
+      "track"
+    ]
+  },
+  {
+    "title": "Beyond Visual Forensics: Auditing Multimodal Robustness for Synthetic Medical Image Detection",
+    "official_url": "https://papers.miccai.org/miccai-2026/0103-Paper2865.html",
+    "authors": [
+      "Ching-Hao Chiu",
+      "Hao-Wei Chung",
+      "Gelei Xu",
+      "Xueyang Li",
+      "Pin-Yu Chen",
+      "John Kheir",
+      "Meysam Ghaffari",
+      "Carlos Morato",
+      "Ahmed Abbasi",
+      "Yiyu Shi"
+    ],
+    "year": 2026,
+    "venue": "MICCAI",
+    "track": "",
+    "doi": "",
+    "arxiv_id": "",
+    "method_name": "",
+    "paper_id": "https://papers.miccai.org/miccai-2026/0103-Paper2865.html",
+    "candidate_tasks": [
+      "detection"
+    ],
+    "candidate_image_scopes": [
+      "generative_editing"
+    ],
+    "candidate_research_types": [
+      "benchmark",
+      "analysis_study"
+    ],
+    "scope_reason": "Synthetic medical-image authenticity benchmark with record-context intervention; author-page inconsistency needs resolution.",
+    "evidence": [
+      {
+        "url": "https://papers.miccai.org/miccai-2026/0103-Paper2865.html",
+        "kind": "primary",
+        "review_depth": "abstract",
+        "capture_paths": [
+          "data/raw/systematic_gap_audit_2026_10_02/sources/159f852178545781233f.gz",
+          "data/raw/systematic_gap_audit_2026_10_02/evidence/p09.json"
+        ],
+        "note": ""
+      }
+    ],
+    "confidence": "medium",
+    "manual_review": true,
+    "decision_required": "Confirm the author list against the accepted paper because the official page header conflicts with Author(s)/BibTeX; then decide whether image-plus-record robustness remains a substantive image-forensic benchmark within scope.",
+    "status": "AMBIGUOUS",
+    "actionable_set": "B",
+    "alternate_versions": [],
+    "metadata_uncertainty": "Author(s) and BibTeX agree on ten authors; page header separately displays Kitty K. Wong; main PDF fetch failed. DOI explicitly unavailable.",
+    "candidate_id": "gap-661e383aa4c7",
+    "deduplication": {
+      "exact_public": {
+        "doi": [],
+        "arxiv_id": [],
+        "title": [],
+        "paper_id": []
+      },
+      "acronym_matches": [],
+      "title_similarity_top3": [
+        {
+          "title": "LEGION: Learning to Ground and Explain for Synthetic Image Detection",
+          "paper_id": "curated:14272073fa5bc0e301b5",
+          "score": 0.5714
+        },
+        {
+          "title": "Exploring the Adversarial Robustness of CLIP for AI-generated Image Detection",
+          "paper_id": "https://openalex.org/W4405845641",
+          "score": 0.5638
+        },
+        {
+          "title": "ImagiNet: A Multi-Content Benchmark for Synthetic Image Detection",
+          "paper_id": "curated:f76424b401abe0c0fd0c",
+          "score": 0.5507
+        }
+      ],
+      "author_year_matches": [
+        {
+          "title": "Detective SAM: Adaptive AI-Image Forgery Localization",
+          "paper_id": "curated:9a208cddb21ddfe2317a",
+          "shared_authors": [
+            "pinyuchen"
+          ]
+        },
+        {
+          "title": "RIGID: A Training-Free and Model-Agnostic Framework for Robust AI-Generated Image Detection",
+          "paper_id": "curated:4b406d0cf578db643214",
+          "shared_authors": [
+            "pinyuchen"
+          ]
+        }
+      ],
+      "curated_manual_matches": [],
+      "policy": "Only exact reviewed identity evidence establishes identity; suggestions require human adjudication.",
+      "checked_values": {
+        "doi": "",
+        "arxiv_id": "",
+        "title": "Beyond Visual Forensics: Auditing Multimodal Robustness for Synthetic Medical Image Detection",
+        "paper_id": "https://papers.miccai.org/miccai-2026/0103-Paper2865.html",
+        "method_name": "",
+        "authors": [
+          "Ching-Hao Chiu",
+          "Hao-Wei Chung",
+          "Gelei Xu",
+          "Xueyang Li",
+          "Pin-Yu Chen",
+          "John Kheir",
+          "Meysam Ghaffari",
+          "Carlos Morato",
+          "Ahmed Abbasi",
+          "Yiyu Shi"
+        ],
+        "year": 2026
+      },
+      "human_adjudication": "Top three title suggestions and author/year overlaps reviewed; no evidence of a renamed version among those suggestions. Missing external identifiers are explicitly recorded."
+    },
+    "scope_detail": [
+      "medical_synthetic_images"
+    ],
+    "metadata_missing": [
+      "doi",
+      "arxiv_id",
+      "track"
+    ]
+  }
+]

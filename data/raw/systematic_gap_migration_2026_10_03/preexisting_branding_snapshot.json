@@ -1,0 +1,11 @@
+{
+  "source_commit": "ecfde6b1fc459a748e34114634fbf21cb9286f65",
+  "reason": "Homepage branding was committed before the gap migration; the older refinement fixture predates these five changes. The original fixture remains unchanged.",
+  "sha256": {
+    "tests/test_frontend_public_labels_layout.py": "ee8006f1b89419a9663fe773bc3753c08f2f8f13fe3ccda2b41448fd79d0dc03",
+    "tests/test_public_academic_refinement.py": "728d130fe2ca69dea1cbf685228cfb933ea3abbcb43bc1cce649578bd83d8dd3",
+    "tests/test_public_header_metadata.py": "bd4fa0e10048d8cf24a8d1ba3175f66d821f6562e83d49e432a318e05eb20163",
+    "web/index.html": "790482cfb1b53032ef7dad9cb49cccc198f1afd81963f7d1c17e1b6db1da853e",
+    "web/style.css": "a2b05c8dfb423e8e5a9c44f67723b5c261295ec2235494f1809e1408a81be867"
+  }
+}

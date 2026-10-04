@@ -1,0 +1,129 @@
+{
+  "runtime": {
+    "python": "3.14.7",
+    "pytest": "9.1.1",
+    "node": "24.19.0",
+    "setup": "PYTHONPATH set once to external pytest dependency directory; bundled Node directory added to PATH; no project dependency changes."
+  },
+  "targeted_groups": [
+    {
+      "name": "migration_and_audit",
+      "passed": 26,
+      "failed": 0,
+      "warnings": 0,
+      "passed_subtests": 0,
+      "files": [
+        "tests/test_systematic_gap_migration_2026_10_03.py",
+        "tests/test_audit_gap_2026_10_02.py"
+      ]
+    },
+    {
+      "name": "paper_taxonomy_dedup_metadata_sync",
+      "passed": 93,
+      "failed": 0,
+      "warnings": 0,
+      "passed_subtests": 6,
+      "files": [
+        "tests/test_public_preview_deduplication.py",
+        "tests/test_paper_taxonomy_migration.py",
+        "tests/test_paper_metadata_consistency_audit.py",
+        "tests/test_public_preview_sync.py"
+      ]
+    },
+    {
+      "name": "affiliation_institution",
+      "passed": 59,
+      "failed": 0,
+      "warnings": 0,
+      "passed_subtests": 8,
+      "files": [
+        "tests/test_affiliation_order.py",
+        "tests/test_institution_hierarchy.py",
+        "tests/test_curated_location_resolution.py"
+      ]
+    },
+    {
+      "name": "publication_review",
+      "passed": 34,
+      "failed": 0,
+      "warnings": 0,
+      "passed_subtests": 0,
+      "files": [
+        "tests/test_formal_publication_authors.py",
+        "tests/test_formal_publication_links.py",
+        "tests/test_publication_types.py",
+        "tests/test_review_decision_idempotence.py"
+      ]
+    },
+    {
+      "name": "current_and_historical_integrity",
+      "passed": 29,
+      "failed": 0,
+      "warnings": 2,
+      "passed_subtests": 12,
+      "files": [
+        "tests/test_repository_baseline.py",
+        "tests/test_legacy_scope_exclusion_migration.py"
+      ]
+    }
+  ],
+  "targeted_total": {
+    "passed": 241,
+    "failed": 0,
+    "warnings": 2,
+    "passed_subtests": 26
+  },
+  "additional_failure_resolution_groups": [
+    {
+      "name": "current counts, branding cache expectations, locations, canonical titles, historical/current venues",
+      "passed": 83,
+      "failed": 0,
+      "warnings": 0,
+      "passed_subtests": 1
+    },
+    {
+      "name": "historical Tier 2 application, normal-priority evidence and policy",
+      "passed": 30,
+      "failed": 0,
+      "warnings": 0
+    }
+  ],
+  "warning_details": [
+    "PytestReturnNotNoneWarning: test_successor_migration_payload returns dict",
+    "PytestReturnNotNoneWarning: test_successor_migration_text returns str"
+  ],
+  "full_suite": {
+    "status": "PASSED",
+    "passed": 1577,
+    "failed": 0,
+    "skipped": 0,
+    "warnings": 2,
+    "passed_subtests": 389,
+    "seconds": 277.41,
+    "junit_receipt": "full_suite.xml"
+  },
+  "validators": {
+    "curated": {
+      "errors": 0,
+      "warnings": 250,
+      "baseline_warnings": 245,
+      "duplicate_candidates": 0
+    },
+    "public": {
+      "map_errors": 0,
+      "paper_errors": 0,
+      "map_warnings": 0,
+      "paper_warnings": 23,
+      "baseline_paper_warnings": 22,
+      "strict_warning_free_pass": false
+    },
+    "migration": {
+      "errors": 0,
+      "protected_files": 105,
+      "expected_changed": 13,
+      "unexpected_changed": 0,
+      "frozen_files": 49,
+      "frozen_changed": 0
+    }
+  }
+}

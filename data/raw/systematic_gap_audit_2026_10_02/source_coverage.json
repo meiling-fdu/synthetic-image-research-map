@@ -1,0 +1,74 @@
+[
+  {
+    "venue": "ICML 2026",
+    "search_scope": "Official PMLR volume 306; 6,552 index titles enumerated, 157 keyword-gated titles inspected, plus one separately discovered position paper. Relevant primary pages checked.",
+    "evidence_refs": "icml2026_screening.json; p03–p06, p11, p13; sources/701210428e9ea6004049.gz",
+    "outcome": "5 additions, 5 scope reviews, 11 metadata updates, 137 title/full-paper exclusions. This is a broad title gate, not an abstract census of all 6,552 papers."
+  },
+  {
+    "venue": "CVPR / ICCV / ECCV / WACV",
+    "search_scope": "2024–2026 venue-keyword checks, emphasizing source attribution, partial generation and localization; CVF/ECVA official links.",
+    "evidence_refs": "search1, s02, s30–s33; p03",
+    "outcome": "Known attribution/localization records repeatedly reconciled; SAFE challenge already present. ECCV 2026 full index captured but not re-screened; no claim of a complete ECCV census."
+  },
+  {
+    "venue": "ICLR / NeurIPS",
+    "search_scope": "2024–2025 proceedings queries plus 2026 ICLR forensic leads; title/identity checks against prior review.",
+    "evidence_refs": "search1, s34–s37, s39, s42",
+    "outcome": "Known ICLR forensic works already present. Training-data attribution rejected as wrong meaning of attribution. Frozen NeurIPS 2026 migration excluded; no official-metadata recheck performed."
+  },
+  {
+    "venue": "ACM Multimedia",
+    "search_scope": "2024–2026 publisher-keyword checks and official 2026 programme retrieval.",
+    "evidence_refs": "s06, s09, s26; p08",
+    "outcome": "2026 programme returned an unusable verification shell. AGIDefect-4K verified through arXiv and excluded as perceptual-defect quality diagnosis. No proceedings-completeness claim."
+  },
+  {
+    "venue": "WIFS / ICIP / MMSP",
+    "search_scope": "2024–2026 keyword/category searches, with older attribution references inspected selectively.",
+    "evidence_refs": "s03, s07, s10, s11, s19, s39",
+    "outcome": "Known WIFS resynthesis and attribution works reconciled. No newly verified in-scope addition from these targeted checks; sparse primary retrieval leaves uncertainty, especially MMSP/ICIP."
+  },
+  {
+    "venue": "ICASSP",
+    "search_scope": "2024–2026 keyword checks, exact-title follow-up, official 2026 programme and arXiv.",
+    "evidence_refs": "s03, s18; p01, p07; official PaperNum=13550 source capture",
+    "outcome": "Beyond Spectral Peaks is a verified missing ICASSP 2026 work, Information Forensics and Security track. DOI remains unverified."
+  },
+  {
+    "venue": "TIFS / TIP / TMM / SPL",
+    "search_scope": "Publisher-focused 2024–2026 forensic terms, source identification and exact-title follow-ups.",
+    "evidence_refs": "s04, s16, s17, s38, s41; p03, p11–p15; adaparse_pdf_text.json",
+    "outcome": "AdaParse requires taxonomy decision. Several TMM/SPL hits already represented. Spectral Forensics remains quarantined because primary retrieval failed. TIP query yielded no verified new gap; not an exhaustive negative finding."
+  },
+  {
+    "venue": "Pattern Recognition / PR Letters / Information Fusion / Signal Processing: Image Communication",
+    "search_scope": "2024–2026 publisher and venue-keyword searches.",
+    "evidence_refs": "s05, s07, s15, s29",
+    "outcome": "Existing HRR and other records reconciled. Search noise from face-only, classical CGI, video and unrelated fusion work limits negative conclusions."
+  },
+  {
+    "venue": "CVIU / IJCV; adjacent journals",
+    "search_scope": "CVIU/IJCV 2024–2026 keyword searches, plus journal/survey leads surfaced by the same queries.",
+    "evidence_refs": "s06, s09, s27, s38, s39; p02, p09, p11, p15",
+    "outcome": "CJIG survey verified missing. Proto-LeakNet, BM-DDFN and SCA-Det quarantined pending accessible primary evidence. No inference of a new gap from an inaccessible publisher snippet."
+  },
+  {
+    "venue": "USENIX Security / IEEE S&P / CCS / NDSS",
+    "search_scope": "2024–2026 targeted synthetic-image security searches; official NDSS/USENIX primary follow-ups.",
+    "evidence_refs": "s08, s12–s14; p07, p08, p12–p14",
+    "outcome": "ViGText verified missing with independent general-image experiments; Chimera scope decision remains. S&P/CCS queries did not establish additional gaps; generic AI security and watermark work excluded."
+  },
+  {
+    "venue": "Attribution / localization / challenge / survey families",
+    "search_scope": "Source-model, hierarchical/open-set, diffusion attribution, passive provenance, local/partial generation, benchmarks and reviews.",
+    "evidence_refs": "s20–s28, s40–s42; p01, p02, p07, p09",
+    "outcome": "Few-shot attribution and EditTrack verified; two DLMMDD participant reports reserved for publication-type decisions. MediaEval 2025 is an independently documented benchmark overview; the Kaggle competition itself is not a paper."
+  },
+  {
+    "venue": "Adjacent primary leads",
+    "search_scope": "IJCAI official proceedings and MICCAI official accepted-paper page.",
+    "evidence_refs": "p09, p13, p14",
+    "outcome": "IJCAI missing DOI/proceedings link is metadata only. MICCAI author-page inconsistency reserved for review; no guessed DOI."
+  }
+]

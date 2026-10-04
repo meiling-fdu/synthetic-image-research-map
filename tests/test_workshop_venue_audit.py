@@ -1,9 +1,11 @@
 """Workshop field roles, source preservation and shared effective-state regressions."""
 import csv
+import io
 import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from scripts.venue_tracks import normalize_venue_track, VENUE_TRACKS
 from scripts.venues import read_venue_aliases, resolve_venue, canonical_venue_registry
@@ -211,6 +213,7 @@ class WorkshopArtifactTests(unittest.TestCase):
 
     def test_processed_admin_dashboard_public_and_marker_state_agree(self):
         from scripts.serve_admin import load_admin_data
+        from scripts.gap_migration_history import historical_text
         from scripts.export_public_preview import identity_key, paper_identity_keys
         from scripts.paper_exclusions import (
             build_active_exclusion_index,
@@ -224,13 +227,34 @@ class WorkshopArtifactTests(unittest.TestCase):
             for record in records
             if not record_is_excluded(record, exclusion_index)
         ]
-        admin, _ = load_admin_data()
-        by_id = {p["display_id"]: p for p in admin}
-        by_key = {identity_key(p): p for p in admin}
+        # This saved venue audit predates the gap migration. Replay its source
+        # state without rewriting the historical processed artifact.
+        def historical_json_records(path):
+            payload = json.loads(historical_text(path))
+            return payload["records"] if isinstance(payload, dict) else payload
+
+        def historical_csv_rows(path):
+            return list(csv.DictReader(io.StringIO(historical_text(path, "utf-8-sig"))))
+
+        with patch("scripts.serve_admin.read_json_records", historical_json_records), patch(
+            "scripts.serve_admin.read_csv_rows", historical_csv_rows
+        ):
+            historical_admin, _ = load_admin_data()
+        by_id = {p["display_id"]: p for p in historical_admin}
         fields = ("venue_id", "venue_name", "venue_acronym", "venue_type", "venue_track", "publication_type")
         for record in records:
             for field in fields:
                 self.assertEqual(record.get(field, ""), by_id[record["display_id"]].get(field, ""), (record["title"], field))
+        # Independently test the current normalized projection, admin, public
+        # papers and markers against each other, including the 17 new works.
+        admin, _ = load_admin_data()
+        by_key = {identity_key(p): p for p in admin}
+        source_admin, _ = load_admin_data(apply_venue_audit=False)
+        audit = VenueAudit(read_venue_aliases())
+        for source in source_admin:
+            effective = audit.effective(source_with_curation(source))
+            for field in fields:
+                self.assertEqual(effective.get(field, ""), by_key[identity_key(source)].get(field, ""), (source["title"], field))
         queue = review_queue(admin, read_venue_aliases())
         self.assertEqual(queue["count"], len(queue["records"]))
         self.assertEqual({p["display_id"] for p in admin if p.get("venue_review_required")}, {p["display_id"] for p in queue["records"]})

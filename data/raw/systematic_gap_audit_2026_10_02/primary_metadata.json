@@ -1,0 +1,436 @@
+[
+  {
+    "title": "Where Detectors Fail: Probing Generative Space for Generalizable AI-Generated Image Detection",
+    "authors": [
+      "Zijie Cao",
+      "Weijie Tu",
+      "Yao Xiao",
+      "Weijian Deng",
+      "Weiyan Chen",
+      "Liang Lin",
+      "Pengxu Wei"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/cao26s.html",
+    "abstract": "Detecting AI-generated images (AIGI) remains challenging because detectors often fail to generalize to unseen generators. Although existing methods are trained on large datasets, their performance still degrades when generation settings change, indicating that data scale alone is insufficient and that limited coverage of generative variations during training is a key factor. Studies on generative model editing show that small changes in internal representations can produce diverse and meaningful image variations, many of which are not explored under standard sampling. Leveraging this insight, we propose PROBE (Probing Robustness via Boundary Exploration), a framework that improves detector generalization by actively exploring challenging regions of the generative process. Instead of treating the generator as a fixed data source, PROBE uses the detector as a critic to steer the generator through manifold-level modifications, producing realistic samples that are difficult to classify. These samples expose failure cases that are uncommon under standard data sampling strategies and are used to refine the detector. Experimental results across multiple benchmarks indicate that PROBE enhances generalization to unseen generators, resulting in more generalizable AIGI detection performance.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/f44fc626846b44fa4906.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "DNA: Uncovering Universal Latent Forgery Knowledge",
+    "authors": [
+      "Jingtong Dou",
+      "Chuancheng Shi",
+      "Anqi Yi",
+      "Shiming Guo",
+      "Wenhua Wu",
+      "Yemin Wang",
+      "Li Zhang",
+      "Fei Shen",
+      "Tat-Seng Chua"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/dou26b.html",
+    "abstract": "As generative AI achieves hyper-realism, superficial artifact detection has become obsolete. While prevailing methods rely on resource-intensive fine-tuning of black-box backbones, we propose that forgery detection capability is already encoded within pre-trained models rather than requiring end-to-end retraining. To elicit this intrinsic capability, we propose the discriminative neural anchors (DNA) framework, which employs a coarse-to-fine excavation mechanism. First, by analyzing feature decoupling and attention distribution shifts, we pinpoint critical intermediate layers where the focus of the model logically transitions from global semantics to local anomalies. Subsequently, we introduce a triadic fusion scoring metric paired with a curvature-truncation strategy to strip away semantic redundancy, precisely isolating the forgery-discriminative units (FDUs) inherently imprinted with sensitivity to forgery traces. Moreover, we introduce HIFI-Gen, a high-fidelity synthetic benchmark built upon the very latest models, to address the lag in existing datasets. Experiments demonstrate that by solely relying on these anchors, DNA achieves superior detection performance even under few-shot conditions. Furthermore, it exhibits remarkable robustness across diverse architectures and against unseen generative models, validating that waking up latent neurons is more effective than extensive fine-tuning.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/7035461665515d858dc8.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "Can We Build a Monolithic Model for Fake Image Detection? SICA: Semantic-Induced Constrained Adaptation for Unified-Yet-Discriminative Artifact Feature Space Reconstruction",
+    "authors": [
+      "Bo Du",
+      "Xiaochen Ma",
+      "Xuekang Zhu",
+      "Zhe Yang",
+      "Chaoqun Niu",
+      "Jian Liu",
+      "Ji-Zhe Zhou"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/du26g.html",
+    "abstract": "Fake Image Detection (FID), aiming at unified detection across four image forensic subdomains, is critical in real-world forensic scenarios. Compared with ensemble approaches, monolithic FID models are theoretically more promising, but to date, consistently yield inferior performance in practice. In this work, we identify the intrinsic distinctness of artifacts across subdomains—a critical barrier we term the \"Ji-Zhe phenomenon\". Driven by this phenomenon, we diagnose the cause of this underperformance for the first time: the collapse of the artifact feature space. The core challenge for developing a practical monolithic FID model thus boils down to the \"unified-yet-discriminative\" reconstruction of the artifact feature space. To address this paradoxical challenge, we hypothesize that high-level semantics can serve as a structural prior for the reconstruction, and further propose Semantic-Induced Constrained Adaptation (SICA), the first monolithic FID paradigm. Extensive experiments on our $ \\textit{OpenMMSec} $ dataset demonstrate that SICA outperforms 15 state-of-the-art methods and reconstructs the target unified-yet-discriminative artifact feature space in a near-orthogonal manner, thus firmly validating our hypothesis. The code and dataset will be made publicly available.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/aa62819cf3e7921f29ac.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "OmniAID: Decoupling Semantics and Artifacts for Universal AI-Generated Image Detection in the Wild",
+    "authors": [
+      "Yuncheng Guo",
+      "Junyan Ye",
+      "Chenjue Zhang",
+      "Hengrui Kang",
+      "Haohuan Fu",
+      "Conghui He",
+      "Weijia Li"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/guo26ag.html",
+    "abstract": "A truly universal AI-Generated Image (AIGI) detector must simultaneously generalize across diverse generative models and varied semantic content. Current methods learn a single, entangled forgery representation, conflating content-dependent flaws with content-agnostic artifacts, and are further constrained by outdated benchmarks. We propose OmniAID, a novel framework centered on a decoupled Mixture-of-Experts (MoE) architecture that separates: (1) semantic flaws across distinct content domains via Routable Specialized Semantic Experts, and (2) content-agnostic universal artifacts from content-dependent flaws via a Fixed Universal Artifact Expert. A two-stage training strategy first specializes experts independently with domain-specific hard-sampling, then trains a lightweight gating network for effective input routing. By explicitly decoupling \"what is generated” (content-specific flaws) from \"how it is generated” (universal artifacts), OmniAID achieves robust generalization. We also introduce Mirage, a large-scale, contemporary dataset comprising a modern training set and a challenging test set. Extensive experiments demonstrate that OmniAID surpasses existing detectors, establishing a new standard for AIGI detection against modern, in-the-wild threats.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/e2b52e46b1af1f3e33ae.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "Divide and Conquer: Reliable Multi-View Evidential Learning for Deepfake Detection",
+    "authors": [
+      "Xiaolu Kang",
+      "Zhongyuan Wang",
+      "Jikang Cheng",
+      "Baojin Huang",
+      "Zhanhe Lei",
+      "Gang Wu",
+      "Qin Zou",
+      "Qian Wang"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/kang26o.html",
+    "abstract": "With the evolution of generative models, deepfakes have achieved near-perfect semantic realism, leaving forensic traces only in subtle structural anomalies. However, existing single-view paradigms often fail to generalize, as dominant semantic features overwhelm subtle artifact cues within entangled representations. This imbalance leads to overconfident yet brittle predictions—a phenomenon we term the Semantic Masking Effect. To address this challenge, we propose a reliable framework called Divide-and-Conquer Multi-View Evidential Learning (DiCoME) for Deepfake Detection. In the \"Divide” phase, we employ Geometric View Purification to decompose the entangled representation space through principled geometric projection. This process suppresses semantic interference within artifact-sensitive representations, forming the foundation for decorrelated yet complementary semantic and artifact views. In the \"Conquer” phase, we leverage Uncertainty-Aware Evidential Learning to synthesize these distinct views. By explicitly modeling the \"epistemic conflict” between semantic and artifact cues, this mechanism provides calibrated uncertainty estimates instead of forcing rigid deterministic decisions. Extensive experiments across multiple benchmarks demonstrate that our method consistently outperforms existing approaches in generalization performance, while providing reliable uncertainty estimation for trustworthy deepfake detection. Code is available at https://github.com/kxl0825/DiCoME.git.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/d8abce1b847536d125ec.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "Dissect and Prune: Enhancing Robustness in AI-Generated Image Detection",
+    "authors": [
+      "Dahye Kim",
+      "Jaehyun Choi",
+      "Hyun Seok Seong",
+      "Seongho Kim",
+      "Donghun Lee",
+      "Sungwon Yi",
+      "Jang-Ho Choi"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/kim26k.html",
+    "abstract": "While existing AI-generated image detectors report high performance, we identify that this is largely driven by a critical prediction asymmetry : a bias toward the real class that severely limits sensitivity to generated content, especially under standard post-processing operations such as compression and resizing. We hypothesize that this stems from the model’s reliance on spurious features, distracting signals that obscure true generative artifacts. To address this, we propose DEAR (Dissect and Prune), which leverages inpainted images to identify and prune these interfering components. Specifically, we find that features strongly aligned to either inpainted or non-inpainted regions are less robust to post-processing. By measuring the alignment between channel activations and inpaint masks, DEAR removes features at both extremes, retaining only those that capture genuine generative artifacts. Experimental results demonstrate that our approach significantly enhances robustness against unseen generators and post-processing, effectively mitigating the prediction asymmetry. Our code is available at https://github.com/dahyedahye/dear.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/8ada47029dd8f0b174c4.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "Localizing Memorized Regions in Diffusion Models via Coordinate-Wise Curvature Differences",
+    "authors": [
+      "Gwangho Kim",
+      "Sungyoon Lee"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/kim26aq.html",
+    "abstract": "Diffusion models can unintentionally memorize training samples, raising concerns about privacy and copyright. While recent methods can detect memorization, they often rely on global or model-specific signals and provide limited insight into where memorization appears within a generated image. We provide a geometric characterization of local memorization as a coordinate-wise variance collapse. However, such collapse can also arise from intrinsic data constraints rather than overfitting. To isolate overfitting-driven memorization, we propose curvature-difference methods that subtract the curvature of an underfitted baseline, either the unconditional model or a less-trained version of itself. We further derive a score-difference proxy that provides a geometric explanation for the widely used score-difference-based detection metric. Experiments on Stable Diffusion, evaluated against ground-truth memorization masks, show that our method outperforms the prior attention-based localization method. Code is available at https://github.com/Gwangho99/mem-curv-diff.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/11fabc988fb3fab919c5.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "Towards Trustworthy and Identifiable Virtual Face Generation",
+    "authors": [
+      "Chunyang Li",
+      "Haoyue Wang",
+      "Zhenxing Qian",
+      "Sheng Li",
+      "Xinpeng Zhang",
+      "Jian Liu",
+      "Yixuan Pei",
+      "Weiqiang Wang"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/li26gt.html",
+    "abstract": "Identifiable virtual face (IVF) generation aims to transform a user’s original face into a virtual face for high utility privacy protection. The IVF is visually and statistically different from the original face, which can still be used for recognizing the user’s identity. Despite this advantage, these schemes are unable to verify the trustworthiness of the IVF, the quality and controllability of which is often limited. To address these issues, we propose TIVDiff, a diffusion-based framework for trustworthy and identifiable virtual face generation. TIVDiff learns a virtual identity (VID) space via Virtual Identity Projection (VIP) and synthesizes high-quality virtual faces conditioned on VID and 3D facial geometry for pose and expression preservation. To enable the trustworthiness of IVF, we further propose an Identity-Guarded Generative Watermarking (IGGW) scheme to bind the diffusion initial noise with VID through a reversible mapping mechanism. This enables the embedding of an imperceptible cue into IVF for legitimacy verification. Experiments demonstrate the advantage of our TIVDiff over the state-of-the-art IVF generation schemes in terms of image quality, identifiability and trustworthiness.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/34253731a42d856a0e4c.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "Deep Residual Injection for Full-Spectrum Forensic Signal Perception in Multimodal Large Language Models",
+    "authors": [
+      "Kaiqing Lin",
+      "Zhiyuan Yan",
+      "Ruoxin Chen",
+      "Ke-Yue Zhang",
+      "Yue Zhou",
+      "Caiyong Piao",
+      "Bin Li",
+      "Taiping Yao",
+      "Bo Wang",
+      "Youchang Xiao",
+      "Shouhong Ding"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/lin26an.html",
+    "abstract": "Multimodal large language models (MLLMs) have been increasingly adopted in forensics for their robust semantic understanding. As AI-generated images become realistic, semantic-level inconsistencies alone are often insufficient for reliable detection. This motivates a critical question: whether MLLMs can achieve full-spectrum forensic signal perception, i.e., capturing low-level generator artifacts without sacrificing pre-trained semantic knowledge. We then conduct a layer-wise analysis of forensic signal perception in MLLMs and find that semantic information is mainly encoded in the early-to-middle layers, and directly fine-tuning MLLMs for artifact learning causes rapid semantic forgetting. Based on this insight, we propose Deep Visual Residual MLLM (Deep-VRM) to preserve early semantic processing while injecting artifact-specific visual signals as a residual path into an intermediate layer , where they are fused with semantic token representations and propagated through subsequent trainable layers. This enables later layers to jointly model semantic reasoning and signal-level forensic cues, and surprisingly, the model learns to adaptively leverage different levels of forensic signals depending on the input, achieving robust and generalizable detection performance. Extensive experiments show that our method achieves state-of-the-art across all benchmarks.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/c07a82c1ae9d34b4a15c.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "PRPO: Paragraph-level Policy Optimization for Vision-Language Deepfake Detection",
+    "authors": [
+      "Tuan Nguyen",
+      "Naseem Khan",
+      "Khang Tran",
+      "Hai Phan",
+      "Issa Khalil"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/nguyen26f.html",
+    "abstract": "The rapid rise of synthetic media has made deepfake detection a critical challenge for online safety and trust. Progress remains constrained by the scarcity of large, high-quality datasets. Although multimodal large language models (LLMs) exhibit strong reasoning capabilities, their performance on deepfake detection is poor, often producing explanations that are misaligned with visual evidence or hallucinatory. To address this limitation, we introduce a reasoning-annotated dataset for deepfake detection and propose Paragraph-level Relative Policy Optimization (PRPO), a reinforcement learning algorithm that aligns LLM reasoning with image content at the paragraph level. Experiments show that PRPO improves detection accuracy by a wide margin and achieves the highest reasoning score of 4.55/5.0. Ablation studies further demonstrate that PRPO significantly outperforms GRPO under test-time conditions. These results underscore the importance of grounding multimodal reasoning in visual evidence to enable more reliable and interpretable deepfake detection.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/7df114b7c665207aaae6.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "OmniVL-Guard: Towards Unified Vision-Language Forgery Detection and Grounding via Balanced RL",
+    "authors": [
+      "Jinjie Shen",
+      "Jing Wu",
+      "Yaxiong Wang",
+      "Lechao Cheng",
+      "Shengeng Tang",
+      "Tianrui Hui",
+      "Nan Pu",
+      "Zhun Zhong"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/shen26u.html",
+    "abstract": "Existing forgery detection methods are often limited to uni-modal or bi-modal settings, failing to handle the interleaved text, images, and videos prevalent in real-world misinformation. To bridge this gap, we propose OmniVL-Guard , a unified framework for omni vision-language forgery detection and grounding. In this unified setting, the interplay between diverse modalities and the dual requirements of simultaneous detection and localization pose significant optimization challenges. Through extensive investigations, we identify a critical difficulty bias in this multi-task optimization: the simpler veracity classification task tends to dominate the gradients, leading to suboptimal performance in fine-grained grounding. To address this imbalance, we first develop a Self-Evolving CoT Generation pipeline to synthesize high-quality reasoning paths, effectively overcoming the cold-start challenge. Building upon this, we propose A daptive R eward S caling P olicy O ptimization ( ARSPO ). By dynamically modulating reward scales and task weights, ARSPO ensures a balanced joint optimization that prioritizes challenging grounding objectives. Extensive experiments demonstrate that OmniVL-Guard significantly outperforms state-of-the-art methods and exhibits robust zero-shot generalization across out-of-domain scenarios.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/f2ae90c9c9a1d82d823d.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "TranX-Adapter: Bridging Artifacts and Semantics within MLLMs for Robust AI-generated Image Detection",
+    "authors": [
+      "Wenbin Wang",
+      "Yuge Huang",
+      "Jianqing Xu",
+      "Yue Yu",
+      "Jiangtao Yan",
+      "Shouhong Ding",
+      "Pan Zhou",
+      "Yong Luo"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/wang26cj.html",
+    "abstract": "Rapid advances in AI-generated image (AIGI) technology enable highly realistic synthesis, threatening public information integrity and security. Recent studies have demonstrated that incorporating texture-level artifact features alongside semantic features into multimodal large language models (MLLMs) can enhance their AIGI detection capability. However, our preliminary analyses reveal that artifact features exhibit high intra-feature similarity, leading to an almost uniform attention map after the softmax operation. This phenomenon causes attention dilution, thereby hindering effective fusion between semantic and artifact features. To overcome this limitation, we propose a lightweight fusion adapter, TranX-Adapter, which integrates a Task-aware Optimal-Transport Fusion that leverages the Jensen-Shannon divergence between artifact and semantic prediction probabilities as a cost matrix to transfer artifact information into semantic features, and an X-Fusion that employs cross-attention to transfer semantic information into artifact features. Experiments on standard AIGI detection benchmarks upon several advanced MLLMs, show that our TranX-Adapter brings consistent and significant improvements (up to +6% accuracy). Code can be found in supplementary material.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/7a4c82c82ed069574646.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "Fleet: Few Shots Lead Effective AI-generated Image Detection",
+    "authors": [
+      "Jiaan Wang",
+      "Sirui Liu",
+      "Yu Li",
+      "Kaiyuan Yang",
+      "Juan Cao",
+      "Sheng Tang"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/wang26eo.html",
+    "abstract": "AI-generated image (AIGI) detection is undergoing a critical transition from laboratory benchmarks to open-world adversarial defense. The prevalent paradigm focuses on finding static feature spaces, assuming that some invariant artifacts learned from historical data can achieve universal zero-shot generalization. While achieving saturation on several AIGI benchmarks, this static hypothesis suffers a severe performance drop against rapidly evolving generators (e.g., SD3, Nano Banana Pro). To address these limitations, we propose that the field should expand beyond \"static generalization\" to a new paradigm of \"dynamic adaptation\". We introduce Fleet , a framework that pioneers a dynamic paradigm of continuous few-shot evolution, enabling rapid alignment with emerging generative threats. Fleet improves few-shot adaptation by replacing unconstrained feature updates with constrained routing correction, where avoidance routing redirects novel AI samples away from Non-AI-dominated routes within decoupled subspaces. To validate this, we present Treasure , a benchmark spanning 64 models and 360k images, featuring diverse architectures and 20 closed-source commercial engines. Experiments reveal that while static SOTA methods fail catastrophically on modern generators, Fleet restores performance from 20.4% to 73.1% with only 10-shot adaptation on \"Doubao Seedream 4.0\". Code and data are available at https://github.com/ICTMCG/Fleet .",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/0eae5b4a7b80bf12af72.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "Breaking Manifold Continuity: Vector Quantized Modeling for Real-Centric Deepfake Detection",
+    "authors": [
+      "Changshuo Wang",
+      "Jiangming Wang",
+      "Ke-Yue Zhang",
+      "Taiping Yao",
+      "Shouhong Ding",
+      "Ran Yi",
+      "Lizhuang Ma"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/wang26it.html",
+    "abstract": "The increasingly realistic and diverse generative data has led some deepfake detection methods to shift towards learning robust real content, e.g., via reconstruction-based tasks. However, most existing approaches rely primarily on prevalent continuous modeling (e.g., GMMs, VAEs, Diffusion Models) to construct a continuous latent manifold of real data, with the aim of improving the generalization capability, while overlooking a critical issue, i.e., such continuity may facilitate the interpolation of forgery artifacts, consequently causing ambiguity in detection. To alleviate this problem, we integrate discrete modeling into the feature space of the CLIP vision encoder, striking a balance between continuous manifold modeling and discrete representation. By incorporating a learnable vector quantized codebook, the real latent manifold is discretized, imposing a more stringent information bottleneck that reduces the likelihood of embedding generative artifacts. In order to further enhance the generalization of discrete modeling, we propose an adaptive tangent space projection mechanism that yields a continuous relaxation of the discrete real distribution within a controllable range. With these components, our method constructs a real distribution that is both tightly constrained and broadly generalizable, enhancing robustness to unseen forgeries. Extensive experiments on diverse datasets demonstrate the effectiveness of our method.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/22f620e2c2dd62bfdeb2.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "Order within Chaos: Capturing Intrinsic Energy Anomalies for AI-Manipulated Image Forgery Localization",
+    "authors": [
+      "Yiming Wang",
+      "Baiqi Wu",
+      "Qingming Li",
+      "Jiahao Chen",
+      "Tong Zhang",
+      "Shouling Ji"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/wang26iy.html",
+    "abstract": "Recent advancements in generative AI have led to image editing models capable of producing realistic forgeries that evade traditional image forgery localization methods, as these approaches depend on physical noise absent in synthetic data. To address this challenge, we theoretically demonstrate that the diffusion process inherently suppresses local high-frequency variance, creating a statistical energy gap that is distinguishable from the natural entropy of optical imaging. Guided by this insight, we propose FLAME, a unified framework that utilizes a LAD map to capture these intrinsic anomalies, coupled with a parameter-efficient adapter for SAM to achieve precise, pixel-level forgery localization. Furthermore, to bridge the lag between forensic benchmarks and evolving generative models, we introduce EditStream, an automated pipeline for continuous, instruction-based training data synthesis. Extensive experiments demonstrate that FLAME establishes a new state-of-the-art, significantly outperforming previous methods on AI-generated forgery datasets while effectively generalizing to unseen generative architectures. Our code is available at https://github.com/phoenixnir/FLAME.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/f0a7329c389104ccfb6f.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "BPL: Generalizable Deepfake Detection via Bias-only Pair-aware Learning",
+    "authors": [
+      "Yuxiang Xu",
+      "Rundong He",
+      "Zhiyuan Yan",
+      "Yicong Dong",
+      "Zhongyi Han",
+      "Xiaoyan Wang",
+      "Yilong Yin"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/xu26s.html",
+    "abstract": "The detection of synthetic images has traditionally been framed as a binary classification problem. However, we argue that this formulation overlooks a fundamental structural property of generative datasets: synthetic images are not independent samples, but are implicitly paired with real images sharing the same semantic source. Existing methods treat real and fake images as independent instances, failing to capture generation-induced relational discrepancies in real–fake pairs. Moreover, models tend to rapidly overfit to seen fake patterns, leading to poor generalization to unseen ones. To overcome these challenges, we propose a novel detection framework that explicitly mines real–fake pairs by constructing source-guided mappings or leveraging nearest-neighbor relationships in the CLIP embedding space. We then introduce pair-wise discrepancy learning that explicitly enlarges generation-induced deviations and discrepancy inversion to mitigate overfitting. Moreover, to preserve pretrained semantic representations while improving generalization, we adopt a bias-only fine-tuning scheme that restricts model capacity during adaptation. Extensive experiments show that our approach achieves superior generalization across unseen fake patterns.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/976045a2e78ca6746db5.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "GenShield: Unified Detection and Artifact Correction for AI-Generated Images",
+    "authors": [
+      "Zhipei Xu",
+      "Xuanyu Zhang",
+      "Youmin Xu",
+      "Qing Huang",
+      "Shen Chen",
+      "Taiping Yao",
+      "Shouhong Ding",
+      "Jian Zhang"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/xu26cl.html",
+    "abstract": "Diffusion-based image synthesis has made AI-generated images (AIGI) increasingly photorealistic, raising urgent concerns about authenticity in applications such as misinformation detection, digital forensics, and content moderation. Despite the substantial advances in AIGI detection, how to correct detected AI-generated images with visible artifacts and restore realistic appearance remains largely underexplored. Moreover, few existing work has established the connection between AIGI detection and artifact correction. To fill this gap, we propose GenShield, a unified autoregressive framework that jointly performs explainable AIGI detection and controllable artifact correction in a closed loop from diagnosis to restoration, revealing a mutually reinforcing relationship between these two tasks. We further introduce a Visual Chain-of-Thought based curriculum learning strategy that enables self-explained, multi-step \"diagnose-then-repair\" correction with an explicit stopping criterion. A high-quality dataset with large-scale \"artifact-restored\" pairs is also constructed alongside a unified evaluation pipeline. Extensive experiments on our correction benchmark and mainstream AIGI detection benchmarks demonstrate state-of-the-art performance and strong generalization of our method.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/9592abb6f18c8ad21fcf.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "DGS-Net: Distillation-Guided Gradient Surgery for CLIP Fine-Tuning in AI-Generated Image Detection",
+    "authors": [
+      "Jiazhen Yan",
+      "Ziqiang Li",
+      "Fan Wang",
+      "Boyu Wang",
+      "Ziwen He",
+      "Zhangjie Fu"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/yan26h.html",
+    "abstract": "The rapid progress of generative models such as GANs and diffusion models has led to the widespread proliferation of AI-generated images, raising concerns about misinformation, privacy violations, and trust erosion in digital media. Although large-scale multimodal models like CLIP offer strong transferable representations for detecting synthetic content, fine-tuning them often induces catastrophic forgetting, which degrades pre-trained priors and limits cross-domain generalization. To address this issue, we propose the Distillation-guided Gradient Surgery Network (DGS-Net), a novel framework that preserves transferable pre-trained priors while suppressing task-irrelevant components. Specifically, we introduce a gradient-space decomposition that separates harmful and beneficial descent directions during optimization. By projecting task gradients onto the orthogonal complement of harmful directions and aligning with beneficial ones distilled from a frozen CLIP encoder, DGS-Net achieves unified optimization of prior preservation and irrelevant suppression. Extensive experiments on 50 generative models demonstrate that our method outperforms state-of-the-art approaches by an average margin of 6.6%, achieving superior detection performance and generalization across diverse generation techniques.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/dcbffd1f800df14b0719.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "FiSeR: Fine-Grained Source Representations for Cross-Domain AI Image Detection",
+    "authors": [
+      "Shan Zhang",
+      "Yongxin He",
+      "Mingming Zhang",
+      "Huiwen Tian",
+      "Lei Ma"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/zhang26bi.html",
+    "abstract": "Real-world synthetic image detectors often generalize poorly under domain shift despite strong in-domain performance. Using unsupervised UMAP projections, we find that natural and synthetic features remain partially separable on unseen datasets, yet performance still drops, suggesting that the classification head overfits to training-domain artifacts. Therefore, the key is to learn more transferable representations so that the decision criterion is more stable and robust to domain shifts. Based on the structural fact that synthetic images are produced by diverse generators, we propose a hierarchical contrastive learning framework that improves the separability between natural and synthetic images while preserving generator identity information. It jointly optimizes (i) a coarse contrastive objective between natural and synthetic images and (ii) a fine contrastive objective among synthetic images using generator identities. Trained on WildFake, our method achieves an average AUROC gain of +10.22 on cross-domain evaluation over Chameleon, AIGIBench, Community Forensics, and GenImage under the same settings as the strong baseline DIRE. For few-shot adaptation, we freeze the backbone and fit an SVM head on 10 labeled samples per class, improving AUROC by +10.64 on AIGIBench and +17.41 on Chameleon, averaged over 12 widely used detectors. Our code is publicly available at: https://github.com/heyongxin233/FiSeR.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/0c9d75c8d5972bc45b99.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "PGC: Peak-Guided Calibration for Generalizable AI-Generated Image Detection",
+    "authors": [
+      "Xiaoyu Zhou",
+      "Jianwei Fei",
+      "Peipeng Yu",
+      "Jingchang Xie",
+      "Chong Cheng",
+      "Zhihua Xia"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/zhou26h.html",
+    "abstract": "The rapid evolution of generative AI, from GANs to modern diffusion models, has resulted in increasingly subtle discriminative clues. These fine-grained signals are often overshadowed by dominant, high-fidelity image content (e.g., the main subject), limiting the reliability of existing detectors that predominantly rely on global representations. To address this challenge, we propose the Peak-Guided Calibration (PGC) framework. PGC introduces a novel strategy that aggregates salient features via a peak-focusing mechanism. Specifically, by employing a peak-sensitive aggregation that accentuates the most discriminative local clues, PGC leverages these critical signals to calibrate the global decision. This approach recovers subtle patterns that would otherwise be submerged in the global context. Furthermore, to better simulate real-world threats, we introduce the CommGen15 dataset, a challenging benchmark comprising samples from 15 commercial models. Extensive experiments demonstrate that PGC achieves state-of-the-art performance. Specifically, it improves mean accuracy by +12.3% on our CommGen15 dataset, and sets new records on standard benchmarks, including GenImage (+2.1%), AIGI (+3.5%), and UniversalFakeDetect (+1.7%). Code is available at https://github.com/xiaoyu6868/PGC.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/0d8f525ad77edeeca31a.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "ForensicConcept: Transferable Forensic Concepts for AIGI Detection",
+    "authors": [
+      "Menyanshu Zhou",
+      "Ziyin Zhou",
+      "Ke Sun",
+      "Yunpeng Luo",
+      "Jiayi Ji",
+      "Xiaoshuai Sun",
+      "Rongrong Ji"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/zhou26bt.html",
+    "abstract": "AI-generated image detectors achieve high accuracy on in-distribution data but often fail on unseen generators. A key obstacle to understanding this failure is the black-box nature of current detectors: they do not reveal which evidence drives their decisions. We propose ForensicConcept, a framework that extracts explicit forensic concepts from detectors and enables their transfer across backbones. Our method localizes decision-critical patches via Transformer attribution, clusters them into a compact concept codebook, and uses a concept-aligned projection to produce auditable evidence readouts. Motivated by prior studies showing that DINO representations can guide diffusion generation and exhibit concept-level correspondence with diffusion features, we introduce a generation-trace reference based on CleanDIFT diffusion features and quantify backbone-trace alignment via neighborhood-structure consistency (CKNNA). We further propose concept codebook injection to transfer diffusion-derived concepts into target backbones. Experiments on GenImage, GAN-family, and Chameleon benchmarks show consistent improvements over prior methods. We also find that CKNNA alignment predicts transfer effectiveness, providing a principled explanation for why some backbones yield more transferable forensic evidence than others.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/f5021d74419edc6a3859.gz",
+    "source_kind": "official_proceedings"
+  },
+  {
+    "title": "Forensic Prompting with Dual-Action Policy Optimization for Vision-Language Forgery Detection and Localization",
+    "authors": [
+      "Ye Zhu",
+      "Ai Zhao",
+      "Jinwei Wang"
+    ],
+    "year": 2026,
+    "venue": "ICML",
+    "doi": "",
+    "arxiv_id": "",
+    "official_url": "https://proceedings.mlr.press/v306/zhu26bg.html",
+    "abstract": "Image forgery is rapidly evolving, rendering forensic traces increasingly subtle and readily attenuated by post-processing. Although vision-language prompting can inject priors, open-ended LLM-generated prompts are difficult to constrain, and naive language descriptions can introduce semantic perturbations. To address these challenges, we propose Forensic Prompting with Dual-Action policy optimization (FPDA) for vision-language forgery detection and localization, where the Forensic Prompting Module (FPM) constructs a structured and reproducible forensic prompt bank and supports optional text input as a reliability-aware cue for stable conditioning. Moreover, Dual-Action Policy Optimization (DAPO) is applied to learn sample-adaptive evidence usage by routing forensic prompts and scheduling localization refinement on a per-image basis, stabilizing discriminative cues and improving mask spatial consistency. Extensive experiments are conducted on multiple public datasets covering manual manipulations, diffusion content, face forgeries, and text-enabled settings, demonstrating favorable detection and localization performance over representative state-of-the-art methods under comparable evaluation protocols.",
+    "source_path": "data/raw/systematic_gap_audit_2026_10_02/sources/546d7193087adb15c4f1.gz",
+    "source_kind": "official_proceedings"
+  }
+]

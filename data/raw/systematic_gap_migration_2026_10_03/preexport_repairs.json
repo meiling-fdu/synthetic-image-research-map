@@ -1,0 +1,53 @@
+{
+  "removed_migration_only_placeholders": [
+    {
+      "location_id": "location:47eb1722a3aa164b1a66",
+      "institution_id": "institution:ff5cbc0264355dd284cf",
+      "institution": "Hamad Bin Khalifa University",
+      "normalized_institution": "hamad bin khalifa university",
+      "city": "Doha",
+      "region": "",
+      "country": "Qatar",
+      "country_code": "QA",
+      "lat": "",
+      "lon": "",
+      "coordinate_status": "missing",
+      "created_at": "2026-10-03T00:00:00Z",
+      "updated_at": "2026-10-03T00:00:00Z",
+      "created_by": "maintainer-approved-gap-migration"
+    },
+    {
+      "location_id": "location:6450ee2a8d9702f28b56",
+      "institution_id": "institution:2e57c791c1aa4a3f50cd",
+      "institution": "Qatar Computing Research Institute",
+      "normalized_institution": "qatar computing research institute",
+      "city": "Doha",
+      "region": "",
+      "country": "Qatar",
+      "country_code": "QA",
+      "lat": "",
+      "lon": "",
+      "coordinate_status": "missing",
+      "created_at": "2026-10-03T00:00:00Z",
+      "updated_at": "2026-10-03T00:00:00Z",
+      "created_by": "maintainer-approved-gap-migration"
+    },
+    {
+      "location_id": "location:9ed952ef4867142840bd",
+      "institution_id": "institution:e86c10c85c74ba208e3d",
+      "institution": "China Southern Power Grid Electric Power Research Institute",
+      "normalized_institution": "china southern power grid electric power research institute",
+      "city": "",
+      "region": "",
+      "country": "China",
+      "country_code": "CN",
+      "lat": "",
+      "lon": "",
+      "coordinate_status": "missing",
+      "created_at": "2026-10-03T00:00:00Z",
+      "updated_at": "2026-10-03T00:00:00Z",
+      "created_by": "maintainer-approved-gap-migration"
+    }
+  ],
+  "reason": "Confirmed-location registry requires numeric coordinates; unverified locations remain only in the existing review queue. No pre-migration rows changed."
+}

@@ -1,0 +1,959 @@
+{
+  "source": {
+    "url": "https://proceedings.mlr.press/v306/",
+    "label": "ICML 2026 official proceedings index",
+    "retrieved_at": "2026-10-02T15:42:13.312245+00:00",
+    "status": 200,
+    "final_url": "https://proceedings.mlr.press/v306/",
+    "content_type": "text/html; charset=utf-8",
+    "raw_path": "data/raw/systematic_gap_audit_2026_10_02/sources/701210428e9ea6004049.gz",
+    "response_sha256": "be60a5b60ca1878a86b4c6c590a598c4fa239f817ee9ee8e718fff3f8474f85f",
+    "bytes": 7156810
+  },
+  "enumerated": 6552,
+  "title_gate": "forensic|forger|deepfake|attribut|provenance|fingerprint|watermark|(?:detect|localiz|identif|authentic|fake).{0,90}(?:generat|synthe|image|diffusion|gan)|(?:generat|synthe|image|diffusion|gan).{0,90}(?:detect|localiz|identif|authentic|fake)",
+  "selected": [
+    {
+      "title": "PASA: A Principled Embedding-Space Watermarking Approach for LLM-Generated Text under Semantic-Invariant Attacks",
+      "primary_url": "https://proceedings.mlr.press/v306/ai26b.html",
+      "top_title": "Fooling the Watchers: Breaking AIGC Detectors via Semantic Prompt Attacks",
+      "similarity": 0.463
+    },
+    {
+      "title": "GEPC: Group-Equivariant Posterior Consistency for Out-of-Distribution Detection in Diffusion Models",
+      "primary_url": "https://proceedings.mlr.press/v306/alexis26a.html",
+      "top_title": "Detecting Origin Attribution for Text-to-Image Diffusion Models",
+      "similarity": 0.482
+    },
+    {
+      "title": "IPMark: A Sentence-Level Watermark for LLMs with Hierarchical Personalization and Efficient Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/an26a.html",
+      "top_title": "HiDD-Net: A Hierarchical Dual-Domain Distillation Network for Efficient Deepfake Detection",
+      "similarity": 0.494
+    },
+    {
+      "title": "Proactive Defense Benchmark against Deepfake Generation",
+      "primary_url": "https://proceedings.mlr.press/v306/baek26e.html",
+      "top_title": "Benchmarking Deepart Detection",
+      "similarity": 0.564
+    },
+    {
+      "title": "Collaborative Threshold Watermarking",
+      "primary_url": "https://proceedings.mlr.press/v306/bakr26a.html",
+      "top_title": "Optimized Frequency Collaborative Strategy Drives AI Image Detection",
+      "similarity": 0.484
+    },
+    {
+      "title": "Where Detectors Fail: Probing Generative Space for Generalizable AI-Generated Image Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/cao26s.html",
+      "top_title": "Reduce the Artifact Bias for More Generalizable AI-Generated Image Detection",
+      "similarity": 0.721
+    },
+    {
+      "title": "Black-Box Detection of LLM-Generated Text Using Generalized Jensen Shannon Divergence",
+      "primary_url": "https://proceedings.mlr.press/v306/chen26bf.html",
+      "top_title": "Detection of GAN generated image using color gradient representation",
+      "similarity": 0.567
+    },
+    {
+      "title": "Selective Disclosure Watermarking for Large Language Models",
+      "primary_url": "https://proceedings.mlr.press/v306/chen26bs.html",
+      "top_title": "Fake-GPT: Detecting Fake Image via Large Language Model",
+      "similarity": 0.525
+    },
+    {
+      "title": "Rotation-Invariant Spherical Watermarking via Third-Order SO(3) Representation Coupling",
+      "primary_url": "https://proceedings.mlr.press/v306/chen26ca.html",
+      "top_title": "Detection of GAN generated image using color gradient representation",
+      "similarity": 0.515
+    },
+    {
+      "title": "DANCE: Dynamic, Available, Neighbor-gated Condensation for Federated Text-Attributed Graphs",
+      "primary_url": "https://proceedings.mlr.press/v306/chen26cr.html",
+      "top_title": "Learning Generalizable Visual Representations for AI-Generated Image Detection",
+      "similarity": 0.459
+    },
+    {
+      "title": "Mechanistic Data Attribution: Tracing the Training Origins of Interpretable LLM Units",
+      "primary_url": "https://proceedings.mlr.press/v306/chen26cv.html",
+      "top_title": "Whodunit: Detection and Attribution of Synthetic Images by Leveraging Model-specific Fingerprints",
+      "similarity": 0.491
+    },
+    {
+      "title": "Beyond Trajectory-Level Attribution: Graph-Based Credit Assignment for Agentic Reinforcement Learning",
+      "primary_url": "https://proceedings.mlr.press/v306/cheng26e.html",
+      "top_title": "Reasoning-Aware AIGC Detection via Alignment and Reinforcement",
+      "similarity": 0.486
+    },
+    {
+      "title": "Barriers to Counterfactual Credit Attribution for Autoregressive Models",
+      "primary_url": "https://proceedings.mlr.press/v306/cohen26e.html",
+      "top_title": "PRADA: Probability-Ratio-Based Attribution and Detection of Autoregressive-Generated Images",
+      "similarity": 0.5
+    },
+    {
+      "title": "FoeGlass: Simple In-Context Learning Is Enough for Red Teaming Audio Deepfake Detectors",
+      "primary_url": "https://proceedings.mlr.press/v306/dehdashtian26a.html",
+      "top_title": "BiHPF: Bilateral High-Pass Filters for Robust Deepfake Detection",
+      "similarity": 0.496
+    },
+    {
+      "title": "STORM: Segment, Track, and Object Re-Localization from a Single Image",
+      "primary_url": "https://proceedings.mlr.press/v306/deng26a.html",
+      "top_title": "Detection, Attribution and Localization of GAN Generated Images",
+      "similarity": 0.559
+    },
+    {
+      "title": "Detecting Errors in AI-Generated Annotations: When and Why Semantic Neighbors Help",
+      "primary_url": "https://proceedings.mlr.press/v306/di26b.html",
+      "top_title": "Detecting GAN-generated synthetic images using semantic inconsistencies",
+      "similarity": 0.537
+    },
+    {
+      "title": "Attribution-Guided and Coverage-Maximized Pruning for Structural MoE Compression",
+      "primary_url": "https://proceedings.mlr.press/v306/ding26q.html",
+      "top_title": "Source Attribution of AI-Generated Images: A Principled Survey",
+      "similarity": 0.452
+    },
+    {
+      "title": "Discriminative Attribute Graph Clustering Through Topology-Guided Contrastive Learning",
+      "primary_url": "https://proceedings.mlr.press/v306/ding26v.html",
+      "top_title": "Generalizable Synthetic Image Detection via Language-Guided Contrastive Learning",
+      "similarity": 0.533
+    },
+    {
+      "title": "DNA: Uncovering Universal Latent Forgery Knowledge",
+      "primary_url": "https://proceedings.mlr.press/v306/dou26b.html",
+      "top_title": "Towards Generalizable Detector for Generated Image",
+      "similarity": 0.449
+    },
+    {
+      "title": "Watermarking Graph Neural Networks via Explanations for Ownership Protection",
+      "primary_url": "https://proceedings.mlr.press/v306/downer26a.html",
+      "top_title": "Learning Generalizable Visual Representations for AI-Generated Image Detection",
+      "similarity": 0.565
+    },
+    {
+      "title": "Can We Build a Monolithic Model for Fake Image Detection? SICA: Semantic-Induced Constrained Adaptation for Unified-Yet-Discriminative Artifact Feature Space Reconstruction",
+      "primary_url": "https://proceedings.mlr.press/v306/du26g.html",
+      "top_title": "AEROBLADE: Training-Free Detection of Latent Diffusion Images Using Autoencoder Reconstruction Error",
+      "similarity": 0.441
+    },
+    {
+      "title": "Sem-Detect: Semantic Level Detection of AI Generated Peer-Reviews",
+      "primary_url": "https://proceedings.mlr.press/v306/duarte26a.html",
+      "top_title": "Prompt-Engineered Detection of AI-Generated Images",
+      "similarity": 0.606
+    },
+    {
+      "title": "ExPLAIND: Unifying Model, Data, and Training Attribution to Study Model Behavior",
+      "primary_url": "https://proceedings.mlr.press/v306/eichin26a.html",
+      "top_title": "Detecting Origin Attribution for Text-to-Image Diffusion Models",
+      "similarity": 0.443
+    },
+    {
+      "title": "ConEx: Human-Interpretable Saliency Maps via Concept-Aware Attribution",
+      "primary_url": "https://proceedings.mlr.press/v306/elisha26a.html",
+      "top_title": "Explainable Artifacts for Synthetic Western Blot Source Attribution",
+      "similarity": 0.512
+    },
+    {
+      "title": "Debate with Images: Detecting Deceptive Behaviors in Multimodal Large Language Models",
+      "primary_url": "https://proceedings.mlr.press/v306/fang26f.html",
+      "top_title": "Towards Explainable Fake Image Detection with Multi-Modal Large Language Models",
+      "similarity": 0.685
+    },
+    {
+      "title": "Real Data Lies: Unveiling and Closing the Quality Shortcut in Generalizable AI-Generated Video Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/fang26s.html",
+      "top_title": "Reduce the Artifact Bias for More Generalizable AI-Generated Image Detection",
+      "similarity": 0.619
+    },
+    {
+      "title": "Learning Interpretable Options by Identifying Reward Diffusion Bottlenecks in Reinforcement Learning",
+      "primary_url": "https://proceedings.mlr.press/v306/fei26a.html",
+      "top_title": "Towards Universal AI-Generated Image Detection by Variational Information Bottleneck Network",
+      "similarity": 0.465
+    },
+    {
+      "title": "Explainable Forensics of Manipulated Segments in Untrimmed Long Videos",
+      "primary_url": "https://proceedings.mlr.press/v306/feng26g.html",
+      "top_title": "Explainability-Driven Analysis of AI-Generated Image Detectors: Insights Into Generalization and Failure Modes",
+      "similarity": 0.494
+    },
+    {
+      "title": "How Good is Post-Hoc Watermarking With Language Model Rephrasing?",
+      "primary_url": "https://proceedings.mlr.press/v306/fernandez26b.html",
+      "top_title": "FLODA: Harnessing Vision-Language Models for Deepfake Assessment",
+      "similarity": 0.505
+    },
+    {
+      "title": "CODiff: One-Step Diffusion Model for Camouflaged Object Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/fu26l.html",
+      "top_title": "DIRE for Diffusion-Generated Image Detection",
+      "similarity": 0.547
+    },
+    {
+      "title": "On the Fragility of Data Attribution When Learning Is Distributed",
+      "primary_url": "https://proceedings.mlr.press/v306/gao26k.html",
+      "top_title": "Source Generator Attribution via Inversion",
+      "similarity": 0.468
+    },
+    {
+      "title": "On the Salience of Low-Probability Tokens for AI-Generated Text Detection: A Multiscale Uncertainty Perspective",
+      "primary_url": "https://proceedings.mlr.press/v306/guo26w.html",
+      "top_title": "Self-Supervised AI-Generated Image Detection: A Camera Metadata Perspective",
+      "similarity": 0.55
+    },
+    {
+      "title": "OmniAID: Decoupling Semantics and Artifacts for Universal AI-Generated Image Detection in the Wild",
+      "primary_url": "https://proceedings.mlr.press/v306/guo26ag.html",
+      "top_title": "OmniAID: Decoupling Semantics and Artifacts for Universal AI-Generated Image Detection in the Wild",
+      "similarity": 1.0
+    },
+    {
+      "title": "Adaptive Code Watermarking Through Reinforcement Learning",
+      "primary_url": "https://proceedings.mlr.press/v306/guo26am.html",
+      "top_title": "Advanced Detection of AI-Generated Images Through Vision Transformers",
+      "similarity": 0.496
+    },
+    {
+      "title": "FLIPS: Instance-Fingerprinting for LLMs via Pseudo-random Sequences",
+      "primary_url": "https://proceedings.mlr.press/v306/gurvan26a.html",
+      "top_title": "Learning to Disentangle GAN Fingerprint for Fake Image Attribution",
+      "similarity": 0.466
+    },
+    {
+      "title": "GaussTrace: Provenance Analysis of 3D Gaussian Splatting Models with Evidence-based LLM Reasoning",
+      "primary_url": "https://proceedings.mlr.press/v306/han26t.html",
+      "top_title": "Towards Generated Image Provenance Analysis via Conceptual-Similar-Guided-SLIP Retrieval",
+      "similarity": 0.457
+    },
+    {
+      "title": "MusicDET: Zero-Shot AI-Generated Music Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/han26u.html",
+      "top_title": "Efficient Zero-Shot AI-Generated Image Detection",
+      "similarity": 0.795
+    },
+    {
+      "title": "SONAR: Spectral-Contrastive Audio Residuals for Generalizable Deepfake Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/hidekel26a.html",
+      "top_title": "High-Resolution Contrastive Framework for Generalizable AI-Generated Image Detection",
+      "similarity": 0.616
+    },
+    {
+      "title": "Denoising without Diffusion: Fixed-Noise Denoiser Anomaly Detection in Tabular Data",
+      "primary_url": "https://proceedings.mlr.press/v306/hirth26a.html",
+      "top_title": "Exposing the Fake: Effective Diffusion-Generated Images Detection",
+      "similarity": 0.527
+    },
+    {
+      "title": "dgMARK: Decoding-Guided Watermarking for Diffusion Language Models",
+      "primary_url": "https://proceedings.mlr.press/v306/hong26i.html",
+      "top_title": "Detecting Origin Attribution for Text-to-Image Diffusion Models",
+      "similarity": 0.549
+    },
+    {
+      "title": "Attributed Network Alignment: Statistical Limits and Efficient Algorithm",
+      "primary_url": "https://proceedings.mlr.press/v306/huang26az.html",
+      "top_title": "Attribution as Retrieval: Model-Agnostic AI-Generated Image Attribution",
+      "similarity": 0.444
+    },
+    {
+      "title": "RLCracker: Evaluating the Worst-Case Vulnerability of LLM Watermarks with Adaptive RL Attacks",
+      "primary_url": "https://proceedings.mlr.press/v306/huang26ch.html",
+      "top_title": "Vulnerabilities in AI-Generated Image Detection: The Challenge of Adversarial Attacks",
+      "similarity": 0.429
+    },
+    {
+      "title": "IACW: Intent-Aware Controllable Watermarking for Scalable Authorial Intent Attribution",
+      "primary_url": "https://proceedings.mlr.press/v306/huang26ck.html",
+      "top_title": "IncreFA: Breaking the Static Wall of Generative Model Attribution",
+      "similarity": 0.485
+    },
+    {
+      "title": "LLM Watermark Evasion via Bias Inversion",
+      "primary_url": "https://proceedings.mlr.press/v306/hwang26e.html",
+      "top_title": "Source Generator Attribution via Inversion",
+      "similarity": 0.548
+    },
+    {
+      "title": "Step-Resolved Data Attribution for Looped Transformers",
+      "primary_url": "https://proceedings.mlr.press/v306/kaissis26a.html",
+      "top_title": "EKILA: Synthetic Media Provenance and Attribution for Generative Art",
+      "similarity": 0.505
+    },
+    {
+      "title": "Real-Time Visual Attribution Streaming in Thinking Model",
+      "primary_url": "https://proceedings.mlr.press/v306/kang26d.html",
+      "top_title": "FIDAVL: Fake Image Detection and Attribution Using Vision-Language Model",
+      "similarity": 0.523
+    },
+    {
+      "title": "Divide and Conquer: Reliable Multi-View Evidential Learning for Deepfake Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/kang26o.html",
+      "top_title": "Incremental Learning for AI-Generated Image Detection",
+      "similarity": 0.576
+    },
+    {
+      "title": "Mechanistic Anomaly Detection via Functional Attribution",
+      "primary_url": "https://proceedings.mlr.press/v306/keenan26a.html",
+      "top_title": "Semantic Visual Anomaly Detection and Reasoning in AI-Generated Images",
+      "similarity": 0.536
+    },
+    {
+      "title": "Dissect and Prune: Enhancing Robustness in AI-Generated Image Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/kim26k.html",
+      "top_title": "Dissect and Prune: Enhancing Robustness in AI-Generated Image Detection",
+      "similarity": 1.0
+    },
+    {
+      "title": "Block-wise Codeword Embedding for Reliable Multi-bit Text Watermarking",
+      "primary_url": "https://proceedings.mlr.press/v306/kim26y.html",
+      "top_title": "PPM-CLIP: Probabilistic Prompt Modeling for Generalizable AI-Generated Image Detection",
+      "similarity": 0.441
+    },
+    {
+      "title": "Localizing Memorized Regions in Diffusion Models via Coordinate-Wise Curvature Differences",
+      "primary_url": "https://proceedings.mlr.press/v306/kim26aq.html",
+      "top_title": "Sanitizing Diffusion-Generated Images via Fingerprint Removal and Adversarial Perturbation for Forensic Evasion",
+      "similarity": 0.436
+    },
+    {
+      "title": "Manifold-Aligned Guided Integrated Gradients for Reliable Feature Attribution",
+      "primary_url": "https://proceedings.mlr.press/v306/kim26aw.html",
+      "top_title": "WILD: A New In-the-Wild Image Linkage Dataset for Synthetic Image Attribution",
+      "similarity": 0.496
+    },
+    {
+      "title": "CausalArmor: Efficient Indirect Prompt Injection Guardrails via Causal Attribution",
+      "primary_url": "https://proceedings.mlr.press/v306/kim26bj.html",
+      "top_title": "RealNet: Efficient and Unsupervised Detection of AI-Generated Images via Real-Only Representation Learning",
+      "similarity": 0.448
+    },
+    {
+      "title": "Towards Foundation Models for Zero-Shot Time Series Anomaly Detection: Leveraging Synthetic Data and Relative Context Discrepancy",
+      "primary_url": "https://proceedings.mlr.press/v306/lan26b.html",
+      "top_title": "Representation and Reference Selection in Training-Free Synthetic Image Attribution",
+      "similarity": 0.452
+    },
+    {
+      "title": "Rethinking Forgery Attacks on Semantic Watermarks in Black-Box Settings: A Geometric Distortion Perspective",
+      "primary_url": "https://proceedings.mlr.press/v306/lee26bm.html",
+      "top_title": "Detecting Generated Images by Fitting Natural Image Distributions",
+      "similarity": 0.437
+    },
+    {
+      "title": "Scaling Behavior in Model Fine-tuning for Audio DeepFake Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/li26u.html",
+      "top_title": "CLIPping the Deception: Adapting Vision-Language Models for Universal Deepfake Detection",
+      "similarity": 0.582
+    },
+    {
+      "title": "Data Provenance Auditing of Fine-Tuned Large Language Models with a Text-Preserving Technique",
+      "primary_url": "https://proceedings.mlr.press/v306/li26an.html",
+      "top_title": "ThinkFake: Reasoning in Multimodal Large Language Models for AI-Generated Image Detection",
+      "similarity": 0.51
+    },
+    {
+      "title": "Hermes: An Evidence-Driven Agentic Framework for Trustworthy and Explainable AI-Generated Video Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/li26be.html",
+      "top_title": "AgentFoX: LLM-Driven Agentic Multi-Expert Fusion with Explainability for AI-Generated Image Detection",
+      "similarity": 0.64
+    },
+    {
+      "title": "Learning Fingerprints for Medical Time Series with Redundancy-Constrained Information Maximization",
+      "primary_url": "https://proceedings.mlr.press/v306/li26bg.html",
+      "top_title": "Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification",
+      "similarity": 0.491
+    },
+    {
+      "title": "Source-Free Open-World RF Fingerprint Identification",
+      "primary_url": "https://proceedings.mlr.press/v306/li26bl.html",
+      "top_title": "Untraceable DeepFakes via Traceable Fingerprint Elimination",
+      "similarity": 0.56
+    },
+    {
+      "title": "AliMark: Enhancing Robustness of Sentence-Level Watermarking Against Text Paraphrasing",
+      "primary_url": "https://proceedings.mlr.press/v306/li26ex.html",
+      "top_title": "Dissect and Prune: Enhancing Robustness in AI-Generated Image Detection",
+      "similarity": 0.511
+    },
+    {
+      "title": "Towards Trustworthy and Identifiable Virtual Face Generation",
+      "primary_url": "https://proceedings.mlr.press/v306/li26gt.html",
+      "top_title": "CoDA: Color Distribution Probing for Efficient and Generalizable AI-Generated Image Detection",
+      "similarity": 0.489
+    },
+    {
+      "title": "Every Step Counts: Decoding Trajectories as Authorship Fingerprints of dLLMs",
+      "primary_url": "https://proceedings.mlr.press/v306/li26ir.html",
+      "top_title": "Riemannian-Geometric Fingerprints of Generative Models",
+      "similarity": 0.435
+    },
+    {
+      "title": "On Revisiting Entropy for Identifying Mislabeled Images",
+      "primary_url": "https://proceedings.mlr.press/v306/li26ju.html",
+      "top_title": "Can Forensic Detectors Identify GAN Generated Images?",
+      "similarity": 0.484
+    },
+    {
+      "title": "Deep Residual Injection for Full-Spectrum Forensic Signal Perception in Multimodal Large Language Models",
+      "primary_url": "https://proceedings.mlr.press/v306/lin26an.html",
+      "top_title": "FakeShield: Explainable Image Forgery Detection and Localization via Multi-Modal Large Language Models",
+      "similarity": 0.556
+    },
+    {
+      "title": "Diagnosing Multi-step Reasoning Failures in Black-box LLMs via Stepwise Confidence Attribution",
+      "primary_url": "https://proceedings.mlr.press/v306/liu26u.html",
+      "top_title": "Progressive Open Space Expansion for Open-Set Model Attribution",
+      "similarity": 0.438
+    },
+    {
+      "title": "Rethinking Feature Alignment in Generalist Graph Anomaly Detection: A Relational Fingerprint-based Approach",
+      "primary_url": "https://proceedings.mlr.press/v306/liu26cp.html",
+      "top_title": "Semantic Visual Anomaly Detection and Reasoning in AI-Generated Images",
+      "similarity": 0.49
+    },
+    {
+      "title": "From Talking to Singing: A New Challenge for Audio-Visual Deepfake Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/liu26es.html",
+      "top_title": "Frequency Masking for Universal Deepfake Detection",
+      "similarity": 0.624
+    },
+    {
+      "title": "Diffuse to Detect: Bi-Level Sample Rebalancing with Pseudo-Label Diffusion for Point-Supervised Infrared Small-Target Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/liu26fj.html",
+      "top_title": "Dual-Scale Model Collaborative Reasoning with Multi-Feature Fusion for Robust AI-Generated Image Detection",
+      "similarity": 0.557
+    },
+    {
+      "title": "Towards the Explainability of Temporal Graph Networks via Memory Backtracking and Topological Attribution",
+      "primary_url": "https://proceedings.mlr.press/v306/liu26gd.html",
+      "top_title": "LoRAX: LoRA eXpandable Networks for Continual Synthetic Image Attribution",
+      "similarity": 0.548
+    },
+    {
+      "title": "DataGuard: A Non-intrusive Dataset Auditing Framework via Differential Information Forensics",
+      "primary_url": "https://proceedings.mlr.press/v306/lou26g.html",
+      "top_title": "Synthetic Image Detection Method Integrating Neural Ordinary Differential Equations and Spatial Attention Transformer",
+      "similarity": 0.452
+    },
+    {
+      "title": "SurrogateSHAP: Training-Free Contributor Attribution for Text-to-Image (T2I) Models",
+      "primary_url": "https://proceedings.mlr.press/v306/lu26f.html",
+      "top_title": "Detecting Origin Attribution for Text-to-Image Diffusion Models",
+      "similarity": 0.656
+    },
+    {
+      "title": "Echoes within the Reasoning: Stealthy and Effective Watermarking via Chain of Thought",
+      "primary_url": "https://proceedings.mlr.press/v306/lu26q.html",
+      "top_title": "AI-generated Image Detection: Passive or Watermark?",
+      "similarity": 0.431
+    },
+    {
+      "title": "De-attribute to Forget for LLM Unlearning",
+      "primary_url": "https://proceedings.mlr.press/v306/lu26z.html",
+      "top_title": "DNA: Dual-Stage Native Attribution for Generated Image Source Tracing",
+      "similarity": 0.511
+    },
+    {
+      "title": "ProConMV: Provenance-Enabled Conceptual Framework for Interpretable Multi-View Diabetic Retinopathy Diagnosis",
+      "primary_url": "https://proceedings.mlr.press/v306/luo26ac.html",
+      "top_title": "CLIP-SegFusion: An Attention-Guided Feature Fusion Framework for Multi-Level Detection on AI-Generated Artworks",
+      "similarity": 0.458
+    },
+    {
+      "title": "Explaining Concept Shift with Interpretable Feature Attribution",
+      "primary_url": "https://proceedings.mlr.press/v306/lyu26i.html",
+      "top_title": "Open Set Synthetic Image Source Attribution",
+      "similarity": 0.526
+    },
+    {
+      "title": "Stability-Aware Feature Design for Robust Watermark Detection in Machine-Generated Text",
+      "primary_url": "https://proceedings.mlr.press/v306/mansouri26b.html",
+      "top_title": "Quality-Aware Calibration for AI-Generated Image Detection in the Wild",
+      "similarity": 0.544
+    },
+    {
+      "title": "Improving Adversarial Robustness of Attribution via Implicit Regularization",
+      "primary_url": "https://proceedings.mlr.press/v306/mehrpanah26a.html",
+      "top_title": "Improving Interpretability and Robustness for the Detection of AI-Generated Images",
+      "similarity": 0.529
+    },
+    {
+      "title": "Watermarking LLM Agent Trajectories",
+      "primary_url": "https://proceedings.mlr.press/v306/meng26b.html",
+      "top_title": "Benchmarking Deepart Detection",
+      "similarity": 0.5
+    },
+    {
+      "title": "Low-Compute Watermark Removal via Dual-Domain Natural Projection",
+      "primary_url": "https://proceedings.mlr.press/v306/meshram26a.html",
+      "top_title": "Comparative Analysis of Custom CNN Architecture and MobileNet for Deepfake Image Detection",
+      "similarity": 0.43
+    },
+    {
+      "title": "Hidden in Plain Tokens: Simply Robust, Gradient-Free Watermark for Synthetic Audio",
+      "primary_url": "https://proceedings.mlr.press/v306/milis26a.html",
+      "top_title": "ImagiNet: A Multi-Content Benchmark for Synthetic Image Detection",
+      "similarity": 0.496
+    },
+    {
+      "title": "GUDA: Counterfactual Group-wise Training Data Attribution for Diffusion Models via Unlearning",
+      "primary_url": "https://proceedings.mlr.press/v306/murata26a.html",
+      "top_title": "Detecting Origin Attribution for Text-to-Image Diffusion Models",
+      "similarity": 0.544
+    },
+    {
+      "title": "Telescope: Improving Zero Shot Detection of LLM Generated Content By Measuring Token Repetition Probability",
+      "primary_url": "https://proceedings.mlr.press/v306/nassif26a.html",
+      "top_title": "ZeroFake: Zero-Shot Detection of Fake Images Generated and Edited by Text-to-Image Generation Models",
+      "similarity": 0.554
+    },
+    {
+      "title": "PRPO: Paragraph-level Policy Optimization for Vision-Language Deepfake Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/nguyen26f.html",
+      "top_title": "CLIPping the Deception: Adapting Vision-Language Models for Universal Deepfake Detection",
+      "similarity": 0.531
+    },
+    {
+      "title": "Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs",
+      "primary_url": "https://proceedings.mlr.press/v306/pan26g.html",
+      "top_title": "Omni-IML: Towards Unified Interpretable Image Manipulation Localization",
+      "similarity": 0.468
+    },
+    {
+      "title": "Detecting and Filtering Unsafe Training Data via Data Attribution with Denoised Representation",
+      "primary_url": "https://proceedings.mlr.press/v306/pan26l.html",
+      "top_title": "Detecting Origin Attribution for Text-to-Image Diffusion Models",
+      "similarity": 0.507
+    },
+    {
+      "title": "Catch-22: On the Fundamental Tradeoff Between Detectability and Robustness in LLM Watermarking",
+      "primary_url": "https://proceedings.mlr.press/v306/pratihar26a.html",
+      "top_title": "Improving Interpretability and Robustness for the Detection of AI-Generated Images",
+      "similarity": 0.444
+    },
+    {
+      "title": "Fine-grained Analysis of Brain-LLM Alignment through Input Attribution",
+      "primary_url": "https://proceedings.mlr.press/v306/proietti26a.html",
+      "top_title": "Enhancing Synthetic Generated-Images Detection Through Post-Hoc Calibration",
+      "similarity": 0.453
+    },
+    {
+      "title": "Revisiting Coding-Based Approaches to Overcome the Curse of Dimensionality in Learning-Based Watermarking",
+      "primary_url": "https://proceedings.mlr.press/v306/qiu26d.html",
+      "top_title": "Vision Transformer-Based Framework for AI-Generated Image Detection in Interior Design",
+      "similarity": 0.443
+    },
+    {
+      "title": "Learning to Watermark in the Latent Space of Generative Models",
+      "primary_url": "https://proceedings.mlr.press/v306/rebuffi26a.html",
+      "top_title": "Riemannian-Geometric Fingerprints of Generative Models",
+      "similarity": 0.608
+    },
+    {
+      "title": "Alterbute: Editing Intrinsic Attributes of Objects in Images",
+      "primary_url": "https://proceedings.mlr.press/v306/reiss26a.html",
+      "top_title": "Where Did I Come From? Origin Attribution of AI-Generated Images",
+      "similarity": 0.514
+    },
+    {
+      "title": "Towards Reliable Marking and Verification of AI-Generated Text via Geometry-aware Sentence-level Watermarking",
+      "primary_url": "https://proceedings.mlr.press/v306/ren26d.html",
+      "top_title": "Towards Extensible Detection of AI-Generated Images via Content-Agnostic Adapter-Based Category-Aware Incremental Learning",
+      "similarity": 0.554
+    },
+    {
+      "title": "Attacks on Machine-Text Detectors Retain Stylistic Fingerprints",
+      "primary_url": "https://proceedings.mlr.press/v306/rivera-soto26a.html",
+      "top_title": "Whodunit: Detection and Attribution of Synthetic Images by Leveraging Model-specific Fingerprints",
+      "similarity": 0.482
+    },
+    {
+      "title": "On the Accuracy of Newton Step and Influence Function Data Attributions",
+      "primary_url": "https://proceedings.mlr.press/v306/rubinstein26a.html",
+      "top_title": "On the Use of Mixup Augmentation for Synthetic Image Attribution in the Wild",
+      "similarity": 0.464
+    },
+    {
+      "title": "Ariadne\u2019s Thread of LipSync: Unraveling Forgeries via Inconsistency between Lip Motions and Head Poses",
+      "primary_url": "https://proceedings.mlr.press/v306/she26a.html",
+      "top_title": "Toward Generalizable Forgery Detection and Reasoning",
+      "similarity": 0.463
+    },
+    {
+      "title": "OmniVL-Guard: Towards Unified Vision-Language Forgery Detection and Grounding via Balanced RL",
+      "primary_url": "https://proceedings.mlr.press/v306/shen26u.html",
+      "top_title": "Toward Generalizable Forgery Detection and Reasoning",
+      "similarity": 0.551
+    },
+    {
+      "title": "Learning What to Generate: A Reinforcement Learning-based Closed-Loop Augmentation Framework for Person Re-identification",
+      "primary_url": "https://proceedings.mlr.press/v306/shi26o.html",
+      "top_title": "X-Transfer: A Transfer Learning-Based Framework for GAN-Generated Fake Image Detection",
+      "similarity": 0.506
+    },
+    {
+      "title": "Auditing Sybil: Explaining Deep Lung Cancer Risk Prediction Through Generative Interventional Attributions",
+      "primary_url": "https://proceedings.mlr.press/v306/sobieski26a.html",
+      "top_title": "Learning on Gradients: Generalized Artifacts Representation for GAN-Generated Images Detection",
+      "similarity": 0.452
+    },
+    {
+      "title": "When Diffusion Language Models Hesitate: Detecting and Correcting Visual Hallucinations via Confidence Fluctuation",
+      "primary_url": "https://proceedings.mlr.press/v306/song26d.html",
+      "top_title": "A Hybrid CLIP-Diffusion Architecture for Transparent Deepfake Detection and Explainability Evaluation",
+      "similarity": 0.471
+    },
+    {
+      "title": "Ideal Attribution and Faithful Watermarks for Language Models",
+      "primary_url": "https://proceedings.mlr.press/v306/song26w.html",
+      "top_title": "FIDAVL: Fake Image Detection and Attribution Using Vision-Language Model",
+      "similarity": 0.552
+    },
+    {
+      "title": "Extending Fair Null-Space Projections for Continuous Attributes to Kernel Methods",
+      "primary_url": "https://proceedings.mlr.press/v306/storck26a.html",
+      "top_title": "Progressive Open Space Expansion for Open-Set Model Attribution",
+      "similarity": 0.46
+    },
+    {
+      "title": "Minimizing Mismatch Risk: A Prototype-Based Routing Framework for Zero-shot LLM-generated Text Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/sun26b.html",
+      "top_title": "Beyond Resizing: A Distribution-Aligned Framework for Robust AI-Generated Image Detection",
+      "similarity": 0.627
+    },
+    {
+      "title": "VideoVeritas: AI-Generated Video Detection via Perception Pretext Reinforcement Learning",
+      "primary_url": "https://proceedings.mlr.press/v306/tan26b.html",
+      "top_title": "Towards Generalizable AI-Generated Image Detection via Image-Adaptive Prompt Learning",
+      "similarity": 0.627
+    },
+    {
+      "title": "CoT is Not the Chain of Truth: An Empirical Internal Analysis of Reasoning LLMs for Fake News Generation",
+      "primary_url": "https://proceedings.mlr.press/v306/tong26e.html",
+      "top_title": "Leveraging Frequency Analysis for Deep Fake Image Recognition",
+      "similarity": 0.443
+    },
+    {
+      "title": "RAIGen: Rare Attribute Identification in Text-to-Image Generative Models",
+      "primary_url": "https://proceedings.mlr.press/v306/vadakkeeveetil-sreelatha26a.html",
+      "top_title": "DE-FAKE: Detection and Attribution of Fake Images Generated by Text-to-Image Generation Models",
+      "similarity": 0.596
+    },
+    {
+      "title": "Symbal: Detecting Systematic Misalignments in Model-Generated Captions",
+      "primary_url": "https://proceedings.mlr.press/v306/varma26a.html",
+      "top_title": "Combating Dataset Misalignment for Robust AI-Generated Image Detection in the Real World",
+      "similarity": 0.536
+    },
+    {
+      "title": "Hidden in Plain Sight \u2013 Class Competition Focuses Attribution Maps",
+      "primary_url": "https://proceedings.mlr.press/v306/walter26a.html",
+      "top_title": "WILD: A New In-the-Wild Image Linkage Dataset for Synthetic Image Attribution",
+      "similarity": 0.5
+    },
+    {
+      "title": "OpenMAG: A Comprehensive Benchmark for Multimodal-Attributed Graph",
+      "primary_url": "https://proceedings.mlr.press/v306/wan26h.html",
+      "top_title": "LOKI: A Comprehensive Synthetic Data Detection Benchmark Using Large Multimodal Models",
+      "similarity": 0.541
+    },
+    {
+      "title": "Multimodal Fact-Level Attribution for Verifiable Reasoning",
+      "primary_url": "https://proceedings.mlr.press/v306/wan26m.html",
+      "top_title": "MAID: Model Attribution via Inverse Diffusion",
+      "similarity": 0.571
+    },
+    {
+      "title": "RA-Det: Towards Universal Detection of AI-Generated Images via Robustness Asymmetry",
+      "primary_url": "https://proceedings.mlr.press/v306/wang26ad.html",
+      "top_title": "Training-Free Detection of AI-Generated Images via Cropping Robustness",
+      "similarity": 0.697
+    },
+    {
+      "title": "When Attributes Disagree: Gradient Conflict in Image Aesthetic Assessment",
+      "primary_url": "https://proceedings.mlr.press/v306/wang26aj.html",
+      "top_title": "A Survey on Deep-Learning-Based Techniques for Detecting AI-Generated Synthetic Images",
+      "similarity": 0.449
+    },
+    {
+      "title": "Beyond Heuristic Tuning: Power-Calibrated LLM Watermarking",
+      "primary_url": "https://proceedings.mlr.press/v306/wang26bu.html",
+      "top_title": "Beyond Semantic Features: Pixel-Level Mapping for Generalized AI-Generated Image Detection",
+      "similarity": 0.496
+    },
+    {
+      "title": "TranX-Adapter: Bridging Artifacts and Semantics within MLLMs for Robust AI-generated Image Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/wang26cj.html",
+      "top_title": "TranX-Adapter: Bridging Artifacts and Semantics Within MLLMs for Robust AI-Generated Image Detection",
+      "similarity": 1.0
+    },
+    {
+      "title": "SLIP-RS: Structured-Attribute Language-Image Pre-Training for Remote Sensing Object Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/wang26dt.html",
+      "top_title": "PURE: Purging Unrelated Representations for Content-Agnostic Forgery Detection",
+      "similarity": 0.483
+    },
+    {
+      "title": "Learning Attribute\u2013Affordance Hierarchies in Hyperbolic Space for Open-Vocabulary 3D Object Affordance Grounding",
+      "primary_url": "https://proceedings.mlr.press/v306/wang26dy.html",
+      "top_title": "Language-Guided Hierarchical Fine-Grained Image Forgery Detection and Localization",
+      "similarity": 0.419
+    },
+    {
+      "title": "Fleet: Few Shots Lead Effective AI-generated Image Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/wang26eo.html",
+      "top_title": "Fleet: Few Shots Lead Effective AI-Generated Image Detection",
+      "similarity": 1.0
+    },
+    {
+      "title": "Large-capacity and Receiver Authenticable Generative Image Steganography",
+      "primary_url": "https://proceedings.mlr.press/v306/wang26fh.html",
+      "top_title": "WildFake: A Large-Scale and Hierarchical Dataset for AI-Generated Images Detection",
+      "similarity": 0.548
+    },
+    {
+      "title": "Breaking Manifold Continuity: Vector Quantized Modeling for Real-Centric Deepfake Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/wang26it.html",
+      "top_title": "Breaking Manifold Continuity: Vector Quantized Modeling for Real-Centric Deepfake Detection",
+      "similarity": 1.0
+    },
+    {
+      "title": "Order within Chaos: Capturing Intrinsic Energy Anomalies for AI-Manipulated Image Forgery Localization",
+      "primary_url": "https://proceedings.mlr.press/v306/wang26iy.html",
+      "top_title": "Detective SAM: Adaptive AI-Image Forgery Localization",
+      "similarity": 0.519
+    },
+    {
+      "title": "Deep Multi-view Graph Clustering via Attribute-aware Bidirectional Structural Refinement and Pseudo-label Guided Multi-level Fusion",
+      "primary_url": "https://proceedings.mlr.press/v306/wang26lf.html",
+      "top_title": "Deep-Synthesized Image Detection via Multi-Domain Feature Fusion and Explainable AI Guided Color Model Selection",
+      "similarity": 0.436
+    },
+    {
+      "title": "Explainable Federated Learning via Global\u2013Local Attribution Alignment",
+      "primary_url": "https://proceedings.mlr.press/v306/wasif26a.html",
+      "top_title": "Explainable AI-Generated Image Detection RewardBench",
+      "similarity": 0.532
+    },
+    {
+      "title": "RECOVER: Reliable Detection of Unauthorized Data Usage in Text-to-Image Diffusion Models via Inversion Robustness",
+      "primary_url": "https://proceedings.mlr.press/v306/wei26ah.html",
+      "top_title": "Detecting Origin Attribution for Text-to-Image Diffusion Models",
+      "similarity": 0.553
+    },
+    {
+      "title": "HyperPotter: Spell the Charm of High-Order Interactions in Audio Deepfake Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/wen26d.html",
+      "top_title": "The Microsoft-Northwestern-WITNESS Benchmark for Deepfake Detection",
+      "similarity": 0.519
+    },
+    {
+      "title": "Hide and Seek in Embedding Space: Geometry-based Steganography and Detection in Large Language Models",
+      "primary_url": "https://proceedings.mlr.press/v306/westphal26a.html",
+      "top_title": "FakeShield: Explainable Image Forgery Detection and Localization via Multi-Modal Large Language Models",
+      "similarity": 0.526
+    },
+    {
+      "title": "DAVE: Distribution-Aware Attribution via ViT Gradient Decomposition",
+      "primary_url": "https://proceedings.mlr.press/v306/wrobel26a.html",
+      "top_title": "DeepGuard: Identification and Attribution of AI-Generated Synthetic Images",
+      "similarity": 0.516
+    },
+    {
+      "title": "Linear Ensembles Wash Away Watermarks: On the Fragility of Distributional Perturbations in LLMs",
+      "primary_url": "https://proceedings.mlr.press/v306/wu26r.html",
+      "top_title": "Secret Lies in Color: Enhancing AI-Generated Images Detection with Color Distribution Analysis",
+      "similarity": 0.454
+    },
+    {
+      "title": "Motion Attribution for Video Generation",
+      "primary_url": "https://proceedings.mlr.press/v306/wu26aq.html",
+      "top_title": "Source Generator Attribution via Inversion",
+      "similarity": 0.603
+    },
+    {
+      "title": "AREA: Attribute Extraction and Aggregation for CLIP-Based Class-Incremental Learning",
+      "primary_url": "https://proceedings.mlr.press/v306/xie26u.html",
+      "top_title": "Deepfakes Creation and Detection Using Deep Learning",
+      "similarity": 0.487
+    },
+    {
+      "title": "Neural Honeytrace: Plug&Play Watermarking Framework against Model Extraction Attacks",
+      "primary_url": "https://proceedings.mlr.press/v306/xu26m.html",
+      "top_title": "A Novel Neural Model based Framework for Detection of GAN Generated Fake Images",
+      "similarity": 0.472
+    },
+    {
+      "title": "BPL: Generalizable Deepfake Detection via Bias-only Pair-aware Learning",
+      "primary_url": "https://proceedings.mlr.press/v306/xu26s.html",
+      "top_title": "Deep Fake Image Detection Based on Pairwise Learning",
+      "similarity": 0.679
+    },
+    {
+      "title": "Antidistillation Fingerprinting",
+      "primary_url": "https://proceedings.mlr.press/v306/xu26y.html",
+      "top_title": "Do GANs Leave Artificial Fingerprints?",
+      "similarity": 0.571
+    },
+    {
+      "title": "LORD-GoF: A Robust Online Detection Approach for LLM Watermarks in Sparse and Mixed Streams",
+      "primary_url": "https://proceedings.mlr.press/v306/xu26ad.html",
+      "top_title": "A Review on Deepfake Image Detection Approaches, Techniques and Methods",
+      "similarity": 0.482
+    },
+    {
+      "title": "Fingerprinting Pre-trained Encoders under Arbitrary Downstream Fine-Tuning via Adversarial Shifting",
+      "primary_url": "https://proceedings.mlr.press/v306/xu26bf.html",
+      "top_title": "Intriguing Properties of Synthetic Images: From Generative Adversarial Networks to Diffusion Models",
+      "similarity": 0.389
+    },
+    {
+      "title": "GenShield: Unified Detection and Artifact Correction for AI-Generated Images",
+      "primary_url": "https://proceedings.mlr.press/v306/xu26cl.html",
+      "top_title": "GenShield: Unified Detection and Artifact Correction for AI-Generated Images",
+      "similarity": 1.0
+    },
+    {
+      "title": "DGS-Net: Distillation-Guided Gradient Surgery for CLIP Fine-Tuning in AI-Generated Image Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/yan26h.html",
+      "top_title": "DGS-Net: Distillation-Guided Gradient Surgery for CLIP Fine-Tuning in AI-Generated Image Detection",
+      "similarity": 1.0
+    },
+    {
+      "title": "CircuitPrint: Mechanistic Circuit Fingerprints for Large Language Models",
+      "primary_url": "https://proceedings.mlr.press/v306/yan26t.html",
+      "top_title": "Riemannian-Geometric Fingerprints of Generative Models",
+      "similarity": 0.549
+    },
+    {
+      "title": "WMVLM: Evaluating Diffusion Model Image Watermarking via Vision-Language Models",
+      "primary_url": "https://proceedings.mlr.press/v306/yang26bs.html",
+      "top_title": "Mirage: Unveiling Hidden Artifacts in Synthetic Images with Large Vision-Language Models",
+      "similarity": 0.593
+    },
+    {
+      "title": "SafeSeek: Universal Attribution of Safety Circuits in Language Models",
+      "primary_url": "https://proceedings.mlr.press/v306/yu26k.html",
+      "top_title": "Universal Deepfake Detection via Low-Rank Adaptation of Vision-Language Models",
+      "similarity": 0.578
+    },
+    {
+      "title": "Bridging Structure and Semantics: Uncertainty-Modulated Dual-Path Diffusion for Robust Text-Attributed Graph Learning",
+      "primary_url": "https://proceedings.mlr.press/v306/yu26ab.html",
+      "top_title": "TranX-Adapter: Bridging Artifacts and Semantics Within MLLMs for Robust AI-Generated Image Detection",
+      "similarity": 0.5
+    },
+    {
+      "title": "Uncovering Hidden Triggers: Backdoor Attribution in Language Models",
+      "primary_url": "https://proceedings.mlr.press/v306/yu26bw.html",
+      "top_title": "FIDAVL: Fake Image Detection and Attribution Using Vision-Language Model",
+      "similarity": 0.545
+    },
+    {
+      "title": "ERAlign: Energy-based Representation Alignment of GNNs and LLMs on Text-attributed Graphs",
+      "primary_url": "https://proceedings.mlr.press/v306/zeng26t.html",
+      "top_title": "Aligned Datasets Improve Detection of Latent Diffusion-Generated Images",
+      "similarity": 0.475
+    },
+    {
+      "title": "Who Gets Credit or Blame? Attributing Accountability in Modern AI Systems",
+      "primary_url": "https://proceedings.mlr.press/v306/zhang26aj.html",
+      "top_title": "Where Did I Come From? Origin Attribution of AI-Generated Images",
+      "similarity": 0.487
+    },
+    {
+      "title": "FiSeR: Fine-Grained Source Representations for Cross-Domain AI Image Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/zhang26bi.html",
+      "top_title": "FiSeR: Fine-Grained Source Representations for Cross-Domain AI Image Detection",
+      "similarity": 1.0
+    },
+    {
+      "title": "Learning to Memorize with Attributive and Associative Memory for Online Test-Time Adaptation of Vision-Language Models",
+      "primary_url": "https://proceedings.mlr.press/v306/zhang26gj.html",
+      "top_title": "Universal Deepfake Detection via Low-Rank Adaptation of Vision-Language Models",
+      "similarity": 0.529
+    },
+    {
+      "title": "SemBind: Binding Diffusion Watermarks to Semantics Against Black-Box Forgery Attacks",
+      "primary_url": "https://proceedings.mlr.press/v306/zhang26hj.html",
+      "top_title": "TranX-Adapter: Bridging Artifacts and Semantics Within MLLMs for Robust AI-Generated Image Detection",
+      "similarity": 0.415
+    },
+    {
+      "title": "Nonparametric Data Attribution for Diffusion Models",
+      "primary_url": "https://proceedings.mlr.press/v306/zhao26i.html",
+      "top_title": "Detecting Origin Attribution for Text-to-Image Diffusion Models",
+      "similarity": 0.653
+    },
+    {
+      "title": "Learning Tight Rejection Boundaries without Negatives for Strict One-Class Audio Deepfake Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/zhao26bu.html",
+      "top_title": "Transfer Learning of Real Image Features with Soft Contrastive Loss for Fake Image Detection",
+      "similarity": 0.542
+    },
+    {
+      "title": "PGC: Peak-Guided Calibration for Generalizable AI-Generated Image Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/zhou26h.html",
+      "top_title": "PGC: Peak-Guided Calibration for Generalizable AI-Generated Image Detection",
+      "similarity": 1.0
+    },
+    {
+      "title": "ForensicConcept: Transferable Forensic Concepts for AIGI Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/zhou26bt.html",
+      "top_title": "ForensicConcept: Transferable Forensic Concepts for AIGI Detection",
+      "similarity": 1.0
+    },
+    {
+      "title": "Modeling Attributional Style at Scale: A Dataset and Analysis for Psychological Attribution Assessment and Reframing",
+      "primary_url": "https://proceedings.mlr.press/v306/zhou26bw.html",
+      "top_title": "Semi-Truths: A Large-Scale Dataset of AI-Augmented Images for Evaluating Robustness of AI-Generated Image Detectors",
+      "similarity": 0.485
+    },
+    {
+      "title": "Alethia: a Foundational Encoder for Voice Deepfakes",
+      "primary_url": "https://proceedings.mlr.press/v306/zhu26l.html",
+      "top_title": "FLODA: Harnessing Vision-Language Models for Deepfake Assessment",
+      "similarity": 0.48
+    },
+    {
+      "title": "Beyond Pixels: Mining Compressed Domain Artifacts for Efficient AI-Generated Video Detection",
+      "primary_url": "https://proceedings.mlr.press/v306/zhu26ap.html",
+      "top_title": "Breaking Semantic Artifacts for Generalized AI-generated Image Detection",
+      "similarity": 0.639
+    },
+    {
+      "title": "Forensic Prompting with Dual-Action Policy Optimization for Vision-Language Forgery Detection and Localization",
+      "primary_url": "https://proceedings.mlr.press/v306/zhu26bg.html",
+      "top_title": "DiffForensics: Leveraging Diffusion Prior to Image Forgery Detection and Localization",
+      "similarity": 0.651
+    },
+    {
+      "title": "GLAD: Bidirectional Structure-Attribute Alignment via Latent Graph Diffusion Models",
+      "primary_url": "https://proceedings.mlr.press/v306/zuo26e.html",
+      "top_title": "Detecting Origin Attribution for Text-to-Image Diffusion Models",
+      "similarity": 0.562
+    },
+    {
+      "title": "Position: The Data Provenance\u2013Parametric Divide in Large Language Models",
+      "primary_url": "https://proceedings.mlr.press/v306/elangovan26a.html",
+      "top_title": "Fake-GPT: Detecting Fake Image via Large Language Model",
+      "similarity": 0.5
+    },
+    {
+      "title": "Position: AI/ML Deepfake Research is Misaligned with AI Generated Non-Consensual Intimate Imagery (AIG-NCII)",
+      "primary_url": "https://proceedings.mlr.press/v306/qiwei26a.html",
+      "top_title": "A Single Simple Patch is All You Need for AI-generated Image Detection",
+      "similarity": 0.486
+    },
+    {
+      "title": "Position: Beyond Sensitive Attributes, ML Fairness Should Quantify Structural Injustice via Social Determinants",
+      "primary_url": "https://proceedings.mlr.press/v306/tang26aj.html",
+      "top_title": "Beyond Resizing: A Distribution-Aligned Framework for Robust AI-Generated Image Detection",
+      "similarity": 0.414
+    }
+  ]
+}

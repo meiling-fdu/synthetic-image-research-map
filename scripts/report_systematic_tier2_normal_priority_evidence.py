@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import io
 import json
 import re
 import sys
@@ -28,6 +29,7 @@ from frozen_predecessor_666 import (
     predecessor_map_records,
     predecessor_public_records,
 )
+from gap_migration_history import historical_text
 from paper_exclusions import (
     active_exclusions,
     exclusions_with_curated_identities,
@@ -83,7 +85,7 @@ IDENTITY_LOCK_FIELDS = (
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
-    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+    with io.StringIO(historical_text(path, "utf-8-sig"), newline="") as handle:
         return list(csv.DictReader(handle))
 
 

@@ -1,0 +1,35 @@
+{
+  "counts": {
+    "papers": 623,
+    "relationships": 1392,
+    "formally_published": 514,
+    "mapped": 602
+  },
+  "baseline_files_checked": 4147,
+  "changed_baseline_files": [
+    "tests/test_frontend_public_labels_layout.py",
+    "tests/test_public_academic_refinement.py",
+    "tests/test_public_header_metadata.py",
+    "web/index.html",
+    "web/style.css"
+  ],
+  "accounted_external_non_corpus_changes": [
+    "tests/test_frontend_public_labels_layout.py",
+    "tests/test_public_academic_refinement.py",
+    "tests/test_public_header_metadata.py",
+    "web/index.html",
+    "web/style.css"
+  ],
+  "unexplained_baseline_changes": [],
+  "saved_checksums_checked": 105,
+  "changed_saved_checksums": [],
+  "candidate_counts": {
+    "EXCLUDE_OUT_OF_SCOPE": 140,
+    "MISSING_HIGH_CONFIDENCE": 12,
+    "MISSING_NEEDS_SCOPE_REVIEW": 9,
+    "EXISTING_METADATA_UPDATE": 12,
+    "AMBIGUOUS": 6,
+    "EXISTING_CURRENT": 84
+  },
+  "errors": []
+}

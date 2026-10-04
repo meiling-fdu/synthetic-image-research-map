@@ -40,10 +40,10 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
         cls.markers = json.loads((ROOT / "web/data/public_preview_map_data.json").read_text(encoding="utf-8"))["records"]
 
     def test_registry_covers_the_reconciled_public_corpus_not_papers_csv(self):
-        self.assertEqual(479, len(self.curated_papers))
-        self.assertEqual(666, len(self.registry))
-        self.assertEqual(623, len(self.public))
-        self.assertEqual(468, sum(bool(row["paper_id"]) for row in self.registry))
+        self.assertEqual(496, len(self.curated_papers))
+        self.assertEqual(683, len(self.registry))
+        self.assertEqual(640, len(self.public))
+        self.assertEqual(485, sum(bool(row["paper_id"]) for row in self.registry))
         self.assertEqual(198, sum(not row["paper_id"] for row in self.registry))
         summary = apply_paper_taxonomy_registry(
             [dict(row) for row in self.public],
@@ -51,9 +51,9 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
             self.registry,
             read_exclusion_rows(),
         )
-        self.assertEqual(623, summary["public_papers_matched"])
+        self.assertEqual(640, summary["public_papers_matched"])
         self.assertEqual(43, summary["registry_rows_suppressed_by_active_exclusion"])
-        self.assertEqual(1392, summary["map_records_matched"])
+        self.assertEqual(1423, summary["map_records_matched"])
 
     def test_curated_only_historical_taxonomy_rows_are_actively_excluded(self):
         public_ids = {row.get("paper_id") for row in self.public if row.get("paper_id")}
@@ -136,14 +136,14 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
 
     def test_localization_has_explicit_task_or_evaluation_evidence(self):
         localized = [row for row in self.registry if "localization" in row["tasks"].split(";")]
-        self.assertEqual(38, len(localized))
+        self.assertEqual(40, len(localized))
         for row in localized:
             evidence = row["tasks_evidence_excerpt"].casefold()
             self.assertTrue(any(term in evidence for term in ("local", "segmentation", "iou")), row["title"])
 
     def test_generative_editing_has_source_modification_evidence(self):
         edited = [row for row in self.registry if "generative_editing" in row["image_scopes"].split(";")]
-        self.assertEqual(47, len(edited))
+        self.assertEqual(51, len(edited))
         for row in edited:
             evidence = row["image_scopes_evidence_excerpt"].casefold()
             self.assertTrue(
@@ -153,9 +153,9 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
 
     def test_expected_counts_and_review_counts(self):
         expected = {
-            "tasks": Counter(detection=622, source_attribution=82, localization=38),
-            "image_scopes": Counter(fully_generated=560, generative_editing=47, deepfake=176, traditional_manipulation=23),
-            "research_types": Counter(method=572, dataset=133, benchmark=82, survey=24, analysis_study=76),
+            "tasks": Counter(detection=635, source_attribution=87, localization=40),
+            "image_scopes": Counter(fully_generated=574, generative_editing=51, deepfake=177, traditional_manipulation=23),
+            "research_types": Counter(method=586, dataset=135, benchmark=85, survey=25, analysis_study=78),
         }
         for field, counts in expected.items():
             actual = Counter(value for row in self.registry for value in row[field].split(";") if value)
@@ -169,7 +169,7 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
         )
         self.assertEqual(0, sum(row["taxonomy_status"] == "needs_review" for row in self.registry))
 
-    def test_current_round_trip_preserves_all_666_rows_and_43_excluded_rows(self):
+    def test_current_round_trip_preserves_all_683_rows_and_43_excluded_rows(self):
         rebuilt = build_registry(
             ROOT / "web/data/public_preview_papers.json",
             ROOT / "data/curated/paper_taxonomy.csv",
@@ -186,13 +186,13 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
                 [dict(row) for row in self.public],
                 [dict(row) for row in self.markers], reread, read_exclusion_rows()
             )
-            self.assertEqual(623, summary["public_papers_matched"])
+            self.assertEqual(640, summary["public_papers_matched"])
             self.assertEqual(43, summary["registry_rows_suppressed_by_active_exclusion"])
         dimensions = ("tasks", "image_scopes", "research_types")
         active = build_active_exclusion_index(read_exclusion_rows())
         expected = {row["taxonomy_id"]: row for row in self.registry}
         excluded = [row for row in rebuilt if record_is_excluded(row, active)]
-        self.assertEqual(666, len(rebuilt))
+        self.assertEqual(683, len(rebuilt))
         self.assertEqual(43, len(excluded))
         self.assertTrue(
             all(

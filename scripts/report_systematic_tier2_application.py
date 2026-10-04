@@ -12,6 +12,11 @@ import io
 import json
 from pathlib import Path
 
+try:
+    from scripts.gap_migration_history import historical_bytes
+except ImportError:
+    from gap_migration_history import historical_bytes
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'data/processed/systematic_tier2_application_2026_09'
 APPLICATION = ROOT / 'data/manual/systematic_tier2_policy_application_2026_09.csv'
@@ -291,7 +296,7 @@ def render(rows, legacy):
 
 def integrity():
     hashes=json.loads((OUT/'baseline_sha256.json').read_text())
-    changed=[p for p,h in hashes.items() if not (ROOT/p).is_file() or hashlib.sha256((ROOT/p).read_bytes()).hexdigest()!=h]
+    changed=[p for p,h in hashes.items() if not (ROOT/p).is_file() or hashlib.sha256(historical_bytes(ROOT/p)).hexdigest()!=h]
     successor = set()
     if (ROOT/'data/processed/systematic_tier2_include_2026_09/insertion.json').exists():
         successor = {

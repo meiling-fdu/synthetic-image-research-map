@@ -1,0 +1,118 @@
+{
+  "data/curated/papers.csv": {
+    "sha256": "e07ad765d1081bc4569c9fc37e7e8599866f71416094e3cb7e2c89aad1baa177",
+    "archive": "predecessor_623/data/curated/papers.csv.gz"
+  },
+  "data/curated/paper_taxonomy.csv": {
+    "sha256": "7593264dfe4bccefe56af7a741a327b15eab846f023152009cd1ee127bc11327",
+    "archive": "predecessor_623/data/curated/paper_taxonomy.csv.gz"
+  },
+  "data/curated/author_institution_mappings.csv": {
+    "sha256": "c542bdf0c43cc49bc448297c98b433f0b5c676fe0786d658027ccb6087844319",
+    "archive": "predecessor_623/data/curated/author_institution_mappings.csv.gz"
+  },
+  "data/curated/institutions.csv": {
+    "sha256": "2c42e8fae87cada3d41392659904042245839047ecd6d9335cef7f7d7ac4f8c4",
+    "archive": "predecessor_623/data/curated/institutions.csv.gz"
+  },
+  "data/curated/institution_locations.csv": {
+    "sha256": "0e991792cfd8f0a052a5a65756507f6b45f01da68669bf23423ecc5677df9308",
+    "archive": "predecessor_623/data/curated/institution_locations.csv.gz"
+  },
+  "data/curated/institution_hierarchy.csv": {
+    "sha256": "39a9963217d4dda7e4eb9f411063dab337c04031d37c4cf96bfdd085099ae961",
+    "archive": "predecessor_623/data/curated/institution_hierarchy.csv.gz"
+  },
+  "data/curated/venue_aliases.csv": {
+    "sha256": "f481c21c88a906d0176c3a26a726077a747ec946f6211a19f20a6c145f88feae",
+    "archive": "predecessor_623/data/curated/venue_aliases.csv.gz"
+  },
+  "data/curated/review_decisions.csv": {
+    "sha256": "0c90237358cf879518d5bd486ccb7aa4df336c573c038bc2e3c70dd6379fa5ff",
+    "archive": "predecessor_623/data/curated/review_decisions.csv.gz"
+  },
+  "data/curated/paper_exclusions.csv": {
+    "sha256": "df80536b3d9d88fa05c821ed100bfad9e6e8deb6b8a3594d649917646c5cbb23",
+    "archive": "predecessor_623/data/curated/paper_exclusions.csv.gz"
+  },
+  "data/curated/institution_audit_log.csv": {
+    "sha256": "ba845cdd6c7f2d09334f575452156b9eb2dfab601c57b8922b77803a5fe542ba",
+    "archive": "predecessor_623/data/curated/institution_audit_log.csv.gz"
+  },
+  "data/curated/institution_location_review.csv": {
+    "sha256": "70134d39250af38df291e7e9247bdefe04e1c61e0e84c2f3bdeba28a288cc1af",
+    "archive": "predecessor_623/data/curated/institution_location_review.csv.gz"
+  },
+  "web/data/public_preview_papers.json": {
+    "sha256": "86014e43bed034ee93b4a58f938e0a2803ce60d293ce2c45c725d70a07ecddb3",
+    "archive": "predecessor_623/web/data/public_preview_papers.json.gz"
+  },
+  "web/data/public_preview_map_data.json": {
+    "sha256": "456b6b13a9350487d7179fd2b8729d41f55a09f84f620dbc8b3a99fe3f16ea88",
+    "archive": "predecessor_623/web/data/public_preview_map_data.json.gz"
+  },
+  "tests/baseline_expectations.py": {
+    "sha256": "f5a8d83ee254fb38c28dc390b2a679f103ca32cd3c0df44047d86ddd172828dc",
+    "archive": "predecessor_623/tests/baseline_expectations.py.gz"
+  },
+  "tests/test_paper_taxonomy_migration.py": {
+    "sha256": "8394cfa5f25d67d6c49b5528fc0caeb920bb905e8b1f2b28d8de72b858233c43",
+    "archive": "predecessor_623/tests/test_paper_taxonomy_migration.py.gz"
+  },
+  "tests/test_formal_publication_links.py": {
+    "sha256": "14180307b8635a0fc4f30f676c955bb7958d3083f7a90f10629c495eadfcfdc2",
+    "archive": "predecessor_623/tests/test_formal_publication_links.py.gz"
+  },
+  "tests/test_paper_metadata_consistency_audit.py": {
+    "sha256": "799f2cb87847e7c2f59f0a35371d572b71f9cb841ff322ff98d57bf9fc79b9ae",
+    "archive": "predecessor_623/tests/test_paper_metadata_consistency_audit.py.gz"
+  },
+  "scripts/frozen_predecessor_666.py": {
+    "sha256": "7f96b32ac6d74c692454f460000f3fab5c9e3804478ca122e1c6a9c6a9ed2d33",
+    "archive": "predecessor_623/scripts/frozen_predecessor_666.py.gz"
+  },
+  "scripts/legacy_scope_exclusion_migration.py": {
+    "sha256": "b21fc632f2a997c078f834ca02e726ee100ae6d51ba13da5b91f1f70c1f147cd",
+    "archive": "predecessor_623/scripts/legacy_scope_exclusion_migration.py.gz"
+  },
+  "docs/key_paper_coverage_report.md": {
+    "sha256": "78f27abe49f5462db0a50e16d07025b9e3cca8432511d4f690eee850984f30a4",
+    "archive": "predecessor_623/docs/key_paper_coverage_report.md.gz"
+  },
+  "tests/public_refinement_snapshot.py": {
+    "sha256": "8f15d03d90e123dd583622e665c2af4ca57c5d28f83f12613da258e92199cf5a",
+    "archive": "predecessor_623/tests/public_refinement_snapshot.py.gz"
+  },
+  "tests/test_frontend_result_cards.py": {
+    "sha256": "f36576df70a9afec0508e46be17cb783320c31d85792f677e0110c2344f5b45c",
+    "archive": "predecessor_623/tests/test_frontend_result_cards.py.gz"
+  },
+  "tests/test_frontend_published_only_filter.py": {
+    "sha256": "fb3ece8ad6bfd97d6fb5aa51f2d0503a9c43fcc1241d01f1b81fb2a2f245789d",
+    "archive": "predecessor_623/tests/test_frontend_published_only_filter.py.gz"
+  },
+  "tests/test_manual_location_audit_20260827.py": {
+    "sha256": "9e1c67b71a0e5dabfb3c3239e77e3abd482b51627f69bc8c1e4d80fd65e72e7b",
+    "archive": "predecessor_623/tests/test_manual_location_audit_20260827.py.gz"
+  },
+  "tests/test_workshop_venue_audit.py": {
+    "sha256": "4f43781d50b98410fc8cf1ade276407cdf94b3a65e9c9065154289a59ef611ae",
+    "archive": "predecessor_623/tests/test_workshop_venue_audit.py.gz"
+  },
+  "tests/test_repository_baseline.py": {
+    "sha256": "8352a436b8ade8fa0d8e251fafa5d51e503f1d2cf321fcd1992dda42913f60c0",
+    "archive": "predecessor_623/tests/test_repository_baseline.py.gz"
+  },
+  "scripts/report_systematic_tier2_policy.py": {
+    "sha256": "057ad7a497fb441166d7ca13a387170d6f604603c97f8abc1ee4d703def5266b",
+    "archive": "predecessor_623/scripts/report_systematic_tier2_policy.py.gz"
+  },
+  "scripts/report_systematic_tier2_application.py": {
+    "sha256": "909c25308f5b2c69a9bc56565038d776393889c50b3a9e8a565a70c1ce168cfd",
+    "archive": "predecessor_623/scripts/report_systematic_tier2_application.py.gz"
+  },
+  "scripts/report_systematic_tier2_normal_priority_evidence.py": {
+    "sha256": "871595e562d6085404f569038642f761352d49a0e534f52625cbedb56300651f",
+    "archive": "predecessor_623/scripts/report_systematic_tier2_normal_priority_evidence.py.gz"
+  }
+}

@@ -8,6 +8,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from scripts.gap_migration_history import EVIDENCE, historical_bytes
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SNAPSHOT = ROOT / "tests/fixtures/public_website_refinement_2026_10_01.json"
@@ -15,8 +17,16 @@ SNAPSHOT = ROOT / "tests/fixtures/public_website_refinement_2026_10_01.json"
 
 def assert_public_refinement_snapshot():
     expected = json.loads(SNAPSHOT.read_text(encoding="utf-8"))["sha256"]
+    # The committed branding successor predates this migration. Keep the old
+    # fixture intact and verify this separately recorded delta against the
+    # pre-migration hashes; never approve changes by reading current bytes.
+    branding = json.loads((EVIDENCE / "preexisting_branding_snapshot.json").read_text())
+    baseline = json.loads((EVIDENCE / "baseline.json").read_text())["tracked_sha256"]
+    for relative, digest in branding["sha256"].items():
+        assert baseline[relative] == digest
+        expected[relative] = digest
     actual = {
-        relative: hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
+        relative: hashlib.sha256(historical_bytes(ROOT / relative)).hexdigest()
         for relative in expected
     }
     assert actual == expected, "Public refinement differs from its reviewed snapshot"
@@ -68,8 +78,8 @@ def historical_normal_priority_diff(tmp_path, monkeypatch):
         archived = (report.OUT / "baseline" / relative).read_bytes()
         assert hashlib.sha256(archived).hexdigest() == digest, relative
         (historical_root / relative).write_bytes(archived)
-    # Read the real current data: no curated row/export assertions are mocked
-    # or replaced. Only the frontend comes from the verified historical copy.
+    # The report reads checksum-verified pre-gap data through its historical
+    # reader. Current-corpus deltas are validated independently by migration tests.
     (historical_root / "data").symlink_to(ROOT / "data", target_is_directory=True)
     with monkeypatch.context() as context:
         context.setattr(report, "ROOT", historical_root)

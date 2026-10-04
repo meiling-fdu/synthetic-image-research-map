@@ -136,7 +136,9 @@ def test_prior_supported_records_and_current_review_candidates_preserved():
     # Six prior cases, Tier 1 affiliations, the Bangladesh address review, six
     # HIGH-evidence institutions plus IIT Patna, and the five new NORMAL-evidence
     # institutions plus two reused institutions that still lack coordinates.
-    assert payload["summary"]["pending_review"] == 53
+    # Gap additions add five institution review cases (six paper relations):
+    # Peng Cheng, QCRI, Ghent, imec, and China Southern Power Grid EPRI.
+    assert payload["summary"]["pending_review"] == 58
     for iid in ("institution:ea7b31bae9ab636d", "institution:251314027de80424"):
         assert any(r["institution_id"] == iid and r["review_status"] == "pending_review"
                    for r in payload["records"])

@@ -7,6 +7,11 @@ import hashlib
 import json
 from pathlib import Path
 
+try:
+    from scripts.gap_migration_history import historical_bytes
+except ImportError:
+    from gap_migration_history import historical_bytes
+
 ROOT = Path(__file__).resolve().parents[1]
 CANDIDATES = ROOT / 'data/manual/systematic_tier2_scope_policy_clusters_2026_09.csv'
 POLICIES = ROOT / 'data/manual/systematic_tier2_scope_policies_2026_09.json'
@@ -203,7 +208,7 @@ def render(rows, registry):
 
 def integrity():
     baseline = json.loads((PROCESSED / 'baseline_sha256.json').read_text())
-    changed = [p for p, digest in baseline.items() if not (ROOT / p).is_file() or hashlib.sha256((ROOT / p).read_bytes()).hexdigest() != digest]
+    changed = [p for p, digest in baseline.items() if not (ROOT / p).is_file() or hashlib.sha256(historical_bytes(ROOT / p)).hexdigest() != digest]
     successor = set()
     if (ROOT / 'data/processed/systematic_tier2_include_2026_09/insertion.json').exists():
         successor = {

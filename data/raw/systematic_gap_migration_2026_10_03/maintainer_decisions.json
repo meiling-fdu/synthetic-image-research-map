@@ -1,0 +1,305 @@
+[
+  {
+    "candidate_id": "gap-e1c1b108b05d",
+    "original_status": "MISSING_HIGH_CONFIDENCE",
+    "decision": "APPROVE_ADD",
+    "title": "Where Detectors Fail: Probing Generative Space for Generalizable AI-Generated Image Detection",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://proceedings.mlr.press/v306/cao26s.html",
+      "https://arxiv.org/abs/2605.24906"
+    ]
+  },
+  {
+    "candidate_id": "gap-847aa30be0f5",
+    "original_status": "MISSING_HIGH_CONFIDENCE",
+    "decision": "APPROVE_ADD",
+    "title": "DNA: Uncovering Universal Latent Forgery Knowledge",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://proceedings.mlr.press/v306/dou26b.html",
+      "https://arxiv.org/abs/2601.22515"
+    ]
+  },
+  {
+    "candidate_id": "gap-597b9e58e04b",
+    "original_status": "MISSING_NEEDS_SCOPE_REVIEW",
+    "decision": "EXCLUDE_OUT_OF_SCOPE",
+    "title": "Can We Build a Monolithic Model for Fake Image Detection? SICA: Semantic-Induced Constrained Adaptation for Unified-Yet-Discriminative Artifact Feature Space Reconstruction",
+    "note": "SICA/OpenMMSec deliberately unifies AIGC, deepfake, manipulation and document forgery. AIGC is one component of a broad framework; excluded under the current narrow corpus policy, not a judgment of research relevance.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://proceedings.mlr.press/v306/du26g.html"
+    ]
+  },
+  {
+    "candidate_id": "gap-475047af959c",
+    "original_status": "MISSING_NEEDS_SCOPE_REVIEW",
+    "decision": "HOLD_SCOPE_EVIDENCE_INSUFFICIENT",
+    "title": "Divide and Conquer: Reliable Multi-View Evidential Learning for Deepfake Detection",
+    "note": "DiCoME abstract establishes generic deepfake detection, but independent general synthetic-image evaluation is unverified. Temporary evidence hold, not permanent exclusion.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://proceedings.mlr.press/v306/kang26o.html"
+    ]
+  },
+  {
+    "candidate_id": "gap-9e3410359ab4",
+    "original_status": "MISSING_HIGH_CONFIDENCE",
+    "decision": "APPROVE_ADD",
+    "title": "Deep Residual Injection for Full-Spectrum Forensic Signal Perception in Multimodal Large Language Models",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://proceedings.mlr.press/v306/lin26an.html",
+      "https://arxiv.org/abs/2606.15880"
+    ]
+  },
+  {
+    "candidate_id": "gap-97036bf7d3f3",
+    "original_status": "MISSING_NEEDS_SCOPE_REVIEW",
+    "decision": "APPROVE_ADD",
+    "title": "PRPO: Paragraph-level Policy Optimization for Vision-Language Deepfake Detection",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://proceedings.mlr.press/v306/nguyen26f.html"
+    ]
+  },
+  {
+    "candidate_id": "gap-44d3346b0c68",
+    "original_status": "MISSING_NEEDS_SCOPE_REVIEW",
+    "decision": "EXCLUDE_OUT_OF_SCOPE",
+    "title": "OmniVL-Guard: Towards Unified Vision-Language Forgery Detection and Grounding via Balanced RL",
+    "note": "OmniVL-Guard targets interleaved text/image/video misinformation detection and grounding; no independently central synthetic-image forensic contribution established.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://proceedings.mlr.press/v306/shen26u.html"
+    ]
+  },
+  {
+    "candidate_id": "gap-923484c8a9ee",
+    "original_status": "MISSING_HIGH_CONFIDENCE",
+    "decision": "APPROVE_ADD",
+    "title": "RA-Det: Towards Universal Detection of AI-Generated Images via Robustness Asymmetry",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://proceedings.mlr.press/v306/wang26ad.html",
+      "https://arxiv.org/abs/2603.01544"
+    ]
+  },
+  {
+    "candidate_id": "gap-ae64f73095cc",
+    "original_status": "MISSING_HIGH_CONFIDENCE",
+    "decision": "APPROVE_ADD",
+    "title": "Order within Chaos: Capturing Intrinsic Energy Anomalies for AI-Manipulated Image Forgery Localization",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://proceedings.mlr.press/v306/wang26iy.html",
+      "https://arxiv.org/abs/2606.02178"
+    ]
+  },
+  {
+    "candidate_id": "gap-95d61d3debba",
+    "original_status": "MISSING_NEEDS_SCOPE_REVIEW",
+    "decision": "EXCLUDE_OUT_OF_SCOPE",
+    "title": "Forensic Prompting with Dual-Action Policy Optimization for Vision-Language Forgery Detection and Localization",
+    "note": "Forensic Prompting is a generic framework spanning manual manipulation, diffusion, face and text settings; generative imagery is insufficiently dominant under the narrow policy.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://proceedings.mlr.press/v306/zhu26bg.html"
+    ]
+  },
+  {
+    "candidate_id": "gap-c20ac70e43cc",
+    "original_status": "MISSING_HIGH_CONFIDENCE",
+    "decision": "APPROVE_ADD",
+    "title": "Supervised Contrastive Learning for Few-Shot AI-Generated Image Detection and Attribution",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://arxiv.org/abs/2511.16541"
+    ]
+  },
+  {
+    "candidate_id": "gap-7ac7fada32cf",
+    "original_status": "MISSING_HIGH_CONFIDENCE",
+    "decision": "APPROVE_ADD",
+    "title": "Learning Continuous Source Responses For Generalizable AI-Generated Image Detection",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://arxiv.org/abs/2609.14316"
+    ]
+  },
+  {
+    "candidate_id": "gap-244d54f4c08b",
+    "original_status": "MISSING_NEEDS_SCOPE_REVIEW",
+    "decision": "APPROVE_ADD",
+    "title": "A Multi-View and Confusion-Guided Ensemble Framework for Robust Synthetic Image Attribution",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://arxiv.org/abs/2609.11188"
+    ]
+  },
+  {
+    "candidate_id": "gap-6f54ea382cde",
+    "original_status": "MISSING_NEEDS_SCOPE_REVIEW",
+    "decision": "APPROVE_ADD",
+    "title": "Hybrid Semantic and Spectral Ensemble for Robust Synthetic Image Source Attribution",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://arxiv.org/abs/2607.22808"
+    ]
+  },
+  {
+    "candidate_id": "gap-d59604897b0c",
+    "original_status": "AMBIGUOUS",
+    "decision": "AMBIGUOUS_IDENTITY",
+    "title": "AI-Generated Image Detection: An Empirical Study and Future Research Directions",
+    "note": "arXiv:2511.02791 and SSRN 6032054 share authors and overlap but the SSRN title and experiments expand the scope. Preserve both links; establish neither one nor two corpus identities yet.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://arxiv.org/abs/2511.02791",
+      "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6032054"
+    ]
+  },
+  {
+    "candidate_id": "gap-6052b6ee0021",
+    "original_status": "MISSING_HIGH_CONFIDENCE",
+    "decision": "APPROVE_ADD",
+    "title": "Beyond Spectral Peaks: Interpreting the Cues Behind Synthetic Image Detection",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://www.cmsworkshops.com/ICASSP2026/view_paper.php?PaperNum=13550&bare=1"
+    ]
+  },
+  {
+    "candidate_id": "gap-3d4856c630d6",
+    "original_status": "MISSING_HIGH_CONFIDENCE",
+    "decision": "APPROVE_ADD",
+    "title": "EditTrack: Detecting and Attributing AI-assisted Image Editing",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://arxiv.org/abs/2510.01173"
+    ]
+  },
+  {
+    "candidate_id": "gap-844d4535b37b",
+    "original_status": "MISSING_HIGH_CONFIDENCE",
+    "decision": "APPROVE_ADD",
+    "title": "A comprehensive survey on visual forensics for AI-Generated image detection",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://www.cjig.cn/en/article/doi/10.11834/jig.250624/"
+    ]
+  },
+  {
+    "candidate_id": "gap-ff14127991ec",
+    "original_status": "MISSING_HIGH_CONFIDENCE",
+    "decision": "APPROVE_ADD",
+    "title": "Synthetic Images at MediaEval 2025: Advancing detection of generative AI in real-world online images",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://2025.multimediaeval.com/paper47.pdf"
+    ]
+  },
+  {
+    "candidate_id": "gap-fb883d3f464b",
+    "original_status": "MISSING_HIGH_CONFIDENCE",
+    "decision": "APPROVE_ADD",
+    "title": "ViGText: Deepfake Image Detection with Vision-Language Model Explanations and Graph Neural Networks",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://www.ndss-symposium.org/ndss-paper/vigtext-deepfake-image-detection-with-vision-language-model-explanations-and-graph-neural-networks/"
+    ]
+  },
+  {
+    "candidate_id": "gap-d5c62e3fe662",
+    "original_status": "MISSING_NEEDS_SCOPE_REVIEW",
+    "decision": "APPROVE_ADD",
+    "title": "AdaParse: Personalized Fingerprinting for Visual Generative Model Reverse Engineering",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://github.com/lizhuoxun/AdaParse"
+    ]
+  },
+  {
+    "candidate_id": "gap-661e383aa4c7",
+    "original_status": "AMBIGUOUS",
+    "decision": "APPROVE_ADD",
+    "title": "Beyond Visual Forensics: Auditing Multimodal Robustness for Synthetic Medical Image Detection",
+    "note": "Maintainer approved this work and canonical taxonomy for the 17-paper migration.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://papers.miccai.org/miccai-2026/0103-Paper2865.html"
+    ]
+  },
+  {
+    "candidate_id": "gap-f6ee3e8afe33",
+    "original_status": "MISSING_NEEDS_SCOPE_REVIEW",
+    "decision": "EXCLUDE_OUT_OF_SCOPE",
+    "title": "Chimera: Creating Digitally Signed Fake Photos by Fooling Image Recapture and Deepfake Detectors",
+    "note": "Chimera centers on counter-forensic detector evasion and digitally signed camera-provenance circumvention, not ordinary passive detection.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://www.usenix.org/conference/usenixsecurity25/presentation/park"
+    ]
+  },
+  {
+    "candidate_id": "gap-407e652cc070",
+    "original_status": "AMBIGUOUS",
+    "decision": "HOLD_EVIDENCE_INSUFFICIENT",
+    "title": "BM-DDFN: Bilinear cross-domain modeling for AIGC image source attribution",
+    "note": "Retain original ambiguous/evidence-insufficient state. No addition, no permanent scope exclusion, no renewed discovery.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://www.sciencedirect.com/science/article/abs/pii/S0950705126003953"
+    ]
+  },
+  {
+    "candidate_id": "gap-d5299b97265c",
+    "original_status": "AMBIGUOUS",
+    "decision": "HOLD_EVIDENCE_INSUFFICIENT",
+    "title": "SCA-Det: A structure-context artifact detector for AI-generated image detection",
+    "note": "Retain original ambiguous/evidence-insufficient state. No addition, no permanent scope exclusion, no renewed discovery.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://www.sciencedirect.com/science/article/pii/S0925231226010246"
+    ]
+  },
+  {
+    "candidate_id": "gap-8093a93ddda1",
+    "original_status": "AMBIGUOUS",
+    "decision": "HOLD_EVIDENCE_INSUFFICIENT",
+    "title": "Spectral Forensics: Detecting Diffusion-Generated Imagery via 1/f^β Power Law Violations",
+    "note": "Retain original ambiguous/evidence-insufficient state. No addition, no permanent scope exclusion, no renewed discovery.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://doi.org/10.1109/LSP.2026.3672388"
+    ]
+  },
+  {
+    "candidate_id": "gap-db00ac33de04",
+    "original_status": "AMBIGUOUS",
+    "decision": "HOLD_EVIDENCE_INSUFFICIENT",
+    "title": "Proto-LeakNet: Towards signal-leak aware attribution in synthetic human face imagery",
+    "note": "Retain original ambiguous/evidence-insufficient state. No addition, no permanent scope exclusion, no renewed discovery.",
+    "decided_at": "2026-10-03T00:00:00Z",
+    "source_urls": [
+      "https://www.sciencedirect.com/science/article/pii/S1077314226002158"
+    ]
+  }
+]

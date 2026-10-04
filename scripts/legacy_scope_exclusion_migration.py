@@ -22,6 +22,11 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 try:
+    from .gap_migration_history import historical_bytes, historical_text, EVIDENCE as GAP_EVIDENCE
+except ImportError:
+    from gap_migration_history import historical_bytes, historical_text, EVIDENCE as GAP_EVIDENCE
+
+try:
     from .curated_schema import PAPER_EXCLUSION_COLUMNS
     from .paper_exclusions import (
         all_identity_keys,
@@ -345,7 +350,7 @@ def sha256_bytes(value: bytes) -> str:
 
 
 def file_sha256(path: Path) -> str:
-    return sha256_bytes(path.read_bytes())
+    return sha256_bytes(historical_bytes(path))
 
 
 def row_sha256(row: Mapping[str, Any]) -> str:
@@ -354,8 +359,13 @@ def row_sha256(row: Mapping[str, Any]) -> str:
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
-    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+    with io.StringIO(historical_text(path, encoding="utf-8-sig"), newline="") as handle:
         return [dict(row) for row in csv.DictReader(handle)]
+
+
+def read_exclusion_rows(path=EXCLUSIONS_PATH):
+    """The completed exclusion migration verifies its original successor layer."""
+    return read_csv(path)
 
 
 def csv_text(rows: Sequence[Mapping[str, Any]], fields: Sequence[str]) -> str:
@@ -379,7 +389,7 @@ def write_text_atomic(path: Path, text: str) -> None:
 
 
 def load_payload(path: Path) -> dict[str, Any]:
-    payload = json.loads(path.read_text(encoding="utf-8"))
+    payload = json.loads(historical_text(path))
     if not isinstance(payload, dict) or not isinstance(payload.get("records"), list):
         raise AssertionError(f"{path} must contain a records array")
     return payload
@@ -1300,7 +1310,7 @@ def reproduction_texts(
         texts[name] = (
             rendered[name]
             if name in rendered
-            else (ROOT / name).read_text(encoding="utf-8")
+            else historical_text(ROOT / name)
         )
     return texts
 
@@ -1672,6 +1682,8 @@ def main() -> int:
     group.add_argument("--reproduce", type=Path)
     parser.add_argument("--output-dir", type=Path, default=OUT)
     args = parser.parse_args()
+    if (GAP_EVIDENCE / 'insertion.json').exists() and (args.phase_a or args.apply or args.render):
+        raise SystemExit('Historical migration is superseded by the approved gap migration; use --check or --reproduce.')
     if args.phase_a:
         result = write_phase_a(args.output_dir)
     elif args.apply:

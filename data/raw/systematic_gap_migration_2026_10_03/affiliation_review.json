@@ -1,0 +1,77 @@
+{
+  "reviewed_at": "2026-10-03",
+  "policy": "Author positions are one-based in the canonical proceedings/arXiv author list. Reuse explicitly reviewed existing entities. Preserve department/lab wording in raw_affiliation. No current-homepage inference. Coordinates require separate evidence.",
+  "papers": {
+    "gap-e1c1b108b05d": [
+      ["Sun Yat-sen University", [1,3,5,6,7], "School of Computer Science and Engineering, Sun Yat-sen University, Guangzhou, China"],
+      ["Australian National University", [2], "Australian National University, Canberra, Australia"],
+      ["Tsinghua Shenzhen International Graduate School", [4], "Tsinghua Shenzhen International Graduate School, Tsinghua University, Shenzhen, China"],
+      ["Peng Cheng Laboratory", [6,7], "Peng Cheng Laboratory, Shenzhen, China"]
+    ],
+    "gap-847aa30be0f5": [
+      ["The University of Sydney", [1,2,3,4,5], "The University of Sydney, Sydney, Australia"],
+      ["National University of Singapore", [2,8,9], "National University of Singapore, Singapore"],
+      ["Xiamen University", [6], "Xiamen University, Xiamen, China"],
+      ["The Hong Kong Polytechnic University", [7], "The Hong Kong Polytechnic University, Hong Kong, China"]
+    ],
+    "gap-9e3410359ab4": [
+      ["Shenzhen University", [1,5,7], "Guangdong Provincial Key Laboratory of Intelligent Information Processing, Shenzhen Key Laboratory of Media Security, and SZU-AFS Joint Innovation Center for AI Technology, Shenzhen University"],
+      ["Tencent Youtu Lab", [1,3,4,8,9,10,11], "Tencent Youtu Lab"],
+      ["Peking University", [2], "Peking University"],
+      ["Fudan University", [6], "Fudan University"]
+    ],
+    "gap-97036bf7d3f3": [
+      ["Qatar Computing Research Institute", [1,2,5], "Qatar Computing Research Institute, Hamad Bin Khalifa University, Doha, Qatar"],
+      ["New Jersey Institute of Technology", [3,4], "New Jersey Institute of Technology, NJ, USA"]
+    ],
+    "gap-923484c8a9ee": [
+      ["Jiangnan University", [1,3,4,5,7], "Jiangnan University"],
+      ["Fudan University", [2,6], "Fudan University"]
+    ],
+    "gap-ae64f73095cc": [["Zhejiang University", [1,2,3,4,5,6], "Zhejiang University, Hangzhou, China"]],
+    "gap-c20ac70e43cc": [["Universidad Politécnica de Madrid", [1,2,3], "Universidad Politécnica de Madrid (UPM), Madrid"]],
+    "gap-7ac7fada32cf": [
+      ["Ant Group", [1,3,8,9,10], "Ant Group"],
+      ["Huazhong University of Science and Technology", [1,5], "Huazhong University of Science and Technology"],
+      ["Institute of Automation, Chinese Academy of Sciences", [2,4,7,11], "Institute of Automation, Chinese Academy of Sciences"],
+      ["Jilin University", [6], "Jilin University"]
+    ],
+    "gap-244d54f4c08b": [["China Southern Power Grid Electric Power Research Institute", [1], "State Key Laboratory of HVDC, China Southern Power Grid Electric Power Research Institute, China"]],
+    "gap-6f54ea382cde": [["Chittagong University of Engineering and Technology", [1], "Chittagong University of Engineering and Technology, Chittagong, Bangladesh"]],
+    "gap-6052b6ee0021": [
+      ["Politecnico di Milano", [1,4], "Dipartimento di Elettronica, Informazione e Bioingegneria, Politecnico di Milano, Milan, Italy"],
+      ["University of Vigo", [2,3,5], "atlanTTic Research Center, University of Vigo, E.E. de Telecomunicación, Vigo, Spain"]
+    ],
+    "gap-3d4856c630d6": [["Duke University", [1,2,3,4], "Duke University"]],
+    "gap-844d4535b37b": [["Chinese People's Armed Police Force Engineering University", [1,2,3,4,5], "Authors 1,2,3,5: College of Cryptography Engineering and Key Laboratory of CTC&IE (Engineering University of PAP), Ministry of Education, Xi’an 710086, China. Author 4 Feng Pei: 武警工程大学装备管理与保障学院 (College of Equipment Management and Support), Xi’an 710086, China. Chinese author block supplies affiliation 3 omitted from English block."]],
+    "gap-ff14127991ec": [
+      ["Centre for Research and Technology Hellas", [1,2,4,5,10], "Information Technologies Institute (ITI) @ CERTH, Greece"],
+      ["University of Naples Federico II", [3,6,9], "University Federico II of Naples, Italy"],
+      ["University of Amsterdam", [4,7], "University of Amsterdam, The Netherlands"],
+      ["Ghent University", [8], "IDLab, Ghent University — imec, Belgium"],
+      ["imec", [8], "IDLab, Ghent University — imec, Belgium"]
+    ],
+    "gap-fb883d3f464b": [
+      ["New Jersey Institute of Technology", [1,4,5], "New Jersey Institute of Technology, Newark, NJ, USA"],
+      ["Old Dominion University", [2], "Old Dominion University, Norfolk, VA, USA"],
+      ["Qatar Computing Research Institute", [3], "Qatar Computing Research Institute (QCRI), HBKU, Doha, Qatar"]
+    ],
+    "gap-d5c62e3fe662": [["Tsinghua University", [1,2,3,4,5], "Department of Automation, Tsinghua University, Beijing 100084, China"]],
+    "gap-661e383aa4c7": []
+  },
+  "unresolved": {
+    "gap-661e383aa4c7": "All ten paper-time author affiliations remain unresolved. Official accepted-paper Author(s)/BibTeX establishes author order, but the linked PDF returned an HTML interstitial (HTTP 200, not PDF); web PDF retrieval failed. The author-linked repository supplies no affiliation block. Do not infer from other papers or present-day profiles. Keep the paper public and all ten author-affiliation reviews unresolved."
+  },
+  "author_order_notes": {
+    "gap-c20ac70e43cc": "Canonical author order follows the arXiv metadata captured by the audit: Jaime Álvarez Urueña; David Camacho; Javier Huertas Tato. PDF places Javier Huertas Tato before David Camacho in a shared affiliation block. Preserve both source renderings; all three explicitly affiliate to UPM.",
+    "gap-661e383aa4c7": "Use the ten names in official Author(s) and BibTeX; reject the inconsistent standalone Kitty K. Wong header."
+  },
+  "new_institutions": [
+    {"canonical_name":"Hamad Bin Khalifa University","abbreviation":"HBKU","institution_type":"university","city":"Doha","country":"Qatar","country_code":"QA","evidence_candidate":"gap-97036bf7d3f3","note":"Parent explicitly named in PRPO and ViGText affiliation blocks; do not confuse with existing Khalifa University in UAE."},
+    {"canonical_name":"Qatar Computing Research Institute","abbreviation":"QCRI","institution_type":"research_unit","parent_name":"Hamad Bin Khalifa University","city":"Doha","country":"Qatar","country_code":"QA","evidence_candidate":"gap-97036bf7d3f3"},
+    {"canonical_name":"New Jersey Institute of Technology","abbreviation":"NJIT","institution_type":"university","city":"Newark","country":"United States","country_code":"US","evidence_candidate":"gap-fb883d3f464b"},
+    {"canonical_name":"Old Dominion University","abbreviation":"ODU","institution_type":"university","city":"Norfolk","country":"United States","country_code":"US","evidence_candidate":"gap-fb883d3f464b"},
+    {"canonical_name":"University of Vigo","abbreviation":"","institution_type":"university","city":"Vigo","country":"Spain","country_code":"ES","evidence_candidate":"gap-6052b6ee0021"},
+    {"canonical_name":"China Southern Power Grid Electric Power Research Institute","abbreviation":"","institution_type":"research_unit","city":"","country":"China","country_code":"CN","evidence_candidate":"gap-244d54f4c08b","note":"Paper establishes institutional identity and China only; no city or coordinate inferred."}
+  ]
+}

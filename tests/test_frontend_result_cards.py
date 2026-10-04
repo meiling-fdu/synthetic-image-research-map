@@ -129,7 +129,10 @@ process.stdout.write(JSON.stringify({
                 "app.js",
             )
         }
-        self.assertEqual(len(set(versions.values())), 1)
+        # The earlier branding commit updated CSS independently of the unchanged
+        # mapping JavaScript. Check both exact versions, not accidental equality.
+        self.assertEqual(versions.pop("style.css"), "20261002-brand-1")
+        self.assertEqual(set(versions.values()), {"20261001-academic-1"})
 
     def test_shared_author_items_preserve_mappings_across_visibility_slices(self):
         helper = ROOT / "web" / "paper_details_helpers.js"

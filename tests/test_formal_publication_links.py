@@ -16,22 +16,22 @@ EXPECTED_LINKS = {
         "1905.02259",
     ),
     "curated:7ed4e932c4dac57d0136": (
-        "https://openreview.net/forum?id=G5XGej7wNt", "2511.13108"
+        "https://proceedings.mlr.press/v306/yan26h.html", "2511.13108"
     ),
     "curated:c87f234ea256991903e1": (
-        "https://openreview.net/forum?id=JcjRShiRQz", "2606.10309"
+        "https://proceedings.mlr.press/v306/kim26k.html", "2606.10309"
     ),
     "curated:f380c0d31081fc59f1eb": (
-        "https://openreview.net/forum?id=qjwFbN77kx", "2606.00606"
+        "https://proceedings.mlr.press/v306/zhang26bi.html", "2606.00606"
     ),
     "curated:078ade9edabe304013a7": (
-        "https://openreview.net/forum?id=SzPII70Uta", "2606.07034"
+        "https://proceedings.mlr.press/v306/zhou26bt.html", "2606.07034"
     ),
     "curated:d6fe2666a64b0c70ff6b": (
-        "https://openreview.net/forum?id=Fhtwta4397", "2605.16122"
+        "https://proceedings.mlr.press/v306/xu26cl.html", "2605.16122"
     ),
     "curated:a570863c3a6ac227b56c": (
-        "https://openreview.net/forum?id=yEjix8H6Dw", "2605.21207"
+        "https://proceedings.mlr.press/v306/zhou26h.html", "2605.21207"
     ),
     "curated:4c10e64c5b8f09c7333e": (
         "https://openreview.net/forum?id=7gGl6HB5Zd", "2504.15470"
