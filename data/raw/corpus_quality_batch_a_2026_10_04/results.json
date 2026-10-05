@@ -1,0 +1,1760 @@
+{
+  "date": "2026-10-04",
+  "records": [
+    {
+      "review_id": "L002",
+      "paper_id": "doi:10.2352/issn.2470-1173.2021.4.mwsf-276",
+      "title": "Detection, Attribution and Localization of GAN Generated Images",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/pdf/2007.10466"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        {
+          "id": "openalex-candidate-100ab0f0615a88f7",
+          "title": "Detection, Attribution and Localization of GAN Generated Images",
+          "in_scope": true,
+          "year": 2021,
+          "publication_year": 2021,
+          "publication_date": "2021-01-18",
+          "venue": "Electronic Imaging",
+          "publisher": "",
+          "publication_type": "journal",
+          "abstract": "Recent advances in Generative Adversarial Networks (GANs) have led to the creation of realistic-looking digital images that pose a major challenge to their detection by humans or computers.GANs are used in a wide range of tasks, from modifying small attributes of an image (StarGAN [14]), transferring attributes between image pairs (CycleGAN [91]), as well as generating entirely new images (ProGAN [36], StyleGAN [37], SPADE/GauGAN [64]).In this paper, we propose a novel approach to detect, attribute and localize GAN generated images that combines image features with deep learning methods.For every image, co-occurrence matrices are computed on neighborhood pixels of RGB channels in different directions (horizontal, vertical and diagonal).A deep learning network is then trained on these features to detect, attribute and localize these GAN generated/manipulated images.A large scale evaluation of our approach on 5 GAN datasets comprising over 2.76 million images (ProGAN, StarGAN, CycleGAN, StyleGAN and SPADE/GauGAN) shows promising results in detecting GAN generated images.",
+          "abstract_source": "OpenAlex local raw cache",
+          "ai_summary": "",
+          "doi": "10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "arxiv_id": "2007.10466",
+          "arxiv_url": "https://arxiv.org/abs/2007.10466",
+          "arxiv_year": 2020,
+          "has_arxiv_version": true,
+          "paper_url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "primary_url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "landing_page_url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "openalex_url": "https://openalex.org/W3179128750",
+          "is_arxiv_preprint": false,
+          "url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "authors": [
+            {
+              "name": "Michael Goebel",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "Lakshmanan Nataraj",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "Tejaswi Nanjundaswamy",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "Tajuddin Manhar Mohammed",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "Shivkumar Chandrasekaran",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "B.S. Manjunath",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            }
+          ],
+          "institution_authors": [
+            "Michael Goebel",
+            "Lakshmanan Nataraj",
+            "Tejaswi Nanjundaswamy",
+            "Tajuddin Manhar Mohammed",
+            "Shivkumar Chandrasekaran",
+            "B.S. Manjunath"
+          ],
+          "institution": "University of California, Santa Barbara",
+          "country": "United States",
+          "country_code": "US",
+          "region": "",
+          "region_code": "",
+          "raw_country": "US",
+          "raw_country_code": "US",
+          "city": "Santa Barbara",
+          "latitude": 34.42083,
+          "longitude": -119.69819,
+          "source_database": "OpenAlex",
+          "resolution_method": "ror_id",
+          "resolution_confidence": "high",
+          "needs_review": false,
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt",
+          "tasks": [
+            "detection",
+            "source_attribution"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method"
+          ],
+          "location_display": "United States",
+          "affiliation_review_state": "unreviewed",
+          "institution_source": "automatic_fallback",
+          "preliminary_affiliations": true,
+          "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+          "venue_review_required": true,
+          "venue_review_reason": "Electronic Imaging is deposited as journal-article metadata but also names symposium proceedings. Confirm the paper-level scholarly event (Electronic Imaging or its MWSF conference), publication type and track from the primary proceedings. Electronic Imaging may denote symposium proceedings rather than a journal. Verify this paper's publication container and type.",
+          "ambiguity_status": "unresolved",
+          "institution_type": "university",
+          "canonical_name": "University of California, Santa Barbara",
+          "canonical_institution_name": "University of California, Santa Barbara",
+          "institution_id": "institution:de4a2849d3de43a3",
+          "author_affiliation_counts": {
+            "mapped": 6,
+            "non_institutional": 0,
+            "unresolved": 0
+          },
+          "affiliation_complete": true,
+          "affiliations": [
+            {
+              "index": 1,
+              "name": "University of California, Santa Barbara",
+              "canonical_name": "University of California, Santa Barbara",
+              "institution_id": "institution:de4a2849d3de43a3",
+              "institution_type": "university",
+              "country": "United States",
+              "country_code": "",
+              "region": "",
+              "location_display": "United States"
+            },
+            {
+              "index": 2,
+              "name": "Mayachitra Inc.",
+              "canonical_name": "Mayachitra Inc.",
+              "institution_id": "institution:bcd3d53e57c31275",
+              "institution_type": "company",
+              "country": "United States",
+              "country_code": "",
+              "region": "",
+              "location_display": "United States",
+              "source_institution_names": [
+                "Mayachitra (United States)"
+              ]
+            }
+          ],
+          "current_institution": {
+            "index": 1,
+            "name": "University of California, Santa Barbara",
+            "canonical_name": "University of California, Santa Barbara",
+            "institution_id": "institution:de4a2849d3de43a3",
+            "institution_type": "university",
+            "country": "United States",
+            "country_code": "",
+            "region": "",
+            "location_display": "United States"
+          },
+          "author_institution_affiliations": [
+            {
+              "index": 1,
+              "institution_id": "institution:de4a2849d3de43a3",
+              "institution": "University of California, Santa Barbara",
+              "institution_type": "university",
+              "authors": [
+                "Michael Goebel",
+                "Lakshmanan Nataraj",
+                "Tejaswi Nanjundaswamy",
+                "Tajuddin Manhar Mohammed",
+                "Shivkumar Chandrasekaran",
+                "B.S. Manjunath"
+              ],
+              "mapping_source": "raw_affiliation",
+              "mapping_fallback": false
+            },
+            {
+              "index": 2,
+              "institution_id": "institution:bcd3d53e57c31275",
+              "institution": "Mayachitra Inc.",
+              "institution_type": "company",
+              "authors": [
+                "Michael Goebel",
+                "Lakshmanan Nataraj",
+                "Tejaswi Nanjundaswamy",
+                "Tajuddin Manhar Mohammed",
+                "Shivkumar Chandrasekaran",
+                "B.S. Manjunath"
+              ],
+              "mapping_source": "raw_affiliation",
+              "mapping_fallback": false,
+              "source_institution_names": [
+                "Mayachitra (United States)"
+              ]
+            }
+          ],
+          "author_affiliation_indices": [
+            {
+              "author": "Michael Goebel",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "Lakshmanan Nataraj",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "Tejaswi Nanjundaswamy",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "Tajuddin Manhar Mohammed",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "Shivkumar Chandrasekaran",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "B.S. Manjunath",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            }
+          ],
+          "author_institution_indices": [
+            {
+              "author": "Michael Goebel",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "Lakshmanan Nataraj",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "Tejaswi Nanjundaswamy",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "Tajuddin Manhar Mohammed",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "Shivkumar Chandrasekaran",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "B.S. Manjunath",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            }
+          ],
+          "aggregated_institution_types": [
+            "university",
+            "company"
+          ],
+          "raw_venue": "Electronic Imaging",
+          "formal_url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "taxonomy_status": "reviewed",
+          "taxonomy_review": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "metadata_status": {
+            "overall": "Source metadata",
+            "default_field_status": "Source metadata",
+            "field_overrides": {
+              "venue": {
+                "status": "Needs review",
+                "source": "OpenAlex"
+              },
+              "arxiv": {
+                "status": "Source metadata",
+                "source": "arXiv"
+              },
+              "affiliations": {
+                "status": "Needs review"
+              }
+            },
+            "source": "OpenAlex"
+          }
+        },
+        {
+          "id": "openalex-candidate-348dac7c89f8e435",
+          "title": "Detection, Attribution and Localization of GAN Generated Images",
+          "in_scope": true,
+          "year": 2021,
+          "publication_year": 2021,
+          "publication_date": "2021-01-18",
+          "venue": "Electronic Imaging",
+          "publisher": "",
+          "publication_type": "journal",
+          "abstract": "Recent advances in Generative Adversarial Networks (GANs) have led to the creation of realistic-looking digital images that pose a major challenge to their detection by humans or computers.GANs are used in a wide range of tasks, from modifying small attributes of an image (StarGAN [14]), transferring attributes between image pairs (CycleGAN [91]), as well as generating entirely new images (ProGAN [36], StyleGAN [37], SPADE/GauGAN [64]).In this paper, we propose a novel approach to detect, attribute and localize GAN generated images that combines image features with deep learning methods.For every image, co-occurrence matrices are computed on neighborhood pixels of RGB channels in different directions (horizontal, vertical and diagonal).A deep learning network is then trained on these features to detect, attribute and localize these GAN generated/manipulated images.A large scale evaluation of our approach on 5 GAN datasets comprising over 2.76 million images (ProGAN, StarGAN, CycleGAN, StyleGAN and SPADE/GauGAN) shows promising results in detecting GAN generated images.",
+          "abstract_source": "OpenAlex local raw cache",
+          "ai_summary": "",
+          "doi": "10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "arxiv_id": "2007.10466",
+          "arxiv_url": "https://arxiv.org/abs/2007.10466",
+          "arxiv_year": 2020,
+          "has_arxiv_version": true,
+          "paper_url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "primary_url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "landing_page_url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "openalex_url": "https://openalex.org/W3179128750",
+          "is_arxiv_preprint": false,
+          "url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "authors": [
+            {
+              "name": "Michael Goebel",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "Lakshmanan Nataraj",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "Tejaswi Nanjundaswamy",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "Tajuddin Manhar Mohammed",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "Shivkumar Chandrasekaran",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "B.S. Manjunath",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            }
+          ],
+          "institution_authors": [
+            "Michael Goebel",
+            "Lakshmanan Nataraj",
+            "Tejaswi Nanjundaswamy",
+            "Tajuddin Manhar Mohammed",
+            "Shivkumar Chandrasekaran",
+            "B.S. Manjunath"
+          ],
+          "institution": "Mayachitra Inc.",
+          "country": "United States",
+          "country_code": "US",
+          "region": "",
+          "region_code": "",
+          "raw_country": "US",
+          "raw_country_code": "US",
+          "city": "Santa Barbara",
+          "latitude": 34.42083,
+          "longitude": -119.69819,
+          "source_database": "OpenAlex",
+          "resolution_method": "ror_id",
+          "resolution_confidence": "high",
+          "needs_review": false,
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt",
+          "tasks": [
+            "detection",
+            "source_attribution"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method"
+          ],
+          "location_display": "United States",
+          "affiliation_review_state": "unreviewed",
+          "institution_source": "automatic_fallback",
+          "preliminary_affiliations": true,
+          "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+          "venue_review_required": true,
+          "venue_review_reason": "Electronic Imaging is deposited as journal-article metadata but also names symposium proceedings. Confirm the paper-level scholarly event (Electronic Imaging or its MWSF conference), publication type and track from the primary proceedings. Electronic Imaging may denote symposium proceedings rather than a journal. Verify this paper's publication container and type.",
+          "ambiguity_status": "unresolved",
+          "institution_type": "company",
+          "source_institution_names": [
+            "Mayachitra (United States)"
+          ],
+          "source_institution": "Mayachitra (United States)",
+          "canonical_name": "Mayachitra Inc.",
+          "canonical_institution_name": "Mayachitra Inc.",
+          "institution_id": "institution:bcd3d53e57c31275",
+          "author_affiliation_counts": {
+            "mapped": 6,
+            "non_institutional": 0,
+            "unresolved": 0
+          },
+          "affiliation_complete": true,
+          "affiliations": [
+            {
+              "index": 1,
+              "name": "University of California, Santa Barbara",
+              "canonical_name": "University of California, Santa Barbara",
+              "institution_id": "institution:de4a2849d3de43a3",
+              "institution_type": "university",
+              "country": "United States",
+              "country_code": "",
+              "region": "",
+              "location_display": "United States"
+            },
+            {
+              "index": 2,
+              "name": "Mayachitra Inc.",
+              "canonical_name": "Mayachitra Inc.",
+              "institution_id": "institution:bcd3d53e57c31275",
+              "institution_type": "company",
+              "country": "United States",
+              "country_code": "",
+              "region": "",
+              "location_display": "United States",
+              "source_institution_names": [
+                "Mayachitra (United States)"
+              ]
+            }
+          ],
+          "current_institution": {
+            "index": 2,
+            "name": "Mayachitra Inc.",
+            "canonical_name": "Mayachitra Inc.",
+            "institution_id": "institution:bcd3d53e57c31275",
+            "institution_type": "company",
+            "country": "United States",
+            "country_code": "",
+            "region": "",
+            "location_display": "United States",
+            "source_institution_names": [
+              "Mayachitra (United States)"
+            ]
+          },
+          "author_institution_affiliations": [
+            {
+              "index": 1,
+              "institution_id": "institution:de4a2849d3de43a3",
+              "institution": "University of California, Santa Barbara",
+              "institution_type": "university",
+              "authors": [
+                "Michael Goebel",
+                "Lakshmanan Nataraj",
+                "Tejaswi Nanjundaswamy",
+                "Tajuddin Manhar Mohammed",
+                "Shivkumar Chandrasekaran",
+                "B.S. Manjunath"
+              ],
+              "mapping_source": "raw_affiliation",
+              "mapping_fallback": false
+            },
+            {
+              "index": 2,
+              "institution_id": "institution:bcd3d53e57c31275",
+              "institution": "Mayachitra Inc.",
+              "institution_type": "company",
+              "authors": [
+                "Michael Goebel",
+                "Lakshmanan Nataraj",
+                "Tejaswi Nanjundaswamy",
+                "Tajuddin Manhar Mohammed",
+                "Shivkumar Chandrasekaran",
+                "B.S. Manjunath"
+              ],
+              "mapping_source": "raw_affiliation",
+              "mapping_fallback": false,
+              "source_institution_names": [
+                "Mayachitra (United States)"
+              ]
+            }
+          ],
+          "author_affiliation_indices": [
+            {
+              "author": "Michael Goebel",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "Lakshmanan Nataraj",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "Tejaswi Nanjundaswamy",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "Tajuddin Manhar Mohammed",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "Shivkumar Chandrasekaran",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "B.S. Manjunath",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            }
+          ],
+          "author_institution_indices": [
+            {
+              "author": "Michael Goebel",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "Lakshmanan Nataraj",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "Tejaswi Nanjundaswamy",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "Tajuddin Manhar Mohammed",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "Shivkumar Chandrasekaran",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "B.S. Manjunath",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            }
+          ],
+          "aggregated_institution_types": [
+            "university",
+            "company"
+          ],
+          "raw_venue": "Electronic Imaging",
+          "formal_url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "taxonomy_status": "reviewed",
+          "taxonomy_review": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "metadata_status": {
+            "overall": "Source metadata",
+            "default_field_status": "Source metadata",
+            "field_overrides": {
+              "venue": {
+                "status": "Needs review",
+                "source": "OpenAlex"
+              },
+              "arxiv": {
+                "status": "Source metadata",
+                "source": "arXiv"
+              },
+              "affiliations": {
+                "status": "Needs review"
+              }
+            },
+            "source": "OpenAlex"
+          }
+        },
+        {
+          "id": "openalex-candidate-42640e9490a9cc59",
+          "title": "Detection, Attribution and Localization of GAN Generated Images",
+          "in_scope": true,
+          "year": 2021,
+          "publication_year": 2021,
+          "publication_date": "2020-07-20",
+          "venue": "Electronic Imaging / IS&T Int’l. Symp. on Electronic Imaging: Media Watermarking, Security, and Forensics",
+          "publisher": "Cornell University",
+          "publication_type": "journal",
+          "abstract": "Recent advances in Generative Adversarial Networks (GANs) have led to the creation of realistic-looking digital images that pose a major challenge to their detection by humans or computers.GANs are used in a wide range of tasks, from modifying small attributes of an image (StarGAN [14]), transferring attributes between image pairs (CycleGAN [91]), as well as generating entirely new images (ProGAN [36], StyleGAN [37], SPADE/GauGAN [64]).In this paper, we propose a novel approach to detect, attribute and localize GAN generated images that combines image features with deep learning methods.For every image, co-occurrence matrices are computed on neighborhood pixels of RGB channels in different directions (horizontal, vertical and diagonal).A deep learning network is then trained on these features to detect, attribute and localize these GAN generated/manipulated images.A large scale evaluation of our approach on 5 GAN datasets comprising over 2.76 million images (ProGAN, StarGAN, CycleGAN, StyleGAN and SPADE/GauGAN) shows promising results in detecting GAN generated images.",
+          "abstract_source": "OpenAlex local raw cache",
+          "ai_summary": "",
+          "doi": "10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "arxiv_id": "2007.10466",
+          "arxiv_url": "https://arxiv.org/abs/2007.10466",
+          "arxiv_year": 2020,
+          "has_arxiv_version": true,
+          "paper_url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "primary_url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "landing_page_url": "https://library.imaging.org/ei/articles/33/4/art00007",
+          "openalex_url": "https://openalex.org/W3043994911",
+          "is_arxiv_preprint": false,
+          "url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "authors": [
+            {
+              "name": "Michael Goebel",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "Lakshmanan Nataraj",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "Tejaswi Nanjundaswamy",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "Tajuddin Manhar Mohammed",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "Shivkumar Chandrasekaran",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            },
+            {
+              "name": "B.S. Manjunath",
+              "affiliation_indices": [
+                1,
+                2
+              ],
+              "is_current_marker_author": true,
+              "affiliation_source": "raw_affiliation",
+              "affiliation_fallback": false,
+              "affiliation_status": "mapped"
+            }
+          ],
+          "institution_authors": [
+            "Michael Goebel"
+          ],
+          "institution": "University of California, Santa Barbara",
+          "country": "United States",
+          "country_code": "US",
+          "region": "",
+          "region_code": "",
+          "raw_country": "US",
+          "raw_country_code": "US",
+          "city": "Santa Barbara",
+          "latitude": 34.42083,
+          "longitude": -119.69819,
+          "source_database": "OpenAlex",
+          "resolution_method": "ror_id",
+          "resolution_confidence": "high",
+          "needs_review": false,
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | manual publication metadata override applied | Manual correction: arXiv version exists, but the paper was formally published in Electronic Imaging 2021.",
+          "tasks": [
+            "detection",
+            "source_attribution"
+          ],
+          "image_scopes": [
+            "fully_generated"
+          ],
+          "research_types": [
+            "method"
+          ],
+          "location_display": "United States",
+          "affiliation_review_state": "unreviewed",
+          "institution_source": "automatic_fallback",
+          "preliminary_affiliations": true,
+          "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+          "venue_review_required": true,
+          "venue_review_reason": "Electronic Imaging is deposited as journal-article metadata but also names symposium proceedings. Confirm the paper-level scholarly event (Electronic Imaging or its MWSF conference), publication type and track from the primary proceedings. Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+          "ambiguity_status": "unresolved",
+          "institution_type": "university",
+          "canonical_name": "University of California, Santa Barbara",
+          "canonical_institution_name": "University of California, Santa Barbara",
+          "institution_id": "institution:de4a2849d3de43a3",
+          "author_affiliation_counts": {
+            "mapped": 6,
+            "non_institutional": 0,
+            "unresolved": 0
+          },
+          "affiliation_complete": true,
+          "affiliations": [
+            {
+              "index": 1,
+              "name": "University of California, Santa Barbara",
+              "canonical_name": "University of California, Santa Barbara",
+              "institution_id": "institution:de4a2849d3de43a3",
+              "institution_type": "university",
+              "country": "United States",
+              "country_code": "",
+              "region": "",
+              "location_display": "United States"
+            },
+            {
+              "index": 2,
+              "name": "Mayachitra Inc.",
+              "canonical_name": "Mayachitra Inc.",
+              "institution_id": "institution:bcd3d53e57c31275",
+              "institution_type": "company",
+              "country": "United States",
+              "country_code": "",
+              "region": "",
+              "location_display": "United States",
+              "source_institution_names": [
+                "Mayachitra (United States)"
+              ]
+            }
+          ],
+          "current_institution": {
+            "index": 1,
+            "name": "University of California, Santa Barbara",
+            "canonical_name": "University of California, Santa Barbara",
+            "institution_id": "institution:de4a2849d3de43a3",
+            "institution_type": "university",
+            "country": "United States",
+            "country_code": "",
+            "region": "",
+            "location_display": "United States"
+          },
+          "author_institution_affiliations": [
+            {
+              "index": 1,
+              "institution_id": "institution:de4a2849d3de43a3",
+              "institution": "University of California, Santa Barbara",
+              "institution_type": "university",
+              "authors": [
+                "Michael Goebel",
+                "Lakshmanan Nataraj",
+                "Tejaswi Nanjundaswamy",
+                "Tajuddin Manhar Mohammed",
+                "Shivkumar Chandrasekaran",
+                "B.S. Manjunath"
+              ],
+              "mapping_source": "raw_affiliation",
+              "mapping_fallback": false
+            },
+            {
+              "index": 2,
+              "institution_id": "institution:bcd3d53e57c31275",
+              "institution": "Mayachitra Inc.",
+              "institution_type": "company",
+              "authors": [
+                "Michael Goebel",
+                "Lakshmanan Nataraj",
+                "Tejaswi Nanjundaswamy",
+                "Tajuddin Manhar Mohammed",
+                "Shivkumar Chandrasekaran",
+                "B.S. Manjunath"
+              ],
+              "mapping_source": "raw_affiliation",
+              "mapping_fallback": false,
+              "source_institution_names": [
+                "Mayachitra (United States)"
+              ]
+            }
+          ],
+          "author_affiliation_indices": [
+            {
+              "author": "Michael Goebel",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "Lakshmanan Nataraj",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "Tejaswi Nanjundaswamy",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "Tajuddin Manhar Mohammed",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "Shivkumar Chandrasekaran",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            },
+            {
+              "author": "B.S. Manjunath",
+              "indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ],
+              "source": "raw_affiliation",
+              "fallback": false
+            }
+          ],
+          "author_institution_indices": [
+            {
+              "author": "Michael Goebel",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "Lakshmanan Nataraj",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "Tejaswi Nanjundaswamy",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "Tajuddin Manhar Mohammed",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "Shivkumar Chandrasekaran",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            },
+            {
+              "author": "B.S. Manjunath",
+              "institution_indices": [
+                1,
+                2
+              ],
+              "institution_ids": [
+                "institution:de4a2849d3de43a3",
+                "institution:bcd3d53e57c31275"
+              ]
+            }
+          ],
+          "aggregated_institution_types": [
+            "university",
+            "company"
+          ],
+          "raw_venue": "Electronic Imaging / IS&T Int’l. Symp. on Electronic Imaging: Media Watermarking, Security, and Forensics",
+          "formal_url": "https://doi.org/10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "taxonomy_status": "reviewed",
+          "taxonomy_review": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "metadata_status": {
+            "overall": "Source metadata",
+            "default_field_status": "Source metadata",
+            "field_overrides": {
+              "venue": {
+                "status": "Needs review",
+                "source": "OpenAlex"
+              },
+              "arxiv": {
+                "status": "Source metadata",
+                "source": "arXiv"
+              },
+              "affiliations": {
+                "status": "Needs review"
+              }
+            },
+            "source": "OpenAlex"
+          }
+        }
+      ],
+      "applied_value": {
+        "institution:de4a2849d3de43a3": [
+          "Michael Goebel",
+          "Shivkumar Chandrasekaran",
+          "B.S. Manjunath"
+        ],
+        "institution:bcd3d53e57c31275": [
+          "Lakshmanan Nataraj",
+          "Tejaswi Nanjundaswamy",
+          "Tajuddin Manhar Mohammed",
+          "Shivkumar Chandrasekaran",
+          "B.S. Manjunath"
+        ]
+      },
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "L029",
+      "paper_id": "doi:10.2352/issn.2470-1173.2021.4.mwsf-276",
+      "title": "Detection, Attribution and Localization of GAN Generated Images",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/pdf/2007.10466"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": {
+        "rows": 1423,
+        "unique_pairs": 1422,
+        "duplicate_pair_groups": 1,
+        "repeated_author_institution_links": 1,
+        "repeated_author_institution_groups": 1
+      },
+      "applied_value": {
+        "rows": 1422,
+        "unique_pairs": 1422,
+        "duplicate_pair_groups": 0,
+        "repeated_author_institution_links": 0,
+        "repeated_author_institution_groups": 0
+      },
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json",
+      "removed_exact_duplicate_rows": [
+        "openalex-candidate-42640e9490a9cc59"
+      ],
+      "R3": "REQUIRES_MAINTAINER_DECISION",
+      "export_outcome": "DETERMINISTIC_EXPORT_COLLAPSE_AFTER_R1_R2"
+    },
+    {
+      "review_id": "P018",
+      "paper_id": "curated:b4cb4110cc81eb9be1d7",
+      "title": "AEGIS: A Holistic Benchmark for Evaluating Forensic Analysis of AI-Generated Academic Images",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2604.28177",
+        "https://openalex.org/W7159651702",
+        "https://aclanthology.org/2026.acl-long.976.pdf"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": {
+        "year": 2026,
+        "publication_type": "preprint",
+        "venue": "arXiv",
+        "venue_id": "venue:arxiv",
+        "venue_acronym": "",
+        "venue_track": "",
+        "doi": "",
+        "paper_url": "",
+        "formal_url": "",
+        "arxiv_id": "2604.28177",
+        "arxiv_url": "https://arxiv.org/abs/2604.28177",
+        "authors": [
+          "Bo Zhang",
+          "Tzu-Yen Ma",
+          "Zichen Tang",
+          "Junpeng Ding",
+          "Zirui Wang",
+          "Yizhuo Zhao",
+          "Peilin Gao",
+          "Zijie Xi",
+          "Zixin Ding",
+          "Haiyang Sun",
+          "Haocheng Gao",
+          "Yuan Liu",
+          "Liangjia Wang",
+          "Yiling Huang",
+          "Yujie Wang",
+          "Yuyue Zhang",
+          "Ronghui Xi",
+          "Yuanze Li",
+          "Jiacheng Liu",
+          "Zhongjun Yang",
+          "Haihong E"
+        ]
+      },
+      "applied_value": {
+        "venue": "Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+        "year": 2026,
+        "publication_type": "conference",
+        "venue_acronym": "ACL",
+        "venue_track": "Main",
+        "doi": "",
+        "paper_url": "https://aclanthology.org/2026.acl-long.976.pdf"
+      },
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "P358",
+      "paper_id": "curated:fc87c72c7e8c831652ea",
+      "title": "LADLE-MM: Limited Annotation Based Detector with Learned Ensembles for Multimodal Misinformation",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2512.20257",
+        "https://openalex.org/W7117248393",
+        "https://www.sciencedirect.com/science/article/pii/S1077314226002961"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": {
+        "year": 2025,
+        "publication_type": "preprint",
+        "venue": "arXiv",
+        "venue_id": "venue:arxiv",
+        "venue_acronym": "",
+        "venue_track": "",
+        "doi": "",
+        "paper_url": "",
+        "formal_url": "",
+        "arxiv_id": "2512.20257",
+        "arxiv_url": "https://arxiv.org/abs/2512.20257",
+        "authors": [
+          "Daniele Cardullo",
+          "Simone Teglia",
+          "Irene Amerini"
+        ]
+      },
+      "applied_value": {
+        "venue": "Computer Vision and Image Understanding",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue_acronym": "CVIU",
+        "venue_track": "",
+        "doi": "10.1016/j.cviu.2026.104929",
+        "paper_url": "https://www.sciencedirect.com/science/article/pii/S1077314226002961",
+        "title": "A Parameter-Efficient Three-Branch Architecture for Multimodal Misinformation Detection with Limited Annotations"
+      },
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json",
+      "publisher_title_as_observed": "A parameter-efficient three-branch architecture for multimodal misinformation detection with limited annotations"
+    },
+    {
+      "review_id": "P502",
+      "paper_id": "doi:10.48550/arxiv.2504.08149",
+      "title": "LoRAX: LoRA eXpandable Networks for Continual Synthetic Image Attribution",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2504.08149",
+        "https://openalex.org/W4414827699",
+        "https://bmva-archive.org.uk/bmvc/2024/workshops/BMVAW/paper1.pdf",
+        "https://bmvc2024.org/proceedings/workshop-proceedings/"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": {
+        "paper_url": ""
+      },
+      "applied_value": {
+        "paper_url": "https://bmva-archive.org.uk/bmvc/2024/workshops/BMVAW/paper1.pdf"
+      },
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "P572",
+      "paper_id": "curated:5a91cc922c8a3c4c3d0c",
+      "title": "Open Set Synthetic Image Source Attribution",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2308.11557",
+        "https://openalex.org/W4386114393",
+        "https://papers.bmvc2023.org/0659.pdf"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": {
+        "year": 2023,
+        "publication_type": "preprint",
+        "venue": "arXiv",
+        "venue_id": "venue:arxiv",
+        "venue_acronym": "",
+        "venue_track": "",
+        "doi": "10.48550/arxiv.2308.11557",
+        "paper_url": "",
+        "formal_url": "",
+        "arxiv_id": "2308.11557",
+        "arxiv_url": "https://arxiv.org/abs/2308.11557",
+        "authors": [
+          "Shengbang Fang",
+          "Tai D. Nguyen",
+          "Matthew C. Stamm"
+        ]
+      },
+      "applied_value": {
+        "venue": "British Machine Vision Conference",
+        "year": 2023,
+        "publication_type": "conference",
+        "venue_acronym": "BMVC",
+        "venue_track": "Main",
+        "doi": "",
+        "paper_url": "https://papers.bmvc2023.org/0659.pdf"
+      },
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json",
+      "venue_registry_consistency": "Reused venue:british-machine-vision-conference; added one existing canonical-name alias to curated registry; no new track inference."
+    },
+    {
+      "review_id": "R063",
+      "paper_id": "curated:54a373c86043477d3b68",
+      "title": "Defake-O3: From Speculative Rationales to Verifiable Evidence for Explainable AIGI Detection",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2608.16259"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "method",
+        "dataset"
+      ],
+      "applied_value": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "dimension": "research_types",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "R074",
+      "paper_id": "curated:0b6c1b00c1b39838db42",
+      "title": "DNA: Dual-Stage Native Attribution for Generated Image Source Tracing",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2607.13685"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "method",
+        "dataset"
+      ],
+      "applied_value": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "dimension": "research_types",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "R131",
+      "paper_id": "curated:9637c6ae3ad013926898",
+      "title": "How Well Are Open Sourced AI-Generated Image Detection Models Out-of-the-Box: A Comprehensive Benchmark Study",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2602.07814"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "benchmark"
+      ],
+      "applied_value": [
+        "benchmark",
+        "analysis_study"
+      ],
+      "dimension": "research_types",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "R210",
+      "paper_id": "curated:c7d464b8f5c94ea55ea9",
+      "title": "SSAFE: Simple and Strong AI-Generated Image Detection via Frozen Vision Encoders",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2606.08634"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "method",
+        "analysis_study"
+      ],
+      "applied_value": [
+        "method",
+        "dataset",
+        "benchmark",
+        "analysis_study"
+      ],
+      "dimension": "research_types",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "R326",
+      "paper_id": "doi:10.48550/arxiv.2512.21512",
+      "title": "Fixed-Threshold Evaluation of a Hybrid CNN-ViT for AI-Generated Image Detection Across Photos and Art",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2512.21512"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "method"
+      ],
+      "applied_value": [
+        "method",
+        "benchmark",
+        "analysis_study"
+      ],
+      "dimension": "research_types",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "R346",
+      "paper_id": "curated:3c3cd6143ece4045b378",
+      "title": "Generalized Design Choices for Deepfake Detectors",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2511.21507"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "method"
+      ],
+      "applied_value": [
+        "method",
+        "analysis_study"
+      ],
+      "dimension": "research_types",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "R388",
+      "paper_id": "curated:79adf19ca6991c1d85f8",
+      "title": "RAID: A Dataset for Testing the Adversarial Robustness of AI-Generated Image Detectors",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2506.03988"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "dataset"
+      ],
+      "applied_value": [
+        "dataset",
+        "benchmark"
+      ],
+      "dimension": "research_types",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "R496",
+      "paper_id": "curated:fa317ff4ccce609227c0",
+      "title": "Improving Interpretability and Robustness for the Detection of AI-Generated Images",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2406.15035"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "method"
+      ],
+      "applied_value": [
+        "method",
+        "dataset",
+        "analysis_study"
+      ],
+      "dimension": "research_types",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "R528",
+      "paper_id": "curated:d9f9207830bec1da388f",
+      "title": "Towards More Accurate Fake Detection on Images Generated from Advanced Generative and Neural Rendering Models",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2411.08642"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "method"
+      ],
+      "applied_value": [
+        "method",
+        "dataset"
+      ],
+      "dimension": "research_types",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "R573",
+      "paper_id": "curated:9d04c60c5b0b70859a63",
+      "title": "PatchCraft: Exploring Texture Patch for Efficient AI-Generated Image Detection",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2311.12397"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "method"
+      ],
+      "applied_value": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "dimension": "research_types",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "R614",
+      "paper_id": "doi:10.48550/arxiv.2106.08749",
+      "title": "Learning to Disentangle GAN Fingerprint for Fake Image Attribution",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2106.08749"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "method"
+      ],
+      "applied_value": [
+        "method",
+        "analysis_study"
+      ],
+      "dimension": "research_types",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "T403",
+      "paper_id": "doi:10.1109/cvpr52734.2025.02685",
+      "title": "SIDA: Social Media Image Deepfake Detection, Localization and Explanation with Large Multimodal Model",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://openaccess.thecvf.com/content/CVPR2025/html/Huang_SIDA_Social_Media_Image_Deepfake_Detection_Localization_and_Explanation_with_CVPR_2025_paper.html"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "detection"
+      ],
+      "applied_value": [
+        "detection",
+        "localization"
+      ],
+      "dimension": "tasks",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "T495",
+      "paper_id": "curated:f76424b401abe0c0fd0c",
+      "title": "ImagiNet: A Multi-Content Benchmark for Synthetic Image Detection",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2407.20020"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "detection"
+      ],
+      "applied_value": [
+        "detection",
+        "source_attribution"
+      ],
+      "dimension": "tasks",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    },
+    {
+      "review_id": "T610",
+      "paper_id": "doi:10.2352/issn.2470-1173.2021.4.mwsf-276",
+      "title": "Detection, Attribution and Localization of GAN Generated Images",
+      "date": "2026-10-04",
+      "authoritative_evidence": [
+        "https://arxiv.org/abs/2007.10466"
+      ],
+      "original_finding": "data/raw/corpus_quality_audit_2026_10_04",
+      "status": "APPLIED",
+      "previous_value": [
+        "detection",
+        "source_attribution"
+      ],
+      "applied_value": [
+        "detection",
+        "source_attribution",
+        "localization"
+      ],
+      "dimension": "tasks",
+      "validation_outcome": "PASS",
+      "validation_evidence": "validation.json: exact curated/public field guards; focused and full-suite verification recorded separately in verification.json"
+    }
+  ],
+  "remaining_batches": {
+    "B": 159,
+    "D": 1752,
+    "C": 41
+  },
+  "R3": "REQUIRES_MAINTAINER_DECISION",
+  "UCSB_export_outcome": "DETERMINISTIC_EXPORT_COLLAPSE_AFTER_R1_R2",
+  "manual_R3_merge_applied": false
+}

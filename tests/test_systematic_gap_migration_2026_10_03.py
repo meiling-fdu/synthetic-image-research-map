@@ -3,16 +3,22 @@ import copy
 import hashlib
 import json
 import unittest
+from unittest.mock import patch
 from collections import Counter
 
 from scripts import migrate_systematic_gap_2026_10_03 as migration
 from scripts import audit_gap_2026_10_02 as audit
 from scripts.paper_taxonomy import normalize_tasks, normalize_image_scopes, normalize_research_types
+from scripts.corpus_quality_history import predecessor_root
 
 
 class ApprovedGapMigrationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        # This suite verifies the completed 17-paper migration at its historical
+        # boundary; current Batch A invariants have a separate regression suite.
+        root = cls.enterClassContext(predecessor_root())
+        cls.enterClassContext(patch.object(migration, 'ROOT', root))
         cls.plan = migration.read(migration.OUT / 'plan.json')
         cls.receipt = migration.read(migration.OUT / 'insertion.json')
         cls.baseline = migration.read(migration.OUT / 'baseline.json')

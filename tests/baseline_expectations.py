@@ -6,18 +6,18 @@ data change and the identity and relationship invariants in
 ``test_repository_baseline.py``.
 """
 
-# Approved gap migration: 17 additions, 12 identity-preserving metadata updates,
-# six new institutions and one hierarchy edge. Legacy exclusions remain retained.
+# Approved gap migration followed by Corpus Quality Batch A: three formal
+# upgrades, 14 taxonomy updates and natural collapse of one UCSB aggregate.
+# The prior exact baseline is retained in the verified 640-paper snapshot.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 640,
-    # Map source identities include one identity resolved to a canonical paper.
-    "public_map_source_papers": 618,
+    "public_map_source_papers": 617,
     "public_papers_with_map": 617,
     "public_papers_without_map": 23,
     "total_institution_registry_rows": 748,
     "active_canonical_institutions": 727,
     "non_active_institution_registry_rows": 21,
-    "public_paper_institution_relationships": 1423,
+    "public_paper_institution_relationships": 1422,
     "institution_hierarchy_edges": 16,
     "institution_aliases": 120,
 }
@@ -55,9 +55,9 @@ PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 607, 'research_unit': 137,
 # changed since the 2026-08-24 checkpoint.
 RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint": 64, "book": 1}
 
-PUBLICATION_TYPE_TOTALS = {'conference': 388, 'preprint': 111, 'journal': 140, 'book': 1}
+PUBLICATION_TYPE_TOTALS = {'conference': 390, 'preprint': 108, 'journal': 141, 'book': 1}
 
-TASK_TOTALS = {'detection': 593, 'source_attribution': 84, 'localization': 38}
+TASK_TOTALS = {'detection': 593, 'source_attribution': 85, 'localization': 40}
 
 RELEASE_TASK_TOTALS = {
     "detection": 471,

@@ -674,6 +674,7 @@ def analyze_shrinkage(
     orphan_cleanup_audits: Sequence[Mapping[str, Any]] = (),
     institution_redirects: Optional[Mapping[str, str]] = None,
     approved_by_baseline: bool = False,
+    institution_author_overrides: Sequence[Mapping[str, Any]] = (),
 ) -> ShrinkageReport:
     try:
         from .curated_export import (
@@ -769,6 +770,27 @@ def analyze_shrinkage(
             transition = RelationshipExplanation(
                 "curated_affiliation_precedence", precedence_reason, True,
             )
+        if institution_author_overrides and not transition.explained:
+            try:
+                from .export_candidate_map_data import matching_institution_author_override
+            except ImportError:
+                from export_candidate_map_data import matching_institution_author_override
+            override = matching_institution_author_override(old, institution_author_overrides)
+            if override:
+                corrected_authors = _author_set(override["authors"])
+                # An author correction cannot authorize moving/removing an
+                # institution, changing coordinates, or dropping another author.
+                targets = [new for new in new_maps
+                           if _paper_matches(old, new)
+                           and _institution_identity(old) == _institution_identity(new)
+                           and _location_identity(old) == _location_identity(new)
+                           and all(old.get(k) == new.get(k) for k in ("latitude", "longitude"))
+                           and _relationship_author_set(new) == corrected_authors]
+                if targets:
+                    transition = RelationshipExplanation(
+                        "reviewed_author_correction",
+                        "curated institution-author correction: " + clean(override.get("notes")), True,
+                    )
         institution_id = clean(
             old.get("institution_id") or old.get("canonical_institution_id")
         )

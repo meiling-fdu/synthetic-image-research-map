@@ -2,6 +2,8 @@ import csv
 import json
 import tempfile
 import unittest
+from unittest.mock import patch
+import sys
 from collections import Counter
 from pathlib import Path
 
@@ -17,6 +19,7 @@ from scripts.paper_exclusions import (
     record_is_excluded,
 )
 from scripts.migrate_paper_taxonomy import build_registry, write_registry
+from scripts.corpus_quality_history import predecessor_root
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +36,10 @@ SCOPE_EXCLUDED_TITLES = {
 class PaperTaxonomyMigrationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        # Preserve the reviewed 640-paper migration's original count contract.
+        # Batch A checks the current registry and round trip separately.
+        root = cls.enterClassContext(predecessor_root())
+        cls.enterClassContext(patch.object(sys.modules[__name__], 'ROOT', root))
         with (ROOT / "data/curated/papers.csv").open(encoding="utf-8", newline="") as handle:
             cls.curated_papers = list(csv.DictReader(handle))
         cls.registry = read_paper_taxonomy_registry(ROOT / "data/curated/paper_taxonomy.csv")

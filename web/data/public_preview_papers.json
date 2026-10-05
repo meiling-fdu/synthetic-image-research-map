@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-03T12:11:51Z"
+    "public_preview_generated_at": "2026-10-05T00:25:52Z"
   },
   "records": [
     {
@@ -3425,6 +3425,295 @@
       }
     },
     {
+      "paper_id": "curated:fc87c72c7e8c831652ea",
+      "title": "A Parameter-Efficient Three-Branch Architecture for Multimodal Misinformation Detection with Limited Annotations",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "deepfake"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "Computer Vision and Image Understanding",
+      "venue_name": "Computer Vision and Image Understanding",
+      "venue_id": "venue:computer-vision-and-image-understanding",
+      "venue_acronym": "CVIU",
+      "venue_type": "journal",
+      "venue_track": "",
+      "raw_venue": "Computer Vision and Image Understanding",
+      "publisher": "",
+      "publication_type": "journal",
+      "venue_review_required": false,
+      "abstract": "With the rise of easily accessible tools for generating and manipulating multimedia content, realistic synthetic alterations to digital media have become a widespread threat, often involving manipulations across multiple modalities simultaneously. Recently, such techniques have been increasingly employed to distort narratives of important events and to spread misinformation on social media, prompting the development of misinformation detectors. In the context of misinformation conveyed through image-text pairs, several detection methods have been proposed. However, these approaches typically rely on computationally intensive architectures or require large amounts of annotated data. In this work we introduce LADLE-MM: Limited Annotation based Detector with Learned Ensembles for Multimodal Misinformation, a model-soup initialized multimodal misinformation detector designed to operate under a limited annotation setup and constrained training resources. LADLE-MM is composed of two unimodal branches and a third multimodal one that enhances image and text representations with additional multimodal embeddings extracted from BLIP, serving as fixed reference space. Despite using 60.3% fewer trainable parameters than previous state-of-the-art models, LADLE-MM achieves competitive performance on both binary and multi-label classification tasks on the DGM4 benchmark, outperforming existing methods when trained without grounding annotations. Moreover, when evaluated on the VERITE dataset, LADLE-MM outperforms current state-of-the-art approaches that utilize more complex architectures involving Large Vision-Language-Models, demonstrating the effective generalization ability in an open-set setting and strong robustness to unimodal bias.",
+      "abstract_source": "arxiv",
+      "ai_summary": "",
+      "doi": "10.1016/j.cviu.2026.104929",
+      "arxiv_id": "2512.20257",
+      "arxiv_url": "https://arxiv.org/abs/2512.20257",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "https://doi.org/10.1016/j.cviu.2026.104929",
+      "formal_url": "https://doi.org/10.1016/j.cviu.2026.104929",
+      "primary_url": "https://doi.org/10.1016/j.cviu.2026.104929",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7117248393",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1016/j.cviu.2026.104929",
+      "authors": [
+        {
+          "name": "Daniele Cardullo",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_review": {
+            "status": "mapped",
+            "reason_kind": "explicit_paper_affiliation",
+            "source_text": "1 Sapienza University of Rome",
+            "doi": "",
+            "review_id": "institution-audit:c78cd99a570d82dc9ecd",
+            "evidence_url": "https://arxiv.org/pdf/2512.20257v1",
+            "review_note": "All printed author-affiliation relationships inspected."
+          },
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Simone Teglia",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_review": {
+            "status": "mapped",
+            "reason_kind": "explicit_paper_affiliation",
+            "source_text": "1 Sapienza University of Rome",
+            "doi": "",
+            "review_id": "institution-audit:8ed7ff98221e1f2f9a75",
+            "evidence_url": "https://arxiv.org/pdf/2512.20257v1",
+            "review_note": "All printed author-affiliation relationships inspected."
+          },
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Irene Amerini",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_review": {
+            "status": "mapped",
+            "reason_kind": "explicit_paper_affiliation",
+            "source_text": "1 Sapienza University of Rome",
+            "doi": "",
+            "review_id": "institution-audit:ad2c29fb2a7ed653d2f0",
+            "evidence_url": "https://arxiv.org/pdf/2512.20257v1",
+            "review_note": "All printed author-affiliation relationships inspected."
+          },
+          "affiliation_status": "mapped"
+        }
+      ],
+      "source_database": "arxiv",
+      "metadata_source": "primary-source review P358; ArXiv 2512.20257 explicitly supplies this DOI and revised title; publisher lists the same three authors (Cardullo, Teglia, Amerini) and identifies the method as LADLE-MM.; https://www.sciencedirect.com/science/article/pii/S1077314226002961; prior metadata: Primary-source review 2026-09-08: https://arxiv.org/abs/2512.20257; https://arxiv.org/pdf/2512.20257v1",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "needs_review": false,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Sapienza University of Rome"
+      ],
+      "aggregated_country_names": [
+        "Italy"
+      ],
+      "aggregated_country_codes": [
+        "IT"
+      ],
+      "aggregated_regions": [
+        "Lazio"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_label": "Computer Vision and Image Understanding (CVIU)",
+      "venue_aliases": [
+        "Computer Vision and Image Understanding"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [
+        {
+          "institution_name": "Sapienza University of Rome",
+          "institution_id": "institution:977430a4473aa4b0",
+          "institution_type": "university",
+          "country": "Italy",
+          "country_code": "IT",
+          "region": "Lazio",
+          "region_code": "",
+          "location_display": "Lazio, Italy"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 3,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:977430a4473aa4b0",
+          "institution": "Sapienza University of Rome",
+          "institution_type": "university",
+          "authors": [
+            "Daniele Cardullo",
+            "Simone Teglia",
+            "Irene Amerini"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Daniele Cardullo",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:977430a4473aa4b0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Simone Teglia",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:977430a4473aa4b0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Irene Amerini",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:977430a4473aa4b0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Daniele Cardullo",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:977430a4473aa4b0"
+          ]
+        },
+        {
+          "author": "Simone Teglia",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:977430a4473aa4b0"
+          ]
+        },
+        {
+          "author": "Irene Amerini",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:977430a4473aa4b0"
+          ]
+        }
+      ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Curated",
+            "source": "arXiv"
+          }
+        },
+        "source": "arXiv"
+      },
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:fce9230079fe3b802226",
+          "institution_id": "institution:977430a4473aa4b0",
+          "location_id": "location:977430a4473aa4b05cfe",
+          "institution": "Sapienza University of Rome",
+          "institution_authors": [
+            "Daniele Cardullo",
+            "Simone Teglia",
+            "Irene Amerini"
+          ],
+          "raw_affiliation": "1 Sapienza University of Rome",
+          "mapping_status": "active",
+          "affiliation_order": 1
+        }
+      ],
+      "search_institution_ids": [
+        "institution:977430a4473aa4b0"
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Sapienza University of Rome",
+          "canonical_name": "Sapienza University of Rome",
+          "institution_id": "institution:977430a4473aa4b0",
+          "institution_type": "university",
+          "country": "Italy",
+          "country_code": "",
+          "region": "Lazio",
+          "location_display": "Lazio, Italy"
+        }
+      ],
+      "current_institution": null
+    },
+    {
       "paper_id": "curated:5305dab76cb75ae5887e",
       "title": "A Rich Knowledge Space for Scalable Deepfake Detection",
       "in_scope": true,
@@ -6228,15 +6517,15 @@
         "benchmark",
         "analysis_study"
       ],
-      "venue": "arXiv",
-      "venue_name": "arXiv",
-      "venue_id": "venue:arxiv",
-      "venue_acronym": "",
-      "venue_type": "preprint",
-      "venue_track": "",
-      "raw_venue": "arXiv",
+      "venue": "Annual Meeting of the Association for Computational Linguistics",
+      "venue_name": "Annual Meeting of the Association for Computational Linguistics",
+      "venue_id": "venue:acl",
+      "venue_acronym": "ACL",
+      "venue_type": "conference",
+      "venue_track": "Main",
+      "raw_venue": "Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
       "publisher": "",
-      "publication_type": "preprint",
+      "publication_type": "conference",
       "venue_review_required": false,
       "abstract": "We introduce AEGIS, A holistic benchmark for Evaluating forensic analysis of AI-Generated academic ImageS. Compared to existing benchmarks, AEGIS features three key advances: (1) Domain-Specific Complexity: covering seven academic categories with 39 fine-grained subtypes, exposing intrinsic forensic difficulty, where even GPT-5.1 reaches 48.80% overall performance and expert models achieve only limited localization accuracy (IoU 30.09%); (2) Diverse Forgery Simulations: modeling four prevalent academic forgery strategies across 25 generative models, with 11 yielding average forensic accuracy below 50%, showing that forensics lag behind generative advances; and (3) Multi-Dimensional Forensic Evaluation: jointly assessing detection, reasoning, and localization, revealing complementary strengths between model families, with multimodal large language models (MLLMs) at 84.74% accuracy in textual artifact recognition and expert detectors peaking at 79.54% accuracy in binary authenticity detection. By evaluating 25 leading MLLMs, nine expert models, and one unified multimodal understanding and generation model, AEGIS serves as a diagnostic testbed exposing fundamental limitations in academic image forensics.",
       "abstract_source": "manual",
@@ -6246,13 +6535,13 @@
       "arxiv_url": "https://arxiv.org/abs/2604.28177",
       "arxiv_year": null,
       "has_arxiv_version": true,
-      "paper_url": "",
-      "formal_url": "",
-      "primary_url": "https://openalex.org/W7159651702",
+      "paper_url": "https://aclanthology.org/2026.acl-long.976.pdf",
+      "formal_url": "https://aclanthology.org/2026.acl-long.976.pdf",
+      "primary_url": "https://aclanthology.org/2026.acl-long.976.pdf",
       "landing_page_url": "",
       "openalex_url": "https://openalex.org/W7159651702",
-      "is_arxiv_preprint": true,
-      "url": "https://openalex.org/W7159651702",
+      "is_arxiv_preprint": false,
+      "url": "https://aclanthology.org/2026.acl-long.976.pdf",
       "authors": [
         {
           "name": "Bo Zhang",
@@ -6466,7 +6755,7 @@
         }
       ],
       "source_database": "manual",
-      "metadata_source": "manual",
+      "metadata_source": "primary-source review P018; Identical title and all 21 authors in the official proceedings PDF; arXiv 2604.28177 reports ACL acceptance. Official ACL main-paper list independently matches title and authors.; https://aclanthology.org/2026.acl-long.976.pdf; prior metadata: manual",
       "curation_status": "confirmed",
       "review_status": "reviewed",
       "needs_review": false,
@@ -6749,11 +7038,12 @@
       ],
       "institution_source": "curated",
       "preliminary_affiliations": false,
-      "venue_label": "arXiv",
+      "venue_label": "Annual Meeting of the Association for Computational Linguistics (ACL)",
       "venue_aliases": [
-        "ArXiv.org",
-        "arXiv (Cornell University)",
-        "arXiv"
+        "Annual Meeting of the Association for Computational Linguistics",
+        "Annual Meeting of the Association for Computational Linguistics (ACL)",
+        "Findings of the Association for Computational Linguistics (ACL)",
+        "Annual Meeting of the Association for Computational Linguistics (Volume 6: Industry Track)"
       ],
       "ambiguity_status": "resolved",
       "aggregated_locations": [
@@ -6777,20 +7067,6 @@
         "unresolved": 0
       },
       "affiliation_complete": true,
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Beijing University of Posts and Telecommunications",
-          "canonical_name": "Beijing University of Posts and Telecommunications",
-          "institution_id": "institution:1502cb7c96ae3095",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "Beijing",
-          "location_display": "Beijing, China"
-        }
-      ],
-      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Bo Zhang",
@@ -7043,17 +7319,27 @@
         "overall": "Verified",
         "default_field_status": "Verified",
         "field_overrides": {
-          "arxiv": {
-            "status": "Verified",
-            "source": "arXiv"
-          },
           "affiliations": {
             "status": "Curated",
             "source": "arXiv"
           }
         },
-        "source": "Manual curation"
-      }
+        "source": "arXiv"
+      },
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Beijing University of Posts and Telecommunications",
+          "canonical_name": "Beijing University of Posts and Telecommunications",
+          "institution_id": "institution:1502cb7c96ae3095",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Beijing",
+          "location_display": "Beijing, China"
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:77504e19116765d4b160",
@@ -25068,7 +25354,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "arXiv",
       "venue_name": "arXiv",
@@ -25283,20 +25570,6 @@
         "unresolved": 0
       },
       "affiliation_complete": true,
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Shanghai Jiao Tong University",
-          "canonical_name": "Shanghai Jiao Tong University",
-          "institution_id": "institution:fccd5d0ac9cc52f9",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "Shanghai",
-          "location_display": "Shanghai, China"
-        }
-      ],
-      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Bowen Deng",
@@ -25363,7 +25636,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "Approved Batch A R063: FakeFrontier is introduced as an out-of-distribution benchmark with an evidence-quality evaluation protocol."
         }
       },
       "search_institution_ids": [
@@ -25383,7 +25657,21 @@
           }
         },
         "source": "Manual curation"
-      }
+      },
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Shanghai Jiao Tong University",
+          "canonical_name": "Shanghai Jiao Tong University",
+          "institution_id": "institution:fccd5d0ac9cc52f9",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Shanghai",
+          "location_display": "Shanghai, China"
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:d4a9b3a3cef9bfbd0e32",
@@ -29658,8 +29946,22 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Approved Batch A R074: DNA-30K is explicitly constructed as a within-family attribution benchmark under open-set evaluation."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -29684,19 +29986,7 @@
           "location_display": "Anhui, China"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:75ab6509220e38b5d356",
@@ -53458,8 +53748,22 @@
         "deepfake"
       ],
       "research_types": [
-        "benchmark"
+        "benchmark",
+        "analysis_study"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Approved Batch A R131: The primary abstract reports a systematic zero-shot study of detector rankings, alignment effects and three failure patterns."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -53517,19 +53821,7 @@
           "location_display": "Missouri, United States"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "title": "HRR: Hierarchical Retrospection Refinement for Generated Image Detection",
@@ -87194,6 +87486,8 @@
       ],
       "research_types": [
         "method",
+        "dataset",
+        "benchmark",
         "analysis_study"
       ],
       "venue": "arXiv",
@@ -87506,7 +87800,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "Approved Batch A R210: RealWorldBench is introduced with real photographs, stock images and recent commercial-generator outputs."
         }
       },
       "search_institution_ids": [
@@ -135406,8 +135701,23 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "benchmark",
+        "analysis_study"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Approved Batch A R326: The primary abstract contributes a fixed-threshold evaluation protocol and studies degradation-dependent forensic/semantic tradeoffs."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -135432,19 +135742,7 @@
           "location_display": "Chattogram, Bangladesh"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:1332f5c35b9ac943f349",
@@ -143874,8 +144172,22 @@
         "deepfake"
       ],
       "research_types": [
-        "method"
+        "method",
+        "analysis_study"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Approved Batch A R346: The primary abstract systematically studies training, inference and incremental-update design choices."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -143900,19 +144212,7 @@
           "location_display": "Lombardy, Italy"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:1750a9eae0bc7ad94628",
@@ -148627,297 +148927,6 @@
           "country_code": "",
           "region": "Zhejiang",
           "location_display": "Zhejiang, China"
-        }
-      ],
-      "current_institution": null
-    },
-    {
-      "paper_id": "curated:fc87c72c7e8c831652ea",
-      "title": "LADLE-MM: Limited Annotation Based Detector with Learned Ensembles for Multimodal Misinformation",
-      "in_scope": true,
-      "year": 2025,
-      "publication_year": 2025,
-      "publication_date": "",
-      "tasks": [
-        "detection"
-      ],
-      "image_scopes": [
-        "deepfake"
-      ],
-      "research_types": [
-        "method"
-      ],
-      "venue": "arXiv",
-      "venue_name": "arXiv",
-      "venue_id": "venue:arxiv",
-      "venue_acronym": "",
-      "venue_type": "preprint",
-      "venue_track": "",
-      "raw_venue": "arXiv",
-      "publisher": "",
-      "publication_type": "preprint",
-      "venue_review_required": false,
-      "abstract": "With the rise of easily accessible tools for generating and manipulating multimedia content, realistic synthetic alterations to digital media have become a widespread threat, often involving manipulations across multiple modalities simultaneously. Recently, such techniques have been increasingly employed to distort narratives of important events and to spread misinformation on social media, prompting the development of misinformation detectors. In the context of misinformation conveyed through image-text pairs, several detection methods have been proposed. However, these approaches typically rely on computationally intensive architectures or require large amounts of annotated data. In this work we introduce LADLE-MM: Limited Annotation based Detector with Learned Ensembles for Multimodal Misinformation, a model-soup initialized multimodal misinformation detector designed to operate under a limited annotation setup and constrained training resources. LADLE-MM is composed of two unimodal branches and a third multimodal one that enhances image and text representations with additional multimodal embeddings extracted from BLIP, serving as fixed reference space. Despite using 60.3% fewer trainable parameters than previous state-of-the-art models, LADLE-MM achieves competitive performance on both binary and multi-label classification tasks on the DGM4 benchmark, outperforming existing methods when trained without grounding annotations. Moreover, when evaluated on the VERITE dataset, LADLE-MM outperforms current state-of-the-art approaches that utilize more complex architectures involving Large Vision-Language-Models, demonstrating the effective generalization ability in an open-set setting and strong robustness to unimodal bias.",
-      "abstract_source": "arxiv",
-      "ai_summary": "",
-      "doi": "",
-      "arxiv_id": "2512.20257",
-      "arxiv_url": "https://arxiv.org/abs/2512.20257",
-      "arxiv_year": null,
-      "has_arxiv_version": true,
-      "paper_url": "",
-      "formal_url": "",
-      "primary_url": "https://openalex.org/W7117248393",
-      "landing_page_url": "",
-      "openalex_url": "https://openalex.org/W7117248393",
-      "is_arxiv_preprint": true,
-      "url": "https://openalex.org/W7117248393",
-      "authors": [
-        {
-          "name": "Daniele Cardullo",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false,
-          "affiliation_review": {
-            "status": "mapped",
-            "reason_kind": "explicit_paper_affiliation",
-            "source_text": "1 Sapienza University of Rome",
-            "doi": "",
-            "review_id": "institution-audit:c78cd99a570d82dc9ecd",
-            "evidence_url": "https://arxiv.org/pdf/2512.20257v1",
-            "review_note": "All printed author-affiliation relationships inspected."
-          },
-          "affiliation_status": "mapped"
-        },
-        {
-          "name": "Simone Teglia",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false,
-          "affiliation_review": {
-            "status": "mapped",
-            "reason_kind": "explicit_paper_affiliation",
-            "source_text": "1 Sapienza University of Rome",
-            "doi": "",
-            "review_id": "institution-audit:8ed7ff98221e1f2f9a75",
-            "evidence_url": "https://arxiv.org/pdf/2512.20257v1",
-            "review_note": "All printed author-affiliation relationships inspected."
-          },
-          "affiliation_status": "mapped"
-        },
-        {
-          "name": "Irene Amerini",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false,
-          "affiliation_review": {
-            "status": "mapped",
-            "reason_kind": "explicit_paper_affiliation",
-            "source_text": "1 Sapienza University of Rome",
-            "doi": "",
-            "review_id": "institution-audit:ad2c29fb2a7ed653d2f0",
-            "evidence_url": "https://arxiv.org/pdf/2512.20257v1",
-            "review_note": "All printed author-affiliation relationships inspected."
-          },
-          "affiliation_status": "mapped"
-        }
-      ],
-      "source_database": "arxiv",
-      "metadata_source": "Primary-source review 2026-09-08: https://arxiv.org/abs/2512.20257; https://arxiv.org/pdf/2512.20257v1",
-      "curation_status": "confirmed",
-      "review_status": "reviewed",
-      "needs_review": false,
-      "has_map_location": true,
-      "map_record_count": 1,
-      "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Sapienza University of Rome"
-      ],
-      "aggregated_country_names": [
-        "Italy"
-      ],
-      "aggregated_country_codes": [
-        "IT"
-      ],
-      "aggregated_regions": [
-        "Lazio"
-      ],
-      "aggregated_region_codes": [],
-      "affiliation_review_state": "curated",
-      "institution_source": "curated",
-      "preliminary_affiliations": false,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "venue_label": "arXiv",
-      "venue_aliases": [
-        "ArXiv.org",
-        "arXiv (Cornell University)",
-        "arXiv"
-      ],
-      "ambiguity_status": "resolved",
-      "aggregated_locations": [
-        {
-          "institution_name": "Sapienza University of Rome",
-          "institution_id": "institution:977430a4473aa4b0",
-          "institution_type": "university",
-          "country": "Italy",
-          "country_code": "IT",
-          "region": "Lazio",
-          "region_code": "",
-          "location_display": "Lazio, Italy"
-        }
-      ],
-      "aggregated_institution_types": [
-        "university"
-      ],
-      "author_affiliation_counts": {
-        "mapped": 3,
-        "non_institutional": 0,
-        "unresolved": 0
-      },
-      "affiliation_complete": true,
-      "author_institution_affiliations": [
-        {
-          "index": 1,
-          "institution_id": "institution:977430a4473aa4b0",
-          "institution": "Sapienza University of Rome",
-          "institution_type": "university",
-          "authors": [
-            "Daniele Cardullo",
-            "Simone Teglia",
-            "Irene Amerini"
-          ],
-          "mapping_source": "curated_admin",
-          "mapping_fallback": false
-        }
-      ],
-      "author_affiliation_indices": [
-        {
-          "author": "Daniele Cardullo",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:977430a4473aa4b0"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Simone Teglia",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:977430a4473aa4b0"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Irene Amerini",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:977430a4473aa4b0"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        }
-      ],
-      "author_institution_indices": [
-        {
-          "author": "Daniele Cardullo",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:977430a4473aa4b0"
-          ]
-        },
-        {
-          "author": "Simone Teglia",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:977430a4473aa4b0"
-          ]
-        },
-        {
-          "author": "Irene Amerini",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:977430a4473aa4b0"
-          ]
-        }
-      ],
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      },
-      "metadata_status": {
-        "overall": "Verified",
-        "default_field_status": "Verified",
-        "field_overrides": {
-          "affiliations": {
-            "status": "Curated",
-            "source": "arXiv"
-          }
-        },
-        "source": "arXiv"
-      },
-      "curated_mappings": [
-        {
-          "mapping_id": "mapping:fce9230079fe3b802226",
-          "institution_id": "institution:977430a4473aa4b0",
-          "location_id": "location:977430a4473aa4b05cfe",
-          "institution": "Sapienza University of Rome",
-          "institution_authors": [
-            "Daniele Cardullo",
-            "Simone Teglia",
-            "Irene Amerini"
-          ],
-          "raw_affiliation": "1 Sapienza University of Rome",
-          "mapping_status": "active",
-          "affiliation_order": 1
-        }
-      ],
-      "search_institution_ids": [
-        "institution:977430a4473aa4b0"
-      ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Sapienza University of Rome",
-          "canonical_name": "Sapienza University of Rome",
-          "institution_id": "institution:977430a4473aa4b0",
-          "institution_type": "university",
-          "country": "Italy",
-          "country_code": "",
-          "region": "Lazio",
-          "location_display": "Lazio, Italy"
         }
       ],
       "current_institution": null
@@ -161828,8 +161837,22 @@
         "fully_generated"
       ],
       "research_types": [
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Approved Batch A R388: RAID supplies transferable adversarial examples and released evaluation code to estimate detector robustness."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -161900,19 +161923,7 @@
           "abbreviation": "CINI"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:44a70bf5f21b5457102b",
@@ -167532,7 +167543,8 @@
       "publication_year": 2025,
       "publication_date": "2025-06-10",
       "tasks": [
-        "detection"
+        "detection",
+        "localization"
       ],
       "image_scopes": [
         "fully_generated",
@@ -168046,7 +168058,8 @@
       "taxonomy_status": "reviewed",
       "taxonomy_review": {
         "tasks": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "Approved Batch A T403: Official CVPR paper describes mask prediction for tampered regions, beyond textual explanation."
         },
         "image_scopes": {
           "status": "reviewed"
@@ -204816,7 +204829,8 @@
         "source": "OpenAlex"
       },
       "tasks": [
-        "detection"
+        "detection",
+        "source_attribution"
       ],
       "image_scopes": [
         "fully_generated"
@@ -204825,6 +204839,19 @@
         "dataset",
         "benchmark"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "Approved Batch A T495: ImagiNet specifies two evaluated tracks: authenticity classification and generative-model identification."
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -204849,19 +204876,7 @@
           "location_display": "California, United States"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:fa317ff4ccce609227c0",
@@ -205558,8 +205573,23 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "dataset",
+        "analysis_study"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Approved Batch A R496: Primary abstract explicitly releases a new dataset and analyzes interpretation and robustness of frozen-CLIP detectors."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -205661,19 +205691,7 @@
           "location_display": "Île-de-France, France"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "title": "IPD-Net: Detecting AI-Generated Images via Inter-Patch Dependencies",
@@ -207043,12 +207061,12 @@
       "arxiv_url": "https://arxiv.org/abs/2504.08149",
       "arxiv_year": null,
       "has_arxiv_version": true,
-      "paper_url": "",
-      "primary_url": "https://openalex.org/W4414827699",
-      "landing_page_url": "http://arxiv.org/abs/2504.08149",
+      "paper_url": "https://bmva-archive.org.uk/bmvc/2024/workshops/BMVAW/paper1.pdf",
+      "primary_url": "https://bmva-archive.org.uk/bmvc/2024/workshops/BMVAW/paper1.pdf",
+      "landing_page_url": "https://bmva-archive.org.uk/bmvc/2024/workshops/BMVAW/paper1.pdf",
       "openalex_url": "https://openalex.org/W4414827699",
-      "is_arxiv_preprint": true,
-      "url": "https://openalex.org/W4414827699",
+      "is_arxiv_preprint": false,
+      "url": "https://bmva-archive.org.uk/bmvc/2024/workshops/BMVAW/paper1.pdf",
       "authors": [
         {
           "name": "Danielle Sullivan-Pao",
@@ -207083,7 +207101,7 @@
       ],
       "source_database": "OpenAlex",
       "needs_review": false,
-      "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
+      "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later. | manual publication metadata override applied | Approved Batch A P502; URL recovery only; Workshop preserved. Evidence: https://bmva-archive.org.uk/bmvc/2024/workshops/BMVAW/paper1.pdf",
       "has_map_location": true,
       "map_record_count": 2,
       "missing_affiliation": false,
@@ -207260,7 +207278,7 @@
       ],
       "ambiguity_status": "resolved",
       "venue_label": "British Machine Vision Conference (BMVC) · Workshop",
-      "formal_url": "",
+      "formal_url": "https://bmva-archive.org.uk/bmvc/2024/workshops/BMVAW/paper1.pdf",
       "search_institution_ids": [
         "institution:39fbdba5585bb3c4",
         "institution:0d3d34a24da64353"
@@ -207296,6 +207314,18 @@
       "research_types": [
         "method"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -207320,19 +207350,7 @@
           "location_display": "Connecticut, United States"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:34fdf09ae334914a2723",
@@ -217068,8 +217086,22 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "dataset"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "Approved Batch A R528: The primary abstract introduces a comprehensive neural-rendering fake-image database as an evaluation resource."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -217094,19 +217126,7 @@
           "location_display": "Hong Kong, China"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:b1977dc0fcca329719f0",
@@ -232980,25 +233000,25 @@
       "year": 2023,
       "publication_year": 2023,
       "publication_date": "",
-      "venue": "arXiv",
-      "venue_name": "arXiv",
-      "venue_type": "preprint",
+      "venue": "British Machine Vision Conference",
+      "venue_name": "British Machine Vision Conference",
+      "venue_type": "conference",
       "publisher": "",
-      "publication_type": "preprint",
+      "publication_type": "conference",
       "abstract": "AI-generated images have become increasingly realistic and have garnered significant public attention. While synthetic images are intriguing due to their realism, they also pose an important misinformation threat. To address this new threat, researchers have developed multiple algorithms to detect synthetic images and identify their source generators. However, most existing source attribution techniques are designed to operate in a closed-set scenario, i.e. they can only be used to discriminate between known image generators. By contrast, new image-generation techniques are rapidly emerging. To contend with this, there is a great need for open-set source attribution techniques that can identify when synthetic images have originated from new, unseen generators. To address this problem, we propose a new metric learning-based approach. Our technique works by learning transferrable embeddings capable of discriminating between generators, even when they are not seen during training. An image is first assigned to a candidate generator, then is accepted or rejected based on its distance in the embedding space from known generators' learned reference points. Importantly, we identify that initializing our source attribution embedding network by pretraining it on image camera identification can improve our embeddings' transferability. Through a series of experiments, we demonstrate our approach's ability to attribute the source of synthetic images in open-set scenarios.",
       "abstract_source": "openalex",
       "ai_summary": "",
-      "doi": "10.48550/arxiv.2308.11557",
+      "doi": "",
       "arxiv_id": "2308.11557",
       "arxiv_url": "https://arxiv.org/abs/2308.11557",
       "arxiv_year": null,
       "has_arxiv_version": true,
-      "paper_url": "",
-      "primary_url": "https://openalex.org/W4386114393",
+      "paper_url": "https://papers.bmvc2023.org/0659.pdf",
+      "primary_url": "https://papers.bmvc2023.org/0659.pdf",
       "landing_page_url": "",
       "openalex_url": "https://openalex.org/W4386114393",
-      "is_arxiv_preprint": true,
-      "url": "https://openalex.org/W4386114393",
+      "is_arxiv_preprint": false,
+      "url": "https://papers.bmvc2023.org/0659.pdf",
       "authors": [
         {
           "name": "Shengbang Fang",
@@ -233032,8 +233052,8 @@
         }
       ],
       "source_database": "openalex",
-      "metadata_source": "openalex",
-      "curation_status": "manually_confirmed",
+      "metadata_source": "primary-source review P572; Official BMVC 2023 proceedings paper 659 has identical title and the same three authors: Shengbang Fang, Tai D. Nguyen, Matthew C. Stamm; same method as arXiv 2308.11557.; https://papers.bmvc2023.org/0659.pdf; prior metadata: openalex",
+      "curation_status": "confirmed",
       "review_status": "reviewed",
       "needs_review": false,
       "notes": "",
@@ -233168,18 +233188,18 @@
       "aggregated_institution_types": [
         "university"
       ],
-      "venue_id": "venue:arxiv",
-      "venue_acronym": "",
-      "venue_track": "",
-      "raw_venue": "arXiv (Cornell University)",
+      "venue_id": "venue:british-machine-vision-conference",
+      "venue_acronym": "BMVC",
+      "venue_track": "Main",
+      "raw_venue": "British Machine Vision Conference",
       "venue_aliases": [
-        "ArXiv.org",
-        "arXiv (Cornell University)",
-        "arXiv"
+        "British Machine Vision Conference",
+        "Proceedings of the British Machine Vision Conference 2021",
+        "BMVC"
       ],
       "ambiguity_status": "resolved",
-      "venue_label": "arXiv",
-      "formal_url": "",
+      "venue_label": "British Machine Vision Conference (BMVC)",
+      "formal_url": "https://papers.bmvc2023.org/0659.pdf",
       "search_institution_ids": [
         "institution:e0fc2ffb269489e7"
       ],
@@ -233194,16 +233214,12 @@
         "overall": "Verified",
         "default_field_status": "Verified",
         "field_overrides": {
-          "arxiv": {
-            "status": "Verified",
-            "source": "arXiv"
-          },
           "affiliations": {
             "status": "Curated",
             "source": "Manual curation"
           }
         },
-        "source": "OpenAlex"
+        "source": "arXiv"
       },
       "tasks": [
         "detection",
@@ -233215,6 +233231,18 @@
       "research_types": [
         "method"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -233228,19 +233256,7 @@
           "location_display": "Philadelphia, United States"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "title": "PatchCraft: Exploring Texture Patch for Efficient AI-Generated Image Detection",
@@ -233255,7 +233271,9 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "dataset",
+        "benchmark"
       ],
       "venue": "arXiv",
       "venue_name": "arXiv",
@@ -233533,7 +233551,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "Approved Batch A R573: PatchCraft explicitly builds a 17-generator benchmark with a leaderboard for follow-up work."
         }
       },
       "metadata_status": {
@@ -246512,7 +246531,8 @@
       "publication_date": "2021-01-18",
       "tasks": [
         "detection",
-        "source_attribution"
+        "source_attribution",
+        "localization"
       ],
       "image_scopes": [
         "fully_generated"
@@ -246541,44 +246561,40 @@
         {
           "name": "Michael Goebel",
           "affiliation_indices": [
-            1,
-            2
+            1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
         {
           "name": "Lakshmanan Nataraj",
           "affiliation_indices": [
-            1,
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
         {
           "name": "Tejaswi Nanjundaswamy",
           "affiliation_indices": [
-            1,
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
         {
           "name": "Tajuddin Manhar Mohammed",
           "affiliation_indices": [
-            1,
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -246589,7 +246605,7 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -246600,7 +246616,7 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         }
@@ -246609,7 +246625,7 @@
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
-      "map_record_count": 3,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -246700,13 +246716,10 @@
           "institution_type": "university",
           "authors": [
             "Michael Goebel",
-            "Lakshmanan Nataraj",
-            "Tejaswi Nanjundaswamy",
-            "Tajuddin Manhar Mohammed",
             "Shivkumar Chandrasekaran",
             "B.S. Manjunath"
           ],
-          "mapping_source": "raw_affiliation",
+          "mapping_source": "curated_admin",
           "mapping_fallback": false
         },
         {
@@ -246715,14 +246728,13 @@
           "institution": "Mayachitra Inc.",
           "institution_type": "company",
           "authors": [
-            "Michael Goebel",
             "Lakshmanan Nataraj",
             "Tejaswi Nanjundaswamy",
             "Tajuddin Manhar Mohammed",
             "Shivkumar Chandrasekaran",
             "B.S. Manjunath"
           ],
-          "mapping_source": "raw_affiliation",
+          "mapping_source": "curated_admin",
           "mapping_fallback": false,
           "source_institution_names": [
             "Mayachitra (United States)"
@@ -246733,53 +246745,45 @@
         {
           "author": "Michael Goebel",
           "indices": [
-            1,
-            2
+            1
           ],
           "institution_ids": [
-            "institution:de4a2849d3de43a3",
-            "institution:bcd3d53e57c31275"
+            "institution:de4a2849d3de43a3"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
           "author": "Lakshmanan Nataraj",
           "indices": [
-            1,
             2
           ],
           "institution_ids": [
-            "institution:de4a2849d3de43a3",
             "institution:bcd3d53e57c31275"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
           "author": "Tejaswi Nanjundaswamy",
           "indices": [
-            1,
             2
           ],
           "institution_ids": [
-            "institution:de4a2849d3de43a3",
             "institution:bcd3d53e57c31275"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
           "author": "Tajuddin Manhar Mohammed",
           "indices": [
-            1,
             2
           ],
           "institution_ids": [
-            "institution:de4a2849d3de43a3",
             "institution:bcd3d53e57c31275"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -246792,7 +246796,7 @@
             "institution:de4a2849d3de43a3",
             "institution:bcd3d53e57c31275"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -246805,7 +246809,7 @@
             "institution:de4a2849d3de43a3",
             "institution:bcd3d53e57c31275"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         }
       ],
@@ -246813,44 +246817,36 @@
         {
           "author": "Michael Goebel",
           "institution_indices": [
-            1,
-            2
+            1
           ],
           "institution_ids": [
-            "institution:de4a2849d3de43a3",
-            "institution:bcd3d53e57c31275"
+            "institution:de4a2849d3de43a3"
           ]
         },
         {
           "author": "Lakshmanan Nataraj",
           "institution_indices": [
-            1,
             2
           ],
           "institution_ids": [
-            "institution:de4a2849d3de43a3",
             "institution:bcd3d53e57c31275"
           ]
         },
         {
           "author": "Tejaswi Nanjundaswamy",
           "institution_indices": [
-            1,
             2
           ],
           "institution_ids": [
-            "institution:de4a2849d3de43a3",
             "institution:bcd3d53e57c31275"
           ]
         },
         {
           "author": "Tajuddin Manhar Mohammed",
           "institution_indices": [
-            1,
             2
           ],
           "institution_ids": [
-            "institution:de4a2849d3de43a3",
             "institution:bcd3d53e57c31275"
           ]
         },
@@ -246882,7 +246878,8 @@
       "taxonomy_status": "reviewed",
       "taxonomy_review": {
         "tasks": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "Approved Batch A T610: The primary paper explicitly trains a network to detect, attribute and localize generated/manipulated images."
         },
         "image_scopes": {
           "status": "reviewed"
@@ -247897,7 +247894,8 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "analysis_study"
       ],
       "venue": "arXiv",
       "venue_name": "arXiv",
@@ -248376,7 +248374,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "Approved Batch A R614: The primary abstract separately claims a comprehensive study of fingerprint properties and dominating GAN architectural factors."
         }
       },
       "search_institution_ids": [

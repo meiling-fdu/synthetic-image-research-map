@@ -24,7 +24,14 @@ def historical_bytes(path):
     manifest = json.loads((EVIDENCE / 'predecessor_623_manifest.json').read_text())
     entry = manifest.get(relative)
     if entry is None:
-        return path.read_bytes()
+        # Files untouched by the gap migration can still change in a later
+        # approved successor. Replay their verified pre-Batch-A bytes without
+        # changing the older 623/666-paper snapshots or their receipts.
+        try:
+            from .corpus_quality_history import historical_bytes as batch_a_bytes
+        except ImportError:
+            from corpus_quality_history import historical_bytes as batch_a_bytes
+        return batch_a_bytes(path)
     baseline = json.loads((EVIDENCE / 'baseline.json').read_text())
     if entry['sha256'] != baseline['tracked_sha256'][relative]:
         raise AssertionError('Historical input disagrees with pre-migration baseline: ' + relative)

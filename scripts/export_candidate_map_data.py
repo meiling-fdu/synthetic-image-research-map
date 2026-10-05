@@ -1438,6 +1438,18 @@ def apply_institution_author_overrides(
     return len(applied_override_indexes), unmatched
 
 
+def matching_institution_author_override(record, overrides):
+    """Return an exact paper/year/institution author review, if present."""
+    for override in overrides:
+        if (normalize_title(override.get("title")) == normalize_title(record.get("title"))
+                and (override.get("year") is None or override["year"] == parse_year(
+                    record.get("publication_year") or record.get("year")))
+                and normalize_institution_name(override.get("institution"))
+                == normalize_institution_name(record.get("institution"))):
+            return override
+    return None
+
+
 def record_id(openalex_id: str, institution_key: Tuple[Any, ...]) -> str:
     identity = "|".join([openalex_id, *(str(value) for value in institution_key)])
     digest = hashlib.sha256(identity.encode("utf-8")).hexdigest()[:16]

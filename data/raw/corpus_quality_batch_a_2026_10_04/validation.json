@@ -1,0 +1,512 @@
+{
+  "before": {
+    "public": 640,
+    "formal": 529,
+    "mapped": 617,
+    "unmapped": 23,
+    "relationship_rows": 1423,
+    "unique_paper_institution_pairs": 1422
+  },
+  "after": {
+    "public": 640,
+    "formal": 532,
+    "mapped": 617,
+    "unmapped": 23,
+    "relationship_rows": 1422,
+    "unique_paper_institution_pairs": 1422
+  },
+  "taxonomy_before": {
+    "tasks": {
+      "detection": 593,
+      "source_attribution": 84,
+      "localization": 38
+    },
+    "research_types": {
+      "method": 548,
+      "analysis_study": 74,
+      "survey": 20,
+      "dataset": 130,
+      "benchmark": 83
+    }
+  },
+  "taxonomy_after": {
+    "tasks": {
+      "detection": 593,
+      "source_attribution": 85,
+      "localization": 40
+    },
+    "research_types": {
+      "method": 548,
+      "analysis_study": 79,
+      "survey": 20,
+      "dataset": 134,
+      "benchmark": 89
+    }
+  },
+  "relationships_before": {
+    "rows": 1423,
+    "unique_pairs": 1422,
+    "duplicate_pair_groups": 1,
+    "repeated_author_institution_links": 1,
+    "repeated_author_institution_groups": 1
+  },
+  "relationships_after": {
+    "rows": 1422,
+    "unique_pairs": 1422,
+    "duplicate_pair_groups": 0,
+    "repeated_author_institution_links": 0,
+    "repeated_author_institution_groups": 0
+  },
+  "changed_public_papers": {
+    "curated:b4cb4110cc81eb9be1d7": [
+      "formal_url",
+      "is_arxiv_preprint",
+      "metadata_source",
+      "metadata_status",
+      "paper_url",
+      "primary_url",
+      "publication_type",
+      "raw_venue",
+      "url",
+      "venue",
+      "venue_acronym",
+      "venue_aliases",
+      "venue_id",
+      "venue_label",
+      "venue_name",
+      "venue_track",
+      "venue_type"
+    ],
+    "curated:54a373c86043477d3b68": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated:0b6c1b00c1b39838db42": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated:9637c6ae3ad013926898": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated:c7d464b8f5c94ea55ea9": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "doi:10.48550/arxiv.2512.21512": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated:3c3cd6143ece4045b378": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated:fc87c72c7e8c831652ea": [
+      "doi",
+      "formal_url",
+      "is_arxiv_preprint",
+      "metadata_source",
+      "paper_url",
+      "primary_url",
+      "publication_type",
+      "publication_year",
+      "raw_venue",
+      "title",
+      "url",
+      "venue",
+      "venue_acronym",
+      "venue_aliases",
+      "venue_id",
+      "venue_label",
+      "venue_name",
+      "venue_type",
+      "year"
+    ],
+    "curated:79adf19ca6991c1d85f8": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "doi:10.1109/cvpr52734.2025.02685": [
+      "tasks",
+      "taxonomy_review"
+    ],
+    "curated:f76424b401abe0c0fd0c": [
+      "tasks",
+      "taxonomy_review"
+    ],
+    "curated:fa317ff4ccce609227c0": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "doi:10.48550/arxiv.2504.08149": [
+      "formal_url",
+      "is_arxiv_preprint",
+      "landing_page_url",
+      "notes",
+      "paper_url",
+      "primary_url",
+      "url"
+    ],
+    "curated:d9f9207830bec1da388f": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated:5a91cc922c8a3c4c3d0c": [
+      "curation_status",
+      "doi",
+      "formal_url",
+      "is_arxiv_preprint",
+      "metadata_source",
+      "metadata_status",
+      "paper_url",
+      "primary_url",
+      "publication_type",
+      "raw_venue",
+      "url",
+      "venue",
+      "venue_acronym",
+      "venue_aliases",
+      "venue_id",
+      "venue_label",
+      "venue_name",
+      "venue_track",
+      "venue_type"
+    ],
+    "curated:9d04c60c5b0b70859a63": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "doi:10.2352/issn.2470-1173.2021.4.mwsf-276": [
+      "author_affiliation_indices",
+      "author_institution_affiliations",
+      "author_institution_indices",
+      "authors",
+      "map_record_count",
+      "tasks",
+      "taxonomy_review"
+    ],
+    "doi:10.48550/arxiv.2106.08749": [
+      "research_types",
+      "taxonomy_review"
+    ]
+  },
+  "changed_map_records": {
+    "curated-map:33533adca2256e62a213": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:e1259bf5446cc462b62f": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:5be658aada82e49528f0": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:e554f8e67f925e9886fe": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "openalex-candidate-75340af8d0f607f4": [
+      "tasks",
+      "taxonomy_review"
+    ],
+    "curated-map:65d639a397e11e444043": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:3bf352c3e7f0d711b6f2": [
+      "tasks",
+      "taxonomy_review"
+    ],
+    "openalex-candidate-100ab0f0615a88f7": [
+      "author_affiliation_indices",
+      "author_institution_affiliations",
+      "author_institution_indices",
+      "authors",
+      "institution_authors",
+      "notes",
+      "tasks",
+      "taxonomy_review"
+    ],
+    "curated-map:f62c1ae323eb49bb5ba8": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:2d872af177b7cfcf43f4": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:e8ca860f26ac49d1d175": [
+      "formal_url",
+      "is_arxiv_preprint",
+      "metadata_source",
+      "metadata_status",
+      "paper_url",
+      "primary_url",
+      "publication_type",
+      "raw_venue",
+      "url",
+      "venue",
+      "venue_acronym",
+      "venue_aliases",
+      "venue_id",
+      "venue_label",
+      "venue_name",
+      "venue_track",
+      "venue_type"
+    ],
+    "curated-map:a57fd12029b24bdb5411": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:fc9babbc2e349a0792e2": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "openalex-candidate-8c8092be8ddb7768": [
+      "tasks",
+      "taxonomy_review"
+    ],
+    "curated-map:59488d1df40666403dbc": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:24f09e9c1e63b8598218": [
+      "formal_url",
+      "is_arxiv_preprint",
+      "landing_page_url",
+      "notes",
+      "paper_url",
+      "primary_url",
+      "url"
+    ],
+    "curated-map:ec73f431802d0934e805": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:9b8f94c9bb39d5a792db": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:fdffa3e861a30a709f8b": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:31fcf4cb7e6f147cc0fe": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:47529c31e6a2ceef78cd": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:d36c2a6fa4b5594aa831": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:f00e847e392d74c73bff": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:924585dbe79bb1db281d": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:0f6716f87e1ff6d5ad6e": [
+      "formal_url",
+      "is_arxiv_preprint",
+      "landing_page_url",
+      "notes",
+      "paper_url",
+      "primary_url",
+      "url"
+    ],
+    "curated-map:2f8ac74ef6ffb056532c": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:1f9f2fd01ee4b0e47a25": [
+      "tasks",
+      "taxonomy_review"
+    ],
+    "curated-map:c1b9001489fd0192c486": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:a507e58d1ff90e24d201": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:7c68932abd49d297011e": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "openalex-candidate-348dac7c89f8e435": [
+      "author_affiliation_indices",
+      "author_institution_affiliations",
+      "author_institution_indices",
+      "authors",
+      "institution_authors",
+      "notes",
+      "tasks",
+      "taxonomy_review"
+    ],
+    "curated-map:7447cc868f9b72a56691": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:19b96600b5ea01367433": [
+      "curation_status",
+      "doi",
+      "formal_url",
+      "is_arxiv_preprint",
+      "metadata_source",
+      "metadata_status",
+      "paper_url",
+      "primary_url",
+      "publication_type",
+      "raw_venue",
+      "url",
+      "venue",
+      "venue_acronym",
+      "venue_aliases",
+      "venue_id",
+      "venue_label",
+      "venue_name",
+      "venue_track",
+      "venue_type"
+    ],
+    "curated-map:78735cf978cff963c28d": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:f9881ef62e6e05fc2212": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:601bfe88b53552240e72": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:a62b8c5f138670e90278": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:cf4ac45a6ed48433650d": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "openalex-candidate-09d45f2a778956e5": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:65f1f60db9635a78af1c": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "openalex-candidate-a45a1e59695e956e": [
+      "tasks",
+      "taxonomy_review"
+    ],
+    "curated-map:1f636da47a7f1fd26d65": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:0774cfa3c74e2b8be424": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:ccfc804316f21c9978a5": [
+      "research_types",
+      "taxonomy_review"
+    ],
+    "curated-map:749114c2f452e9d7f06c": [
+      "doi",
+      "formal_url",
+      "is_arxiv_preprint",
+      "metadata_source",
+      "paper_url",
+      "primary_url",
+      "publication_type",
+      "publication_year",
+      "raw_venue",
+      "title",
+      "url",
+      "venue",
+      "venue_acronym",
+      "venue_aliases",
+      "venue_id",
+      "venue_label",
+      "venue_name",
+      "venue_type",
+      "year"
+    ],
+    "openalex-candidate-37b3f843307b9428": [
+      "tasks",
+      "taxonomy_review"
+    ],
+    "curated-map:14a6a84e6f4b7348ed8b": [
+      "research_types",
+      "taxonomy_review"
+    ]
+  },
+  "removed_map_ids": [
+    "openalex-candidate-42640e9490a9cc59"
+  ],
+  "key_paper_report_changes": {
+    "26": [
+      "map_record_count"
+    ],
+    "218": [
+      "matched_public_title"
+    ]
+  },
+  "expected_changed": [
+    "data/curated/author_institution_mappings.csv",
+    "data/curated/paper_taxonomy.csv",
+    "data/curated/papers.csv",
+    "data/curated/venue_aliases.csv",
+    "data/manual/key_paper_coverage_report.csv",
+    "docs/key_paper_coverage_report.md",
+    "scripts/export_candidate_map_data.py",
+    "scripts/export_public_preview.py",
+    "scripts/gap_migration_history.py",
+    "scripts/public_export_guard.py",
+    "scripts/validate_corpus_quality_audit.py",
+    "tests/baseline_expectations.py",
+    "tests/test_corpus_quality_audit.py",
+    "tests/test_frontend_published_only_filter.py",
+    "tests/test_paper_metadata_consistency_audit.py",
+    "tests/test_paper_taxonomy_migration.py",
+    "tests/test_systematic_gap_migration_2026_10_03.py",
+    "web/data/public_preview_map_data.json",
+    "web/data/public_preview_papers.json"
+  ],
+  "new_files": [
+    "data/curated/institution_author_overrides.csv",
+    "data/curated/publication_overrides.csv",
+    "data/raw/corpus_quality_batch_a_2026_10_04/baseline.json",
+    "data/raw/corpus_quality_batch_a_2026_10_04/plan.json",
+    "data/raw/corpus_quality_batch_a_2026_10_04/predecessor_640.json.gz",
+    "data/raw/corpus_quality_batch_a_2026_10_04/predecessor_640_manifest.json",
+    "data/raw/corpus_quality_batch_a_2026_10_04/results.json",
+    "data/raw/corpus_quality_batch_a_2026_10_04/validation.json",
+    "data/raw/corpus_quality_batch_a_2026_10_04/verification.json",
+    "docs/corpus_quality_batch_a_remediation_2026_10_04.md",
+    "scripts/corpus_quality_history.py",
+    "scripts/remediate_corpus_quality_batch_a.py",
+    "scripts/validate_corpus_quality_batch_a.py",
+    "tests/test_corpus_quality_batch_a.py"
+  ],
+  "unexpected_changed": [],
+  "frozen_changed": [],
+  "preexisting_local_changed": [],
+  "remaining_batches": {
+    "B": 159,
+    "D": 1752,
+    "C": 41
+  },
+  "R3": "REQUIRES_MAINTAINER_DECISION",
+  "errors": []
+}

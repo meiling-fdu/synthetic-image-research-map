@@ -1,0 +1,177 @@
+{
+  "date": "2026-10-05",
+  "batch_a_tests": {
+    "passed": 35,
+    "failures": 0
+  },
+  "batch_a_and_historical_tests": {
+    "passed": 68,
+    "failures": 0,
+    "command": "python3 -m pytest -q tests/test_corpus_quality_batch_a.py tests/test_corpus_quality_audit.py tests/test_systematic_gap_migration_2026_10_03.py"
+  },
+  "broader_targeted_tests": {
+    "passed": 313,
+    "subtests_passed": 14,
+    "failures": 0
+  },
+  "full_suite": {
+    "status": "PASS",
+    "initial_result": {
+      "passed": 1619,
+      "failed": 9,
+      "warnings": 2,
+      "subtests_passed": 388
+    },
+    "failure_classification": {
+      "current_count_expectations": 5,
+      "historical_hash_checks": 3,
+      "canonical_title_format_subtest": 1
+    },
+    "repairs": [
+      "Current-state baselines updated to exact reviewed Batch A counts; release baselines unchanged",
+      "Historical readers use checksum-verified earlier bytes for files changed by approved successors; frozen receipts unchanged",
+      "P358 formal journal title follows existing canonical_paper_title formatting; observed publisher spelling retained in ledger"
+    ],
+    "passed": 1627,
+    "failures": 0,
+    "warnings": 2,
+    "subtests_passed": 389,
+    "elapsed_seconds": 308.51,
+    "junit_sha256": "1fe9bf6e5c63734c15aeae4a12fe2bb104d5e7bddc85bb03013db593581db904",
+    "command": "PATH=<bundled-node>:$PATH PYTHONPATH=/private/tmp/sirm-gap-test-deps python3 -m pytest -q --junitxml=/private/tmp/corpus-quality-batch-a-full-suite-final.xml",
+    "warning_details": [
+      "PytestReturnNotNoneWarning: tests/test_legacy_scope_exclusion_migration.py::test_successor_migration_payload returns dict",
+      "PytestReturnNotNoneWarning: tests/test_legacy_scope_exclusion_migration.py::test_successor_migration_text returns str"
+    ]
+  },
+  "validators": {
+    "curated": {
+      "errors": 0,
+      "warnings": 252,
+      "warning_note": "250 baseline warnings plus two optional-CSV schema notices; override contents also checked by existing loaders and exact Batch A guards"
+    },
+    "public_map": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "public_papers": {
+      "errors": 0,
+      "warnings": 23
+    },
+    "historical_audit": {
+      "errors": 0
+    },
+    "batch_a": {
+      "errors": 0
+    }
+  },
+  "direct_public_taxonomy_registry_counts": {
+    "tasks": {
+      "detection": 593,
+      "source_attribution": 85,
+      "localization": 40
+    },
+    "research_types": {
+      "method": 548,
+      "analysis_study": 79,
+      "survey": 20,
+      "dataset": 134,
+      "benchmark": 89
+    }
+  },
+  "export_reproducibility": {
+    "before": {
+      "web/data/public_preview_map_data.json": "702d55a988a8b61421a2472528ce9f55b02bfd5a45d062e1e678939d25a07805",
+      "web/data/public_preview_papers.json": "8eccd08d690b79087a798da01e8287c9fe3557395dab1e429097d9360e3edc9c",
+      "data/manual/key_paper_coverage_report.csv": "81e6323ee23ec8d8bf6ad6d2b5681e272981e92fc84a5930e58fd63b6a484fe5",
+      "docs/key_paper_coverage_report.md": "dbf97bbd81af9629bc7816f0ebe35c329c135b1b2d18e77762054a783e801914"
+    },
+    "after": {
+      "web/data/public_preview_map_data.json": "702d55a988a8b61421a2472528ce9f55b02bfd5a45d062e1e678939d25a07805",
+      "web/data/public_preview_papers.json": "8eccd08d690b79087a798da01e8287c9fe3557395dab1e429097d9360e3edc9c",
+      "data/manual/key_paper_coverage_report.csv": "81e6323ee23ec8d8bf6ad6d2b5681e272981e92fc84a5930e58fd63b6a484fe5",
+      "docs/key_paper_coverage_report.md": "dbf97bbd81af9629bc7816f0ebe35c329c135b1b2d18e77762054a783e801914"
+    },
+    "EXPORT_REPRODUCIBLE": 1
+  },
+  "initial_failure_triage": [
+    {
+      "issue": "Three historical count assertions",
+      "resolution": "Exact original assertions retained against checksum-verified predecessor snapshot; current registry has separate tests"
+    },
+    {
+      "issue": "BMVC canonical identity absent in curated CSV",
+      "resolution": "One existing canonical entry materialized; enriched catalog unchanged"
+    },
+    {
+      "issue": "Stale generated key-paper coverage reports",
+      "resolution": "Regenerated with existing generator; exact two expected row changes verified"
+    }
+  ],
+  "post_repair_targeted_tests": {
+    "passed": 104,
+    "subtests_passed": 13,
+    "failures": 0
+  },
+  "historical_repair_tests": {
+    "passed": 39,
+    "warnings": 2,
+    "failures": 0
+  },
+  "integrity": {
+    "UNEXPECTED_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "original_findings_files_unchanged": 7,
+    "frozen_artifacts_checked": 49,
+    "preexisting_local_files_checked": 128
+  },
+  "git": {
+    "head": "ff583614ed50294f17a5dff85d00f40cbfc77079",
+    "tracked_modified_count": 17,
+    "tracked_modified_paths": [
+      "data/curated/author_institution_mappings.csv",
+      "data/curated/paper_taxonomy.csv",
+      "data/curated/papers.csv",
+      "data/curated/venue_aliases.csv",
+      "data/manual/key_paper_coverage_report.csv",
+      "docs/key_paper_coverage_report.md",
+      "scripts/export_candidate_map_data.py",
+      "scripts/export_public_preview.py",
+      "scripts/gap_migration_history.py",
+      "scripts/public_export_guard.py",
+      "tests/baseline_expectations.py",
+      "tests/test_frontend_published_only_filter.py",
+      "tests/test_paper_metadata_consistency_audit.py",
+      "tests/test_paper_taxonomy_migration.py",
+      "tests/test_systematic_gap_migration_2026_10_03.py",
+      "web/data/public_preview_map_data.json",
+      "web/data/public_preview_papers.json"
+    ],
+    "untracked_count": 151,
+    "untracked_classification": {
+      "preexisting_excluded": 128,
+      "original_quality_audit": 9,
+      "batch_a_artifacts": 14
+    },
+    "new_batch_a_paths": [
+      "data/curated/institution_author_overrides.csv",
+      "data/curated/publication_overrides.csv",
+      "data/raw/corpus_quality_batch_a_2026_10_04/baseline.json",
+      "data/raw/corpus_quality_batch_a_2026_10_04/plan.json",
+      "data/raw/corpus_quality_batch_a_2026_10_04/predecessor_640.json.gz",
+      "data/raw/corpus_quality_batch_a_2026_10_04/predecessor_640_manifest.json",
+      "data/raw/corpus_quality_batch_a_2026_10_04/results.json",
+      "data/raw/corpus_quality_batch_a_2026_10_04/validation.json",
+      "data/raw/corpus_quality_batch_a_2026_10_04/verification.json",
+      "docs/corpus_quality_batch_a_remediation_2026_10_04.md",
+      "scripts/corpus_quality_history.py",
+      "scripts/remediate_corpus_quality_batch_a.py",
+      "scripts/validate_corpus_quality_batch_a.py",
+      "tests/test_corpus_quality_batch_a.py"
+    ],
+    "staged_paths": [],
+    "commit_created": false,
+    "push_performed": false
+  }
+}

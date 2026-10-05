@@ -122,6 +122,7 @@ try:
         apply_publication_overrides,
         index_papers_by_identity,
         load_institution_author_overrides,
+        matching_institution_author_override,
         load_institution_record_overrides,
         match_row_by_identity,
         normalize_export_task_labels,
@@ -236,6 +237,7 @@ except ImportError:  # Direct execution from the scripts directory.
         apply_publication_overrides,
         index_papers_by_identity,
         load_institution_author_overrides,
+        matching_institution_author_override,
         load_institution_record_overrides,
         match_row_by_identity,
         normalize_export_task_labels,
@@ -258,6 +260,8 @@ DEFAULT_EXPORT_DIAGNOSTICS = Path("data/manual/key_paper_export_diagnostics.csv"
 DEFAULT_PAPER_VERSION_OVERRIDES = Path("data/manual/paper_version_overrides.csv")
 DEFAULT_PAPER_ARXIV_LINKS = Path("data/manual/paper_arxiv_links.csv")
 DEFAULT_PUBLICATION_OVERRIDES = Path("data/manual/publication_overrides.csv")
+DEFAULT_CURATED_PUBLICATION_OVERRIDES = Path("data/curated/publication_overrides.csv")
+DEFAULT_CURATED_AUTHOR_OVERRIDES = Path("data/curated/institution_author_overrides.csv")
 DEFAULT_KEY_PAPERS = Path("data/manual/key_papers.csv")
 DEFAULT_PAPER_EXCLUSIONS = DEFAULT_EXCLUSIONS_PATH
 DEFAULT_REVIEW_DECISIONS = (
@@ -898,6 +902,7 @@ def _author_mapping_source(
 def add_public_detail_fields(
     paper_records: Sequence[Dict[str, Any]],
     map_records: Sequence[Dict[str, Any]],
+    institution_author_overrides: Sequence[Dict[str, Any]] = (),
 ) -> None:
     """Export one stable author/affiliation schema to papers and markers.
 
@@ -1206,6 +1211,28 @@ def add_public_detail_fields(
                             ),
                             fallback=mapping.get("fallback") is True,
                         )
+
+        # Reviewed author subsets override legacy nested indices as well as the
+        # marker's direct author list; retain institution numbering and geography.
+        for affiliation in affiliations:
+            override = matching_institution_author_override(
+                {**records[0], "institution": affiliation["name"]},
+                institution_author_overrides,
+            )
+            if override is None:
+                continue
+            identity = detail_institution_identity(affiliation)
+            affiliation["authors"] = list(override["authors"])
+            affiliation["mapping_source"] = "curated_admin"
+            affiliation["mapping_fallback"] = False
+            for identities in author_affiliation_identities.values():
+                if identity in identities:
+                    identities.remove(identity)
+            for author in override["authors"]:
+                key = normalized_author_name(author)
+                author_affiliation_identities[key].append(identity)
+                author_mapping_sources[key] = "curated_admin"
+                author_mapping_fallbacks[key] = False
 
         exported_affiliations = [
             {
@@ -4559,12 +4586,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             *read_paper_arxiv_links(),
             *read_csv_rows(DEFAULT_CURATED_ARXIV_LINKS),
         ]
-        publication_overrides = read_publication_overrides()
+        curated_publication_overrides = read_publication_overrides(DEFAULT_CURATED_PUBLICATION_OVERRIDES)
+        publication_overrides = [*read_publication_overrides(), *curated_publication_overrides]
         paper_abstracts = read_paper_abstracts()
         local_abstracts = read_local_openalex_abstracts()
         key_papers = read_key_papers()
         institution_record_overrides = load_institution_record_overrides()
         institution_author_overrides = load_institution_author_overrides()
+        curated_author_overrides = load_institution_author_overrides(DEFAULT_CURATED_AUTHOR_OVERRIDES)
+        institution_author_overrides.extend(curated_author_overrides)
         payload, summary = build_preview(
             records,
             args.max_records,
@@ -4817,10 +4847,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 exclusion_rows,
             )
         )
+        # Preservation may restore pre-review copies. Reapply the authoritative
+        # curated corrections before rebuilding every derived affiliation field.
+        apply_institution_author_overrides(integrated_maps, curated_author_overrides)
+        apply_publication_overrides(integrated_papers, curated_publication_overrides)
+        apply_publication_overrides(integrated_maps, curated_publication_overrides)
         apply_ordered_paper_location_summaries(
             integrated_papers, integrated_maps
         )
-        add_public_detail_fields(integrated_papers, integrated_maps)
+        add_public_detail_fields(integrated_papers, integrated_maps, curated_author_overrides)
         # Detail enrichment can supply author identities that were absent on a
         # raw candidate marker. Reapply curated precedence at that final shape
         # so a reviewed mapping cannot coexist with its automatic predecessor.
@@ -4835,7 +4870,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         )
         exact_map_relationships_deduplicated += final_relationships_deduplicated
         apply_ordered_paper_location_summaries(integrated_papers, integrated_maps)
-        add_public_detail_fields(integrated_papers, integrated_maps)
+        add_public_detail_fields(integrated_papers, integrated_maps, curated_author_overrides)
         normalize_exported_institution_types(
             integrated_papers, integrated_maps, institution_rows
         )
@@ -5055,6 +5090,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 institution_rows=institution_rows,
                 orphan_cleanup_audits=orphan_cleanup_audit_rows,
                 institution_redirects=exported_id_redirects,
+                institution_author_overrides=curated_author_overrides,
                 approved_by_baseline=approved_baseline_allows(
                     len(integrated_papers),
                     len(integrated_maps),
