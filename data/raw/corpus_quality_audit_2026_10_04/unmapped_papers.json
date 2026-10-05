@@ -1,0 +1,1812 @@
+{
+  "audit_date": "2026-10-04",
+  "baseline_unmapped_count": 23,
+  "evidence_policy": "Reuse committed paper-time provenance; no current-employment inference. OpenAlex candidate mappings are not treated as verified primary affiliation evidence. Coordinate absence is independent of affiliation confidence. Location known means a reviewed curated coordinate row; automatic city-centroid candidates are not accepted coordinates.",
+  "counts": {
+    "EVIDENCE_CAN_RESOLVE": 20,
+    "LEGITIMATELY_UNMAPPED": 1,
+    "MAINTAINER_REVIEW": 2,
+    "AUTO_FIX_CANDIDATE": 0
+  },
+  "primary_classification_counts": {
+    "INSTITUTION_LOCATION_UNRESOLVED": 16,
+    "PUBLICATION_SOURCE_INACCESSIBLE": 1,
+    "INSTITUTION_UNRESOLVED": 1,
+    "AFFILIATION_UNRESOLVED": 5
+  },
+  "records": [
+    {
+      "review_id": "U001",
+      "paper_id": "curated:f43871cdbcf21546aa91",
+      "title": "ImageTrust: Multi-Backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty",
+      "year": 2027,
+      "publication_status": "conference",
+      "authors": [
+        "Andrei-Alexandru Iancu",
+        "Darius Galiş",
+        "Sebastian-Aurelian Stefaniga"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:921138f86bde324d",
+          "canonical_name": "West University of Timișoara",
+          "raw_affiliation": "Faculty of Computer Science, West University of Timişoara, Timişoara, Romania",
+          "authors": [
+            "Andrei-Alexandru Iancu",
+            "Darius Galiş",
+            "Sebastian-Aurelian Stefaniga"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:f8f070004f61020bde2c",
+          "evidence_url": "https://doi.org/10.1007/978-3-032-29430-2_19",
+          "evidence_basis": "https://doi.org/10.1007/978-3-032-29430-2_19",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://doi.org/10.1007/978-3-032-29430-2_19",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U002",
+      "paper_id": "curated:bd8343f176d4b9e38a7b",
+      "title": "A Multi-View and Confusion-Guided Ensemble Framework for Robust Synthetic Image Attribution",
+      "year": 2026,
+      "publication_status": "preprint",
+      "authors": [
+        "Zuomin Qu"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:e86c10c85c74ba208e3d",
+          "canonical_name": "China Southern Power Grid Electric Power Research Institute",
+          "raw_affiliation": "State Key Laboratory of HVDC, China Southern Power Grid Electric Power Research Institute, China",
+          "authors": [
+            "Zuomin Qu"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:fca75dd464bd39f7ef6e",
+          "evidence_url": "https://arxiv.org/pdf/2609.11188",
+          "evidence_basis": "https://arxiv.org/pdf/2609.11188",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://arxiv.org/abs/2609.11188",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U003",
+      "paper_id": "curated:dc0280c881d08395cfac",
+      "title": "Abductive Corroboration of Probabilistic AI Models for Forensic Synthetic Media Detection",
+      "year": 2026,
+      "publication_status": "preprint",
+      "authors": [
+        "Junade Ali"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:904dd0b78e96e555",
+          "canonical_name": "The Alan Turing Institute",
+          "raw_affiliation": "The Alan Turing Institute, Defence and National Security Programme, London, United Kingdom",
+          "authors": [
+            "Junade Ali"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:2a5fe76815f5fff8b970",
+          "evidence_url": "https://arxiv.org/abs/2607.05434",
+          "evidence_basis": "https://arxiv.org/abs/2607.05434",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://arxiv.org/abs/2607.05434",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U004",
+      "paper_id": "curated:c088992f23e0a0a7d5c5",
+      "title": "Beyond Visual Forensics: Auditing Multimodal Robustness for Synthetic Medical Image Detection",
+      "year": 2026,
+      "publication_status": "conference",
+      "authors": [
+        "Ching-Hao Chiu",
+        "Hao-Wei Chung",
+        "Gelei Xu",
+        "Xueyang Li",
+        "Pin-Yu Chen",
+        "John Kheir",
+        "Meysam Ghaffari",
+        "Carlos Morato",
+        "Ahmed Abbasi",
+        "Yiyu Shi"
+      ],
+      "institutions": [],
+      "author_affiliation_known": false,
+      "canonical_institution_identity_known": false,
+      "institution_registry_complete": false,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "PUBLICATION_SOURCE_INACCESSIBLE",
+      "remediation_category": "LEGITIMATELY_UNMAPPED",
+      "blocker": "Ten authors are verified, but no author affiliation is verified. The prior official PDF request returned an HTML interstitial, not a usable paper.",
+      "confidence": "high",
+      "recommended_action": "Keep unmapped; obtain a usable official MICCAI paper-time affiliation block before proposing any relationships.",
+      "authoritative_evidence_url": "https://papers.miccai.org/miccai-2026/0103-Paper2865.html",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv",
+        "data/raw/systematic_gap_migration_2026_10_03/affiliation_review.json"
+      ],
+      "batch": "D"
+    },
+    {
+      "review_id": "U005",
+      "paper_id": "curated:64195610a6d2c2448275",
+      "title": "Conditional Uncertainty-Aware Political Deepfake Detection with Stochastic Convolutional Neural Networks",
+      "year": 2026,
+      "publication_status": "journal",
+      "authors": [
+        "Rafael-Petruţ Gardoş"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:004b85aa254cbf69",
+          "canonical_name": "Colegiul Național “Mihai Eminescu” Satu Mare",
+          "raw_affiliation": "Colegiul National ”Mihai Eminescu” Satu Mare, Mihai Eminescu 5, 440014, Satu Mare, Romania",
+          "authors": [
+            "Rafael-Petruţ Gardoş"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:d6bbb1d46b8896b7f584",
+          "evidence_url": "https://doi.org/10.64336/001c.156299",
+          "evidence_basis": "https://doi.org/10.64336/001c.156299",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://doi.org/10.64336/001c.156299",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U006",
+      "paper_id": "curated:d129c9180d4a0cff91ad",
+      "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+      "year": 2026,
+      "publication_status": "journal",
+      "authors": [
+        "Ahmet Korkmaz",
+        "Mustafa Özden"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:18f39ff159f5ad03",
+          "canonical_name": "Turkish National Defense University",
+          "raw_affiliation": "Army NCO Vocational HE School, Turkish National Defense University, Balıkesir, Turkey",
+          "authors": [
+            "Ahmet Korkmaz"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:9e64ae16b23dbac6c55c",
+          "evidence_url": "https://doi.org/10.1007/s41060-026-01192-9",
+          "evidence_basis": "https://doi.org/10.1007/s41060-026-01192-9",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:5bbd04df727db877",
+          "canonical_name": "Bursa Technical University",
+          "raw_affiliation": "Department of Electrical and Electronics Engineering, Bursa Technical University, 16310 Yıldırım, Bursa, Turkey",
+          "authors": [
+            "Mustafa Özden"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:a44cd5e6667cf97cd40d",
+          "evidence_url": "https://doi.org/10.1007/s41060-026-01192-9",
+          "evidence_basis": "https://doi.org/10.1007/s41060-026-01192-9",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://doi.org/10.1007/s41060-026-01192-9",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U007",
+      "paper_id": "curated:5b2a1ca1ae438916336b",
+      "title": "Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification",
+      "year": 2026,
+      "publication_status": "conference",
+      "authors": [
+        "Jiangling Zhang",
+        "Shuxuan Gao",
+        "Bofan Liu",
+        "Siqiang Feng",
+        "Jirui Huang",
+        "Yaxiong Chen",
+        "Ziyu Chen"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:bbb055c97c3e3d2f",
+          "canonical_name": "Wuhan University of Technology",
+          "raw_affiliation": "Wuhan University of Technology",
+          "authors": [
+            "Jiangling Zhang",
+            "Shuxuan Gao",
+            "Bofan Liu",
+            "Siqiang Feng",
+            "Jirui Huang",
+            "Yaxiong Chen",
+            "Ziyu Chen"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:7d926423b354f72de21b",
+          "evidence_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_Detecting_AI-Generated_Forgeries_via_Iterative_Manifold_Deviation_Amplification_CVPR_2026_paper.html",
+          "evidence_basis": "https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_Detecting_AI-Generated_Forgeries_via_Iterative_Manifold_Deviation_Amplification_CVPR_2026_paper.html",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_Detecting_AI-Generated_Forgeries_via_Iterative_Manifold_Deviation_Amplification_CVPR_2026_paper.html",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U008",
+      "paper_id": "curated:e5a9ed970200c293678e",
+      "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+      "year": 2026,
+      "publication_status": "journal",
+      "authors": [
+        "Surbhi Raj",
+        "Jimson Mathew",
+        "Arijit Mondal"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:a4e0e93fcd90b1c0",
+          "canonical_name": "Indian Institute of Technology Patna",
+          "raw_affiliation": "Computer Science and Engineering, Indian Institute of Technology Patna, Patna, Bihar 801106, India",
+          "authors": [
+            "Surbhi Raj",
+            "Jimson Mathew",
+            "Arijit Mondal"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:bfb708d0cec751ba4a9b",
+          "evidence_url": "https://doi.org/10.1007/s00138-026-01836-7",
+          "evidence_basis": "https://doi.org/10.1007/s00138-026-01836-7",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://doi.org/10.1007/s00138-026-01836-7",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U009",
+      "paper_id": "curated:9a208cddb21ddfe2317a",
+      "title": "Detective SAM: Adaptive AI-Image Forgery Localization",
+      "year": 2026,
+      "publication_status": "conference",
+      "authors": [
+        "Gert Lek",
+        "Nicolas Van Schaik",
+        "Chaoyi Zhu",
+        "Pin-Yu Chen",
+        "Robert Birke",
+        "Lydia Y. Chen"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:a56f008e53c416d8",
+          "canonical_name": "University of Neuchâtel",
+          "raw_affiliation": "University of Neuchâtel",
+          "authors": [
+            "Gert Lek",
+            "Lydia Y. Chen"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:f1b0df5269da279e33ce",
+          "evidence_url": "https://proceedings.iclr.cc/paper_files/paper/2026/file/262dd62fd1bbb30d6a6b4d578f5e65ff-Paper-Conference.pdf",
+          "evidence_basis": "https://proceedings.iclr.cc/paper_files/paper/2026/file/262dd62fd1bbb30d6a6b4d578f5e65ff-Paper-Conference.pdf",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:0c35d84c6b0c0dfb",
+          "canonical_name": "Delft University of Technology",
+          "raw_affiliation": "Delft University of Technology",
+          "authors": [
+            "Nicolas Van Schaik",
+            "Chaoyi Zhu",
+            "Lydia Y. Chen"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:3b4d57ae67e7ba71d94e",
+          "evidence_url": "https://proceedings.iclr.cc/paper_files/paper/2026/file/262dd62fd1bbb30d6a6b4d578f5e65ff-Paper-Conference.pdf",
+          "evidence_basis": "https://proceedings.iclr.cc/paper_files/paper/2026/file/262dd62fd1bbb30d6a6b4d578f5e65ff-Paper-Conference.pdf",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:95c76cd34c2276d0",
+          "canonical_name": "University of Turin",
+          "raw_affiliation": "University of Turin",
+          "authors": [
+            "Robert Birke"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:a6089560fdd22abb82de",
+          "evidence_url": "https://proceedings.iclr.cc/paper_files/paper/2026/file/262dd62fd1bbb30d6a6b4d578f5e65ff-Paper-Conference.pdf",
+          "evidence_basis": "https://proceedings.iclr.cc/paper_files/paper/2026/file/262dd62fd1bbb30d6a6b4d578f5e65ff-Paper-Conference.pdf",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/262dd62fd1bbb30d6a6b4d578f5e65ff-Abstract-Conference.html",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U010",
+      "paper_id": "curated:d0eec7c4fce8929c295a",
+      "title": "Diffusion-Driven Forgery Detection: Distilling Latent Features for Generalized Image Forensics",
+      "year": 2026,
+      "publication_status": "journal",
+      "authors": [
+        "Kaiwen Qian",
+        "Yutao Xu",
+        "Yifan Xu",
+        "Yuchun Fang"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:07ba242d76aafb0e",
+          "canonical_name": "Shanghai University of Engineering Science",
+          "raw_affiliation": "School of Computer Engineering and Science, Shanghai University, Shanghai, China",
+          "authors": [
+            "Kaiwen Qian",
+            "Yutao Xu",
+            "Yifan Xu",
+            "Yuchun Fang"
+          ],
+          "paper_time_affiliation_known": false,
+          "institution_identity_known": false,
+          "exists_in_registry": true,
+          "location_known": true,
+          "location_records": [
+            {
+              "location_id": "location:68c6c3260b5b9192a66f",
+              "institution_id": "institution:07ba242d76aafb0e",
+              "institution": "Shanghai University of Engineering Science",
+              "normalized_institution": "shanghai university of engineering science",
+              "city": "Shanghai",
+              "region": "Shanghai",
+              "country": "China",
+              "country_code": "CN",
+              "lat": "31.0572641",
+              "lon": "121.2008668",
+              "coordinate_status": "known",
+              "created_at": "2026-08-26T11:12:29Z",
+              "updated_at": "2026-08-26T11:12:29Z",
+              "created_by": "codex-pending-institution-curation"
+            }
+          ],
+          "mapping_status": "needs_review",
+          "mapping_id": "mapping:b2df8c5c3dcef11ea3b6",
+          "evidence_url": "https://doi.org/10.1109/lsp.2026.3687792",
+          "evidence_basis": "OpenAlex authorships",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": false,
+      "canonical_institution_identity_known": false,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": true,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_UNRESOLVED",
+      "remediation_category": "MAINTAINER_REVIEW",
+      "blocker": "Raw affiliation says Shanghai University; candidate canonical node is Shanghai University of Engineering Science. These are distinct identities, although coordinates exist.",
+      "confidence": "high",
+      "recommended_action": "Use the publisher paper-time affiliation to resolve Shanghai University versus SUES; maintainer must approve the mapping identity correction before export.",
+      "authoritative_evidence_url": "https://doi.org/10.1109/lsp.2026.3687792",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "C"
+    },
+    {
+      "review_id": "U011",
+      "paper_id": "curated:c495f498c11dab35ecbc",
+      "title": "FALCON-Net: Feature Aggregation of Local Patterns for AI-Generated Image Detection",
+      "year": 2026,
+      "publication_status": "journal",
+      "authors": [
+        "Dengyong Zhang",
+        "Miao Hu",
+        "Jiaxin Chen",
+        "Changsheng Chen",
+        "Jin Wang",
+        "Yun Song",
+        "Gaobo Yang",
+        "Xin Liao",
+        "Xiangling Ding"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:6bdc62fb06ac696f",
+          "canonical_name": "Changsha University of Science and Technology",
+          "raw_affiliation": "School of Computer Science and Technology, Changsha University of Science and Technology, Changsha, China",
+          "authors": [
+            "Dengyong Zhang",
+            "Miao Hu",
+            "Jiaxin Chen",
+            "Yun Song"
+          ],
+          "paper_time_affiliation_known": false,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": true,
+          "location_records": [
+            {
+              "location_id": "location:24ff901ade26602be031",
+              "institution_id": "institution:6bdc62fb06ac696f",
+              "institution": "Changsha University of Science and Technology",
+              "normalized_institution": "changsha university of science and technology",
+              "city": "Changsha",
+              "region": "Hunan",
+              "country": "China",
+              "country_code": "CN",
+              "lat": "28.0705674",
+              "lon": "113.0029417",
+              "coordinate_status": "known",
+              "created_at": "2026-08-26T11:12:29Z",
+              "updated_at": "2026-08-26T11:12:29Z",
+              "created_by": "codex-pending-institution-curation"
+            }
+          ],
+          "mapping_status": "needs_review",
+          "mapping_id": "mapping:59717de03fbe53a3b5b5",
+          "evidence_url": "https://doi.org/10.1109/tifs.2026.3683286",
+          "evidence_basis": "OpenAlex authorships",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:11d4e5b507bbbada",
+          "canonical_name": "Shenzhen MSU-BIT University",
+          "raw_affiliation": "Faculty of Engineering, Shenzhen MSU-BIT University, Shenzhen, China",
+          "authors": [
+            "Changsheng Chen"
+          ],
+          "paper_time_affiliation_known": false,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": true,
+          "location_records": [
+            {
+              "location_id": "location:746e8c5352691ed57b23",
+              "institution_id": "institution:11d4e5b507bbbada",
+              "institution": "Shenzhen MSU-BIT University",
+              "normalized_institution": "shenzhen msu bit university",
+              "city": "Shenzhen",
+              "region": "Guangdong",
+              "country": "China",
+              "country_code": "CN",
+              "lat": "22.6819166",
+              "lon": "114.2003376",
+              "coordinate_status": "known",
+              "created_at": "2026-08-26T11:12:29Z",
+              "updated_at": "2026-08-26T11:12:29Z",
+              "created_by": "codex-pending-institution-curation"
+            }
+          ],
+          "mapping_status": "needs_review",
+          "mapping_id": "mapping:6456b8bdf7002d769476",
+          "evidence_url": "https://doi.org/10.1109/tifs.2026.3683286",
+          "evidence_basis": "OpenAlex authorships",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:42d2e85e0328361b",
+          "canonical_name": "Hunan University of Science and Technology",
+          "raw_affiliation": "School of Computer and Science and Engineering, Hunan University of Science and Technology, Xiangtan, China",
+          "authors": [
+            "Jin Wang",
+            "Xiangling Ding"
+          ],
+          "paper_time_affiliation_known": false,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": true,
+          "location_records": [
+            {
+              "location_id": "location:31be200653d3e8540ffd",
+              "institution_id": "institution:42d2e85e0328361b",
+              "institution": "Hunan University of Science and Technology",
+              "normalized_institution": "hunan university of science and technology",
+              "city": "Xiangtan",
+              "region": "Hunan",
+              "country": "China",
+              "country_code": "CN",
+              "lat": "27.9063746",
+              "lon": "112.9166685",
+              "coordinate_status": "known",
+              "created_at": "2026-08-26T11:12:29Z",
+              "updated_at": "2026-08-26T11:12:29Z",
+              "created_by": "codex-pending-institution-curation"
+            }
+          ],
+          "mapping_status": "needs_review",
+          "mapping_id": "mapping:22611f0898a942d4554e",
+          "evidence_url": "https://doi.org/10.1109/tifs.2026.3683286",
+          "evidence_basis": "OpenAlex authorships",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:be8fe6da68f67876",
+          "canonical_name": "Hunan University",
+          "raw_affiliation": "College of Computer Science and Electronic Engineering, Hunan University, Changsha, China",
+          "authors": [
+            "Gaobo Yang",
+            "Xin Liao"
+          ],
+          "paper_time_affiliation_known": false,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": true,
+          "location_records": [
+            {
+              "location_id": "location:be8fe6da68f67876f00e",
+              "institution_id": "institution:be8fe6da68f67876",
+              "institution": "Hunan University",
+              "normalized_institution": "hunan university",
+              "city": "Changsha",
+              "region": "Hunan",
+              "country": "China",
+              "country_code": "CN",
+              "lat": "28.183548",
+              "lon": "112.9413466",
+              "coordinate_status": "known",
+              "created_at": "2026-07-29T07:52:00Z",
+              "updated_at": "2026-07-29T07:52:00Z",
+              "created_by": "local-admin"
+            }
+          ],
+          "mapping_status": "needs_review",
+          "mapping_id": "mapping:049f07debf3a1d281504",
+          "evidence_url": "https://doi.org/10.1109/tifs.2026.3683286",
+          "evidence_basis": "OpenAlex authorships",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": false,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": true,
+      "relationship_currently_possible": false,
+      "primary_classification": "AFFILIATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Candidate author-to-institution associations come from OpenAlex and remain needs_review. Reviewed coordinates already exist; the affiliation review gate prevents export.",
+      "confidence": "high",
+      "recommended_action": "Verify each named author and superscript against the publisher PDF/HTML, then propose confirmation of existing mapping rows; no geocoding is needed.",
+      "authoritative_evidence_url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U012",
+      "paper_id": "curated:eb04aa0a684bdc34b406",
+      "title": "Fractal Characterization of Low-Correlation Signals in AI-Generated Image Detection",
+      "year": 2026,
+      "publication_status": "preprint",
+      "authors": [
+        "Wenwei Xie",
+        "Jie Yin",
+        "Lu Ma",
+        "Xuansong Zhang",
+        "Wenjing Zhang"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:62a53b60ce61884a",
+          "canonical_name": "Jiangsu Police Institute",
+          "raw_affiliation": "Jiangsu Police Institute, Nanjing 210031, Jiangsu, China",
+          "authors": [
+            "Jie Yin"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:a143b7270cde4e9becf3",
+          "evidence_url": "https://arxiv.org/pdf/2604.17268",
+          "evidence_basis": "https://arxiv.org/pdf/2604.17268",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://arxiv.org/abs/2604.17268",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U013",
+      "paper_id": "curated:167b4dd09fa505470bce",
+      "title": "NSFF: Noise and Semantic Features Fusion for AI-Generated Image Detection",
+      "year": 2026,
+      "publication_status": "journal",
+      "authors": [
+        "Haoran Yang",
+        "Ruiqiang Ma",
+        "Gang Wang",
+        "Jien Kato"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:ce9788da3b7b6137",
+          "canonical_name": "Inner Mongolia University of Technology",
+          "raw_affiliation": "College of Intelligent Science and Technology, Inner Mongolia University of Technology, Hohhot, 010080, Inner Mongolia, China | College of Intelligent Science and Technology, Inner Mongolia University of Technology, Hohhot, 010080, Inner Mongolia, China. Electronic address: marq@imut.edu.cn",
+          "authors": [
+            "Haoran Yang",
+            "Ruiqiang Ma",
+            "Gang Wang"
+          ],
+          "paper_time_affiliation_known": false,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": true,
+          "location_records": [
+            {
+              "location_id": "location:c53efe7c5122b6bbc425",
+              "institution_id": "institution:ce9788da3b7b6137",
+              "institution": "Inner Mongolia University of Technology",
+              "normalized_institution": "inner mongolia university of technology",
+              "city": "Hohhot",
+              "region": "Inner Mongolia",
+              "country": "China",
+              "country_code": "CN",
+              "lat": "40.7863421",
+              "lon": "111.5455609",
+              "coordinate_status": "known",
+              "created_at": "2026-08-26T11:12:29Z",
+              "updated_at": "2026-08-26T11:12:29Z",
+              "created_by": "codex-pending-institution-curation"
+            }
+          ],
+          "mapping_status": "needs_review",
+          "mapping_id": "mapping:5910b6a24468c0825dd5",
+          "evidence_url": "https://doi.org/10.1016/j.neunet.2026.109130",
+          "evidence_basis": "OpenAlex authorships",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:24b3cd33acdc095d",
+          "canonical_name": "Kochi University of Technology",
+          "raw_affiliation": "School of Data and Innovation, Kochi Univertisy of Technology, Kami, 782-8502, Kochi, Japan",
+          "authors": [
+            "Jien Kato"
+          ],
+          "paper_time_affiliation_known": false,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": true,
+          "location_records": [
+            {
+              "location_id": "location:b2cc69c01ac26a632f22",
+              "institution_id": "institution:24b3cd33acdc095d",
+              "institution": "Kochi University of Technology",
+              "normalized_institution": "kochi university of technology",
+              "city": "Kami",
+              "region": "Kochi",
+              "country": "Japan",
+              "country_code": "JP",
+              "lat": "33.6208089",
+              "lon": "133.719376",
+              "coordinate_status": "known",
+              "created_at": "2026-08-26T11:12:29Z",
+              "updated_at": "2026-08-26T11:12:29Z",
+              "created_by": "codex-pending-institution-curation"
+            }
+          ],
+          "mapping_status": "needs_review",
+          "mapping_id": "mapping:e459aae30e6eed1f0f2d",
+          "evidence_url": "https://doi.org/10.1016/j.neunet.2026.109130",
+          "evidence_basis": "OpenAlex authorships",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": false,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": true,
+      "relationship_currently_possible": false,
+      "primary_classification": "AFFILIATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Candidate author-to-institution associations come from OpenAlex and remain needs_review. Reviewed coordinates already exist; the affiliation review gate prevents export.",
+      "confidence": "high",
+      "recommended_action": "Verify each named author and superscript against the publisher PDF/HTML, then propose confirmation of existing mapping rows; no geocoding is needed.",
+      "authoritative_evidence_url": "https://doi.org/10.1016/j.neunet.2026.109130",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U014",
+      "paper_id": "curated:b14247b031eff3671d2b",
+      "title": "Scalable Black-Box Model Attribution for Images",
+      "year": 2026,
+      "publication_status": "preprint",
+      "authors": [
+        "Asaf Livne",
+        "Amir Jevnisek",
+        "Shai Avidan"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:7df4a1601453f806",
+          "canonical_name": "Tel Aviv University",
+          "raw_affiliation": "Tel Aviv University",
+          "authors": [
+            "Asaf Livne",
+            "Amir Jevnisek",
+            "Shai Avidan"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:236bda41155adb283523",
+          "evidence_url": "https://arxiv.org/abs/2608.15652",
+          "evidence_basis": "https://arxiv.org/abs/2608.15652",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://arxiv.org/abs/2608.15652",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U015",
+      "paper_id": "curated:9a95c96ee1d20e56c56d",
+      "title": "Spatial Flatness-Curvature Mask Driven Generalized Detection of Synthetic Images",
+      "year": 2026,
+      "publication_status": "journal",
+      "authors": [
+        "Tanusree Ghosh",
+        "Ruchira Naskar"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:4269181ef8bd7d6e",
+          "canonical_name": "Indian Institute of Engineering Science and Technology, Shibpur",
+          "raw_affiliation": "Department of Information Technology, Indian Institute of Engineering Science and Technology, Shibpur, India",
+          "authors": [
+            "Tanusree Ghosh",
+            "Ruchira Naskar"
+          ],
+          "paper_time_affiliation_known": false,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": true,
+          "location_records": [
+            {
+              "location_id": "location:acf7d25ca755677b1742",
+              "institution_id": "institution:4269181ef8bd7d6e",
+              "institution": "Indian Institute of Engineering Science and Technology, Shibpur",
+              "normalized_institution": "indian institute of engineering science and technology shibpur",
+              "city": "Howrah",
+              "region": "West Bengal",
+              "country": "India",
+              "country_code": "IN",
+              "lat": "22.555204",
+              "lon": "88.305908",
+              "coordinate_status": "known",
+              "created_at": "2026-08-07T09:08:05Z",
+              "updated_at": "2026-08-07T09:08:05Z",
+              "created_by": "local-admin"
+            }
+          ],
+          "mapping_status": "needs_review",
+          "mapping_id": "mapping:cfa5314dd9fe4a5141c4",
+          "evidence_url": "https://doi.org/10.1016/j.patrec.2026.04.022",
+          "evidence_basis": "OpenAlex authorships",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": false,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": true,
+      "relationship_currently_possible": false,
+      "primary_classification": "AFFILIATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Candidate author-to-institution associations come from OpenAlex and remain needs_review. Reviewed coordinates already exist; the affiliation review gate prevents export.",
+      "confidence": "high",
+      "recommended_action": "Verify each named author and superscript against the publisher PDF/HTML, then propose confirmation of existing mapping rows; no geocoding is needed.",
+      "authoritative_evidence_url": "https://doi.org/10.1016/j.patrec.2026.04.022",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U016",
+      "paper_id": "curated:26e3335c0d625676a231",
+      "title": "SPECTRA-Net: Scalable Pipeline for Explainable Cross-Domain Tensor Representations for AI-Generated Images Detection",
+      "year": 2026,
+      "publication_status": "preprint",
+      "authors": [
+        "Sarra Arab",
+        "Anfal Achouri",
+        "Seif Eddine Bouziane"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:b5047d79e959e40b",
+          "canonical_name": "National School of Artificial Intelligence",
+          "raw_affiliation": "The National School of Artificial Intelligence, Algiers, Algeria",
+          "authors": [
+            "Sarra Arab",
+            "Anfal Achouri",
+            "Seif Eddine Bouziane"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:2c5dd1ce9a91a9ca482f",
+          "evidence_url": "https://arxiv.org/pdf/2605.08226",
+          "evidence_basis": "https://arxiv.org/pdf/2605.08226",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://arxiv.org/abs/2605.08226",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U017",
+      "paper_id": "curated:0d918782407e05ade5bd",
+      "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+      "year": 2026,
+      "publication_status": "conference",
+      "authors": [
+        "Thinh-Phat Vo",
+        "Daniel Mai",
+        "Minh–Triet Tran",
+        "Trong-Le Do"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:19d2ee8d44bfb9f0",
+          "canonical_name": "Vietnam National University Ho Chi Minh City",
+          "raw_affiliation": "University of Science, VNU-HCM, Ho Chi Minh, Vietnam and Viet Nam National University, Ho Chi Minh City, Vietnam | University of Science, VNU-HCM, Ho Chi Minh, Vietnam and Viet Nam National University, Ho Chi Minh, Vietnam",
+          "authors": [
+            "Thinh-Phat Vo",
+            "Daniel Mai",
+            "Minh–Triet Tran",
+            "Trong-Le Do"
+          ],
+          "paper_time_affiliation_known": false,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": true,
+          "location_records": [
+            {
+              "location_id": "location:eb04fc46c0c4e2a07c27",
+              "institution_id": "institution:19d2ee8d44bfb9f0",
+              "institution": "Vietnam National University Ho Chi Minh City",
+              "normalized_institution": "vietnam national university ho chi minh city",
+              "city": "Ho Chi Minh City",
+              "region": "Ho Chi Minh City",
+              "country": "Vietnam",
+              "country_code": "VN",
+              "lat": "10.86896",
+              "lon": "106.79623",
+              "coordinate_status": "known",
+              "created_at": "2026-08-25T06:18:37Z",
+              "updated_at": "2026-08-25T06:18:50Z",
+              "created_by": "local-admin"
+            }
+          ],
+          "mapping_status": "needs_review",
+          "mapping_id": "mapping:6307736ef459cb62af5a",
+          "evidence_url": "https://doi.org/10.1145/3810988.3812660",
+          "evidence_basis": "OpenAlex authorships",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": false,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": true,
+      "relationship_currently_possible": false,
+      "primary_classification": "AFFILIATION_UNRESOLVED",
+      "remediation_category": "MAINTAINER_REVIEW",
+      "blocker": "Candidate author-to-institution associations come from OpenAlex and remain needs_review. Reviewed coordinates already exist; the affiliation review gate prevents export. The raw affiliation includes University of Science and its VNU-HCM parent but the candidate has only the parent node.",
+      "confidence": "high",
+      "recommended_action": "Verify author affiliations in the ACM paper, then decide child/parent representation under the existing hierarchy policy; preserve both affiliations when distinct.",
+      "authoritative_evidence_url": "https://doi.org/10.1145/3810988.3812660",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "C"
+    },
+    {
+      "review_id": "U018",
+      "paper_id": "curated:f7adf12bdae80860a18f",
+      "title": "DeCLIP: Decoding CLIP Representations for Deepfake Localization",
+      "year": 2025,
+      "publication_status": "conference",
+      "authors": [
+        "Stefan Smeu",
+        "Elisabeta Oneata",
+        "Dan Oneata"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:5099f96889f598c5",
+          "canonical_name": "Bitdefender",
+          "raw_affiliation": "Bitdefender",
+          "authors": [
+            "Stefan Smeu",
+            "Elisabeta Oneata"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:84d44f13545e90dc1b25",
+          "evidence_url": "https://openaccess.thecvf.com/content/WACV2025/papers/Smeu_DeCLIP_Decoding_CLIP_Representations_for_Deepfake_Localization_WACV_2025_paper.pdf",
+          "evidence_basis": "https://openaccess.thecvf.com/content/WACV2025/papers/Smeu_DeCLIP_Decoding_CLIP_Representations_for_Deepfake_Localization_WACV_2025_paper.pdf",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:a6c16c22f070d803",
+          "canonical_name": "University Politehnica of Bucharest",
+          "raw_affiliation": "POLITEHNICA Bucharest",
+          "authors": [
+            "Dan Oneata"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:64bac9d32589855f9a26",
+          "evidence_url": "https://openaccess.thecvf.com/content/WACV2025/papers/Smeu_DeCLIP_Decoding_CLIP_Representations_for_Deepfake_Localization_WACV_2025_paper.pdf",
+          "evidence_basis": "https://openaccess.thecvf.com/content/WACV2025/papers/Smeu_DeCLIP_Decoding_CLIP_Representations_for_Deepfake_Localization_WACV_2025_paper.pdf",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://doi.org/10.1109/wacv61041.2025.00025",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U019",
+      "paper_id": "curated:48d8ffca3a1741cf11d3",
+      "title": "FUSE: Unifying Spectral and Semantic Cues for Robust AI-Generated Image Detection",
+      "year": 2025,
+      "publication_status": "conference",
+      "authors": [
+        "Md. Zahid Hossain",
+        "Most. Sharmin Sultana Samu",
+        "Md. Kamrozzaman Bhuiyan",
+        "Farhad Uz Zaman",
+        "Md. Rakibul Islam"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:c04d9c3ee6b155d2",
+          "canonical_name": "Ahsanullah University of Science and Technology",
+          "raw_affiliation": "Department of CSE, Ahsanullah University of Science and Technology, Dhaka-1208, Bangladesh",
+          "authors": [
+            "Md. Zahid Hossain",
+            "Md. Rakibul Islam"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:412748ca368c4c79e1a3",
+          "evidence_url": "https://arxiv.org/pdf/2512.21695",
+          "evidence_basis": "https://arxiv.org/pdf/2512.21695",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:93b0d6dd6666e2d1",
+          "canonical_name": "BRAC University",
+          "raw_affiliation": "Department of CSE, BRAC University, Dhaka-1212, Bangladesh",
+          "authors": [
+            "Most. Sharmin Sultana Samu"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:cd1f4513f890c12f5753",
+          "evidence_url": "https://arxiv.org/pdf/2512.21695",
+          "evidence_basis": "https://arxiv.org/pdf/2512.21695",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:e068377b0d654b7d",
+          "canonical_name": "Enosis Solutions",
+          "raw_affiliation": "Enosis Solutions, Bangladesh",
+          "authors": [
+            "Md. Kamrozzaman Bhuiyan"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:32b8b0549bfa55b27582",
+          "evidence_url": "https://arxiv.org/pdf/2512.21695",
+          "evidence_basis": "https://arxiv.org/pdf/2512.21695",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:16af91b38bb67588",
+          "canonical_name": "Southeast University (Bangladesh)",
+          "raw_affiliation": "Department of CSE, Southeast University, Dhaka-1208, Bangladesh",
+          "authors": [
+            "Farhad Uz Zaman"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:b02883fec4a099b9ae1e",
+          "evidence_url": "https://arxiv.org/pdf/2512.21695",
+          "evidence_basis": "https://arxiv.org/pdf/2512.21695",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://doi.org/10.1109/iccit68739.2025.11491327",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U020",
+      "paper_id": "curated:a867abd584976f8b2f41",
+      "title": "ILLUSION: Unveiling Truth with a Comprehensive Multi-Modal, Multi-Lingual Deepfake Dataset",
+      "year": 2025,
+      "publication_status": "conference",
+      "authors": [
+        "Kartik Thakral",
+        "Rishabh Ranjan",
+        "Akanksha Singh",
+        "Akshat Jain",
+        "Mayank Vatsa",
+        "Richa Singh"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:fcc81f8f5be3121c",
+          "canonical_name": "Indian Institute of Technology Jodhpur",
+          "raw_affiliation": "IIT Jodhpur, India",
+          "authors": [
+            "Kartik Thakral",
+            "Rishabh Ranjan",
+            "Akanksha Singh",
+            "Akshat Jain",
+            "Mayank Vatsa",
+            "Richa Singh"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:261ec633ee4618ec1b16",
+          "evidence_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/08f9de0232c0b485110237f6e6cf88f1-Abstract-Conference.html",
+          "evidence_basis": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/08f9de0232c0b485110237f6e6cf88f1-Abstract-Conference.html",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:a3b35dea71f38dc7",
+          "canonical_name": "Indian Institute of Science Education and Research Bhopal",
+          "raw_affiliation": "IISER Bhopal, India",
+          "authors": [
+            "Akanksha Singh"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:8357e8c8680d88f1ee3f",
+          "evidence_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/08f9de0232c0b485110237f6e6cf88f1-Abstract-Conference.html",
+          "evidence_basis": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/08f9de0232c0b485110237f6e6cf88f1-Abstract-Conference.html",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/08f9de0232c0b485110237f6e6cf88f1-Abstract-Conference.html",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U021",
+      "paper_id": "curated:0e0f70c0146b624226ca",
+      "title": "UniAIDet: A Unified and Universal Benchmark for AI-Generated Image Content Detection and Localization",
+      "year": 2025,
+      "publication_status": "preprint",
+      "authors": [
+        "Huixuan Zhang",
+        "Xiaojun Wan"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:ea7b31bae9ab636d",
+          "canonical_name": "Wangxuan Institute of Computer Technology",
+          "raw_affiliation": "Wangxuan Institute of Computer Technology, Peking University",
+          "authors": [
+            "Huixuan Zhang",
+            "Xiaojun Wan"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:c1bd2dd06a64a023b8c3",
+          "evidence_url": "https://arxiv.org/pdf/2510.23023v1",
+          "evidence_basis": "https://arxiv.org/pdf/2510.23023v1",
+          "hierarchy": [
+            {
+              "parent_institution_id": "institution:46e4866d3b2954ab",
+              "child_institution_id": "institution:ea7b31bae9ab636d",
+              "relationship_type": "affiliated_institute",
+              "review_status": "confirmed",
+              "evidence_source": "Primary paper affiliation and official organization evidence",
+              "evidence_url": "https://www.icst.pku.edu.cn/english/people/ss/index.htm",
+              "notes": "Official institute address: No. 128 Zhongguancun North Street, Beijing 100871. Do not copy an unverified parent-campus point for this separately addressed institute; exact geocoder query returned no result."
+            }
+          ],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution. Wangxuan has a confirmed Peking University parent, but the hierarchy explicitly forbids copying an unverified parent-campus point for its separate address.",
+      "confidence": "high",
+      "recommended_action": "Verify Wangxuan Institute coordinates at its documented address; preserve its identity and existing parent-search link. Do not inherit the Peking University point.",
+      "authoritative_evidence_url": "https://arxiv.org/abs/2510.23023",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U022",
+      "paper_id": "curated:2117831292318de4cf18",
+      "title": "Explainable Artifacts for Synthetic Western Blot Source Attribution",
+      "year": 2024,
+      "publication_status": "conference",
+      "authors": [
+        "João Phillipe Cardenuto",
+        "Sara Mandelli",
+        "Daniel Moreira",
+        "Paolo Bestagini",
+        "Edward J. Delp",
+        "Anderson Rocha"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:f4a883f8d9615a43",
+          "canonical_name": "University of Campinas",
+          "raw_affiliation": "Recod.ai, Institute of Computing, Universidade Estadual de Campinas (UNICAMP),Artificial Intelligence Lab.,Campinas,SP,Brazil",
+          "authors": [
+            "João Phillipe Cardenuto",
+            "Anderson Rocha"
+          ],
+          "paper_time_affiliation_known": false,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": true,
+          "location_records": [
+            {
+              "location_id": "location:f4a883f8d9615a43d89c",
+              "institution_id": "institution:f4a883f8d9615a43",
+              "institution": "University of Campinas",
+              "normalized_institution": "university of campinas",
+              "city": "Campinas",
+              "region": "São Paulo",
+              "country": "Brazil",
+              "country_code": "BR",
+              "lat": "-22.817",
+              "lon": "-47.0683",
+              "coordinate_status": "known",
+              "created_at": "2026-07-01T07:19:42Z",
+              "updated_at": "2026-07-01T07:19:42Z",
+              "created_by": "local-admin"
+            }
+          ],
+          "mapping_status": "needs_review",
+          "mapping_id": "mapping:52ce396bb8d6c7a0b6bc",
+          "evidence_url": "https://doi.org/10.1109/wifs61860.2024.10810680",
+          "evidence_basis": "OpenAlex authorships",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:1ee9da20656fd88b",
+          "canonical_name": "Politecnico di Milano",
+          "raw_affiliation": "Politecnico di Milano,Dipartimento di Elettronica, Informazione e Bioingegneria,Milan,Italy,20133",
+          "authors": [
+            "Sara Mandelli",
+            "Paolo Bestagini"
+          ],
+          "paper_time_affiliation_known": false,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": true,
+          "location_records": [
+            {
+              "location_id": "location:b78ddf1c32aefc86f954",
+              "institution_id": "institution:1ee9da20656fd88b",
+              "institution": "Politecnico di Milano",
+              "normalized_institution": "politecnico di milano",
+              "city": "Milan",
+              "region": "Lombardy",
+              "country": "Italy",
+              "country_code": "IT",
+              "lat": "45.478",
+              "lon": "9.2271",
+              "coordinate_status": "known",
+              "created_at": "2026-08-11T10:33:01Z",
+              "updated_at": "2026-08-26T11:11:33Z",
+              "created_by": "local-admin"
+            }
+          ],
+          "mapping_status": "needs_review",
+          "mapping_id": "mapping:6a1f1135c52904549c2d",
+          "evidence_url": "https://doi.org/10.1109/wifs61860.2024.10810680",
+          "evidence_basis": "OpenAlex authorships",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:d30e2f168f8ccc03",
+          "canonical_name": "Loyola University Chicago",
+          "raw_affiliation": "Loyola University Chicago,Department of Computer Science,Chicago,IL,USA",
+          "authors": [
+            "Daniel Moreira"
+          ],
+          "paper_time_affiliation_known": false,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": true,
+          "location_records": [
+            {
+              "location_id": "location:0c379ecb058ba7a0c856",
+              "institution_id": "institution:d30e2f168f8ccc03",
+              "institution": "Loyola University Chicago",
+              "normalized_institution": "loyola university chicago",
+              "city": "Chicago",
+              "region": "Illinois",
+              "country": "United States",
+              "country_code": "US",
+              "lat": "41.9990955",
+              "lon": "-87.6572748",
+              "coordinate_status": "known",
+              "created_at": "2026-08-26T11:12:29Z",
+              "updated_at": "2026-08-26T11:12:29Z",
+              "created_by": "codex-pending-institution-curation"
+            }
+          ],
+          "mapping_status": "needs_review",
+          "mapping_id": "mapping:1bf645607b0257dfbde5",
+          "evidence_url": "https://doi.org/10.1109/wifs61860.2024.10810680",
+          "evidence_basis": "OpenAlex authorships",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:90b589325857dff0",
+          "canonical_name": "Purdue University",
+          "raw_affiliation": "Purdue University,School of Electrical and Computer Engineering,West Lafayette,IN,USA",
+          "authors": [
+            "Edward J. Delp"
+          ],
+          "paper_time_affiliation_known": false,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": true,
+          "location_records": [
+            {
+              "location_id": "location:90b589325857dff04efc",
+              "institution_id": "institution:90b589325857dff0",
+              "institution": "Purdue University",
+              "normalized_institution": "purdue university",
+              "city": "West Lafayette",
+              "region": "Indiana",
+              "country": "United States",
+              "country_code": "US",
+              "lat": "40.4237",
+              "lon": "-86.9212",
+              "coordinate_status": "known",
+              "created_at": "2026-07-01T04:38:37Z",
+              "updated_at": "2026-07-01T04:54:26Z",
+              "created_by": "local-admin"
+            }
+          ],
+          "mapping_status": "needs_review",
+          "mapping_id": "mapping:38ebe8aa01fb879c4361",
+          "evidence_url": "https://doi.org/10.1109/wifs61860.2024.10810680",
+          "evidence_basis": "OpenAlex authorships",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": false,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": true,
+      "relationship_currently_possible": false,
+      "primary_classification": "AFFILIATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Candidate author-to-institution associations come from OpenAlex and remain needs_review. Reviewed coordinates already exist; the affiliation review gate prevents export.",
+      "confidence": "high",
+      "recommended_action": "Verify each named author and superscript against the publisher PDF/HTML, then propose confirmation of existing mapping rows; no geocoding is needed.",
+      "authoritative_evidence_url": "https://doi.org/10.1109/wifs61860.2024.10810680",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    },
+    {
+      "review_id": "U023",
+      "paper_id": "curated:9e6bc47bc75cd7b9b637",
+      "title": "Weakly-Supervised Deepfake Localization in Diffusion-Generated Images",
+      "year": 2024,
+      "publication_status": "conference",
+      "authors": [
+        "Dragoș-Constantin Tântaru",
+        "Elisabeta Oneață",
+        "Dan Oneață"
+      ],
+      "institutions": [
+        {
+          "institution_id": "institution:5099f96889f598c5",
+          "canonical_name": "Bitdefender",
+          "raw_affiliation": "Bitdefender",
+          "authors": [
+            "Dragoș-Constantin Tântaru",
+            "Elisabeta Oneață"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:770e8ed8c98625d6fbc4",
+          "evidence_url": "https://openaccess.thecvf.com/content/WACV2024/papers/Tantaru_Weakly-Supervised_Deepfake_Localization_in_Diffusion-Generated_Images_WACV_2024_paper.pdf",
+          "evidence_basis": "https://openaccess.thecvf.com/content/WACV2024/papers/Tantaru_Weakly-Supervised_Deepfake_Localization_in_Diffusion-Generated_Images_WACV_2024_paper.pdf",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        },
+        {
+          "institution_id": "institution:a6c16c22f070d803",
+          "canonical_name": "University Politehnica of Bucharest",
+          "raw_affiliation": "University Politehnica of Bucharest",
+          "authors": [
+            "Dan Oneață"
+          ],
+          "paper_time_affiliation_known": true,
+          "institution_identity_known": true,
+          "exists_in_registry": true,
+          "location_known": false,
+          "location_records": [],
+          "mapping_status": "active",
+          "mapping_id": "mapping:7e33f92900273f7bb860",
+          "evidence_url": "https://openaccess.thecvf.com/content/WACV2024/papers/Tantaru_Weakly-Supervised_Deepfake_Localization_in_Diffusion-Generated_Images_WACV_2024_paper.pdf",
+          "evidence_basis": "https://openaccess.thecvf.com/content/WACV2024/papers/Tantaru_Weakly-Supervised_Deepfake_Localization_in_Diffusion-Generated_Images_WACV_2024_paper.pdf",
+          "hierarchy": [],
+          "allowed_to_map_as_node": true,
+          "relationship_currently_possible": false
+        }
+      ],
+      "author_affiliation_known": true,
+      "canonical_institution_identity_known": true,
+      "institution_registry_complete": true,
+      "any_reviewed_location_known": false,
+      "relationship_currently_possible": false,
+      "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+      "remediation_category": "EVIDENCE_CAN_RESOLVE",
+      "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "confidence": "high",
+      "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "authoritative_evidence_url": "https://doi.org/10.1109/wacv57701.2024.00614",
+      "project_evidence": [
+        "data/curated/author_institution_mappings.csv",
+        "data/curated/institutions.csv",
+        "data/curated/institution_locations.csv",
+        "data/curated/institution_hierarchy.csv"
+      ],
+      "batch": "B"
+    }
+  ]
+}

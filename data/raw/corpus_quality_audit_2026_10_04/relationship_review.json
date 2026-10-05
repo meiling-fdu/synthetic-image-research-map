@@ -1,0 +1,1138 @@
+{
+  "audit_date": "2026-10-04",
+  "methodology": "Exhaustive structural scan of all exported rows using existing paper taxonomy identities; primary-source verification is targeted to the known overlap. String/coordinate/registry flags are not proven false affiliations. No global institution rewrite.",
+  "counts": {
+    "relationship_rows": 1423,
+    "unique_paper_institution_pairs": 1422,
+    "duplicate_pair_groups": 1,
+    "duplicate_author_institution_links": 1,
+    "primary_evidenced_unsupported_author_links": 4,
+    "author_string_mismatch_links": 18,
+    "author_string_mismatch_papers": 12,
+    "public_institution_ids_absent_from_curated_registry": 15,
+    "registry_gap_papers": 12,
+    "confirmed_alias_collision_groups": 0,
+    "parent_child_cooccurrences": 2,
+    "coordinate_coincidence_groups": 28
+  },
+  "records": [
+    {
+      "review_id": "L001",
+      "paper_id": "doi:10.2352/issn.2470-1173.2021.4.mwsf-276",
+      "title": "Detection, Attribution and Localization of GAN Generated Images",
+      "issue": "DUPLICATE_PAPER_INSTITUTION_PAIR",
+      "batch": "C",
+      "institution_ids": [
+        "institution:de4a2849d3de43a3"
+      ],
+      "recommended_action": "After R1 author-group correction and R2 recomputation, merge the two exported UCSB rows only if they represent one equivalent paper–institution relation. Preserve both original OpenAlex source identities and evidence in the audit trail; maintainer approval is required for provenance representation.",
+      "evidence_required": "Approve how both source records remain traceable after export consolidation; require the R2 equivalence result before merging.",
+      "recommendation": "MERGE_RECOMMENDED",
+      "reason": "The singleton Goebel list is a subset of the other row, not a disjoint author group. Different OpenAlex work records now resolve to the same DOI/arXiv identity; historical source-version duplication explains the extra row.",
+      "rows": [
+        {
+          "id": "openalex-candidate-100ab0f0615a88f7",
+          "openalex_url": "https://openalex.org/W3179128750",
+          "doi": "10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "arxiv_id": "2007.10466",
+          "institution_authors": [
+            "Michael Goebel",
+            "Lakshmanan Nataraj",
+            "Tejaswi Nanjundaswamy",
+            "Tajuddin Manhar Mohammed",
+            "Shivkumar Chandrasekaran",
+            "B.S. Manjunath"
+          ],
+          "source_database": "OpenAlex",
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt"
+        },
+        {
+          "id": "openalex-candidate-42640e9490a9cc59",
+          "openalex_url": "https://openalex.org/W3043994911",
+          "doi": "10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "arxiv_id": "2007.10466",
+          "institution_authors": [
+            "Michael Goebel"
+          ],
+          "source_database": "OpenAlex",
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | manual publication metadata override applied | Manual correction: arXiv version exists, but the paper was formally published in Electronic Imaging 2021."
+        }
+      ],
+      "evidence_urls": [
+        "https://arxiv.org/pdf/2007.10466"
+      ],
+      "confidence": "high",
+      "action_key": "R3",
+      "depends_on": [
+        "L029"
+      ]
+    },
+    {
+      "review_id": "L002",
+      "paper_id": "doi:10.2352/issn.2470-1173.2021.4.mwsf-276",
+      "title": "Detection, Attribution and Localization of GAN Generated Images",
+      "issue": "AUTHOR_AFFILIATION_OVERASSIGNMENT",
+      "batch": "A",
+      "institution_ids": [
+        "institution:de4a2849d3de43a3",
+        "institution:bcd3d53e57c31275"
+      ],
+      "recommended_action": "Repair the two author-group lists against the primary paper while preserving its six-author order and both institution identities.",
+      "evidence_required": "",
+      "proposed_author_groups": {
+        "institution:de4a2849d3de43a3": [
+          "Michael Goebel",
+          "Shivkumar Chandrasekaran",
+          "B.S. Manjunath"
+        ],
+        "institution:bcd3d53e57c31275": [
+          "Lakshmanan Nataraj",
+          "Tejaswi Nanjundaswamy",
+          "Tajuddin Manhar Mohammed",
+          "Shivkumar Chandrasekaran",
+          "B.S. Manjunath"
+        ]
+      },
+      "unsupported_links": [
+        {
+          "institution_id": "institution:de4a2849d3de43a3",
+          "author": "Lakshmanan Nataraj"
+        },
+        {
+          "institution_id": "institution:de4a2849d3de43a3",
+          "author": "Tejaswi Nanjundaswamy"
+        },
+        {
+          "institution_id": "institution:de4a2849d3de43a3",
+          "author": "Tajuddin Manhar Mohammed"
+        },
+        {
+          "institution_id": "institution:bcd3d53e57c31275",
+          "author": "Michael Goebel"
+        }
+      ],
+      "evidence_urls": [
+        "https://arxiv.org/pdf/2007.10466"
+      ],
+      "confidence": "high",
+      "limitation": "Uses paper-time arXiv PDF fallback; no affiliation inference from present employment.",
+      "action_key": "R1",
+      "depends_on": []
+    },
+    {
+      "review_id": "L003",
+      "paper_id": "curated:52edb9369ffaae37bd81",
+      "title": "Dual-Tree Complex Wavelet Driven Hierarchical Spatial-Frequency Fusion Learning for Robust Deepfake Detection",
+      "issue": "AUTHOR_STRING_MISMATCH",
+      "batch": "B",
+      "institution_ids": [
+        "institution:f6342fd457763517"
+      ],
+      "recommended_action": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "evidence_required": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "observations": [
+        {
+          "author": "M Li",
+          "institution_id": "institution:f6342fd457763517",
+          "relationship_id": "curated-map:72dea18ba8f9284057b2"
+        }
+      ],
+      "evidence_urls": [
+        "https://doi.org/10.1109/tdsc.2026.3712721"
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L004",
+      "paper_id": "curated:8116d19627b92530b580",
+      "title": "EvoGuard: An Extensible Agentic RL-Based Framework for Practical and Evolving AI-Generated Image Detection",
+      "issue": "AUTHOR_STRING_MISMATCH",
+      "batch": "B",
+      "institution_ids": [
+        "institution:db8874f9983a5ffd"
+      ],
+      "recommended_action": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "evidence_required": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "observations": [
+        {
+          "author": "Jun Liu",
+          "institution_id": "institution:db8874f9983a5ffd",
+          "relationship_id": "curated-map:b9c370276a6b796c63ad"
+        }
+      ],
+      "evidence_urls": [
+        "https://arxiv.org/abs/2603.17343"
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L005",
+      "paper_id": "curated:316fc03d348baa637bb4",
+      "title": "Geometric-Semantic Dual-Adaptation for Generalizable AI-Generated Image Detection",
+      "issue": "AUTHOR_STRING_MISMATCH",
+      "batch": "B",
+      "institution_ids": [
+        "institution:3f9391add8daa620"
+      ],
+      "recommended_action": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "evidence_required": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "observations": [
+        {
+          "author": "Zhang Minqing",
+          "institution_id": "institution:3f9391add8daa620",
+          "relationship_id": "curated-map:f8ff6a7ac983ca84c099"
+        }
+      ],
+      "evidence_urls": [
+        "https://doi.org/10.1016/j.neucom.2026.134418"
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L006",
+      "paper_id": "curated:1f9d168cc6c4c445a231",
+      "title": "Orthogonal Subspace Decomposition for Generalizable AI-Generated Image Detection",
+      "issue": "AUTHOR_STRING_MISMATCH",
+      "batch": "B",
+      "institution_ids": [
+        "institution:3e78e883c14f8bb8",
+        "institution:6346b1a9c3b5ccd7"
+      ],
+      "recommended_action": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "evidence_required": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "observations": [
+        {
+          "author": "Li Yuan",
+          "institution_id": "institution:6346b1a9c3b5ccd7",
+          "relationship_id": "curated-map:b40d3f7647598a98a1a5"
+        },
+        {
+          "author": "Shen Chen",
+          "institution_id": "institution:3e78e883c14f8bb8",
+          "relationship_id": "curated-map:ad85d592b0fc7058e0cc"
+        }
+      ],
+      "evidence_urls": [
+        "https://openreview.net/pdf?id=GFpjO8S8Po"
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L007",
+      "paper_id": "curated:6ca781a0d606a5d5db64",
+      "title": "REVEAL: A Retrieval-Augmented Generation Approach for Contextual Identification of Synthetic Visual Content",
+      "issue": "AUTHOR_STRING_MISMATCH",
+      "batch": "B",
+      "institution_ids": [
+        "institution:1e2fe2432a089705"
+      ],
+      "recommended_action": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "evidence_required": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "observations": [
+        {
+          "author": "Hessen B. Eutamene",
+          "institution_id": "institution:1e2fe2432a089705",
+          "relationship_id": "curated-map:df76519156a591a42f8f"
+        }
+      ],
+      "evidence_urls": [
+        "https://doi.org/10.1145/3746265.3759667"
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L008",
+      "paper_id": "curated:613af6288792f6ece505",
+      "title": "The Visual Counter Turing Test (VCT2): A Benchmark for Evaluating AI-Generated Image Detection and the Visual AI Index (VAI)",
+      "issue": "AUTHOR_STRING_MISMATCH",
+      "batch": "B",
+      "institution_ids": [
+        "institution:1a36f9f1487a39da",
+        "institution:498778a17add497f"
+      ],
+      "recommended_action": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "evidence_required": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "observations": [
+        {
+          "author": "Abhilekh Borah",
+          "institution_id": "institution:1a36f9f1487a39da",
+          "relationship_id": "curated-map:75f173565e194c4b5680"
+        },
+        {
+          "author": "Song Wang",
+          "institution_id": "institution:498778a17add497f",
+          "relationship_id": "curated-map:04c84a81868e76f35577"
+        }
+      ],
+      "evidence_urls": [
+        "https://doi.org/10.18653/v1/2025.ijcnlp-long.100"
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L009",
+      "paper_id": "curated:dc9126cc128e1b228717",
+      "title": "Transfer Learning of Real Image Features with Soft Contrastive Loss for Fake Image Detection",
+      "issue": "AUTHOR_STRING_MISMATCH",
+      "batch": "B",
+      "institution_ids": [
+        "institution:26db9b197bbb7634",
+        "institution:c111feb812f1a7ed",
+        "institution:f23b95ce92de4591"
+      ],
+      "recommended_action": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "evidence_required": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "observations": [
+        {
+          "author": "Mengjie Wu",
+          "institution_id": "institution:f23b95ce92de4591",
+          "relationship_id": "curated-map:4ed13fbf854562fceb05"
+        },
+        {
+          "author": "Boheng Li",
+          "institution_id": "institution:c111feb812f1a7ed",
+          "relationship_id": "curated-map:ab423567808d02cc3837"
+        },
+        {
+          "author": "Xinyi Yang",
+          "institution_id": "institution:26db9b197bbb7634",
+          "relationship_id": "curated-map:817c271fc99325414f32"
+        }
+      ],
+      "evidence_urls": [
+        "https://doi.org/10.1609/aaai.v39i25.34826"
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L010",
+      "paper_id": "curated:c9485f4d5346304272f2",
+      "title": "Frequency Masking for Universal Deepfake Detection",
+      "issue": "AUTHOR_STRING_MISMATCH",
+      "batch": "B",
+      "institution_ids": [
+        "institution:6dd3ce9e0d5fd1ab"
+      ],
+      "recommended_action": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "evidence_required": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "observations": [
+        {
+          "author": "Chandler Timm Doloriel",
+          "institution_id": "institution:6dd3ce9e0d5fd1ab",
+          "relationship_id": "curated-map:9a264429d9d6fe9f88f5"
+        }
+      ],
+      "evidence_urls": [
+        "https://doi.org/10.1109/icassp48485.2024.10446290"
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L011",
+      "paper_id": "curated:b65aca5f04f1f41ad725",
+      "title": "How to Trace Latent Generative Model Generated Images Without Artificial Watermark?",
+      "issue": "AUTHOR_STRING_MISMATCH",
+      "batch": "B",
+      "institution_ids": [
+        "institution:33a58a66974db112"
+      ],
+      "recommended_action": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "evidence_required": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "observations": [
+        {
+          "author": "Dimitris N. Metaxas",
+          "institution_id": "institution:33a58a66974db112",
+          "relationship_id": "curated-map:e3e698df2c60f9257b72"
+        }
+      ],
+      "evidence_urls": [
+        "https://openreview.net/pdf?id=TwZ2sY6eJj"
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L012",
+      "paper_id": "doi:10.48550/arxiv.2405.18071",
+      "title": "Text Modality Oriented Image Feature Extraction for Detecting Diffusion-Based DeepFake",
+      "issue": "AUTHOR_STRING_MISMATCH",
+      "batch": "B",
+      "institution_ids": [
+        "institution:a8d8c5fe60be3e65",
+        "institution:c111feb812f1a7ed"
+      ],
+      "recommended_action": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "evidence_required": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "observations": [
+        {
+          "author": "Di Yang",
+          "institution_id": "institution:a8d8c5fe60be3e65",
+          "relationship_id": "curated-map:7e5f55a74943169bbb7e"
+        },
+        {
+          "author": "Yang Liu",
+          "institution_id": "institution:c111feb812f1a7ed",
+          "relationship_id": "curated-map:d93125c71bfdf4225f79"
+        }
+      ],
+      "evidence_urls": [
+        "https://arxiv.org/abs/2405.18071"
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L013",
+      "paper_id": "curated:9d04c60c5b0b70859a63",
+      "title": "PatchCraft: Exploring Texture Patch for Efficient AI-Generated Image Detection",
+      "issue": "AUTHOR_STRING_MISMATCH",
+      "batch": "B",
+      "institution_ids": [
+        "institution:baa1df7c4adddbda"
+      ],
+      "recommended_action": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "evidence_required": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "observations": [
+        {
+          "author": "Li, Sheng",
+          "institution_id": "institution:baa1df7c4adddbda",
+          "relationship_id": "openalex-candidate-09d45f2a778956e5"
+        }
+      ],
+      "evidence_urls": [
+        "https://arxiv.org/abs/2311.12397"
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L014",
+      "paper_id": "doi:10.48550/arxiv.2106.08749",
+      "title": "Learning to Disentangle GAN Fingerprint for Fake Image Attribution",
+      "issue": "AUTHOR_STRING_MISMATCH",
+      "batch": "B",
+      "institution_ids": [
+        "institution:69309405e04976ec",
+        "institution:e278f75918ccf8a7"
+      ],
+      "recommended_action": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "evidence_required": "Verify paper-time byline and affiliation markers for the listed author strings; distinguish name order/abbreviation or version differences from unsupported authors. No automatic name merge.",
+      "observations": [
+        {
+          "author": "Qiang Sheng",
+          "institution_id": "institution:e278f75918ccf8a7",
+          "relationship_id": "curated-map:7447cc868f9b72a56691"
+        },
+        {
+          "author": "Qiang Sheng",
+          "institution_id": "institution:69309405e04976ec",
+          "relationship_id": "curated-map:f62c1ae323eb49bb5ba8"
+        }
+      ],
+      "evidence_urls": [
+        "https://arxiv.org/abs/2106.08749"
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L015",
+      "paper_id": "curated:75cbd31c9946c7eb7977",
+      "title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation",
+      "issue": "PUBLIC_INSTITUTION_NOT_IN_CURATED_REGISTRY",
+      "batch": "B",
+      "institution_ids": [
+        "institution:ac9dc63b4bd4669a",
+        "institution:aeb3cd858bb22d74"
+      ],
+      "recommended_action": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "evidence_required": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "observations": [
+        {
+          "id": "openalex-candidate-d2a030d99b35b5f8",
+          "institution_id": "institution:ac9dc63b4bd4669a",
+          "institution": "Leibniz University Hannover",
+          "institution_authors": [
+            "Sandra Höltervennhoff",
+            "Sascha Fahl"
+          ],
+          "openalex_url": "https://openalex.org/W4416604008",
+          "resolution_method": "openalex_institution_geo",
+          "notes": "Imported OpenAlex authorship affiliation for broad key-paper marker expansion; verify manually. | Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later."
+        },
+        {
+          "id": "openalex-candidate-2d8466e77a874e50",
+          "institution_id": "institution:aeb3cd858bb22d74",
+          "institution": "Hannover Re (Germany)",
+          "institution_authors": [
+            "Sandra Höltervennhoff",
+            "Sascha Fahl"
+          ],
+          "openalex_url": "https://openalex.org/W4416604008",
+          "resolution_method": "openalex_institution_geo",
+          "notes": "Imported OpenAlex authorship affiliation for broad key-paper marker expansion; verify manually. | Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later."
+        }
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L016",
+      "paper_id": "doi:10.1609/aaai.v40i13.38060",
+      "title": "Explainable Synthetic Image Detection Through Diffusion Timestep Ensembling",
+      "issue": "PUBLIC_INSTITUTION_NOT_IN_CURATED_REGISTRY",
+      "batch": "B",
+      "institution_ids": [
+        "institution:8b4ead1dd8198300"
+      ],
+      "recommended_action": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "evidence_required": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "observations": [
+        {
+          "id": "openalex-candidate-a476e2ac4895a63d",
+          "institution_id": "institution:8b4ead1dd8198300",
+          "institution": "Ministry of Education",
+          "institution_authors": [
+            "Xuanjing Huang"
+          ],
+          "openalex_url": "https://openalex.org/W7138458380",
+          "resolution_method": "openalex_institution_geo",
+          "notes": "Imported OpenAlex authorship affiliation for next50 key-paper marker expansion; verify manually. | Imported from next50 missing key-paper OpenAlex strong match; broad paper-level preview eligible; affiliation/location repair may still be needed. | key-paper checklist export attempt"
+        }
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L017",
+      "paper_id": "curated:559269bd486bc1da5115",
+      "title": "Comparative Analysis of Custom CNN Architecture and MobileNet for Deepfake Image Detection",
+      "issue": "PUBLIC_INSTITUTION_NOT_IN_CURATED_REGISTRY",
+      "batch": "B",
+      "institution_ids": [
+        "institution:78c149de84a6c7d7"
+      ],
+      "recommended_action": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "evidence_required": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "observations": [
+        {
+          "id": "openalex-candidate-e7bb261846216fae",
+          "institution_id": "institution:78c149de84a6c7d7",
+          "institution": "Scientific Research Group in Egypt",
+          "institution_authors": [
+            "Sara Abdelghafar"
+          ],
+          "openalex_url": "https://openalex.org/W4407768917",
+          "resolution_method": "ror_id",
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review."
+        }
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L018",
+      "paper_id": "doi:10.3390/electronics14040665",
+      "title": "DeepGuard: Identification and Attribution of AI-Generated Synthetic Images",
+      "issue": "PUBLIC_INSTITUTION_NOT_IN_CURATED_REGISTRY",
+      "batch": "B",
+      "institution_ids": [
+        "institution:1ffa1eeecc9396a4",
+        "institution:ae98978d5c148689"
+      ],
+      "recommended_action": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "evidence_required": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "observations": [
+        {
+          "id": "openalex-candidate-2f645976e2469741",
+          "institution_id": "institution:ae98978d5c148689",
+          "institution": "University Frères Mentouri Constantine 1",
+          "institution_authors": [
+            "Yasmine Namani",
+            "Ikram Reghioua",
+            "Gueltoum Bendiab"
+          ],
+          "openalex_url": "https://openalex.org/W4407408001",
+          "resolution_method": "ror_id",
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt"
+        },
+        {
+          "id": "openalex-candidate-357117c58029fe9f",
+          "institution_id": "institution:1ffa1eeecc9396a4",
+          "institution": "Paris-Est Sup",
+          "institution_authors": [
+            "Mohamed Aymen Labiod"
+          ],
+          "openalex_url": "https://openalex.org/W4407408001",
+          "resolution_method": "ror_id",
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt"
+        }
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L019",
+      "paper_id": "doi:10.2139/ssrn.5238890",
+      "title": "Harnessing The Power Of AI To Detect AI Generated Images",
+      "issue": "PUBLIC_INSTITUTION_NOT_IN_CURATED_REGISTRY",
+      "batch": "B",
+      "institution_ids": [
+        "institution:f8a9691bb5291a8e"
+      ],
+      "recommended_action": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "evidence_required": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "observations": [
+        {
+          "id": "openalex-candidate-76c8f3b5a1dc8cf8",
+          "institution_id": "institution:f8a9691bb5291a8e",
+          "institution": "Institute of Engineering",
+          "institution_authors": [
+            "Abhishek Pratap Singh",
+            "Ritesh Rastogi",
+            "M R Naveen Kumar"
+          ],
+          "openalex_url": "https://openalex.org/W4410120556",
+          "resolution_method": "ror_id",
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review."
+        }
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L020",
+      "paper_id": "doi:10.1109/jiot.2025.3531053",
+      "title": "Optimized Frequency Collaborative Strategy Drives AI Image Detection",
+      "issue": "PUBLIC_INSTITUTION_NOT_IN_CURATED_REGISTRY",
+      "batch": "B",
+      "institution_ids": [
+        "institution:b8150f32ccd21738"
+      ],
+      "recommended_action": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "evidence_required": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "observations": [
+        {
+          "id": "openalex-candidate-b991d5dd58baf382",
+          "institution_id": "institution:b8150f32ccd21738",
+          "institution": "Innovation Team (China)",
+          "institution_authors": [
+            "Jun Li",
+            "Wentao Jiang",
+            "Liyan Shen",
+            "Yawei Ren"
+          ],
+          "openalex_url": "https://openalex.org/W4406657393",
+          "resolution_method": "openalex_institution_geo",
+          "notes": "Imported OpenAlex authorship affiliation for next50 key-paper marker expansion; verify manually. | Imported from next50 missing key-paper OpenAlex strong match; broad paper-level preview eligible; affiliation/location repair may still be needed. | key-paper checklist export attempt"
+        }
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L021",
+      "paper_id": "doi:10.55041/ijsrem30215",
+      "title": "DeepFake Image Detection",
+      "issue": "PUBLIC_INSTITUTION_NOT_IN_CURATED_REGISTRY",
+      "batch": "B",
+      "institution_ids": [
+        "institution:f31d282d4be83051"
+      ],
+      "recommended_action": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "evidence_required": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "observations": [
+        {
+          "id": "openalex-candidate-21583637d904d186",
+          "institution_id": "institution:f31d282d4be83051",
+          "institution": "AISSMS Institute of Information Technology",
+          "institution_authors": [
+            "Mrs. Prajwal S"
+          ],
+          "openalex_url": "https://openalex.org/W4394009764",
+          "resolution_method": "ror_id",
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review."
+        }
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L022",
+      "paper_id": "doi:10.21203/rs.3.rs-4259468/v1",
+      "title": "Detecting AI-Generated Images via CLIP",
+      "issue": "PUBLIC_INSTITUTION_NOT_IN_CURATED_REGISTRY",
+      "batch": "B",
+      "institution_ids": [
+        "institution:34b03d8b7abfc1c7",
+        "institution:572758623152e66d"
+      ],
+      "recommended_action": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "evidence_required": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "observations": [
+        {
+          "id": "openalex-candidate-766ab7ae30df4fc6",
+          "institution_id": "institution:572758623152e66d",
+          "institution": "Carnegie Institution for Science",
+          "institution_authors": [
+            "Alexander Moskowitz",
+            "Tyler Gaona"
+          ],
+          "openalex_url": "https://openalex.org/W4394891207",
+          "resolution_method": "ror_id",
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt"
+        },
+        {
+          "id": "openalex-candidate-a3244a642cee4349",
+          "institution_id": "institution:34b03d8b7abfc1c7",
+          "institution": "Haemonetics (United States)",
+          "institution_authors": [
+            "Jacob Peterson"
+          ],
+          "openalex_url": "https://openalex.org/W4394891207",
+          "resolution_method": "ror_id",
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt"
+        }
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L023",
+      "paper_id": "doi:10.1109/mvip62238.2024.10491148",
+      "title": "Enhancing the Generalization of Synthetic Image Detection Models Through the Exploration of Features in Deep Detection Models",
+      "issue": "PUBLIC_INSTITUTION_NOT_IN_CURATED_REGISTRY",
+      "batch": "B",
+      "institution_ids": [
+        "institution:23824a2aff1dfd72"
+      ],
+      "recommended_action": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "evidence_required": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "observations": [
+        {
+          "id": "openalex-candidate-5728035d66086141",
+          "institution_id": "institution:23824a2aff1dfd72",
+          "institution": "Institute for Research in Fundamental Sciences",
+          "institution_authors": [
+            "Hossein Motamednia"
+          ],
+          "openalex_url": "https://openalex.org/W4394624427",
+          "resolution_method": "openalex_institution_api",
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates. | key-paper checklist export attempt"
+        }
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L024",
+      "paper_id": "doi:10.1016/j.jvcir.2023.103876",
+      "title": "Detection of GAN generated image using color gradient representation",
+      "issue": "PUBLIC_INSTITUTION_NOT_IN_CURATED_REGISTRY",
+      "batch": "B",
+      "institution_ids": [
+        "institution:7a0649786398723d"
+      ],
+      "recommended_action": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "evidence_required": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "observations": [
+        {
+          "id": "openalex-candidate-bff6a6d4616494e7",
+          "institution_id": "institution:7a0649786398723d",
+          "institution": "Shenzhen University Health Science Center",
+          "institution_authors": [
+            "Guanghui Yue"
+          ],
+          "openalex_url": "https://openalex.org/W4381620941",
+          "resolution_method": "ror_id",
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review."
+        }
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L025",
+      "paper_id": "doi:10.1109/cvpr52729.2023.01165",
+      "title": "Learning on Gradients: Generalized Artifacts Representation for GAN-Generated Images Detection",
+      "issue": "PUBLIC_INSTITUTION_NOT_IN_CURATED_REGISTRY",
+      "batch": "B",
+      "institution_ids": [
+        "institution:89ff6b9e4955819f"
+      ],
+      "recommended_action": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "evidence_required": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "observations": [
+        {
+          "id": "openalex-candidate-44aed4e6b1e0cb4e",
+          "institution_id": "institution:89ff6b9e4955819f",
+          "institution": "Signal Processing (United States)",
+          "institution_authors": [
+            "Guanghua Gu"
+          ],
+          "openalex_url": "https://openalex.org/W4386075954",
+          "resolution_method": "ror_id",
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt"
+        }
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L026",
+      "paper_id": "doi:10.1016/j.patter.2022.100511",
+      "title": "AI-enabled image fraud in scientific publications",
+      "issue": "PUBLIC_INSTITUTION_NOT_IN_CURATED_REGISTRY",
+      "batch": "B",
+      "institution_ids": [
+        "institution:2f6dd59c6afca61d"
+      ],
+      "recommended_action": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "evidence_required": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+      "observations": [
+        {
+          "id": "openalex-candidate-d3778a47fb99be46",
+          "institution_id": "institution:2f6dd59c6afca61d",
+          "institution": "First Affiliated Hospital of GuangXi Medical University",
+          "institution_authors": [
+            "Weijin Fu"
+          ],
+          "openalex_url": "https://openalex.org/W4284974950",
+          "resolution_method": "ror_id",
+          "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review."
+        }
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L027",
+      "paper_id": "curated:f8bc8386ea043eef0a7c",
+      "title": "Fleet: Few Shots Lead Effective AI-Generated Image Detection",
+      "issue": "PARENT_CHILD_COAFFILIATION",
+      "batch": "D",
+      "institution_ids": [
+        "institution:69309405e04976ec",
+        "institution:fe6f0cc7c1924a6a"
+      ],
+      "recommended_action": "Retain both nodes: different author groups and a confirmed parent/child relation are not duplicate affiliations.",
+      "evidence_required": "",
+      "shared_authors": [],
+      "confidence": "high"
+    },
+    {
+      "review_id": "L028",
+      "paper_id": "curated:762982679d91cd198a41",
+      "title": "Forensics-Bench: A Comprehensive Forgery Detection Benchmark Suite for Large Vision Language Models",
+      "issue": "PARENT_CHILD_COAFFILIATION",
+      "batch": "B",
+      "institution_ids": [
+        "institution:404cfa1ef241f359",
+        "institution:0094b55826d7cf3e"
+      ],
+      "recommended_action": "Verify the primary affiliation markers for Ping Luo; retain dual affiliation if explicitly stated, otherwise propose the correct single affiliation.",
+      "evidence_required": "Verify the primary affiliation markers for Ping Luo; retain dual affiliation if explicitly stated, otherwise propose the correct single affiliation.",
+      "shared_authors": [
+        "Ping Luo"
+      ],
+      "confidence": "screening_only"
+    },
+    {
+      "review_id": "L029",
+      "paper_id": "doi:10.2352/issn.2470-1173.2021.4.mwsf-276",
+      "title": "Detection, Attribution and Localization of GAN Generated Images",
+      "issue": "RECOMPUTE_AFTER_AFFILIATION_REPAIR",
+      "batch": "A",
+      "institution_ids": [
+        "institution:de4a2849d3de43a3"
+      ],
+      "action_key": "R2",
+      "depends_on": [
+        "L002"
+      ],
+      "recommended_action": "After R1, recompute the UCSB paper–institution aggregate using the existing canonical paper identity and corrected author groups; compare the resulting relation and provenance sets before any R3 consolidation.",
+      "evidence_required": "",
+      "reason": "Deterministic recomputation/verification step following the primary-evidenced author-group repair. This step itself authorizes no deduplication.",
+      "confidence": "high",
+      "evidence_urls": [
+        "https://arxiv.org/pdf/2007.10466"
+      ]
+    }
+  ],
+  "coordinate_observations": [
+    {
+      "latitude": -33.86785,
+      "longitude": 151.20732,
+      "institution_ids": [
+        "institution:1984e5f97afb62d8",
+        "institution:f68896817b1b2d6b"
+      ]
+    },
+    {
+      "latitude": 1.28967,
+      "longitude": 103.85007,
+      "institution_ids": [
+        "institution:6dd3ce9e0d5fd1ab",
+        "institution:70ccb485197bbb6c",
+        "institution:c111feb812f1a7ed"
+      ]
+    },
+    {
+      "latitude": 11.00555,
+      "longitude": 76.96612,
+      "institution_ids": [
+        "institution:39fe5b3a0cd3dd7c",
+        "institution:cdedd18207a1eeb2"
+      ]
+    },
+    {
+      "latitude": 13.08784,
+      "longitude": 80.27847,
+      "institution_ids": [
+        "institution:87c744673e7e4d05",
+        "institution:9e9891886a71efdf"
+      ]
+    },
+    {
+      "latitude": 22.20056,
+      "longitude": 113.54611,
+      "institution_ids": [
+        "institution:769b711ed2fee7c0",
+        "institution:d8d45546142be201"
+      ]
+    },
+    {
+      "latitude": 22.27832,
+      "longitude": 114.17469,
+      "institution_ids": [
+        "institution:213a2f107c1f76df",
+        "institution:31f980eaa403801a",
+        "institution:ec71dc4340659fd9"
+      ]
+    },
+    {
+      "latitude": 22.54554,
+      "longitude": 114.0683,
+      "institution_ids": [
+        "institution:0d485839c904b21b",
+        "institution:5dbb9ac6a407e079",
+        "institution:7a0649786398723d",
+        "institution:ad9c8964d01f80d8"
+      ]
+    },
+    {
+      "latitude": 22.81667,
+      "longitude": 108.31667,
+      "institution_ids": [
+        "institution:2f6dd59c6afca61d",
+        "institution:d1de2b99104f99ed"
+      ]
+    },
+    {
+      "latitude": 23.11667,
+      "longitude": 113.25,
+      "institution_ids": [
+        "institution:5c85faa51cc57a24",
+        "institution:8632718a2c1444c6"
+      ]
+    },
+    {
+      "latitude": 23.7104,
+      "longitude": 90.40744,
+      "institution_ids": [
+        "institution:592f613084a7ca9d",
+        "institution:c04d9c3ee6b155d2"
+      ]
+    },
+    {
+      "latitude": 30.06263,
+      "longitude": 31.24967,
+      "institution_ids": [
+        "institution:008fc27550d4153d",
+        "institution:030ecebfe13ca82f",
+        "institution:091dadcc6613c152"
+      ]
+    },
+    {
+      "latitude": 30.29365,
+      "longitude": 120.16142,
+      "institution_ids": [
+        "institution:07d62a903f84afcd",
+        "institution:e433baf78e80004b"
+      ]
+    },
+    {
+      "latitude": 30.32443,
+      "longitude": 78.03392,
+      "institution_ids": [
+        "institution:018c503420feda75",
+        "institution:128d207ba007d9d7",
+        "institution:b77cc69e117a29dc"
+      ]
+    },
+    {
+      "latitude": 30.583330154418945,
+      "longitude": 114.26667022705078,
+      "institution_ids": [
+        "institution:557b8ad811254ad6",
+        "institution:69152a620553f03a",
+        "institution:ed58576681c8c7e7",
+        "institution:f23b95ce92de4591"
+      ]
+    },
+    {
+      "latitude": 30.66667,
+      "longitude": 104.06667,
+      "institution_ids": [
+        "institution:4c1e9439f241e5ec",
+        "institution:636b930e320fc074"
+      ]
+    },
+    {
+      "latitude": 31.222219467163086,
+      "longitude": 121.45806121826172,
+      "institution_ids": [
+        "institution:baa1df7c4adddbda",
+        "institution:fccd5d0ac9cc52f9"
+      ]
+    },
+    {
+      "latitude": 31.22222,
+      "longitude": 121.45806,
+      "institution_ids": [
+        "institution:85a4635e28eefe8e",
+        "institution:baa1df7c4adddbda",
+        "institution:dbc08517e4f1ed6e",
+        "institution:fccd5d0ac9cc52f9"
+      ]
+    },
+    {
+      "latitude": 31.86389,
+      "longitude": 117.28083,
+      "institution_ids": [
+        "institution:16ee891260af74c0",
+        "institution:e721b03b6f6c172d"
+      ]
+    },
+    {
+      "latitude": 32.06167,
+      "longitude": 118.77778,
+      "institution_ids": [
+        "institution:17d17325e0e0dae2",
+        "institution:a239b6e2cb8473ef"
+      ]
+    },
+    {
+      "latitude": 34.42083,
+      "longitude": -119.69819,
+      "institution_ids": [
+        "institution:bcd3d53e57c31275",
+        "institution:de4a2849d3de43a3"
+      ]
+    },
+    {
+      "latitude": 37.566,
+      "longitude": 126.9784,
+      "institution_ids": [
+        "institution:457423605fa485bc",
+        "institution:8ee530c781dde9f8",
+        "institution:9191a7d5e3a9fc0c",
+        "institution:c13e2f4a44bb01ed",
+        "institution:cf0fbf994717bb60",
+        "institution:e80b94c605da24ce",
+        "institution:eceea91f3973f1b1"
+      ]
+    },
+    {
+      "latitude": 39.1660594,
+      "longitude": -86.5265353,
+      "institution_ids": [
+        "institution:4c6b8eaa9cee97d7",
+        "institution:d85e8e9a30d5a34b"
+      ]
+    },
+    {
+      "latitude": 39.9075,
+      "longitude": 116.39723,
+      "institution_ids": [
+        "institution:080a1da6ac4d04fd",
+        "institution:157163d25dac880f",
+        "institution:4ae45b121fe12e9c",
+        "institution:69309405e04976ec",
+        "institution:7b971ad17fd639eb",
+        "institution:924e1e0e9723b423",
+        "institution:bf6195b78f6dc951",
+        "institution:cee70184073782c7"
+      ]
+    },
+    {
+      "latitude": 39.907501220703125,
+      "longitude": 116.39723205566406,
+      "institution_ids": [
+        "institution:1502cb7c96ae3095",
+        "institution:157163d25dac880f",
+        "institution:48441fb89f75bf9d",
+        "institution:8ac3b059e7b70054",
+        "institution:9cd15ab643d7131f",
+        "institution:bf6195b78f6dc951",
+        "institution:cee70184073782c7",
+        "institution:e278f75918ccf8a7",
+        "institution:ea6661ca99f0c1aa"
+      ]
+    },
+    {
+      "latitude": 40.71427,
+      "longitude": -74.00597,
+      "institution_ids": [
+        "institution:17bf653107a56b33",
+        "institution:c83aeae887827902"
+      ]
+    },
+    {
+      "latitude": 41.89193,
+      "longitude": 12.51133,
+      "institution_ids": [
+        "institution:4e0158a865182393",
+        "institution:977430a4473aa4b0"
+      ]
+    },
+    {
+      "latitude": 42.65258,
+      "longitude": -73.75623,
+      "institution_ids": [
+        "institution:87cfa9f9d3bda4e1",
+        "institution:c121cd267550901f"
+      ]
+    },
+    {
+      "latitude": 47.6062,
+      "longitude": -122.3321,
+      "institution_ids": [
+        "institution:284bfcf10a3b1ebf",
+        "institution:4bff7ae080547794"
+      ]
+    }
+  ],
+  "alias_collisions": [],
+  "hierarchy_observations": [
+    {
+      "paper_id": "curated:f8bc8386ea043eef0a7c",
+      "parent_institution_id": "institution:69309405e04976ec",
+      "child_institution_id": "institution:fe6f0cc7c1924a6a",
+      "shared_authors": []
+    },
+    {
+      "paper_id": "curated:762982679d91cd198a41",
+      "parent_institution_id": "institution:404cfa1ef241f359",
+      "child_institution_id": "institution:0094b55826d7cf3e",
+      "shared_authors": [
+        "Ping Luo"
+      ]
+    }
+  ],
+  "related_unmapped_reviews": [
+    "U007",
+    "U009",
+    "U010",
+    "U017",
+    "U021"
+  ],
+  "resolved_checks": [
+    {
+      "check": "parent_search",
+      "result": "No confirmed failure: web/app.js expands parent queries through the confirmed hierarchy; parents need not appear in every paper search_institution_ids array. UniAIDet remains unmapped because reviewed Wangxuan coordinates are absent; parent coordinates are not automatically inheritable."
+    },
+    {
+      "check": "shared_coordinates",
+      "result": "28 coincident coordinate groups are observations only. City-centroid equality does not prove institution identity; UCSB and Mayachitra remain distinct."
+    },
+    {
+      "check": "legacy_map_unique_counter",
+      "result": "Existing public validator reports 618 source-key groups in map rows; joining both historical UCSB OpenAlex versions to the authoritative taxonomy identity yields 617 mapped papers and 1422 unique paper–institution pairs. The public papers export independently has 617 has_map_location=true records."
+    }
+  ]
+}
