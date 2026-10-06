@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "audit": "corpus_quality_batch_c_external_evidence",
+  "wave": "3B-1",
+  "date": "2026-10-06",
+  "adjudication_date": "2026-10-06",
+  "adjudication_status": "FINAL",
+  "baseline_commit": "a24a9e6e4adf8d099c78e5ec70b6a5f1f1a62a19",
+  "policy": {
+    "policy_id": "T1",
+    "name": "Attribution vs Detection",
+    "rule": "source_attribution does not imply detection. Assign detection only when the paper explicitly performs an authenticity / real-versus-generated task. Classification among already-synthetic generators is attribution only."
+  },
+  "scope": {
+    "review_ids": [
+      "T299",
+      "T446",
+      "T572",
+      "T576"
+    ],
+    "actions": 4,
+    "unique_papers": 4,
+    "dimension": "tasks",
+    "research_type_reviewed": false,
+    "primary_document_budget": 4,
+    "primary_documents_attempted": 4,
+    "usable_primary_documents": 2,
+    "authoritative_corpus_changes_applied": false
+  },
+  "retrieval_policy": {
+    "one_primary_document_per_paper": true,
+    "supplements_retrieved": false,
+    "alternate_versions_retrieved_for_corroboration": false,
+    "search_pages_saved": false,
+    "raw_sources_saved": false,
+    "note": "Only one selected primary-paper URL was used per review. T572 stopped after the official BMVC host was unreachable. T576 stopped after the official OpenReview PDF returned HTTP 403. No alternate paper or supplement was substituted."
+  },
+  "documents": [
+    {
+      "document_id": "T299-wacv-final",
+      "review_id": "T299",
+      "source_type": "official_wacv_cvf_paper_pdf",
+      "url": "https://openaccess.thecvf.com/content/WACV2025/papers/Xu_Detecting_Origin_Attribution_for_Text-to-Image_Diffusion_Models_WACV_2025_paper.pdf",
+      "retrieval_outcome": "USABLE_ALL_11_PAGES_TEXT_EXTRACTED_TRANSFER_TRAILER_INCOMPLETE",
+      "usable_evidence_extracted": true,
+      "raw_saved": false,
+      "locators": [
+        "introduction, unified real-vs-fake and attribution task",
+        "section 4.1, Training Image Attributors",
+        "Table 1, balanced 13-way classification",
+        "section 5, real-versus-fake confusion analysis"
+      ]
+    },
+    {
+      "document_id": "T446-arxiv-full",
+      "review_id": "T446",
+      "source_type": "authoritative_arxiv_full_paper",
+      "url": "https://arxiv.org/pdf/2408.09153",
+      "retrieval_outcome": "COMPLETE_MAIN_PAPER_RETRIEVED",
+      "usable_evidence_extracted": true,
+      "raw_saved": false,
+      "locators": [
+        "section 3.1, Problem Statement",
+        "Figure 1, real/known-synthetic/unknown-synthetic decision space",
+        "section 4.1, GenImage split",
+        "Evaluation metrics and Table 2"
+      ]
+    },
+    {
+      "document_id": "T572-bmvc-final",
+      "review_id": "T572",
+      "source_type": "official_bmvc_proceedings_paper_pdf",
+      "url": "https://papers.bmvc2023.org/0659.pdf",
+      "retrieval_outcome": "HOST_UNREACHABLE_DNS_AND_BROWSER_502",
+      "usable_evidence_extracted": false,
+      "raw_saved": false
+    },
+    {
+      "document_id": "T576-openreview-final",
+      "review_id": "T576",
+      "source_type": "official_icml_openreview_paper_pdf",
+      "url": "https://openreview.net/pdf?id=Hs9GcILuZN",
+      "retrieval_outcome": "ACCESS_BLOCKED_HTTP_403",
+      "usable_evidence_extracted": false,
+      "raw_saved": false
+    }
+  ],
+  "actions": [
+    {
+      "review_id": "T299",
+      "paper_id": "curated:161b6d5ca391d238f7e9",
+      "title": "Detecting Origin Attribution for Text-to-Image Diffusion Models",
+      "authoritative_source_document_id": "T299-wacv-final",
+      "authoritative_url": "https://openaccess.thecvf.com/content/WACV2025/papers/Xu_Detecting_Origin_Attribution_for_Text-to-Image_Diffusion_Models_WACV_2025_paper.pdf",
+      "source_type": "official_wacv_cvf_paper_pdf",
+      "claimed_tasks": [
+        "authenticity detection",
+        "source-generator attribution",
+        "inference-hyperparameter attribution"
+      ],
+      "evaluated_class_space": "Balanced 13-way classification: one real-image class plus 12 text-to-image generator classes. Separate experiments classify checkpoints, schedulers, inference-step counts, and seeds within a generator.",
+      "real_image_role": "Real MS-COCO images are an explicit thirteenth class. The paper states that it unifies real-vs-fake classification and image attribution and analyzes confusion between real and synthetic images.",
+      "detection_specific_evaluation": "The integrated 13-way task reports accuracy (best 90.96%; random chance 7.69%) and class-confusion analysis that includes the real class. No separate binary authenticity metric is reported, but real-vs-generated classification is explicitly formulated and evaluated within the joint task.",
+      "attribution_evaluation": "Source attribution is evaluated across 12 named T2I generators with overall accuracy and confusion matrices; further classification experiments evaluate generator checkpoints, schedulers, step counts, and seeds.",
+      "adjudication": "DETECTION_TASK_SUPPORTED",
+      "evidence_outcome": "EVIDENCE_RESOLVED_NO_CHANGE",
+      "final_disposition": "TAXONOMY_RETAINED",
+      "proposed_later_taxonomy": [
+        "detection",
+        "source_attribution"
+      ],
+      "confidence": "high",
+      "corpus_change_applied": false
+    },
+    {
+      "review_id": "T446",
+      "paper_id": "curated:8bc69db49ef4b9db3cd6",
+      "title": "Are CLIP Features All You Need for Universal Synthetic Image Origin Attribution?",
+      "authoritative_source_document_id": "T446-arxiv-full",
+      "authoritative_url": "https://arxiv.org/pdf/2408.09153",
+      "source_type": "authoritative_arxiv_full_paper",
+      "claimed_tasks": [
+        "authenticity detection",
+        "known-generator attribution",
+        "open-set unknown-generator rejection"
+      ],
+      "evaluated_class_space": "Known labels are one real class plus n known generator classes; the open-set rejection class contains only images from unseen synthetic generators. Main GenImage splits use one real class, four seen-generator classes, and four unseen generators collapsed into the synthetic-unknown class.",
+      "real_image_role": "Real ImageNet images form the explicit Seen Real class. The problem statement requires deciding whether an input is real or generated before assigning a known generator or rejecting it as synthetic from an unknown generator.",
+      "detection_specific_evaluation": "Closed-set accuracy is measured over Seen Real plus Seen Fake classes, so the explicit real/generated decision participates in the evaluated classifier. No separate binary authenticity metric is reported. Open-set AUROC and OSCR measure unseen-synthetic rejection and are not treated as authenticity evidence.",
+      "attribution_evaluation": "Closed-set generator attribution uses accuracy. Open-set attribution uses AUROC and OSCR to measure rejection of synthetic images from unseen generators while retaining classification of real and known-generator classes.",
+      "adjudication": "DETECTION_TASK_SUPPORTED",
+      "evidence_outcome": "EVIDENCE_RESOLVED_NO_CHANGE",
+      "final_disposition": "TAXONOMY_RETAINED",
+      "proposed_later_taxonomy": [
+        "detection",
+        "source_attribution"
+      ],
+      "confidence": "high",
+      "corpus_change_applied": false
+    },
+    {
+      "review_id": "T572",
+      "paper_id": "curated:5a91cc922c8a3c4c3d0c",
+      "title": "Open Set Synthetic Image Source Attribution",
+      "authoritative_source_document_id": "T572-bmvc-final",
+      "authoritative_url": "https://papers.bmvc2023.org/0659.pdf",
+      "source_type": "official_bmvc_proceedings_paper_pdf",
+      "claimed_tasks": [
+        "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT"
+      ],
+      "evaluated_class_space": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "real_image_role": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "detection_specific_evaluation": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "attribution_evaluation": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "adjudication": "EVIDENCE_STILL_INSUFFICIENT",
+      "evidence_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "final_disposition": "REMEDIATION_NOT_APPLIED",
+      "proposed_later_taxonomy": null,
+      "confidence": "high for the evidence-insufficiency determination",
+      "corpus_change_applied": false
+    },
+    {
+      "review_id": "T576",
+      "paper_id": "curated:62b0a9ae8be24d9f02e0",
+      "title": "Single-Model Attribution of Generative Models Through Final-Layer Inversion",
+      "authoritative_source_document_id": "T576-openreview-final",
+      "authoritative_url": "https://openreview.net/pdf?id=Hs9GcILuZN",
+      "source_type": "official_icml_openreview_paper_pdf",
+      "claimed_tasks": [
+        "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT"
+      ],
+      "evaluated_class_space": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "real_image_role": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "detection_specific_evaluation": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "attribution_evaluation": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "adjudication": "EVIDENCE_STILL_INSUFFICIENT",
+      "evidence_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "final_disposition": "REMEDIATION_NOT_APPLIED",
+      "proposed_later_taxonomy": null,
+      "confidence": "high for the evidence-insufficiency determination",
+      "corpus_change_applied": false
+    }
+  ],
+  "resolution": {
+    "DETECTION_TASK_SUPPORTED": 2,
+    "ATTRIBUTION_ONLY_NO_DETECTION": 0,
+    "EVIDENCE_STILL_INSUFFICIENT": 2,
+    "EVIDENCE_RESOLVED_NO_CHANGE": 2,
+    "external_batch_c_before": 28,
+    "external_batch_c_resolved": 2,
+    "external_batch_c_after": 26,
+    "task_cases_before": 12,
+    "task_cases_targeted": 4,
+    "task_cases_resolved": 2,
+    "task_cases_after": 10,
+    "institution_cases_after": 1,
+    "research_type_cases_after": 15,
+    "t527_excluded_from_external_count": true
+  },
+  "unchanged_corpus": {
+    "public_papers": 639,
+    "formal_publications": 531,
+    "mapped_papers": 617,
+    "relationship_rows": 1421,
+    "unique_paper_institution_pairs": 1421
+  },
+  "unchanged_taxonomy": {
+    "detection": 592,
+    "source_attribution": 85,
+    "localization": 42,
+    "method": 547,
+    "dataset": 133,
+    "benchmark": 88,
+    "survey": 20,
+    "analysis_study": 78
+  },
+  "integrity_expectations": {
+    "AUTHORITATIVE_CORPUS_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+  }
+}
