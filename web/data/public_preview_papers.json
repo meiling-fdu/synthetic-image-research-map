@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-05T00:25:52Z"
+    "public_preview_generated_at": "2026-10-05T15:54:25Z"
   },
   "records": [
     {
@@ -33852,9 +33852,7 @@
         "deepfake"
       ],
       "research_types": [
-        "method",
-        "dataset",
-        "benchmark"
+        "method"
       ],
       "venue": "Computer Vision Winter Workshop",
       "raw_venue": "29th Computer Vision Winter Workshop (CVWW 2026)",
@@ -34038,7 +34036,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "Explicit maintainer-approved Batch C disposition: retain method; remove dataset and benchmark. Supersedes the decision sheet’s earlier retention recommendation; historical source evidence is preserved. Decision: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json#R084"
         }
       },
       "metadata_status": {
@@ -49122,8 +49121,7 @@
       ],
       "research_types": [
         "method",
-        "dataset",
-        "analysis_study"
+        "dataset"
       ],
       "venue": "arXiv",
       "venue_name": "arXiv",
@@ -49447,42 +49445,6 @@
         "unresolved": 0
       },
       "affiliation_complete": true,
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Shanghai Jiao Tong University",
-          "canonical_name": "Shanghai Jiao Tong University",
-          "institution_id": "institution:fccd5d0ac9cc52f9",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "Shanghai",
-          "location_display": "Shanghai, China"
-        },
-        {
-          "index": 2,
-          "name": "Ant Group",
-          "canonical_name": "Ant Group",
-          "institution_id": "institution:5a28a1a99a417ba5",
-          "institution_type": "company",
-          "country": "China",
-          "country_code": "",
-          "region": "Zhejiang",
-          "location_display": "Zhejiang, China"
-        },
-        {
-          "index": 3,
-          "name": "Shenzhen University",
-          "canonical_name": "Shenzhen University",
-          "institution_id": "institution:ad9c8964d01f80d8",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "Guangdong",
-          "location_display": "Guangdong, China"
-        }
-      ],
-      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Haozhen Yan",
@@ -49571,7 +49533,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "Explicit maintainer-approved Batch C disposition: retain method and dataset; remove analysis_study because the reviewed analysis supports the method rather than a primary scientific contribution. Supersedes the earlier retention recommendation. Decision: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json#R121"
         }
       },
       "search_institution_ids": [
@@ -49593,7 +49556,43 @@
           }
         },
         "source": "Manual curation"
-      }
+      },
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Shanghai Jiao Tong University",
+          "canonical_name": "Shanghai Jiao Tong University",
+          "institution_id": "institution:fccd5d0ac9cc52f9",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Shanghai",
+          "location_display": "Shanghai, China"
+        },
+        {
+          "index": 2,
+          "name": "Ant Group",
+          "canonical_name": "Ant Group",
+          "institution_id": "institution:5a28a1a99a417ba5",
+          "institution_type": "company",
+          "country": "China",
+          "country_code": "",
+          "region": "Zhejiang",
+          "location_display": "Zhejiang, China"
+        },
+        {
+          "index": 3,
+          "name": "Shenzhen University",
+          "canonical_name": "Shenzhen University",
+          "institution_id": "institution:ad9c8964d01f80d8",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China"
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:f105a82454d369e100b9",
@@ -151062,7 +151061,8 @@
         "source": "OpenAlex"
       },
       "tasks": [
-        "detection"
+        "detection",
+        "localization"
       ],
       "image_scopes": [
         "fully_generated"
@@ -151070,6 +151070,19 @@
       "research_types": [
         "method"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "Maintainer-approved Batch C T2 disposition: evaluated artifact segmentation supports localization; retain detection. Decision: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json#T363"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -151127,19 +151140,7 @@
           "location_display": "Shanghai, China"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:084e01a1a2191cb4c86a",

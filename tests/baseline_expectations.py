@@ -6,8 +6,8 @@ data change and the identity and relationship invariants in
 ``test_repository_baseline.py``.
 """
 
-# Approved gap migration followed by Corpus Quality Batch A: three formal
-# upgrades, 14 taxonomy updates and natural collapse of one UCSB aggregate.
+# Approved gap migration and Corpus Quality Batches A/C Phase 1: three formal
+# upgrades, 17 taxonomy updates and natural collapse of one UCSB aggregate.
 # The prior exact baseline is retained in the verified 640-paper snapshot.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 640,
@@ -57,7 +57,7 @@ RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint"
 
 PUBLICATION_TYPE_TOTALS = {'conference': 390, 'preprint': 108, 'journal': 141, 'book': 1}
 
-TASK_TOTALS = {'detection': 593, 'source_attribution': 85, 'localization': 40}
+TASK_TOTALS = {'detection': 593, 'source_attribution': 85, 'localization': 41}
 
 RELEASE_TASK_TOTALS = {
     "detection": 471,

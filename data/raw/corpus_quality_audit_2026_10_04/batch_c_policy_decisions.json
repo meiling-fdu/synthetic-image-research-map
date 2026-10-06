@@ -1,0 +1,1706 @@
+{
+  "schema_version": 1,
+  "audit": "corpus_quality_audit_2026_10_04",
+  "phase": "BATCH_C_PHASE_1",
+  "date": "2026-10-05",
+  "baseline_commit": "0bc98c3e75636899e53114be3d9de0a71986990c",
+  "local_evidence_only": true,
+  "network_requests": 0,
+  "decision_authority": "Explicit maintainer Batch C Phase 1 dispositions and clarifications dated 2026-10-05; original findings and pre-decision recommendations remain historical.",
+  "policies": [
+    {
+      "policy_id": "T1",
+      "decision": "ACCEPT",
+      "final_rule": "source_attribution does not imply detection. Assign detection only when the paper explicitly performs an authenticity / real-versus-generated task. Classification among already-synthetic generators is attribution only.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "T024",
+        "T136",
+        "T137",
+        "T141",
+        "T299",
+        "T446",
+        "T503",
+        "T572",
+        "T576",
+        "T611",
+        "T634"
+      ],
+      "policy_alone_resolves": {
+        "T024": false,
+        "T136": false,
+        "T137": false,
+        "T141": false,
+        "T299": false,
+        "T446": false,
+        "T503": false,
+        "T572": false,
+        "T576": false,
+        "T611": false,
+        "T634": false
+      }
+    },
+    {
+      "policy_id": "T2",
+      "decision": "ACCEPT",
+      "final_rule": "localization requires an evaluated spatial forensic prediction task such as pixel-, mask-, patch-, region-, or equivalent spatial prediction of synthetic/generated/edited content. Artifact segmentation qualifies. Attention maps, saliency maps, explainability heatmaps, or visualization alone do not qualify.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "T236",
+        "T246",
+        "T363"
+      ],
+      "policy_alone_resolves": {
+        "T236": false,
+        "T246": false,
+        "T363": true
+      }
+    },
+    {
+      "policy_id": "T3",
+      "decision": "MODIFY_AND_ACCEPT",
+      "final_rule": "Every public paper must remain connected to at least one core forensic task represented by the map: detection, source_attribution, or localization. If careful review establishes that none applies, the record requires scope review rather than an empty task set.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "T527"
+      ],
+      "policy_alone_resolves": {
+        "T527": false
+      }
+    },
+    {
+      "policy_id": "R1",
+      "decision": "ACCEPT",
+      "final_rule": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "R084",
+        "R099",
+        "R176",
+        "R190",
+        "R455",
+        "R535",
+        "R580"
+      ],
+      "policy_alone_resolves": {
+        "R084": false,
+        "R099": false,
+        "R176": false,
+        "R190": false,
+        "R455": false,
+        "R535": false,
+        "R580": false
+      }
+    },
+    {
+      "policy_id": "R2",
+      "decision": "ACCEPT",
+      "final_rule": "Assign benchmark only when the paper contributes a reusable evaluation benchmark, challenge, protocol, systematic comparative framework, or benchmark resource intended to evaluate methods. Large experimental tables or evaluation across many generators alone are insufficient.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "R548"
+      ],
+      "policy_alone_resolves": {
+        "R548": false
+      }
+    },
+    {
+      "policy_id": "R3",
+      "decision": "ACCEPT",
+      "final_rule": "Assign analysis_study only when systematic empirical or theoretical analysis is a primary scientific contribution. Routine ablations, robustness tables, parameter sweeps, or supporting interpretability figures do not qualify by themselves.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "R121",
+        "R127",
+        "R189",
+        "R460",
+        "R537",
+        "R615"
+      ],
+      "policy_alone_resolves": {
+        "R121": false,
+        "R127": false,
+        "R189": false,
+        "R460": false,
+        "R537": false,
+        "R615": false
+      }
+    },
+    {
+      "policy_id": "R4",
+      "decision": "ACCEPT",
+      "final_rule": "Assign method only when the paper contributes substantive technical novelty: a method, algorithm, model, procedure, or system. Pure surveys, benchmarks, datasets, or analysis studies do not gain method merely because they implement baselines. Multiple legitimate research-type roles remain allowed.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "R117",
+        "R376",
+        "R549"
+      ],
+      "policy_alone_resolves": {
+        "R117": false,
+        "R376": false,
+        "R549": false
+      }
+    },
+    {
+      "policy_id": "I1",
+      "decision": "ACCEPT",
+      "final_rule": "Shanghai University and Shanghai University of Engineering Science are distinct canonical institutions and must never be merged through alias normalization. The affected paper assignment remains evidence-dependent.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "U010"
+      ],
+      "policy_alone_resolves": {
+        "U010": false
+      }
+    },
+    {
+      "policy_id": "I2",
+      "decision": "ACCEPT",
+      "final_rule": "When a paper explicitly names a specific VNU-HCM member institution, map the affiliation to that member institution. Represent VNU-HCM through the reviewed parent-child hierarchy so parent searches include the member. Do not create an additional duplicate parent-level paper relationship unless the paper explicitly lists the parent organization as a separate affiliation. Explicit dual affiliations must be preserved when genuinely present.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "U017"
+      ],
+      "policy_alone_resolves": {
+        "U017": false
+      }
+    },
+    {
+      "policy_id": "P1",
+      "decision": "ACCEPT",
+      "final_rule": "Multiple raw/source provenance records may support the same canonical paper–institution relation. Preserve those provenance records, but expose one normalized public paper–institution relationship when the canonical paper and institution pair are identical.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "L001"
+      ],
+      "policy_alone_resolves": {
+        "L001": true
+      }
+    },
+    {
+      "policy_id": "V1",
+      "decision": "ACCEPT",
+      "final_rule": "Keep the canonical archival venue identity conceptually distinct from source container/event information and paper track. Do not encode track as a different canonical venue. Use only fields supported by the current schema and do not invent metadata when event/container evidence is absent.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "P550",
+        "P586",
+        "P610",
+        "P633"
+      ],
+      "policy_alone_resolves": {
+        "P550": false,
+        "P586": false,
+        "P610": false,
+        "P633": false
+      }
+    },
+    {
+      "policy_id": "V3",
+      "decision": "ACCEPT",
+      "final_rule": "Preserve IEEE MultiMedia as the canonical full venue identity. Do not populate or normalize to an optional acronym when that acronym is ambiguous or unsupported.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "P222"
+      ],
+      "policy_alone_resolves": {
+        "P222": true
+      }
+    }
+  ],
+  "resolved_dispositions": [
+    {
+      "review_id": "T363",
+      "paper_id": "curated:14272073fa5bc0e301b5",
+      "title": "LEGION: Learning to Ground and Explain for Synthetic Image Detection",
+      "policy_ids": [
+        "T2"
+      ],
+      "outcome": "APPLIED_TAXONOMY_CHANGE",
+      "authoritative_data_changed": true,
+      "dimension": "tasks",
+      "before": "detection",
+      "after": "detection;localization",
+      "reason": "Maintainer-approved Batch C T2 disposition: evaluated artifact segmentation supports localization; retain detection."
+    },
+    {
+      "review_id": "R084",
+      "paper_id": "curated:980afddea0a156b5020b",
+      "title": "Dynamic Ensemble of Deepfake Detectors Conditioned on CLIP Features",
+      "policy_ids": [
+        "R1",
+        "R2"
+      ],
+      "outcome": "APPLIED_TAXONOMY_CHANGE",
+      "authoritative_data_changed": true,
+      "dimension": "research_types",
+      "before": "method;dataset;benchmark",
+      "after": "method",
+      "reason": "Explicit maintainer-approved Batch C disposition: retain method; remove dataset and benchmark. Supersedes the decision sheet’s earlier retention recommendation; historical source evidence is preserved."
+    },
+    {
+      "review_id": "R121",
+      "paper_id": "curated:bada2e715200e9fccb7a",
+      "title": "GAP-SAM: A Global Artifact Prior for Generalizable AI-Generated Image Manipulation Localization",
+      "policy_ids": [
+        "R3"
+      ],
+      "outcome": "APPLIED_TAXONOMY_CHANGE",
+      "authoritative_data_changed": true,
+      "dimension": "research_types",
+      "before": "method;dataset;analysis_study",
+      "after": "method;dataset",
+      "reason": "Explicit maintainer-approved Batch C disposition: retain method and dataset; remove analysis_study because the reviewed analysis supports the method rather than a primary scientific contribution. Supersedes the earlier retention recommendation."
+    },
+    {
+      "review_id": "L001",
+      "paper_id": "doi:10.2352/issn.2470-1173.2021.4.mwsf-276",
+      "title": "Detection, Attribution and Localization of GAN Generated Images",
+      "policy_ids": [
+        "P1"
+      ],
+      "outcome": "R3_RESOLVED_BY_PROVENANCE_POLICY",
+      "authoritative_data_changed": false,
+      "reason": "Policy-layer resolution only; preserve current relationships and every source provenance record."
+    },
+    {
+      "review_id": "P222",
+      "paper_id": "curated:e9594b5466110ca009aa",
+      "title": "Toward Generalizable AI-Generated Image Detection with a New Realistic Dataset: Performance Evaluation and Improvement",
+      "policy_ids": [
+        "V3"
+      ],
+      "outcome": "ALREADY_COMPLIANT_NO_DATA_CHANGE",
+      "authoritative_data_changed": false,
+      "reason": "Effective authoritative/public canonical venue is IEEE MultiMedia, venue:ieee-multimedia, journal, with an empty optional acronym. Preserve source spelling and all other paper metadata; no cosmetic diff."
+    }
+  ],
+  "residual_triage": [
+    {
+      "review_id": "P550",
+      "paper_id": "doi:10.2352/ei.2023.35.4.mwsf-380",
+      "title": "Detecting GAN-generated synthetic images using semantic inconsistencies",
+      "policy_id": "V1",
+      "category": "venue",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "Saved DOI metadata identifies Electronic Imaging, journal-article, volume 35 issue 4, pages 380-1–380-6, with no event object. MWSF in the DOI is not sufficient event/type/track evidence.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "P550",
+          "sha256_at_review": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "doi:10.2352/ei.2023.35.4.mwsf-380",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "doi:10.2352/ei.2023.35.4.mwsf-380",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/venue_audit_crossref/b94d98f46d806ccdc849.json",
+          "locator": "doi:10.2352/ei.2023.35.4.mwsf-380",
+          "sha256_at_review": "d5df0e177c3bac673720337e369aa69753076da2842e557f9c45fc38f6b60e33"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain identifier-linked official publisher/proceedings paper and volume/event evidence establishing archival container, named event, publication form and any explicitly documented track; keep unknown track empty. Case question: Which named scholarly event contains this paper, is it a proceedings contribution, and what track is explicitly documented?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "P586",
+      "paper_id": "doi:10.1016/j.trpro.2022.09.012",
+      "title": "Deep Learning applied to Road Accident Detection with Transfer Learning and Synthetic Images",
+      "policy_id": "V1",
+      "category": "venue",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "Saved DOI metadata identifies Transportation Research Procedia, journal-article, volume 64, pages 90–97, with no event object. The underlying event and paper track are not established; inclusion is unchanged.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "P586",
+          "sha256_at_review": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "doi:10.1016/j.trpro.2022.09.012",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "doi:10.1016/j.trpro.2022.09.012",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/venue_audit_crossref/aacf9e26ac7c4f1b8186.json",
+          "locator": "doi:10.1016/j.trpro.2022.09.012",
+          "sha256_at_review": "301287d3500b879d96f806ae6f37b8c27af08d9d377c6b45a85dded03190f066"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain identifier-linked official publisher/proceedings paper and volume/event evidence establishing archival container, named event, publication form and any explicitly documented track; keep unknown track empty. Case question: Which event is represented by volume 64, what is the paper’s publication form/year relationship, and is any track documented?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "P610",
+      "paper_id": "doi:10.2352/issn.2470-1173.2021.4.mwsf-276",
+      "title": "Detection, Attribution and Localization of GAN Generated Images",
+      "policy_id": "V1",
+      "category": "venue",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "Saved DOI metadata identifies Electronic Imaging, journal-article, volume 33 issue 4, pages 276-1–276-11, with no event object. The saved arXiv page establishes paper identity, not authoritative proceedings/track assignment.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "P610",
+          "sha256_at_review": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "doi:10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "doi:10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/key_paper_reconciliation_2026_09_08/arxiv_2007.10466.source",
+          "locator": "doi:10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "sha256_at_review": "a5722fef1e8dc3d19d2da44509473c941ce26115fe497fe656a2c32b7653a245"
+        },
+        {
+          "path": "data/raw/venue_audit_crossref/469ab0e78605845ddcfe.json",
+          "locator": "doi:10.2352/issn.2470-1173.2021.4.mwsf-276",
+          "sha256_at_review": "b577850a255aa26e944c511bbb74dc372bc5ee315b5e159437ddfc6f06255806"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain identifier-linked official publisher/proceedings paper and volume/event evidence establishing archival container, named event, publication form and any explicitly documented track; keep unknown track empty. Case question: Does the primary proceedings identify Electronic Imaging or MWSF as this paper’s event, and what publication form/track is evidenced?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "P633",
+      "paper_id": "curated:60066ef08c2226131085",
+      "title": "Detecting GAN Generated Fake Images Using Co-Occurrence Matrices",
+      "policy_id": "V1",
+      "category": "venue",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "Saved DOI metadata identifies Electronic Imaging, journal-article, volume 31 issue 5, pages 532-1–532-7, with no event object. Other saved matches are metadata/references, not an official event/track determination.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "P633",
+          "sha256_at_review": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:60066ef08c2226131085",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:60066ef08c2226131085",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/venue_audit_crossref/02646d674722d690bd8d.json",
+          "locator": "curated:60066ef08c2226131085",
+          "sha256_at_review": "defbbe6ce2b09b55e03144852ba8f8e78192feb2be3a7070c31f57558df8de5e"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain identifier-linked official publisher/proceedings paper and volume/event evidence establishing archival container, named event, publication form and any explicitly documented track; keep unknown track empty. Case question: Does the primary proceedings identify Electronic Imaging or MWSF as this paper’s event, and what publication form/track is evidenced?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R099",
+      "paper_id": "curated:9c39067ac73e7354c2f3",
+      "title": "Fake-HR1: Rethinking Reasoning of Vision Language Model for Synthetic Image Detection",
+      "policy_id": "R1",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The saved arXiv abstract establishes HFT/HGRPO adaptive reasoning as the method. It does not establish whether training examples are a substantive reusable data contribution; silence is not evidence of absence.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R099",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:9c39067ac73e7354c2f3",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:9c39067ac73e7354c2f3",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/systematic_literature_2026_09/7775b0a1023d00f8820f.gz",
+          "locator": "curated:9c39067ac73e7354c2f3",
+          "sha256_at_review": "c4fc2525e7d571b5ef951fdbf9c0c36b93462a6632baeae8845768c6e381177c"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary contribution/data section and supplement or author release documentation specifying resource contents, reuse and whether its construction/curation is a substantive contribution. Case question: Are Fake-HR1 training examples a separately contributed reusable resource or only method training data?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R117",
+      "paper_id": "curated:748ed5e2cf27aea70f6a",
+      "title": "Frequency-Aware Robustness Analysis of Deepfake Detection Models",
+      "policy_id": "R4",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The stored abstract positively establishes a systematic robustness study of three existing detectors, 12 distortions and FSI-drop statistics. It does not settle whether FSI or associated machinery is substantive technical novelty, so the whole method-to-analysis replacement remains open.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R117",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:748ed5e2cf27aea70f6a",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:748ed5e2cf27aea70f6a",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary contribution list and technical specification to establish substantive novelty versus a measurement, baseline ensemble or illustrative survey case study. Case question: Is FSI/associated machinery a substantive new technical method, or only a measurement used by the study?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R127",
+      "paper_id": "curated:807cbb7fa6b003585c72",
+      "title": "GlobalForge: Towards Robust AI-Generated Image Detection",
+      "policy_id": "R3",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The primary abstract diagnoses local-artifact fragility and proposes LIB/GSR, with RealDeg-Bench for evaluation. It does not separate independently tested principal findings from method motivation/validation. No new benchmark action is opened.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R127",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:807cbb7fa6b003585c72",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:807cbb7fa6b003585c72",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/ant_gap_fill_2026_09_05/ant_candidates_arxiv.xml",
+          "locator": "curated:807cbb7fa6b003585c72",
+          "sha256_at_review": "9d5901810e8d425440c4060df441dac9d5f47040347349fe1f624765c5531d7c"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary introduction/contribution list and controlled-analysis sections to distinguish an independent principal scientific finding from method-supporting validation. Case question: Is the local-artifact fragility diagnosis independently tested as a principal finding, beyond motivating/validating LIB/GSR?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R176",
+      "paper_id": "curated:f6ad15b01df18aadfe1a",
+      "title": "PRADA: Probability-Ratio-Based Attribution and Detection of Autoregressive-Generated Images",
+      "policy_id": "R1",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract explicitly says code and data are released, for eight class-to-image and four text-to-image models. Release alone does not establish the contents or contribution-level status of that resource.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R176",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:f6ad15b01df18aadfe1a",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:f6ad15b01df18aadfe1a",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary contribution/data section and supplement or author release documentation specifying resource contents, reuse and whether its construction/curation is a substantive contribution. Case question: What is in the released PRADA data, and is its construction/curation a substantial reusable contribution?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R188",
+      "paper_id": "curated:6c2f591bf6fda3abecbb",
+      "title": "Reasoning-Aware AIGC Detection via Alignment and Reinforcement",
+      "policy_id": null,
+      "category": "source_conflict",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The current generic AIGC title does not literally say image; the historical queue nevertheless flags an image/text association conflict. All retained abstract-bearing versions repeat the AIGC-textbank/REVEAL text-authorship abstract. Repeated downstream copies cannot independently authenticate the DOI/arXiv/title/author/abstract association.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R188",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:6c2f591bf6fda3abecbb",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:6c2f591bf6fda3abecbb",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/processed/venue_audit_baseline.json",
+          "locator": "curated:6c2f591bf6fda3abecbb",
+          "sha256_at_review": "a8b278b8bafc54df01ffe3ac40021c80a653200980cd786a68beed3ac6c2130e"
+        },
+        {
+          "path": "data/raw/systematic_gap_migration_2026_10_03/baseline.json",
+          "locator": "curated:6c2f591bf6fda3abecbb",
+          "sha256_at_review": "7c15aad2c09ff8f5bc830fa23046604be8febc0c06d1f6a77af0c743da8ea439"
+        },
+        {
+          "path": "data/processed/primary_curation_baseline_2026_09_08.json",
+          "locator": "curated:6c2f591bf6fda3abecbb",
+          "sha256_at_review": "48574085f64f44a885865bb1e421a8486f80673e55f65feeddc4ab7a97707566"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the official ACL Anthology paper/PDF for DOI 10.18653/v1/2026.findings-acl.1043 and authoritative arXiv 2604.19172 record/PDF, matching title, authors, identifiers and abstract before choosing a source association or scope outcome. Case question: Which title/abstract/identifier combination actually belongs to the included image paper, and which text-paper evidence was misassociated?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R189",
+      "paper_id": "curated:685065a3632a185a230d",
+      "title": "Reduce the Artifact Bias for More Generalizable AI-Generated Image Detection",
+      "policy_id": "R3",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The primary abstract describes artifact bias, ACEF/LACF and validation on 13 benchmarks. This establishes a method but not whether a separate controlled analysis is a principal contribution.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R189",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:685065a3632a185a230d",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:685065a3632a185a230d",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/ant_gap_fill_2026_09_05/ant_candidates_arxiv.xml",
+          "locator": "curated:685065a3632a185a230d",
+          "sha256_at_review": "9d5901810e8d425440c4060df441dac9d5f47040347349fe1f624765c5531d7c"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary introduction/contribution list and controlled-analysis sections to distinguish an independent principal scientific finding from method-supporting validation. Case question: Is there independent systematic evidence for artifact-bias claims beyond motivating and validating ACEF?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R190",
+      "paper_id": "curated:c84b04cb8e921be753db",
+      "title": "Representation and Reference Selection in Training-Free Synthetic Image Attribution",
+      "policy_id": "R1",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The primary abstract establishes a controlled study of representation layer and reference selection. A reference pool used in experiments does not by itself establish or rule out a contributed dataset.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R190",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:c84b04cb8e921be753db",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:c84b04cb8e921be753db",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary contribution/data section and supplement or author release documentation specifying resource contents, reuse and whether its construction/curation is a substantive contribution. Case question: Does the reference collection constitute a contributed reusable dataset, rather than inputs for controlled analysis?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R376",
+      "paper_id": "curated:cda6067db322246e8195",
+      "title": "No Detector to Rule Them All",
+      "policy_id": "R4",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract positively establishes comparative benchmarking/feature analysis and exploratory simple ensembles. It does not provide the ensemble specification/contribution claim needed to decide whether method should be removed.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R376",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:cda6067db322246e8195",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:cda6067db322246e8195",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary contribution list and technical specification to establish substantive novelty versus a measurement, baseline ensemble or illustrative survey case study. Case question: Is the ensemble a new technical contribution with its own specification, or an exploratory combination of baselines?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R455",
+      "paper_id": "curated:04932cb03f767948ddf4",
+      "title": "Deep Image Fingerprint: Towards Low Budget Synthetic Image Detection and Model Lineage Analysis",
+      "policy_id": "R1",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract establishes CNN-based detection and model-lineage experiments. The saved WACV listing and metadata do not describe a reusable collection contribution.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R455",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:04932cb03f767948ddf4",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:04932cb03f767948ddf4",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/systematic_literature_2026_09/8a58427f7c9c37e21b27.gz",
+          "locator": "curated:04932cb03f767948ddf4",
+          "sha256_at_review": "be92a7d04b92543ce4994749371f26f344f72c5e86220b9042474b8322501737"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary contribution/data section and supplement or author release documentation specifying resource contents, reuse and whether its construction/curation is a substantive contribution. Case question: Is there a documented new reusable image collection beyond detector/lineage experiments?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R460",
+      "paper_id": "doi:10.1109/aivrv63595.2024.10860248",
+      "title": "Detecting AI Generated Images Through Texture and Frequency Analysis of Patches",
+      "policy_id": "R3",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract establishes a patch/frequency preprocessing pipeline, multi-head classifier and accuracy/generalization results. It does not provide the contribution or experimental sections needed to exclude an independent analysis.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R460",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "doi:10.1109/aivrv63595.2024.10860248",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "doi:10.1109/aivrv63595.2024.10860248",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary introduction/contribution list and controlled-analysis sections to distinguish an independent principal scientific finding from method-supporting validation. Case question: Is any systematic scientific analysis a primary contribution beyond preprocessing/classifier accuracy?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R535",
+      "paper_id": "curated:98c0322e2f8dd41d3e9e",
+      "title": "Which Model Generated This Image? A Model-Agnostic Approach for Origin Attribution",
+      "policy_id": "R1",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract establishes few-shot OCC-CLIP origin attribution and code availability. It does not establish whether evaluation samples form a separately contributed resource.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R535",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:98c0322e2f8dd41d3e9e",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:98c0322e2f8dd41d3e9e",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary contribution/data section and supplement or author release documentation specifying resource contents, reuse and whether its construction/curation is a substantive contribution. Case question: Does OCC-CLIP contribute a dataset beyond the samples used for few-shot evaluation?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R537",
+      "paper_id": "doi:10.1109/ijcnn60899.2024.10650566",
+      "title": "X-Transfer: A Transfer Learning-Based Framework for GAN-Generated Fake Image Detection",
+      "policy_id": "R3",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract establishes interleaved-gradient transfer learning, a combined loss and validation on face/non-face data. Supporting results alone do not establish analysis_study; absence of another analysis is not proved by the abstract.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R537",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "doi:10.1109/ijcnn60899.2024.10650566",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "doi:10.1109/ijcnn60899.2024.10650566",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary introduction/contribution list and controlled-analysis sections to distinguish an independent principal scientific finding from method-supporting validation. Case question: Is there an independent transfer-learning analysis beyond validating the new algorithm?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R548",
+      "paper_id": "doi:10.1145/3576915.3616588",
+      "title": "DE-FAKE: Detection and Attribution of Fake Images Generated by Text-to-Image Generation Models",
+      "policy_id": "R2",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract establishes a systematic detection/attribution study on four generators and two existing prompt-image datasets. Reusing those datasets does not settle whether the paper also contributes a reusable evaluation protocol.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R548",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "doi:10.1145/3576915.3616588",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "doi:10.1145/3576915.3616588",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/systematic_literature_2026_09/752ef7d30779b04a67e8.gz",
+          "locator": "doi:10.1145/3576915.3616588",
+          "sha256_at_review": "ca068e8277bcce7d7ca8d0da9c86dbb31836a825443496b58a875c9e7e54df93"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary contributions and protocol/release documentation specifying a reusable benchmark/framework, rather than only this method’s experiments. Case question: Does DE-FAKE contribute a reusable evaluation protocol/framework rather than only its own comparative experiments?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R549",
+      "paper_id": "curated:616984c24ff3792431e6",
+      "title": "Deepfake Generation and Detection: Case Study and Challenges",
+      "policy_id": "R4",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The stored abstract explicitly establishes a survey and names an IBMM case study. The survey role is supported, but the abstract does not settle whether IBMM is an original system; the complete proposed method-to-survey replacement remains open.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R549",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:616984c24ff3792431e6",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:616984c24ff3792431e6",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary contribution list and technical specification to establish substantive novelty versus a measurement, baseline ensemble or illustrative survey case study. Case question: Is IBMM proposed as an original algorithm/system, or an illustrative survey case study?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R580",
+      "paper_id": "curated:1ef55e4fc03eb4880beb",
+      "title": "Towards Universal Fake Image Detectors That Generalize Across Generative Models",
+      "policy_id": "R1",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract establishes the classifier asymmetry finding and nearest-neighbor/linear-probe methods. Cached metadata and citations do not settle whether a new reusable image collection is contributed.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R580",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:1ef55e4fc03eb4880beb",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:1ef55e4fc03eb4880beb",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/systematic_literature_2026_09/4f84e5dd650af932cac1.gz",
+          "locator": "curated:1ef55e4fc03eb4880beb",
+          "sha256_at_review": "0d52eabaee1bf46e957ff297186c4e3f879eff413166352f88f0c1774c342060"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary contribution/data section and supplement or author release documentation specifying resource contents, reuse and whether its construction/curation is a substantive contribution. Case question: Which new reusable data resource, if any, is contributed beyond evaluating on existing detection data?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "R615",
+      "paper_id": "doi:10.1109/iccv48922.2021.01383",
+      "title": "Towards Discovery and Attribution of Open-world GAN Generated Images",
+      "policy_id": "R3",
+      "category": "research_type",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract establishes an iterative open-world discovery algorithm and its experiments, including real/fake detection. It does not settle the independence of the claimed analysis contribution.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "R615",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "doi:10.1109/iccv48922.2021.01383",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "doi:10.1109/iccv48922.2021.01383",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary introduction/contribution list and controlled-analysis sections to distinguish an independent principal scientific finding from method-supporting validation. Case question: Is open-world discovery analysis independently substantive, beyond demonstrating the iterative method?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "T024",
+      "paper_id": "curated:1a8e996ef9ce73efc0ef",
+      "title": "AI-Generated Image Homology Detection",
+      "policy_id": "T1",
+      "category": "task",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract defines same-generator pair verification as orthogonal to categorical detection/attribution. Transferred detectors are discussed, but their use does not establish a separately evaluated authenticity task.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T024",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:1a8e996ef9ce73efc0ef",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:1a8e996ef9ce73efc0ef",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the identity-matched primary paper/supplement class definitions and complete evaluation protocol: explicit real/authentic-versus-generated evaluation, or an explicit exhaustive attribution-only protocol. Case question: Does the evaluation include authentic images as a real-vs-generated task, beyond same-source pair verification?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "T136",
+      "paper_id": "curated:d59bffe554500b241a3e",
+      "title": "ImageAttributionBench: How Far Are We from Generalizable Attribution?",
+      "policy_id": "T1",
+      "category": "task",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The saved arXiv abstract specifies synthetic-generator attribution under degraded-image and semantically disjoint splits. It does not give a complete class inventory or exclude an additional authenticity protocol.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T136",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:d59bffe554500b241a3e",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:d59bffe554500b241a3e",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/systematic_literature_2026_09/29cb716809f6f85ddbe2.gz",
+          "locator": "curated:d59bffe554500b241a3e",
+          "sha256_at_review": "7132d91e367edc5cca1bf58fa59bbc55131f824f4ee32d5bc0b13f55f45a17da"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the identity-matched primary paper/supplement class definitions and complete evaluation protocol: explicit real/authentic-versus-generated evaluation, or an explicit exhaustive attribution-only protocol. Case question: Is there a separate real-image/authenticity protocol outside the two recorded attribution settings?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "T137",
+      "paper_id": "curated:246f07c81b9f91e527eb",
+      "title": "IncreFA: Breaking the Static Wall of Generative Model Attribution",
+      "policy_id": "T1",
+      "category": "task",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract reports IABench with 28 generators and 98.93% unseen detection. Unseen-generator rejection is not evidence of a real/authentic class; the saved CVPR listing supplies no complete protocol.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T137",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:246f07c81b9f91e527eb",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:246f07c81b9f91e527eb",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/systematic_literature_2026_09/2b1991ff8fad866075c9.gz",
+          "locator": "curated:246f07c81b9f91e527eb",
+          "sha256_at_review": "c0cf4c9fd13478486773dfe4658becb834294e39807e1e148e9a867b1857cb2c"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the identity-matched primary paper/supplement class definitions and complete evaluation protocol: explicit real/authentic-versus-generated evaluation, or an explicit exhaustive attribution-only protocol. Case question: Does any IABench protocol classify real images, rather than only known versus unseen generators?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "T141",
+      "paper_id": "curated:268336295435cfbbbd5d",
+      "title": "Learning a Semantic Similarity Orthogonal Space for Model-Level AI-Generated Image Source Attribution",
+      "policy_id": "T1",
+      "category": "task",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract contrasts real/synthetic detection with reconstruct-and-compare source tracing. It establishes attribution, but not the complete evaluated task inventory.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T141",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:268336295435cfbbbd5d",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:268336295435cfbbbd5d",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the identity-matched primary paper/supplement class definitions and complete evaluation protocol: explicit real/authentic-versus-generated evaluation, or an explicit exhaustive attribution-only protocol. Case question: Is real-vs-generated authenticity evaluated beyond reconstruction-based source matching?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "T236",
+      "paper_id": "curated:64635535d7b7b6a12a32",
+      "title": "Unveiling Perceptual Artifacts: A Fine-Grained Benchmark for Interpretable AI-Generated Image Detection",
+      "policy_id": "T2",
+      "category": "task",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "X-AIGD has pixel artifact annotations and attention-alignment/interpretability analysis. The saved abstract does not establish a spatial prediction output scored against ground truth.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T236",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:64635535d7b7b6a12a32",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:64635535d7b7b6a12a32",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary method/evaluation sections specifying spatial output, forensic ground truth and a spatial metric; distinguish scored predictions from annotations/attention visualization. Case question: Are spatial artifact predictions scored against the pixel annotations, or are masks used only to analyze/align attention?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "T246",
+      "paper_id": "doi:10.1609/aaai.v40i4.37240",
+      "title": "Zooming In on Fakes: A Novel Dataset for Localized AI-Generated Image Detection with Forgery Amplification Approach",
+      "policy_id": "T2",
+      "category": "task",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "BR-Gen has local forgeries and scene annotations; NFA-ViT propagates local cues for detection. Neither annotations nor mined regions establish evaluated mask/patch/box prediction.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T246",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "doi:10.1609/aaai.v40i4.37240",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "doi:10.1609/aaai.v40i4.37240",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the primary method/evaluation sections specifying spatial output, forensic ground truth and a spatial metric; distinguish scored predictions from annotations/attention visualization. Case question: Is a predicted edited-region mask/patch/box evaluated, or is the output only an image-level decision?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "T299",
+      "paper_id": "curated:161b6d5ca391d238f7e9",
+      "title": "Detecting Origin Attribution for Text-to-Image Diffusion Models",
+      "policy_id": "T1",
+      "category": "task",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract describes 12-generator, seed and hyperparameter attribution. Its broad use of detectable does not establish binary authenticity evaluation.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T299",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:161b6d5ca391d238f7e9",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:161b6d5ca391d238f7e9",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/systematic_literature_2026_09/c37068edaad6c5c6536e.gz",
+          "locator": "curated:161b6d5ca391d238f7e9",
+          "sha256_at_review": "98eca80cd4cbbcdc8ae48620c90bf4bd6035da43e485c70c41208ba7705484e2"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the identity-matched primary paper/supplement class definitions and complete evaluation protocol: explicit real/authentic-versus-generated evaluation, or an explicit exhaustive attribution-only protocol. Case question: Is real/fake discrimination a distinct task, rather than generator/seed/hyperparameter identification?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "T446",
+      "paper_id": "curated:8bc69db49ef4b9db3cd6",
+      "title": "Are CLIP Features All You Need for Universal Synthetic Image Origin Attribution?",
+      "policy_id": "T1",
+      "category": "task",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract establishes open-set origin attribution using CLIP features. Its motivation mentions detecting fakes, but the real-class evaluation protocol is absent.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T446",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:8bc69db49ef4b9db3cd6",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:8bc69db49ef4b9db3cd6",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the identity-matched primary paper/supplement class definitions and complete evaluation protocol: explicit real/authentic-versus-generated evaluation, or an explicit exhaustive attribution-only protocol. Case question: Does the open-set protocol contain a real/authentic class and evaluate it as detection?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "T503",
+      "paper_id": "curated:34fdf09ae334914a2723",
+      "title": "ManiFPT: Defining and Analyzing Fingerprints of Generative Models",
+      "policy_id": "T1",
+      "category": "task",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract establishes generative-model fingerprint identification. References to prior real/fake detection are background, not this paper’s authenticity evaluation.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T503",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:34fdf09ae334914a2723",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:34fdf09ae334914a2723",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/systematic_literature_2026_09/55382925aba53887a9d5.gz",
+          "locator": "curated:34fdf09ae334914a2723",
+          "sha256_at_review": "56fbe062df55de8241eb16104dd317464c048a5ace199f80d89554d0625b8e9f"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the identity-matched primary paper/supplement class definitions and complete evaluation protocol: explicit real/authentic-versus-generated evaluation, or an explicit exhaustive attribution-only protocol. Case question: Does the full protocol evaluate real/fake detection in addition to fingerprint/model identification?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "T527",
+      "paper_id": "doi:10.1109/lsp.2024.3388958",
+      "title": "Towards Generated Image Provenance Analysis via Conceptual-Similar-Guided-SLIP Retrieval",
+      "policy_id": "T3",
+      "category": "task",
+      "evidence_status": "MAINTAINER_SCOPE_JUDGMENT_REQUIRED",
+      "review_state": "SCOPE_OR_TASK_EVIDENCE_REQUIRED",
+      "local_finding": "The stored abstract explicitly evaluates retrieval of replicated training images through image/text matching and re-ranking. The remaining judgment is whether that provenance task fits the map’s core task vocabulary and narrow scope; no core-task label is cleared.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T527",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "doi:10.1109/lsp.2024.3388958",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "doi:10.1109/lsp.2024.3388958",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": null,
+      "maintainer_question": "Does training-image provenance retrieval substantively fit a represented core task? If none applies, should this paper remain public under the narrow scope? Preserve source_attribution until that decision."
+    },
+    {
+      "review_id": "T572",
+      "paper_id": "curated:5a91cc922c8a3c4c3d0c",
+      "title": "Open Set Synthetic Image Source Attribution",
+      "policy_id": "T1",
+      "category": "task",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The stored arXiv abstract describes candidate-generator acceptance/rejection. Saved BMVC checks settle publication identity only; real/authentic evaluation remains unestablished.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T572",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:5a91cc922c8a3c4c3d0c",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:5a91cc922c8a3c4c3d0c",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the identity-matched primary paper/supplement class definitions and complete evaluation protocol: explicit real/authentic-versus-generated evaluation, or an explicit exhaustive attribution-only protocol. Case question: Does the BMVC protocol include a separate authenticity evaluation beyond unknown-generator rejection?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "T576",
+      "paper_id": "curated:62b0a9ae8be24d9f02e0",
+      "title": "Single-Model Attribution of Generative Models Through Final-Layer Inversion",
+      "policy_id": "T1",
+      "category": "task",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract establishes generator membership via final-layer inversion and anomaly detection. Non-membership need not mean real; the complete class/protocol definition is not retained.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T576",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:62b0a9ae8be24d9f02e0",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:62b0a9ae8be24d9f02e0",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/raw/systematic_literature_2026_09/e50f3037063dc47ed5cc.gz",
+          "locator": "curated:62b0a9ae8be24d9f02e0",
+          "sha256_at_review": "4ca7057db831baa15bb713e5ee8856b6e8e53ca126e40ecce30f7234ba1d0a90"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the identity-matched primary paper/supplement class definitions and complete evaluation protocol: explicit real/authentic-versus-generated evaluation, or an explicit exhaustive attribution-only protocol. Case question: Are real images part of an explicit authenticity task, rather than merely examples of non-membership?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "T611",
+      "paper_id": "curated:07ee620b8169b67b900f",
+      "title": "Does a GAN Leave Distinct Model-Specific Fingerprints?",
+      "policy_id": "T1",
+      "category": "task",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract motivates image authenticity and evaluates GAN-specific fingerprints. It does not enumerate whether experiments separately score binary authenticity.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T611",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:07ee620b8169b67b900f",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:07ee620b8169b67b900f",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the identity-matched primary paper/supplement class definitions and complete evaluation protocol: explicit real/authentic-versus-generated evaluation, or an explicit exhaustive attribution-only protocol. Case question: Do the reported fingerprint experiments include binary authenticity detection?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "T634",
+      "paper_id": "doi:10.1109/mipr.2019.00103",
+      "title": "Do GANs Leave Artificial Fingerprints?",
+      "policy_id": "T1",
+      "category": "task",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The abstract explicitly reports source-identification experiments with popular GANs. It does not supply a complete protocol that can settle an additional real/fake task.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+          "locator": "T634",
+          "sha256_at_review": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "doi:10.1109/mipr.2019.00103",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "doi:10.1109/mipr.2019.00103",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the identity-matched primary paper/supplement class definitions and complete evaluation protocol: explicit real/authentic-versus-generated evaluation, or an explicit exhaustive attribution-only protocol. Case question: Does the complete experiment protocol include real/fake detection beyond source identification?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "U010",
+      "paper_id": "curated:d0eec7c4fce8929c295a",
+      "title": "Diffusion-Driven Forgery Detection: Distilling Latent Features for Generalized Image Forensics",
+      "policy_id": "I1",
+      "category": "institution",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The mapping candidate names SUES while raw affiliation text says School of Computer Engineering and Science, Shanghai University. Paper-time affiliation and identity-known flags are false; coordinates cannot resolve author assignment.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "U010",
+          "sha256_at_review": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:d0eec7c4fce8929c295a",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:d0eec7c4fce8929c295a",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "curated:d0eec7c4fce8929c295a",
+          "sha256_at_review": "0ee827547c74eeb24851f4386637bf3ae8d3001eb45aee599f599a6b5cb02be3"
+        },
+        {
+          "path": "data/curated/institutions.csv",
+          "locator": "curated:d0eec7c4fce8929c295a",
+          "sha256_at_review": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the IEEE paper-time author superscripts and affiliation block for Kaiwen Qian, Yutao Xu, Yifan Xu and Yuchun Fang; distinguish Shanghai University, SUES and any genuine dual affiliation. Case question: Which paper-time affiliation marker belongs to each of Kaiwen Qian, Yutao Xu, Yifan Xu and Yuchun Fang: Shanghai University, SUES, or genuinely both?",
+      "maintainer_question": null
+    },
+    {
+      "review_id": "U017",
+      "paper_id": "curated:0d918782407e05ade5bd",
+      "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+      "policy_id": "I2",
+      "category": "institution",
+      "evidence_status": "EXTERNAL_PRIMARY_SOURCE_REQUIRED",
+      "review_state": "EVIDENCE_REQUIRED",
+      "local_finding": "The candidate raw affiliation names University of Science and VNU-HCM. Active member and parent records exist, but no confirmed hierarchy CSV edge or paper-time author superscripts establish whether these are separately listed affiliations.",
+      "evidence": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "U017",
+          "sha256_at_review": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf"
+        },
+        {
+          "path": "data/curated/papers.csv",
+          "locator": "curated:0d918782407e05ade5bd",
+          "sha256_at_review": "f59ae42cde91ed6c5e5211cb2267af1fd9f60689cfb98b3cbf8bcfb105a6fe75"
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "locator": "curated:0d918782407e05ade5bd",
+          "sha256_at_review": "885232d29b3ec779d27b0d1a274ec82e7e9153932e8a317dee09e1d4add309dd"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "curated:0d918782407e05ade5bd",
+          "sha256_at_review": "0ee827547c74eeb24851f4386637bf3ae8d3001eb45aee599f599a6b5cb02be3"
+        },
+        {
+          "path": "data/curated/institutions.csv",
+          "locator": "curated:0d918782407e05ade5bd",
+          "sha256_at_review": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326"
+        },
+        {
+          "path": "data/curated/institution_hierarchy.csv",
+          "locator": "curated:0d918782407e05ade5bd",
+          "sha256_at_review": "66e379a3e7f8b58d6f46d9d5d8ec7bd4615a64c884ebbbcbb0063e7821da307f"
+        }
+      ],
+      "proposed_factual_disposition": null,
+      "applied": false,
+      "missing_external_evidence": "Obtain the ACM paper-time author superscripts and affiliation block for Thinh-Phat Vo, Daniel Mai, Minh–Triet Tran and Trong-Le Do; establish the named member and any explicitly separate parent affiliation. Case question: How do the ACM paper’s affiliation markers assign Thinh-Phat Vo, Daniel Mai, Minh–Triet Tran and Trong-Le Do to the member and parent; are those separately listed affiliations?",
+      "maintainer_question": null
+    }
+  ],
+  "reconciliation": {
+    "original_batch_counts": {
+      "A": 20,
+      "B": 159,
+      "C": 41,
+      "D": 1752
+    },
+    "original_batch_c": 41,
+    "resolved": 5,
+    "remaining_batch_c": 36,
+    "authoritative_taxonomy_changes": 3,
+    "policy_only_resolutions": 1,
+    "already_compliant_no_data_changes": 1,
+    "triage_counts": {
+      "LOCAL_EVIDENCE_SUFFICIENT": 0,
+      "EXTERNAL_PRIMARY_SOURCE_REQUIRED": 35,
+      "MAINTAINER_SCOPE_JUDGMENT_REQUIRED": 1
+    },
+    "batch_b_remaining": 159,
+    "batch_d_remaining": 1752
+  },
+  "evidence_review": {
+    "method": "Read-only inspection of committed queues, curated evidence, retained source captures/metadata and historical notes. Scanned identity/title/DOI/arXiv/OpenAlex matches in committed local data/docs (including gzip payloads); inspected 33 distinct saved PDF payloads and relevant HTML/metadata. Bibliography mentions and repeated downstream copies were not treated as independent primary evidence. No excluded local capture was altered or promoted.",
+    "local_sufficiency": "No residual action has enough retained evidence to settle its complete disputed disposition. Partial positive findings, such as the survey role of R549 or study role of R117, do not settle removal of method. Abstract silence is not proof of absent tasks, resources or contributions.",
+    "r188_retained_versions": [
+      "data/curated/author_institution_mappings.csv",
+      "data/curated/institution_location_review.csv",
+      "data/curated/paper_taxonomy.csv",
+      "data/curated/papers.csv",
+      "data/manual/missing_author_mappings_report.csv",
+      "data/manual/paper_marker_blocker_report.csv",
+      "data/processed/author_affiliation_review.csv",
+      "data/processed/final_public_marker_blockers.csv",
+      "data/processed/missing_author_mappings_report.csv",
+      "data/processed/paper_title_capitalization_audit.csv",
+      "data/processed/primary_curation_baseline_2026_09_08.json",
+      "data/processed/publication_type_migration_audit.csv",
+      "data/processed/publication_venue_audit.json",
+      "data/processed/requested_eccv_ijcai_2026-08-29_author_review.csv",
+      "data/processed/requested_papers_2026-08-29_author_review.csv",
+      "data/processed/systematic_literature_2026_09/corpus_inventory.csv",
+      "data/processed/systematic_tier2_application_2026_09/legacy_screening_636.json",
+      "data/processed/venue_audit_baseline.json",
+      "data/processed/venue_normalized_papers.csv",
+      "data/processed/venue_normalized_papers.json",
+      "data/processed/workshop_venue_audit.json",
+      "data/processed/workshop_venue_baseline.json",
+      "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+      "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "data/raw/systematic_gap_audit_2026_10_02/candidates.json",
+      "data/raw/systematic_gap_audit_2026_10_02/icml2026_screening.json",
+      "data/raw/systematic_gap_migration_2026_10_03/baseline.json",
+      "data/raw/systematic_gap_migration_2026_10_03/discovery_snapshot.json",
+      "docs/corpus_quality_audit_2026_10_04.md",
+      "docs/missing_author_mappings_audit_2026-08-27.csv",
+      "docs/paper_marker_blockers_audit_2026-08-27.csv",
+      "docs/paper_metadata_consistency_audit.csv",
+      "docs/public_metadata_status_audit.csv",
+      "docs/public_relationship_location_completeness.csv",
+      "docs/subtask_removal_audit.csv",
+      "docs/venue_registry_audit.csv"
+    ],
+    "r188_result": "One substantive text-authorship abstract repeated in current papers.csv, venue_audit_baseline.json and migration baseline; no locally retained authoritative identity-matched primary paper resolving the association. Other hits are identifier/review/downstream records."
+  },
+  "t3_existing_empty_core_tasks": {
+    "records": [
+      {
+        "paper_id": "curated:75cbd31c9946c7eb7977",
+        "title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation"
+      },
+      {
+        "paper_id": "curated:a99dc95e4b7a85bd938f",
+        "title": "TWIGMA: A Dataset of AI-Generated Images with Metadata from Twitter"
+      }
+    ],
+    "disposition": "Pre-existing baseline records unchanged. The newly locked rule routes an established lack of core-task applicability to scope review; this phase creates no empty task sets and authorizes no additional remediation or Batch B/D promotion."
+  },
+  "corpus_before": {
+    "public": 640,
+    "formal": 532,
+    "mapped": 617,
+    "unmapped": 23,
+    "relationship_rows": 1422,
+    "unique_paper_institution_pairs": 1422
+  },
+  "taxonomy_before": {
+    "tasks": {
+      "detection": 593,
+      "localization": 40,
+      "source_attribution": 85
+    },
+    "research_types": {
+      "analysis_study": 79,
+      "benchmark": 89,
+      "dataset": 134,
+      "method": 548,
+      "survey": 20
+    }
+  },
+  "protected_state": {
+    "UCSB_R3": "R3_RESOLVED_BY_PROVENANCE_POLICY",
+    "UCSB_export": "DETERMINISTIC_EXPORT_COLLAPSE_AFTER_R1_R2",
+    "UCSB_manual_merge": "NO MANUAL R3 MERGE APPLIED",
+    "T527": "SCOPE_OR_TASK_EVIDENCE_REQUIRED",
+    "NeurIPS": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA",
+    "excluded_local_files": 128,
+    "frozen_artifacts": 49,
+    "original_decision_sheet_bytes": 49058,
+    "original_decision_sheet_sha256": "396e007e136bec46b223e5b873946da7134ba2a9f04285d9538b233c08c8dafc"
+  },
+  "corpus_after": {
+    "public": 640,
+    "formal": 532,
+    "mapped": 617,
+    "unmapped": 23,
+    "relationship_rows": 1422,
+    "unique_paper_institution_pairs": 1422
+  },
+  "taxonomy_after": {
+    "tasks": {
+      "detection": 593,
+      "localization": 41,
+      "source_attribution": 85
+    },
+    "research_types": {
+      "analysis_study": 78,
+      "benchmark": 88,
+      "dataset": 133,
+      "method": 548,
+      "survey": 20
+    }
+  },
+  "validation": {
+    "completed_on_local_date": "2026-10-06",
+    "focused_tests_passed": 14,
+    "focused_failures": 0,
+    "focused_command": "PYTHONPATH=/private/tmp/sirm-gap-test-deps python3 -m pytest -q tests/test_corpus_quality_batch_c_phase1.py",
+    "curated_validator_errors": 0,
+    "curated_validator_warnings": 252,
+    "public_validator_errors": 0,
+    "public_validator_warnings": 23,
+    "map_validator_warnings": 0,
+    "key_paper_freshness_errors": 0,
+    "broader_targeted_tests_passed": 240,
+    "broader_targeted_subtests_passed": 9,
+    "broader_targeted_failures": 0,
+    "full_suite_run": true,
+    "full_suite_passed": 1641,
+    "full_suite_subtests_passed": 389,
+    "full_suite_failures": 0,
+    "full_suite_warnings": 2,
+    "full_suite_elapsed_seconds": 299.09,
+    "full_suite_junit_sha256": "ec4c00d9dad9164dbdff785b09092d5eba175223efc7d9175c6568a7a0bfb80c",
+    "full_suite_warning_details": [
+      "PytestReturnNotNoneWarning: tests/test_legacy_scope_exclusion_migration.py::test_successor_migration_payload returns dict",
+      "PytestReturnNotNoneWarning: tests/test_legacy_scope_exclusion_migration.py::test_successor_migration_text returns str"
+    ],
+    "full_suite_repair_note": "The initial collected run exposed 13 missing-Node invocation failures, one Phase 1 localization-count expectation, and four historical checks that included unarchived .DS_Store bytes. The final run used the established Node runtime, updated the reviewed current count, and excluded OS metadata from semantic historical integrity while preserving old report replay.",
+    "git_diff_check": "PASS",
+    "EXPORT_REPRODUCIBLE": 1,
+    "export_sha256": {
+      "web/data/public_preview_papers.json": "b664e4b3b615a4eb04b964c09bf8dae91d84a94019a6fab411ce06e346f744ff",
+      "web/data/public_preview_map_data.json": "e07b6f33165537b362ea8da036811bce304fb9fbe2f4a3f667089f771e126ee1"
+    }
+  },
+  "integrity": {
+    "UNEXPECTED_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "tracked_modifications": [
+      "data/curated/paper_taxonomy.csv",
+      "data/curated/papers.csv",
+      "docs/key_paper_coverage_report.md",
+      "tests/baseline_expectations.py",
+      "tests/public_refinement_snapshot.py",
+      "tests/test_corpus_quality_batch_a.py",
+      "web/data/public_preview_map_data.json",
+      "web/data/public_preview_papers.json"
+    ],
+    "audit_untracked": [
+      "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "docs/corpus_quality_batch_c_decision_sheet_2026_10_05.md",
+      "tests/test_corpus_quality_batch_c_phase1.py"
+    ],
+    "untracked_count": 131,
+    "excluded_count": 128,
+    "head": "0bc98c3e75636899e53114be3d9de0a71986990c",
+    "index_empty": true
+  }
+}

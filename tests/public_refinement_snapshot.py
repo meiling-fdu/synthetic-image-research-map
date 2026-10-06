@@ -16,13 +16,19 @@ SNAPSHOT = ROOT / "tests/fixtures/public_website_refinement_2026_10_01.json"
 
 
 def assert_public_refinement_snapshot():
-    expected = json.loads(SNAPSHOT.read_text(encoding="utf-8"))["sha256"]
+    expected = {
+        relative: digest
+        for relative, digest in json.loads(SNAPSHOT.read_text(encoding="utf-8"))["sha256"].items()
+        if Path(relative).name != ".DS_Store"
+    }
     # The committed branding successor predates this migration. Keep the old
     # fixture intact and verify this separately recorded delta against the
     # pre-migration hashes; never approve changes by reading current bytes.
     branding = json.loads((EVIDENCE / "preexisting_branding_snapshot.json").read_text())
     baseline = json.loads((EVIDENCE / "baseline.json").read_text())["tracked_sha256"]
     for relative, digest in branding["sha256"].items():
+        if Path(relative).name == ".DS_Store":
+            continue
         assert baseline[relative] == digest
         expected[relative] = digest
     actual = {
@@ -34,7 +40,7 @@ def assert_public_refinement_snapshot():
     current_frontend = sorted(
         str(path.relative_to(ROOT))
         for path in (ROOT / "web").glob("*")
-        if path.is_file()
+        if path.is_file() and path.name != ".DS_Store"
     )
     assert current_frontend == expected_frontend
     return expected
@@ -65,10 +71,12 @@ def historical_normal_priority_diff(tmp_path, monkeypatch):
     frontend = {
         name: digest
         for name, digest in baseline.items()
-        if name.startswith("web/") and not name.startswith("web/data/")
+        if name.startswith("web/")
+        and not name.startswith("web/data/")
     }
     current_frontend = {name for name in expected if name.startswith("web/")}
-    assert current_frontend == set(frontend) | {
+    semantic_frontend = {name for name in frontend if Path(name).name != ".DS_Store"}
+    assert current_frontend == semantic_frontend | {
         "web/methodology.html", "web/paper_search_helpers.js",
     }
 

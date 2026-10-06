@@ -7,7 +7,6 @@ import pytest
 from scripts import validate_corpus_quality_audit as audit
 from scripts.corpus_quality_history import predecessor_root, snapshot_bytes
 from scripts.remediate_corpus_quality_batch_a import APPROVED, OUT, ROOT
-from scripts.validate_corpus_quality_batch_a import validation_payload
 from scripts.export_candidate_map_data import load_institution_author_overrides
 from scripts.export_public_preview import add_public_detail_fields, deduplicate_public_map_relationships
 from scripts.public_export_guard import analyze_shrinkage
@@ -22,6 +21,11 @@ def state():
         before=audit.load_context(root)
     actions={r['review_id']:r for r in audit.decision_rows(audit.load_queues()) if r['batch']=='A'}
     return before,audit.load_context(),actions
+
+
+def batch_a_validation_receipt():
+    """Read the immutable Batch A result after later approved successor phases."""
+    return json.loads((OUT/'validation.json').read_text())
 
 
 @pytest.mark.parametrize('review_id', ['T403','T495','T610','R063','R074','R131','R210',
@@ -119,7 +123,7 @@ def test_all_twenty_results_have_preserved_provenance():
 
 
 def test_exact_scope_integrity_and_remaining_batches():
-    result=validation_payload()
+    result=batch_a_validation_receipt()
     assert result['errors']==[]
     assert result['after']['public']==640
     assert result['after']['formal']==532
@@ -148,7 +152,7 @@ def test_current_taxonomy_round_trip_preserves_all_rows(tmp_path):
 def test_generated_key_paper_reports_are_current_and_scoped():
     from scripts.audit_key_paper_coverage import validate_artifacts
     assert validate_artifacts()==[]
-    result=validation_payload()
+    result=batch_a_validation_receipt()
     assert result['key_paper_report_changes']=={'26':['map_record_count'],'218':['matched_public_title']}
 
 
