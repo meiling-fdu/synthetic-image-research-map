@@ -11,7 +11,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-10-06T02:48:40Z |
+| public_preview_generated_at | 2026-10-06T10:03:42Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1419 |
-| Unique mapped papers | 616 |
+| Map records | 1421 |
+| Unique mapped papers | 617 |
 | Unique institutions | 567 |
 | Countries | 47 |
 | arXiv/preprint records | 780 |
-| Records with DOI | 1095 |
-| Records with venue | 1415 |
+| Records with DOI | 1097 |
+| Records with venue | 1417 |
 | Records missing venue | 4 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -36,7 +36,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Task | Records |
 | --- | ---: |
-| detection | 573 |
+| detection | 574 |
 | source_attribution | 81 |
 | localization | 36 |
 
@@ -45,7 +45,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | Year | Records |
 | --- | ---: |
 | 2027 | 1 |
-| 2026 | 229 |
+| 2026 | 230 |
 | 2025 | 182 |
 | 2024 | 104 |
 | 2023 | 43 |
@@ -104,7 +104,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1328 |
+| high | 1330 |
 | medium | 91 |
 
 ## Potential quality issues

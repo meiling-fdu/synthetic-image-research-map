@@ -66,7 +66,9 @@ def test_exact_approved_taxonomy_change(state, review_id):
 def test_only_three_authoritative_rows_and_approved_fields_change(state, path, key):
     context, _ = state
     old = csv_by_key(previous(path), key)
-    new = csv_by_key((ROOT / path).read_bytes(), key)
+    # Preserve the historical Phase 1 boundary. Later evidence waves may make
+    # separately approved changes to these authoritative files.
+    new = csv_by_key(phase1(path), key)
     assert old.keys() == new.keys()
     allowed = {}
     for pid, dimension, _, _ in TARGETS.values():
@@ -204,8 +206,17 @@ def test_ucsb_provenance_and_public_relationships_are_unchanged(state):
         assert old == new
         if 'map_data' in path:
             assert sum(r['institution_id'] == 'institution:de4a2849d3de43a3' for r in new) == 1
-    for path in ('data/curated/author_institution_mappings.csv',
-                 'data/curated/institution_author_overrides.csv',
+    mapping_path = 'data/curated/author_institution_mappings.csv'
+    before_mappings = [
+        row for row in csv.DictReader(io.StringIO(phase1(mapping_path).decode(), newline=''))
+        if row['paper_id'] != 'curated:0d918782407e05ade5bd'
+    ]
+    after_mappings = [
+        row for row in csv.DictReader((ROOT / mapping_path).open(newline=''))
+        if row['paper_id'] != 'curated:0d918782407e05ade5bd'
+    ]
+    assert after_mappings == before_mappings
+    for path in ('data/curated/institution_author_overrides.csv',
                  'data/raw/corpus_quality_audit_2026_10_04/relationship_review.json',
                  'data/raw/corpus_quality_batch_a_2026_10_04/results.json'):
         assert (ROOT / path).read_bytes() == previous(path)
@@ -224,10 +235,10 @@ def test_recomputed_counts_and_registry_export_synchronization(state):
     assert ledger['corpus_after'] == dict(public=640, formal=532, mapped=617, unmapped=23,
                                          relationship_rows=1422,
                                          unique_paper_institution_pairs=1422)
-    # Wave 1 later excludes the text-only R188 record at the publication gate.
-    assert context['counts'] == dict(public=639, formal=531, mapped=616, unmapped=23,
-                                    relationship_rows=1419,
-                                    unique_paper_institution_pairs=1419)
+    # Wave 1 excludes R188; Wave 2 then adds U017's explicit dual affiliation.
+    assert context['counts'] == dict(public=639, formal=531, mapped=617, unmapped=22,
+                                    relationship_rows=1421,
+                                    unique_paper_institution_pairs=1421)
     for dimension in ('tasks','research_types'):
         registry_totals = Counter(label for row in context['taxonomy'].values() for label in row[dimension].split(';') if label)
         expected_current = Counter(ledger['taxonomy_after'][dimension])

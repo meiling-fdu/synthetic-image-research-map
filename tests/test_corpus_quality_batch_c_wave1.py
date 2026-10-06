@@ -184,10 +184,10 @@ def test_exact_corpus_and_taxonomy_impact():
     assert context["counts"] == {
         "public": 639,
         "formal": 531,
-        "mapped": 616,
-        "unmapped": 23,
-        "relationship_rows": 1419,
-        "unique_paper_institution_pairs": 1419,
+        "mapped": 617,
+        "unmapped": 22,
+        "relationship_rows": 1421,
+        "unique_paper_institution_pairs": 1421,
     }
     tasks = Counter(
         label for row in context["papers"].values() for label in row["tasks"]

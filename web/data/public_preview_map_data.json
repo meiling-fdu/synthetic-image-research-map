@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-06T02:48:40Z"
+    "public_preview_generated_at": "2026-10-06T10:03:42Z"
   },
   "records": [
     {
@@ -592406,6 +592406,708 @@
           }
         },
         "source": "Manual curation"
+      }
+    },
+    {
+      "id": "curated-map:892ef7f2c7b199932aef",
+      "paper_id": "curated:0d918782407e05ade5bd",
+      "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "ACM International Workshop on Multimedia AI against Disinformation",
+      "venue_name": "ACM International Workshop on Multimedia AI against Disinformation",
+      "venue_id": "venue:mad",
+      "venue_acronym": "MAD",
+      "venue_type": "conference",
+      "venue_track": "Workshop",
+      "raw_venue": "Proceedings of the 5th ACM International Workshop on Multimedia AI against Disinformation (MAD)",
+      "publication_type": "conference",
+      "abstract": "Generative image models and modern editing tools make it increasingly difficult to verify the authenticity of visual content, especially when images span fully generated, locally edited, and hybrid, partly synthesized cases. To address this unified setting, we construct NESS, a large-scale benchmark that aggregates public datasets into four categories: Natural, locally Edited, fully Synthesized, and locally Synthesized, resulting in 210,776 images and a balanced evaluation protocol. On top of NESS, we introduce DAFNet, a dual-stream artifact-fusion network that couples an RGB semantic stream with an artifact stream built from fixed SRM high-pass residuals, and integrates them via a lightweight spatial gating module to adaptively exploit complementary cues across manipulation types. On the NESS test set, DAFNet achieves a balanced accuracy of 0.9191 and a ROC-AUC of 0.9799, outperforming the evaluated baselines under the same protocol. The NESS dataset and DAFNet implementation will be released to support future research on robust image authenticity assessment.",
+      "abstract_source": "openalex",
+      "doi": "10.1145/3810988.3812660",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1145/3810988.3812660",
+      "formal_url": "https://doi.org/10.1145/3810988.3812660",
+      "primary_url": "https://doi.org/10.1145/3810988.3812660",
+      "openalex_url": "https://openalex.org/W7164758918",
+      "url": "https://doi.org/10.1145/3810988.3812660",
+      "authors": [
+        {
+          "name": "Thinh-Phat Vo",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Dang-Khoa Mai",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Minh–Triet Tran",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Trong-Le Do",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "institution": "University of Science, Viet Nam National University Ho Chi Minh City",
+      "institution_id": "institution:806523d1aae41484",
+      "location_id": "location:806523d1aae41484a05a",
+      "institution_authors": [
+        "Thinh-Phat Vo",
+        "Dang-Khoa Mai",
+        "Minh-Triet Tran",
+        "Trong-Le Do"
+      ],
+      "country": "Vietnam",
+      "country_code": "VN",
+      "region": "Ho Chi Minh City",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Ho Chi Minh City",
+      "latitude": 10.76262,
+      "longitude": 106.68218,
+      "lat": 10.76262,
+      "lon": 106.68218,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "mapping_id": "mapping:92ec0a0fa7b4539863d1",
+      "affiliation_order": 1,
+      "raw_affiliation": "University of Science, VNU-HCM, Ho Chi Minh, Vietnam",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: University of Science, VNU-HCM, Ho Chi Minh, Vietnam",
+      "location_display": "Ho Chi Minh City, Vietnam",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:806523d1aae41484",
+          "institution": "University of Science, Viet Nam National University Ho Chi Minh City",
+          "institution_type": "university",
+          "authors": [
+            "Thinh-Phat Vo",
+            "Dang-Khoa Mai",
+            "Minh-Triet Tran",
+            "Trong-Le Do"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:19d2ee8d44bfb9f0",
+          "institution": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
+          "institution_type": "university",
+          "authors": [
+            "Thinh-Phat Vo",
+            "Dang-Khoa Mai",
+            "Minh-Triet Tran",
+            "Trong-Le Do"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Vietnam National University Ho Chi Minh City"
+          ],
+          "canonical_name": "Vietnam National University Ho Chi Minh City",
+          "canonical_institution_name": "Vietnam National University Ho Chi Minh City",
+          "abbreviation": "VNU-HCM"
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Thinh-Phat Vo",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ]
+        },
+        {
+          "author": "Dang-Khoa Mai",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ]
+        },
+        {
+          "author": "Minh–Triet Tran",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ]
+        },
+        {
+          "author": "Trong-Le Do",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ]
+        }
+      ],
+      "venue_label": "ACM International Workshop on Multimedia AI against Disinformation (MAD)",
+      "venue_aliases": [
+        "ACM International Workshop on Multimedia AI against Disinformation (MAD)",
+        "ACM International Workshop on Multimedia AI against Disinformation",
+        "Proceedings of the 1st International Workshop on Multimedia AI against Disinformation",
+        "MAD"
+      ],
+      "ambiguity_status": "unresolved",
+      "venue_review_required": true,
+      "venue_review_reason": "This is a standalone scholarly workshop venue. Its name alone does not establish a Workshop subtrack; confirm Main versus an actual nested workshop track from the paper/program, preserving the venue identity.",
+      "institution_type": "university",
+      "canonical_name": "University of Science, Viet Nam National University Ho Chi Minh City",
+      "canonical_institution_name": "University of Science, Viet Nam National University Ho Chi Minh City",
+      "mapping_lineage_ids": [
+        "mapping:92ec0a0fa7b4539863d1"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 4,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Science, Viet Nam National University Ho Chi Minh City",
+          "canonical_name": "University of Science, Viet Nam National University Ho Chi Minh City",
+          "institution_id": "institution:806523d1aae41484",
+          "institution_type": "university",
+          "country": "Vietnam",
+          "country_code": "",
+          "region": "Ho Chi Minh City",
+          "location_display": "Ho Chi Minh City, Vietnam"
+        },
+        {
+          "index": 2,
+          "name": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
+          "canonical_name": "Vietnam National University Ho Chi Minh City",
+          "institution_id": "institution:19d2ee8d44bfb9f0",
+          "institution_type": "university",
+          "country": "Vietnam",
+          "country_code": "",
+          "region": "Ho Chi Minh City",
+          "location_display": "Ho Chi Minh City, Vietnam",
+          "source_institution_names": [
+            "Vietnam National University Ho Chi Minh City"
+          ],
+          "canonical_institution_name": "Vietnam National University Ho Chi Minh City",
+          "abbreviation": "VNU-HCM"
+        }
+      ],
+      "current_institution": {
+        "index": 1,
+        "name": "University of Science, Viet Nam National University Ho Chi Minh City",
+        "canonical_name": "University of Science, Viet Nam National University Ho Chi Minh City",
+        "institution_id": "institution:806523d1aae41484",
+        "institution_type": "university",
+        "country": "Vietnam",
+        "country_code": "",
+        "region": "Ho Chi Minh City",
+        "location_display": "Ho Chi Minh City, Vietnam"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Thinh-Phat Vo",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Dang-Khoa Mai",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Minh–Triet Tran",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Trong-Le Do",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "is_arxiv_preprint": false,
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "venue": {
+            "status": "Needs review",
+            "source": "OpenAlex"
+          },
+          "affiliations": {
+            "status": "Curated",
+            "source": "Manual curation"
+          }
+        },
+        "source": "OpenAlex"
+      }
+    },
+    {
+      "id": "curated-map:b0b3eabf500ad0a06389",
+      "paper_id": "curated:0d918782407e05ade5bd",
+      "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "ACM International Workshop on Multimedia AI against Disinformation",
+      "venue_name": "ACM International Workshop on Multimedia AI against Disinformation",
+      "venue_id": "venue:mad",
+      "venue_acronym": "MAD",
+      "venue_type": "conference",
+      "venue_track": "Workshop",
+      "raw_venue": "Proceedings of the 5th ACM International Workshop on Multimedia AI against Disinformation (MAD)",
+      "publication_type": "conference",
+      "abstract": "Generative image models and modern editing tools make it increasingly difficult to verify the authenticity of visual content, especially when images span fully generated, locally edited, and hybrid, partly synthesized cases. To address this unified setting, we construct NESS, a large-scale benchmark that aggregates public datasets into four categories: Natural, locally Edited, fully Synthesized, and locally Synthesized, resulting in 210,776 images and a balanced evaluation protocol. On top of NESS, we introduce DAFNet, a dual-stream artifact-fusion network that couples an RGB semantic stream with an artifact stream built from fixed SRM high-pass residuals, and integrates them via a lightweight spatial gating module to adaptively exploit complementary cues across manipulation types. On the NESS test set, DAFNet achieves a balanced accuracy of 0.9191 and a ROC-AUC of 0.9799, outperforming the evaluated baselines under the same protocol. The NESS dataset and DAFNet implementation will be released to support future research on robust image authenticity assessment.",
+      "abstract_source": "openalex",
+      "doi": "10.1145/3810988.3812660",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1145/3810988.3812660",
+      "formal_url": "https://doi.org/10.1145/3810988.3812660",
+      "primary_url": "https://doi.org/10.1145/3810988.3812660",
+      "openalex_url": "https://openalex.org/W7164758918",
+      "url": "https://doi.org/10.1145/3810988.3812660",
+      "authors": [
+        {
+          "name": "Thinh-Phat Vo",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Dang-Khoa Mai",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Minh–Triet Tran",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Trong-Le Do",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "institution": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
+      "institution_id": "institution:19d2ee8d44bfb9f0",
+      "location_id": "location:eb04fc46c0c4e2a07c27",
+      "institution_authors": [
+        "Thinh-Phat Vo",
+        "Dang-Khoa Mai",
+        "Minh-Triet Tran",
+        "Trong-Le Do"
+      ],
+      "country": "Vietnam",
+      "country_code": "VN",
+      "region": "Ho Chi Minh City",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Ho Chi Minh City",
+      "latitude": 10.86896,
+      "longitude": 106.79623,
+      "lat": 10.86896,
+      "lon": 106.79623,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "mapping_id": "mapping:6307736ef459cb62af5a",
+      "affiliation_order": 2,
+      "raw_affiliation": "Viet Nam National University, Ho Chi Minh City, Vietnam",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Viet Nam National University, Ho Chi Minh City, Vietnam",
+      "location_display": "Ho Chi Minh City, Vietnam",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:806523d1aae41484",
+          "institution": "University of Science, Viet Nam National University Ho Chi Minh City",
+          "institution_type": "university",
+          "authors": [
+            "Thinh-Phat Vo",
+            "Dang-Khoa Mai",
+            "Minh-Triet Tran",
+            "Trong-Le Do"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:19d2ee8d44bfb9f0",
+          "institution": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
+          "institution_type": "university",
+          "authors": [
+            "Thinh-Phat Vo",
+            "Dang-Khoa Mai",
+            "Minh-Triet Tran",
+            "Trong-Le Do"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Vietnam National University Ho Chi Minh City"
+          ],
+          "canonical_name": "Vietnam National University Ho Chi Minh City",
+          "canonical_institution_name": "Vietnam National University Ho Chi Minh City",
+          "abbreviation": "VNU-HCM"
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Thinh-Phat Vo",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ]
+        },
+        {
+          "author": "Dang-Khoa Mai",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ]
+        },
+        {
+          "author": "Minh–Triet Tran",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ]
+        },
+        {
+          "author": "Trong-Le Do",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ]
+        }
+      ],
+      "venue_label": "ACM International Workshop on Multimedia AI against Disinformation (MAD)",
+      "venue_aliases": [
+        "ACM International Workshop on Multimedia AI against Disinformation (MAD)",
+        "ACM International Workshop on Multimedia AI against Disinformation",
+        "Proceedings of the 1st International Workshop on Multimedia AI against Disinformation",
+        "MAD"
+      ],
+      "ambiguity_status": "unresolved",
+      "venue_review_required": true,
+      "venue_review_reason": "This is a standalone scholarly workshop venue. Its name alone does not establish a Workshop subtrack; confirm Main versus an actual nested workshop track from the paper/program, preserving the venue identity.",
+      "institution_type": "university",
+      "source_institution_names": [
+        "Vietnam National University Ho Chi Minh City"
+      ],
+      "source_institution": "Vietnam National University Ho Chi Minh City",
+      "canonical_name": "Vietnam National University Ho Chi Minh City",
+      "canonical_institution_name": "Vietnam National University Ho Chi Minh City",
+      "abbreviation": "VNU-HCM",
+      "mapping_lineage_ids": [
+        "mapping:6307736ef459cb62af5a"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 4,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Science, Viet Nam National University Ho Chi Minh City",
+          "canonical_name": "University of Science, Viet Nam National University Ho Chi Minh City",
+          "institution_id": "institution:806523d1aae41484",
+          "institution_type": "university",
+          "country": "Vietnam",
+          "country_code": "",
+          "region": "Ho Chi Minh City",
+          "location_display": "Ho Chi Minh City, Vietnam"
+        },
+        {
+          "index": 2,
+          "name": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
+          "canonical_name": "Vietnam National University Ho Chi Minh City",
+          "institution_id": "institution:19d2ee8d44bfb9f0",
+          "institution_type": "university",
+          "country": "Vietnam",
+          "country_code": "",
+          "region": "Ho Chi Minh City",
+          "location_display": "Ho Chi Minh City, Vietnam",
+          "source_institution_names": [
+            "Vietnam National University Ho Chi Minh City"
+          ],
+          "canonical_institution_name": "Vietnam National University Ho Chi Minh City",
+          "abbreviation": "VNU-HCM"
+        }
+      ],
+      "current_institution": {
+        "index": 2,
+        "name": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
+        "canonical_name": "Vietnam National University Ho Chi Minh City",
+        "institution_id": "institution:19d2ee8d44bfb9f0",
+        "institution_type": "university",
+        "country": "Vietnam",
+        "country_code": "",
+        "region": "Ho Chi Minh City",
+        "location_display": "Ho Chi Minh City, Vietnam",
+        "source_institution_names": [
+          "Vietnam National University Ho Chi Minh City"
+        ],
+        "canonical_institution_name": "Vietnam National University Ho Chi Minh City",
+        "abbreviation": "VNU-HCM"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Thinh-Phat Vo",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Dang-Khoa Mai",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Minh–Triet Tran",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Trong-Le Do",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:806523d1aae41484",
+            "institution:19d2ee8d44bfb9f0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "is_arxiv_preprint": false,
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "venue": {
+            "status": "Needs review",
+            "source": "OpenAlex"
+          },
+          "affiliations": {
+            "status": "Curated",
+            "source": "Manual curation"
+          }
+        },
+        "source": "OpenAlex"
       }
     }
   ],

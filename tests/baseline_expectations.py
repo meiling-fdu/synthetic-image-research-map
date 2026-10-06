@@ -7,17 +7,17 @@ data change and the identity and relationship invariants in
 """
 
 # Approved gap migration and Corpus Quality Batches A/C Phase 1 plus Batch C
-# Wave 1: R188 is retained in audit history and excluded from public outputs.
-# The prior exact baseline is retained in the verified 640-paper snapshot.
+# Waves 1 and 2: R188 is excluded from public outputs; U017 has its explicit
+# member and parent affiliations. The prior baseline remains in dated receipts.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 639,
-    "public_map_source_papers": 616,
-    "public_papers_with_map": 616,
-    "public_papers_without_map": 23,
+    "public_map_source_papers": 617,
+    "public_papers_with_map": 617,
+    "public_papers_without_map": 22,
     "total_institution_registry_rows": 748,
     "active_canonical_institutions": 727,
     "non_active_institution_registry_rows": 21,
-    "public_paper_institution_relationships": 1419,
+    "public_paper_institution_relationships": 1421,
     "institution_hierarchy_edges": 16,
     "institution_aliases": 120,
 }
@@ -73,8 +73,6 @@ PUBLIC_PAPERS_WITHOUT_MAP = {
     "NSFF: Noise and Semantic Features Fusion for AI-Generated Image Detection":
         "missing_affiliation_rows",
     "Spatial Flatness-Curvature Mask Driven Generalized Detection of Synthetic Images":
-        "missing_affiliation_rows",
-    "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion":
         "missing_affiliation_rows",
     "Explainable Artifacts for Synthetic Western Blot Source Attribution":
         "missing_affiliation_rows",

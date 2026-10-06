@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-06T02:48:40Z"
+    "public_preview_generated_at": "2026-10-06T10:03:42Z"
   },
   "records": [
     {
@@ -96364,40 +96364,44 @@
         {
           "name": "Thinh-Phat Vo",
           "affiliation_indices": [
-            1
+            1,
+            2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
         {
-          "name": "Daniel Mai",
+          "name": "Dang-Khoa Mai",
           "affiliation_indices": [
-            1
+            1,
+            2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
         {
           "name": "Minh–Triet Tran",
           "affiliation_indices": [
-            1
+            1,
+            2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
         {
           "name": "Trong-Le Do",
           "affiliation_indices": [
-            1
+            1,
+            2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         }
@@ -96406,46 +96410,90 @@
       "metadata_source": "openalex",
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "paper_only_review",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University of Science, Viet Nam National University Ho Chi Minh City",
+        "Vietnam National University Ho Chi Minh City (VNU-HCM)"
+      ],
+      "aggregated_country_names": [
+        "Vietnam"
+      ],
+      "aggregated_country_codes": [
+        "VN"
+      ],
+      "aggregated_regions": [
+        "Ho Chi Minh City"
+      ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {
+          "mapping_id": "mapping:92ec0a0fa7b4539863d1",
+          "institution_id": "institution:806523d1aae41484",
+          "location_id": "location:806523d1aae41484a05a",
+          "institution": "University of Science, Viet Nam National University Ho Chi Minh City",
+          "institution_authors": [
+            "Thinh-Phat Vo",
+            "Dang-Khoa Mai",
+            "Minh-Triet Tran",
+            "Trong-Le Do"
+          ],
+          "raw_affiliation": "University of Science, VNU-HCM, Ho Chi Minh, Vietnam",
+          "mapping_status": "active",
+          "affiliation_order": 1
+        },
+        {
           "mapping_id": "mapping:6307736ef459cb62af5a",
           "institution_id": "institution:19d2ee8d44bfb9f0",
+          "location_id": "location:eb04fc46c0c4e2a07c27",
           "institution": "Vietnam National University Ho Chi Minh City",
           "institution_authors": [
             "Thinh-Phat Vo",
-            "Daniel Mai",
-            "Minh–Triet Tran",
+            "Dang-Khoa Mai",
+            "Minh-Triet Tran",
             "Trong-Le Do"
           ],
-          "raw_affiliation": "University of Science, VNU-HCM, Ho Chi Minh, Vietnam and Viet Nam National University, Ho Chi Minh City, Vietnam | University of Science, VNU-HCM, Ho Chi Minh, Vietnam and Viet Nam National University, Ho Chi Minh, Vietnam",
-          "mapping_status": "needs_review"
+          "raw_affiliation": "Viet Nam National University, Ho Chi Minh City, Vietnam",
+          "mapping_status": "active",
+          "affiliation_order": 2
         }
       ],
       "author_institution_affiliations": [
         {
           "index": 1,
+          "institution_id": "institution:806523d1aae41484",
+          "institution": "University of Science, Viet Nam National University Ho Chi Minh City",
+          "institution_type": "university",
+          "authors": [
+            "Thinh-Phat Vo",
+            "Dang-Khoa Mai",
+            "Minh-Triet Tran",
+            "Trong-Le Do"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
           "institution_id": "institution:19d2ee8d44bfb9f0",
           "institution": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
           "institution_type": "university",
-          "authors": [],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": true,
+          "authors": [
+            "Thinh-Phat Vo",
+            "Dang-Khoa Mai",
+            "Minh-Triet Tran",
+            "Trong-Le Do"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
           "source_institution_names": [
             "Vietnam National University Ho Chi Minh City"
           ],
-          "preliminary": true,
           "canonical_name": "Vietnam National University Ho Chi Minh City",
           "canonical_institution_name": "Vietnam National University Ho Chi Minh City",
           "abbreviation": "VNU-HCM"
@@ -96455,36 +96503,44 @@
         {
           "author": "Thinh-Phat Vo",
           "institution_indices": [
-            1
+            1,
+            2
           ],
           "institution_ids": [
+            "institution:806523d1aae41484",
             "institution:19d2ee8d44bfb9f0"
           ]
         },
         {
-          "author": "Daniel Mai",
+          "author": "Dang-Khoa Mai",
           "institution_indices": [
-            1
+            1,
+            2
           ],
           "institution_ids": [
+            "institution:806523d1aae41484",
             "institution:19d2ee8d44bfb9f0"
           ]
         },
         {
           "author": "Minh–Triet Tran",
           "institution_indices": [
-            1
+            1,
+            2
           ],
           "institution_ids": [
+            "institution:806523d1aae41484",
             "institution:19d2ee8d44bfb9f0"
           ]
         },
         {
           "author": "Trong-Le Do",
           "institution_indices": [
-            1
+            1,
+            2
           ],
           "institution_ids": [
+            "institution:806523d1aae41484",
             "institution:19d2ee8d44bfb9f0"
           ]
         }
@@ -96493,73 +96549,82 @@
         {
           "author": "Thinh-Phat Vo",
           "indices": [
-            1
+            1,
+            2
           ],
           "institution_ids": [
+            "institution:806523d1aae41484",
             "institution:19d2ee8d44bfb9f0"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
-          "author": "Daniel Mai",
+          "author": "Dang-Khoa Mai",
           "indices": [
-            1
+            1,
+            2
           ],
           "institution_ids": [
+            "institution:806523d1aae41484",
             "institution:19d2ee8d44bfb9f0"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
           "author": "Minh–Triet Tran",
           "indices": [
-            1
+            1,
+            2
           ],
           "institution_ids": [
+            "institution:806523d1aae41484",
             "institution:19d2ee8d44bfb9f0"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
           "author": "Trong-Le Do",
           "indices": [
-            1
+            1,
+            2
           ],
           "institution_ids": [
+            "institution:806523d1aae41484",
             "institution:19d2ee8d44bfb9f0"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         }
       ],
-      "affiliations": [
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "aggregated_locations": [
         {
-          "index": 1,
-          "name": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
-          "canonical_name": "Vietnam National University Ho Chi Minh City",
+          "institution_name": "University of Science, Viet Nam National University Ho Chi Minh City",
+          "institution_id": "institution:806523d1aae41484",
+          "institution_type": "university",
+          "country": "Vietnam",
+          "country_code": "VN",
+          "region": "Ho Chi Minh City",
+          "region_code": "",
+          "location_display": "Ho Chi Minh City, Vietnam"
+        },
+        {
+          "institution_name": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
           "institution_id": "institution:19d2ee8d44bfb9f0",
           "institution_type": "university",
-          "country": "",
-          "country_code": "",
-          "region": "",
-          "location_display": "",
-          "source_institution_names": [
-            "Vietnam National University Ho Chi Minh City"
-          ],
-          "preliminary": true,
-          "canonical_institution_name": "Vietnam National University Ho Chi Minh City",
-          "abbreviation": "VNU-HCM"
+          "country": "Vietnam",
+          "country_code": "VN",
+          "region": "Ho Chi Minh City",
+          "region_code": "",
+          "location_display": "Ho Chi Minh City, Vietnam"
         }
       ],
-      "current_institution": null,
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "aggregated_locations": [],
       "aggregated_institution_types": [
         "university"
       ],
@@ -96577,6 +96642,7 @@
       "venue_label": "ACM International Workshop on Multimedia AI against Disinformation (MAD)",
       "formal_url": "https://doi.org/10.1145/3810988.3812660",
       "search_institution_ids": [
+        "institution:806523d1aae41484",
         "institution:19d2ee8d44bfb9f0"
       ],
       "author_affiliation_counts": {
@@ -96596,7 +96662,8 @@
             "source": "OpenAlex"
           },
           "affiliations": {
-            "status": "Needs review"
+            "status": "Curated",
+            "source": "Manual curation"
           }
         },
         "source": "OpenAlex"
@@ -96621,7 +96688,37 @@
         "research_types": {
           "status": "reviewed"
         }
-      }
+      },
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Science, Viet Nam National University Ho Chi Minh City",
+          "canonical_name": "University of Science, Viet Nam National University Ho Chi Minh City",
+          "institution_id": "institution:806523d1aae41484",
+          "institution_type": "university",
+          "country": "Vietnam",
+          "country_code": "",
+          "region": "Ho Chi Minh City",
+          "location_display": "Ho Chi Minh City, Vietnam"
+        },
+        {
+          "index": 2,
+          "name": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
+          "canonical_name": "Vietnam National University Ho Chi Minh City",
+          "institution_id": "institution:19d2ee8d44bfb9f0",
+          "institution_type": "university",
+          "country": "Vietnam",
+          "country_code": "",
+          "region": "Ho Chi Minh City",
+          "location_display": "Ho Chi Minh City, Vietnam",
+          "source_institution_names": [
+            "Vietnam National University Ho Chi Minh City"
+          ],
+          "canonical_institution_name": "Vietnam National University Ho Chi Minh City",
+          "abbreviation": "VNU-HCM"
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:1babf622ee5d19e20e1a",

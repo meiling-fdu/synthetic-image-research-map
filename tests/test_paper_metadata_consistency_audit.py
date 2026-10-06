@@ -79,8 +79,8 @@ class PaperMetadataConsistencyAuditTests(unittest.TestCase):
         self.assertEqual(summary["true_inconsistencies"], 0)
         self.assertEqual(summary["legacy_fallback_risks"], 0)
         # Current-state assertions; dated audit receipts retain predecessor bytes.
-        self.assertEqual(summary["public_paper_institution_relationships"], 1419)
-        self.assertEqual(summary["map_markers"], 1419)
+        self.assertEqual(summary["public_paper_institution_relationships"], 1421)
+        self.assertEqual(summary["map_markers"], 1421)
         self.assertEqual(summary["published_only_papers"], 531)
         self.assertEqual(summary["affiliation_audit_mismatches"], 0)
         self.assertEqual(summary["retired_institution_affiliation_leaks"], 0)

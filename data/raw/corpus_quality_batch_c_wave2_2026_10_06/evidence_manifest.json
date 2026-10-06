@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "audit": "corpus_quality_batch_c_external_evidence",
+  "wave": 2,
+  "date": "2026-10-06",
+  "adjudication_date": "2026-10-06",
+  "adjudication_status": "FINAL",
+  "baseline_commit": "b5766b029a74d5225e2cdf490a8ce9cc55d69da7",
+  "scope": {
+    "review_ids": [
+      "U010",
+      "U017"
+    ],
+    "actions": 2,
+    "unique_papers": 2,
+    "primary_document_budget": 2,
+    "primary_documents_represented": 2,
+    "evidence_only": false,
+    "corpus_changes_applied": true
+  },
+  "retrieval_policy": {
+    "one_primary_document_per_paper": true,
+    "search_results_saved": false,
+    "raw_pages_saved": false,
+    "failed_responses_saved": false,
+    "raw_files": [],
+    "note": "The wave used only the permitted official IEEE document for U010 and the single already-identified official ACM PDF for U017. No substitute or secondary source is evidence."
+  },
+  "documents": [
+    {
+      "document_id": "U010-ieee",
+      "review_id": "U010",
+      "source_type": "official_ieee_formatted_paper_pdf",
+      "url": "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11494515",
+      "retrieval_outcome": "HTTP_418_UNUSABLE",
+      "raw_saved": false,
+      "usable_evidence_extracted": false
+    },
+    {
+      "document_id": "U017-acm",
+      "review_id": "U017",
+      "source_type": "official_acm_formatted_paper_pdf",
+      "url": "https://dl.acm.org/doi/pdf/10.1145/3810988.3812660",
+      "retrieval_outcome": "RENDERED_COMPLETE_AFFILIATION_BLOCK",
+      "raw_saved": false,
+      "usable_evidence_extracted": true,
+      "locator": "page 1, author and affiliation block"
+    }
+  ],
+  "actions": [
+    {
+      "review_id": "U010",
+      "paper_id": "curated:d0eec7c4fce8929c295a",
+      "title": "Diffusion-Driven Forgery Detection: Distilling Latent Features for Generalized Image Forensics",
+      "policy_id": "I1",
+      "official_source_document_id": "U010-ieee",
+      "official_source_url": "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11494515",
+      "source_type": "official_ieee_formatted_paper_pdf",
+      "retrieval_outcome": "HTTP_418_UNUSABLE",
+      "local_context_only": {
+        "current_mapping": "All four authors are assigned to Shanghai University of Engineering Science (SUES).",
+        "recorded_affiliation_text": "School of Computer Engineering and Science, Shanghai University, Shanghai, China",
+        "locked_policy": "KEEP_DISTINCT_CANONICAL_INSTITUTIONS",
+        "warning": "This conflict is context only and does not establish the paper-time affiliation."
+      },
+      "literal_authoritative_evidence": null,
+      "adjudication": "EVIDENCE_STILL_INSUFFICIENT",
+      "evidence_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "confidence": "high",
+      "exact_missing_evidence": "Accessible official IEEE paper metadata/PDF containing the complete author-affiliation block and author markers.",
+      "proposed_future_remediation": null,
+      "final_disposition": "EVIDENCE_STILL_INSUFFICIENT",
+      "corpus_change_applied": false
+    },
+    {
+      "review_id": "U017",
+      "paper_id": "curated:0d918782407e05ade5bd",
+      "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+      "policy_id": "I2",
+      "official_source_document_id": "U017-acm",
+      "official_source_url": "https://dl.acm.org/doi/pdf/10.1145/3810988.3812660",
+      "source_type": "official_acm_formatted_paper_pdf",
+      "retrieval_outcome": "RENDERED_COMPLETE_AFFILIATION_BLOCK",
+      "literal_authoritative_evidence": {
+        "author_order": [
+          "Thinh-Phat Vo",
+          "Dang-Khoa Mai",
+          "Minh-Triet Tran",
+          "Trong-Le Do"
+        ],
+        "affiliation_marker_form": "No numbered affiliation superscripts are used. Each ACM author block directly repeats the affiliations beneath the author name. Trong-Le Do alone has an asterisk identifying the corresponding author; it is not an affiliation marker.",
+        "affiliation_blocks": [
+          {
+            "authors": [
+              "Thinh-Phat Vo",
+              "Dang-Khoa Mai",
+              "Minh-Triet Tran",
+              "Trong-Le Do"
+            ],
+            "literal_lines": [
+              "University of Science, VNU-HCM",
+              "Ho Chi Minh, Vietnam",
+              "Viet Nam National University",
+              "Ho Chi Minh City, Vietnam"
+            ]
+          }
+        ],
+        "specific_member": "University of Science, VNU-HCM",
+        "parent_separately_listed": true,
+        "parent_literal_name": "Viet Nam National University",
+        "organizational_formulation": "The member and parent are separately listed as two organization/location pairs within every author's affiliation block."
+      },
+      "author_to_affiliation_mapping": [
+        {
+          "author": "Thinh-Phat Vo",
+          "affiliations": [
+            "University of Science, VNU-HCM",
+            "Viet Nam National University"
+          ]
+        },
+        {
+          "author": "Dang-Khoa Mai",
+          "affiliations": [
+            "University of Science, VNU-HCM",
+            "Viet Nam National University"
+          ]
+        },
+        {
+          "author": "Minh-Triet Tran",
+          "affiliations": [
+            "University of Science, VNU-HCM",
+            "Viet Nam National University"
+          ]
+        },
+        {
+          "author": "Trong-Le Do",
+          "affiliations": [
+            "University of Science, VNU-HCM",
+            "Viet Nam National University"
+          ]
+        }
+      ],
+      "adjudication": "EXPLICIT_DUAL_AFFILIATION_SUPPORTED",
+      "evidence_outcome": "EVIDENCE_RESOLVED_CHANGE",
+      "confidence": "high",
+      "exact_missing_evidence": null,
+      "final_disposition": "REMEDIATION_APPLIED",
+      "canonical_institutions": {
+        "member": {
+          "institution_id": "institution:806523d1aae41484",
+          "canonical_name": "University of Science, Viet Nam National University Ho Chi Minh City",
+          "mapping_id": "mapping:92ec0a0fa7b4539863d1"
+        },
+        "parent": {
+          "institution_id": "institution:19d2ee8d44bfb9f0",
+          "canonical_name": "Vietnam National University Ho Chi Minh City",
+          "mapping_id": "mapping:6307736ef459cb62af5a"
+        }
+      },
+      "remediation": {
+        "author_identity_correction": "Daniel Mai -> Dang-Khoa Mai",
+        "author_order": [
+          "Thinh-Phat Vo",
+          "Dang-Khoa Mai",
+          "Minh-Triet Tran",
+          "Trong-Le Do"
+        ],
+        "member_affiliation_added_for_all_authors": true,
+        "explicit_parent_affiliation_retained_for_all_authors": true,
+        "author_institution_links": 8,
+        "paper_institution_relationships": 2,
+        "hierarchy_changed": false,
+        "coordinates_changed": false
+      },
+      "proposed_future_remediation": null,
+      "corpus_change_applied": true
+    }
+  ],
+  "reconciliation": {
+    "EVIDENCE_RESOLVED_CHANGE": 1,
+    "EVIDENCE_RESOLVED_NO_CHANGE": 0,
+    "EVIDENCE_STILL_INSUFFICIENT": 1,
+    "external_batch_c_before": 30,
+    "external_batch_c_after": 29,
+    "t527_separate_maintainer_scope_judgment": true,
+    "total_unresolved_batch_c_after_including_t527": 30
+  },
+  "corpus_before": {
+    "public_papers": 639,
+    "formal_publications": 531,
+    "mapped_papers": 616,
+    "relationship_rows": 1419,
+    "unique_paper_institution_pairs": 1419
+  },
+  "corpus_after": {
+    "public_papers": 639,
+    "formal_publications": 531,
+    "mapped_papers": 617,
+    "relationship_rows": 1421,
+    "unique_paper_institution_pairs": 1421
+  },
+  "taxonomy_after": {
+    "detection": 592,
+    "source_attribution": 85,
+    "localization": 41,
+    "method": 547,
+    "dataset": 133,
+    "benchmark": 88,
+    "survey": 20,
+    "analysis_study": 78
+  },
+  "integrity_expectations": {
+    "allowed_authoritative_changes": [
+      "U017 author identity correction",
+      "U017 explicit member and parent author-affiliation mappings"
+    ],
+    "institution_registry_changed": false,
+    "institution_hierarchy_changed": false,
+    "institution_coordinates_changed": false,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+  }
+}
