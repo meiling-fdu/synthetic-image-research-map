@@ -315,6 +315,8 @@ def integrity():
             'data/manual/missing_author_mappings_report.csv',
             'data/processed/institution_type_audit.csv',
             'docs/missing_author_mappings_report.md',
+            'docs/paper_metadata_consistency_audit.csv',
+            'docs/paper_metadata_consistency_audit.md',
             'docs/public_preview_report.md',
         })
     migration_snapshot = ROOT/'data/processed/legacy_scope_exclusion_migration_2026_09/predecessor_666_snapshot.json'

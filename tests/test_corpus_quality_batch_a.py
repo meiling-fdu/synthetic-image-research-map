@@ -146,7 +146,7 @@ def test_current_taxonomy_round_trip_preserves_all_rows(tmp_path):
     summary=apply_paper_taxonomy_registry(current,maps,rebuilt,read_exclusion_rows())
     assert summary['public_papers_matched']==len(current)
     assert summary['map_records_matched']==len(maps)
-    assert summary['registry_rows_suppressed_by_active_exclusion']==43
+    assert summary['registry_rows_suppressed_by_active_exclusion']==44
 
 
 def test_generated_key_paper_reports_are_current_and_scoped():

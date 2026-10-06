@@ -5,6 +5,7 @@ import gzip
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 import tempfile
 from functools import lru_cache
 
@@ -47,6 +48,27 @@ def historical_bytes(path):
     return values[relative] if relative in values else path.read_bytes()
 
 
+def baseline_bytes(path):
+    """Read a path exactly as it existed at the verified Batch A baseline."""
+    path = Path(path).resolve()
+    relative = path.relative_to(ROOT).as_posix()
+    manifest = EVIDENCE / 'predecessor_640_manifest.json'
+    archive = EVIDENCE / 'predecessor_640.json.gz'
+    values = _cached_snapshot(manifest.stat().st_mtime_ns, archive.stat().st_mtime_ns)
+    if relative in values:
+        return values[relative]
+    baseline = json.loads((EVIDENCE / 'baseline.json').read_text())
+    expected = baseline['tracked_sha256'].get(relative)
+    if not expected:
+        return path.read_bytes()
+    value = subprocess.check_output(
+        ['git', 'show', baseline['head'] + ':' + relative], cwd=ROOT
+    )
+    if hashlib.sha256(value).hexdigest() != expected:
+        raise ValueError('Batch A baseline object checksum mismatch: ' + relative)
+    return value
+
+
 @contextmanager
 def predecessor_root():
     """Materialize historical inputs; unchanged protected files stay read-only links."""
@@ -60,5 +82,15 @@ def predecessor_root():
             if path in values:
                 target.write_bytes(values[path])
             else:
-                target.symlink_to(ROOT / path)
+                expected = (prior['protected_105'] | prior['frozen_sha256'])[path]
+                current = ROOT / path
+                if current.is_file() and hashlib.sha256(current.read_bytes()).hexdigest() == expected:
+                    target.symlink_to(current)
+                else:
+                    value = subprocess.check_output(
+                        ['git', 'show', prior['head'] + ':' + path], cwd=ROOT
+                    )
+                    if hashlib.sha256(value).hexdigest() != expected:
+                        raise ValueError('historical protected object checksum mismatch: ' + path)
+                    target.write_bytes(value)
         yield root

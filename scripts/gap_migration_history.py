@@ -11,6 +11,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / 'data/raw/systematic_gap_migration_2026_10_03'
+BATCH_A_BASELINE_REPORTS = {
+    'data/manual/missing_author_mappings_report.csv',
+    'docs/missing_author_mappings_report.md',
+    'docs/public_preview_report.md',
+}
 
 
 def historical_bytes(path):
@@ -28,9 +33,17 @@ def historical_bytes(path):
         # approved successor. Replay their verified pre-Batch-A bytes without
         # changing the older 623/666-paper snapshots or their receipts.
         try:
-            from .corpus_quality_history import historical_bytes as batch_a_bytes
+            from .corpus_quality_history import (
+                baseline_bytes as batch_a_baseline_bytes,
+                historical_bytes as batch_a_bytes,
+            )
         except ImportError:
-            from corpus_quality_history import historical_bytes as batch_a_bytes
+            from corpus_quality_history import (
+                baseline_bytes as batch_a_baseline_bytes,
+                historical_bytes as batch_a_bytes,
+            )
+        if relative in BATCH_A_BASELINE_REPORTS:
+            return batch_a_baseline_bytes(path)
         return batch_a_bytes(path)
     baseline = json.loads((EVIDENCE / 'baseline.json').read_text())
     if entry['sha256'] != baseline['tracked_sha256'][relative]:

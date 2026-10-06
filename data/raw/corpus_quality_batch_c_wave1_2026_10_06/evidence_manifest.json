@@ -1,0 +1,359 @@
+{
+  "schema_version": 1,
+  "audit": "corpus_quality_batch_c_external_evidence",
+  "wave": 1,
+  "retrieval_date": "2026-10-06",
+  "adjudication_date": "2026-10-06",
+  "adjudication_status": "FINAL",
+  "scope": {
+    "review_ids": [
+      "P550",
+      "P586",
+      "P610",
+      "P633",
+      "R188"
+    ],
+    "actions": 5,
+    "unique_papers": 5,
+    "authoritative_documents": 6,
+    "excluded": [
+      "Batch B",
+      "other Batch C actions",
+      "T527",
+      "Batch D",
+      "NeurIPS 7+1"
+    ]
+  },
+  "retrieval_policy": {
+    "search_results_saved": false,
+    "raw_pages_saved": false,
+    "raw_files": [],
+    "note": "Only compact extracted evidence is retained. No mirror, search-result page, or transient error response is an evidence source."
+  },
+  "documents": [
+    {
+      "document_id": "P550-publisher",
+      "review_id": "P550",
+      "source_type": "official_publisher_paper_page",
+      "url": "https://library.imaging.org/ei/articles/35/4/MWSF-380",
+      "raw_saved": false
+    },
+    {
+      "document_id": "P586-publisher",
+      "review_id": "P586",
+      "source_type": "official_publisher_paper_page",
+      "url": "https://www.sciencedirect.com/science/article/pii/S2352146522006263",
+      "raw_saved": false
+    },
+    {
+      "document_id": "P610-publisher",
+      "review_id": "P610",
+      "source_type": "official_publisher_paper_page",
+      "url": "https://library.imaging.org/ei/articles/33/4/art00007",
+      "raw_saved": false
+    },
+    {
+      "document_id": "P633-publisher",
+      "review_id": "P633",
+      "source_type": "official_publisher_paper_page",
+      "url": "https://library.imaging.org/ei/articles/31/5/art00008",
+      "raw_saved": false
+    },
+    {
+      "document_id": "R188-acl",
+      "review_id": "R188",
+      "source_type": "official_acl_anthology_record",
+      "url": "https://aclanthology.org/2026.findings-acl.1043/",
+      "raw_saved": false
+    },
+    {
+      "document_id": "R188-arxiv",
+      "review_id": "R188",
+      "source_type": "authoritative_arxiv_record",
+      "url": "https://arxiv.org/abs/2604.19172",
+      "raw_saved": false
+    }
+  ],
+  "actions": [
+    {
+      "review_id": "P550",
+      "paper_id": "doi:10.2352/ei.2023.35.4.mwsf-380",
+      "title": "Detecting GAN-generated synthetic images using semantic inconsistencies",
+      "policy_id": "V1",
+      "current_metadata": {
+        "year": 2023,
+        "venue": "Electronic Imaging",
+        "publication_type": "journal",
+        "venue_track": "",
+        "doi": "10.2352/ei.2023.35.4.mwsf-380"
+      },
+      "authoritative_evidence": {
+        "document_ids": [
+          "P550-publisher"
+        ],
+        "title": "Detecting GAN-generated synthetic images using semantic inconsistencies",
+        "authors": [
+          "Danial Samadi Vahdati",
+          "Matthew C. Stamm"
+        ],
+        "year": 2023,
+        "canonical_archival_container": "Electronic Imaging",
+        "event_or_conference": "Media Watermarking, Security, and Forensics 2023",
+        "track": null,
+        "publication_type": "journal",
+        "doi": "10.2352/EI.2023.35.4.MWSF-380",
+        "evidence_fields": [
+          "Journal Title: Electronic Imaging",
+          "Volume 35; Article ID MWSF-380",
+          "MWSF: Media Watermarking, Security, and Forensics 2023",
+          "Published Online: January 2023"
+        ]
+      },
+      "adjudication": "KEEP_CURRENT",
+      "evidence_outcome": "EVIDENCE_RESOLVED_NO_CHANGE",
+      "proposed_remediation": "None. Retain Electronic Imaging as the canonical archival container, journal as the publication type, and an empty track. Preserve MWSF as event context in evidence rather than encoding it as a venue or inventing a track.",
+      "confidence": "high",
+      "final_disposition": "WAVE1_RESOLVED_NO_CHANGE",
+      "finalized": true,
+      "corpus_change_applied": false,
+      "schema_change_required": false
+    },
+    {
+      "review_id": "P586",
+      "paper_id": "doi:10.1016/j.trpro.2022.09.012",
+      "title": "Deep Learning applied to Road Accident Detection with Transfer Learning and Synthetic Images",
+      "policy_id": "V1",
+      "current_metadata": {
+        "year": 2022,
+        "venue": "Transportation research procedia",
+        "publication_type": "journal",
+        "venue_track": "",
+        "doi": "10.1016/j.trpro.2022.09.012"
+      },
+      "authoritative_evidence": {
+        "document_ids": [
+          "P586-publisher"
+        ],
+        "title": "Deep Learning applied to Road Accident Detection with Transfer Learning and Synthetic Images",
+        "authors": [
+          "Tiago Tamagusko",
+          "Matheus Gomes Correia",
+          "Minh Anh Huynh",
+          "Adelino Ferreira"
+        ],
+        "year": 2022,
+        "canonical_archival_container": "Transportation Research Procedia",
+        "event_or_conference": "International Scientific Conference ‘The Science and Development of Transport – Znanost i razvitak prometa’",
+        "track": null,
+        "publication_type": "journal",
+        "doi": "10.1016/j.trpro.2022.09.012",
+        "evidence_fields": [
+          "Transportation Research Procedia, Volume 64 (2022), pages 90–97",
+          "Volume context identifies the International Scientific Conference ‘The Science and Development of Transport – Znanost i razvitak prometa’",
+          "Publisher record labels the item as an article under the Procedia series"
+        ]
+      },
+      "adjudication": "KEEP_CURRENT",
+      "evidence_outcome": "EVIDENCE_RESOLVED_NO_CHANGE",
+      "proposed_remediation": "None. Retain Transportation Research Procedia as the canonical archival container, journal as the schema publication type, and an empty track. Keep the conference relationship in evidence because the current schema has no separate event field.",
+      "confidence": "high",
+      "final_disposition": "WAVE1_RESOLVED_NO_CHANGE",
+      "finalized": true,
+      "corpus_change_applied": false,
+      "schema_change_required": false
+    },
+    {
+      "review_id": "P610",
+      "paper_id": "doi:10.2352/issn.2470-1173.2021.4.mwsf-276",
+      "title": "Detection, Attribution and Localization of GAN Generated Images",
+      "policy_id": "V1",
+      "current_metadata": {
+        "year": 2021,
+        "venue": "Electronic Imaging",
+        "publication_type": "journal",
+        "venue_track": "",
+        "doi": "10.2352/issn.2470-1173.2021.4.mwsf-276"
+      },
+      "authoritative_evidence": {
+        "document_ids": [
+          "P610-publisher"
+        ],
+        "title": "Detection, Attribution and Localization of GAN Generated Images",
+        "authors": [
+          "Michael Goebel",
+          "Lakshmanan Nataraj",
+          "Tejaswi Nanjundaswamy",
+          "Tajuddin Manhar Mohammed",
+          "Shivkumar Chandrasekaran",
+          "B. S. Manjunath"
+        ],
+        "year": 2021,
+        "canonical_archival_container": "Electronic Imaging",
+        "event_or_conference": "IS&T International Symposium on Electronic Imaging: Media Watermarking, Security, and Forensics",
+        "track": null,
+        "publication_type": "journal",
+        "doi": "10.2352/ISSN.2470-1173.2021.4.MWSF-276",
+        "evidence_fields": [
+          "Journal Title: Electronic Imaging",
+          "Publisher citation: Proc. IS&T Int’l. Symp. on Electronic Imaging: Media Watermarking, Security, and Forensics",
+          "Published Online: January 2021"
+        ]
+      },
+      "adjudication": "KEEP_CURRENT",
+      "evidence_outcome": "EVIDENCE_RESOLVED_NO_CHANGE",
+      "proposed_remediation": "None. Retain Electronic Imaging as the canonical archival container and journal as the schema publication type. Treat the symposium/MWSF wording as event context and leave track empty because no main/workshop/special-session status is stated.",
+      "confidence": "high",
+      "final_disposition": "WAVE1_RESOLVED_NO_CHANGE",
+      "finalized": true,
+      "corpus_change_applied": false,
+      "schema_change_required": false
+    },
+    {
+      "review_id": "P633",
+      "paper_id": "curated:60066ef08c2226131085",
+      "title": "Detecting GAN Generated Fake Images Using Co-Occurrence Matrices",
+      "policy_id": "V1",
+      "current_metadata": {
+        "year": 2019,
+        "venue": "Electronic Imaging",
+        "publication_type": "journal",
+        "venue_track": "",
+        "doi": "10.2352/issn.2470-1173.2019.5.mwsf-532"
+      },
+      "authoritative_evidence": {
+        "document_ids": [
+          "P633-publisher"
+        ],
+        "title": "Detecting GAN generated Fake Images using Co-occurrence Matrices",
+        "authors": [
+          "Lakshmanan Nataraj",
+          "Tajuddin Manhar Mohammed",
+          "B. S. Manjunath",
+          "Shivkumar Chandrasekaran",
+          "Arjuna Flenner",
+          "Jawadul H. Bappy",
+          "Amit K. Roy-Chowdhury"
+        ],
+        "year": 2019,
+        "canonical_archival_container": "Electronic Imaging",
+        "event_or_conference": "IS&T International Symposium on Electronic Imaging: Media Watermarking, Security, and Forensics",
+        "track": null,
+        "publication_type": "journal",
+        "doi": "10.2352/ISSN.2470-1173.2019.5.MWSF-532",
+        "evidence_fields": [
+          "Journal Title: Electronic Imaging",
+          "Publisher citation: Proc. IS&T Int’l. Symp. on Electronic Imaging: Media Watermarking, Security, and Forensics",
+          "Published Online: January 2019"
+        ]
+      },
+      "adjudication": "KEEP_CURRENT",
+      "evidence_outcome": "EVIDENCE_RESOLVED_NO_CHANGE",
+      "proposed_remediation": "None. Retain Electronic Imaging as the canonical archival container and journal as the schema publication type. Treat the symposium/MWSF wording as event context and leave track empty because no main/workshop/special-session status is stated.",
+      "confidence": "high",
+      "final_disposition": "WAVE1_RESOLVED_NO_CHANGE",
+      "finalized": true,
+      "corpus_change_applied": false,
+      "schema_change_required": false
+    },
+    {
+      "review_id": "R188",
+      "paper_id": "curated:6c2f591bf6fda3abecbb",
+      "title": "Reasoning-Aware AIGC Detection via Alignment and Reinforcement",
+      "policy_id": null,
+      "current_metadata": {
+        "year": 2026,
+        "venue": "Annual Meeting of the Association for Computational Linguistics",
+        "venue_track": "Findings",
+        "publication_type": "conference",
+        "doi": "10.18653/v1/2026.findings-acl.1043",
+        "arxiv_id": "2604.19172",
+        "tasks": [
+          "detection"
+        ],
+        "image_scopes": [
+          "fully_generated"
+        ],
+        "research_types": [
+          "method"
+        ]
+      },
+      "authoritative_evidence": {
+        "document_ids": [
+          "R188-acl",
+          "R188-arxiv"
+        ],
+        "acl": {
+          "title": "Reasoning-Aware AIGC Detection via Alignment and Reinforcement",
+          "authors": [
+            "Zhao Wang",
+            "Max Xiong",
+            "Jianxun Lian",
+            "Zhicheng Dou"
+          ],
+          "venue": "Findings of the Association for Computational Linguistics: ACL 2026",
+          "year": 2026,
+          "identifier": "2026.findings-acl.1043",
+          "doi": "10.18653/v1/2026.findings-acl.1043",
+          "abstract": "The paper introduces AIGC-text-bank, a multi-domain dataset with diverse LLM sources and authorship scenarios, and REVEAL, a reasoning-chain framework for detecting AI-generated text."
+        },
+        "arxiv": {
+          "arxiv_id": "2604.19172",
+          "title": "Reasoning-Aware AIGC Detection via Alignment and Reinforcement",
+          "authors": [
+            "Zhao Wang",
+            "Max Xiong",
+            "Jianxun Lian",
+            "Zhicheng Dou"
+          ],
+          "abstract": "The paper introduces AIGC-text-bank, a multi-domain dataset with diverse LLM sources and authorship scenarios, and REVEAL, a reasoning-chain framework for detecting AI-generated text.",
+          "version_history": [
+            "v1 submitted 2026-04-21"
+          ],
+          "comments_or_publication_note": null
+        },
+        "comparison": {
+          "title_match": true,
+          "authors_match": true,
+          "abstract_match": true,
+          "method_and_task_match": true,
+          "task_domain": "LLM-generated text authorship detection",
+          "image_forensics_evidence": false,
+          "identifier_relationship": "The DOI and ACL identifier name the Findings publication; arXiv 2604.19172 is the matching preprint."
+        }
+      },
+      "identity_classification": "SOURCE_RECORD_CORRUPTION",
+      "evidence_outcome": "EVIDENCE_RESOLVED_CHANGE",
+      "applied_remediation": "Excluded the text-only work from the active synthetic-image corpus through the durable publication-boundary gate. Preserved the DOI–ACL–arXiv–OpenAlex relationship as one historical identity.",
+      "confidence": "high",
+      "final_disposition": "WAVE1_RESOLVED_CHANGE",
+      "finalized": true,
+      "corpus_change_applied": true,
+      "exclusion": {
+        "exclusion_id": "exclusion:713b062c413880d72166",
+        "mechanism": "active durable paper exclusion",
+        "reason": "out_of_scope",
+        "review_semantics": "TEXT_ONLY_OUT_OF_SCOPE",
+        "evidence_finding": "SOURCE_RECORD_CORRUPTION",
+        "historical_identity_retained": true,
+        "active_duplicate_remaining": false
+      }
+    }
+  ],
+  "reconciliation": {
+    "WAVE1_RESOLVED_CHANGE": 1,
+    "WAVE1_RESOLVED_NO_CHANGE": 4,
+    "WAVE1_STILL_INSUFFICIENT": 0,
+    "EVIDENCE_RESOLVED_CHANGE": 1,
+    "EVIDENCE_RESOLVED_NO_CHANGE": 4,
+    "EVIDENCE_STILL_INSUFFICIENT": 0,
+    "external_primary_source_required_before": 35,
+    "resolved_by_wave1_evidence": 5,
+    "external_primary_source_required_after": 30,
+    "maintainer_scope_judgment_excluded": 1,
+    "maintainer_scope_judgment_review_id": "T527",
+    "maintainer_scope_judgment_state": "SCOPE_OR_TASK_EVIDENCE_REQUIRED",
+    "total_unresolved_batch_c": 31,
+    "v1_schema_change_required": false,
+    "corpus_remediation_applied": true
+  }
+}

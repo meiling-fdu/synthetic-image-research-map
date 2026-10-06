@@ -15,6 +15,7 @@ from scripts.validate_corpus_quality_audit import load_context, load_queues, dec
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = '0bc98c3e75636899e53114be3d9de0a71986990c'
+PHASE1 = 'ccb3fab'
 LEDGER = ROOT / 'data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json'
 PUBLIC = ('web/data/public_preview_papers.json', 'web/data/public_preview_map_data.json')
 TARGETS = {
@@ -27,6 +28,11 @@ TARGETS = {
 @lru_cache
 def previous(path):
     return subprocess.check_output(['git', 'show', BASE + ':' + path], cwd=ROOT)
+
+
+@lru_cache
+def phase1(path):
+    return subprocess.check_output(['git', 'show', PHASE1 + ':' + path], cwd=ROOT)
 
 
 def csv_by_key(content, key):
@@ -79,7 +85,9 @@ def test_only_three_authoritative_rows_and_approved_fields_change(state, path, k
 def test_public_export_changes_are_confined_to_three_papers(state, path):
     context, _ = state
     old = json.loads(previous(path))
-    new = json.loads((ROOT / path).read_text())
+    # Keep this Phase 1 audit tied to the committed Phase 1 output. Later
+    # adjudication waves may legitimately change active corpus membership.
+    new = json.loads(phase1(path))
     assert old.keys() == new.keys()
     assert len(old['records']) == len(new['records'])
     for key in old.keys() - {'records', 'metadata'}:
@@ -212,20 +220,28 @@ def test_ucsb_provenance_and_public_relationships_are_unchanged(state):
 
 def test_recomputed_counts_and_registry_export_synchronization(state):
     context, ledger = state
-    assert context['counts'] == ledger['corpus_after'] == ledger['corpus_before']
-    assert context['counts'] == dict(public=640, formal=532, mapped=617, unmapped=23,
-                                   relationship_rows=1422, unique_paper_institution_pairs=1422)
+    assert ledger['corpus_after'] == ledger['corpus_before']
+    assert ledger['corpus_after'] == dict(public=640, formal=532, mapped=617, unmapped=23,
+                                         relationship_rows=1422,
+                                         unique_paper_institution_pairs=1422)
+    # Wave 1 later excludes the text-only R188 record at the publication gate.
+    assert context['counts'] == dict(public=639, formal=531, mapped=616, unmapped=23,
+                                    relationship_rows=1419,
+                                    unique_paper_institution_pairs=1419)
     for dimension in ('tasks','research_types'):
         registry_totals = Counter(label for row in context['taxonomy'].values() for label in row[dimension].split(';') if label)
-        assert dict(registry_totals) == ledger['taxonomy_after'][dimension]
+        expected_current = Counter(ledger['taxonomy_after'][dimension])
+        expected_current.subtract({'detection': 1} if dimension == 'tasks' else {'method': 1})
+        assert registry_totals == +expected_current
         old = Counter(label for row in json.loads(previous(PUBLIC[0]))['records'] for label in row[dimension])
+        phase1_totals = Counter(label for row in json.loads(phase1(PUBLIC[0]))['records'] for label in row[dimension])
         assert dict(old) == ledger['taxonomy_before'][dimension]
         expected = old.copy()
         for _, dim, before, after in TARGETS.values():
             if dim == dimension:
                 expected.subtract(before.split(';'))
                 expected.update(after.split(';'))
-        assert registry_totals == expected
+        assert phase1_totals == expected
         for pid, paper in context['papers'].items():
             assert paper[dimension] == [v for v in context['taxonomy'][pid][dimension].split(';') if v]
 

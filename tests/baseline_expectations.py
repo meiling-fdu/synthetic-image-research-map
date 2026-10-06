@@ -6,18 +6,18 @@ data change and the identity and relationship invariants in
 ``test_repository_baseline.py``.
 """
 
-# Approved gap migration and Corpus Quality Batches A/C Phase 1: three formal
-# upgrades, 17 taxonomy updates and natural collapse of one UCSB aggregate.
+# Approved gap migration and Corpus Quality Batches A/C Phase 1 plus Batch C
+# Wave 1: R188 is retained in audit history and excluded from public outputs.
 # The prior exact baseline is retained in the verified 640-paper snapshot.
 CURRENT_REPOSITORY_BASELINE = {
-    "public_unique_papers": 640,
-    "public_map_source_papers": 617,
-    "public_papers_with_map": 617,
+    "public_unique_papers": 639,
+    "public_map_source_papers": 616,
+    "public_papers_with_map": 616,
     "public_papers_without_map": 23,
     "total_institution_registry_rows": 748,
     "active_canonical_institutions": 727,
     "non_active_institution_registry_rows": 21,
-    "public_paper_institution_relationships": 1422,
+    "public_paper_institution_relationships": 1419,
     "institution_hierarchy_edges": 16,
     "institution_aliases": 120,
 }
@@ -49,15 +49,15 @@ CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 537, 'company': 88, 'research
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 529, 'company': 86, 'research_unit': 94, 'other': 18}
 
-PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 607, 'research_unit': 137, 'other': 28, 'company': 129}
+PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 606, 'research_unit': 137, 'other': 28, 'company': 128}
 
 # Historical release artifacts are immutable; current effective venues have
 # changed since the 2026-08-24 checkpoint.
 RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint": 64, "book": 1}
 
-PUBLICATION_TYPE_TOTALS = {'conference': 390, 'preprint': 108, 'journal': 141, 'book': 1}
+PUBLICATION_TYPE_TOTALS = {'conference': 389, 'preprint': 108, 'journal': 141, 'book': 1}
 
-TASK_TOTALS = {'detection': 593, 'source_attribution': 85, 'localization': 41}
+TASK_TOTALS = {'detection': 592, 'source_attribution': 85, 'localization': 41}
 
 RELEASE_TASK_TOTALS = {
     "detection": 471,

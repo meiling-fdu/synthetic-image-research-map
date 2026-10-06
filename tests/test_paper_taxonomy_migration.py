@@ -56,7 +56,7 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
             [dict(row) for row in self.public],
             [dict(row) for row in self.markers],
             self.registry,
-            read_exclusion_rows(),
+            read_exclusion_rows(ROOT / "data/curated/paper_exclusions.csv"),
         )
         self.assertEqual(640, summary["public_papers_matched"])
         self.assertEqual(43, summary["registry_rows_suppressed_by_active_exclusion"])
@@ -72,7 +72,9 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
             for row in self.registry
             if row.get("paper_id") in curated_only
         ]
-        active = build_active_exclusion_index(read_exclusion_rows())
+        active = build_active_exclusion_index(
+            read_exclusion_rows(ROOT / "data/curated/paper_exclusions.csv")
+        )
         # Twelve internally curated migration rows are suppressed; the
         # thirteenth internal-ID candidate is the blocked LADLE-MM conflict and
         # remains public.
@@ -101,7 +103,10 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
             apply_paper_taxonomy_registry(
                 [dict(row) for row in self.public],
                 [dict(row) for row in self.markers],
-                [*self.registry, orphan], [*read_exclusion_rows(), exclusion],
+                [*self.registry, orphan], [
+                    *read_exclusion_rows(ROOT / "data/curated/paper_exclusions.csv"),
+                    exclusion,
+                ],
             )
 
     def test_focused_scope_exclusions_leave_public_and_taxonomy_outputs(self):
@@ -180,6 +185,7 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
         rebuilt = build_registry(
             ROOT / "web/data/public_preview_papers.json",
             ROOT / "data/curated/paper_taxonomy.csv",
+            exclusions_path=ROOT / "data/curated/paper_exclusions.csv",
         )
         with tempfile.TemporaryDirectory() as directory:
             serialized = Path(directory) / "taxonomy.csv"
@@ -187,16 +193,20 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
             reread = read_paper_taxonomy_registry(serialized)
             self.assertEqual(self.registry, reread)
             self.assertEqual(rebuilt, build_registry(
-                ROOT / "web/data/public_preview_papers.json", serialized
+                ROOT / "web/data/public_preview_papers.json", serialized,
+                exclusions_path=ROOT / "data/curated/paper_exclusions.csv",
             ))
             summary = apply_paper_taxonomy_registry(
                 [dict(row) for row in self.public],
-                [dict(row) for row in self.markers], reread, read_exclusion_rows()
+                [dict(row) for row in self.markers], reread,
+                read_exclusion_rows(ROOT / "data/curated/paper_exclusions.csv")
             )
             self.assertEqual(640, summary["public_papers_matched"])
             self.assertEqual(43, summary["registry_rows_suppressed_by_active_exclusion"])
         dimensions = ("tasks", "image_scopes", "research_types")
-        active = build_active_exclusion_index(read_exclusion_rows())
+        active = build_active_exclusion_index(
+            read_exclusion_rows(ROOT / "data/curated/paper_exclusions.csv")
+        )
         expected = {row["taxonomy_id"]: row for row in self.registry}
         excluded = [row for row in rebuilt if record_is_excluded(row, active)]
         self.assertEqual(683, len(rebuilt))
