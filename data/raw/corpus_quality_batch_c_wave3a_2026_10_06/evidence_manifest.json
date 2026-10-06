@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "audit": "corpus_quality_batch_c_external_evidence",
+  "wave": "3A",
+  "date": "2026-10-06",
+  "adjudication_date": "2026-10-06",
+  "adjudication_status": "FINAL",
+  "baseline_commit": "196c9a9d7cfd9fc03422ed318b7985aa84d208e3",
+  "scope": {
+    "review_ids": [
+      "T236",
+      "T246"
+    ],
+    "actions": 2,
+    "unique_papers": 2,
+    "dimension": "tasks.localization",
+    "research_type_reviewed": false,
+    "primary_document_budget": 2,
+    "primary_documents_attempted": 2,
+    "usable_primary_documents": 1,
+    "authoritative_corpus_changes_applied": true
+  },
+  "retrieval_policy": {
+    "one_primary_document_per_paper": true,
+    "supplements_retrieved": false,
+    "alternate_versions_retrieved_for_corroboration": false,
+    "search_pages_saved": false,
+    "raw_sources_saved": false,
+    "note": "Evidence is limited to the final official ICLR OpenReview paper record for T236 and the official AAAI proceedings PDF for T246. The OpenReview final PDF was challenge-blocked and timed out; no alternate paper version was substituted."
+  },
+  "documents": [
+    {
+      "document_id": "T236-openreview-final",
+      "review_id": "T236",
+      "source_type": "official_iclr_openreview_final_paper_pdf",
+      "url": "https://openreview.net/pdf/6b5a5d6411ea1778f8c2cbf707a8a5744abe71b0.pdf",
+      "retrieval_outcome": "ACCESS_BLOCKED_OPENREVIEW_CHALLENGE_TIMEOUT",
+      "usable_evidence_extracted": false,
+      "raw_saved": false
+    },
+    {
+      "document_id": "T246-aaai-final",
+      "review_id": "T246",
+      "source_type": "official_aaai_proceedings_paper_pdf",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/download/37240/41202",
+      "retrieval_outcome": "COMPLETE_MAIN_PAPER_RETRIEVED",
+      "usable_evidence_extracted": true,
+      "raw_saved": false,
+      "locators": [
+        "page 4, Weighted Decoder and Loss Function",
+        "page 5, evaluation metrics",
+        "page 6, localization results and ablations"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "review_id": "T236",
+      "paper_id": "curated:64635535d7b7b6a12a32",
+      "title": "Unveiling Perceptual Artifacts: A Fine-Grained Benchmark for Interpretable AI-Generated Image Detection",
+      "policy_id": "T2",
+      "dimension": "tasks.localization",
+      "authoritative_source_document_id": "T236-openreview-final",
+      "authoritative_source_url": "https://openreview.net/pdf/6b5a5d6411ea1778f8c2cbf707a8a5744abe71b0.pdf",
+      "source_type": "official_iclr_openreview_final_paper_pdf",
+      "retrieval_outcome": "ACCESS_BLOCKED_OPENREVIEW_CHALLENGE_TIMEOUT",
+      "extracted_task_evidence": "The accessible official record describes X-AIGD as an interpretability benchmark with pixel-level categorized perceptual-artifact annotations and attention alignment. The final paper body could not be accessed to establish an evaluated spatial prediction task.",
+      "output_representation": "NOT_ESTABLISHED. The accessible record mentions detector attention and artifact regions, but does not establish a predicted forensic mask, patch, box, or equivalent localization output.",
+      "ground_truth_evidence": "The official abstract confirms pixel-level categorized annotations of perceptual artifacts.",
+      "evaluation_evidence": "NOT_ESTABLISHED. No accessible method/evaluation text demonstrated a quantitative metric comparing a model spatial prediction with the pixel annotations.",
+      "negative_signals": [
+        "interpretability benchmark",
+        "attention alignment with artifact regions",
+        "spatial-looking annotations do not by themselves establish a localization task"
+      ],
+      "adjudication": "EVIDENCE_STILL_INSUFFICIENT",
+      "evidence_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "final_disposition": "REMEDIATION_NOT_APPLIED",
+      "proposed_later_taxonomy": null,
+      "confidence": "high",
+      "corpus_change_applied": false
+    },
+    {
+      "review_id": "T246",
+      "paper_id": "doi:10.1609/aaai.v40i4.37240",
+      "title": "Zooming In on Fakes: A Novel Dataset for Localized AI-Generated Image Detection with Forgery Amplification Approach",
+      "policy_id": "T2",
+      "dimension": "tasks.localization",
+      "authoritative_source_document_id": "T246-aaai-final",
+      "authoritative_source_url": "https://ojs.aaai.org/index.php/AAAI/article/download/37240/41202",
+      "source_type": "official_aaai_proceedings_paper_pdf",
+      "retrieval_outcome": "COMPLETE_MAIN_PAPER_RETRIEVED",
+      "extracted_task_evidence": "NFA-ViT explicitly performs both detection and localization. The paper defines predicted masks for localization and evaluates segmentation performance on locally forged images.",
+      "output_representation": "A weighted decoder fuses hierarchical features, upsamples to the original image resolution, and outputs a predicted region mask M-hat.",
+      "ground_truth_evidence": "BR-Gen retains a real-image, mask, forged-image triplet; training uses ground-truth region masks M with binary cross-entropy segmentation loss Lseg(M, M-hat).",
+      "evaluation_evidence": "IoU is explicitly defined as the localization metric measuring segmentation accuracy. NFA-ViT reports IoU 0.907, including component ablations for localization performance.",
+      "negative_signals": [],
+      "adjudication": "LOCALIZATION_TASK_SUPPORTED",
+      "evidence_outcome": "EVIDENCE_RESOLVED_CHANGE",
+      "final_disposition": "REMEDIATION_APPLIED",
+      "proposed_later_taxonomy": {
+        "tasks_before": [
+          "detection"
+        ],
+        "tasks_after": [
+          "detection",
+          "localization"
+        ]
+      },
+      "confidence": "high",
+      "corpus_change_applied": true
+    }
+  ],
+  "resolution": {
+    "LOCALIZATION_TASK_SUPPORTED": 1,
+    "VISUALIZATION_ONLY_NO_LOCALIZATION": 0,
+    "NO_LOCALIZATION_TASK": 0,
+    "EVIDENCE_STILL_INSUFFICIENT": 1,
+    "external_batch_c_before": 29,
+    "external_batch_c_resolved": 1,
+    "external_batch_c_after": 28,
+    "task_cases_before": 13,
+    "task_cases_resolved": 1,
+    "task_cases_after": 12,
+    "institution_cases_after": 1,
+    "research_type_cases_after": 15,
+    "t527_separate_maintainer_scope_judgment": true,
+    "total_unresolved_batch_c_after_including_t527": 29
+  },
+  "unchanged_corpus": {
+    "public_papers": 639,
+    "formal_publications": 531,
+    "mapped_papers": 617,
+    "relationship_rows": 1421,
+    "unique_paper_institution_pairs": 1421
+  },
+  "taxonomy_before": {
+    "detection": 592,
+    "source_attribution": 85,
+    "localization": 41,
+    "method": 547,
+    "dataset": 133,
+    "benchmark": 88,
+    "survey": 20,
+    "analysis_study": 78
+  },
+  "taxonomy_after": {
+    "detection": 592,
+    "source_attribution": 85,
+    "localization": 42,
+    "method": 547,
+    "dataset": 133,
+    "benchmark": 88,
+    "survey": 20,
+    "analysis_study": 78
+  },
+  "integrity_expectations": {
+    "allowed_authoritative_change": "T246 tasks: detection -> detection;localization",
+    "UNEXPECTED_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+  }
+}

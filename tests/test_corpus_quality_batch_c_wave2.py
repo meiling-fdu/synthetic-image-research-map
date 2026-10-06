@@ -162,7 +162,7 @@ def test_exact_corpus_and_unchanged_taxonomy_counts():
     research_types = Counter(
         label for row in context["papers"].values() for label in row["research_types"]
     )
-    assert tasks == {"detection": 592, "source_attribution": 85, "localization": 41}
+    assert tasks == {"detection": 592, "source_attribution": 85, "localization": 42}
     assert research_types == {
         "method": 547,
         "dataset": 133,

@@ -235,7 +235,7 @@ def test_recomputed_counts_and_registry_export_synchronization(state):
     assert ledger['corpus_after'] == dict(public=640, formal=532, mapped=617, unmapped=23,
                                          relationship_rows=1422,
                                          unique_paper_institution_pairs=1422)
-    # Wave 1 excludes R188; Wave 2 then adds U017's explicit dual affiliation.
+    # Wave 1 excludes R188; Wave 2 maps U017; Wave 3A adds T246 localization.
     assert context['counts'] == dict(public=639, formal=531, mapped=617, unmapped=22,
                                     relationship_rows=1421,
                                     unique_paper_institution_pairs=1421)
@@ -243,6 +243,8 @@ def test_recomputed_counts_and_registry_export_synchronization(state):
         registry_totals = Counter(label for row in context['taxonomy'].values() for label in row[dimension].split(';') if label)
         expected_current = Counter(ledger['taxonomy_after'][dimension])
         expected_current.subtract({'detection': 1} if dimension == 'tasks' else {'method': 1})
+        if dimension == 'tasks':
+            expected_current.update({'localization': 1})
         assert registry_totals == +expected_current
         old = Counter(label for row in json.loads(previous(PUBLIC[0]))['records'] for label in row[dimension])
         phase1_totals = Counter(label for row in json.loads(phase1(PUBLIC[0]))['records'] for label in row[dimension])
