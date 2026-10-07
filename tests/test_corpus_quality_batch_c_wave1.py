@@ -198,7 +198,7 @@ def test_exact_corpus_and_taxonomy_impact():
     assert tasks == {"detection": 590, "source_attribution": 85, "localization": 42}
     assert research_types == {
         "method": 547,
-        "dataset": 133,
+        "dataset": 132,
         "benchmark": 88,
         "survey": 20,
         "analysis_study": 78,

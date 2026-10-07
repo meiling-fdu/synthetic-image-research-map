@@ -35,6 +35,12 @@ def previous_csv(path):
     return list(csv.DictReader(io.StringIO(previous(path).decode("utf-8-sig"), newline="")))
 
 
+def adjudicated_csv(path):
+    # Later approved waves can change unrelated rows; keep this wave's boundary fixed.
+    data = subprocess.check_output(["git", "show", "a24a9e6:" + path], cwd=ROOT)
+    return list(csv.DictReader(io.StringIO(data.decode("utf-8-sig"), newline="")))
+
+
 def records(path, *, current=True):
     payload = json.loads((ROOT / path).read_text()) if current else json.loads(previous(path))
     return payload["records"]
@@ -43,13 +49,9 @@ def records(path, *, current=True):
 def test_t246_is_the_only_authoritative_taxonomy_change():
     path = "data/curated/paper_taxonomy.csv"
     before = {row["taxonomy_id"]: row for row in previous_csv(path)}
-    after = {row["taxonomy_id"]: row for row in csv_rows(path)}
+    after = {row["taxonomy_id"]: row for row in adjudicated_csv(path)}
     assert before.keys() == after.keys()
-    assert {key for key in before if before[key] != after[key]} == {
-        T246,
-        "paper_id:curated:1a8e996ef9ce73efc0ef",
-        "paper_id:curated:d59bffe554500b241a3e",
-    }
+    assert {key for key in before if before[key] != after[key]} == {T246}
     old, new = before[T246], after[T246]
     assert old["tasks"] == "detection"
     assert new["tasks"] == "detection;localization"
@@ -162,7 +164,7 @@ def test_exact_corpus_and_taxonomy_effect():
     assert tasks == {"detection": 590, "source_attribution": 85, "localization": 42}
     assert research_types == {
         "method": 547,
-        "dataset": 133,
+        "dataset": 132,
         "benchmark": 88,
         "survey": 20,
         "analysis_study": 78,

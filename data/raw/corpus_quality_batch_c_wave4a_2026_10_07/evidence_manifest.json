@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "audit": "corpus_quality_batch_c_external_evidence",
+  "wave": "4A",
+  "date": "2026-10-07",
+  "adjudication_status": "FINAL",
+  "baseline_commit": "ea9a9846a8c2b4886adba06a3e7d0798697f33af",
+  "policy": {
+    "policy_id": "R1",
+    "name": "Dataset contribution",
+    "rule": "Assign dataset only when a reusable dataset or data resource is itself a substantive contribution of the paper. Data generated or collected solely to run that paper's experiments is insufficient."
+  },
+  "scope": {
+    "review_ids": [
+      "R099",
+      "R176",
+      "R190",
+      "R455"
+    ],
+    "actions": 4,
+    "unique_papers": 4,
+    "dimension": "research_type_dataset_only",
+    "task_taxonomy_reviewed": false,
+    "method_adjudicated": false,
+    "benchmark_adjudicated": false,
+    "analysis_study_adjudicated": false,
+    "primary_document_budget": 4,
+    "primary_documents_attempted": 4,
+    "usable_primary_documents": 2,
+    "authoritative_corpus_changes_applied": true
+  },
+  "retrieval_policy": {
+    "one_primary_document_per_paper": true,
+    "supplements_retrieved": false,
+    "alternate_versions_retrieved": false,
+    "mirrors_retrieved": false,
+    "search_pages_saved": false,
+    "raw_sources_saved": false,
+    "note": "Exactly one primary full paper was attempted for each case. R176 and R455 stopped after terminal internal retrieval errors; no substitute source or alternate version was used."
+  },
+  "documents": [
+    {
+      "document_id": "R099-arxiv-full",
+      "review_id": "R099",
+      "source_type": "authoritative_arxiv_full_paper",
+      "url": "https://arxiv.org/pdf/2602.10042",
+      "retrieval_outcome": "COMPLETE_MAIN_PAPER_RETRIEVED",
+      "usable_evidence_extracted": true,
+      "raw_saved": false,
+      "locators": [
+        "introduction, contribution bullets",
+        "section 2.1, dual-mode data strategy",
+        "section 3, Data Formulation"
+      ]
+    },
+    {
+      "document_id": "R176-cvf-full",
+      "review_id": "R176",
+      "source_type": "official_cvpr_cvf_paper_pdf",
+      "url": "https://openaccess.thecvf.com/content/CVPR2026F/papers/Damm_PRADA_Probability-Ratio-Based_Attribution_and_Detection_of_Autoregressive-Generated_Images_CVPRF_2026_paper.pdf",
+      "retrieval_outcome": "PRIMARY_DOCUMENT_RETRIEVAL_INTERNAL_ERROR_NONRETRYABLE",
+      "usable_evidence_extracted": false,
+      "raw_saved": false
+    },
+    {
+      "document_id": "R190-arxiv-full",
+      "review_id": "R190",
+      "source_type": "authoritative_arxiv_full_paper",
+      "url": "https://arxiv.org/pdf/2607.12052",
+      "retrieval_outcome": "COMPLETE_MAIN_PAPER_RETRIEVED",
+      "usable_evidence_extracted": true,
+      "raw_saved": false,
+      "locators": [
+        "introduction, contribution bullets",
+        "section IV, Dataset Construction",
+        "section V, Experimental Results"
+      ]
+    },
+    {
+      "document_id": "R455-cvf-full",
+      "review_id": "R455",
+      "source_type": "official_wacv_cvf_paper_pdf",
+      "url": "https://openaccess.thecvf.com/content/WACV2024/papers/Sinitsa_Deep_Image_Fingerprint_Towards_Low_Budget_Synthetic_Image_Detection_and_WACV_2024_paper.pdf",
+      "retrieval_outcome": "PRIMARY_DOCUMENT_RETRIEVAL_INTERNAL_ERROR_NONRETRYABLE",
+      "usable_evidence_extracted": false,
+      "raw_saved": false
+    }
+  ],
+  "actions": [
+    {
+      "review_id": "R099",
+      "paper_id": "curated:9c39067ac73e7354c2f3",
+      "title": "Fake-HR1: Rethinking Reasoning of Vision Language Model for Synthetic Image Detection",
+      "current_research_types": [
+        "method",
+        "dataset"
+      ],
+      "authoritative_source_document_id": "R099-arxiv-full",
+      "authoritative_url": "https://arxiv.org/pdf/2602.10042",
+      "retrieval_outcome": "COMPLETE_MAIN_PAPER_RETRIEVED",
+      "claimed_data_contribution": "The paper claims a hybrid-reasoning training framework and the Fake-HR1 model. Its contribution bullets do not claim a new dataset or reusable data resource. A dual-mode training dataset is assembled from existing GenImage and FakeClue data with simple and hard seed-question banks.",
+      "dataset_name": "unnamed dual-mode training dataset assembled from GenImage and FakeClue",
+      "resource_size_composition": "SFT uses 1.834 million non-reasoning samples and 94,188 reasoning samples; reject sampling leaves 15,712 FakeClue samples for reinforcement learning.",
+      "reuse_release_evidence": "The paper presents the mixture as training input for Fake-HR1. It does not claim the mixture as a standalone contribution or state that it is released for reuse. The conclusion describes a larger online model-generated seed dataset only as future work.",
+      "scientific_role": "EXPERIMENTAL_DATA_ONLY",
+      "adjudication": "EXPERIMENTAL_DATA_ONLY_NO_DATASET",
+      "proposed_later_research_types": [
+        "method"
+      ],
+      "confidence": "high",
+      "corpus_change_applied": true,
+      "evidence_outcome": "EVIDENCE_RESOLVED_CHANGE",
+      "final_disposition": "REMEDIATION_APPLIED"
+    },
+    {
+      "review_id": "R176",
+      "paper_id": "curated:f6ad15b01df18aadfe1a",
+      "title": "PRADA: Probability-Ratio-Based Attribution and Detection of Autoregressive-Generated Images",
+      "current_research_types": [
+        "method",
+        "dataset"
+      ],
+      "authoritative_source_document_id": "R176-cvf-full",
+      "authoritative_url": "https://openaccess.thecvf.com/content/CVPR2026F/papers/Damm_PRADA_Probability-Ratio-Based_Attribution_and_Detection_of_Autoregressive-Generated_Images_CVPRF_2026_paper.pdf",
+      "retrieval_outcome": "PRIMARY_DOCUMENT_RETRIEVAL_INTERNAL_ERROR_NONRETRYABLE",
+      "claimed_data_contribution": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "dataset_name": null,
+      "resource_size_composition": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "reuse_release_evidence": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "scientific_role": "AMBIGUOUS_RESOURCE_ROLE",
+      "adjudication": "EVIDENCE_STILL_INSUFFICIENT",
+      "proposed_later_research_types": null,
+      "evidence_reason": "The single permitted official CVF primary PDF returned an internal retrieval error.",
+      "confidence": "high for the evidence-insufficiency determination",
+      "corpus_change_applied": false,
+      "evidence_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "final_disposition": "REMEDIATION_NOT_APPLIED"
+    },
+    {
+      "review_id": "R190",
+      "paper_id": "curated:c84b04cb8e921be753db",
+      "title": "Representation and Reference Selection in Training-Free Synthetic Image Attribution",
+      "current_research_types": [
+        "dataset",
+        "analysis_study"
+      ],
+      "authoritative_source_document_id": "R190-arxiv-full",
+      "authoritative_url": "https://arxiv.org/pdf/2607.12052",
+      "retrieval_outcome": "COMPLETE_MAIN_PAPER_RETRIEVED",
+      "claimed_data_contribution": "The contribution list explicitly claims construction of two attribution datasets, BC-Attr-6 and COCO-Attr, alongside the controlled analysis.",
+      "dataset_name": "BC-Attr-6 and COCO-Attr",
+      "resource_size_composition": "BC-Attr-6 contains 12,000 images from 10 text-to-image generators across six semantic categories, split into 1,200 queries and 10,800 references. COCO-Attr uses the same 10 generators with MSCOCO-derived caption prompts and holds out 100 query images per generator, for 1,000 queries, with the remaining generated images used as references.",
+      "reuse_release_evidence": "The paper names the two datasets as a distinct contribution and specifies their generators, prompt sources, semantic organization, query/reference splits, and intended attribution use. No public-release or repository statement appears in the paper, so support rests on the explicit contribution framing and reusable dataset specification rather than demonstrated availability.",
+      "scientific_role": "SUBSTANTIVE_REUSABLE_DATASET_CONTRIBUTION",
+      "adjudication": "DATASET_ROLE_SUPPORTED",
+      "proposed_later_research_types": [
+        "dataset",
+        "analysis_study"
+      ],
+      "confidence": "medium",
+      "corpus_change_applied": false,
+      "evidence_outcome": "EVIDENCE_RESOLVED_NO_CHANGE",
+      "final_disposition": "REMEDIATION_NOT_REQUIRED"
+    },
+    {
+      "review_id": "R455",
+      "paper_id": "curated:04932cb03f767948ddf4",
+      "title": "Deep Image Fingerprint: Towards Low Budget Synthetic Image Detection and Model Lineage Analysis",
+      "current_research_types": [
+        "method",
+        "dataset"
+      ],
+      "authoritative_source_document_id": "R455-cvf-full",
+      "authoritative_url": "https://openaccess.thecvf.com/content/WACV2024/papers/Sinitsa_Deep_Image_Fingerprint_Towards_Low_Budget_Synthetic_Image_Detection_and_WACV_2024_paper.pdf",
+      "retrieval_outcome": "PRIMARY_DOCUMENT_RETRIEVAL_INTERNAL_ERROR_NONRETRYABLE",
+      "claimed_data_contribution": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "dataset_name": null,
+      "resource_size_composition": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "reuse_release_evidence": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "scientific_role": "AMBIGUOUS_RESOURCE_ROLE",
+      "adjudication": "EVIDENCE_STILL_INSUFFICIENT",
+      "proposed_later_research_types": null,
+      "evidence_reason": "The single permitted official CVF primary PDF returned an internal retrieval error.",
+      "confidence": "high for the evidence-insufficiency determination",
+      "corpus_change_applied": false,
+      "evidence_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "final_disposition": "REMEDIATION_NOT_APPLIED"
+    }
+  ],
+  "resolution": {
+    "DATASET_ROLE_SUPPORTED": 1,
+    "EXPERIMENTAL_DATA_ONLY_NO_DATASET": 1,
+    "EVIDENCE_STILL_INSUFFICIENT": 2,
+    "external_batch_c_before": 23,
+    "external_batch_c_targeted": 4,
+    "external_batch_c_resolved": 2,
+    "external_batch_c_after": 21,
+    "research_type_cases_before": 15,
+    "research_type_cases_targeted": 4,
+    "research_type_cases_resolved": 2,
+    "research_type_cases_after": 13,
+    "task_cases_after": 7,
+    "institution_cases_after": 1,
+    "t527_excluded_from_external_count": true,
+    "total_unresolved_batch_c_after_including_t527": 22,
+    "EVIDENCE_RESOLVED_CHANGE": 1,
+    "EVIDENCE_RESOLVED_NO_CHANGE": 1,
+    "REMEDIATION_APPLIED": 1,
+    "REMEDIATION_NOT_REQUIRED": 1,
+    "REMEDIATION_NOT_APPLIED": 2
+  },
+  "unchanged_corpus": {
+    "public_papers": 639,
+    "formal_publications": 531,
+    "mapped_papers": 617,
+    "relationship_rows": 1421,
+    "unique_paper_institution_pairs": 1421
+  },
+  "integrity_expectations": {
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA",
+    "UNEXPECTED_CHANGED": 0
+  },
+  "post_adjudication_taxonomy": {
+    "detection": 590,
+    "source_attribution": 85,
+    "localization": 42,
+    "method": 547,
+    "dataset": 132,
+    "benchmark": 88,
+    "survey": 20,
+    "analysis_study": 78
+  },
+  "adjudication_date": "2026-10-07"
+}

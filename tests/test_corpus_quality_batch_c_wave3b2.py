@@ -44,6 +44,12 @@ def previous_csv(path):
     return list(csv.DictReader(io.StringIO(previous(path).decode("utf-8-sig"), newline="")))
 
 
+def adjudicated_csv(path):
+    # Later approved waves can change unrelated rows; keep this wave's boundary fixed.
+    data = subprocess.check_output(["git", "show", "9b7dec4:" + path], cwd=ROOT)
+    return list(csv.DictReader(io.StringIO(data.decode("utf-8-sig"), newline="")))
+
+
 def records(path, *, current=True):
     payload = json.loads((ROOT / path).read_text()) if current else json.loads(previous(path))
     return payload["records"]
@@ -55,7 +61,7 @@ def test_exactly_two_authoritative_task_rows_change():
         ("data/curated/paper_taxonomy.csv", "paper_id"),
     ):
         before = {row[key]: row for row in previous_csv(path)}
-        after = {row[key]: row for row in csv_rows(path)}
+        after = {row[key]: row for row in adjudicated_csv(path)}
         assert before.keys() == after.keys()
         assert {paper_id for paper_id in before if before[paper_id] != after[paper_id]} == CHANGED
         for paper_id in CHANGED:
@@ -181,7 +187,7 @@ def test_exact_corpus_and_taxonomy_effect():
     assert tasks == {"detection": 590, "source_attribution": 85, "localization": 42}
     assert research_types == {
         "method": 547,
-        "dataset": 133,
+        "dataset": 132,
         "benchmark": 88,
         "survey": 20,
         "analysis_study": 78,

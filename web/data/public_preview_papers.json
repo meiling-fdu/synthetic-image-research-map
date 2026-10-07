@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-07T02:36:01Z"
+    "public_preview_generated_at": "2026-10-07T05:59:06Z"
   },
   "records": [
     {
@@ -39751,8 +39751,7 @@
         "fully_generated"
       ],
       "research_types": [
-        "method",
-        "dataset"
+        "method"
       ],
       "venue": "arXiv",
       "venue_name": "arXiv",
@@ -40106,42 +40105,6 @@
         "unresolved": 0
       },
       "affiliation_complete": true,
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Wuhan University",
-          "canonical_name": "Wuhan University",
-          "institution_id": "institution:f23b95ce92de4591",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "Hubei",
-          "location_display": "Hubei, China"
-        },
-        {
-          "index": 2,
-          "name": "Ant Group",
-          "canonical_name": "Ant Group",
-          "institution_id": "institution:5a28a1a99a417ba5",
-          "institution_type": "company",
-          "country": "China",
-          "country_code": "",
-          "region": "Zhejiang",
-          "location_display": "Zhejiang, China"
-        },
-        {
-          "index": 3,
-          "name": "Zhejiang University",
-          "canonical_name": "Zhejiang University",
-          "institution_id": "institution:e433baf78e80004b",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "Zhejiang",
-          "location_display": "Zhejiang, China"
-        }
-      ],
-      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Changjiang Jiang",
@@ -40245,7 +40208,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R1: internal method-training data is not a substantive reusable dataset contribution"
         }
       },
       "search_institution_ids": [
@@ -40267,7 +40231,43 @@
           }
         },
         "source": "Manual curation"
-      }
+      },
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Wuhan University",
+          "canonical_name": "Wuhan University",
+          "institution_id": "institution:f23b95ce92de4591",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hubei",
+          "location_display": "Hubei, China"
+        },
+        {
+          "index": 2,
+          "name": "Ant Group",
+          "canonical_name": "Ant Group",
+          "institution_id": "institution:5a28a1a99a417ba5",
+          "institution_type": "company",
+          "country": "China",
+          "country_code": "",
+          "region": "Zhejiang",
+          "location_display": "Zhejiang, China"
+        },
+        {
+          "index": 3,
+          "name": "Zhejiang University",
+          "canonical_name": "Zhejiang University",
+          "institution_id": "institution:e433baf78e80004b",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Zhejiang",
+          "location_display": "Zhejiang, China"
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:411724cd949b78c1af6a",
