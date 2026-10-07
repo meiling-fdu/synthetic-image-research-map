@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "audit": "corpus_quality_batch_c_external_evidence",
+  "wave": "3B-3",
+  "date": "2026-10-07",
+  "adjudication_date": "2026-10-07",
+  "adjudication_status": "FINAL",
+  "baseline_commit": "9b7dec4c31c7737baa1d5a0d07c6fa54db1d7fdb",
+  "policy": {
+    "policy_id": "T1",
+    "name": "Attribution vs Detection",
+    "rule": "source_attribution does not imply detection. Assign detection only when the paper explicitly performs an authenticity / real-versus-generated task. Classification among already-synthetic generators is attribution only."
+  },
+  "scope": {
+    "review_ids": [
+      "T503",
+      "T611",
+      "T634"
+    ],
+    "actions": 3,
+    "unique_papers": 3,
+    "dimension": "tasks",
+    "research_type_reviewed": false,
+    "primary_document_budget": 3,
+    "primary_documents_attempted": 3,
+    "usable_primary_documents": 1,
+    "authoritative_corpus_changes_applied": false
+  },
+  "retrieval_policy": {
+    "one_primary_document_per_paper": true,
+    "supplements_retrieved": false,
+    "alternate_versions_retrieved": false,
+    "mirrors_retrieved": false,
+    "search_pages_saved": false,
+    "raw_sources_saved": false,
+    "note": "The official T503 and T611 PDF attempts were stopped at their first terminal access failures. T634 used the established authoritative arXiv full paper. No alternate document was substituted."
+  },
+  "documents": [
+    {
+      "document_id": "T503-cvf-final",
+      "review_id": "T503",
+      "source_type": "official_cvpr_cvf_paper_pdf",
+      "url": "https://openaccess.thecvf.com/content/CVPR2024/papers/Song_ManiFPT_Defining_and_Analyzing_Fingerprints_of_Generative_Models_CVPR_2024_paper.pdf",
+      "retrieval_outcome": "ACCESS_BLOCKED_HTTP_403",
+      "usable_evidence_extracted": false,
+      "raw_saved": false
+    },
+    {
+      "document_id": "T611-bmvc-final",
+      "review_id": "T611",
+      "source_type": "official_bmvc_paper_pdf",
+      "url": "https://www.bmvc2021-virtualconference.com/assets/papers/0197.pdf",
+      "retrieval_outcome": "UNSAFE_REDIRECT_TO_UNRELATED_DOMAIN_NONRETRYABLE",
+      "usable_evidence_extracted": false,
+      "raw_saved": false
+    },
+    {
+      "document_id": "T634-arxiv-full",
+      "review_id": "T634",
+      "source_type": "authoritative_arxiv_full_paper",
+      "url": "https://arxiv.org/pdf/1812.11842",
+      "retrieval_outcome": "COMPLETE_MAIN_PAPER_RETRIEVED",
+      "usable_evidence_extracted": true,
+      "raw_saved": false,
+      "locators": [
+        "section 3, same-GAN versus cross-GAN correlation ROCs",
+        "section 4, source identification experiments",
+        "Table 1, GAN and real-camera sources",
+        "Figures 7-8, source-identification ROCs and confusion matrix",
+        "section 4, NIST Forensics GAN Challenge real-versus-GAN experiment"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "review_id": "T503",
+      "paper_id": "curated:34fdf09ae334914a2723",
+      "title": "ManiFPT: Defining and Analyzing Fingerprints of Generative Models",
+      "authoritative_source_document_id": "T503-cvf-final",
+      "authoritative_url": "https://openaccess.thecvf.com/content/CVPR2024/papers/Song_ManiFPT_Defining_and_Analyzing_Fingerprints_of_Generative_Models_CVPR_2024_paper.pdf",
+      "source_type": "official_cvpr_cvf_paper_pdf",
+      "retrieval_outcome": "ACCESS_BLOCKED_HTTP_403",
+      "claimed_task": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "evaluated_class_or_decision_space": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "real_image_role": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "detection_specific_evaluation": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "attribution_or_fingerprint_evaluation": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "adjudication": "EVIDENCE_STILL_INSUFFICIENT",
+      "evidence_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "final_disposition": "REMEDIATION_NOT_APPLIED",
+      "evidence_reason": "The single permitted official CVF primary PDF returned HTTP 403.",
+      "proposed_taxonomy": null,
+      "confidence": "high for the evidence-insufficiency determination",
+      "corpus_change_applied": false
+    },
+    {
+      "review_id": "T611",
+      "paper_id": "curated:07ee620b8169b67b900f",
+      "title": "Does a GAN Leave Distinct Model-Specific Fingerprints?",
+      "authoritative_source_document_id": "T611-bmvc-final",
+      "authoritative_url": "https://www.bmvc2021-virtualconference.com/assets/papers/0197.pdf",
+      "source_type": "official_bmvc_paper_pdf",
+      "retrieval_outcome": "UNSAFE_REDIRECT_TO_UNRELATED_DOMAIN_NONRETRYABLE",
+      "claimed_task": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "evaluated_class_or_decision_space": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "real_image_role": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "detection_specific_evaluation": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "attribution_or_fingerprint_evaluation": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "adjudication": "EVIDENCE_STILL_INSUFFICIENT",
+      "evidence_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "final_disposition": "REMEDIATION_NOT_APPLIED",
+      "evidence_reason": "The single permitted official BMVC PDF redirected to an unrelated domain and was rejected as unsafe.",
+      "proposed_taxonomy": null,
+      "confidence": "high for the evidence-insufficiency determination",
+      "corpus_change_applied": false
+    },
+    {
+      "review_id": "T634",
+      "paper_id": "doi:10.1109/mipr.2019.00103",
+      "title": "Do GANs Leave Artificial Fingerprints?",
+      "authoritative_source_document_id": "T634-arxiv-full",
+      "authoritative_url": "https://arxiv.org/pdf/1812.11842",
+      "source_type": "authoritative_arxiv_full_paper",
+      "retrieval_outcome": "COMPLETE_MAIN_PAPER_RETRIEVED",
+      "claimed_task": "GAN fingerprint discovery and source identification, plus explicit real-versus-GAN classification in the NIST Forensics GAN Challenge.",
+      "evaluated_class_or_decision_space": "Source identification spans CycleGAN, ProGAN and StarGAN source variants plus two real-camera sources. A separate 1,000-image challenge classifies images as real or GAN-generated.",
+      "real_image_role": "Real images are two named camera sources in the multiclass attribution experiment and the explicit real class in the binary Forensics GAN Challenge.",
+      "detection_specific_evaluation": "The paper reports a real-versus-GAN challenge experiment. GAN-fingerprint clustering is fused with a deep-network baseline, producing a final AUC of 0.999.",
+      "attribution_or_fingerprint_evaluation": "Same-GAN versus cross-GAN fingerprint correlation yields AUC 0.990 and 0.998 in the initial two-source study. The larger source-identification experiment reports one-vs-all ROCs, a confusion matrix, 90.3% accuracy, and 90.1% after JPEG QF=95.",
+      "adjudication": "DETECTION_TASK_SUPPORTED",
+      "evidence_outcome": "EVIDENCE_RESOLVED_NO_CHANGE",
+      "final_disposition": "TAXONOMY_RETAINED",
+      "proposed_taxonomy": [
+        "detection",
+        "source_attribution"
+      ],
+      "confidence": "high",
+      "corpus_change_applied": false
+    }
+  ],
+  "resolution": {
+    "DETECTION_TASK_SUPPORTED": 1,
+    "ATTRIBUTION_ONLY_NO_DETECTION": 0,
+    "EVIDENCE_STILL_INSUFFICIENT": 2,
+    "external_batch_c_before": 24,
+    "external_batch_c_resolved": 1,
+    "external_batch_c_after": 23,
+    "task_cases_before": 8,
+    "task_cases_targeted": 3,
+    "task_cases_resolved": 1,
+    "task_cases_after": 7,
+    "remaining_task_cases": [
+      "T236",
+      "T137",
+      "T141",
+      "T572",
+      "T576",
+      "T503",
+      "T611"
+    ],
+    "institution_cases_after": 1,
+    "research_type_cases_after": 15,
+    "t527_excluded_from_external_count": true,
+    "total_unresolved_batch_c_after_including_t527": 24
+  },
+  "unchanged_corpus": {
+    "public_papers": 639,
+    "formal_publications": 531,
+    "mapped_papers": 617,
+    "relationship_rows": 1421,
+    "unique_paper_institution_pairs": 1421
+  },
+  "unchanged_taxonomy": {
+    "detection": 590,
+    "source_attribution": 85,
+    "localization": 42,
+    "method": 547,
+    "dataset": 133,
+    "benchmark": 88,
+    "survey": 20,
+    "analysis_study": 78
+  },
+  "integrity_expectations": {
+    "AUTHORITATIVE_CORPUS_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+  }
+}
