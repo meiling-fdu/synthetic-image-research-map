@@ -27,7 +27,7 @@ class PublicHeaderMetadataTests(unittest.TestCase):
         heading = re.search(r'<h1 class="header-title">(.*?)</h1>', self.html, re.S)
         self.assertIsNotNone(heading)
         self.assertEqual(re.sub(r'<[^>]+>', '', heading.group(1)).strip(), project_name)
-        self.assertIn("Detection · Source Attribution · Localization", self.html)
+        self.assertNotIn("Detection · Source Attribution · Localization", self.html)
         self.assertNotIn("<h1>\n          <span>", self.html)
         self.assertIn("Maintained by Meiling Li", self.html)
 

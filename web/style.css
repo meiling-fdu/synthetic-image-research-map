@@ -116,8 +116,9 @@ footer {
   display: grid;
   min-height: 96px;
   min-width: 0;
+  align-self: stretch;
   align-content: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .header-lockup {
@@ -153,10 +154,11 @@ footer {
 }
 
 .header-tagline {
+  max-width: 410px;
   margin: 0;
   color: var(--muted);
-  font-size: 0.66rem;
-  line-height: 1.35;
+  font-size: 0.75rem;
+  line-height: 1.45;
 }
 
 .header-statistics-group {
@@ -2000,7 +2002,6 @@ input:disabled {
     padding: 12px 0;
   }
 
-  .header-brand,
   .header-chart {
     height: 112px;
   }
@@ -3544,7 +3545,7 @@ footer a {
   }
 
   .header-tagline {
-    font-size: 0.57rem;
+    font-size: 0.66rem;
   }
 
   .header-repository-block {
