@@ -7,8 +7,9 @@ data change and the identity and relationship invariants in
 """
 
 # Approved gap migration and Corpus Quality Batches A/C Phase 1 plus Batch C
-# Waves 1, 2, and 3A: R188 is excluded; U017 has its explicit affiliations;
-# T246 has evaluated localization. Prior baselines remain in dated receipts.
+# Waves 1, 2, 3A, 3B-1, and 3B-2: R188 is excluded; U017 has its explicit
+# affiliations; T246 has evaluated localization; T024 and T136 retain only
+# source attribution. Prior baselines remain in dated receipts.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 639,
     "public_map_source_papers": 617,
@@ -57,7 +58,7 @@ RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint"
 
 PUBLICATION_TYPE_TOTALS = {'conference': 389, 'preprint': 108, 'journal': 141, 'book': 1}
 
-TASK_TOTALS = {'detection': 592, 'source_attribution': 85, 'localization': 42}
+TASK_TOTALS = {'detection': 590, 'source_attribution': 85, 'localization': 42}
 
 RELEASE_TASK_TOTALS = {
     "detection": 471,

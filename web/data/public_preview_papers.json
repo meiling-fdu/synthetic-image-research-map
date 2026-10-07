@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-06T13:44:34Z"
+    "public_preview_generated_at": "2026-10-07T02:36:01Z"
   },
   "records": [
     {
@@ -10110,7 +10110,6 @@
         "source": "OpenAlex"
       },
       "tasks": [
-        "detection",
         "source_attribution"
       ],
       "image_scopes": [
@@ -10119,6 +10118,19 @@
       "research_types": [
         "method"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "T1: pairwise source-homology verification is not an authenticity task"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -10176,19 +10188,7 @@
           "location_display": "Tianjin, China"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:2b5013b99aa5e4de2621",
@@ -55799,7 +55799,6 @@
         "source": "OpenAlex"
       },
       "tasks": [
-        "detection",
         "source_attribution"
       ],
       "image_scopes": [
@@ -55809,6 +55808,19 @@
         "dataset",
         "benchmark"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "T1: a real source class within multiclass attribution does not create an authenticity task"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -55833,19 +55845,7 @@
           "location_display": "California, United States"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:246f07c81b9f91e527eb",

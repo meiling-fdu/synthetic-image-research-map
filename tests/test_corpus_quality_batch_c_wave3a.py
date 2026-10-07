@@ -45,7 +45,11 @@ def test_t246_is_the_only_authoritative_taxonomy_change():
     before = {row["taxonomy_id"]: row for row in previous_csv(path)}
     after = {row["taxonomy_id"]: row for row in csv_rows(path)}
     assert before.keys() == after.keys()
-    assert {key for key in before if before[key] != after[key]} == {T246}
+    assert {key for key in before if before[key] != after[key]} == {
+        T246,
+        "paper_id:curated:1a8e996ef9ce73efc0ef",
+        "paper_id:curated:d59bffe554500b241a3e",
+    }
     old, new = before[T246], after[T246]
     assert old["tasks"] == "detection"
     assert new["tasks"] == "detection;localization"
@@ -155,7 +159,7 @@ def test_exact_corpus_and_taxonomy_effect():
     research_types = Counter(
         label for row in context["papers"].values() for label in row["research_types"]
     )
-    assert tasks == {"detection": 592, "source_attribution": 85, "localization": 42}
+    assert tasks == {"detection": 590, "source_attribution": 85, "localization": 42}
     assert research_types == {
         "method": 547,
         "dataset": 133,

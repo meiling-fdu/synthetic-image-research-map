@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "audit": "corpus_quality_batch_c_external_evidence",
+  "wave": "3B-2",
+  "date": "2026-10-06",
+  "completion_date": "2026-10-07",
+  "baseline_commit": "1e2c728e0b16cabc1c81ffca9b791829d8aa5d78",
+  "policy": {
+    "policy_id": "T1",
+    "name": "Attribution vs Detection",
+    "rule": "source_attribution does not imply detection. Assign detection only when the paper explicitly performs an authenticity / real-versus-generated task."
+  },
+  "scope": {
+    "review_ids": [
+      "T024",
+      "T136",
+      "T137",
+      "T141"
+    ],
+    "actions": 4,
+    "unique_papers": 4,
+    "dimension": "tasks",
+    "research_type_reviewed": false,
+    "primary_document_budget": 4,
+    "primary_documents_attempted": 4,
+    "usable_primary_documents": 2,
+    "authoritative_corpus_changes_applied": true
+  },
+  "retrieval_policy": {
+    "one_primary_document_per_paper": true,
+    "additional_retrieval_after_interruption": false,
+    "supplements_retrieved": false,
+    "alternate_versions_retrieved": false,
+    "search_pages_saved": false,
+    "raw_sources_saved": false,
+    "note": "The resumed review used only the previously downloaded T024 and T136 primary papers. T137 and T141 remained frozen at their established retrieval failures and were not retried."
+  },
+  "documents": [
+    {
+      "document_id": "T024-springer-final",
+      "review_id": "T024",
+      "source_type": "official_springer_proceedings_paper_pdf",
+      "url": "https://link.springer.com/content/pdf/10.1007/978-981-92-2856-0_1.pdf",
+      "retrieval_outcome": "COMPLETE_MAIN_PAPER_RETRIEVED",
+      "local_retrieval_status": "PRESENT_DURING_RESUMED_REVIEW_TEXT_EXTRACTED",
+      "usable_evidence_extracted": true,
+      "raw_saved": false,
+      "locators": [
+        "section 3.1, Task Definition",
+        "section 4.1, Homology Pair Construction",
+        "section 4.1, Evaluation Metric"
+      ]
+    },
+    {
+      "document_id": "T136-arxiv-full",
+      "review_id": "T136",
+      "source_type": "authoritative_arxiv_full_paper",
+      "url": "https://arxiv.org/pdf/2605.12967",
+      "retrieval_outcome": "COMPLETE_MAIN_PAPER_RETRIEVED",
+      "local_retrieval_status": "PRESENT_DURING_RESUMED_REVIEW_TEXT_EXTRACTED",
+      "usable_evidence_extracted": true,
+      "raw_saved": false,
+      "locators": [
+        "introduction, attribution task definition",
+        "section 3, dataset construction",
+        "section 4, Evaluation Settings",
+        "Table 3, attribution accuracy",
+        "appendix Table 6, real plus generator label mapping"
+      ]
+    },
+    {
+      "document_id": "T137-cvf-final",
+      "review_id": "T137",
+      "source_type": "official_cvpr_cvf_paper_pdf",
+      "url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Qin_IncreFA_Breaking_the_Static_Wall_of_Generative_Model_Attribution_CVPR_2026_paper.pdf",
+      "retrieval_outcome": "TRANSFER_STALLED_BOUNDED_WAIT_EXCEEDED",
+      "local_retrieval_status": "UNUSABLE_INCOMPLETE_TRANSFER",
+      "usable_evidence_extracted": false,
+      "raw_saved": false
+    },
+    {
+      "document_id": "T141-wiley-final",
+      "review_id": "T141",
+      "source_type": "official_wiley_publisher_paper_pdf",
+      "url": "https://onlinelibrary.wiley.com/doi/pdf/10.1111/exsy.70359",
+      "retrieval_outcome": "ACCESS_BLOCKED_HTTP_403",
+      "local_retrieval_status": "NOT_AVAILABLE",
+      "usable_evidence_extracted": false,
+      "raw_saved": false
+    }
+  ],
+  "actions": [
+    {
+      "review_id": "T024",
+      "paper_id": "curated:1a8e996ef9ce73efc0ef",
+      "title": "AI-Generated Image Homology Detection",
+      "authoritative_source_document_id": "T024-springer-final",
+      "authoritative_url": "https://link.springer.com/content/pdf/10.1007/978-981-92-2856-0_1.pdf",
+      "local_retrieval_status": "PRESENT_DURING_RESUMED_REVIEW_TEXT_EXTRACTED",
+      "claimed_tasks": [
+        "source homology verification",
+        "same-source matching"
+      ],
+      "evaluated_class_space": "Binary pairwise decision: homologous versus non-homologous. Real-real and same-generator pairs are homologous; real-generated and different-generator pairs are non-homologous. Experiments focus on architecture-level homology.",
+      "real_image_role": "Real images participate in pair construction as a source category: real-real pairs are positives, while real-generated pairs can be negatives. They are not an individual-image authenticity class or a separate real-vs-generated task.",
+      "detection_specific_evaluation": "None. The paper explicitly distinguishes homology detection from individual-image real-vs-fake detection. Reported pair-classification accuracy and average precision do not evaluate authenticity.",
+      "attribution_or_homology_evaluation": "Homology detectors are evaluated with accuracy and average precision on balanced homologous/non-homologous pairs, including an out-of-distribution test over unseen GAN and diffusion generator subsets.",
+      "adjudication": "ATTRIBUTION_ONLY_NO_DETECTION",
+      "proposed_later_taxonomy": {
+        "tasks_before": [
+          "detection",
+          "source_attribution"
+        ],
+        "tasks_after": [
+          "source_attribution"
+        ]
+      },
+      "confidence": "high",
+      "corpus_change_applied": true,
+      "evidence_outcome": "EVIDENCE_RESOLVED_CHANGE",
+      "final_disposition": "REMEDIATION_APPLIED"
+    },
+    {
+      "review_id": "T136",
+      "paper_id": "curated:d59bffe554500b241a3e",
+      "title": "ImageAttributionBench: How Far Are We from Generalizable Attribution?",
+      "authoritative_source_document_id": "T136-arxiv-full",
+      "authoritative_url": "https://arxiv.org/pdf/2605.12967",
+      "local_retrieval_status": "PRESENT_DURING_RESUMED_REVIEW_TEXT_EXTRACTED",
+      "claimed_tasks": [
+        "source-model attribution benchmarking",
+        "cross-semantic attribution generalization",
+        "degradation robustness for attribution"
+      ],
+      "evaluated_class_space": "Thirty-two-way source classification: one real-image source class plus 31 generative-model classes. The benchmark defines standard balanced-split and semantic-split attribution protocols.",
+      "real_image_role": "Real images form one class inside the source-attribution label space and seed matched semantic prompts for synthetic generation. The benchmark does not define a separate binary authenticity protocol.",
+      "detection_specific_evaluation": "None. No binary real-vs-generated accuracy, AUROC, or separate detection stage is reported. Detection methods are adapted to multiclass attribution; real-class presence alone is not treated as authenticity detection.",
+      "attribution_or_homology_evaluation": "Attribution accuracy is reported for clean and six degraded conditions in the standard balanced split and for clean/degraded cross-semantic splits. Confusion matrices use the 32 source labels.",
+      "adjudication": "ATTRIBUTION_ONLY_NO_DETECTION",
+      "proposed_later_taxonomy": {
+        "tasks_before": [
+          "detection",
+          "source_attribution"
+        ],
+        "tasks_after": [
+          "source_attribution"
+        ]
+      },
+      "confidence": "high",
+      "corpus_change_applied": true,
+      "evidence_outcome": "EVIDENCE_RESOLVED_CHANGE",
+      "final_disposition": "REMEDIATION_APPLIED"
+    },
+    {
+      "review_id": "T137",
+      "paper_id": "curated:246f07c81b9f91e527eb",
+      "title": "IncreFA: Breaking the Static Wall of Generative Model Attribution",
+      "authoritative_source_document_id": "T137-cvf-final",
+      "authoritative_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Qin_IncreFA_Breaking_the_Static_Wall_of_Generative_Model_Attribution_CVPR_2026_paper.pdf",
+      "local_retrieval_status": "UNUSABLE_INCOMPLETE_TRANSFER",
+      "claimed_tasks": [
+        "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT"
+      ],
+      "evaluated_class_space": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "real_image_role": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "detection_specific_evaluation": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "attribution_or_homology_evaluation": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "adjudication": "EVIDENCE_STILL_INSUFFICIENT",
+      "evidence_reason": "The single permitted official CVF primary-document transfer did not complete within the bounded retrieval window.",
+      "proposed_later_taxonomy": null,
+      "confidence": "high for the evidence-insufficiency determination",
+      "corpus_change_applied": false,
+      "evidence_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "final_disposition": "REMEDIATION_NOT_APPLIED"
+    },
+    {
+      "review_id": "T141",
+      "paper_id": "curated:268336295435cfbbbd5d",
+      "title": "Learning a Semantic Similarity Orthogonal Space for Model-Level AI-Generated Image Source Attribution",
+      "authoritative_source_document_id": "T141-wiley-final",
+      "authoritative_url": "https://onlinelibrary.wiley.com/doi/pdf/10.1111/exsy.70359",
+      "local_retrieval_status": "NOT_AVAILABLE",
+      "claimed_tasks": [
+        "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT"
+      ],
+      "evaluated_class_space": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "real_image_role": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "detection_specific_evaluation": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "attribution_or_homology_evaluation": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "adjudication": "EVIDENCE_STILL_INSUFFICIENT",
+      "evidence_reason": "The single permitted official Wiley primary PDF returned HTTP 403.",
+      "proposed_later_taxonomy": null,
+      "confidence": "high for the evidence-insufficiency determination",
+      "corpus_change_applied": false,
+      "evidence_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "final_disposition": "REMEDIATION_NOT_APPLIED"
+    }
+  ],
+  "resolution": {
+    "DETECTION_TASK_SUPPORTED": 0,
+    "ATTRIBUTION_ONLY_NO_DETECTION": 2,
+    "EVIDENCE_STILL_INSUFFICIENT": 2,
+    "external_batch_c_before": 26,
+    "external_batch_c_resolved": 2,
+    "external_batch_c_after": 24,
+    "task_cases_before": 10,
+    "task_cases_targeted": 4,
+    "task_cases_resolved": 2,
+    "task_cases_after": 8,
+    "institution_cases_after": 1,
+    "research_type_cases_after": 15,
+    "t527_excluded_from_external_count": true,
+    "total_unresolved_batch_c_after_including_t527": 25
+  },
+  "unchanged_corpus": {
+    "public_papers": 639,
+    "formal_publications": 531,
+    "mapped_papers": 617,
+    "relationship_rows": 1421,
+    "unique_paper_institution_pairs": 1421
+  },
+  "integrity_expectations": {
+    "EXPECTED_AUTHORITATIVE_TASK_ROWS_CHANGED": 2,
+    "UNEXPECTED_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+  },
+  "adjudication_date": "2026-10-07",
+  "adjudication_status": "FINAL",
+  "taxonomy_before": {
+    "detection": 592,
+    "source_attribution": 85,
+    "localization": 42,
+    "method": 547,
+    "dataset": 133,
+    "benchmark": 88,
+    "survey": 20,
+    "analysis_study": 78
+  },
+  "taxonomy_after": {
+    "detection": 590,
+    "source_attribution": 85,
+    "localization": 42,
+    "method": 547,
+    "dataset": 133,
+    "benchmark": 88,
+    "survey": 20,
+    "analysis_study": 78
+  }
+}

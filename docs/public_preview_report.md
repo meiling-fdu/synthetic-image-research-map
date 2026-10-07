@@ -11,7 +11,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-10-06T13:44:34Z |
+| public_preview_generated_at | 2026-10-07T02:36:01Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -36,7 +36,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Task | Records |
 | --- | ---: |
-| detection | 574 |
+| detection | 572 |
 | source_attribution | 81 |
 | localization | 37 |
 
