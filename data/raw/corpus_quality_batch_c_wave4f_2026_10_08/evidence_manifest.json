@@ -1,0 +1,467 @@
+{
+  "schema_version": 1,
+  "audit": "corpus_quality_batch_c_external_evidence",
+  "wave": "4F",
+  "date": "2026-10-08",
+  "adjudication_status": "FINAL",
+  "baseline_commit": "58fb5e557e5d5cfc8e70ad5b36e89e6b2a92d39b",
+  "policy": {
+    "policy_id": "R1",
+    "name": "Dataset contribution",
+    "locked_rule": "Assign dataset only when a reusable dataset or data resource is itself a substantive scientific contribution. Data created or collected solely for the paper's experiments is insufficient.",
+    "public_release_required": false,
+    "multiple_research_roles_allowed": true
+  },
+  "selection": {
+    "order": "ascending review ID",
+    "eligible_unreviewed_r1_cases": 2,
+    "review_ids": [
+      "R535",
+      "R580"
+    ],
+    "decision_sheet": "docs/corpus_quality_batch_c_decision_sheet_2026_10_05.md",
+    "external_evidence_plan": "docs/corpus_quality_batch_c_external_evidence_plan_2026_10_06.md",
+    "policy_ledger": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+    "prior_wave_manifests": [
+      "data/raw/corpus_quality_batch_c_wave1_2026_10_06/evidence_manifest.json",
+      "data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+      "data/raw/corpus_quality_batch_c_wave3a_2026_10_06/evidence_manifest.json",
+      "data/raw/corpus_quality_batch_c_wave3b1_2026_10_06/evidence_manifest.json",
+      "data/raw/corpus_quality_batch_c_wave3b2_2026_10_06/evidence_manifest.json",
+      "data/raw/corpus_quality_batch_c_wave3b3_2026_10_07/evidence_manifest.json",
+      "data/raw/corpus_quality_batch_c_wave4a_2026_10_07/evidence_manifest.json",
+      "data/raw/corpus_quality_batch_c_wave4b_2026_10_07/evidence_manifest.json",
+      "data/raw/corpus_quality_batch_c_wave4c_2026_10_07/evidence_manifest.json",
+      "data/raw/corpus_quality_batch_c_wave4d_2026_10_08/evidence_manifest.json",
+      "data/raw/corpus_quality_batch_c_wave4e_2026_10_08/evidence_manifest.json"
+    ],
+    "other_policy_unreviewed_review_ids": [],
+    "unreviewed_research_type_cases_after_this_wave": 0
+  },
+  "research_type_coverage": {
+    "population_definition": "The 15 category=research_type residual actions marked EXTERNAL_PRIMARY_SOURCE_REQUIRED in the approved Phase 1 ledger. R084 and R121 were resolved in Phase 1 and are outside this evidence population; R188 is a source-conflict action, not a research-type evidence action.",
+    "original_action_count": 15,
+    "counts_before_wave4f": {
+      "RESOLVED_CHANGE": 1,
+      "FIRST_PASS_INSUFFICIENT": 9,
+      "RESOLVED_NO_CHANGE": 3,
+      "NEVER_FIRST_PASS_REVIEWED": 2
+    },
+    "counts_after_wave4f": {
+      "RESOLVED_CHANGE": 1,
+      "FIRST_PASS_INSUFFICIENT": 11,
+      "RESOLVED_NO_CHANGE": 3,
+      "NEVER_FIRST_PASS_REVIEWED": 0
+    },
+    "records": [
+      {
+        "review_id": "R099",
+        "paper_id": "curated:9c39067ac73e7354c2f3",
+        "title": "Fake-HR1: Rethinking Reasoning of Vision Language Model for Synthetic Image Detection",
+        "policy_id": "R1",
+        "current_research_types": [
+          "method"
+        ],
+        "disposition_before_wave4f": "RESOLVED_CHANGE",
+        "prior_wave": "4A",
+        "prior_manifest": "data/raw/corpus_quality_batch_c_wave4a_2026_10_07/evidence_manifest.json",
+        "disposition_after_wave4f": "RESOLVED_CHANGE",
+        "wave4f_outcome": null
+      },
+      {
+        "review_id": "R117",
+        "paper_id": "curated:748ed5e2cf27aea70f6a",
+        "title": "Frequency-Aware Robustness Analysis of Deepfake Detection Models",
+        "policy_id": "R4",
+        "current_research_types": [
+          "method"
+        ],
+        "disposition_before_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "prior_wave": "4E",
+        "prior_manifest": "data/raw/corpus_quality_batch_c_wave4e_2026_10_08/evidence_manifest.json",
+        "disposition_after_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "wave4f_outcome": null
+      },
+      {
+        "review_id": "R127",
+        "paper_id": "curated:807cbb7fa6b003585c72",
+        "title": "GlobalForge: Towards Robust AI-Generated Image Detection",
+        "policy_id": "R3",
+        "current_research_types": [
+          "method",
+          "analysis_study"
+        ],
+        "disposition_before_wave4f": "RESOLVED_NO_CHANGE",
+        "prior_wave": "4B",
+        "prior_manifest": "data/raw/corpus_quality_batch_c_wave4b_2026_10_07/evidence_manifest.json",
+        "disposition_after_wave4f": "RESOLVED_NO_CHANGE",
+        "wave4f_outcome": null
+      },
+      {
+        "review_id": "R176",
+        "paper_id": "curated:f6ad15b01df18aadfe1a",
+        "title": "PRADA: Probability-Ratio-Based Attribution and Detection of Autoregressive-Generated Images",
+        "policy_id": "R1",
+        "current_research_types": [
+          "method",
+          "dataset"
+        ],
+        "disposition_before_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "prior_wave": "4A",
+        "prior_manifest": "data/raw/corpus_quality_batch_c_wave4a_2026_10_07/evidence_manifest.json",
+        "disposition_after_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "wave4f_outcome": null
+      },
+      {
+        "review_id": "R189",
+        "paper_id": "curated:685065a3632a185a230d",
+        "title": "Reduce the Artifact Bias for More Generalizable AI-Generated Image Detection",
+        "policy_id": "R3",
+        "current_research_types": [
+          "method",
+          "analysis_study"
+        ],
+        "disposition_before_wave4f": "RESOLVED_NO_CHANGE",
+        "prior_wave": "4B",
+        "prior_manifest": "data/raw/corpus_quality_batch_c_wave4b_2026_10_07/evidence_manifest.json",
+        "disposition_after_wave4f": "RESOLVED_NO_CHANGE",
+        "wave4f_outcome": null
+      },
+      {
+        "review_id": "R190",
+        "paper_id": "curated:c84b04cb8e921be753db",
+        "title": "Representation and Reference Selection in Training-Free Synthetic Image Attribution",
+        "policy_id": "R1",
+        "current_research_types": [
+          "dataset",
+          "analysis_study"
+        ],
+        "disposition_before_wave4f": "RESOLVED_NO_CHANGE",
+        "prior_wave": "4A",
+        "prior_manifest": "data/raw/corpus_quality_batch_c_wave4a_2026_10_07/evidence_manifest.json",
+        "disposition_after_wave4f": "RESOLVED_NO_CHANGE",
+        "wave4f_outcome": null
+      },
+      {
+        "review_id": "R376",
+        "paper_id": "curated:cda6067db322246e8195",
+        "title": "No Detector to Rule Them All",
+        "policy_id": "R4",
+        "current_research_types": [
+          "method"
+        ],
+        "disposition_before_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "prior_wave": "4E",
+        "prior_manifest": "data/raw/corpus_quality_batch_c_wave4e_2026_10_08/evidence_manifest.json",
+        "disposition_after_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "wave4f_outcome": null
+      },
+      {
+        "review_id": "R455",
+        "paper_id": "curated:04932cb03f767948ddf4",
+        "title": "Deep Image Fingerprint: Towards Low Budget Synthetic Image Detection and Model Lineage Analysis",
+        "policy_id": "R1",
+        "current_research_types": [
+          "method",
+          "dataset"
+        ],
+        "disposition_before_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "prior_wave": "4A",
+        "prior_manifest": "data/raw/corpus_quality_batch_c_wave4a_2026_10_07/evidence_manifest.json",
+        "disposition_after_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "wave4f_outcome": null
+      },
+      {
+        "review_id": "R460",
+        "paper_id": "doi:10.1109/aivrv63595.2024.10860248",
+        "title": "Detecting AI Generated Images Through Texture and Frequency Analysis of Patches",
+        "policy_id": "R3",
+        "current_research_types": [
+          "method",
+          "analysis_study"
+        ],
+        "disposition_before_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "prior_wave": "4B",
+        "prior_manifest": "data/raw/corpus_quality_batch_c_wave4b_2026_10_07/evidence_manifest.json",
+        "disposition_after_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "wave4f_outcome": null
+      },
+      {
+        "review_id": "R535",
+        "paper_id": "curated:98c0322e2f8dd41d3e9e",
+        "title": "Which Model Generated This Image? A Model-Agnostic Approach for Origin Attribution",
+        "policy_id": "R1",
+        "current_research_types": [
+          "method",
+          "dataset"
+        ],
+        "disposition_before_wave4f": "NEVER_FIRST_PASS_REVIEWED",
+        "prior_wave": null,
+        "prior_manifest": null,
+        "disposition_after_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "wave4f_outcome": "EVIDENCE_STILL_INSUFFICIENT"
+      },
+      {
+        "review_id": "R537",
+        "paper_id": "doi:10.1109/ijcnn60899.2024.10650566",
+        "title": "X-Transfer: A Transfer Learning-Based Framework for GAN-Generated Fake Image Detection",
+        "policy_id": "R3",
+        "current_research_types": [
+          "method",
+          "analysis_study"
+        ],
+        "disposition_before_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "prior_wave": "4B",
+        "prior_manifest": "data/raw/corpus_quality_batch_c_wave4b_2026_10_07/evidence_manifest.json",
+        "disposition_after_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "wave4f_outcome": null
+      },
+      {
+        "review_id": "R548",
+        "paper_id": "doi:10.1145/3576915.3616588",
+        "title": "DE-FAKE: Detection and Attribution of Fake Images Generated by Text-to-Image Generation Models",
+        "policy_id": "R2",
+        "current_research_types": [
+          "method",
+          "benchmark",
+          "analysis_study"
+        ],
+        "disposition_before_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "prior_wave": "4D",
+        "prior_manifest": "data/raw/corpus_quality_batch_c_wave4d_2026_10_08/evidence_manifest.json",
+        "disposition_after_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "wave4f_outcome": null
+      },
+      {
+        "review_id": "R549",
+        "paper_id": "curated:616984c24ff3792431e6",
+        "title": "Deepfake Generation and Detection: Case Study and Challenges",
+        "policy_id": "R4",
+        "current_research_types": [
+          "method"
+        ],
+        "disposition_before_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "prior_wave": "4E",
+        "prior_manifest": "data/raw/corpus_quality_batch_c_wave4e_2026_10_08/evidence_manifest.json",
+        "disposition_after_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "wave4f_outcome": null
+      },
+      {
+        "review_id": "R580",
+        "paper_id": "curated:1ef55e4fc03eb4880beb",
+        "title": "Towards Universal Fake Image Detectors That Generalize Across Generative Models",
+        "policy_id": "R1",
+        "current_research_types": [
+          "method",
+          "dataset"
+        ],
+        "disposition_before_wave4f": "NEVER_FIRST_PASS_REVIEWED",
+        "prior_wave": null,
+        "prior_manifest": null,
+        "disposition_after_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "wave4f_outcome": "EVIDENCE_STILL_INSUFFICIENT"
+      },
+      {
+        "review_id": "R615",
+        "paper_id": "doi:10.1109/iccv48922.2021.01383",
+        "title": "Towards Discovery and Attribution of Open-world GAN Generated Images",
+        "policy_id": "R3",
+        "current_research_types": [
+          "method",
+          "analysis_study"
+        ],
+        "disposition_before_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "prior_wave": "4C",
+        "prior_manifest": "data/raw/corpus_quality_batch_c_wave4c_2026_10_07/evidence_manifest.json",
+        "disposition_after_wave4f": "FIRST_PASS_INSUFFICIENT",
+        "wave4f_outcome": null
+      }
+    ]
+  },
+  "scope": {
+    "actions": 2,
+    "unique_papers": 2,
+    "dimension": "research_type_dataset_only",
+    "maximum_wave_cases": 2,
+    "primary_document_budget": 2,
+    "primary_documents_attempted": 2,
+    "full_primary_documents_obtained": 0,
+    "publisher_previews_obtained": 1,
+    "sufficient_primary_documents": 0,
+    "method_adjudicated": false,
+    "benchmark_adjudicated": false,
+    "analysis_study_adjudicated": false,
+    "forensic_tasks_adjudicated": false,
+    "authoritative_corpus_changes_applied": false
+  },
+  "retrieval_policy": {
+    "one_primary_document_per_paper": true,
+    "failed_targets_retried": false,
+    "alternate_versions_retrieved": false,
+    "mirrors_retrieved": false,
+    "secondary_sources_retrieved": false,
+    "supplements_retrieved": false,
+    "search_snippets_used_as_evidence": false,
+    "failed_response_bodies_saved": false,
+    "existing_evidence_debt_revisited": false
+  },
+  "documents": [
+    {
+      "document_id": "R535-primary",
+      "review_id": "R535",
+      "authoritative_url": "https://link.springer.com/content/pdf/10.1007/978-3-031-73033-7_16.pdf",
+      "resolved_url": "https://link.springer.com/chapter/10.1007/978-3-031-73033-7_16",
+      "source_type": "official_springer_primary_paper_pdf_target",
+      "attempted_at": "2026-10-08",
+      "retrieval_outcome": "PRIMARY_PDF_REDIRECTED_TO_SUBSCRIPTION_PREVIEW",
+      "http_status": null,
+      "content_type": "text/html",
+      "retrieval_note": "The requested PDF redirected to the matching official chapter subscription preview; no full paper was returned.",
+      "primary_record_metadata_available": true,
+      "full_primary_document_obtained": false,
+      "sufficient_dataset_role_evidence": false,
+      "raw_saved": false,
+      "sha256": null,
+      "storage_note": "No paper copy, preview body, or failed response body saved; no HTTP status inferred."
+    },
+    {
+      "document_id": "R580-primary",
+      "review_id": "R580",
+      "authoritative_url": "https://openaccess.thecvf.com/content/CVPR2023/papers/Ojha_Towards_Universal_Fake_Image_Detectors_That_Generalize_Across_Generative_Models_CVPR_2023_paper.pdf",
+      "resolved_url": null,
+      "source_type": "official_cvpr_cvf_primary_paper_pdf",
+      "attempted_at": "2026-10-08",
+      "retrieval_outcome": "PRIMARY_DOCUMENT_RETRIEVAL_INTERNAL_ERROR",
+      "http_status": null,
+      "content_type": null,
+      "retrieval_note": "The retrieval tool returned Internal Error without further failure details or an HTTP status.",
+      "primary_record_metadata_available": false,
+      "full_primary_document_obtained": false,
+      "sufficient_dataset_role_evidence": false,
+      "raw_saved": false,
+      "sha256": null,
+      "storage_note": "No paper copy, preview body, or failed response body saved; no HTTP status inferred."
+    }
+  ],
+  "actions": [
+    {
+      "review_id": "R535",
+      "paper_id": "curated:98c0322e2f8dd41d3e9e",
+      "title": "Which Model Generated This Image? A Model-Agnostic Approach for Origin Attribution",
+      "policy_id": "R1",
+      "current_research_types": [
+        "method",
+        "dataset"
+      ],
+      "authoritative_url": "https://link.springer.com/content/pdf/10.1007/978-3-031-73033-7_16.pdf",
+      "source_target_basis": "External-evidence plan section B requires the official full paper with contribution, data, and availability statements; selected the publisher PDF endpoint for the canonical Springer chapter DOI.",
+      "pending_dataset_question": "Does OCC-CLIP contribute a dataset beyond the samples used for few-shot evaluation?",
+      "primary_document_attempts": 1,
+      "prior_batch_c_first_pass": false,
+      "identity_verification": "Publisher preview title, authors (Fengyuan Liu, Haochen Luo, Yiming Li, Philip Torr, Jindong Gu), and chapter DOI match the canonical paper; full paper unavailable.",
+      "retrieval_outcome": "PRIMARY_PDF_REDIRECTED_TO_SUBSCRIPTION_PREVIEW",
+      "claimed_dataset_contribution": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "resource_identity_and_composition": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "reusability_evidence": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "reusable_protocol_or_dataset_specification": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "experimental_data_only_signals": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "release_access_information": "Publisher abstract links source code; dataset release/access and resource contents remain unestablished. Code availability does not settle the dataset contribution.",
+      "evidence_locators": [
+        {
+          "source_url": "https://link.springer.com/chapter/10.1007/978-3-031-73033-7_16",
+          "locator": "Title/author header and DOI; Abstract; subscription-preview/access notice",
+          "finding": "Matching publisher record and abstract available; full contribution/data sections unavailable."
+        }
+      ],
+      "r1_reason": "The sole PDF request returned only a publisher subscription preview. Its abstract and code link do not establish whether a reusable dataset is a substantive contribution; absence of that detail from the preview does not establish experimental-data-only status.",
+      "adjudication": "EVIDENCE_STILL_INSUFFICIENT",
+      "evidence_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "proposed_later_research_types": null,
+      "missing_evidence": "Accessible authoritative full paper containing OCC-CLIP contribution/data/availability statements that distinguish a reusable contributed dataset from few-shot evaluation samples.",
+      "confidence": "high for evidence insufficiency; substantive dataset role unassessed",
+      "corpus_change_applied": false,
+      "final_disposition": "REMEDIATION_NOT_APPLIED"
+    },
+    {
+      "review_id": "R580",
+      "paper_id": "curated:1ef55e4fc03eb4880beb",
+      "title": "Towards Universal Fake Image Detectors That Generalize Across Generative Models",
+      "policy_id": "R1",
+      "current_research_types": [
+        "method",
+        "dataset"
+      ],
+      "authoritative_url": "https://openaccess.thecvf.com/content/CVPR2023/papers/Ojha_Towards_Universal_Fake_Image_Detectors_That_Generalize_Across_Generative_Models_CVPR_2023_paper.pdf",
+      "source_target_basis": "External-evidence plan section B requires the official full paper with contribution, data, and availability statements; selected the official CVPR 2023 CVF paper PDF for the canonical title/DOI.",
+      "pending_dataset_question": "Which new reusable data resource, if any, is contributed beyond evaluation on existing detection data?",
+      "primary_document_attempts": 1,
+      "prior_batch_c_first_pass": false,
+      "identity_verification": "Intended title/DOI selected from the canonical record; primary-document identity could not be verified because retrieval failed.",
+      "retrieval_outcome": "PRIMARY_DOCUMENT_RETRIEVAL_INTERNAL_ERROR",
+      "claimed_dataset_contribution": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "resource_identity_and_composition": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "reusability_evidence": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "reusable_protocol_or_dataset_specification": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "experimental_data_only_signals": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "release_access_information": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "evidence_locators": [],
+      "r1_reason": "The sole official CVF PDF attempt returned an internal retrieval error. Dataset contribution, contents, reusability, experimental role, and availability cannot be assessed; retrieval failure is not evidence against a dataset contribution.",
+      "adjudication": "EVIDENCE_STILL_INSUFFICIENT",
+      "evidence_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "proposed_later_research_types": null,
+      "missing_evidence": "Accessible authoritative full paper containing contribution/data/availability statements establishing whether a new reusable data resource is contributed beyond evaluation on existing detection data.",
+      "confidence": "high for evidence insufficiency; substantive dataset role unassessed",
+      "corpus_change_applied": false,
+      "final_disposition": "REMEDIATION_NOT_APPLIED"
+    }
+  ],
+  "resolution": {
+    "DATASET_ROLE_SUPPORTED": 0,
+    "EXPERIMENTAL_DATA_ONLY_NO_DATASET": 0,
+    "EVIDENCE_STILL_INSUFFICIENT": 2,
+    "resolved_change": 0,
+    "resolved_no_change": 0,
+    "external_batch_c_before": 19,
+    "external_batch_c_resolved": 0,
+    "external_batch_c_after": 19,
+    "research_type_cases_before": 11,
+    "research_type_cases_resolved": 0,
+    "research_type_cases_after": 11,
+    "task_cases_after": 7,
+    "institution_cases_after": 1,
+    "t527_maintainer_scope_judgment": 1,
+    "t527_excluded_from_external_count": true,
+    "total_unresolved_batch_c_after_including_t527": 20,
+    "accounting_note": "Neither permitted source establishes the dataset role. R535 and R580 become first-pass evidence debt without a scientific determination or proposed type change. Existing nine research-type debts are not revisited."
+  },
+  "unchanged_corpus": {
+    "public": 639,
+    "formal": 531,
+    "mapped": 617,
+    "unmapped": 22,
+    "relationship_rows": 1421,
+    "unique_paper_institution_pairs": 1421
+  },
+  "unchanged_taxonomy": {
+    "tasks": {
+      "detection": 590,
+      "source_attribution": 85,
+      "localization": 42
+    },
+    "research_types": {
+      "method": 547,
+      "analysis_study": 78,
+      "survey": 20,
+      "dataset": 132,
+      "benchmark": 88
+    }
+  },
+  "integrity_expectations": {
+    "AUTHORITATIVE_CORPUS_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+  },
+  "adjudication_date": "2026-10-08",
+  "additional_retrievals_during_finalization": 0
+}
