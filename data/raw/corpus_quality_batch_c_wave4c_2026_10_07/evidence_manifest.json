@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "audit": "corpus_quality_batch_c_external_evidence",
+  "wave": "4C",
+  "date": "2026-10-07",
+  "adjudication_status": "FINAL",
+  "baseline_commit": "34c5568a2aa549b17440682a4f03d6a353e8ba9d",
+  "policy": {
+    "policy_id": "R3",
+    "name": "Analysis as a primary scientific contribution",
+    "locked_rule": "Assign analysis_study only when systematic empirical or theoretical analysis is itself a primary scientific contribution. Routine ablation, robustness testing, parameter sweeps, diagnostic experiments, or ordinary experimental analysis supporting a method do not qualify.",
+    "decision_question": "Would the paper still make a substantive scientific contribution through its systematic analysis/findings, rather than merely using analysis to validate another primary method?",
+    "multi_role_papers_allowed": true
+  },
+  "selection": {
+    "order": "ascending review ID",
+    "eligible_unreviewed_r3_cases": 1,
+    "review_ids": [
+      "R615"
+    ],
+    "decision_sheet": "docs/corpus_quality_batch_c_decision_sheet_2026_10_05.md",
+    "external_evidence_plan": "docs/corpus_quality_batch_c_external_evidence_plan_2026_10_06.md",
+    "policy_ledger": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+    "prior_first_pass_check": "Recomputed after published Wave 4B from the policy ledger and all prior Batch C wave manifests; R615 is the sole eligible unreviewed R3 case.",
+    "unreviewed_r3_cases_after_this_wave": 0
+  },
+  "scope": {
+    "actions": 1,
+    "unique_papers": 1,
+    "dimension": "research_type_analysis_study_only",
+    "maximum_wave_cases": 4,
+    "primary_document_budget": 1,
+    "primary_documents_attempted": 1,
+    "usable_primary_documents": 0,
+    "dataset_adjudicated": false,
+    "benchmark_adjudicated": false,
+    "method_adjudicated": false,
+    "forensic_tasks_adjudicated": false,
+    "authoritative_corpus_changes_applied": false
+  },
+  "retrieval_policy": {
+    "one_primary_document_per_paper": true,
+    "failed_targets_retried": false,
+    "alternate_versions_retrieved": false,
+    "mirrors_retrieved": false,
+    "secondary_sources_retrieved": false,
+    "supplements_retrieved": false,
+    "failed_response_bodies_saved": false,
+    "search_result_pages_saved": false,
+    "existing_evidence_debt_revisited": false
+  },
+  "documents": [
+    {
+      "document_id": "R615-primary",
+      "review_id": "R615",
+      "authoritative_url": "https://openaccess.thecvf.com/content/ICCV2021/papers/Girish_Towards_Discovery_and_Attribution_of_Open-World_GAN_Generated_Images_ICCV_2021_paper.pdf",
+      "source_type": "official_iccv_cvf_primary_paper_pdf",
+      "attempted_at": "2026-10-07",
+      "retrieval_outcome": "PRIMARY_DOCUMENT_RETRIEVAL_FORBIDDEN_403",
+      "http_status": 403,
+      "usable_evidence_extracted": false,
+      "raw_saved": false,
+      "sha256": null,
+      "storage_note": "Only the failure classification is recorded; no response body or local document copy was saved."
+    }
+  ],
+  "actions": [
+    {
+      "review_id": "R615",
+      "paper_id": "doi:10.1109/iccv48922.2021.01383",
+      "title": "Towards Discovery and Attribution of Open-world GAN Generated Images",
+      "policy_id": "R3",
+      "current_research_types": [
+        "method",
+        "analysis_study"
+      ],
+      "authoritative_url": "https://openaccess.thecvf.com/content/ICCV2021/papers/Girish_Towards_Discovery_and_Attribution_of_Open-World_GAN_Generated_Images_ICCV_2021_paper.pdf",
+      "source_target_basis": "The local external-evidence plan specifies the official ICCV paper PDF for DOI 10.1109/iccv48922.2021.01383; the CVF proceedings full-paper endpoint was selected.",
+      "primary_document_attempts": 1,
+      "prior_batch_c_first_pass": false,
+      "identity_verification": "Target selected from the local ICCV identity; primary-document identity could not be independently verified because retrieval failed.",
+      "retrieval_outcome": "PRIMARY_DOCUMENT_RETRIEVAL_FORBIDDEN_403",
+      "contribution_framing": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "systematic_analysis_scope": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "analysis_methodology": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "independent_analysis_findings": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "routine_evaluation_signals": "NOT_ESTABLISHED_FROM_PERMITTED_PRIMARY_DOCUMENT",
+      "evidence_locators": [],
+      "r3_reason": "The sole permitted official CVF primary paper returned HTTP 403 Forbidden. The contribution-versus-supporting-evaluation question remains unassessed; no retry, alternative source, or abstract-based inference was used.",
+      "adjudication": "EVIDENCE_STILL_INSUFFICIENT",
+      "evidence_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "proposed_later_research_types": null,
+      "confidence": "high for evidence insufficiency; scientific role unassessed",
+      "corpus_change_applied": false,
+      "final_disposition": "REMEDIATION_NOT_APPLIED",
+      "missing_evidence": "Accessible authoritative full paper establishing whether systematic analysis is an independent scientific contribution."
+    }
+  ],
+  "resolution": {
+    "ANALYSIS_STUDY_SUPPORTED": 0,
+    "ROUTINE_EVALUATION_NO_ANALYSIS_STUDY": 0,
+    "EVIDENCE_STILL_INSUFFICIENT": 1,
+    "external_batch_c_before": 19,
+    "external_batch_c_resolved": 0,
+    "external_batch_c_after": 19,
+    "research_type_cases_before": 11,
+    "research_type_cases_resolved": 0,
+    "research_type_cases_after": 11,
+    "task_cases_after": 7,
+    "institution_cases_after": 1,
+    "t527_maintainer_scope_judgment": 1,
+    "t527_excluded_from_external_count": true,
+    "total_unresolved_batch_c_after_including_t527": 20,
+    "accounting_note": "An attempted but inaccessible primary document does not resolve the scientific question. R615 remains evidence debt; all earlier debts remain unchanged."
+  },
+  "unchanged_corpus": {
+    "public": 639,
+    "formal": 531,
+    "mapped": 617,
+    "unmapped": 22,
+    "relationship_rows": 1421,
+    "unique_paper_institution_pairs": 1421
+  },
+  "unchanged_taxonomy": {
+    "tasks": {
+      "detection": 590,
+      "source_attribution": 85,
+      "localization": 42
+    },
+    "research_types": {
+      "method": 547,
+      "analysis_study": 78,
+      "survey": 20,
+      "dataset": 132,
+      "benchmark": 88
+    }
+  },
+  "integrity_expectations": {
+    "AUTHORITATIVE_CORPUS_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+  },
+  "adjudication_date": "2026-10-08"
+}
