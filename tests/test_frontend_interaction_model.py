@@ -141,7 +141,7 @@ process.stdout.write(JSON.stringify({
         self.assertIn('marker: params.get("marker") || ""', self.app)
         self.assertIn("Open institution papers.", self.app)
         self.assertIn("Select a paper or explore an institution marker", self.html)
-        self.assertIn("Hover over an institution for a preview", self.app)
+        self.assertIn("Hover over an institution for a preview", self.html)
         self.assertIn('data-marker-paper=', self.app)
         self.assertIn('back.className = "back-to-institution-button"', self.app)
 

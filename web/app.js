@@ -328,27 +328,27 @@ const MARKER_TASK_PALETTES = {
 };
 const BASE_MARKER_STYLE = {
   radius: 8,
-  weight: 1.5,
-  fillOpacity: 0.5,
-  opacity: 0.68,
+  weight: 1,
+  fillOpacity: 0.34,
+  opacity: 0.5,
 };
 const DIMMED_MARKER_STYLE = {
   radius: 7.5,
-  weight: 1.1,
-  fillOpacity: 0.24,
-  opacity: 0.42,
+  weight: 0.8,
+  fillOpacity: 0.16,
+  opacity: 0.32,
 };
 const RELATED_MARKER_STYLE = {
   radius: 9.5,
-  weight: 1.8,
-  fillOpacity: 0.62,
-  opacity: 0.82,
+  weight: 1.4,
+  fillOpacity: 0.48,
+  opacity: 0.7,
 };
 const CURRENT_MARKER_STYLE = {
   radius: 11.5,
-  weight: 2.2,
-  fillOpacity: 0.7,
-  opacity: 0.9,
+  weight: 1.8,
+  fillOpacity: 0.58,
+  opacity: 0.82,
 };
 const CONNECTION_LINE_STYLE = {
   color: rootStyles.getPropertyValue("--map-connection-line").trim() || "#2f4554",
@@ -4843,9 +4843,8 @@ function renderResults(visibleRecords, visiblePaperRecords = [], generation = nu
   }
   const count = displayedResults.length;
   const resultNoun = resultsView === "papers" ? "unique paper" : "institution record";
-  resultsCount.textContent = count
-    ? `${count.toLocaleString("en-US")} ${resultNoun}${count === 1 ? "" : "s"}`
-    : `0 ${resultsView === "papers" ? "papers" : "institution records"}`;
+  // The adjacent heading names the view; retain the unit in live announcements.
+  resultsCount.innerHTML = `${count.toLocaleString("en-US")}<span class="visually-hidden"> ${resultNoun}${count === 1 ? "" : "s"}</span>`;
   exportCsvButton.disabled = count === 0;
   resultsEmpty.hidden = count !== 0;
 
@@ -4893,11 +4892,8 @@ function selectResultsView(view) {
 
 function baseMapStatusText(visibleRecords) {
   const markerCount = visibleMarkerEntries.length;
-  const interactionHint = supportsMarkerHover
-    ? " Hover over an institution for a preview; click to inspect its papers."
-    : " Tap an institution marker to inspect its papers.";
   return markerCount
-    ? `Showing ${markerCount} institution/location marker${markerCount === 1 ? "" : "s"}.${interactionHint}`
+    ? `${markerCount} institution/location marker${markerCount === 1 ? "" : "s"}`
     : "No records match the current filters.";
 }
 

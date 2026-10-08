@@ -90,7 +90,11 @@ console.log(JSON.stringify({initial, paperOpen, institutionOpen, closed, reopene
         self.assertIn('class="map-workspace details-collapsed"', self.html)
         self.assertIn('aria-controls="paper-details" aria-expanded="false"', self.html)
         desktop = self.css.split('@media (min-width: 1251px)', 1)[1].split('@media', 1)[0]
-        self.assertIn('grid-template-columns: minmax(0, 1fr) 32px', desktop)
+        self.assertIn('grid-template-columns: minmax(0, 1fr);', desktop)
+        handle = self.css.split('.paper-details-handle {', 1)[1].split('}', 1)[0]
+        self.assertIn('position: absolute', handle)
+        self.assertIn('right: 0', handle)
+        self.assertNotIn('align-self: stretch', handle)
         self.assertIn('.details-collapsed > #paper-details', desktop)
         self.assertIn('display: none', desktop)
         mobile = self.css.split('@media (max-width: 1250px)', 1)[1].split('@media', 1)[0]

@@ -278,7 +278,7 @@
       <div class="map-column">
         <section class="map-panel" aria-label="Research Map">
           <div class="map-summary">
-            <div class="dataset-overview" aria-label="Filtered data overview">
+            <div class="dataset-overview" aria-label="Filtered data overview" aria-describedby="dataset-statistics-note">
               <dl class="dataset-statistics" aria-live="polite">
                 <div>
                   <dt>Institution Records</dt>
@@ -297,45 +297,49 @@
                   <dd id="dataset-country-count">0</dd>
                 </div>
               </dl>
-              <p id="dataset-statistics-note">
-                Filtered institution records represent paper–institution links; unique papers
-                include papers without mapped institutions.
-              </p>
             </div>
             <div class="map-status-row">
               <div class="map-encoding-legend" role="group" aria-label="Map legend">
-                <span class="map-encoding-item">
+                <span class="map-encoding-item" title="Larger circles = more unique papers in the current filtered view">
                   <span class="marker-size-examples" aria-hidden="true">
                     <i class="marker-size-example small"></i>
                     <i class="marker-size-example medium"></i>
                     <i class="marker-size-example large"></i>
                   </span>
-                  Larger circles = more unique papers in the current filtered view
+                  Size: unique papers in view
                 </span>
-                <span class="map-encoding-item">Color: dominant task</span>
-                <span class="map-encoding-item"><i class="marker-color-example detection" aria-hidden="true"></i>Detection</span>
-                <span class="map-encoding-item"><i class="marker-color-example source-attribution" aria-hidden="true"></i>Source Attribution</span>
-                <span class="map-encoding-item"><i class="marker-color-example mixed" aria-hidden="true"></i>Localization or Mixed / multiple tasks (shared color)</span>
-                <span class="map-encoding-item"><i class="marker-color-example unknown" aria-hidden="true"></i>Unknown</span>
-              </div>
-              <p id="map-status" class="map-status" role="status">
-                Loading research map data...
-              </p>
-              <details id="map-help" class="map-help">
-                <summary aria-controls="map-help-content" aria-expanded="false">How to use</summary>
-                <div id="map-help-content" class="map-help-content">
-                  <p><strong>Explore the map:</strong> select a circle to inspect an institution’s papers, or select a result to open Paper Details.</p>
-                  <ul>
-                    <li><strong>Forensic Task:</strong> Detection identifies generated images; Source Attribution identifies their origin; Localization identifies where content was generated or manipulated.</li>
-                    <li><strong>Image Scope:</strong> the kind of image generation or manipulation studied.</li>
-                    <li><strong>Research Type:</strong> the contribution, such as a method, dataset, benchmark, or survey.</li>
-                    <li><strong>Institution Records</strong> are paper–institution links; <strong>Unique Papers</strong> lists each paper once. A paper may have multiple institution records. Papers without mapped institutions remain in the paper view.</li>
-                    <li><strong>Circles:</strong> size shows unique papers in the current view; color shows the dominant forensic task.</li>
-                    <li><strong>Current view:</strong> filters narrow the results, Copy link shares the current state, and Export CSV downloads the current results.</li>
-                  </ul>
-                  <p><a href="#site-information-heading">About, Methodology, and Scope</a> · <a href="methodology.html">Methodology</a></p>
+                <div class="map-task-legend">
+                  <span class="map-encoding-item">Color: dominant task</span>
+                  <span class="map-encoding-item"><i class="marker-color-example detection" aria-hidden="true"></i>Detection</span>
+                  <span class="map-encoding-item"><i class="marker-color-example source-attribution" aria-hidden="true"></i>Source Attribution</span>
+                  <span class="map-encoding-item" title="Localization or Mixed / multiple tasks (shared color)"><i class="marker-color-example mixed" aria-hidden="true"></i>Localization / Mixed</span>
+                  <span class="map-encoding-item"><i class="marker-color-example unknown" aria-hidden="true"></i>Unknown</span>
                 </div>
-              </details>
+              </div>
+              <div class="map-utilities">
+                <p id="map-status" class="map-status" role="status">
+                  Loading research map data...
+                </p>
+                <details id="map-help" class="map-help">
+                  <summary aria-controls="map-help-content" aria-expanded="false">How to use</summary>
+                  <div id="map-help-content" class="map-help-content">
+                    <p><strong>Explore the map:</strong> Hover over an institution for a preview; click or tap a circle to inspect its papers, or select a result to open Paper Details.</p>
+                    <p id="dataset-statistics-note">
+                      Filtered institution records represent paper–institution links; unique papers
+                      include papers without mapped institutions.
+                    </p>
+                    <ul>
+                      <li><strong>Forensic Task:</strong> Detection identifies generated images; Source Attribution identifies their origin; Localization identifies where content was generated or manipulated.</li>
+                      <li><strong>Image Scope:</strong> the kind of image generation or manipulation studied.</li>
+                      <li><strong>Research Type:</strong> the contribution, such as a method, dataset, benchmark, or survey.</li>
+                      <li><strong>Institution Records</strong> are paper–institution links; <strong>Unique Papers</strong> lists each paper once. A paper may have multiple institution records. Papers without mapped institutions remain in the paper view.</li>
+                      <li><strong>Circles:</strong> size shows unique papers in the current view; color shows the dominant forensic task. Localization and Mixed / multiple tasks share a color.</li>
+                      <li><strong>Current view:</strong> filters narrow the results, Copy link shares the current state, and Export CSV downloads the current results.</li>
+                    </ul>
+                    <p><a href="#site-information-heading">About, Methodology, and Scope</a> · <a href="methodology.html">Methodology</a></p>
+                  </div>
+                </details>
+              </div>
             </div>
           </div>
           <div class="map-workspace details-collapsed">
@@ -372,22 +376,22 @@
           <div class="results-heading-row">
             <div class="results-heading-group">
               <h2 id="results-heading">Unique Papers</h2>
-            <p id="results-count" role="status" aria-live="polite" tabindex="-1">Loading…</p>
+              <p id="results-count" role="status" aria-live="polite" tabindex="-1">Loading…</p>
             </div>
-            <div class="results-view-toggle" role="group" aria-label="Results View">
-              <span>View:</span>
-              <button
-                type="button"
-                data-results-view="institutions"
-                aria-pressed="false"
-              >Institution Records</button>
-              <button
-                type="button"
-                data-results-view="papers"
-                aria-pressed="true"
-              >Unique Papers</button>
-            </div>
-            <div class="results-actions">
+            <div class="results-controls">
+              <div class="results-view-toggle" role="group" aria-label="Results View">
+                <span>View:</span>
+                <button
+                  type="button"
+                  data-results-view="institutions"
+                  aria-pressed="false"
+                >Institution Records</button>
+                <button
+                  type="button"
+                  data-results-view="papers"
+                  aria-pressed="true"
+                >Unique Papers</button>
+              </div>
               <div class="sort-control-label filter-dropdown-field" data-filter-dropdown>
                 <span id="sort-control-label" class="filter-label">Sort By</span>
                 <select id="sort-control" class="sort-control-compact" disabled>
@@ -399,6 +403,8 @@
                   <option value="title-desc">Title: Z–A</option>
                 </select>
               </div>
+            </div>
+            <div class="results-actions">
               <button id="copy-view-link" class="copy-link-button" type="button">
                 Copy link
               </button>

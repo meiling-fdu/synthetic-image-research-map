@@ -164,8 +164,8 @@ process.stdout.write(JSON.stringify({
         self.assertIn("paperDetails.contains(event.relatedTarget)", app_source)
         self.assertNotIn('paperDetails.addEventListener("mouseleave"', app_source)
         self.assertNotIn(".bindTooltip(", app_source)
-        self.assertIn("fillOpacity: 0.5", base_style)
-        self.assertIn("opacity: 0.68", base_style)
+        self.assertIn("fillOpacity: 0.34", base_style)
+        self.assertIn("opacity: 0.5", base_style)
         self.assertNotIn("#ffffff", base_style)
         self.assertIn("--map-detection-fill: #5a9da6", style_source)
         self.assertIn("--map-detection-stroke: #376f78", style_source)
@@ -173,10 +173,10 @@ process.stdout.write(JSON.stringify({
         self.assertIn("--map-mixed-fill: #8b6fa8", style_source)
         self.assertIn("--map-unknown-fill: #8a98a3", style_source)
         self.assertIn(
-            "border: 1.5px solid rgb(55 111 120 / 68%)", style_source
+            "border: 1px solid rgb(55 111 120 / 50%)", style_source
         )
         self.assertIn(
-            "background: rgb(90 157 166 / 50%)", style_source
+            "background: rgb(90 157 166 / 34%)", style_source
         )
         self.assertIn("const interactionState = {", app_source)
         self.assertIn("transientHover: null", app_source)

@@ -202,7 +202,8 @@ class FrontendStickyPublicLayoutTests(unittest.TestCase):
         details_heading = self.css.split(".paper-details-heading {", 1)[1].split("}", 1)[0]
         self.assertIn("background: var(--header-surface)", header)
         self.assertIn("background: var(--overview-surface)", overview)
-        self.assertIn("background: var(--metric-surface)", metrics)
+        self.assertNotIn("background:", metrics)
+        self.assertIn("border-right: 1px solid var(--separator-line)", metrics)
         self.assertIn("background: var(--secondary-surface)", details_heading)
         self.assertNotIn("rgb(234 240 242", self.css)
 

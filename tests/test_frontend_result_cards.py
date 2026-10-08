@@ -598,7 +598,7 @@ process.stdout.write(JSON.stringify({
             render,
         )
         self.assertIn("displayedResults.length", render)
-        self.assertIn('`0 ${resultsView === "papers" ? "papers" : "institution records"}`', render)
+        self.assertIn('resultsCount.innerHTML = `${count.toLocaleString("en-US")}', render)
         self.assertIn('<ol id="results-list"', self.html)
         self.assertIn("Data unavailable", self.app)
         self.assertIn("Loading…", self.html)

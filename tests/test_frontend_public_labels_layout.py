@@ -168,8 +168,8 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         self.assertIn("height: 35px", self.css)
         self.assertIn(".year-range-slider {\n  position: relative;\n  height: 24px;", self.css)
         self.assertIn("justify-content: space-between", self.css)
-        self.assertIn(".dataset-overview > p {\n  margin: 0;", self.css)
-        self.assertIn("flex: 0 1 280px", self.css)
+        self.assertIn(".dataset-overview {\n  border-bottom: 1px solid var(--separator-line);", self.css)
+        self.assertIn(".dataset-statistics div:last-child { border-right: 0; }", self.css)
         self.assertIn("@media (max-width: 1250px)", self.css)
         self.assertIn("@media (max-width: 820px)", self.css)
         self.assertNotIn("dataset-overview-heading", self.css)
@@ -234,7 +234,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             self.css.index(".map-encoding-legend {"):
             self.css.index(".marker-size-examples {")
         ]
-        self.assertIn("gap: 4px 16px", legend)
+        self.assertIn("gap: 6px 14px", legend)
         self.assertIn("min-width: 0", legend)
 
     def test_text_brand_replaces_outdated_wordmark_without_duplicate_legend(self):

@@ -211,20 +211,23 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
             render,
         )
         self.assertIn('count.toLocaleString("en-US")', render)
-        self.assertIn('`${count.toLocaleString("en-US")} ${resultNoun}${count === 1 ? "" : "s"}`', render)
+        self.assertIn('`${count.toLocaleString("en-US")}<span class="visually-hidden"> ${resultNoun}${count === 1 ? "" : "s"}</span>`', render)
         # Frozen recovery delegates contextual copy; the live count stays numeric.
         self.assertIn('renderNoResultsState(resultNoun);', render)
-        self.assertIn('`0 ${resultsView === "papers" ? "papers" : "institution records"}`', render)
+        self.assertIn('resultsCount.innerHTML = `${count.toLocaleString("en-US")}', render)
         self.assertIn("renderNoResultsState(resultNoun);", render)
 
-    def test_overview_metrics_are_semantic_non_input_pills(self):
+    def test_overview_metrics_are_a_semantic_non_input_strip(self):
         overview = self.html[
             self.html.index('<div class="dataset-overview"'):
             self.html.index('<div class="map-status-row"')
         ]
         self.assertIn('<dl class="dataset-statistics"', overview)
         self.assertNotIn("<input", overview)
-        self.assertIn("background: #edf4f6", self.css)
+        statistics = self.css.split('.dataset-statistics div {', 1)[1].split('}', 1)[0]
+        self.assertIn('border-right: 1px solid var(--separator-line)', statistics)
+        self.assertNotIn('border-radius', statistics)
+        self.assertNotIn('background:', statistics)
 
     def test_overview_metrics_are_compact_and_can_wrap_responsively(self):
         statistics = self.css[
@@ -234,7 +237,7 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
         self.assertIn("display: flex", statistics)
         self.assertIn("flex-wrap: wrap", statistics)
         self.assertIn("flex: 0 0 auto", statistics)
-        self.assertIn("min-width: 150px", statistics)
+        self.assertIn("min-width: 0", statistics)
         self.assertNotIn("overflow-x: auto", statistics)
 
     def test_keyword_search_text_includes_supported_record_fields(self):

@@ -140,7 +140,7 @@ console.log(JSON.stringify({output,multiKey:clearEmptyFiltersButton.dataset.empt
 
     def test_zero_toolbar_count_and_compact_presentation(self):
         render = self.function('renderResults', 'selectResultsView')
-        self.assertIn('`0 ${resultsView === "papers" ? "papers" : "institution records"}`', render)
+        self.assertIn('resultsCount.innerHTML = `${count.toLocaleString("en-US")}', render)
         self.assertIn('exportCsvButton.disabled = count === 0', render)
         self.assertNotIn('No matching', render)
         empty = self.css.split('.results-empty {', 1)[1].split('}', 1)[0]
