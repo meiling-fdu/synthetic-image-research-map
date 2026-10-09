@@ -23,7 +23,7 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20261002-brand-1">
+    <link rel="stylesheet" href="style.css?v=20261009-explorer-1">
   </head>
   <body>
     <header class="site-header">
@@ -102,6 +102,7 @@
             >×</button>
           </div>
           <div class="filters-panel-content">
+            <p id="facet-counts-note" class="facet-counts-note">Option counts show unique papers, with other filters applied.</p>
             <div class="filter-grid">
             <div class="keyword-search-field">
             <label for="keyword-filter">
@@ -320,6 +321,10 @@
                 <p id="map-status" class="map-status" role="status">
                   Loading research map data...
                 </p>
+                <div class="map-navigation" role="group" aria-label="Map navigation">
+                  <button id="fit-map-results" type="button" disabled>Fit results</button>
+                  <button id="reset-map-world" type="button" disabled>Reset world</button>
+                </div>
                 <details id="map-help" class="map-help">
                   <summary aria-controls="map-help-content" aria-expanded="false">How to use</summary>
                   <div id="map-help-content" class="map-help-content">
@@ -340,6 +345,10 @@
                   </div>
                 </details>
               </div>
+            </div>
+            <div id="workspace-filter-context" class="workspace-filter-context" hidden>
+              <button id="workspace-filter-button" type="button" aria-controls="filters-panel"></button>
+              <button id="workspace-filter-clear" type="button" aria-label="Clear all active filters">Clear</button>
             </div>
           </div>
           <div class="map-workspace details-collapsed">
@@ -532,16 +541,16 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="title_markup.js?v=20261001-academic-1"></script>
-    <script src="paper_details_helpers.js?v=20261001-academic-1"></script>
-    <script src="paper_link_helpers.js?v=20261001-academic-1"></script>
-    <script src="paper_search_helpers.js?v=20261001-academic-1"></script>
-    <script src="marker_size_helpers.js?v=20261001-academic-1"></script>
-    <script src="marker_interaction_helpers.js?v=20261001-academic-1"></script>
-    <script src="public_metadata.js?v=20261001-academic-1"></script>
-    <script src="institution_type_labels.js?v=20261001-academic-1"></script>
-    <script src="institution_display.js?v=20261001-academic-1"></script>
-    <script src="keyword_suggestions.js?v=20261001-academic-1"></script>
-    <script src="app.js?v=20261001-academic-1"></script>
+    <script src="title_markup.js?v=20261009-explorer-1"></script>
+    <script src="paper_details_helpers.js?v=20261009-explorer-1"></script>
+    <script src="paper_link_helpers.js?v=20261009-explorer-1"></script>
+    <script src="paper_search_helpers.js?v=20261009-explorer-1"></script>
+    <script src="marker_size_helpers.js?v=20261009-explorer-1"></script>
+    <script src="marker_interaction_helpers.js?v=20261009-explorer-1"></script>
+    <script src="public_metadata.js?v=20261009-explorer-1"></script>
+    <script src="institution_type_labels.js?v=20261009-explorer-1"></script>
+    <script src="institution_display.js?v=20261009-explorer-1"></script>
+    <script src="keyword_suggestions.js?v=20261009-explorer-1"></script>
+    <script src="app.js?v=20261009-explorer-1"></script>
   </body>
 </html>

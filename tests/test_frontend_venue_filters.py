@@ -170,7 +170,11 @@ function syncFilterDropdownForSelect() {{}}
 {venue_helpers}
 {count_helpers}
 {update_helper}
-updateVenueDimensionFilters(papers, papers);
+updateVenueDimensionFilters(
+  dimensionPaperCounts(papers, record => isBookRecord(record) ? [] : [venueFilterValue(record)]),
+  dimensionPaperCounts(papers, record => [recordVenueType(record) || '__unknown__']),
+  papers,
+);
 process.stdout.write(JSON.stringify({{
   options: Object.fromEntries(venueFilter.options.map(option => [option.value, option.textContent])),
   cvprPaperLabels: papers
@@ -230,10 +234,10 @@ process.stdout.write(JSON.stringify({{
         )
 
     def test_dynamic_counts_use_unique_paper_dimension_sets(self):
-        self.assertIn('const venueDimensionSets = dimensionSets("ignoreVenue")', self.app)
-        self.assertIn('const venueTypeDimensionSets = dimensionSets("ignoreVenueType")', self.app)
-        self.assertIn('dimensionPaperCounts(venuePapers', self.app)
-        self.assertIn('dimensionPaperCounts(\n    venueTypePapers', self.app)
+        self.assertIn('facetCounts("ignoreVenue",', self.app)
+        self.assertIn('facetCounts("ignoreVenueType",', self.app)
+        self.assertIn('const facetCounts = (ignoredDimension, valuesForRecord) => dimensionPaperCounts(', self.app)
+        self.assertIn('({ record }) => paperIdentity(record)', self.app)
         identity_start = self.app.index("function paperIdentity")
         identity = self.app[
             identity_start:
@@ -559,13 +563,17 @@ process.stdout.write(JSON.stringify({{
             {paper.get("venue_label") for paper in self.papers},
         )
 
-    def test_invalid_venue_selection_is_not_preserved_when_type_changes(self):
+    def test_zero_result_venue_selection_is_preserved_when_type_changes(self):
         self.assertIn(
             'replaceCountedFilterOptions(\n    venueFilter,\n    "All",',
             self.app,
         )
         self.assertIn("sortedVenueCounts(venueCounts, metadataByVenue)", self.app)
-        self.assertIn("false,\n  );\n  replaceCountedFilterOptions(\n    venueTypeFilter", self.app)
+        update = self.app.split("function updateVenueDimensionFilters", 1)[1].split(
+            "function enableControls", 1
+        )[0]
+        self.assertNotIn("false,", update)
+        self.assertIn("includeZeroCountOptions(venueCounts, allPapers", update)
 
     def test_combined_venue_type_and_year_filter_uses_unique_papers(self):
         matching = [paper for paper in self.papers if (

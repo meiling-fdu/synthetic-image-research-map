@@ -33,7 +33,7 @@ class FrontendResultCardTests(unittest.TestCase):
         self.assertIn("result-card-institution", institution)
         self.assertIn("Institution record", institution)
         self.assertIn("result-card-paper", paper)
-        self.assertIn("Unique paper", paper)
+        self.assertNotIn('class="result-entity-kicker"', paper)
         self.assertIn("institutionResultContent(record, relatedEntries, cardId)", create)
         self.assertIn("paperResultContent(record, relatedEntries, cardId)", create)
         self.assertIn(": visibleRecords", render)
@@ -119,6 +119,7 @@ process.stdout.write(JSON.stringify({
             asset: self.html.split(f'{asset}?v=', 1)[1].split('"', 1)[0]
             for asset in (
                 "style.css",
+                "title_markup.js",
                 "paper_search_helpers.js",
                 "paper_details_helpers.js",
                 "paper_link_helpers.js",
@@ -126,13 +127,20 @@ process.stdout.write(JSON.stringify({
                 "marker_interaction_helpers.js",
                 "public_metadata.js",
                 "institution_type_labels.js",
+                "institution_display.js",
+                "keyword_suggestions.js",
                 "app.js",
             )
         }
-        # The earlier branding commit updated CSS independently of the unchanged
-        # mapping JavaScript. Check both exact versions, not accidental equality.
-        self.assertEqual(versions.pop("style.css"), "20261002-brand-1")
-        self.assertEqual(set(versions.values()), {"20261001-academic-1"})
+        self.assertEqual(set(versions.values()), {"20261009-explorer-1"})
+
+    def test_unique_paper_bibliography_precedes_institutions(self):
+        paper = self.function("paperResultContent", "setResultsLayoutPending")
+        fields = ["paperTitleHtml", "resultAuthors", "resultVenueYear",
+                  "resultBadges", "resultInstitutions", "resultLinks"]
+        positions = [paper.index(field) for field in fields]
+        self.assertEqual(positions, sorted(positions))
+        self.assertNotIn("abstract", paper)
 
     def test_shared_author_items_preserve_mappings_across_visibility_slices(self):
         helper = ROOT / "web" / "paper_details_helpers.js"

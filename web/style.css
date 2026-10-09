@@ -653,6 +653,17 @@ h2 {
   display: none;
 }
 
+.filter-dropdown-option.is-zero-count:not([aria-selected="true"]) {
+  color: var(--muted);
+}
+
+.facet-counts-note {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
+
 .filter-dropdown-option.is-active,
 .filter-dropdown-option:hover {
   background: #edf4f6;
@@ -1767,6 +1778,10 @@ input:disabled {
   padding-top: 8px;
 }
 
+.result-card-paper .result-secondary {
+  margin-top: 8px;
+}
+
 .result-venue-year {
   display: flex;
   align-items: baseline;
@@ -1978,8 +1993,71 @@ input:disabled {
   flex: 1 1 auto;
   align-items: center;
   justify-content: flex-end;
-  gap: 12px;
   min-width: 0;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.map-navigation {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 4px;
+}
+
+.map-navigation button,
+.workspace-filter-context button {
+  width: auto;
+  min-height: 28px;
+  margin: 0;
+  border-color: transparent;
+  padding: 4px 6px;
+  background: transparent;
+  color: var(--accent-dark);
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.map-navigation button:hover:not(:disabled),
+.workspace-filter-context button:hover {
+  background: var(--secondary-surface);
+}
+
+.map-navigation button:disabled {
+  color: var(--muted);
+  opacity: 0.55;
+}
+
+.workspace-filter-context {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  border-top: 1px solid var(--separator-line);
+  padding: 3px 0;
+}
+
+.workspace-filter-context[hidden] { display: none; }
+
+#workspace-filter-button {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+#workspace-filter-clear {
+  flex: 0 0 auto;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (pointer: coarse) {
+  .map-navigation button,
+  .workspace-filter-context button { min-height: 44px; }
 }
 
 .map-utilities .map-help {

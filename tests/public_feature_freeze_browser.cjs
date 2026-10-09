@@ -61,7 +61,12 @@ const assert = require('node:assert/strict');
  console.log('filters/copy/reload/history/reset/zero recovery/view/sort passed');
  await page.goto('http://127.0.0.1:8899');await ready();
  await page.locator('[data-results-view="papers"]').click();await ready();
- await page.locator('#results-list .result-item').first().focus();
+ // The first sorted paper can be standalone; cross-highlighting needs a mapped paper.
+ const mappedCardIndex=await page.evaluate(()=>[...resultsList.querySelectorAll('.result-item')]
+  .find(item=>resultsPipeline.relatedEntriesByIdentity.get(item.dataset.paperIdentity)?.length)
+  ?.dataset.resultIndex);
+ assert.notEqual(mappedCardIndex,undefined,'Expected a rendered mapped-paper fixture');
+ await page.locator(`#results-list .result-item[data-result-index="${mappedCardIndex}"]`).focus();
  assert(await page.locator('.is-card-cross-highlighted').count()>0);
  await page.locator('#copy-view-link').focus();
  assert.equal(await page.locator('.is-card-cross-highlighted').count(),0);
@@ -77,7 +82,7 @@ const assert = require('node:assert/strict');
  console.log('cross-highlighting, pin precedence, collapse/reopen and keyboard help passed');
  await page.locator('#keyword-filter').fill('zzzznonezzzz');await ready();
  assert.equal(await page.locator('#paper-details').isVisible(),false,'Empty Details must collapse when filters remove the selection');
- await page.goto('http://127.0.0.1:8899/?paper=missing-paper');await ready();
+ await page.goto('http://127.0.0.1:8899/web/?paper=missing-paper');await ready();
  assert.equal(await page.locator('#paper-details').isVisible(),true,'Unavailable deep link must open Details');
  assert.deepEqual(errors,[]);await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});

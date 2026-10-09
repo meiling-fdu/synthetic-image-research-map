@@ -38,10 +38,10 @@ class FrontendYearRangeSliderTests(unittest.TestCase):
         self.assertIn('id="year-range-min"', self.html)
         self.assertIn('id="year-range-max"', self.html)
         self.assertIn(".year-range-input-end::-webkit-slider-thumb", self.css)
-        self.assertEqual(self.css.count("width: 28px;"), 2)
-        self.assertEqual(self.css.count("height: 28px;"), 2)
         for pseudo in ('::-webkit-slider-thumb', '::-moz-range-thumb'):
             thumb = self.css.split('.year-range-input' + pseudo + ' {', 1)[1].split('}', 1)[0]
+            self.assertIn('width: 28px;', thumb)
+            self.assertIn('height: 28px;', thumb)
             self.assertIn('border: 7px solid transparent', thumb)
             self.assertIn('border-radius: 50%', thumb)
             self.assertIn('background-clip: padding-box', thumb)

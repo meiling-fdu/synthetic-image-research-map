@@ -191,6 +191,11 @@ const resetButton = document.querySelector("#reset-filters");
 const activeFilterBar = document.querySelector("#active-filter-bar");
 const activeFilterChips = document.querySelector("#active-filter-chips");
 const clearActiveFiltersButton = document.querySelector("#clear-active-filters");
+const workspaceFilterContext = document.querySelector("#workspace-filter-context");
+const workspaceFilterButton = document.querySelector("#workspace-filter-button");
+const workspaceFilterClear = document.querySelector("#workspace-filter-clear");
+const fitResultsButton = document.querySelector("#fit-map-results");
+const resetWorldButton = document.querySelector("#reset-map-world");
 const activeFilterStatus = document.querySelector("#active-filter-status");
 const filtersPanel = document.querySelector("#filters-panel");
 const filtersBackdrop = document.querySelector("#filters-backdrop");
@@ -379,6 +384,24 @@ function scheduleMapResize(fitWorld = false) {
       map.setZoom(minZoom, { animate: false });
     }
   }, 0);
+}
+
+function fitMapResults() {
+  if (!visibleMarkerEntries.length) return;
+  const bounds = L.latLngBounds(visibleMarkerEntries.map(({ marker }) => marker.getLatLng()));
+  const normalMinZoom = noWrapMinZoomForWidth(map.getSize().x);
+  // Measure without the no-wrap constraint, then relax it only as far as this
+  // explicit fit needs. Ordinary resize/filter updates restore the normal rule.
+  map.setMinZoom(0);
+  const fittedZoom = map.getBoundsZoom(bounds, false, L.point(72, 72));
+  map.setMinZoom(Math.min(normalMinZoom, fittedZoom));
+  // Cap close/coincident locations at city scale, including a single marker.
+  map.fitBounds(bounds, { padding: [36, 36], maxZoom: 8, animate: false });
+}
+
+function resetMapWorld() {
+  updateNoWrapMinZoom();
+  map.fitBounds(DISPLAY_BOUNDS, { padding: [8, 8], animate: false });
 }
 
 const INSTITUTION_CSV_COLUMNS = [
@@ -1368,6 +1391,29 @@ function renderActiveFilterChips() {
   activeFilterStatus.textContent = descriptors.length
     ? `${descriptors.length} active filter${descriptors.length === 1 ? "" : "s"}`
     : "No active filters";
+}
+
+function workspaceFilterSummary(descriptors) {
+  const priorities = ["tasks", "research-types", "year", "keyword", "image-scopes"];
+  const rank = (key) => priorities.includes(key) ? priorities.indexOf(key) : priorities.length;
+  const ordered = [...descriptors].sort((first, second) => rank(first.key) - rank(second.key));
+  const limit = ordered.length > 3 ? 2 : 3;
+  const values = ordered.slice(0, limit).map(({ key, value }) => {
+    const parts = ["tasks", "research-types", "image-scopes"].includes(key)
+      ? value.split(", ") : [value];
+    return parts.length > 1 ? `${parts[0]} +${parts.length - 1}` : value;
+  });
+  if (ordered.length > limit) values.push(`+${ordered.length - limit} filters`);
+  return values.join(" · ");
+}
+
+function renderWorkspaceFilterContext() {
+  const descriptors = activeFilterChipDescriptors();
+  workspaceFilterContext.hidden = descriptors.length === 0;
+  workspaceFilterButton.textContent = `Current view: ${workspaceFilterSummary(descriptors)}`;
+  const description = descriptors.map(({ category, value }) => `${category}: ${value}`).join("; ");
+  workspaceFilterButton.title = description;
+  workspaceFilterButton.setAttribute("aria-label", `Open filters. Current view: ${description}`);
 }
 
 function applyInstitutionFilter(identity, label) {
@@ -2813,11 +2859,11 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
   const selectedTasks = selectedFilterValues(taskFilter);
   const selectedImageScopes = selectedFilterValues(imageScopeFilter);
   const selectedEntryTypes = selectedFilterValues(entryTypeFilter);
-  const matchesTask = selectedTasks.length === 0
+  const matchesTask = options.ignoreTask === true || selectedTasks.length === 0
     || selectedTasks.some((value) => getTasks(record).includes(value));
-  const matchesImageScope = selectedImageScopes.length === 0
+  const matchesImageScope = options.ignoreImageScope === true || selectedImageScopes.length === 0
     || selectedImageScopes.some((value) => getImageScopes(record).includes(value));
-  const matchesEntryType = selectedEntryTypes.length === 0
+  const matchesEntryType = options.ignoreEntryType === true || selectedEntryTypes.length === 0
     || selectedEntryTypes.some((value) => getPaperCategories(record).includes(value));
   const matchesVenue =
     options.ignoreVenue === true || venueFilter.value === "all"
@@ -2826,10 +2872,11 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
     || recordVenueType(record) === venueTypeFilter.value;
   const selectedVersion = preprintFilter.value;
   const matchesVersion =
-    selectedVersion === "all" ||
+    options.ignoreVersion === true || selectedVersion === "all" ||
     (selectedVersion === "has-arxiv" && hasArxivVersion(record)) ||
     (selectedVersion === "no-arxiv" && !hasArxivVersion(record));
-  const matchesPublicationStatus = typeof publishedOnlyFilter === "undefined"
+  const matchesPublicationStatus = options.ignorePublicationStatus === true
+    || typeof publishedOnlyFilter === "undefined"
     || !isPublishedOnlySelected() || isFormallyPublished(record);
   const year = publicationYear(record);
   const minimumYear = yearFilterValue(minYearFilter);
@@ -2872,14 +2919,33 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
   );
 }
 
-function dimensionPaperCounts(papers, valuesForRecord) {
-  const counts = new Map();
+function dimensionPaperCounts(papers, valuesForRecord, identityForRecord = (paper) => paper) {
+  const identitiesByValue = new Map();
   papers.forEach((paper) => {
     new Set(valuesForRecord(paper)).forEach((value) => {
-      if (value) counts.set(value, (counts.get(value) || 0) + 1);
+      if (!value) return;
+      if (!identitiesByValue.has(value)) identitiesByValue.set(value, new Set());
+      identitiesByValue.get(value).add(identityForRecord(paper));
     });
   });
+  return new Map([...identitiesByValue].map(([value, identities]) => [value, identities.size]));
+}
+
+function includeZeroCountOptions(counts, allPapers, valuesForRecord) {
+  allPapers.forEach((paper) => valuesForRecord(paper).forEach((value) => {
+    if (value && !counts.has(value)) counts.set(value, 0);
+  }));
   return counts;
+}
+
+function updateStaticFacetCounts(select, counts) {
+  // Update labels in place so multi-selections and scope optgroups stay intact.
+  [...select.options].forEach((option) => {
+    if (option.value === "all") return;
+    const label = option.textContent.replace(/\s+\([\d,]+\)$/, "");
+    option.textContent = `${label} (${counts.get(option.value) || 0})`;
+  });
+  syncFilterDropdownForSelect(select);
 }
 
 function sortedDimensionCounts(counts, labelForValue = (value) => value) {
@@ -2891,7 +2957,7 @@ function sortedDimensionCounts(counts, labelForValue = (value) => value) {
 
 function sortedInstitutionTypeCounts(counts) {
   return INSTITUTION_TYPE_ORDER
-    .filter((value) => (counts.get(value) || 0) > 0)
+    .filter((value) => counts.has(value))
     .map((value) => [value, counts.get(value)]);
 }
 
@@ -2959,7 +3025,7 @@ function replaceCountedFilterOptions(
     option.textContent = label;
     return option;
   }));
-  select.value = selectedValue === "all" || selectedStillAvailable
+  select.value = selectedValue === "all" || selectedStillAvailable || preserveMissingSelection
     ? selectedValue
     : "all";
 }
@@ -3054,6 +3120,7 @@ function syncFilterDropdown(dropdown) {
     const element = document.createElement("li");
     element.id = `${dropdown.select.id}-dropdown-option-${option.index}`;
     element.className = `filter-dropdown-option${option.group === "Extended scopes" ? " is-extended-scope" : ""}`;
+    element.classList.toggle("is-zero-count", /\(0\)$/.test(option.label));
     element.dataset.filterOptionIndex = String(option.index);
     element.dataset.filterValue = option.value;
     element.setAttribute("role", "option");
@@ -3241,30 +3308,24 @@ function syncFilterDropdownForSelect(select) {
   if (dropdown) syncFilterDropdown(dropdown);
 }
 
-function updateInstitutionDimensionFilters(countryPapers, institutionTypePapers) {
-  const countryCounts = dimensionPaperCounts(
-    countryPapers,
-    (paper) => countriesForRecord(paper),
-  );
+function updateInstitutionDimensionFilters(
+  countryCounts, typeCounts, allPapers,
+) {
+  includeZeroCountOptions(countryCounts, allPapers, countriesForRecord);
   replaceCountedFilterOptions(
     countryFilter,
     "All",
     sortedDimensionCounts(countryCounts),
     (value) => value,
-    false,
   );
   syncFilterDropdownForSelect(countryFilter);
 
-  const typeCounts = dimensionPaperCounts(
-    institutionTypePapers,
-    (paper) => institutionTypesForRecord(paper),
-  );
+  includeZeroCountOptions(typeCounts, allPapers, institutionTypesForRecord);
   replaceCountedFilterOptions(
     institutionTypeFilter,
     "All",
     sortedInstitutionTypeCounts(typeCounts),
     institutionTypeLabel,
-    false,
   );
   syncFilterDropdownForSelect(institutionTypeFilter);
 }
@@ -4282,16 +4343,13 @@ function paperResultContent(record, relatedEntries = [], cardId = "paper-result"
   });
   return `
     <article class="result-card result-card-paper" aria-labelledby="${cardId}">
-      <p class="result-entity-kicker">Unique paper</p>
       <h3 class="result-title" id="${cardId}">${paperTitleHtml(record)}</h3>
-      ${institutionMatchExplanationHtml(record)}
-      <div class="result-card-adaptive">
-        ${resultAuthors(normalizedRecord.authors, "Authors", `${cardId}-authors`, 4)}
-        ${resultInstitutions(normalizedRecord.affiliations, `${cardId}-institutions`, 3)}
-      </div>
+      ${resultAuthors(normalizedRecord.authors, "Authors", `${cardId}-authors`, 4)}
+      ${resultVenueYear(record)}
+      ${resultBadges(record)}
       <div class="result-secondary">
-        ${resultVenueYear(record)}
-        ${resultBadges(record)}
+        ${institutionMatchExplanationHtml(record)}
+        ${resultInstitutions(normalizedRecord.affiliations, `${cardId}-institutions`, 3)}
         ${resultLinks(record)}
       </div>
     </article>
@@ -5600,34 +5658,56 @@ function renderRecordsForGeneration({ generation = null } = {}) {
     keywordTerms,
     { resolvedInstitutionIdentities, activeInstitutionIdentities },
   );
-  const dimensionSets = (ignoredDimension) => deriveFilteredRecordSets(
-    records,
-    paperRecords,
-    (record) => recordMatchesActiveFilters(record, keywordTerms, {
-      institutionRecord: true,
-      resolvedInstitutionIdentities,
-      activeInstitutionIdentities,
-      [ignoredDimension]: true,
-    }),
-    (record) => recordMatchesActiveFilters(record, keywordTerms, {
-      resolvedInstitutionIdentities,
-      activeInstitutionIdentities,
-      [ignoredDimension]: true,
-    }),
+  // Count from both sources, exactly as results matching does. A canonical paper
+  // can lack a value that is present on one of its mapped affiliation records.
+  const facetSources = [
+    ...records.map((record) => ({ record, institutionRecord: true })),
+    ...paperRecords.map((record) => ({ record, institutionRecord: false })),
+  ];
+  const facetCounts = (ignoredDimension, valuesForRecord) => dimensionPaperCounts(
+    facetSources.filter(({ record, institutionRecord }) => recordMatchesActiveFilters(
+      record, keywordTerms, {
+        institutionRecord, resolvedInstitutionIdentities, activeInstitutionIdentities,
+        [ignoredDimension]: true,
+      },
+    )),
+    ({ record, institutionRecord }) => valuesForRecord(record, institutionRecord),
+    ({ record }) => paperIdentity(record),
   );
-  const countryDimensionSets = dimensionSets("ignoreCountry");
-  const institutionTypeDimensionSets = dimensionSets("ignoreInstitutionType");
-  const venueDimensionSets = dimensionSets("ignoreVenue");
-  const venueTypeDimensionSets = dimensionSets("ignoreVenueType");
-  updateInstitutionDimensionFilters(
-    countryDimensionSets.filteredPapers,
-    institutionTypeDimensionSets.filteredPapers,
-  );
+  const requiredIdentities = activeInstitutionFilter
+    ? activeInstitutionIdentities : resolvedInstitutionIdentities;
+  const countryCounts = facetCounts("ignoreCountry", (record, institutionRecord) => (
+    countriesForRecord(record, institutionRecord).filter((country) => recordMatchesInstitutionDimensions(
+      record, country, institutionTypeFilter.value, institutionRecord, requiredIdentities,
+    ))
+  ));
+  const institutionTypeCounts = facetCounts("ignoreInstitutionType", (record, institutionRecord) => (
+    institutionTypesForRecord(record, institutionRecord).filter((type) => recordMatchesInstitutionDimensions(
+      record, countryFilter.value, type, institutionRecord, requiredIdentities,
+    ))
+  ));
+  const allFacetRecords = [...paperRecords, ...records];
+  updateInstitutionDimensionFilters(countryCounts, institutionTypeCounts, allFacetRecords);
   updateVenueDimensionFilters(
-    venueDimensionSets.filteredPapers,
-    venueTypeDimensionSets.filteredPapers,
+    facetCounts("ignoreVenue", (record) => isBookRecord(record) ? [] : [venueFilterValue(record)]),
+    facetCounts("ignoreVenueType", (record) => [recordVenueType(record) || "__unknown__"]),
+    allFacetRecords,
   );
+  [
+    [taskFilter, "ignoreTask", getTasks],
+    [imageScopeFilter, "ignoreImageScope", getImageScopes],
+    [entryTypeFilter, "ignoreEntryType", getPaperCategories],
+    [publishedOnlyFilter, "ignorePublicationStatus", (paper) => (
+      isFormallyPublished(paper) ? ["published-only"] : []
+    )],
+    [preprintFilter, "ignoreVersion", (paper) => (
+      [hasArxivVersion(paper) ? "has-arxiv" : "no-arxiv"]
+    )],
+  ].forEach(([select, ignoredDimension, valuesForRecord]) => {
+    updateStaticFacetCounts(select, facetCounts(ignoredDimension, valuesForRecord));
+  });
   renderActiveFilterChips();
+  renderWorkspaceFilterContext();
   syncMoreFilters();
   const filteredSets = deriveFilteredRecordSets(
     records,
@@ -5719,6 +5799,8 @@ function renderRecordsForGeneration({ generation = null } = {}) {
     });
   });
 
+  fitResultsButton.disabled = visibleMarkerEntries.length === 0;
+  resetWorldButton.disabled = false;
   const linkedPaperState = reconcilePersistentSelectionAfterFilter(
     filteredSets.matchingPaperIdentities,
   );
@@ -5970,9 +6052,9 @@ function configureVenueFilter() {
   syncFilterDropdownForSelect(venueTypeFilter);
 }
 
-function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
+function updateVenueDimensionFilters(venueCounts, venueTypeCounts, allPapers) {
   const metadataByVenue = new Map();
-  [...venuePapers, ...venueTypePapers].filter((record) => !isBookRecord(record)).forEach((record) => {
+  allPapers.filter((record) => !isBookRecord(record)).forEach((record) => {
     const value = venueFilterValue(record);
     const existing = metadataByVenue.get(value);
     const track = canonicalVenueTrack(record);
@@ -5996,11 +6078,10 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
       metadata.track = "";
     }
   });
-  const venueCounts = dimensionPaperCounts(venuePapers,
+  includeZeroCountOptions(venueCounts, allPapers,
     (record) => isBookRecord(record) ? [] : [venueFilterValue(record)],
   );
-  const venueTypeCounts = dimensionPaperCounts(
-    venueTypePapers,
+  includeZeroCountOptions(venueTypeCounts, allPapers,
     (record) => [recordVenueType(record) || "__unknown__"],
   );
   replaceCountedFilterOptions(
@@ -6009,7 +6090,6 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
     sortedVenueCounts(venueCounts, metadataByVenue),
     (value) => metadataByVenue.get(value)?.label
       || (value === "__unknown__" ? "Unknown publication venue" : value),
-    false,
   );
   replaceCountedFilterOptions(
     venueTypeFilter,
@@ -6821,6 +6901,16 @@ document.fonts?.ready.then(() => {
   }
 });
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
+fitResultsButton.addEventListener("click", fitMapResults);
+resetWorldButton.addEventListener("click", resetMapWorld);
+workspaceFilterButton.addEventListener("click", () => {
+  if (mobileFiltersMedia.matches) openFiltersDrawer();
+  else filtersHeading.focus();
+});
+workspaceFilterClear.addEventListener("click", () => {
+  clearAllActiveFilters();
+  resetWorldButton.focus({ preventScroll: true });
+});
 closePaperDetailsButton.addEventListener("click", () => {
   if (!stackedDetailsMedia.matches) {
     setPaperDetailsExpanded(false, { focus: true });

@@ -317,7 +317,7 @@ process.stdout.write(JSON.stringify({{
             self.app,
         )
         self.assertIn(
-            'sortedDimensionCounts(countryCounts),\n    (value) => value,\n    false,',
+            'sortedDimensionCounts(countryCounts),\n    (value) => value,\n  );',
             self.app,
         )
 
