@@ -237,7 +237,7 @@ def test_recomputed_counts_and_registry_export_synchronization(state):
                                          unique_paper_institution_pairs=1422)
     # Wave 1 excludes R188; Wave 2 maps U017; Wave 3A adds T246 localization;
     # Wave 3B-2 removes detection from T024 and T136; Wave 4A removes R099 dataset;
-    # Wave 5A removes unsupported detection from T611.
+    # Wave 5A removes unsupported detection from T611; Wave 5B adds T236 localization.
     assert context['counts'] == dict(public=639, formal=531, mapped=617, unmapped=22,
                                     relationship_rows=1421,
                                     unique_paper_institution_pairs=1421)
@@ -246,7 +246,7 @@ def test_recomputed_counts_and_registry_export_synchronization(state):
         expected_current = Counter(ledger['taxonomy_after'][dimension])
         expected_current.subtract({'detection': 4} if dimension == 'tasks' else {'method': 1, 'dataset': 1})
         if dimension == 'tasks':
-            expected_current.update({'localization': 1})
+            expected_current.update({'localization': 2})
         assert registry_totals == +expected_current
         old = Counter(label for row in json.loads(previous(PUBLIC[0]))['records'] for label in row[dimension])
         phase1_totals = Counter(label for row in json.loads(phase1(PUBLIC[0]))['records'] for label in row[dimension])

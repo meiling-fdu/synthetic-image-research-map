@@ -15,6 +15,7 @@ from scripts.validate_corpus_quality_audit import load_context
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "114d2e5f352f39f6c3a484e43f3aac593eb7cf64"
+WAVE5A = "70a0bd330b76a493597c53f6117dcfa18f2a3c4e"
 MANIFEST_PATH = "data/raw/corpus_quality_batch_c_wave5a_2026_10_08/evidence_manifest.json"
 REPORT_PATH = "docs/corpus_quality_batch_c_wave5a_2026_10_08.md"
 T576 = "curated:62b0a9ae8be24d9f02e0"
@@ -35,6 +36,12 @@ def previous(path):
     return subprocess.check_output(["git", "show", f"{BASE}:{path}"], cwd=ROOT)
 
 
+@lru_cache
+def adjudicated(path):
+    # Pin the Wave 5A historical boundary; later accepted waves may change other rows.
+    return subprocess.check_output(["git", "show", f"{WAVE5A}:{path}"], cwd=ROOT)
+
+
 def read_json(path):
     return json.loads((ROOT / path).read_text())
 
@@ -49,7 +56,7 @@ def manifest():
 
 @pytest.mark.parametrize("path", ["data/curated/papers.csv", "data/curated/paper_taxonomy.csv"])
 def test_only_t611_task_fields_change_and_other_csv_bytes_are_preserved(path):
-    old_bytes, new_bytes = previous(path), (ROOT / path).read_bytes()
+    old_bytes, new_bytes = previous(path), adjudicated(path)
     before = {r["paper_id"]: r for r in rows(old_bytes)}
     after = {r["paper_id"]: r for r in rows(new_bytes)}
     assert before.keys() == after.keys()
@@ -82,7 +89,7 @@ def test_only_t611_task_fields_change_and_other_csv_bytes_are_preserved(path):
 @pytest.mark.parametrize("path", PUBLIC_PATHS)
 def test_public_changes_are_only_t611_tasks_and_task_review_provenance(path):
     before = json.loads(previous(path))["records"]
-    after = read_json(path)["records"]
+    after = json.loads(adjudicated(path))["records"]
     assert len(after) == len(before)
     assert [r for r in after if r.get("paper_id") != T611] == [
         r for r in before if r.get("paper_id") != T611
@@ -211,12 +218,16 @@ def test_recomputed_corpus_and_taxonomy_change_only_detection_by_one():
     }
     before = json.loads(previous(PUBLIC_PATHS[0]))["records"]
     old = Counter(label for row in before for key in ("tasks", "research_types") for label in row[key])
-    new = Counter(label for row in context["papers"].values()
-                  for key in ("tasks", "research_types") for label in row[key])
+    wave5a = Counter(label for row in json.loads(adjudicated(PUBLIC_PATHS[0]))["records"]
+                     for key in ("tasks", "research_types") for label in row[key])
+    current = Counter(label for row in context["papers"].values()
+                      for key in ("tasks", "research_types") for label in row[key])
     assert old == manifest()["taxonomy_before"]
-    assert new == manifest()["taxonomy_after"]
-    assert new == {"detection": 589, "source_attribution": 85, "localization": 42,
-                   "method": 547, "dataset": 132, "benchmark": 88,
-                   "survey": 20, "analysis_study": 78}
-    assert old - new == {"detection": 1}
-    assert not new - old
+    assert wave5a == manifest()["taxonomy_after"]
+    assert wave5a == {"detection": 589, "source_attribution": 85, "localization": 42,
+                      "method": 547, "dataset": 132, "benchmark": 88,
+                      "survey": 20, "analysis_study": 78}
+    assert old - wave5a == {"detection": 1}
+    assert not wave5a - old
+    assert current - wave5a == {"localization": 1}
+    assert not wave5a - current

@@ -58,7 +58,7 @@ RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint"
 
 PUBLICATION_TYPE_TOTALS = {'conference': 389, 'preprint': 108, 'journal': 141, 'book': 1}
 
-TASK_TOTALS = {'detection': 589, 'source_attribution': 85, 'localization': 42}
+TASK_TOTALS = {'detection': 589, 'source_attribution': 85, 'localization': 43}
 
 RELEASE_TASK_TOTALS = {
     "detection": 471,

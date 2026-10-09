@@ -35,14 +35,19 @@ def previous_csv(path):
     return list(csv.DictReader(io.StringIO(previous(path).decode("utf-8-sig"), newline="")))
 
 
-def adjudicated_csv(path):
+def adjudicated_bytes(path):
     # Later approved waves can change unrelated rows; keep this wave's boundary fixed.
-    data = subprocess.check_output(["git", "show", "a24a9e6:" + path], cwd=ROOT)
-    return list(csv.DictReader(io.StringIO(data.decode("utf-8-sig"), newline="")))
+    return subprocess.check_output(["git", "show", "a24a9e6:" + path], cwd=ROOT)
 
 
-def records(path, *, current=True):
-    payload = json.loads((ROOT / path).read_text()) if current else json.loads(previous(path))
+def adjudicated_csv(path):
+    return list(csv.DictReader(io.StringIO(adjudicated_bytes(path).decode("utf-8-sig"), newline="")))
+
+
+def records(path, *, current=True, adjudicated=False):
+    payload = json.loads(adjudicated_bytes(path)) if adjudicated else (
+        json.loads((ROOT / path).read_text()) if current else json.loads(previous(path))
+    )
     return payload["records"]
 
 
@@ -68,7 +73,7 @@ def test_t246_is_the_only_authoritative_taxonomy_change():
 def test_t236_remains_detection_only_and_byte_semantically_unchanged():
     path = "data/curated/paper_taxonomy.csv"
     before = {row["taxonomy_id"]: row for row in previous_csv(path)}[T236]
-    after = {row["taxonomy_id"]: row for row in csv_rows(path)}[T236]
+    after = {row["taxonomy_id"]: row for row in adjudicated_csv(path)}[T236]
     assert after == before
     assert after["tasks"] == "detection"
 
@@ -76,7 +81,7 @@ def test_t236_remains_detection_only_and_byte_semantically_unchanged():
 def test_public_export_changes_only_t246_task_evidence():
     for path in ("web/data/public_preview_papers.json", "web/data/public_preview_map_data.json"):
         before = [row for row in records(path, current=False) if row.get("doi") == T246_DOI]
-        after = [row for row in records(path) if row.get("doi") == T246_DOI]
+        after = [row for row in records(path, adjudicated=True) if row.get("doi") == T246_DOI]
         assert len(after) == len(before) and after
         for old, new in zip(before, after):
             assert old["tasks"] == ["detection"]
@@ -90,7 +95,7 @@ def test_public_export_changes_only_t246_task_evidence():
             }
 
         t236_before = [row for row in records(path, current=False) if row.get("paper_id") == T236.removeprefix("paper_id:")]
-        t236_after = [row for row in records(path) if row.get("paper_id") == T236.removeprefix("paper_id:")]
+        t236_after = [row for row in records(path, adjudicated=True) if row.get("paper_id") == T236.removeprefix("paper_id:")]
         assert t236_after == t236_before
 
 
@@ -161,7 +166,7 @@ def test_exact_corpus_and_taxonomy_effect():
     research_types = Counter(
         label for row in context["papers"].values() for label in row["research_types"]
     )
-    assert tasks == {"detection": 589, "source_attribution": 85, "localization": 42}
+    assert tasks == {"detection": 589, "source_attribution": 85, "localization": 43}
     assert research_types == {
         "method": 547,
         "dataset": 132,

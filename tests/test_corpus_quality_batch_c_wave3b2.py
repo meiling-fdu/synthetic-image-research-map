@@ -184,7 +184,7 @@ def test_exact_corpus_and_taxonomy_effect():
     research_types = Counter(
         label for row in context["papers"].values() for label in row["research_types"]
     )
-    assert tasks == {"detection": 589, "source_attribution": 85, "localization": 42}
+    assert tasks == {"detection": 589, "source_attribution": 85, "localization": 43}
     assert research_types == {
         "method": 547,
         "dataset": 132,

@@ -1,0 +1,348 @@
+{
+  "schema_version": 1,
+  "audit": "corpus_quality_batch_c_second_pass_task_evidence",
+  "wave": "5B",
+  "date": "2026-10-09",
+  "status": "FINAL",
+  "baseline_commit": "70a0bd330b76a493597c53f6117dcfa18f2a3c4e",
+  "scope": {
+    "review_ids": [
+      "T236",
+      "T137"
+    ],
+    "research_type_reviewed": false,
+    "authoritative_changes_applied": 1,
+    "full_paper_budget": 2
+  },
+  "retrieval_policy": {
+    "full_papers_retrieved": 2,
+    "full_papers_per_case": 1,
+    "source_format": "arxiv_author_deposited_full_paper_html",
+    "candidate_abstract_records_opened": 2,
+    "previous_blocked_urls_retried": 0,
+    "alternate_full_paper_versions_retrieved": 0,
+    "supplements_retrieved": 0,
+    "other_papers_retrieved": 0,
+    "broad_searches": 0,
+    "raw_sources_saved_in_repository": false,
+    "note": "Each arXiv abstract record was checked against the local canonical identity before reading its corresponding full paper. Only arXiv HTML v1 for T236 and HTML v2 for T137 were read. Embedded appendix sections are part of those same full papers. Exact conference-final manuscript equivalence was not established."
+  },
+  "documents": [
+    {
+      "review_id": "T236",
+      "source_type": "author_deposited_arxiv_full_paper",
+      "abstract_url": "https://arxiv.org/abs/2601.19430",
+      "full_paper_url": "https://arxiv.org/html/2601.19430v1",
+      "version": "v1, 2026-01-27",
+      "retrieval_outcome": "COMPLETE_FULL_PAPER_HTML_RETRIEVED_IDENTITY_MATCHED",
+      "identity_verification": {
+        "exact_title_match": true,
+        "ordered_author_match_after_case_normalization": true,
+        "arxiv_id_matches_canonical": true,
+        "abstract_matches_local_canonical_work": true,
+        "canonical_conference": "ICLR 2026, OpenReview forum Tk8ujiOgHM",
+        "version_relationship": "Author-deposited v1 of the locally linked canonical work; its exact textual equivalence to the inaccessible ICLR/OpenReview final PDF was not verified."
+      },
+      "locators": [
+        "section 3.2",
+        "section 3.3",
+        "section 5 and Tables 2-3",
+        "appendix A.5",
+        "appendix B.2"
+      ]
+    },
+    {
+      "review_id": "T137",
+      "source_type": "author_deposited_arxiv_full_paper",
+      "abstract_url": "https://arxiv.org/abs/2604.17736",
+      "full_paper_url": "https://arxiv.org/html/2604.17736v2",
+      "version": "v2, 2026-04-21",
+      "retrieval_outcome": "COMPLETE_FULL_PAPER_HTML_RETRIEVED_SAME_WORK_WITH_AUTHOR_LIST_VARIANT",
+      "identity_verification": {
+        "exact_title_match": true,
+        "arxiv_id_matches_canonical": true,
+        "five_canonical_authors_present_in_order": true,
+        "author_list_exact_match": false,
+        "author_variance": "arXiv v2 lists Yuexuan Tan between Yueying Gao and Lei Chen; the five-name canonical CVPR author field omits Tan. The pre-existing docs/missing_author_mappings_audit_2026-08-27.md also records the 5/6-author discrepancy for this title.",
+        "abstract_matches_local_canonical_work": true,
+        "canonical_conference": "CVPR 2026",
+        "version_relationship": "The arXiv abstract record states accepted to CVPR 2026; identical title, canonical arXiv ID, five ordered shared authors, abstract, and the locally pre-documented sixth-author variant establish same-work identity. Exact equivalence to the inaccessible CVF final PDF was not verified."
+      },
+      "locators": [
+        "section 3.1 and Figure 2",
+        "section 4.4",
+        "section 5.1, EP1 and EP2",
+        "Tables 1-2",
+        "section 5.4"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "review_id": "T236",
+      "paper_id": "curated:64635535d7b7b6a12a32",
+      "title": "Unveiling Perceptual Artifacts: A Fine-Grained Benchmark for Interpretable AI-Generated Image Detection",
+      "first_pass_source_url": "https://openreview.net/pdf/6b5a5d6411ea1778f8c2cbf707a8a5744abe71b0.pdf",
+      "first_pass_failure": "ACCESS_BLOCKED_OPENREVIEW_CHALLENGE_TIMEOUT",
+      "second_pass_source_url": "https://arxiv.org/html/2601.19430v1",
+      "retrieval_outcome": "COMPLETE_FULL_PAPER_HTML_RETRIEVED_IDENTITY_MATCHED",
+      "identity_verified": true,
+      "policy_id": "T2",
+      "task_definition": "Section 3.3 defines Authenticity Judgment as real/fake image classification and Perceptual Artifact Detection as prediction of artifact instance regions and one of seven categories. Section 5 studies PAD-only and joint PAD/AJ models, so PAD is a performed auxiliary forensic task, not merely explanatory display.",
+      "output_decision_space": "A PAD model produces a pixel-level semantic segmentation mask for seven perceptual-artifact categories plus background; the joint model also outputs image-level fake probability. Existing detectors' Grad-CAM/relevance heatmaps and later attention-alignment maps are distinct interpretation outputs and alone would not meet T2.",
+      "supervision_and_ground_truth": "Section 3.2 describes human polygon masks and artifact categories on fake images. Appendix B.2 describes a segmentation head, multiclass segmentation loss and predicted pixel-level masks at inference. Predictions are compared with held-out annotated artifact regions.",
+      "evaluation_evidence": "Section 3.3 and appendix A.5 define IoU, pixel precision/recall/F1 and weak instance-level matching against ground-truth regions; section 5, Tables 2-3 report spatial PAD results. Table 2 PAD-only IoU 27.2 and PixF1 42.7; joint multi-task IoU 27.3 and PixF1 42.8, as reported. Interpretation heatmap overlap results are separate and are not the basis of this adjudication.",
+      "quantitative_metrics": {
+        "PAD_only_category_agnostic_IoU_reported": 27.2,
+        "PAD_only_category_agnostic_PixF1_reported": 42.7,
+        "multi_task_category_agnostic_IoU_reported": 27.3,
+        "multi_task_category_agnostic_PixF1_reported": 42.8
+      },
+      "adjudication": "LOCALIZATION_TASK_SUPPORTED",
+      "evidence_outcome": "EVIDENCE_RESOLVED_CHANGE",
+      "proposed_taxonomy": {
+        "tasks_before": [
+          "detection"
+        ],
+        "tasks_after": [
+          "detection",
+          "localization"
+        ]
+      },
+      "remediation_applied": true,
+      "confidence": "high for the spatial task in the retrieved author manuscript; conference-final text equivalence unverified",
+      "limitations": "The arXiv v1 manuscript predates the inaccessible ICLR final PDF. PAD is artifact-region segmentation on generated images, not a claim of manipulated-region compositing localization.",
+      "tasks_before": [
+        "detection"
+      ],
+      "final_taxonomy": {
+        "tasks": [
+          "detection",
+          "localization"
+        ]
+      },
+      "finalized": true,
+      "remediation": "APPLIED",
+      "final_disposition": "REMEDIATION_APPLIED",
+      "current_tasks": [
+        "detection",
+        "localization"
+      ]
+    },
+    {
+      "review_id": "T137",
+      "paper_id": "curated:246f07c81b9f91e527eb",
+      "title": "IncreFA: Breaking the Static Wall of Generative Model Attribution",
+      "first_pass_source_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Qin_IncreFA_Breaking_the_Static_Wall_of_Generative_Model_Attribution_CVPR_2026_paper.pdf",
+      "first_pass_failure": "TRANSFER_STALLED_BOUNDED_WAIT_EXCEEDED",
+      "second_pass_source_url": "https://arxiv.org/html/2604.17736v2",
+      "retrieval_outcome": "COMPLETE_FULL_PAPER_HTML_RETRIEVED_SAME_WORK_WITH_AUTHOR_LIST_VARIANT",
+      "identity_verified": true,
+      "policy_id": "T1",
+      "task_definition": "Section 3.1 defines source-model attribution with an expanded real, known-generator, and unseen-generator decision space. Section 5.1 evaluates incremental attribution/open-set generator recognition (EP1) and static attribution plus authenticity recognition (EP2).",
+      "output_decision_space": "The hierarchical formulation first separates real, fake, and unseen (Figure 2); known synthetic images then receive generator/family labels. EP1 starts with a real class and one generator and adds generators; the withheld unknowns are synthetic generators, not real images.",
+      "real_image_role": "Real COCO images are a labeled class in IABench (section 3.1; section 5.1; Table 2). Their mere presence is not the detection evidence. EP2 explicitly frames and scores real-versus-generated authenticity recognition as a separate metric.",
+      "authenticity_evaluation": "Section 5.1 defines Auth. Acc. as accuracy distinguishing real from generated images. Table 2 reports IncreFA Auth. Acc. 99.97 and real-class accuracy 99.66. Table 1 also reports Auth. Acc. 99.97 under EP1. The explicit binary metric supports T1 independently of the N+1 real class.",
+      "attribution_evaluation": "Section 5.1 and Tables 1-2 separately score seen-generator attribution and unknown-synthetic-generator rejection. Table 1 final incremental-task attribution accuracy 78.80 and unseen-generator accuracy 98.93; Table 2 static average attribution accuracy 95.93 and unseen-generator accuracy 98.78. None of these unknown-generator figures is treated as authenticity accuracy.",
+      "quantitative_metrics": {
+        "EP2_Auth_Acc_percent": 99.97,
+        "EP2_real_class_accuracy_percent": 99.66,
+        "EP2_average_attribution_accuracy_percent": 95.93,
+        "EP2_unseen_generator_accuracy_percent": 98.78,
+        "EP1_final_task_attribution_accuracy_percent": 78.8,
+        "EP1_unseen_generator_accuracy_percent": 98.93
+      },
+      "adjudication": "DETECTION_TASK_SUPPORTED",
+      "evidence_outcome": "EVIDENCE_RESOLVED_NO_CHANGE",
+      "proposed_taxonomy": {
+        "tasks_before": [
+          "detection",
+          "source_attribution"
+        ],
+        "tasks_after": [
+          "detection",
+          "source_attribution"
+        ]
+      },
+      "remediation_applied": false,
+      "confidence": "high for the explicit authenticity metric and same-work identity; conference-final authorship and exact textual equivalence remain unverified",
+      "limitations": "The author-deposited v2 includes Yuexuan Tan while the canonical CVPR field has five authors. That known metadata variance is documented, not silently normalized or used to edit publication metadata. The first-pass CVF final PDF remains unread.",
+      "tasks_before": [
+        "detection",
+        "source_attribution"
+      ],
+      "final_taxonomy": {
+        "tasks": [
+          "detection",
+          "source_attribution"
+        ]
+      },
+      "finalized": true,
+      "remediation": "NOT_REQUIRED",
+      "final_disposition": "REMEDIATION_NOT_REQUIRED",
+      "current_tasks": [
+        "detection",
+        "source_attribution"
+      ]
+    }
+  ],
+  "resolution": {
+    "before": {
+      "task_evidence": 5,
+      "institution_evidence": 1,
+      "research_type_evidence": 11,
+      "external_unresolved": 17,
+      "maintainer_T527": 1,
+      "total_unresolved": 18
+    },
+    "scientifically_resolved": 2,
+    "still_insufficient_in_wave": 0,
+    "authoritative_changes_applied": 1,
+    "pending_maintainer_adjudications": [],
+    "accounting_basis": "Both cases were subtracted exactly once when Wave 5B evidence was collected; adjudication applies only T236 and does not reduce the remaining ledger again.",
+    "after": {
+      "task_evidence": 3,
+      "institution_evidence": 1,
+      "research_type_evidence": 11,
+      "external_unresolved": 15,
+      "maintainer_T527": 1,
+      "total_unresolved": 16
+    },
+    "remaining_external_ids": [
+      "T141",
+      "T572",
+      "T503",
+      "U010",
+      "R117",
+      "R176",
+      "R376",
+      "R455",
+      "R460",
+      "R535",
+      "R537",
+      "R548",
+      "R549",
+      "R580",
+      "R615"
+    ],
+    "resolved_change_applied": [
+      "T236"
+    ],
+    "resolved_no_change": [
+      "T137"
+    ],
+    "evidence_debt_subtracted_once": true
+  },
+  "unchanged_corpus": {
+    "public": 639,
+    "formal": 531,
+    "mapped": 617,
+    "relationship_rows": 1421,
+    "unique_pairs": 1421
+  },
+  "integrity_expectations": {
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA",
+    "UNEXPECTED_CHANGED": 0,
+    "IGNORED_OPERATIONAL_INPUTS_COMMITTED": 0
+  },
+  "concurrent_tracked_changes_observed_at_validation": {
+    "paths": [
+      "tests/test_frontend_country_institution_type_filters.py",
+      "tests/test_frontend_result_cards.py",
+      "tests/test_frontend_venue_filters.py",
+      "tests/test_frontend_year_range_slider.py",
+      "web/app.js",
+      "web/index.html",
+      "web/style.css"
+    ],
+    "relationship_to_wave": "Out-of-scope frontend and frontend-test edits appeared after the initial clean-baseline check. They were preserved without modification and are not included in Wave 5B evidence or authoritative-corpus change counts. This is a validation-time observation, not a claim that concurrent editing has stopped."
+  },
+  "concurrent_untracked_changes_observed_at_validation": {
+    "paths": [
+      "tests/test_frontend_explorer_facets.py"
+    ],
+    "relationship_to_wave": "An out-of-scope frontend test appeared after the initial excluded-file inventory and was preserved without modification. The 128 pre-existing excluded files are a separate, checksum-verified set."
+  },
+  "publication_state": "VALIDATED_FOR_PUBLICATION",
+  "adjudication_status": "FINAL",
+  "adjudication_date": "2026-10-09",
+  "adjudication_authority": "Explicit maintainer approval: T236 localization addition only; T137 detection retention with no taxonomy edit.",
+  "additional_retrievals_during_finalization": 0,
+  "taxonomy_before": {
+    "detection": 589,
+    "source_attribution": 85,
+    "localization": 42,
+    "method": 547,
+    "dataset": 132,
+    "benchmark": 88,
+    "survey": 20,
+    "analysis_study": 78
+  },
+  "taxonomy_after": {
+    "detection": 589,
+    "source_attribution": 85,
+    "localization": 43,
+    "method": 547,
+    "dataset": 132,
+    "benchmark": 88,
+    "survey": 20,
+    "analysis_study": 78
+  },
+  "validation": {
+    "focused": {
+      "tests_passed": 60,
+      "subtests_passed": 12,
+      "failures": 0
+    },
+    "full_suite": {
+      "tests_passed": 1689,
+      "subtests_passed": 389,
+      "failures": 0,
+      "warnings": 2
+    },
+    "validators": {
+      "errors": 0,
+      "curated_existing_warnings": 252,
+      "public_existing_warnings": 23,
+      "exclusion_existing_warnings": 2,
+      "key_paper_coverage_check_passed": true
+    },
+    "export_reproducibility": {
+      "EXPORT_REPRODUCIBLE": 1,
+      "offline_passes": 2,
+      "paths_compared_per_pass": 4283,
+      "changed_paths_per_pass": [
+        [],
+        []
+      ]
+    },
+    "integrity": {
+      "UNEXPECTED_CHANGED": 0,
+      "FROZEN_NEURIPS_CHANGED": 0,
+      "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+      "IGNORED_OPERATIONAL_INPUTS_COMMITTED": 0,
+      "excluded_local_files_unchanged": 128
+    },
+    "operational_inputs": {
+      "offline_export_ignored_inputs_checksum_matched": 104,
+      "historical_fixtures_checksum_matched": 15,
+      "committed": 0
+    }
+  },
+  "remote_topology_at_validation": {
+    "remote_head": "f7e6f721dcca4c992285a86f3fc75706d6d3f091",
+    "intervening_commit": "f7e6f721dcca4c992285a86f3fc75706d6d3f091 feat: improve scholarly exploration workflow",
+    "intervening_changed_paths": 10,
+    "overlap_with_wave5b_changed_paths": [],
+    "primary_checkout_head": "f7e6f721dcca4c992285a86f3fc75706d6d3f091",
+    "independently_changed_frontend_paths_since_initial_snapshot": [
+      "tests/public_explorer_browser.cjs",
+      "tests/test_frontend_explorer_facets.py",
+      "web/app.js"
+    ],
+    "primary_wave5b_evidence_unchanged": true,
+    "primary_excluded_files_unchanged": 128
+  }
+}
