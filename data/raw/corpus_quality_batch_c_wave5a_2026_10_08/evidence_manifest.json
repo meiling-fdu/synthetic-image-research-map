@@ -1,0 +1,669 @@
+{
+  "schema_version": 1,
+  "audit": "corpus_quality_batch_c",
+  "wave": "5A",
+  "date": "2026-10-08",
+  "adjudication_status": "FINAL",
+  "baseline_commit": "114d2e5f352f39f6c3a484e43f3aac593eb7cf64",
+  "triage_publication": {
+    "baseline": "0f859a4c6221cafca8463b7828267b0fa8605030",
+    "report": "docs/corpus_quality_batch_c_evidence_debt_triage_2026_10_08.md",
+    "report_sha256": "2c754938a41ea52cc3b9650574e319e792ee8bce659f0ba89ba8d89461d93acc",
+    "validation_checks": 208,
+    "commit": "114d2e5f352f39f6c3a484e43f3aac593eb7cf64",
+    "remote_head": "114d2e5f352f39f6c3a484e43f3aac593eb7cf64",
+    "ahead": 0,
+    "behind": 0,
+    "push_result": "0f859a4..114d2e5 main -> main"
+  },
+  "selection": {
+    "review_ids": [
+      "T576",
+      "T611"
+    ],
+    "count": 2,
+    "scope": "Second-pass T1 task evidence only; other 17 external debts and T527 not reviewed or modified"
+  },
+  "policy": {
+    "policy_id": "T1",
+    "locked_rule": "Source attribution does not imply authenticity detection. Assign detection only when the paper explicitly performs and evaluates real-versus-generated discrimination as a substantive forensic task.",
+    "guard": "An N+1 classifier with a real class, model matching, unknown-generator rejection or real negative training samples alone does not establish a substantive authenticity task."
+  },
+  "retrieval_policy": {
+    "full_paper_budget": 2,
+    "full_papers_obtained": 2,
+    "alternative_work_documents_per_paper": 1,
+    "original_failed_urls_retried": 0,
+    "other_papers_retrieved": 0,
+    "supplements_retrieved": 0,
+    "arxiv_versions_retrieved": 0,
+    "broad_searches": 0,
+    "transport_attempts": 6,
+    "transport_note": "Initial web-tool format/access failures were followed by one bounded direct GET to each same authorized URL. T611 then followed the official same-work archive destination and its direct PDF link. Six endpoint requests retrieved exactly two full papers; no request was automatically retried and no HTTP redirect was automatically followed."
+  },
+  "documents": [
+    {
+      "document_id": "T576-second-pass-primary",
+      "review_id": "T576",
+      "url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/laszkiewicz24a/laszkiewicz24a.pdf",
+      "retrieval_outcome": "COMPLETE_PRIMARY_PAPER_RETRIEVED_IDENTITY_MATCHED",
+      "http_status": 200,
+      "content_type": "application/octet-stream",
+      "retrieved_at": "2026-10-08T13:23:55.889726+00:00",
+      "pages": 36,
+      "bytes": 4232171,
+      "sha256": "449bb229bee4b6f1cfe225f76e1a01854c1e57498f41bab2793a438f111a785d",
+      "repository_copy_saved": false,
+      "temporary_copy_retained": true,
+      "temporary_local_path": "/tmp/wave5a-T576.pdf",
+      "usable_evidence_extracted": true,
+      "visual_identity_check": true,
+      "visual_table_check": true,
+      "source_chain": [
+        {
+          "url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/laszkiewicz24a/laszkiewicz24a.pdf",
+          "transport": "web document tool",
+          "outcome": "UNSUPPORTED_CONTENT_TYPE_APPLICATION_OCTET_STREAM",
+          "server_http_status": null
+        },
+        {
+          "review_id": "T576",
+          "requested_url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/laszkiewicz24a/laszkiewicz24a.pdf",
+          "retrieved_at": "2026-10-08T13:23:55.889726+00:00",
+          "transport": "urllib direct GET; no automatic redirects; no retries",
+          "timeout_seconds": 30,
+          "status": 200,
+          "final_url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/laszkiewicz24a/laszkiewicz24a.pdf",
+          "content_type": "application/octet-stream",
+          "bytes": 4232171,
+          "sha256": "449bb229bee4b6f1cfe225f76e1a01854c1e57498f41bab2793a438f111a785d",
+          "local_path": "/tmp/wave5a-T576.pdf",
+          "pdf_signature": true
+        }
+      ],
+      "source_authority": "Official PMLR listing links publisher-owned mlresearch repository"
+    },
+    {
+      "document_id": "T611-second-pass-primary",
+      "review_id": "T611",
+      "url": "https://www.bmva-archive.org.uk/bmvc/2021/assets/papers/0197.pdf",
+      "retrieval_outcome": "COMPLETE_PRIMARY_PAPER_RETRIEVED_IDENTITY_MATCHED",
+      "http_status": 200,
+      "content_type": "application/pdf",
+      "retrieved_at": "2026-10-08T13:26:28.688336+00:00",
+      "pages": 13,
+      "bytes": 3724588,
+      "sha256": "3ece0cc9c4818a21ae62726b1783548fd109af10f26615f55da2be237227dc7e",
+      "repository_copy_saved": false,
+      "temporary_copy_retained": true,
+      "temporary_local_path": "/tmp/wave5a-T611.pdf",
+      "usable_evidence_extracted": true,
+      "visual_identity_check": true,
+      "visual_table_check": true,
+      "source_chain": [
+        {
+          "url": "https://www.bmva.org/bmvc/2021/conference/papers/paper_0197.html",
+          "transport": "web document tool",
+          "outcome": "URL_INACCESSIBLE_VIA_TOOL",
+          "server_http_status": null
+        },
+        {
+          "review_id": "T611",
+          "requested_url": "https://www.bmva.org/bmvc/2021/conference/papers/paper_0197.html",
+          "retrieved_at": "2026-10-08T13:23:55.890396+00:00",
+          "transport": "urllib direct GET; no automatic redirects; no retries",
+          "timeout_seconds": 30,
+          "status": 200,
+          "final_url": "https://www.bmva.org/bmvc/2021/conference/papers/paper_0197.html",
+          "content_type": "text/html; charset=utf-8",
+          "bytes": 110,
+          "sha256": "6d2fb0b0be591fcccc6463fcb7ba83cb590c1e0dd4338d74f71a60f1ffa9fb4e",
+          "local_path": "/tmp/wave5a-T611.html",
+          "pdf_signature": false
+        },
+        {
+          "review_id": "T611",
+          "requested_url": "https://www.bmva-archive.org.uk/bmvc/2021/conference/papers/paper_0197.html",
+          "linked_from": "https://www.bmva.org/bmvc/2021/conference/papers/paper_0197.html",
+          "link_type": "explicit same-paper JavaScript redirect from official BMVA record",
+          "retrieved_at": "2026-10-08T13:25:17.322828+00:00",
+          "transport": "urllib direct GET; redirects disabled; no retries",
+          "status": 200,
+          "final_url": "https://www.bmva-archive.org.uk/bmvc/2021/conference/papers/paper_0197.html",
+          "content_type": "text/html",
+          "bytes": 36853,
+          "sha256": "83625a11c188c5c1a79db31269b9e5d2e0748c15fb279a82920c2fe2bb2363ee",
+          "local_path": "/tmp/wave5a-T611-archive.html"
+        },
+        {
+          "review_id": "T611",
+          "requested_url": "https://www.bmva-archive.org.uk/bmvc/2021/assets/papers/0197.pdf",
+          "linked_from": "https://www.bmva-archive.org.uk/bmvc/2021/conference/papers/paper_0197.html",
+          "retrieved_at": "2026-10-08T13:26:28.688336+00:00",
+          "transport": "urllib direct GET; redirects disabled; no retries",
+          "status": 200,
+          "final_url": "https://www.bmva-archive.org.uk/bmvc/2021/assets/papers/0197.pdf",
+          "content_type": "application/pdf",
+          "bytes": 3724588,
+          "sha256": "3ece0cc9c4818a21ae62726b1783548fd109af10f26615f55da2be237227dc7e",
+          "local_path": "/tmp/wave5a-T611.pdf",
+          "pdf_signature": true
+        }
+      ],
+      "source_authority": "Official BMVA record names same-work BMVA archive; matching archive record directly links paper PDF"
+    }
+  ],
+  "actions": [
+    {
+      "review_id": "T576",
+      "paper_id": "curated:62b0a9ae8be24d9f02e0",
+      "title": "Single-Model Attribution of Generative Models Through Final-Layer Inversion",
+      "policy_id": "T1",
+      "canonical_identity": {
+        "paper_id": "curated:62b0a9ae8be24d9f02e0",
+        "title": "Single-Model Attribution of Generative Models Through Final-Layer Inversion",
+        "authors": [
+          "Mike Laszkiewicz",
+          "Jonas Ricker",
+          "Johannes Lederer",
+          "Asja Fischer"
+        ],
+        "doi": "10.48550/arxiv.2306.06210",
+        "arxiv_id": "2306.06210",
+        "year": 2023,
+        "venue": "International Conference on Machine Learning"
+      },
+      "current_tasks": [
+        "detection",
+        "source_attribution"
+      ],
+      "first_pass": {
+        "manifest": "data/raw/corpus_quality_batch_c_wave3b1_2026_10_06/evidence_manifest.json",
+        "source_url": "https://openreview.net/pdf?id=Hs9GcILuZN",
+        "retrieval_outcome": "ACCESS_BLOCKED_HTTP_403",
+        "scientific_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+        "retried_in_wave5a": false
+      },
+      "second_pass_document_id": "T576-second-pass-primary",
+      "second_pass_source_url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/laszkiewicz24a/laszkiewicz24a.pdf",
+      "second_pass_full_paper_url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/laszkiewicz24a/laszkiewicz24a.pdf",
+      "second_pass_retrieval_outcome": "COMPLETE_PRIMARY_PAPER_RETRIEVED_IDENTITY_MATCHED",
+      "primary_full_papers_obtained": 1,
+      "corpus_change_applied": false,
+      "final_disposition": "REMEDIATION_NOT_REQUIRED",
+      "paper_identity_verification": {
+        "status": "MATCH",
+        "title": "Exact title matches PDF title metadata and rendered page 1.",
+        "authors": "Mike Laszkiewicz; Jonas Ricker; Johannes Lederer; Asja Fischer match canonical authors in order and rendered page 1.",
+        "work_correspondence": "The previously saved official PMLR volume listing links this exact mlresearch PDF for the same title and authors. Canonical record carries arXiv 2306.06210; no arXiv source was retrieved.",
+        "version": "PMLR 235 / ICML 2024 proceedings paper, 36 PDF pages including embedded appendices.",
+        "date_note": "Canonical year is 2023; the PDF identifies proceedings year 2024. Same-work identity is established by exact title/authors and the official source association. No publication metadata correction is proposed or applied."
+      },
+      "claimed_task": "Open-world single-model attribution: decide whether an image came from a specified generator G. Section 2 also explicitly includes fake-versus-real discrimination within the framework.",
+      "evaluated_decision_space": "Binary +1 = target G, -1 = not G; experiments separately pair G with real images or another generator. Pairwise G-versus-real results are distinct from G-versus-G-prime attribution results. This is not an N+1 source classifier.",
+      "real_image_role": "Real CelebA/LSUN images provide negative training examples; real held-out images also appear as separately scored test comparators in Table 8. FFHQ real images are a test comparator for StyleGAN2 in Table 4. Some other experiments substitute another generator for unavailable real data.",
+      "authenticity_formulation": "The general decision concerns model membership, but the explicitly defined and separately scored real-comparator experiments instantiate generator-specific generated-versus-real discrimination. The anomaly score or real training data alone would not establish detection.",
+      "authenticity_evaluation": {
+        "reported": true,
+        "scope": "Generator-specific binary real-versus-generated experiments within the attribution framework; no claim of a universal any-generator-versus-real detector.",
+        "protocol": "Sections 5.1 and G.1-G.2 specify binary test accuracy, held-out target-model validation for the threshold, 1000 test examples per source in CelebA/LSUN, and five runs.",
+        "results": [
+          {
+            "locator": "Table 8, PDF page 34, FLIPAD/DCGAN row, Real columns",
+            "metric": "binary classification accuracy percent, average over five runs",
+            "CelebA": 99.72,
+            "LSUN": 99.69
+          },
+          {
+            "locator": "Table 4, PDF page 8, Style-Based Models/real column",
+            "metric": "StyleGAN2-versus-real binary classification accuracy percent, average over five runs",
+            "DCTPAD": 99.93,
+            "FLIPAD": "not applied in this setting"
+          }
+        ]
+      },
+      "source_attribution_evaluation": "Section 5 and Tables 1-5 also evaluate target-versus-other-generator attribution, same-architecture/different-seed verification, perturbations and diffusion-version attribution. These comparisons are not themselves authenticity evidence.",
+      "adjudication": "DETECTION_TASK_SUPPORTED",
+      "evidence_outcome": "EVIDENCE_RESOLVED_NO_CHANGE",
+      "proposed_taxonomy": {
+        "tasks": [
+          "detection",
+          "source_attribution"
+        ]
+      },
+      "policy_reason": "Retain detection because real-comparator binary tests are explicitly specified and separately quantified across models/datasets, not merely because real images occur in the data or a source-classification label set. Source attribution remains the primary framing; the detection support is bounded to the evaluated generator-specific authenticity comparisons.",
+      "confidence": {
+        "identity": "high",
+        "retrieval_and_numeric_evidence": "high",
+        "T1_classification": "moderate",
+        "reason": "The real-versus-generated test results are unambiguous. Treating their systematic, separately reported binary evaluation as a substantive detection component is a policy interpretation; the paper primarily frames these experiments as single-model attribution."
+      },
+      "evidence_locators": [
+        {
+          "page": 1,
+          "section": "Title, authors, proceedings footer",
+          "finding": "Exact work/author identity and proceedings version."
+        },
+        {
+          "page": 2,
+          "section": "2 Problem Setup",
+          "finding": "Single-model attribution and explicit conceptual inclusion of fake/real discrimination."
+        },
+        {
+          "page": 3,
+          "section": "4.1",
+          "finding": "Target-model inliers versus non-target anomalies."
+        },
+        {
+          "page": 6,
+          "section": "5.1 Setup",
+          "finding": "Training labels and pairwise test protocol."
+        },
+        {
+          "page": 7,
+          "section": "5.2 Style-based Generative Models",
+          "finding": "StyleGAN2 comparator set includes real FFHQ images."
+        },
+        {
+          "page": 8,
+          "section": "Table 4",
+          "finding": "Separately scored real comparator, distinct from generator/version comparators."
+        },
+        {
+          "page": 24,
+          "section": "G.1-G.2",
+          "finding": "Threshold calibration and sample counts."
+        },
+        {
+          "page": 25,
+          "section": "G.4",
+          "finding": "Style-model sample counts."
+        },
+        {
+          "page": 34,
+          "section": "Table 8",
+          "finding": "Dedicated Real columns for CelebA and LSUN; five-run means."
+        }
+      ],
+      "limitations": [
+        "The main goal remains generator attribution; the finding does not imply a general authenticity detector across arbitrary generators.",
+        "No inference is drawn from related-work claims, real training negatives alone, or the word anomaly.",
+        "Appendices were included inside the same retrieved 36-page PDF; no separately linked supplement was retrieved."
+      ],
+      "tasks_before": [
+        "detection",
+        "source_attribution"
+      ],
+      "final_taxonomy": {
+        "tasks": [
+          "detection",
+          "source_attribution"
+        ]
+      },
+      "finalized": true,
+      "remediation": "NOT_REQUIRED",
+      "accepted_detection_limitation": "Detection evidence is generator-specific real-versus-generated discrimination, not a demonstrated universal synthetic-image detector."
+    },
+    {
+      "review_id": "T611",
+      "paper_id": "curated:07ee620b8169b67b900f",
+      "title": "Does a GAN Leave Distinct Model-Specific Fingerprints?",
+      "policy_id": "T1",
+      "canonical_identity": {
+        "paper_id": "curated:07ee620b8169b67b900f",
+        "title": "Does a GAN Leave Distinct Model-Specific Fingerprints?",
+        "authors": [
+          "Yuzhen Ding",
+          "Nupur Thakur",
+          "Baoxin Li"
+        ],
+        "doi": "10.5244/c.35.53",
+        "arxiv_id": "",
+        "year": 2021,
+        "venue": "British Machine Vision Conference"
+      },
+      "current_tasks": [
+        "source_attribution"
+      ],
+      "first_pass": {
+        "manifest": "data/raw/corpus_quality_batch_c_wave3b3_2026_10_07/evidence_manifest.json",
+        "source_url": "https://www.bmvc2021-virtualconference.com/assets/papers/0197.pdf",
+        "retrieval_outcome": "UNSAFE_REDIRECT_TO_UNRELATED_DOMAIN_NONRETRYABLE",
+        "scientific_outcome": "EVIDENCE_STILL_INSUFFICIENT",
+        "retried_in_wave5a": false
+      },
+      "second_pass_document_id": "T611-second-pass-primary",
+      "second_pass_source_url": "https://www.bmva.org/bmvc/2021/conference/papers/paper_0197.html",
+      "second_pass_full_paper_url": "https://www.bmva-archive.org.uk/bmvc/2021/assets/papers/0197.pdf",
+      "second_pass_retrieval_outcome": "COMPLETE_PRIMARY_PAPER_RETRIEVED_IDENTITY_MATCHED",
+      "primary_full_papers_obtained": 1,
+      "corpus_change_applied": true,
+      "final_disposition": "REMEDIATION_APPLIED",
+      "paper_identity_verification": {
+        "status": "MATCH",
+        "title": "Rendered PDF page 1 matches the canonical title after capitalization, line-break and typographic-ligature normalization.",
+        "authors": "Yuzhen Ding; Nupur Thakur; Baoxin Li match the canonical author list and rendered PDF page 1.",
+        "work_correspondence": "The official BMVA record explicitly redirects to the same paper path on bmva-archive.org.uk. That record gives the matching title, authors and DOI 10.5244/C.35.53, and directly links PDF 0197.pdf.",
+        "version": "BMVC 2021 main paper, 13 PDF pages (main text pages 1-10; references pages 11-13).",
+        "redirect_assessment": "The official BMVA HTML named the exact same-paper archive destination. Only that related official archive and its explicit Paper link were followed; the old virtual-conference first-pass URL and supplement link were not requested."
+      },
+      "claimed_task": "Extract model-specific GAN fingerprint distributions and investigate their dependence on architecture, initialization, training dataset and transformations.",
+      "evaluated_decision_space": "Section 3 defines representations for groups of GAN-generated images. Sections 5.1-5.2 compare ProGAN, SNGAN, MMDGAN and CramerGAN fingerprints, seen/unseen initialization seeds, and unseen StyleGAN/StarGAN. The metrics are distribution similarity, not an authentic-versus-synthetic decision.",
+      "real_image_role": "CelebA images are bases for the added-sine-wave fingerprint simulation in Section 4. CelebA and LSUN supply underlying GAN datasets in Section 5. These uses do not form a scored authentic-image class in the main-paper experiments.",
+      "authenticity_formulation": "The introduction discusses binary fake-image detection as a related motivation/research line; the paper own formal task in Section 3 is GAN fingerprint representation and source association.",
+      "authenticity_evaluation": {
+        "reported": false,
+        "scope": "No independently formulated and evaluated real-versus-generated task in the complete retrieved main paper.",
+        "evidence": "Tables 1-3 and Sections 5.1-5.2 report Jensen-Shannon divergence/correlation for GAN fingerprints and their changes, without a real-image class, authenticity decision rule or real-versus-generated test metric.",
+        "limitation": "The paper mentions separate supplemental experiments. That supplement was not retrieved, and no claim is made about its unseen contents."
+      },
+      "source_attribution_evaluation": "Tables 1-2 use Jensen-Shannon divergence and correlation to compare fingerprints across GANs and initialization seeds, including unseen GANs/seeds. Table 3 studies transformed generated images; Section 5.2 also examines dataset dependence.",
+      "adjudication": "ATTRIBUTION_ONLY_NO_DETECTION",
+      "evidence_outcome": "EVIDENCE_RESOLVED_CHANGE",
+      "proposed_taxonomy": {
+        "tasks": [
+          "source_attribution"
+        ]
+      },
+      "policy_reason": "The complete main paper supplies positive evidence for source-fingerprint attribution, while its formal task and all main-paper evaluations concern GAN sources rather than authenticity. Introductory motivation and real base/training images do not meet T1. Maintainer accepted removal of detection only; the authoritative task correction is applied.",
+      "confidence": {
+        "identity": "high",
+        "retrieval_and_scientific_evidence": "high",
+        "T1_classification": "high within the reviewed main-paper scope",
+        "reason": "Formal task, experimental class space and all three results tables consistently concern generated-source fingerprints. No unsupported inference is made about the unreviewed supplement."
+      },
+      "evidence_locators": [
+        {
+          "page": 1,
+          "section": "Title, authors and introduction",
+          "finding": "Identity; detection motivation distinguished from paper task."
+        },
+        {
+          "page": 3,
+          "section": "3 Learning to Extract GAN Fingerprints",
+          "finding": "Explicit groups-of-GAN-images representation task."
+        },
+        {
+          "page": 5,
+          "section": "4 Simulation-Based Experiments",
+          "finding": "Real images are simulation bases for added fingerprint patterns."
+        },
+        {
+          "page": 7,
+          "section": "5 and 5.1",
+          "finding": "GANs, generated datasets and experimental setup; supplement boundary."
+        },
+        {
+          "page": 8,
+          "section": "Table 1; Evaluation criteria; 5.2",
+          "finding": "GAN/seed comparator identities and JSD/correlation measures."
+        },
+        {
+          "page": 9,
+          "section": "Table 2; 5.2",
+          "finding": "Unseen seed/GAN comparisons and dataset dependence."
+        },
+        {
+          "page": 10,
+          "section": "Table 3; 5.2; 6 Conclusion",
+          "finding": "Transformations and overall fingerprint contribution; no authenticity metric."
+        }
+      ],
+      "limitations": [
+        "No separate supplement, video, slides, code or third-party copy was retrieved.",
+        "Attribution-only finding is supported by the complete main paper and has been accepted by the maintainer."
+      ],
+      "tasks_before": [
+        "detection",
+        "source_attribution"
+      ],
+      "final_taxonomy": {
+        "tasks": [
+          "source_attribution"
+        ]
+      },
+      "finalized": true,
+      "remediation": "APPLIED"
+    }
+  ],
+  "resolution": {
+    "accounting_basis": "Final maintainer-accepted Wave 5A outcomes; ledger reconciled from Phase 1 plus finalized wave manifests. Exactly one authoritative task correction applied.",
+    "before": {
+      "task_evidence": 7,
+      "institution_evidence": 1,
+      "research_type_evidence": 11,
+      "external_unresolved": 19,
+      "maintainer_T527": 1,
+      "total_unresolved": 20
+    },
+    "scientifically_resolved": 2,
+    "resolved_no_change": [
+      "T576"
+    ],
+    "still_insufficient_in_wave": 0,
+    "remaining_external_ids": [
+      "T236",
+      "T137",
+      "T141",
+      "T572",
+      "T503",
+      "U010",
+      "R117",
+      "R176",
+      "R376",
+      "R455",
+      "R460",
+      "R535",
+      "R537",
+      "R548",
+      "R549",
+      "R580",
+      "R615"
+    ],
+    "after": {
+      "task_evidence": 5,
+      "institution_evidence": 1,
+      "research_type_evidence": 11,
+      "external_unresolved": 17,
+      "maintainer_T527": 1,
+      "total_unresolved": 18
+    },
+    "pending_maintainer_adjudications": [],
+    "authoritative_changes_applied": 1,
+    "resolved_change_applied": [
+      "T611"
+    ]
+  },
+  "unchanged_corpus": {
+    "public": 639,
+    "formal": 531,
+    "mapped": 617,
+    "relationship_rows": 1421,
+    "unique_pairs": 1421
+  },
+  "integrity_expectations": {
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA",
+    "UNEXPECTED_CHANGED": 0,
+    "IGNORED_OPERATIONAL_INPUTS_COMMITTED": 0
+  },
+  "validation_scope": "Focused regression tests and relevant validators, one full-suite run after focused success, and established double-export reproducibility check.",
+  "publication_state": "Wave 5A adjudication validated for the single scoped commit; remote publication is verified separately.",
+  "adjudication_date": "2026-10-09",
+  "additional_retrievals_during_finalization": 0,
+  "adjudication_authority": "Explicit maintainer approval: T576 retention without authoritative change; T611 detection removal only.",
+  "taxonomy_before": {
+    "detection": 590,
+    "source_attribution": 85,
+    "localization": 42,
+    "method": 547,
+    "dataset": 132,
+    "benchmark": 88,
+    "survey": 20,
+    "analysis_study": 78
+  },
+  "taxonomy_after": {
+    "detection": 589,
+    "source_attribution": 85,
+    "localization": 42,
+    "method": 547,
+    "dataset": 132,
+    "benchmark": 88,
+    "survey": 20,
+    "analysis_study": 78
+  },
+  "validation": {
+    "status": "PASSED",
+    "focused": {
+      "passed": 77,
+      "failed": 0,
+      "warnings": 0,
+      "includes_current_detection_total_test": true
+    },
+    "validators": {
+      "curated_database": {
+        "errors": 0,
+        "warnings": 252
+      },
+      "public_map": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "public_papers": {
+        "errors": 0,
+        "warnings": 23
+      },
+      "paper_exclusions": {
+        "errors": 0,
+        "warnings": 2
+      },
+      "key_paper_coverage_check": {
+        "exit_code": 0
+      }
+    },
+    "full_suite": {
+      "runs_in_corrected_environment": 1,
+      "passed": 1680,
+      "failed": 0,
+      "skipped": 0,
+      "subtests_passed": 389,
+      "warnings": 2,
+      "exit_code": 0,
+      "warning_kind": "Two existing PytestReturnNotNoneWarning messages from legacy scope-exclusion tests."
+    },
+    "export": {
+      "first_offline_refresh": "PASSED",
+      "second_offline_refresh": "PASSED",
+      "double_export_check": "PASSED",
+      "reproducibility_verified": true,
+      "EXPORT_REPRODUCIBLE": 1,
+      "tracked_and_visible_untracked_paths_compared": 4408,
+      "changed_paths": [],
+      "output_sha256": {
+        "web/data/public_preview_papers.json": "492874171c7cfc1c653ebe07915dcdb0973d448ed886ca3336a6563be254888b",
+        "web/data/public_preview_map_data.json": "4e3101e023e2d19af5989a9bb5a1cd1ca097133f2d04034a3c0ed825e98515a7",
+        "docs/key_paper_coverage_report.md": "082985cdf059956e379644a004a117aa09e268a9f6ebd1fa17faa98380a4cb52",
+        "data/manual/key_paper_coverage_report.csv": "81e6323ee23ec8d8bf6ad6d2b5681e272981e92fc84a5930e58fd63b6a484fe5",
+        "docs/public_preview_report.md": "fb23ffe38238ce9dee9e1cae41c7db09343853f1d1972c5ca59fa92c725c76f6",
+        "docs/missing_author_mappings_report.md": "53653b0375f07da17aec54c167261ff92d609e315cec75794b56b8613f5ff33f",
+        "data/manual/missing_author_mappings_report.csv": "cef7476e784b1301d1078d673325a3d1f52eb0bde14a90e739be5a9f874224d6"
+      }
+    },
+    "historical_inputs": {
+      "operational_inputs_verified": 104,
+      "test_fixtures_verified": 14,
+      "new_downloads": 0
+    },
+    "integrity": {
+      "UNEXPECTED_CHANGED": 0,
+      "FROZEN_NEURIPS_CHANGED": 0,
+      "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+      "IGNORED_OPERATIONAL_INPUTS_COMMITTED": 0,
+      "excluded_files": 128,
+      "frozen_files": 49
+    },
+    "next_gate": "Final scoped diff review, single Wave 5A commit, safe fast-forward push and remote verification.",
+    "recovery": {
+      "localhost_permission": "AUTHORIZED_EXECUTION_PERMISSION_CONFIRMED",
+      "localhost_previously_failed_tests": {
+        "passed": 42,
+        "failed": 0,
+        "subtests_passed": 42
+      },
+      "node_runtime": "/Users/meilinger/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "node_version": "v24.19.0",
+      "node_previously_failed_tests": {
+        "passed": 13,
+        "failed": 0
+      },
+      "current_detection_count_assertion": "CORRECTED_TO_589_AND_PASSED",
+      "historical_frontend_snapshot": {
+        "status": "REPAIRED_IN_SEPARATELY_PUBLISHED_ANCESTOR",
+        "repair_commit": "2a8c485235a73ee8307be6d8693d8885610d9473",
+        "previously_failing_tests": 4,
+        "current_result": {
+          "passed": 4,
+          "failed": 0
+        },
+        "historical_fixture_changed": false,
+        "frontend_production_changed": false
+      }
+    },
+    "baseline_synchronization": {
+      "before": "114d2e5f352f39f6c3a484e43f3aac593eb7cf64",
+      "published_frontend_repair": "2a8c485235a73ee8307be6d8693d8885610d9473",
+      "method": "git merge --ff-only origin/main",
+      "wave5a_tracked_files_preserved": 13,
+      "wave5a_untracked_files_preserved": 3,
+      "excluded_files_preserved": 128
+    },
+    "preflight": {
+      "historical_snapshot": {
+        "passed": 4,
+        "failed": 0
+      },
+      "frontend": {
+        "passed": 323,
+        "failed": 0,
+        "subtests_passed": 36
+      },
+      "wave5a_focused_and_count": {
+        "passed": 77,
+        "failed": 0
+      },
+      "localhost_smoke": {
+        "passed": 1,
+        "failed": 0,
+        "subtests_passed": 27
+      }
+    },
+    "previous_failed_full_suite": {
+      "runs": 1,
+      "passed": 1563,
+      "failed": 66,
+      "skipped": 59,
+      "subtests_passed": 332,
+      "warnings": 2,
+      "exit_code": 1,
+      "failure_causes": [
+        {
+          "count": 48,
+          "cause": "Sandbox denies localhost socket binding in HTTP endpoint tests (PermissionError: Operation not permitted)."
+        },
+        {
+          "count": 13,
+          "cause": "Node absent from PATH; installed bundled Node exists. Another 59 tests skip for this same runtime-path condition."
+        },
+        {
+          "count": 1,
+          "cause": "tests/baseline_expectations.py still expects detection=590; the accepted T611 correction gives 589."
+        },
+        {
+          "count": 4,
+          "cause": "Historical public-refinement snapshot checks encounter eight frontend/test paths whose bytes already differ at the published baseline; these paths are unchanged by Wave 5A."
+        }
+      ]
+    }
+  }
+}

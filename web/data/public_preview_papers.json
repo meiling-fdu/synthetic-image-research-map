@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-07T05:59:06Z"
+    "public_preview_generated_at": "2026-10-09T01:10:25Z"
   },
   "records": [
     {
@@ -246842,7 +246842,6 @@
         "source": "OpenAlex"
       },
       "tasks": [
-        "detection",
         "source_attribution"
       ],
       "image_scopes": [
@@ -246851,6 +246850,19 @@
       "research_types": [
         "method"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed",
+          "reason": "T1: GAN fingerprint/source comparisons do not establish an evaluated authenticity task; no real-versus-generated decision rule or metric in the reviewed main paper."
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -246864,19 +246876,7 @@
           "location_display": "Arizona, United States"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "title": "EasyDeep: An IoT Friendly Robust Detection Method for GAN Generated Deepfake Images in Social Media",

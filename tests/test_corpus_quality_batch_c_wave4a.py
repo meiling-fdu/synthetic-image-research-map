@@ -37,15 +37,26 @@ def previous_csv(path):
     return list(csv.DictReader(io.StringIO(previous(path).decode("utf-8-sig"), newline="")))
 
 
-def records(path, *, current=True):
-    payload = json.loads((ROOT / path).read_text()) if current else json.loads(previous(path))
+def adjudicated_bytes(path):
+    # Later approved waves can change unrelated rows; keep this historical boundary fixed.
+    return subprocess.check_output(["git", "show", "68b61d6d9a3fdaa919053617ad7b4faf1e94af09:" + path], cwd=ROOT)
+
+
+def adjudicated_csv(path):
+    return list(csv.DictReader(io.StringIO(adjudicated_bytes(path).decode("utf-8-sig"), newline="")))
+
+
+def records(path, *, current=True, adjudicated=False):
+    payload = json.loads(adjudicated_bytes(path)) if adjudicated else (
+        json.loads((ROOT / path).read_text()) if current else json.loads(previous(path))
+    )
     return payload["records"]
 
 
 def test_r099_is_the_only_authoritative_research_type_change():
     for path in ("data/curated/papers.csv", "data/curated/paper_taxonomy.csv"):
         before = {row["paper_id"]: row for row in previous_csv(path)}
-        after = {row["paper_id"]: row for row in csv_rows(path)}
+        after = {row["paper_id"]: row for row in adjudicated_csv(path)}
         assert before.keys() == after.keys()
         assert {paper_id for paper_id in before if before[paper_id] != after[paper_id]} == {R099}
         old, new = before[R099], after[R099]
@@ -83,7 +94,10 @@ def test_r176_r190_and_r455_authoritative_rows_remain_unchanged():
 def test_public_exports_change_only_r099_research_type_evidence():
     for path in ("web/data/public_preview_papers.json", "web/data/public_preview_map_data.json"):
         before_rows = records(path, current=False)
-        after_rows = records(path)
+        after_rows = records(path, adjudicated=True)
+        assert [r for r in records(path) if r.get("paper_id") == R099] == [
+            r for r in after_rows if r.get("paper_id") == R099
+        ]
         assert len(before_rows) == len(after_rows)
         assert [r for r in before_rows if r.get("paper_id") != R099] == [
             r for r in after_rows if r.get("paper_id") != R099
@@ -184,7 +198,7 @@ def test_exact_corpus_and_taxonomy_effect():
     research_types = Counter(
         label for row in context["papers"].values() for label in row["research_types"]
     )
-    assert tasks == {"detection": 590, "source_attribution": 85, "localization": 42}
+    assert tasks == {"detection": 589, "source_attribution": 85, "localization": 42}
     assert research_types == {
         "method": 547,
         "dataset": 132,

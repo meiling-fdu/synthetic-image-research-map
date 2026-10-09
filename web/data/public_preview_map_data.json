@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-07T05:59:06Z"
+    "public_preview_generated_at": "2026-10-09T01:10:25Z"
   },
   "records": [
     {
@@ -119516,7 +119516,6 @@
       "publication_year": 2021,
       "publication_date": "",
       "tasks": [
-        "detection",
         "source_attribution"
       ],
       "image_scopes": [
@@ -119739,7 +119738,8 @@
       "taxonomy_status": "reviewed",
       "taxonomy_review": {
         "tasks": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "T1: GAN fingerprint/source comparisons do not establish an evaluated authenticity task; no real-versus-generated decision rule or metric in the reviewed main paper."
         },
         "image_scopes": {
           "status": "reviewed"
