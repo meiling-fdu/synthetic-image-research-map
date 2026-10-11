@@ -230,4 +230,4 @@ def test_recomputed_corpus_and_taxonomy_change_only_detection_by_one():
     assert old - wave5a == {"detection": 1}
     assert not wave5a - old
     assert current - wave5a == {"localization": 1}
-    assert not wave5a - current
+    assert wave5a - current == {"detection": 2}  # Approved later Wave 5C removals.

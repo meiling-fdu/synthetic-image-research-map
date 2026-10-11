@@ -35,6 +35,29 @@ PUBLISHED_FRONTEND_SUCCESSORS = (
         "web/index.html",
         "web/style.css",
     )),
+    # Published scholarly-explorer successor; pin its four overlapping UI/test
+    # paths to that commit, leaving the older refinement receipts untouched.
+    ("f7e6f721dcca4c992285a86f3fc75706d6d3f091", (
+        "tests/public_feature_freeze_browser.cjs",
+        "tests/test_frontend_country_institution_type_filters.py",
+        "tests/test_frontend_year_range_slider.py",
+        "web/app.js",
+        "web/index.html",
+        "web/style.css",
+    )),
+    # Later published desktop successor; keep each changed historical path
+    # tied to that exact commit instead of reading mutable current bytes.
+    ("ef0d93fa2658c532fff54df2bfaf21fec65f5b57", (
+        "tests/public_accessibility_browser.cjs",
+        "tests/test_frontend_chart_filters.py",
+        "tests/test_frontend_public_labels_layout.py",
+        # result_cards is archived by the pre-gap manifest and stays frozen there.
+        "tests/test_frontend_year_range_slider.py",
+        "web/app.js",
+        "web/index.html",
+        "web/methodology.html",
+        "web/style.css",
+    )),
 )
 
 

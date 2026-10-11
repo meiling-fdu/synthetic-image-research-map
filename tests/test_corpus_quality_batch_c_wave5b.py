@@ -15,6 +15,7 @@ from scripts.validate_corpus_quality_audit import load_context
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "70a0bd330b76a493597c53f6117dcfa18f2a3c4e"
+PUBLISHED_WAVE5B = "805edcc5bbd2fb5c1afda348e900f32f02fcd450"
 T236 = "curated:64635535d7b7b6a12a32"
 T137 = "curated:246f07c81b9f91e527eb"
 T527 = "doi:10.1109/lsp.2024.3388958"
@@ -44,7 +45,7 @@ def action(review_id):
 @pytest.mark.parametrize("path", ["data/curated/papers.csv", "data/curated/paper_taxonomy.csv"])
 def test_exactly_t236_authoritative_task_fields_change_and_csv_bytes_remain_scoped(path):
     old_bytes = previous(path)
-    new_bytes = (ROOT / path).read_bytes()
+    new_bytes = subprocess.check_output(["git", "show", f"{PUBLISHED_WAVE5B}:{path}"], cwd=ROOT)
     old = {r["paper_id"]: r for r in rows(old_bytes)}
     new = {r["paper_id"]: r for r in rows(new_bytes)}
     assert old.keys() == new.keys()
@@ -145,7 +146,7 @@ def test_remaining_ledger_subtracts_the_two_cases_only_once():
 @pytest.mark.parametrize("path", PUBLIC)
 def test_public_exports_change_only_t236_tasks_and_review_provenance(path):
     old = json.loads(previous(path))["records"]
-    new = json.loads((ROOT / path).read_text())["records"]
+    new = json.loads(subprocess.check_output(["git", "show", f"{PUBLISHED_WAVE5B}:{path}"], cwd=ROOT))["records"]
     assert len(old) == len(new)
     assert [x for x in old if x.get("paper_id") != T236] == [x for x in new if x.get("paper_id") != T236]
     a = [x for x in old if x.get("paper_id") == T236]
@@ -170,8 +171,9 @@ def test_corpus_and_taxonomy_counts_recompute_from_current_export():
                                  "unique_paper_institution_pairs": 1421}
     totals = Counter(label for p in context["papers"].values()
                      for key in ("tasks", "research_types") for label in p[key])
-    assert dict(totals) == manifest()["taxonomy_after"] == {
-        "detection": 589, "source_attribution": 85, "localization": 43,
+    assert manifest()["taxonomy_after"]["detection"] == 589  # Published Wave 5B receipt.
+    assert dict(totals) == {
+        "detection": 587, "source_attribution": 85, "localization": 43,
         "method": 547, "dataset": 132, "benchmark": 88,
         "survey": 20, "analysis_study": 78,
     }
@@ -183,4 +185,4 @@ def test_corpus_and_taxonomy_counts_recompute_from_current_export():
     assert len(previous_t527) == 1
     assert context["papers"][T527]["tasks"] == previous_t527[0]["tasks"]
     assert totals - old == {"localization": 1}
-    assert not old - totals
+    assert old - totals == {"detection": 2}  # Later Wave 5C task corrections.
