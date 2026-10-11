@@ -77,7 +77,7 @@ process.stdout.write(JSON.stringify({{firstBounds, defaultSelection, preserved, 
 
     def test_start_end_constraints_and_accessible_range_sync(self):
         sync_start = self.app.index("function syncYearRange")
-        sync_end = self.app.index("\nfunction configureYearRange", sync_start)
+        sync_end = self.app.index("\nfunction syncYearInputs", sync_start)
         sync_source = self.app[sync_start:sync_end]
         payload = self.run_node(f"""
 function clampYear(value, minimum, maximum) {{
@@ -86,6 +86,7 @@ function clampYear(value, minimum, maximum) {{
 function input(value) {{
   return {{value: String(value), attributes: {{}}, setAttribute(name, next) {{ this.attributes[name] = next; }}}};
 }}
+function syncYearInputs() {{}}
 const minYearFilter = input(2025);
 const maxYearFilter = input(2023);
 const sliderStyle = {{values: {{}}, setProperty(name, value) {{ this.values[name] = value; }}}};

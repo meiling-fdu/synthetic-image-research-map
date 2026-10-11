@@ -23,9 +23,13 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20261009-explorer-1">
+    <link rel="stylesheet" href="style.css?v=20261009-desktop-1">
   </head>
   <body>
+    <nav class="desktop-skip-navigation" aria-label="Skip navigation">
+      <a href="#research-map">Skip to Research Map</a>
+      <a href="#paper-results">Skip to Paper Results</a>
+    </nav>
     <header class="site-header">
       <div class="site-header-inner">
       <div class="header-brand">
@@ -202,6 +206,17 @@
                 <span id="year-range-min">—</span>
                 <span id="year-range-max">—</span>
               </div>
+              <div class="desktop-year-controls">
+                <label for="year-start-input">Start
+                  <input id="year-start-input" type="text" inputmode="numeric" maxlength="4"
+                    aria-label="Selected start publication year" aria-describedby="year-input-status" disabled>
+                </label>
+                <label for="year-end-input">End
+                  <input id="year-end-input" type="text" inputmode="numeric" maxlength="4"
+                    aria-label="Selected end publication year" aria-describedby="year-input-status" disabled>
+                </label>
+                <p id="year-input-status" role="status" aria-live="polite" hidden></p>
+              </div>
             </fieldset>
 
             <div class="more-filters">
@@ -277,7 +292,7 @@
       </aside>
 
       <div class="map-column">
-        <section class="map-panel" aria-label="Research Map">
+        <section id="research-map" class="map-panel" aria-label="Research Map" tabindex="-1">
           <div class="map-summary">
             <div class="dataset-overview" aria-label="Filtered data overview" aria-describedby="dataset-statistics-note">
               <dl class="dataset-statistics" aria-live="polite">
@@ -381,7 +396,7 @@
           </div>
         </section>
 
-        <section class="panel results-panel" aria-labelledby="results-heading">
+        <section id="paper-results" class="panel results-panel" aria-labelledby="results-heading" tabindex="-1">
           <div class="results-heading-row">
             <div class="results-heading-group">
               <h2 id="results-heading">Unique Papers</h2>
@@ -541,16 +556,16 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="title_markup.js?v=20261009-explorer-1"></script>
-    <script src="paper_details_helpers.js?v=20261009-explorer-1"></script>
-    <script src="paper_link_helpers.js?v=20261009-explorer-1"></script>
-    <script src="paper_search_helpers.js?v=20261009-explorer-1"></script>
-    <script src="marker_size_helpers.js?v=20261009-explorer-1"></script>
-    <script src="marker_interaction_helpers.js?v=20261009-explorer-1"></script>
-    <script src="public_metadata.js?v=20261009-explorer-1"></script>
-    <script src="institution_type_labels.js?v=20261009-explorer-1"></script>
-    <script src="institution_display.js?v=20261009-explorer-1"></script>
-    <script src="keyword_suggestions.js?v=20261009-explorer-1"></script>
-    <script src="app.js?v=20261009-explorer-1"></script>
+    <script src="title_markup.js?v=20261009-desktop-1"></script>
+    <script src="paper_details_helpers.js?v=20261009-desktop-1"></script>
+    <script src="paper_link_helpers.js?v=20261009-desktop-1"></script>
+    <script src="paper_search_helpers.js?v=20261009-desktop-1"></script>
+    <script src="marker_size_helpers.js?v=20261009-desktop-1"></script>
+    <script src="marker_interaction_helpers.js?v=20261009-desktop-1"></script>
+    <script src="public_metadata.js?v=20261009-desktop-1"></script>
+    <script src="institution_type_labels.js?v=20261009-desktop-1"></script>
+    <script src="institution_display.js?v=20261009-desktop-1"></script>
+    <script src="keyword_suggestions.js?v=20261009-desktop-1"></script>
+    <script src="app.js?v=20261009-desktop-1"></script>
   </body>
 </html>

@@ -58,6 +58,7 @@
 .methodology-skip { position: absolute; top: -100px; left: 16px; padding: 12px; background: var(--paper); }
 .methodology-skip:focus { top: 8px; }
 
+
 * {
   box-sizing: border-box;
 }
@@ -3882,4 +3883,74 @@ footer a {
     height: clamp(320px, 62vw, 360px);
     min-height: 320px;
   }
+}
+
+.desktop-skip-navigation,
+.desktop-year-controls,
+.result-details-action { display: none; }
+
+@media (min-width: 821px) {
+  .desktop-skip-navigation {
+    display: flex;
+    position: fixed;
+    z-index: 2000;
+    top: 8px;
+    left: 12px;
+    gap: 8px;
+    transform: translateY(-160%);
+  }
+
+  .desktop-skip-navigation:focus-within { transform: none; }
+  .desktop-skip-navigation a {
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    padding: 8px 12px;
+    background: var(--paper);
+    color: var(--accent-dark);
+    font-weight: 700;
+  }
+
+  .desktop-year-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 10px;
+    margin-top: 6px;
+  }
+
+  .desktop-year-controls label { margin: 0; font-size: 0.72rem; }
+  .desktop-year-controls input { margin-top: 2px; padding: 5px 8px; font-variant-numeric: tabular-nums; }
+  .desktop-year-controls input[aria-invalid="true"] { border-color: #a1392e; }
+  #year-input-status { grid-column: 1 / -1; margin: 0; font-size: 0.72rem; color: #a1392e; }
+
+  button.result-details-action {
+    display: inline-flex;
+    width: auto;
+    min-height: 28px;
+    margin: 0;
+    border: 1px solid var(--control-line);
+    border-radius: 999px;
+    padding: 4px 8px;
+    background: var(--paper);
+    color: var(--accent-dark);
+    font-size: 0.72rem;
+    font-weight: 750;
+    line-height: 1.5;
+  }
+
+  #research-map:focus-visible,
+  #paper-results:focus-visible,
+  #paper-details-heading:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* The overlap note must not impose its unwrapped width on the task counts. */
+  .header-chart { height: auto; min-height: 96px; }
+  .task-chart .header-chart-content {
+    height: auto;
+    min-height: 60px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(3, minmax(12px, auto)) auto auto;
+  }
+  .task-chart-overlap { white-space: normal; }
 }

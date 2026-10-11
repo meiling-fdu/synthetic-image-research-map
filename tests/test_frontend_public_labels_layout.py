@@ -346,7 +346,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         self.assertIn("Filtered institution records represent paper–institution links", self.html)
         self.assertIn('resultsView === "papers" ? "unique paper" : "institution record"', self.app)
         self.assertEqual(self.app.count('recordLabel: "institution record"'), 2)
-        self.assertIn("No records match the current filters.", self.app)
+        self.assertIn("No unique papers match the current filters.", self.app)
         self.assertIn('aria-label="Research Map"', self.html)
 
     def test_bottom_information_is_one_compact_production_panel(self):

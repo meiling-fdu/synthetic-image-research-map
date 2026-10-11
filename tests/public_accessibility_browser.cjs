@@ -8,7 +8,7 @@ const {chromium} = require('/Users/meilinger/.cache/codex-runtimes/codex-primary
     page.on('pageerror', e=>errors.push(e.message));
     await page.emulateMedia({reducedMotion:'reduce'});
     await page.setViewportSize({width,height:900});
-    await page.goto('http://127.0.0.1:8899');
+    await page.goto(process.env.AUDIT_URL || 'http://127.0.0.1:8899');
     await page.waitForFunction(()=>!document.querySelector('#keyword-filter').disabled);
     const help=page.locator('#map-help summary');
     await help.focus();await help.press('Enter');
@@ -55,10 +55,11 @@ const {chromium} = require('/Users/meilinger/.cache/codex-runtimes/codex-primary
       await page.locator('#open-paper-details').click();
       if(await page.locator('#open-paper-details').getAttribute('aria-expanded')!=='true') throw Error('Details expanded ARIA');
     }
-    await page.locator('#results-list .result-item').first().focus();
+    const resultFocusSelector = width > 820 ? '.result-details-action' : '.result-item';
+    await page.locator('#results-list ' + resultFocusSelector).first().focus();
     await page.evaluate(()=>renderRecords());
     await page.waitForFunction(()=>document.querySelector('#results-list').getAttribute('aria-busy')==='false');
-    if(!await page.evaluate(()=>document.activeElement.classList.contains('result-item'))) throw Error('Result rerender lost focus');
+    if(!await page.evaluate(selector=>document.activeElement.matches(selector), resultFocusSelector)) throw Error('Result rerender lost focus');
     const chartFocus = await page.evaluate(()=>{
       const button=document.querySelector('button[data-chart-filter="tasks"]');
       const value=button.dataset.chartValue;

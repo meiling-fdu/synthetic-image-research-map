@@ -182,7 +182,7 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
         self.assertIn('window.addEventListener("error"', startup)
         self.assertIn('window.addEventListener("unhandledrejection"', startup)
         self.assertIn("Unable to load data.", startup)
-        self.assertIn('"No records match the current filters."', self.app)
+        self.assertIn('"No unique papers match the current filters."', self.app)
         self.assertIn(
             'showDatasetMessage(messages[datasetName], true, true)',
             self.app,

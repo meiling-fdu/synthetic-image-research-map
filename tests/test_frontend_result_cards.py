@@ -132,7 +132,7 @@ process.stdout.write(JSON.stringify({
                 "app.js",
             )
         }
-        self.assertEqual(set(versions.values()), {"20261009-explorer-1"})
+        self.assertEqual(set(versions.values()), {"20261009-desktop-1"})
 
     def test_unique_paper_bibliography_precedes_institutions(self):
         paper = self.function("paperResultContent", "setResultsLayoutPending")

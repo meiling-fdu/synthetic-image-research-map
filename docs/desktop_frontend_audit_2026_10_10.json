@@ -1,0 +1,4150 @@
+{
+  "auditDate": "2026-10-10",
+  "finalizedAtUtc": "2026-10-10T16:05:41.960527+00:00",
+  "scope": "Desktop-only; existing mobile behavior preserved; no commit, push, or deployment",
+  "head": "f7e6f721dcca4c992285a86f3fc75706d6d3f091",
+  "originMainObserved": "805edcc5bbd2fb5c1afda348e900f32f02fcd450",
+  "mainAheadBehind": "0\t1",
+  "browserAudit": {
+    "matrix": [
+      {
+        "width": 1024,
+        "zoom": 1,
+        "cssWidth": 1024,
+        "cssHeight": 900,
+        "dpr": 1,
+        "mobile": false,
+        "header": 153.328125,
+        "filterTop": 154,
+        "overflow": false,
+        "mapWidth": 721,
+        "clippedCharts": []
+      },
+      {
+        "width": 1024,
+        "zoom": 1.25,
+        "cssWidth": 819,
+        "cssHeight": 720,
+        "dpr": 1.25,
+        "mobile": true,
+        "header": 223.3125,
+        "filterTop": 0,
+        "overflow": false,
+        "mapWidth": 771.2000122070312,
+        "clippedCharts": [
+          "header-chart task-chart",
+          "header-chart institution-chart",
+          "header-chart year-chart"
+        ]
+      },
+      {
+        "width": 1024,
+        "zoom": 1.5,
+        "cssWidth": 683,
+        "cssHeight": 600,
+        "dpr": 1.5,
+        "mobile": true,
+        "header": 223.03125,
+        "filterTop": 0,
+        "overflow": false,
+        "mapWidth": 634.6666870117188,
+        "clippedCharts": [
+          "header-chart task-chart",
+          "header-chart institution-chart",
+          "header-chart year-chart"
+        ]
+      },
+      {
+        "width": 1200,
+        "zoom": 1,
+        "cssWidth": 1200,
+        "cssHeight": 900,
+        "dpr": 1,
+        "mobile": false,
+        "header": 173.171875,
+        "filterTop": 174,
+        "overflow": false,
+        "mapWidth": 897,
+        "clippedCharts": []
+      },
+      {
+        "width": 1200,
+        "zoom": 1.25,
+        "cssWidth": 960,
+        "cssHeight": 720,
+        "dpr": 1.25,
+        "mobile": false,
+        "header": 168.5500030517578,
+        "filterTop": 169,
+        "overflow": false,
+        "mapWidth": 657,
+        "clippedCharts": []
+      },
+      {
+        "width": 1200,
+        "zoom": 1.5,
+        "cssWidth": 800,
+        "cssHeight": 600,
+        "dpr": 1.5,
+        "mobile": true,
+        "header": 223.03125,
+        "filterTop": 0,
+        "overflow": false,
+        "mapWidth": 752,
+        "clippedCharts": [
+          "header-chart task-chart",
+          "header-chart institution-chart",
+          "header-chart year-chart"
+        ]
+      },
+      {
+        "width": 1280,
+        "zoom": 1,
+        "cssWidth": 1280,
+        "cssHeight": 900,
+        "dpr": 1,
+        "mobile": false,
+        "header": 159.71875,
+        "filterTop": 160,
+        "overflow": false,
+        "mapWidth": 977,
+        "clippedCharts": []
+      },
+      {
+        "width": 1280,
+        "zoom": 1.25,
+        "cssWidth": 1024,
+        "cssHeight": 720,
+        "dpr": 1.25,
+        "mobile": false,
+        "header": 152.71250915527344,
+        "filterTop": 153,
+        "overflow": false,
+        "mapWidth": 721,
+        "clippedCharts": []
+      },
+      {
+        "width": 1280,
+        "zoom": 1.5,
+        "cssWidth": 853,
+        "cssHeight": 600,
+        "dpr": 1.5,
+        "mobile": false,
+        "header": 178.02084350585938,
+        "filterTop": 179,
+        "overflow": false,
+        "mapWidth": 550.3333740234375,
+        "clippedCharts": []
+      },
+      {
+        "width": 1440,
+        "zoom": 1,
+        "cssWidth": 1440,
+        "cssHeight": 900,
+        "dpr": 1,
+        "mobile": false,
+        "header": 159.71875,
+        "filterTop": 160,
+        "overflow": false,
+        "mapWidth": 1137,
+        "clippedCharts": []
+      },
+      {
+        "width": 1440,
+        "zoom": 1.25,
+        "cssWidth": 1152,
+        "cssHeight": 720,
+        "dpr": 1.25,
+        "mobile": false,
+        "header": 146.6374969482422,
+        "filterTop": 147,
+        "overflow": false,
+        "mapWidth": 849,
+        "clippedCharts": []
+      },
+      {
+        "width": 1440,
+        "zoom": 1.5,
+        "cssWidth": 960,
+        "cssHeight": 600,
+        "dpr": 1.5,
+        "mobile": false,
+        "header": 168.1666717529297,
+        "filterTop": 169,
+        "overflow": false,
+        "mapWidth": 657,
+        "clippedCharts": []
+      },
+      {
+        "width": 1920,
+        "zoom": 1,
+        "cssWidth": 1920,
+        "cssHeight": 900,
+        "dpr": 1,
+        "mobile": false,
+        "header": 159.71875,
+        "filterTop": 160,
+        "overflow": false,
+        "mapWidth": 1613,
+        "clippedCharts": []
+      },
+      {
+        "width": 1920,
+        "zoom": 1.25,
+        "cssWidth": 1536,
+        "cssHeight": 720,
+        "dpr": 1.25,
+        "mobile": false,
+        "header": 159.3249969482422,
+        "filterTop": 160,
+        "overflow": false,
+        "mapWidth": 1233,
+        "clippedCharts": []
+      },
+      {
+        "width": 1920,
+        "zoom": 1.5,
+        "cssWidth": 1280,
+        "cssHeight": 600,
+        "dpr": 1.5,
+        "mobile": false,
+        "header": 159.05209350585938,
+        "filterTop": 160,
+        "overflow": false,
+        "mapWidth": 977,
+        "clippedCharts": []
+      }
+    ],
+    "workflows": [
+      "Year drafts, invalid input, slider keyboard, chart, back/forward",
+      "Recent Source Attribution",
+      "Benchmark + Publication Year",
+      "University search, Details, external paper link opens separately",
+      "Copy filtered deep link and restore selection, ordering, CSV and facets",
+      "Institution control → marker papers → paper → Back to institution",
+      "Real unmapped paper, both views, accurate empty-map message",
+      "Whole-card selection; independent nested controls",
+      "Downloaded papers CSV matches the authoritative export bytes (42980 bytes)",
+      "Downloaded institutions CSV matches the authoritative export bytes (73044 bytes)",
+      "Paper-data HTTP failure stays distinct from zero results"
+    ],
+    "contracts": [
+      {
+        "query": "?view=papers",
+        "rows": 639,
+        "csvBytes": 465267,
+        "sha256": "e54c53c5a1a7360aa3ff0f92ac6899403db1d538d748bb32d7d3b44545de03ea"
+      },
+      {
+        "query": "?view=institutions",
+        "rows": 1421,
+        "csvBytes": 877017,
+        "sha256": "cb7b8b1cc91cea0e4ef472a81c15bf2672c189aa86198a8b746f83fe90474ac6"
+      },
+      {
+        "query": "?tasks=source_attribution&year_start=2024&view=papers",
+        "rows": 61,
+        "csvBytes": 42980,
+        "sha256": "22d6fa1fe617ed6b24b3e96d3b0070cefb01b675992fa8a426d2cf2019f97628"
+      },
+      {
+        "query": "?tasks=source_attribution&year_start=2024&view=institutions",
+        "rows": 118,
+        "csvBytes": 73044,
+        "sha256": "1fbef2d38be6c7b33c77728d7b19e2f20fab22daec95450f97d627c1c0cad9ea"
+      },
+      {
+        "query": "?research_types=benchmark&year_start=2023&view=papers",
+        "rows": 86,
+        "csvBytes": 70894,
+        "sha256": "d610638505e8661f67cbff6090b37fbc5c0b8d7cb5ac7fbdf17f0781c6b10779"
+      },
+      {
+        "query": "?research_types=benchmark&year_start=2023&view=institutions",
+        "rows": 245,
+        "csvBytes": 166290,
+        "sha256": "640abf04e3488059ec751b91f07c610cfb0fd444b295b82fc4da329fb0254633"
+      },
+      {
+        "query": "?keyword=Tsinghua%20University&view=papers",
+        "rows": 19,
+        "csvBytes": 16743,
+        "sha256": "1279ef4253179a76823548570872ff14145af018049625239364936844c5f9d4"
+      },
+      {
+        "query": "?keyword=Tsinghua%20University&view=institutions",
+        "rows": 19,
+        "csvBytes": 12480,
+        "sha256": "f2e043b0763eb65bf60c28c4604da8970156a4688594094a8674517a1a104e83"
+      },
+      {
+        "query": "?keyword=ImageTrust%3A%20Multi-Backbone%20Fusion%20for%20AI-Generated%20Image%20Detection%20with%20Calibrated%20Uncertainty&view=papers",
+        "rows": 1,
+        "csvBytes": 1035,
+        "sha256": "838c3b3a75c7b1917808b3f9b1c4f3706d90f1123fc31573e83a684a861472a1"
+      },
+      {
+        "query": "?keyword=ImageTrust%3A%20Multi-Backbone%20Fusion%20for%20AI-Generated%20Image%20Detection%20with%20Calibrated%20Uncertainty&view=institutions",
+        "rows": 0,
+        "csvBytes": 407,
+        "sha256": "aa6aa85a2c732e19976961693e565f22c6810e2ae1f3da999f06971596380fc9"
+      },
+      {
+        "query": "?country=Italy&published_only=published-only&view=papers",
+        "rows": 63,
+        "csvBytes": 46984,
+        "sha256": "b68b0547ce39ada557906955c7ca236df1256f3acbcdd34f7912b2da49274e8d"
+      },
+      {
+        "query": "?country=Italy&published_only=published-only&view=institutions",
+        "rows": 91,
+        "csvBytes": 59566,
+        "sha256": "2acf1a599b42f598c3f66911edda8e01d1d2d365cb94e4d483ab8e3d5acf373d"
+      },
+      {
+        "query": "?tasks=detection,localization&image_scopes=fully_generated&view=papers",
+        "rows": 525,
+        "csvBytes": 384261,
+        "sha256": "3b682fabb85cfae75772331000890d39db7d71529068afdba2d709c152535ed2"
+      },
+      {
+        "query": "?tasks=detection,localization&image_scopes=fully_generated&view=institutions",
+        "rows": 1189,
+        "csvBytes": 734327,
+        "sha256": "1eb8557b979fc0733ef2beb191dd291922ef762a359baac5e2b10b40be05c89f"
+      },
+      {
+        "query": "?keyword=diffusion&sort=title-asc&view=papers",
+        "rows": 191,
+        "csvBytes": 139807,
+        "sha256": "5da76104564d05846cfc371a82664aba756811955696a4d0747fc740a3c9bd70"
+      },
+      {
+        "query": "?keyword=diffusion&sort=title-asc&view=institutions",
+        "rows": 407,
+        "csvBytes": 258346,
+        "sha256": "13954b33a76e04e3b3886d3714056af86a4f4e04159bbf6af14f9d2655a79d07"
+      },
+      {
+        "query": "?keyword=__no_such_paper_audit__&view=papers",
+        "rows": 0,
+        "csvBytes": 421,
+        "sha256": "a6a0e09de3d222c5e66cc95b7c475081c988bda36422d0e666ddafb7f86c830e"
+      },
+      {
+        "query": "?keyword=__no_such_paper_audit__&view=institutions",
+        "rows": 0,
+        "csvBytes": 407,
+        "sha256": "aa6aa85a2c732e19976961693e565f22c6810e2ae1f3da999f06971596380fc9"
+      }
+    ],
+    "mobile": [
+      {
+        "width": 390,
+        "geometryIdentical": true,
+        "drawerKeyboard": true
+      },
+      {
+        "width": 683,
+        "geometryIdentical": true,
+        "drawerKeyboard": true
+      },
+      {
+        "width": 800,
+        "geometryIdentical": true,
+        "drawerKeyboard": true
+      },
+      {
+        "width": 820,
+        "geometryIdentical": true,
+        "drawerKeyboard": true
+      }
+    ],
+    "errors": [],
+    "browser": "153.0.8010.53",
+    "loadedDataSha256": "0eff38e58bdcd2bbe7c09a6cdf9950f2cb28de01eb66bd8187656c963db845b1",
+    "result": "PASS"
+  },
+  "performance": {
+    "isolated-baseline": {
+      "browser": "153.0.8010.53",
+      "runs": [
+        {
+          "temperature": "cold",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19867801,
+                  "ms": 42.39999985694885
+                },
+                {
+                  "characters": 8824747,
+                  "ms": 19.700000047683716
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0.20000004768371582,
+                  "calls": 2,
+                  "max": 0.20000004768371582
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 38.59999871253967,
+                  "calls": 14742,
+                  "max": 1.9000000953674316
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 62.40000009536743,
+                  "calls": 1,
+                  "max": 62.40000009536743
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 79.99999833106995,
+                  "calls": 20600,
+                  "max": 1.2000000476837158
+                },
+                "createResultItem": {
+                  "ms": 17.59999990463257,
+                  "calls": 18,
+                  "max": 8
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 24.700000047683716,
+                  "calls": 1,
+                  "max": 24.700000047683716
+                },
+                "renderResults": {
+                  "ms": 33,
+                  "calls": 1,
+                  "max": 33
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 279.40000009536743,
+                  "calls": 1,
+                  "max": 279.40000009536743
+                },
+                "displayDataset": {
+                  "ms": 363.7000000476837,
+                  "calls": 1,
+                  "max": 363.7000000476837
+                },
+                "measureMasonryItems": {
+                  "ms": 3.0999999046325684,
+                  "calls": 1,
+                  "max": 3.0999999046325684
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 1542.7999999523163,
+                  "duration": 59
+                },
+                {
+                  "start": 1635.5,
+                  "duration": 390
+                }
+              ],
+              "errors": [],
+              "mapReady": 2025.9000000953674,
+              "mapPaint": 2049
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 1434.2999999523163,
+                "ms": 48.5,
+                "protocol": "http/1.0",
+                "transfer": 19872556,
+                "encoded": 19872256,
+                "decoded": 19872256
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 1602.2000000476837,
+                "ms": 12.200000047683716,
+                "protocol": "http/1.0",
+                "transfer": 8827903,
+                "encoded": 8827603,
+                "decoded": 8827603
+              }
+            ],
+            "memory": {
+              "used": 72738182,
+              "total": 130368698
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 169.70000004768372,
+          "searchInputToTwoFramesMs": 287.7999999523163,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0.20000004768371582,
+                "calls": 2,
+                "max": 0.20000004768371582
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 56.999998331069946,
+                "calls": 28054,
+                "max": 1.9000000953674316
+              },
+              "canonicalizePublicDataset": {
+                "ms": 62.40000009536743,
+                "calls": 1,
+                "max": 62.40000009536743
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 397.69999861717224,
+                "calls": 61800,
+                "max": 1.2000000476837158
+              },
+              "createResultItem": {
+                "ms": 22.5,
+                "calls": 40,
+                "max": 8
+              },
+              "prepareFirstResultViewport": {
+                "ms": 32.799999952316284,
+                "calls": 3,
+                "max": 24.700000047683716
+              },
+              "renderResults": {
+                "ms": 42.299999713897705,
+                "calls": 3,
+                "max": 33
+              },
+              "renderRecordsForGeneration": {
+                "ms": 698.8999998569489,
+                "calls": 3,
+                "max": 279.40000009536743
+              },
+              "displayDataset": {
+                "ms": 363.7000000476837,
+                "calls": 1,
+                "max": 363.7000000476837
+              },
+              "measureMasonryItems": {
+                "ms": 5.299999952316284,
+                "calls": 3,
+                "max": 3.0999999046325684
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 1542.7999999523163,
+                "duration": 59
+              },
+              {
+                "start": 1635.5,
+                "duration": 390
+              },
+              {
+                "start": 3562.9000000953674,
+                "duration": 154
+              },
+              {
+                "start": 4093.2999999523163,
+                "duration": 270
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "temperature": "warm",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19867801,
+                  "ms": 36.90000009536743
+                },
+                {
+                  "characters": 8824747,
+                  "ms": 19.399999856948853
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0.09999990463256836,
+                  "calls": 2,
+                  "max": 0.09999990463256836
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 33.49999976158142,
+                  "calls": 14742,
+                  "max": 1.7000000476837158
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 56,
+                  "calls": 1,
+                  "max": 56
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 75.10000014305115,
+                  "calls": 20600,
+                  "max": 1.3999998569488525
+                },
+                "createResultItem": {
+                  "ms": 4.799999952316284,
+                  "calls": 18,
+                  "max": 0.7000000476837158
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 9.400000095367432,
+                  "calls": 1,
+                  "max": 9.400000095367432
+                },
+                "renderResults": {
+                  "ms": 15.700000047683716,
+                  "calls": 1,
+                  "max": 15.700000047683716
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 237.20000004768372,
+                  "calls": 1,
+                  "max": 237.20000004768372
+                },
+                "displayDataset": {
+                  "ms": 300.5,
+                  "calls": 1,
+                  "max": 300.5
+                },
+                "measureMasonryItems": {
+                  "ms": 2.1999998092651367,
+                  "calls": 1,
+                  "max": 2.1999998092651367
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 121.89999985694885,
+                  "duration": 50
+                },
+                {
+                  "start": 203.89999985694885,
+                  "duration": 326
+                }
+              ],
+              "errors": [],
+              "mapReady": 530.5999999046326,
+              "mapPaint": 546
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 34.39999985694885,
+                "ms": 30.299999952316284,
+                "protocol": "http/1.0",
+                "transfer": 19872556,
+                "encoded": 19872256,
+                "decoded": 19872256
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 172.69999980926514,
+                "ms": 12.300000190734863,
+                "protocol": "http/1.0",
+                "transfer": 8827903,
+                "encoded": 8827603,
+                "decoded": 8827603
+              }
+            ],
+            "memory": {
+              "used": 50095147,
+              "total": 124334051
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 164.39999985694885,
+          "searchInputToTwoFramesMs": 239,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0.09999990463256836,
+                "calls": 2,
+                "max": 0.09999990463256836
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 53.59999895095825,
+                "calls": 28054,
+                "max": 1.7000000476837158
+              },
+              "canonicalizePublicDataset": {
+                "ms": 56,
+                "calls": 1,
+                "max": 56
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 361.2999973297119,
+                "calls": 61800,
+                "max": 3.9000000953674316
+              },
+              "createResultItem": {
+                "ms": 9.399999856948853,
+                "calls": 40,
+                "max": 0.7000000476837158
+              },
+              "prepareFirstResultViewport": {
+                "ms": 15.800000190734863,
+                "calls": 3,
+                "max": 9.400000095367432
+              },
+              "renderResults": {
+                "ms": 23.200000047683716,
+                "calls": 3,
+                "max": 15.700000047683716
+              },
+              "renderRecordsForGeneration": {
+                "ms": 617.9000000953674,
+                "calls": 3,
+                "max": 237.20000004768372
+              },
+              "displayDataset": {
+                "ms": 300.5,
+                "calls": 1,
+                "max": 300.5
+              },
+              "measureMasonryItems": {
+                "ms": 4.099999666213989,
+                "calls": 3,
+                "max": 2.1999998092651367
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 121.89999985694885,
+                "duration": 50
+              },
+              {
+                "start": 203.89999985694885,
+                "duration": 326
+              },
+              {
+                "start": 1055.7999999523163,
+                "duration": 149
+              },
+              {
+                "start": 1577.3999998569489,
+                "duration": 235
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "temperature": "warm",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19867801,
+                  "ms": 36.5
+                },
+                {
+                  "characters": 8824747,
+                  "ms": 19.09999990463257
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0,
+                  "calls": 2,
+                  "max": 0
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 30.00000023841858,
+                  "calls": 14742,
+                  "max": 0.10000014305114746
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 52.59999990463257,
+                  "calls": 1,
+                  "max": 52.59999990463257
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 72.70000076293945,
+                  "calls": 20600,
+                  "max": 0.10000014305114746
+                },
+                "createResultItem": {
+                  "ms": 4.8999998569488525,
+                  "calls": 18,
+                  "max": 0.7999999523162842
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 9.400000095367432,
+                  "calls": 1,
+                  "max": 9.400000095367432
+                },
+                "renderResults": {
+                  "ms": 17.700000047683716,
+                  "calls": 1,
+                  "max": 17.700000047683716
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 235.90000009536743,
+                  "calls": 1,
+                  "max": 235.90000009536743
+                },
+                "displayDataset": {
+                  "ms": 295.2000000476837,
+                  "calls": 1,
+                  "max": 295.2000000476837
+                },
+                "measureMasonryItems": {
+                  "ms": 2.299999952316284,
+                  "calls": 1,
+                  "max": 2.299999952316284
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 189.59999990463257,
+                  "duration": 320
+                }
+              ],
+              "errors": [],
+              "mapReady": 509.7000000476837,
+              "mapPaint": 524.3999998569489
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 31.399999856948853,
+                "ms": 28.800000190734863,
+                "protocol": "http/1.0",
+                "transfer": 19872556,
+                "encoded": 19872256,
+                "decoded": 19872256
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 162.89999985694885,
+                "ms": 9.700000047683716,
+                "protocol": "http/1.0",
+                "transfer": 8827903,
+                "encoded": 8827603,
+                "decoded": 8827603
+              }
+            ],
+            "memory": {
+              "used": 55898298,
+              "total": 128084162
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 161.20000004768372,
+          "searchInputToTwoFramesMs": 235.89999985694885,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0,
+                "calls": 2,
+                "max": 0
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 53.999999046325684,
+                "calls": 28054,
+                "max": 2.700000047683716
+              },
+              "canonicalizePublicDataset": {
+                "ms": 52.59999990463257,
+                "calls": 1,
+                "max": 52.59999990463257
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 351.6999981403351,
+                "calls": 61800,
+                "max": 2
+              },
+              "createResultItem": {
+                "ms": 9.499999761581421,
+                "calls": 40,
+                "max": 0.7999999523162842
+              },
+              "prepareFirstResultViewport": {
+                "ms": 15.799999952316284,
+                "calls": 3,
+                "max": 9.400000095367432
+              },
+              "renderResults": {
+                "ms": 25.299999952316284,
+                "calls": 3,
+                "max": 17.700000047683716
+              },
+              "renderRecordsForGeneration": {
+                "ms": 612,
+                "calls": 3,
+                "max": 235.90000009536743
+              },
+              "displayDataset": {
+                "ms": 295.2000000476837,
+                "calls": 1,
+                "max": 295.2000000476837
+              },
+              "measureMasonryItems": {
+                "ms": 4.200000047683716,
+                "calls": 3,
+                "max": 2.299999952316284
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 189.59999990463257,
+                "duration": 320
+              },
+              {
+                "start": 1037.3999998569489,
+                "duration": 147
+              },
+              {
+                "start": 1553.5999999046326,
+                "duration": 233
+              }
+            ],
+            "errors": []
+          }
+        }
+      ]
+    },
+    "isolated-candidate": {
+      "browser": "153.0.8010.53",
+      "runs": [
+        {
+          "temperature": "cold",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19867801,
+                  "ms": 41.40000009536743
+                },
+                {
+                  "characters": 8824747,
+                  "ms": 19.40000009536743
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0.09999990463256836,
+                  "calls": 2,
+                  "max": 0.09999990463256836
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 35.39999842643738,
+                  "calls": 14742,
+                  "max": 2.200000047683716
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 58.799999952316284,
+                  "calls": 1,
+                  "max": 58.799999952316284
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 78.4999988079071,
+                  "calls": 20600,
+                  "max": 1.2000000476837158
+                },
+                "createResultItem": {
+                  "ms": 10,
+                  "calls": 18,
+                  "max": 2.1999998092651367
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 16.200000047683716,
+                  "calls": 1,
+                  "max": 16.200000047683716
+                },
+                "renderResults": {
+                  "ms": 24.59999990463257,
+                  "calls": 1,
+                  "max": 24.59999990463257
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 258.7000000476837,
+                  "calls": 1,
+                  "max": 258.7000000476837
+                },
+                "displayDataset": {
+                  "ms": 337.7000000476837,
+                  "calls": 1,
+                  "max": 337.7000000476837
+                },
+                "measureMasonryItems": {
+                  "ms": 3.700000047683716,
+                  "calls": 1,
+                  "max": 3.700000047683716
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 2004.8999998569489,
+                  "duration": 419
+                }
+              ],
+              "errors": [],
+              "mapReady": 2424,
+              "mapPaint": 2455.2999999523163
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 1907.8999998569489,
+                "ms": 56.40000009536743,
+                "protocol": "http/1.0",
+                "transfer": 19872556,
+                "encoded": 19872256,
+                "decoded": 19872256
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 1908,
+                "ms": 38.09999990463257,
+                "protocol": "http/1.0",
+                "transfer": 8827903,
+                "encoded": 8827603,
+                "decoded": 8827603
+              }
+            ],
+            "memory": {
+              "used": 62406176,
+              "total": 122862476
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 176.5,
+          "searchInputToTwoFramesMs": 227.40000009536743,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0.09999990463256836,
+                "calls": 2,
+                "max": 0.09999990463256836
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 57.299999952316284,
+                "calls": 28054,
+                "max": 2.200000047683716
+              },
+              "canonicalizePublicDataset": {
+                "ms": 58.799999952316284,
+                "calls": 1,
+                "max": 58.799999952316284
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 358.69999742507935,
+                "calls": 61800,
+                "max": 2.9000000953674316
+              },
+              "createResultItem": {
+                "ms": 14.900000095367432,
+                "calls": 40,
+                "max": 2.1999998092651367
+              },
+              "prepareFirstResultViewport": {
+                "ms": 24.59999990463257,
+                "calls": 3,
+                "max": 16.200000047683716
+              },
+              "renderResults": {
+                "ms": 34.19999980926514,
+                "calls": 3,
+                "max": 24.59999990463257
+              },
+              "renderRecordsForGeneration": {
+                "ms": 639.1999998092651,
+                "calls": 3,
+                "max": 258.7000000476837
+              },
+              "displayDataset": {
+                "ms": 337.7000000476837,
+                "calls": 1,
+                "max": 337.7000000476837
+              },
+              "measureMasonryItems": {
+                "ms": 5.8999998569488525,
+                "calls": 3,
+                "max": 3.700000047683716
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 2004.8999998569489,
+                "duration": 419
+              },
+              {
+                "start": 4153.700000047684,
+                "duration": 160
+              },
+              {
+                "start": 4686,
+                "duration": 225
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "temperature": "warm",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19867801,
+                  "ms": 36.200000047683716
+                },
+                {
+                  "characters": 8824747,
+                  "ms": 19.200000047683716
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0,
+                  "calls": 2,
+                  "max": 0
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 32.69999933242798,
+                  "calls": 14742,
+                  "max": 0.10000014305114746
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 55.59999990463257,
+                  "calls": 1,
+                  "max": 55.59999990463257
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 74.80000042915344,
+                  "calls": 20600,
+                  "max": 0.5
+                },
+                "createResultItem": {
+                  "ms": 4.900000095367432,
+                  "calls": 18,
+                  "max": 0.7000000476837158
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 9.400000095367432,
+                  "calls": 1,
+                  "max": 9.400000095367432
+                },
+                "renderResults": {
+                  "ms": 17.200000047683716,
+                  "calls": 1,
+                  "max": 17.200000047683716
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 236,
+                  "calls": 1,
+                  "max": 236
+                },
+                "displayDataset": {
+                  "ms": 301,
+                  "calls": 1,
+                  "max": 301
+                },
+                "measureMasonryItems": {
+                  "ms": 2.4000000953674316,
+                  "calls": 1,
+                  "max": 2.4000000953674316
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 199.20000004768372,
+                  "duration": 326
+                }
+              ],
+              "errors": [],
+              "mapReady": 525.2999999523163,
+              "mapPaint": 541.7000000476837
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 33.299999952316284,
+                "ms": 44.200000047683716,
+                "protocol": "http/1.0",
+                "transfer": 19872556,
+                "encoded": 19872256,
+                "decoded": 19872256
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 33.59999990463257,
+                "ms": 92.70000004768372,
+                "protocol": "http/1.0",
+                "transfer": 8827903,
+                "encoded": 8827603,
+                "decoded": 8827603
+              }
+            ],
+            "memory": {
+              "used": 50169297,
+              "total": 121458161
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 163.29999995231628,
+          "searchInputToTwoFramesMs": 219.90000009536743,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0,
+                "calls": 2,
+                "max": 0
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 53.200000524520874,
+                "calls": 28054,
+                "max": 0.7000000476837158
+              },
+              "canonicalizePublicDataset": {
+                "ms": 55.59999990463257,
+                "calls": 1,
+                "max": 55.59999990463257
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 336.19999980926514,
+                "calls": 61800,
+                "max": 0.5999999046325684
+              },
+              "createResultItem": {
+                "ms": 10.5,
+                "calls": 40,
+                "max": 0.7999999523162842
+              },
+              "prepareFirstResultViewport": {
+                "ms": 17.700000047683716,
+                "calls": 3,
+                "max": 9.400000095367432
+              },
+              "renderResults": {
+                "ms": 26.700000047683716,
+                "calls": 3,
+                "max": 17.200000047683716
+              },
+              "renderRecordsForGeneration": {
+                "ms": 597.9000000953674,
+                "calls": 3,
+                "max": 236
+              },
+              "displayDataset": {
+                "ms": 301,
+                "calls": 1,
+                "max": 301
+              },
+              "measureMasonryItems": {
+                "ms": 4.5,
+                "calls": 3,
+                "max": 2.4000000953674316
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 199.20000004768372,
+                "duration": 326
+              },
+              {
+                "start": 1051.2999999523163,
+                "duration": 148
+              },
+              {
+                "start": 1569.5,
+                "duration": 218
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "temperature": "warm",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19867801,
+                  "ms": 36.40000009536743
+                },
+                {
+                  "characters": 8824747,
+                  "ms": 19.100000143051147
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0.19999980926513672,
+                  "calls": 2,
+                  "max": 0.09999990463256836
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 31.800000190734863,
+                  "calls": 14742,
+                  "max": 0.10000014305114746
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 52.60000014305115,
+                  "calls": 1,
+                  "max": 52.60000014305115
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 73.00000095367432,
+                  "calls": 20600,
+                  "max": 0.5
+                },
+                "createResultItem": {
+                  "ms": 4.700000047683716,
+                  "calls": 18,
+                  "max": 0.7999999523162842
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 9.299999952316284,
+                  "calls": 1,
+                  "max": 9.299999952316284
+                },
+                "renderResults": {
+                  "ms": 16.799999952316284,
+                  "calls": 1,
+                  "max": 16.799999952316284
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 236.5,
+                  "calls": 1,
+                  "max": 236.5
+                },
+                "displayDataset": {
+                  "ms": 295.80000019073486,
+                  "calls": 1,
+                  "max": 295.80000019073486
+                },
+                "measureMasonryItems": {
+                  "ms": 2.299999952316284,
+                  "calls": 1,
+                  "max": 2.299999952316284
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 191.59999990463257,
+                  "duration": 320
+                }
+              ],
+              "errors": [],
+              "mapReady": 512.2000000476837,
+              "mapPaint": 527.2000000476837
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 31,
+                "ms": 32.200000047683716,
+                "protocol": "http/1.0",
+                "transfer": 19872556,
+                "encoded": 19872256,
+                "decoded": 19872256
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 31.09999990463257,
+                "ms": 89.90000009536743,
+                "protocol": "http/1.0",
+                "transfer": 8827903,
+                "encoded": 8827603,
+                "decoded": 8827603
+              }
+            ],
+            "memory": {
+              "used": 57149716,
+              "total": 124702736
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 162.29999995231628,
+          "searchInputToTwoFramesMs": 256.69999980926514,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0.19999980926513672,
+                "calls": 2,
+                "max": 0.09999990463256836
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 49.70000219345093,
+                "calls": 28054,
+                "max": 0.10000014305114746
+              },
+              "canonicalizePublicDataset": {
+                "ms": 52.60000014305115,
+                "calls": 1,
+                "max": 52.60000014305115
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 376.20000314712524,
+                "calls": 61800,
+                "max": 3.799999952316284
+              },
+              "createResultItem": {
+                "ms": 9.700000047683716,
+                "calls": 40,
+                "max": 0.7999999523162842
+              },
+              "prepareFirstResultViewport": {
+                "ms": 16.90000009536743,
+                "calls": 3,
+                "max": 9.299999952316284
+              },
+              "renderResults": {
+                "ms": 25.5,
+                "calls": 3,
+                "max": 16.799999952316284
+              },
+              "renderRecordsForGeneration": {
+                "ms": 632.8000001907349,
+                "calls": 3,
+                "max": 249
+              },
+              "displayDataset": {
+                "ms": 295.80000019073486,
+                "calls": 1,
+                "max": 295.80000019073486
+              },
+              "measureMasonryItems": {
+                "ms": 4.299999952316284,
+                "calls": 3,
+                "max": 2.299999952316284
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 191.59999990463257,
+                "duration": 320
+              },
+              {
+                "start": 1044.8999998569489,
+                "duration": 147
+              },
+              {
+                "start": 1566.5,
+                "duration": 253
+              }
+            ],
+            "errors": []
+          }
+        }
+      ]
+    },
+    "published": {
+      "browser": "153.0.8010.53",
+      "runs": [
+        {
+          "temperature": "cold",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19869326,
+                  "ms": 35.39999985694885
+                },
+                {
+                  "characters": 8825052,
+                  "ms": 20
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0,
+                  "calls": 2,
+                  "max": 0
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 27.90000009536743,
+                  "calls": 14742,
+                  "max": 1.1999998092651367
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 49.60000014305115,
+                  "calls": 1,
+                  "max": 49.60000014305115
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 58.90000033378601,
+                  "calls": 20600,
+                  "max": 0.5
+                },
+                "createResultItem": {
+                  "ms": 6.400000095367432,
+                  "calls": 18,
+                  "max": 1.8000001907348633
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 11.700000047683716,
+                  "calls": 1,
+                  "max": 11.700000047683716
+                },
+                "renderResults": {
+                  "ms": 19.200000047683716,
+                  "calls": 1,
+                  "max": 19.200000047683716
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 202.19999980926514,
+                  "calls": 1,
+                  "max": 202.19999980926514
+                },
+                "displayDataset": {
+                  "ms": 268.90000009536743,
+                  "calls": 1,
+                  "max": 268.90000009536743
+                },
+                "measureMasonryItems": {
+                  "ms": 1.9000000953674316,
+                  "calls": 1,
+                  "max": 1.9000000953674316
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 4406.700000047684,
+                  "duration": 53
+                },
+                {
+                  "start": 5838.700000047684,
+                  "duration": 297
+                }
+              ],
+              "errors": [],
+              "mapReady": 6136,
+              "mapPaint": 6152.200000047684
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 2776.100000143051,
+                "ms": 1630.3999998569489,
+                "protocol": "h2",
+                "transfer": 1493848,
+                "encoded": 1493548,
+                "decoded": 19873781
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 4509.700000047684,
+                "ms": 1297.2999999523163,
+                "protocol": "h2",
+                "transfer": 1015064,
+                "encoded": 1014764,
+                "decoded": 8827908
+              }
+            ],
+            "memory": {
+              "used": 58530178,
+              "total": 107521230
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 153.89999985694885,
+          "searchInputToTwoFramesMs": 222.5,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0,
+                "calls": 2,
+                "max": 0
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 51.000000953674316,
+                "calls": 28054,
+                "max": 3.5
+              },
+              "canonicalizePublicDataset": {
+                "ms": 49.60000014305115,
+                "calls": 1,
+                "max": 49.60000014305115
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 320.4999988079071,
+                "calls": 61800,
+                "max": 2.1000001430511475
+              },
+              "createResultItem": {
+                "ms": 10.400000095367432,
+                "calls": 40,
+                "max": 1.8000001907348633
+              },
+              "prepareFirstResultViewport": {
+                "ms": 17.200000047683716,
+                "calls": 3,
+                "max": 11.700000047683716
+              },
+              "renderResults": {
+                "ms": 25.699999809265137,
+                "calls": 3,
+                "max": 19.200000047683716
+              },
+              "renderRecordsForGeneration": {
+                "ms": 552.3999996185303,
+                "calls": 3,
+                "max": 215
+              },
+              "displayDataset": {
+                "ms": 268.90000009536743,
+                "calls": 1,
+                "max": 268.90000009536743
+              },
+              "measureMasonryItems": {
+                "ms": 3.700000047683716,
+                "calls": 3,
+                "max": 1.9000000953674316
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 4406.700000047684,
+                "duration": 53
+              },
+              {
+                "start": 5838.700000047684,
+                "duration": 297
+              },
+              {
+                "start": 6670,
+                "duration": 136
+              },
+              {
+                "start": 7182.600000143051,
+                "duration": 218
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "temperature": "warm",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19869326,
+                  "ms": 27.59999990463257
+                },
+                {
+                  "characters": 8825052,
+                  "ms": 16.59999990463257
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0.09999990463256836,
+                  "calls": 2,
+                  "max": 0.09999990463256836
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 25.40000081062317,
+                  "calls": 14742,
+                  "max": 0.10000014305114746
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 42.799999952316284,
+                  "calls": 1,
+                  "max": 42.799999952316284
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 58.400001525878906,
+                  "calls": 20600,
+                  "max": 0.5999999046325684
+                },
+                "createResultItem": {
+                  "ms": 4,
+                  "calls": 18,
+                  "max": 0.7000000476837158
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 7.700000047683716,
+                  "calls": 1,
+                  "max": 7.700000047683716
+                },
+                "renderResults": {
+                  "ms": 12.800000190734863,
+                  "calls": 1,
+                  "max": 12.800000190734863
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 186.90000009536743,
+                  "calls": 1,
+                  "max": 186.90000009536743
+                },
+                "displayDataset": {
+                  "ms": 237.5,
+                  "calls": 1,
+                  "max": 237.5
+                },
+                "measureMasonryItems": {
+                  "ms": 1.9000000953674316,
+                  "calls": 1,
+                  "max": 1.9000000953674316
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 367.2000000476837,
+                  "duration": 259
+                }
+              ],
+              "errors": [],
+              "mapReady": 626.5,
+              "mapPaint": 638.9000000953674
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 27.09999990463257,
+                "ms": 141.30000019073486,
+                "protocol": "h2",
+                "transfer": 300,
+                "encoded": 1493548,
+                "decoded": 19873781
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 247.20000004768372,
+                "ms": 103,
+                "protocol": "h2",
+                "transfer": 300,
+                "encoded": 1014764,
+                "decoded": 8827908
+              }
+            ],
+            "memory": {
+              "used": 54956025,
+              "total": 124348565
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 141.79999995231628,
+          "searchInputToTwoFramesMs": 207.79999995231628,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0.09999990463256836,
+                "calls": 2,
+                "max": 0.09999990463256836
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 44.700000524520874,
+                "calls": 28054,
+                "max": 0.7000000476837158
+              },
+              "canonicalizePublicDataset": {
+                "ms": 42.799999952316284,
+                "calls": 1,
+                "max": 42.799999952316284
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 307.7000014781952,
+                "calls": 61800,
+                "max": 1.5
+              },
+              "createResultItem": {
+                "ms": 7.799999952316284,
+                "calls": 40,
+                "max": 0.7000000476837158
+              },
+              "prepareFirstResultViewport": {
+                "ms": 12.799999952316284,
+                "calls": 3,
+                "max": 7.700000047683716
+              },
+              "renderResults": {
+                "ms": 18.800000190734863,
+                "calls": 3,
+                "max": 12.800000190734863
+              },
+              "renderRecordsForGeneration": {
+                "ms": 518.3000001907349,
+                "calls": 3,
+                "max": 201.5
+              },
+              "displayDataset": {
+                "ms": 237.5,
+                "calls": 1,
+                "max": 237.5
+              },
+              "measureMasonryItems": {
+                "ms": 3.5,
+                "calls": 3,
+                "max": 1.9000000953674316
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 367.2000000476837,
+                "duration": 259
+              },
+              {
+                "start": 1157.9000000953674,
+                "duration": 130
+              },
+              {
+                "start": 1656.2999999523163,
+                "duration": 204
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "temperature": "warm",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19869326,
+                  "ms": 27.5
+                },
+                {
+                  "characters": 8825052,
+                  "ms": 16.40000009536743
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0.10000014305114746,
+                  "calls": 2,
+                  "max": 0.10000014305114746
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 24.59999966621399,
+                  "calls": 14742,
+                  "max": 0.10000014305114746
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 42,
+                  "calls": 1,
+                  "max": 42
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 56.40000009536743,
+                  "calls": 20600,
+                  "max": 0.10000014305114746
+                },
+                "createResultItem": {
+                  "ms": 3.700000047683716,
+                  "calls": 18,
+                  "max": 0.6000001430511475
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 7.099999904632568,
+                  "calls": 1,
+                  "max": 7.099999904632568
+                },
+                "renderResults": {
+                  "ms": 13.200000047683716,
+                  "calls": 1,
+                  "max": 13.200000047683716
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 180.09999990463257,
+                  "calls": 1,
+                  "max": 180.09999990463257
+                },
+                "displayDataset": {
+                  "ms": 229.29999995231628,
+                  "calls": 1,
+                  "max": 229.29999995231628
+                },
+                "measureMasonryItems": {
+                  "ms": 1.7999999523162842,
+                  "calls": 1,
+                  "max": 1.7999999523162842
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 411.60000014305115,
+                  "duration": 250
+                }
+              ],
+              "errors": [],
+              "mapReady": 662.2000000476837,
+              "mapPaint": 673.7999999523163
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 28.100000143051147,
+                "ms": 190.89999985694885,
+                "protocol": "h2",
+                "transfer": 300,
+                "encoded": 1493548,
+                "decoded": 19873781
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 297.7000000476837,
+                "ms": 98.70000004768372,
+                "protocol": "h2",
+                "transfer": 300,
+                "encoded": 1014764,
+                "decoded": 8827908
+              }
+            ],
+            "memory": {
+              "used": 53948236,
+              "total": 125452864
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 139.5,
+          "searchInputToTwoFramesMs": 212.5,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0.10000014305114746,
+                "calls": 2,
+                "max": 0.10000014305114746
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 41.29999876022339,
+                "calls": 28054,
+                "max": 0.10000014305114746
+              },
+              "canonicalizePublicDataset": {
+                "ms": 42,
+                "calls": 1,
+                "max": 42
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 309.4999997615814,
+                "calls": 61800,
+                "max": 1.7999999523162842
+              },
+              "createResultItem": {
+                "ms": 7.400000095367432,
+                "calls": 40,
+                "max": 0.6000001430511475
+              },
+              "prepareFirstResultViewport": {
+                "ms": 12.300000190734863,
+                "calls": 3,
+                "max": 7.099999904632568
+              },
+              "renderResults": {
+                "ms": 19.200000047683716,
+                "calls": 3,
+                "max": 13.200000047683716
+              },
+              "renderRecordsForGeneration": {
+                "ms": 514.3999998569489,
+                "calls": 3,
+                "max": 206.59999990463257
+              },
+              "displayDataset": {
+                "ms": 229.29999995231628,
+                "calls": 1,
+                "max": 229.29999995231628
+              },
+              "measureMasonryItems": {
+                "ms": 3.4000000953674316,
+                "calls": 3,
+                "max": 1.7999999523162842
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 411.60000014305115,
+                "duration": 250
+              },
+              {
+                "start": 1188.2000000476837,
+                "duration": 128
+              },
+              {
+                "start": 1686.4000000953674,
+                "duration": 209
+              }
+            ],
+            "errors": []
+          }
+        }
+      ]
+    },
+    "remote-sequential": {
+      "browser": "153.0.8010.53",
+      "runs": [
+        {
+          "temperature": "cold",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19869326,
+                  "ms": 34.200000047683716
+                },
+                {
+                  "characters": 8825052,
+                  "ms": 17.09999990463257
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0.09999990463256836,
+                  "calls": 2,
+                  "max": 0.09999990463256836
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 29.800000190734863,
+                  "calls": 14742,
+                  "max": 1.6000001430511475
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 52.90000009536743,
+                  "calls": 1,
+                  "max": 52.90000009536743
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 62.799999952316284,
+                  "calls": 20600,
+                  "max": 0.5999999046325684
+                },
+                "createResultItem": {
+                  "ms": 6.400000095367432,
+                  "calls": 18,
+                  "max": 1.7999999523162842
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 12,
+                  "calls": 1,
+                  "max": 12
+                },
+                "renderResults": {
+                  "ms": 19.300000190734863,
+                  "calls": 1,
+                  "max": 19.300000190734863
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 213.90000009536743,
+                  "calls": 1,
+                  "max": 213.90000009536743
+                },
+                "displayDataset": {
+                  "ms": 284.5,
+                  "calls": 1,
+                  "max": 284.5
+                },
+                "measureMasonryItems": {
+                  "ms": 2,
+                  "calls": 1,
+                  "max": 2
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 8095.700000047684,
+                  "duration": 308
+                }
+              ],
+              "errors": [],
+              "mapReady": 8403.700000047684,
+              "mapPaint": 8421.400000095367
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 699.9000000953674,
+                "ms": 4881.099999904633,
+                "protocol": "",
+                "transfer": 0,
+                "encoded": 0,
+                "decoded": 0
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 5674.400000095367,
+                "ms": 2401.0999999046326,
+                "protocol": "",
+                "transfer": 0,
+                "encoded": 0,
+                "decoded": 0
+              }
+            ],
+            "memory": {
+              "used": 54195035,
+              "total": 107501943
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 134.19999980926514,
+          "searchInputToTwoFramesMs": 190.90000009536743,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0.09999990463256836,
+                "calls": 2,
+                "max": 0.09999990463256836
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 51.20000076293945,
+                "calls": 28054,
+                "max": 3.5999999046325684
+              },
+              "canonicalizePublicDataset": {
+                "ms": 52.90000009536743,
+                "calls": 1,
+                "max": 52.90000009536743
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 284.800000667572,
+                "calls": 61800,
+                "max": 1.9000000953674316
+              },
+              "createResultItem": {
+                "ms": 10.400000095367432,
+                "calls": 40,
+                "max": 1.7999999523162842
+              },
+              "prepareFirstResultViewport": {
+                "ms": 18.800000190734863,
+                "calls": 3,
+                "max": 12
+              },
+              "renderResults": {
+                "ms": 27.00000023841858,
+                "calls": 3,
+                "max": 19.300000190734863
+              },
+              "renderRecordsForGeneration": {
+                "ms": 519.6000001430511,
+                "calls": 3,
+                "max": 213.90000009536743
+              },
+              "displayDataset": {
+                "ms": 284.5,
+                "calls": 1,
+                "max": 284.5
+              },
+              "measureMasonryItems": {
+                "ms": 3.8000001907348633,
+                "calls": 3,
+                "max": 2
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 8095.700000047684,
+                "duration": 308
+              },
+              {
+                "start": 8947.900000095367,
+                "duration": 121
+              },
+              {
+                "start": 9436.400000095367,
+                "duration": 189
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "temperature": "warm",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19869326,
+                  "ms": 29.09999990463257
+                },
+                {
+                  "characters": 8825052,
+                  "ms": 17.5
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0,
+                  "calls": 2,
+                  "max": 0
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 25.199999809265137,
+                  "calls": 14742,
+                  "max": 0.39999985694885254
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 42.89999985694885,
+                  "calls": 1,
+                  "max": 42.89999985694885
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 54.20000076293945,
+                  "calls": 20600,
+                  "max": 0.10000014305114746
+                },
+                "createResultItem": {
+                  "ms": 4.400000095367432,
+                  "calls": 18,
+                  "max": 0.9000000953674316
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 8,
+                  "calls": 1,
+                  "max": 8
+                },
+                "renderResults": {
+                  "ms": 12.900000095367432,
+                  "calls": 1,
+                  "max": 12.900000095367432
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 188.39999985694885,
+                  "calls": 1,
+                  "max": 188.39999985694885
+                },
+                "displayDataset": {
+                  "ms": 239,
+                  "calls": 1,
+                  "max": 239
+                },
+                "measureMasonryItems": {
+                  "ms": 1.9000000953674316,
+                  "calls": 1,
+                  "max": 1.9000000953674316
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 689.2000000476837,
+                  "duration": 260
+                }
+              ],
+              "errors": [],
+              "mapReady": 950,
+              "mapPaint": 965.9000000953674
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 27.300000190734863,
+                "ms": 466.69999980926514,
+                "protocol": "",
+                "transfer": 0,
+                "encoded": 0,
+                "decoded": 0
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 558.3000001907349,
+                "ms": 118.79999995231628,
+                "protocol": "",
+                "transfer": 0,
+                "encoded": 0,
+                "decoded": 0
+              }
+            ],
+            "memory": {
+              "used": 70121773,
+              "total": 127682729
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 137.89999985694885,
+          "searchInputToTwoFramesMs": 202.70000004768372,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0,
+                "calls": 2,
+                "max": 0
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 42.0999972820282,
+                "calls": 28054,
+                "max": 0.39999985694885254
+              },
+              "canonicalizePublicDataset": {
+                "ms": 42.89999985694885,
+                "calls": 1,
+                "max": 42.89999985694885
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 298.20000100135803,
+                "calls": 61800,
+                "max": 3.200000047683716
+              },
+              "createResultItem": {
+                "ms": 8.100000143051147,
+                "calls": 40,
+                "max": 0.9000000953674316
+              },
+              "prepareFirstResultViewport": {
+                "ms": 13.099999904632568,
+                "calls": 3,
+                "max": 8
+              },
+              "renderResults": {
+                "ms": 18.90000009536743,
+                "calls": 3,
+                "max": 12.900000095367432
+              },
+              "renderRecordsForGeneration": {
+                "ms": 510.19999980926514,
+                "calls": 3,
+                "max": 196.10000014305115
+              },
+              "displayDataset": {
+                "ms": 239,
+                "calls": 1,
+                "max": 239
+              },
+              "measureMasonryItems": {
+                "ms": 3.5,
+                "calls": 3,
+                "max": 1.9000000953674316
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 689.2000000476837,
+                "duration": 260
+              },
+              {
+                "start": 1482.5,
+                "duration": 126
+              },
+              {
+                "start": 1977.7000000476837,
+                "duration": 199
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "temperature": "warm",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19869326,
+                  "ms": 27.699999809265137
+                },
+                {
+                  "characters": 8825052,
+                  "ms": 16.5
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0,
+                  "calls": 2,
+                  "max": 0
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 24.899999856948853,
+                  "calls": 14742,
+                  "max": 0.10000014305114746
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 44.299999952316284,
+                  "calls": 1,
+                  "max": 44.299999952316284
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 57.59999918937683,
+                  "calls": 20600,
+                  "max": 1.1000001430511475
+                },
+                "createResultItem": {
+                  "ms": 3.9000000953674316,
+                  "calls": 18,
+                  "max": 0.6000001430511475
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 7.599999904632568,
+                  "calls": 1,
+                  "max": 7.599999904632568
+                },
+                "renderResults": {
+                  "ms": 12.599999904632568,
+                  "calls": 1,
+                  "max": 12.599999904632568
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 181.79999995231628,
+                  "calls": 1,
+                  "max": 181.79999995231628
+                },
+                "displayDataset": {
+                  "ms": 231.90000009536743,
+                  "calls": 1,
+                  "max": 231.90000009536743
+                },
+                "measureMasonryItems": {
+                  "ms": 1.7999999523162842,
+                  "calls": 1,
+                  "max": 1.7999999523162842
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 338.40000009536743,
+                  "duration": 254
+                }
+              ],
+              "errors": [],
+              "mapReady": 592.4000000953674,
+              "mapPaint": 604.7000000476837
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 28.40000009536743,
+                "ms": 125,
+                "protocol": "",
+                "transfer": 0,
+                "encoded": 0,
+                "decoded": 0
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 217.5,
+                "ms": 106.90000009536743,
+                "protocol": "",
+                "transfer": 0,
+                "encoded": 0,
+                "decoded": 0
+              }
+            ],
+            "memory": {
+              "used": 55119017,
+              "total": 133587581
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 141,
+          "searchInputToTwoFramesMs": 213.39999985694885,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0,
+                "calls": 2,
+                "max": 0
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 44.69999933242798,
+                "calls": 28054,
+                "max": 2.700000047683716
+              },
+              "canonicalizePublicDataset": {
+                "ms": 44.299999952316284,
+                "calls": 1,
+                "max": 44.299999952316284
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 312.89999866485596,
+                "calls": 61800,
+                "max": 3.6000001430511475
+              },
+              "createResultItem": {
+                "ms": 7.6000001430511475,
+                "calls": 40,
+                "max": 0.6000001430511475
+              },
+              "prepareFirstResultViewport": {
+                "ms": 12.700000047683716,
+                "calls": 3,
+                "max": 7.599999904632568
+              },
+              "renderResults": {
+                "ms": 18.600000143051147,
+                "calls": 3,
+                "max": 12.599999904632568
+              },
+              "renderRecordsForGeneration": {
+                "ms": 517.6999998092651,
+                "calls": 3,
+                "max": 207
+              },
+              "displayDataset": {
+                "ms": 231.90000009536743,
+                "calls": 1,
+                "max": 231.90000009536743
+              },
+              "measureMasonryItems": {
+                "ms": 3.5999996662139893,
+                "calls": 3,
+                "max": 1.7999999523162842
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 338.40000009536743,
+                "duration": 254
+              },
+              {
+                "start": 1111.7999999523163,
+                "duration": 129
+              },
+              {
+                "start": 1610.9000000953674,
+                "duration": 210
+              }
+            ],
+            "errors": []
+          }
+        }
+      ]
+    },
+    "remote-parallel": {
+      "browser": "153.0.8010.53",
+      "runs": [
+        {
+          "temperature": "cold",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19869326,
+                  "ms": 33.700000047683716
+                },
+                {
+                  "characters": 8825052,
+                  "ms": 17.600000143051147
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0,
+                  "calls": 2,
+                  "max": 0
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 29.299999475479126,
+                  "calls": 14742,
+                  "max": 1.7000000476837158
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 47.299999952316284,
+                  "calls": 1,
+                  "max": 47.299999952316284
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 58.600000858306885,
+                  "calls": 20600,
+                  "max": 0.2999999523162842
+                },
+                "createResultItem": {
+                  "ms": 6,
+                  "calls": 18,
+                  "max": 1.7000000476837158
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 11,
+                  "calls": 1,
+                  "max": 11
+                },
+                "renderResults": {
+                  "ms": 17.200000047683716,
+                  "calls": 1,
+                  "max": 17.200000047683716
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 197.20000004768372,
+                  "calls": 1,
+                  "max": 197.20000004768372
+                },
+                "displayDataset": {
+                  "ms": 259.2999999523163,
+                  "calls": 1,
+                  "max": 259.2999999523163
+                },
+                "measureMasonryItems": {
+                  "ms": 2.1000001430511475,
+                  "calls": 1,
+                  "max": 2.1000001430511475
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 4533.400000095367,
+                  "duration": 58
+                },
+                {
+                  "start": 4592.200000047684,
+                  "duration": 283
+                }
+              ],
+              "errors": [],
+              "mapReady": 4875.900000095367,
+              "mapPaint": 4892.400000095367
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 804.7999999523163,
+                "ms": 3672.800000190735,
+                "protocol": "",
+                "transfer": 0,
+                "encoded": 0,
+                "decoded": 0
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 804.7999999523163,
+                "ms": 3695.5,
+                "protocol": "",
+                "transfer": 0,
+                "encoded": 0,
+                "decoded": 0
+              }
+            ],
+            "memory": {
+              "used": 91007578,
+              "total": 142231746
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 147,
+          "searchInputToTwoFramesMs": 215.09999990463257,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0,
+                "calls": 2,
+                "max": 0
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 47.49999928474426,
+                "calls": 28054,
+                "max": 1.7000000476837158
+              },
+              "canonicalizePublicDataset": {
+                "ms": 47.299999952316284,
+                "calls": 1,
+                "max": 47.299999952316284
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 307.30000138282776,
+                "calls": 61800,
+                "max": 2.299999952316284
+              },
+              "createResultItem": {
+                "ms": 10.200000047683716,
+                "calls": 40,
+                "max": 1.7000000476837158
+              },
+              "prepareFirstResultViewport": {
+                "ms": 16.59999990463257,
+                "calls": 3,
+                "max": 11
+              },
+              "renderResults": {
+                "ms": 23.700000047683716,
+                "calls": 3,
+                "max": 17.200000047683716
+              },
+              "renderRecordsForGeneration": {
+                "ms": 534.1999998092651,
+                "calls": 3,
+                "max": 208.09999990463257
+              },
+              "displayDataset": {
+                "ms": 259.2999999523163,
+                "calls": 1,
+                "max": 259.2999999523163
+              },
+              "measureMasonryItems": {
+                "ms": 3.8000001907348633,
+                "calls": 3,
+                "max": 2.1000001430511475
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 4533.400000095367,
+                "duration": 58
+              },
+              {
+                "start": 4592.200000047684,
+                "duration": 283
+              },
+              {
+                "start": 5410.799999952316,
+                "duration": 129
+              },
+              {
+                "start": 5917.400000095367,
+                "duration": 211
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "temperature": "warm",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19869326,
+                  "ms": 27.899999856948853
+                },
+                {
+                  "characters": 8825052,
+                  "ms": 17.5
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0,
+                  "calls": 2,
+                  "max": 0
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 25.399998664855957,
+                  "calls": 14742,
+                  "max": 0.10000014305114746
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 41.40000009536743,
+                  "calls": 1,
+                  "max": 41.40000009536743
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 57.10000038146973,
+                  "calls": 20600,
+                  "max": 0.19999980926513672
+                },
+                "createResultItem": {
+                  "ms": 4.300000190734863,
+                  "calls": 18,
+                  "max": 0.7000000476837158
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 7.800000190734863,
+                  "calls": 1,
+                  "max": 7.800000190734863
+                },
+                "renderResults": {
+                  "ms": 12.800000190734863,
+                  "calls": 1,
+                  "max": 12.800000190734863
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 185.40000009536743,
+                  "calls": 1,
+                  "max": 185.40000009536743
+                },
+                "displayDataset": {
+                  "ms": 232,
+                  "calls": 1,
+                  "max": 232
+                },
+                "measureMasonryItems": {
+                  "ms": 1.7999999523162842,
+                  "calls": 1,
+                  "max": 1.7999999523162842
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 988.7000000476837,
+                  "duration": 261
+                }
+              ],
+              "errors": [],
+              "mapReady": 1249.9000000953674,
+              "mapPaint": 1265.8000001907349
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 25.800000190734863,
+                "ms": 879,
+                "protocol": "",
+                "transfer": 0,
+                "encoded": 0,
+                "decoded": 0
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 25.800000190734863,
+                "ms": 950.8999998569489,
+                "protocol": "",
+                "transfer": 0,
+                "encoded": 0,
+                "decoded": 0
+              }
+            ],
+            "memory": {
+              "used": 92304465,
+              "total": 144145037
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 141.70000004768372,
+          "searchInputToTwoFramesMs": 206.90000009536743,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0,
+                "calls": 2,
+                "max": 0
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 44.699997663497925,
+                "calls": 28054,
+                "max": 0.9000000953674316
+              },
+              "canonicalizePublicDataset": {
+                "ms": 41.40000009536743,
+                "calls": 1,
+                "max": 41.40000009536743
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 304.800000667572,
+                "calls": 61800,
+                "max": 1.5999999046325684
+              },
+              "createResultItem": {
+                "ms": 7.6000001430511475,
+                "calls": 40,
+                "max": 0.7000000476837158
+              },
+              "prepareFirstResultViewport": {
+                "ms": 12.700000047683716,
+                "calls": 3,
+                "max": 7.800000190734863
+              },
+              "renderResults": {
+                "ms": 18.600000143051147,
+                "calls": 3,
+                "max": 12.800000190734863
+              },
+              "renderRecordsForGeneration": {
+                "ms": 516.1000001430511,
+                "calls": 3,
+                "max": 200.70000004768372
+              },
+              "displayDataset": {
+                "ms": 232,
+                "calls": 1,
+                "max": 232
+              },
+              "measureMasonryItems": {
+                "ms": 3.5999999046325684,
+                "calls": 3,
+                "max": 1.7999999523162842
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 988.7000000476837,
+                "duration": 261
+              },
+              {
+                "start": 1778.3000001907349,
+                "duration": 130
+              },
+              {
+                "start": 2277.800000190735,
+                "duration": 204
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "temperature": "warm",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19869326,
+                  "ms": 27.600000143051147
+                },
+                {
+                  "characters": 8825052,
+                  "ms": 14.600000143051147
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0.09999990463256836,
+                  "calls": 2,
+                  "max": 0.09999990463256836
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 23.30000066757202,
+                  "calls": 14742,
+                  "max": 0.10000014305114746
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 43.299999952316284,
+                  "calls": 1,
+                  "max": 43.299999952316284
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 57.500001192092896,
+                  "calls": 20600,
+                  "max": 0.7000000476837158
+                },
+                "createResultItem": {
+                  "ms": 4.099999904632568,
+                  "calls": 18,
+                  "max": 0.7999999523162842
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 7.599999904632568,
+                  "calls": 1,
+                  "max": 7.599999904632568
+                },
+                "renderResults": {
+                  "ms": 14.099999904632568,
+                  "calls": 1,
+                  "max": 14.099999904632568
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 182.90000009536743,
+                  "calls": 1,
+                  "max": 182.90000009536743
+                },
+                "displayDataset": {
+                  "ms": 233.40000009536743,
+                  "calls": 1,
+                  "max": 233.40000009536743
+                },
+                "measureMasonryItems": {
+                  "ms": 1.7000000476837158,
+                  "calls": 1,
+                  "max": 1.7000000476837158
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 236.70000004768372,
+                  "duration": 253
+                }
+              ],
+              "errors": [],
+              "mapReady": 489.7000000476837,
+              "mapPaint": 502.5
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 31.5,
+                "ms": 118.20000004768372,
+                "protocol": "",
+                "transfer": 0,
+                "encoded": 0,
+                "decoded": 0
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 31.59999990463257,
+                "ms": 191.70000004768372,
+                "protocol": "",
+                "transfer": 0,
+                "encoded": 0,
+                "decoded": 0
+              }
+            ],
+            "memory": {
+              "used": 50350162,
+              "total": 121253378
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 139.70000004768372,
+          "searchInputToTwoFramesMs": 182.89999985694885,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0.09999990463256836,
+                "calls": 2,
+                "max": 0.09999990463256836
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 39.799999952316284,
+                "calls": 28054,
+                "max": 0.7000000476837158
+              },
+              "canonicalizePublicDataset": {
+                "ms": 43.299999952316284,
+                "calls": 1,
+                "max": 43.299999952316284
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 282.20000100135803,
+                "calls": 61800,
+                "max": 2.299999952316284
+              },
+              "createResultItem": {
+                "ms": 8.199999809265137,
+                "calls": 40,
+                "max": 0.7999999523162842
+              },
+              "prepareFirstResultViewport": {
+                "ms": 13.099999904632568,
+                "calls": 3,
+                "max": 7.599999904632568
+              },
+              "renderResults": {
+                "ms": 20.799999952316284,
+                "calls": 3,
+                "max": 14.099999904632568
+              },
+              "renderRecordsForGeneration": {
+                "ms": 486.89999985694885,
+                "calls": 3,
+                "max": 182.90000009536743
+              },
+              "displayDataset": {
+                "ms": 233.40000009536743,
+                "calls": 1,
+                "max": 233.40000009536743
+              },
+              "measureMasonryItems": {
+                "ms": 3.3000001907348633,
+                "calls": 3,
+                "max": 1.7000000476837158
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 236.70000004768372,
+                "duration": 253
+              },
+              {
+                "start": 1012.9000000953674,
+                "duration": 126
+              },
+              {
+                "start": 1506.7999999523163,
+                "duration": 181
+              }
+            ],
+            "errors": []
+          }
+        }
+      ]
+    },
+    "final-candidate": {
+      "browser": "153.0.8010.53",
+      "runs": [
+        {
+          "temperature": "cold",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19867801,
+                  "ms": 41.700000047683716
+                },
+                {
+                  "characters": 8824747,
+                  "ms": 19.200000047683716
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0.10000014305114746,
+                  "calls": 2,
+                  "max": 0.10000014305114746
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 37.19999933242798,
+                  "calls": 14742,
+                  "max": 2
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 58.60000014305115,
+                  "calls": 1,
+                  "max": 58.60000014305115
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 79.30000019073486,
+                  "calls": 20600,
+                  "max": 1.2000000476837158
+                },
+                "createResultItem": {
+                  "ms": 11.400000095367432,
+                  "calls": 18,
+                  "max": 2.799999952316284
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 20.799999952316284,
+                  "calls": 1,
+                  "max": 20.799999952316284
+                },
+                "renderResults": {
+                  "ms": 29.399999856948853,
+                  "calls": 1,
+                  "max": 29.399999856948853
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 269.5,
+                  "calls": 1,
+                  "max": 269.5
+                },
+                "displayDataset": {
+                  "ms": 355.59999990463257,
+                  "calls": 1,
+                  "max": 355.59999990463257
+                },
+                "measureMasonryItems": {
+                  "ms": 4.799999952316284,
+                  "calls": 1,
+                  "max": 4.799999952316284
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 1164.7999999523163,
+                  "duration": 439
+                }
+              ],
+              "errors": [],
+              "mapReady": 1604.5,
+              "mapPaint": 1641.2999999523163
+            },
+            "resources": [
+              {
+                "name": "public_preview_papers.json",
+                "start": 1021.5999999046326,
+                "ms": 41.30000019073486,
+                "protocol": "http/1.0",
+                "transfer": 8827903,
+                "encoded": 8827603,
+                "decoded": 8827603
+              },
+              {
+                "name": "public_preview_map_data.json",
+                "start": 1021.5999999046326,
+                "ms": 77,
+                "protocol": "http/1.0",
+                "transfer": 19872556,
+                "encoded": 19872256,
+                "decoded": 19872256
+              }
+            ],
+            "memory": {
+              "used": 62112328,
+              "total": 123124620
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 162.29999995231628,
+          "searchInputToTwoFramesMs": 223.5,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0.10000014305114746,
+                "calls": 2,
+                "max": 0.10000014305114746
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 57.70000100135803,
+                "calls": 28054,
+                "max": 2
+              },
+              "canonicalizePublicDataset": {
+                "ms": 58.60000014305115,
+                "calls": 1,
+                "max": 58.60000014305115
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 342.6000020503998,
+                "calls": 61800,
+                "max": 2.8000001907348633
+              },
+              "createResultItem": {
+                "ms": 16.300000190734863,
+                "calls": 40,
+                "max": 2.799999952316284
+              },
+              "prepareFirstResultViewport": {
+                "ms": 29,
+                "calls": 3,
+                "max": 20.799999952316284
+              },
+              "renderResults": {
+                "ms": 38.700000047683716,
+                "calls": 3,
+                "max": 29.399999856948853
+              },
+              "renderRecordsForGeneration": {
+                "ms": 630.3000001907349,
+                "calls": 3,
+                "max": 269.5
+              },
+              "displayDataset": {
+                "ms": 355.59999990463257,
+                "calls": 1,
+                "max": 355.59999990463257
+              },
+              "measureMasonryItems": {
+                "ms": 6.800000190734863,
+                "calls": 3,
+                "max": 4.799999952316284
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 1164.7999999523163,
+                "duration": 439
+              },
+              {
+                "start": 2515.0999999046326,
+                "duration": 145
+              },
+              {
+                "start": 3034.0999999046326,
+                "duration": 220
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "temperature": "warm",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19867801,
+                  "ms": 36.60000014305115
+                },
+                {
+                  "characters": 8824747,
+                  "ms": 19.299999952316284
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0,
+                  "calls": 2,
+                  "max": 0
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 31.40000033378601,
+                  "calls": 14742,
+                  "max": 0.10000014305114746
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 53.59999990463257,
+                  "calls": 1,
+                  "max": 53.59999990463257
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 75.99999952316284,
+                  "calls": 20600,
+                  "max": 0.6000001430511475
+                },
+                "createResultItem": {
+                  "ms": 4.799999952316284,
+                  "calls": 18,
+                  "max": 0.7000000476837158
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 9.299999952316284,
+                  "calls": 1,
+                  "max": 9.299999952316284
+                },
+                "renderResults": {
+                  "ms": 17.199999809265137,
+                  "calls": 1,
+                  "max": 17.199999809265137
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 238.20000004768372,
+                  "calls": 1,
+                  "max": 238.20000004768372
+                },
+                "displayDataset": {
+                  "ms": 300.60000014305115,
+                  "calls": 1,
+                  "max": 300.60000014305115
+                },
+                "measureMasonryItems": {
+                  "ms": 2.8999998569488525,
+                  "calls": 1,
+                  "max": 2.8999998569488525
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 157.5,
+                  "duration": 373
+                }
+              ],
+              "errors": [],
+              "mapReady": 530.6000001430511,
+              "mapPaint": 547.8000001907349
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 27.200000047683716,
+                "ms": 76.70000004768372,
+                "protocol": "http/1.0",
+                "transfer": 19872556,
+                "encoded": 19872256,
+                "decoded": 19872256
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 27.40000009536743,
+                "ms": 34.700000047683716,
+                "protocol": "http/1.0",
+                "transfer": 8827903,
+                "encoded": 8827603,
+                "decoded": 8827603
+              }
+            ],
+            "memory": {
+              "used": 81543056,
+              "total": 162493308
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 160.30000019073486,
+          "searchInputToTwoFramesMs": 217.5,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0,
+                "calls": 2,
+                "max": 0
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 53.39999985694885,
+                "calls": 28054,
+                "max": 3.200000047683716
+              },
+              "canonicalizePublicDataset": {
+                "ms": 53.59999990463257,
+                "calls": 1,
+                "max": 53.59999990463257
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 338.2999994754791,
+                "calls": 61800,
+                "max": 3.8000001907348633
+              },
+              "createResultItem": {
+                "ms": 9.799999952316284,
+                "calls": 40,
+                "max": 0.7000000476837158
+              },
+              "prepareFirstResultViewport": {
+                "ms": 16.899999856948853,
+                "calls": 3,
+                "max": 9.299999952316284
+              },
+              "renderResults": {
+                "ms": 25.799999713897705,
+                "calls": 3,
+                "max": 17.199999809265137
+              },
+              "renderRecordsForGeneration": {
+                "ms": 596,
+                "calls": 3,
+                "max": 238.20000004768372
+              },
+              "displayDataset": {
+                "ms": 300.60000014305115,
+                "calls": 1,
+                "max": 300.60000014305115
+              },
+              "measureMasonryItems": {
+                "ms": 4.8999998569488525,
+                "calls": 3,
+                "max": 2.8999998569488525
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 157.5,
+                "duration": 373
+              },
+              {
+                "start": 1071.5,
+                "duration": 145
+              },
+              {
+                "start": 1585.8000001907349,
+                "duration": 216
+              }
+            ],
+            "errors": []
+          }
+        },
+        {
+          "temperature": "warm",
+          "initial": {
+            "audit": {
+              "parse": [
+                {
+                  "characters": 19867801,
+                  "ms": 37.39999985694885
+                },
+                {
+                  "characters": 8824747,
+                  "ms": 19.09999990463257
+                }
+              ],
+              "functions": {
+                "normalizeDatasetPayload": {
+                  "ms": 0,
+                  "calls": 2,
+                  "max": 0
+                },
+                "normalizeCountryRegionRecord": {
+                  "ms": 33.60000038146973,
+                  "calls": 14742,
+                  "max": 1
+                },
+                "canonicalizePublicDataset": {
+                  "ms": 53,
+                  "calls": 1,
+                  "max": 53
+                },
+                "recordMatchesActiveFilters": {
+                  "ms": 74.59999871253967,
+                  "calls": 20600,
+                  "max": 0.10000014305114746
+                },
+                "createResultItem": {
+                  "ms": 4.800000190734863,
+                  "calls": 18,
+                  "max": 0.7000000476837158
+                },
+                "prepareFirstResultViewport": {
+                  "ms": 9.200000047683716,
+                  "calls": 1,
+                  "max": 9.200000047683716
+                },
+                "renderResults": {
+                  "ms": 15.599999904632568,
+                  "calls": 1,
+                  "max": 15.599999904632568
+                },
+                "renderRecordsForGeneration": {
+                  "ms": 232.59999990463257,
+                  "calls": 1,
+                  "max": 232.59999990463257
+                },
+                "displayDataset": {
+                  "ms": 292.2999999523163,
+                  "calls": 1,
+                  "max": 292.2999999523163
+                },
+                "measureMasonryItems": {
+                  "ms": 2.4000000953674316,
+                  "calls": 1,
+                  "max": 2.4000000953674316
+                }
+              },
+              "longTasks": [
+                {
+                  "start": 173.60000014305115,
+                  "duration": 317
+                }
+              ],
+              "errors": [],
+              "mapReady": 490.7000000476837,
+              "mapPaint": 505.90000009536743
+            },
+            "resources": [
+              {
+                "name": "public_preview_map_data.json",
+                "start": 20,
+                "ms": 32.5,
+                "protocol": "http/1.0",
+                "transfer": 19872556,
+                "encoded": 19872256,
+                "decoded": 19872256
+              },
+              {
+                "name": "public_preview_papers.json",
+                "start": 20.100000143051147,
+                "ms": 81.09999990463257,
+                "protocol": "http/1.0",
+                "transfer": 8827903,
+                "encoded": 8827603,
+                "decoded": 8827603
+              }
+            ],
+            "memory": {
+              "used": 168972222,
+              "total": 222596746
+            },
+            "count": 639,
+            "markers": 684
+          },
+          "filterMs": 158.70000004768372,
+          "searchInputToTwoFramesMs": 212.5,
+          "searchSettled": {
+            "functions": {
+              "normalizeDatasetPayload": {
+                "ms": 0,
+                "calls": 2,
+                "max": 0
+              },
+              "normalizeCountryRegionRecord": {
+                "ms": 51.8000009059906,
+                "calls": 28054,
+                "max": 1
+              },
+              "canonicalizePublicDataset": {
+                "ms": 53,
+                "calls": 1,
+                "max": 53
+              },
+              "recordMatchesActiveFilters": {
+                "ms": 331.39999771118164,
+                "calls": 61800,
+                "max": 2.5999999046325684
+              },
+              "createResultItem": {
+                "ms": 9.700000286102295,
+                "calls": 40,
+                "max": 0.7000000476837158
+              },
+              "prepareFirstResultViewport": {
+                "ms": 16.700000047683716,
+                "calls": 3,
+                "max": 9.200000047683716
+              },
+              "renderResults": {
+                "ms": 23.899999856948853,
+                "calls": 3,
+                "max": 15.599999904632568
+              },
+              "renderRecordsForGeneration": {
+                "ms": 582.3999998569489,
+                "calls": 3,
+                "max": 232.59999990463257
+              },
+              "displayDataset": {
+                "ms": 292.2999999523163,
+                "calls": 1,
+                "max": 292.2999999523163
+              },
+              "measureMasonryItems": {
+                "ms": 4.500000238418579,
+                "calls": 3,
+                "max": 2.4000000953674316
+              }
+            },
+            "searchCount": 4,
+            "longTasks": [
+              {
+                "start": 173.60000014305115,
+                "duration": 317
+              },
+              {
+                "start": 1017.2999999523163,
+                "duration": 143
+              },
+              {
+                "start": 1530.4000000953674,
+                "duration": 210
+              }
+            ],
+            "errors": []
+          }
+        }
+      ]
+    }
+  },
+  "performanceNotes": [
+    "Primary comparison is isolated-baseline versus isolated-candidate on final application code.",
+    "published uses the already-published data revision, one commit ahead of local main.",
+    "remote-sequential and remote-parallel are earlier network prototypes, not final deployment measurements.",
+    "final-candidate overlapped other tests; retained as a confounded sample, excluded from primary conclusions.",
+    "No fixed speedup claim. Only one cold and two warm loads per variant.",
+    "mapPaint is two frames after initial render return, not complete basemap-tile loading."
+  ],
+  "measurementSource": "const {chromium}=require('playwright');\nconst fs=require('node:fs');\nconst out='/private/tmp/sirm-desktop-audit';\n(async()=>{\n const browser=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--enable-precise-memory-info']});\n const context=await browser.newContext({viewport:{width:1440,height:1000}});\n await context.addInitScript(()=>{\n  window.audit={parse:[],functions:{},longTasks:[],errors:[]};\n  new PerformanceObserver(list=>audit.longTasks.push(...list.getEntries().map(e=>({start:e.startTime,duration:e.duration})))).observe({type:'longtask',buffered:true});\n  const parse=JSON.parse;JSON.parse=function(text,...args){const t=performance.now();const value=parse.call(this,text,...args);if(typeof text==='string'&&text.length>100000)audit.parse.push({characters:text.length,ms:performance.now()-t});return value};\n  window.addEventListener('error',e=>audit.errors.push(e.message));\n  document.addEventListener('DOMContentLoaded',()=>{\n   for(const name of ['normalizeDatasetPayload','normalizeCountryRegionRecord','canonicalizePublicDataset','displayDataset','renderRecordsForGeneration','recordMatchesActiveFilters','renderResults','createResultItem','measureMasonryItems','prepareFirstResultViewport']){\n    const fn=window[name];if(!fn)continue;\n    window[name]=function(...args){const t=performance.now();try{return fn.apply(this,args)}finally{const metric=audit.functions[name]??={ms:0,calls:0,max:0};const ms=performance.now()-t;metric.ms+=ms;metric.calls++;metric.max=Math.max(metric.max,ms);if(name==='renderRecordsForGeneration'&&!audit.mapReady){audit.mapReady=performance.now();requestAnimationFrame(()=>requestAnimationFrame(()=>audit.mapPaint=performance.now()))}}};\n   }\n  });\n });\n const page=await context.newPage(); const report={browser:browser.version(),runs:[]};\n for(const temperature of ['cold','warm','warm']){\n  await page.goto(process.env.AUDIT_URL || 'http://127.0.0.1:8873/'+(process.argv[2]||'baseline')+'/web/');\n  await page.waitForFunction(()=>window.audit?.mapPaint&&document.querySelector('.results-list.is-masonry-ready'));\n  await page.waitForTimeout(500);\n  const initial=await page.evaluate(()=>({audit:structuredClone(audit),resources:performance.getEntriesByType('resource').filter(e=>/\\.json/.test(e.name)).map(e=>({name:e.name.split('/').pop(),start:e.startTime,ms:e.duration,protocol:e.nextHopProtocol,transfer:e.transferSize,encoded:e.encodedBodySize,decoded:e.decodedBodySize})),memory:performance.memory?{used:performance.memory.usedJSHeapSize,total:performance.memory.totalJSHeapSize}:null,count:currentFilteredPaperRecords.length,markers:visibleMarkerEntries.length}));\n  const interact=async(fn)=>page.evaluate(async(fn)=>{const t=performance.now();eval(fn);await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return performance.now()-t},fn);\n  const filterMs=await interact(\"taskFilter.options[2].selected=true;taskFilter.dispatchEvent(new Event('change',{bubbles:true}))\");\n  await page.waitForTimeout(350);\n  const searchMs=await interact(\"keywordFilter.value='Tsinghua';keywordFilter.dispatchEvent(new Event('input',{bubbles:true}))\");\n  await page.waitForTimeout(500);\n  const searchSettled=await page.evaluate(()=>({functions:audit.functions,searchCount:currentFilteredPaperRecords.length,longTasks:audit.longTasks,errors:audit.errors}));\n  report.runs.push({temperature,initial,filterMs,searchInputToTwoFramesMs:searchMs,searchSettled});\n }\n fs.writeFileSync(out+'/'+(process.argv[2]||'baseline')+'-performance.json',JSON.stringify(report,null,2));\n console.log(JSON.stringify(report,null,2));await browser.close();\n})().catch(e=>{console.error(e);process.exit(1)});\n",
+  "publicResourceChecks": [
+    {
+      "url": "https://cdn.jsdelivr.net",
+      "status": 200,
+      "final": "https://www.jsdelivr.com/",
+      "encoding": null,
+      "length": null,
+      "cache_control": "public, max-age=300, must-revalidate, stale-while-revalidate=600, stale-if-error=86400"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css",
+      "status": 200,
+      "final": "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css",
+      "encoding": null,
+      "length": null,
+      "cache_control": "public, max-age=31536000, s-maxage=31536000, immutable"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js",
+      "status": 200,
+      "final": "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js",
+      "encoding": null,
+      "length": null,
+      "cache_control": "public, max-age=31536000, s-maxage=31536000, immutable"
+    },
+    {
+      "url": "https://developers.openai.com/codex/",
+      "status": 200,
+      "final": "https://learn.chatgpt.com/docs",
+      "encoding": null,
+      "length": "368401",
+      "cache_control": "public, max-age=0, must-revalidate"
+    },
+    {
+      "url": "https://github.com/meiling-fdu/synthetic-image-research-map",
+      "status": 200,
+      "final": "https://github.com/meiling-fdu/synthetic-image-research-map",
+      "encoding": null,
+      "length": null,
+      "cache_control": "max-age=0, private, must-revalidate"
+    },
+    {
+      "url": "https://github.com/meiling-fdu/synthetic-image-research-map/issues",
+      "status": 200,
+      "final": "https://github.com/meiling-fdu/synthetic-image-research-map/issues",
+      "encoding": null,
+      "length": null,
+      "cache_control": "max-age=0, private, must-revalidate"
+    },
+    {
+      "url": "https://leafletjs.com/",
+      "status": 200,
+      "final": "https://leafletjs.com/",
+      "encoding": null,
+      "length": "14313",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://learn.chatgpt.com/",
+      "status": 200,
+      "final": "https://learn.chatgpt.com/",
+      "encoding": null,
+      "length": "424535",
+      "cache_control": "public, max-age=0, must-revalidate"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/",
+      "encoding": null,
+      "length": "1625",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/CITATION.cff",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/CITATION.cff",
+      "encoding": null,
+      "length": "390",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/docs/data_collection.md",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/docs/data_collection.md",
+      "encoding": null,
+      "length": "77304",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/docs/data_schema.md",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/docs/data_schema.md",
+      "encoding": null,
+      "length": "71341",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/docs/public_preview_report.md",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/docs/public_preview_report.md",
+      "encoding": null,
+      "length": "5278",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/favicon.ico",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/",
+      "encoding": null,
+      "length": "27651",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/?dataset=preview",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/?dataset=preview",
+      "encoding": null,
+      "length": "27651",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/app.js?v=20261009-desktop-1",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/app.js?v=20261009-desktop-1",
+      "encoding": null,
+      "length": "272474",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/assets/synthetic-image-forensics-mark.png",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/assets/synthetic-image-forensics-mark.png",
+      "encoding": null,
+      "length": "393958",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/data/public_preview_map_data.json",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/data/public_preview_map_data.json",
+      "encoding": null,
+      "length": "19873781",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/data/public_preview_papers.json",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/data/public_preview_papers.json",
+      "encoding": null,
+      "length": "8827908",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/institution_display.js?v=20261009-desktop-1",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/institution_display.js?v=20261009-desktop-1",
+      "encoding": null,
+      "length": "1104",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/institution_type_labels.js?v=20261009-desktop-1",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/institution_type_labels.js?v=20261009-desktop-1",
+      "encoding": null,
+      "length": "1246",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/keyword_suggestions.js?v=20261009-desktop-1",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/keyword_suggestions.js?v=20261009-desktop-1",
+      "encoding": null,
+      "length": "4807",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/marker_interaction_helpers.js?v=20261009-desktop-1",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/marker_interaction_helpers.js?v=20261009-desktop-1",
+      "encoding": null,
+      "length": "2276",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/marker_size_helpers.js?v=20261009-desktop-1",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/marker_size_helpers.js?v=20261009-desktop-1",
+      "encoding": null,
+      "length": "3674",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/methodology.html",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/methodology.html",
+      "encoding": null,
+      "length": "11309",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/paper_details_helpers.js?v=20261009-desktop-1",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/paper_details_helpers.js?v=20261009-desktop-1",
+      "encoding": null,
+      "length": "10225",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/paper_link_helpers.js?v=20261009-desktop-1",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/paper_link_helpers.js?v=20261009-desktop-1",
+      "encoding": null,
+      "length": "5088",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/paper_search_helpers.js?v=20261009-desktop-1",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/paper_search_helpers.js?v=20261009-desktop-1",
+      "encoding": null,
+      "length": "2620",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/public_metadata.js?v=20261009-desktop-1",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/public_metadata.js?v=20261009-desktop-1",
+      "encoding": null,
+      "length": "1037",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/style.css?v=20261009-desktop-1",
+      "status": 200,
+      "final": "https://meiling-fdu.github.io/synthetic-image-research-map/web/style.css?v=20261009-desktop-1",
+      "encoding": null,
+      "length": "72677",
+      "cache_control": "max-age=600"
+    },
+    {
+      "url": "https://meiling-fdu.github.io/synthetic-image-research-map/web/title_markup.js?v=20261009-desktop-1",
+      "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)>"
+    },
+    {
+      "url": "https://openalex.org/",
+      "status": 200,
+      "final": "https://openalex.org/",
+      "encoding": null,
+      "length": null,
+      "cache_control": "no-cache"
+    },
+    {
+      "url": "https://www.openstreetmap.org/copyright",
+      "status": 200,
+      "final": "https://www.openstreetmap.org/copyright",
+      "encoding": null,
+      "length": null,
+      "cache_control": "max-age=0, private, must-revalidate"
+    }
+  ],
+  "publicResourceRetry": {
+    "resource": "web/title_markup.js?v=20261009-desktop-1",
+    "status": 200,
+    "protocol": "HTTP/2",
+    "note": "Separate curl retry succeeded after the initial TLS error; observed during audit."
+  },
+  "publicEncodingResponseHeaders": "HTTP/2 200 \nserver: GitHub.com\ncontent-type: application/json; charset=utf-8\nlast-modified: Fri, 09 Oct 2026 13:26:59 GMT\naccess-control-allow-origin: *\nstrict-transport-security: max-age=31556952\netag: W/\"6ac8eba3-12f3ff5\"\nexpires: Sat, 10 Oct 2026 16:08:16 GMT\ncache-control: max-age=600\ncontent-encoding: gzip\nx-proxy-cache: MISS\nx-github-request-id: EAD0:1014F1:6BF6EA:6F6752:6ACA6098\nx-github-edge-region: japaneast\naccept-ranges: bytes\nage: 1\ndate: Sat, 10 Oct 2026 15:58:17 GMT\nvia: 1.1 varnish\nx-served-by: cache-nrt-rjtf7700030-NRT\nx-cache: MISS\nx-cache-hits: 0\nx-timer: S1791647897.838483,VS0,VE837\nvary: Accept-Encoding\nx-fastly-request-id: b46883dab317fede869742d23e95dc28d55d0e52\ncontent-length: 1493548\n\nHTTP/2 200 \nserver: GitHub.com\ncontent-type: application/json; charset=utf-8\nlast-modified: Fri, 09 Oct 2026 13:27:00 GMT\naccess-control-allow-origin: *\nstrict-transport-security: max-age=31556952\netag: W/\"6ac8eba4-86b404\"\nexpires: Sat, 10 Oct 2026 16:08:17 GMT\ncache-control: max-age=600\ncontent-encoding: gzip\nx-proxy-cache: MISS\nx-github-request-id: D5EE:D64F2:6C4B2C:6FBAD2:6ACA6099\nx-github-edge-region: japaneast\naccept-ranges: bytes\nage: 0\ndate: Sat, 10 Oct 2026 15:58:18 GMT\nvia: 1.1 varnish\nx-served-by: cache-nrt-rjtf7700030-NRT\nx-cache: MISS\nx-cache-hits: 0\nx-timer: S1791647898.774292,VS0,VE380\nvary: Accept-Encoding\nx-fastly-request-id: 57cb3a9ac7edc245f904c4e22722979eb99e8f2c\ncontent-length: 1014764\n\n",
+  "validationLogs": {
+    "final-frontend-tests.txt": "...................................................................................................................................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 323 tests in 8.210s\n\nOK\n",
+    "final-public-pytest.txt": "............................................................ [ 24%]\n.................................................................. [ 51%]\n.................................................................... [ 79%]\n...................................................                      [100%]\n245 passed, 22 subtests passed in 32.48s\n",
+    "final-browser-tests.txt": "{\"result\":\"PASS\",\"matrix\":15,\"workflows\":11,\"contractComparisons\":18,\"mobile\":4,\"output\":\"/private/tmp/sirm-desktop-audit/final\"}\n",
+    "final-accessibility-tests.txt": "{\"width\":375,\"scroll\":375,\"header\":266.234375,\"toolbar\":{\"x\":24,\"y\":267,\"width\":327,\"height\":188.96875,\"top\":267,\"right\":351,\"bottom\":455.96875,\"left\":24}}\n{\"width\":430,\"scroll\":430,\"header\":250.921875,\"toolbar\":{\"x\":24,\"y\":251,\"width\":382,\"height\":188.96875,\"top\":251,\"right\":406,\"bottom\":439.96875,\"left\":24}}\n{\"width\":768,\"scroll\":768,\"header\":223.6875,\"toolbar\":{\"x\":24,\"y\":224,\"width\":720,\"height\":136.96875,\"top\":224,\"right\":744,\"bottom\":360.96875,\"left\":24}}\n{\"width\":1024,\"scroll\":1024,\"header\":153.328125,\"toolbar\":{\"x\":279,\"y\":154,\"width\":721,\"height\":72.96875,\"top\":154,\"right\":1000,\"bottom\":226.96875,\"left\":279}}\n{\"width\":1440,\"scroll\":1440,\"header\":159.71875,\"toolbar\":{\"x\":279,\"y\":160,\"width\":1137,\"height\":45,\"top\":160,\"right\":1416,\"bottom\":205,\"left\":279}}\n"
+  },
+  "preservation": {
+    "trackedFilesCompared": 4282,
+    "initialManifestSha256": "6da1625aac863dbb650d0bb0a9f96211ef10b2d9ec58d7ab4321208583a54958",
+    "changedTracked": [
+      "tests/public_accessibility_browser.cjs",
+      "tests/test_frontend_chart_filters.py",
+      "tests/test_frontend_public_labels_layout.py",
+      "tests/test_frontend_result_cards.py",
+      "tests/test_frontend_year_range_slider.py",
+      "web/app.js",
+      "web/index.html",
+      "web/methodology.html",
+      "web/style.css"
+    ],
+    "protectedChanges": [],
+    "publicHashes": {
+      "web/data/public_preview_map_data.json": "4e3101e023e2d19af5989a9bb5a1cd1ca097133f2d04034a3c0ed825e98515a7",
+      "web/data/public_preview_papers.json": "492874171c7cfc1c653ebe07915dcdb0973d448ed886ca3336a6563be254888b"
+    },
+    "unchangedMaxWidthMediaBlocks": 6,
+    "initialUntrackedStatusCount": 89,
+    "initialStatusEntriesStillPresent": true,
+    "initialStatus": [
+      "?? data/raw/corpus_quality_batch_c_wave5b_2026_10_09/",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p01.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p02.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p03.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p04.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p05.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p06.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p07.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p08.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p09.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p10.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p11.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p12.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p13.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p14.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p15.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/fetch_extra_jobs.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/fetch_jobs.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/final_git_audit.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/priority_identity_checks.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/search/",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/051c3d5914447233a502.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/07ae2fe03845e90efc73.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/0c9d75c8d5972bc45b99.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/0d8f525ad77edeeca31a.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/0eae5b4a7b80bf12af72.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/0f57901467d617f93751.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/11fabc988fb3fab919c5.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/14368c4ab7bdeab35ea3.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/159f852178545781233f.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/1cba7ea5b129e2ec3cb2.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/22f620e2c2dd62bfdeb2.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/2d7b6ca1802d6ee49d90.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/34253731a42d856a0e4c.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/524ad6f1ba42aae0a9f3.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/546d7193087adb15c4f1.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/54e776761efd082cb3d2.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/6f4ed920edcc40867457.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/7035461665515d858dc8.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/7a4c82c82ed069574646.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/7df114b7c665207aaae6.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/8ada47029dd8f0b174c4.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/9592abb6f18c8ad21fcf.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/976045a2e78ca6746db5.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/a25f6588cff2ddf4f004.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/a35f640f39dac073b639.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/aa62819cf3e7921f29ac.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/b9197d99543010a07e7b.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/b9d830b2694e009b5b23.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/c07a82c1ae9d34b4a15c.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/c6a0429c0cfeba5793c4.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/cae1a49b2fbbde2c360e.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/cd26ad1627b8f3da0f30.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/d8abce1b847536d125ec.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/dcbffd1f800df14b0719.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/e1786c796da89420a467.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/e2b52e46b1af1f3e33ae.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/e8d510819d0e22d7823b.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/f0a7329c389104ccfb6f.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/f2ae90c9c9a1d82d823d.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/f44fc626846b44fa4906.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/f5021d74419edc6a3859.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/curated_validation_after.txt",
+      "?? data/raw/systematic_gap_migration_2026_10_03/curated_validation_before.txt",
+      "?? data/raw/systematic_gap_migration_2026_10_03/full_suite.xml",
+      "?? data/raw/systematic_gap_migration_2026_10_03/full_suite_initial.xml",
+      "?? data/raw/systematic_gap_migration_2026_10_03/git_audit.json",
+      "?? data/raw/systematic_gap_migration_2026_10_03/initial_full_suite_triage.json",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/05c120058aa769cb54b2.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/06c1e60ff87d4544ebf9.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/23b3e87658f52dc2e825.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/298e571aaa36aff480ec.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/2ea67815bb17f8560a63.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/3a37e3c4c0b088c6492a.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/3c2ad142ba32942d6fe3.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/3d636934fd00fcff46b2.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/3e430a5c102b817594a1.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/3e9d132fc286a8caa51a.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/4f5c9baef9e37c154200.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/677ddbd2cd01bd04be59.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/7e5517ee00e971fad9c6.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/85325afdfb2f84a6863f.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/9d70acfaca0819eaabd1.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/bf9788aebc1bdddab139.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/dc6d74f70fb57d48c870.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/e439abe166212a6e8a70.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/e9ceafd8b50c2520b4c7.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/ef6cde598d35cce269fa.gz",
+      "?? docs/corpus_quality_batch_c_wave5b_2026_10_09.md"
+    ]
+  },
+  "finalVerification": {
+    "javascriptSyntaxFiles": [
+      "web/admin.js",
+      "web/app.js",
+      "web/institution_display.js",
+      "web/institution_type_labels.js",
+      "web/keyword_suggestions.js",
+      "web/marker_interaction_helpers.js",
+      "web/marker_size_helpers.js",
+      "web/paper_details_helpers.js",
+      "web/paper_link_helpers.js",
+      "web/paper_search_helpers.js",
+      "web/public_metadata.js",
+      "web/title_markup.js",
+      "tests/frontend_desktop_audit.cjs",
+      "tests/public_accessibility_browser.cjs"
+    ],
+    "javascriptSyntax": "PASS",
+    "whitespace": "PASS",
+    "stagedFiles": [],
+    "sourceSha256": {
+      "tests/public_accessibility_browser.cjs": "53ac1127044c96a36bc822c650a588b8e11fee93a0ad4d39b9747d2470bb9ce7",
+      "tests/test_frontend_chart_filters.py": "c364c800c9dd7f1efb13e1e38a40541db3c17de655768c9fa11803337125a349",
+      "tests/test_frontend_public_labels_layout.py": "3d256e5dc4b8f45313af8d0edc24cf7bb898783a26872a25166360d65d53ffe6",
+      "tests/test_frontend_result_cards.py": "0d0b089c69c3e4853b0e2d5a14dd407be6ba293bfd7d2fba45399dca95c66b05",
+      "tests/test_frontend_year_range_slider.py": "54e81401f9ed8897b28ce9deb2c7449a64829374c510f7954e97cf3e2a9b285d",
+      "web/app.js": "b55635c7b4935d69629bca1e1ca03ac1892cfcb35bb4d6508f3bc8fc833212dd",
+      "web/index.html": "ba43571ce429f16d422277597d7e51d95ca1f612d08ecfb02aba18bb8dbf3f58",
+      "web/methodology.html": "a38fc694d56e078bb91d3e458124039ad72d53d07753322590f31e4ec1ebe8a5",
+      "web/style.css": "f5213c9c4c2cb1625ba34b0a08ff58052e1b1e977b77d257457213475f6a44a0",
+      "tests/frontend_desktop_audit.cjs": "cd6c8553050c3f1579483a44904251e4cd8cccdf655ea37c726393e0d74659d9",
+      "tests/test_frontend_desktop_audit.py": "7858077dedd1461b90e24f5277a8378c5272ac57ee27b304c10f295fb2ab8aff"
+    },
+    "newAuditFiles": [
+      "docs/desktop_frontend_audit_2026_10_10.json",
+      "docs/desktop_frontend_audit_2026_10_10.md",
+      "tests/frontend_desktop_audit.cjs",
+      "tests/test_frontend_desktop_audit.py"
+    ],
+    "gitStatusShort": [
+      " M tests/public_accessibility_browser.cjs",
+      " M tests/test_frontend_chart_filters.py",
+      " M tests/test_frontend_public_labels_layout.py",
+      " M tests/test_frontend_result_cards.py",
+      " M tests/test_frontend_year_range_slider.py",
+      " M web/app.js",
+      " M web/index.html",
+      " M web/methodology.html",
+      " M web/style.css",
+      "?? data/raw/corpus_quality_batch_c_wave5b_2026_10_09/",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p01.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p02.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p03.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p04.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p05.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p06.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p07.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p08.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p09.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p10.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p11.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p12.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p13.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p14.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/evidence/p15.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/fetch_extra_jobs.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/fetch_jobs.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/final_git_audit.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/priority_identity_checks.json",
+      "?? data/raw/systematic_gap_audit_2026_10_02/search/",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/051c3d5914447233a502.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/07ae2fe03845e90efc73.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/0c9d75c8d5972bc45b99.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/0d8f525ad77edeeca31a.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/0eae5b4a7b80bf12af72.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/0f57901467d617f93751.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/11fabc988fb3fab919c5.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/14368c4ab7bdeab35ea3.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/159f852178545781233f.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/1cba7ea5b129e2ec3cb2.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/22f620e2c2dd62bfdeb2.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/2d7b6ca1802d6ee49d90.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/34253731a42d856a0e4c.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/524ad6f1ba42aae0a9f3.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/546d7193087adb15c4f1.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/54e776761efd082cb3d2.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/6f4ed920edcc40867457.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/7035461665515d858dc8.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/7a4c82c82ed069574646.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/7df114b7c665207aaae6.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/8ada47029dd8f0b174c4.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/9592abb6f18c8ad21fcf.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/976045a2e78ca6746db5.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/a25f6588cff2ddf4f004.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/a35f640f39dac073b639.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/aa62819cf3e7921f29ac.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/b9197d99543010a07e7b.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/b9d830b2694e009b5b23.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/c07a82c1ae9d34b4a15c.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/c6a0429c0cfeba5793c4.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/cae1a49b2fbbde2c360e.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/cd26ad1627b8f3da0f30.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/d8abce1b847536d125ec.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/dcbffd1f800df14b0719.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/e1786c796da89420a467.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/e2b52e46b1af1f3e33ae.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/e8d510819d0e22d7823b.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/f0a7329c389104ccfb6f.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/f2ae90c9c9a1d82d823d.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/f44fc626846b44fa4906.gz",
+      "?? data/raw/systematic_gap_audit_2026_10_02/sources/f5021d74419edc6a3859.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/curated_validation_after.txt",
+      "?? data/raw/systematic_gap_migration_2026_10_03/curated_validation_before.txt",
+      "?? data/raw/systematic_gap_migration_2026_10_03/full_suite.xml",
+      "?? data/raw/systematic_gap_migration_2026_10_03/full_suite_initial.xml",
+      "?? data/raw/systematic_gap_migration_2026_10_03/git_audit.json",
+      "?? data/raw/systematic_gap_migration_2026_10_03/initial_full_suite_triage.json",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/05c120058aa769cb54b2.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/06c1e60ff87d4544ebf9.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/23b3e87658f52dc2e825.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/298e571aaa36aff480ec.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/2ea67815bb17f8560a63.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/3a37e3c4c0b088c6492a.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/3c2ad142ba32942d6fe3.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/3d636934fd00fcff46b2.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/3e430a5c102b817594a1.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/3e9d132fc286a8caa51a.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/4f5c9baef9e37c154200.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/677ddbd2cd01bd04be59.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/7e5517ee00e971fad9c6.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/85325afdfb2f84a6863f.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/9d70acfaca0819eaabd1.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/bf9788aebc1bdddab139.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/dc6d74f70fb57d48c870.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/e439abe166212a6e8a70.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/e9ceafd8b50c2520b4c7.gz",
+      "?? data/raw/systematic_gap_migration_2026_10_03/sources/ef6cde598d35cce269fa.gz",
+      "?? docs/corpus_quality_batch_c_wave5b_2026_10_09.md",
+      "?? docs/desktop_frontend_audit_2026_10_10.json",
+      "?? docs/desktop_frontend_audit_2026_10_10.md",
+      "?? tests/frontend_desktop_audit.cjs",
+      "?? tests/test_frontend_desktop_audit.py"
+    ]
+  },
+  "screenshots": {
+    "directory": "/private/tmp/sirm-desktop-audit/final",
+    "note": "Temporary local screenshot paths; images are not embedded in this JSON."
+  }
+}

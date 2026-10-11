@@ -183,6 +183,9 @@ const maxYearFilter = document.querySelector("#max-year-filter");
 const yearRangeMinimum = document.querySelector("#year-range-min");
 const yearRangeMaximum = document.querySelector("#year-range-max");
 const yearRangeSlider = document.querySelector(".year-range-slider");
+const yearStartInput = document.querySelector("#year-start-input");
+const yearEndInput = document.querySelector("#year-end-input");
+const yearInputStatus = document.querySelector("#year-input-status");
 
 function isPublishedOnlySelected() {
   return publishedOnlyFilter.value === "published-only";
@@ -4613,7 +4616,7 @@ function revealPendingResult() {
   pendingResultReveal = null;
   syncResultHighlights();
   updateShowInResultsAction();
-  item.focus({ preventScroll: true });
+  resultFocusTarget(item).focus({ preventScroll: true });
   item.scrollIntoView({ block: "nearest", behavior: "auto" });
 }
 
@@ -4647,6 +4650,23 @@ function showSelectionInResults() {
   continuePendingResultReveal();
 }
 
+function resultFocusTarget(item) {
+  return (!mobileFiltersMedia.matches && item?.querySelector(".result-details-action")) || item;
+}
+
+function syncResultItemAccessibility(item) {
+  // Preserve the existing small-screen interaction in this desktop-only pass.
+  const mobile = mobileFiltersMedia.matches;
+  item.tabIndex = mobile ? 0 : -1;
+  if (mobile) {
+    item.setAttribute("role", "button");
+    item.setAttribute("aria-label", item.dataset.detailsLabel);
+  } else {
+    item.removeAttribute("role");
+    item.removeAttribute("aria-label");
+  }
+}
+
 function createResultItem(record, index, pipeline) {
   const item = document.createElement("li");
   item.className = `result-item result-item-${pipeline.view === "papers" ? "paper" : "institution"} is-masonry-pending`;
@@ -4657,16 +4677,24 @@ function createResultItem(record, index, pipeline) {
     item.dataset.institutionIdentity = institutionIdentity(record);
     item.dataset.markerIdentity = markerInstitutionIdentity(record);
   }
-  item.tabIndex = 0;
-  item.setAttribute("role", "button");
-  item.setAttribute("aria-label", pipeline.view === "papers"
+  item.dataset.detailsLabel = pipeline.view === "papers"
     ? `Open Paper Details for ${recordTitle(record)}`
-    : `Open Paper Details for ${recordTitle(record)} with ${recordInstitution(record)} context`);
+    : `Open Paper Details for ${recordTitle(record)} with ${recordInstitution(record)} context`;
   const relatedEntries = pipeline.relatedEntriesByIdentity.get(paperIdentity(record)) || [];
   const cardId = `result-card-title-${pipeline.view}-${index}`;
   item.innerHTML = pipeline.view === "papers"
     ? paperResultContent(record, relatedEntries, cardId)
     : institutionResultContent(record, relatedEntries, cardId);
+  const details = document.createElement("button");
+  details.type = "button";
+  details.className = "result-details-action";
+  details.textContent = "Details";
+  details.setAttribute("aria-label", item.dataset.detailsLabel);
+  details.setAttribute("aria-controls", "paper-details");
+  const links = item.querySelector(".result-links");
+  if (links) links.prepend(details);
+  else item.querySelector(".result-secondary").append(details);
+  syncResultItemAccessibility(item);
   const identity = paperIdentity(record);
   item.querySelectorAll("[data-focus-institution]").forEach((button) => {
     let markerEntry = visibleMarkerEntryByInstitutionKey.get(button.dataset.focusInstitution);
@@ -4795,13 +4823,15 @@ function prepareFirstResultViewport(generation) {
     if (generation !== resultsRenderGeneration) return;
     const focusedCard = document.activeElement?.closest?.(".result-item");
     const restoreCardFocus = focusedCard && resultsList.contains(focusedCard);
+    // A zoom/resize may cross the desktop breakpoint while cards are staged.
+    preparedCards.forEach(syncResultItemAccessibility);
     resultsList.replaceChildren(...preparedCards);
     if (restoreCardFocus) {
       const replacement = preparedCards.find(card => (
         card.dataset.paperIdentity === focusedCard.dataset.paperIdentity
         && card.dataset.markerIdentity === focusedCard.dataset.markerIdentity
       ));
-      (replacement || resultsCount).focus({ preventScroll: true });
+      (resultFocusTarget(replacement) || resultsCount).focus({ preventScroll: true });
     }
     resultsList.classList.toggle("is-masonry-ready", masonryReady);
     resultsList.hidden = false;
@@ -4948,11 +4978,15 @@ function selectResultsView(view) {
   renderRecordsForGeneration({ generation });
 }
 
-function baseMapStatusText(visibleRecords) {
+function baseMapStatusText(visibleRecords, visiblePapers = currentFilteredPaperRecords) {
   const markerCount = visibleMarkerEntries.length;
-  return markerCount
-    ? `${markerCount} institution/location marker${markerCount === 1 ? "" : "s"}`
-    : "No records match the current filters.";
+  if (markerCount) {
+    return `${markerCount} institution/location marker${markerCount === 1 ? "" : "s"}`;
+  }
+  const paperCount = visiblePapers.length;
+  return paperCount
+    ? `${paperCount} matching unique paper${paperCount === 1 ? "" : "s"}, but no mapped institution locations. View Unique Papers.`
+    : "No unique papers match the current filters.";
 }
 
 // Layout visibility is DOM-only; selection and pinning stay in interactionState.
@@ -4998,6 +5032,7 @@ function showPaperDetails(record, relatedEntries, {
   paperDetailsContent.innerHTML = paperDetailsHtml(
     record, relatedEntries, contextualInstitutionId,
   );
+  orderDesktopPaperDetails();
   paperDetails.classList.add("has-content");
   closePaperDetailsButton.disabled = false;
   paperDetails.classList.add("is-pinned");
@@ -5025,6 +5060,30 @@ function showPaperDetails(record, relatedEntries, {
   appendCopyPaperLinkAction(record, relatedEntries);
   paperDetails.scrollTop = preserveScroll ? previousScroll : 0;
   updateShowInResultsAction();
+}
+
+function orderDesktopPaperDetails() {
+  if (mobileFiltersMedia.matches) return;
+  // Move the existing nodes, preserving all metadata and link construction.
+  [
+    ".paper-details-title", ".paper-details-venue-row", ".paper-details-links",
+    ".paper-taxonomy-rows", ".paper-details-authors", ".paper-details-affiliation-section",
+    ".paper-abstract-section", ".paper-details-metadata-status", ".paper-taxonomy-review",
+  ].forEach((selector) => {
+    const section = paperDetailsContent.querySelector(selector);
+    if (section) paperDetailsContent.append(section);
+  });
+}
+
+function revealDesktopDetails() {
+  if (mobileFiltersMedia.matches) return;
+  paperDetails.scrollTop = 0;
+  paperDetailsHeading.focus({ preventScroll: true });
+  const heading = paperDetailsHeading.getBoundingClientRect();
+  const headerBottom = document.querySelector(".site-header").getBoundingClientRect().bottom;
+  if (heading.top < headerBottom + 12 || heading.bottom > window.innerHeight - 12) {
+    window.scrollBy({ top: heading.top - headerBottom - 12, behavior: "instant" });
+  }
 }
 
 function showLinkedPaperUnavailable() {
@@ -5982,12 +6041,45 @@ function syncYearRange(changedHandle = null) {
   maxYearFilter.setAttribute("aria-valuemin", String(start));
   minYearFilter.setAttribute("aria-valuetext", `Start Publication Year ${start}`);
   maxYearFilter.setAttribute("aria-valuetext", `End Publication Year ${end}`);
+  syncYearInputs();
 
   const span = yearRangeBounds.maximum - yearRangeBounds.minimum;
   const startPercent = span ? ((start - yearRangeBounds.minimum) / span) * 100 : 0;
   const endPercent = span ? ((end - yearRangeBounds.minimum) / span) * 100 : 100;
   yearRangeSlider.style.setProperty("--range-start", `${startPercent}%`);
   yearRangeSlider.style.setProperty("--range-end", `${endPercent}%`);
+}
+
+function syncYearInputs() {
+  [yearStartInput, yearEndInput].forEach((input, index) => {
+    input.value = yearRangeBounds ? [minYearFilter, maxYearFilter][index].value : "";
+    input.disabled = !yearRangeBounds;
+    input.removeAttribute("aria-invalid");
+  });
+  yearInputStatus.textContent = "";
+  yearInputStatus.hidden = true;
+}
+
+function commitYearInput(handle) {
+  if (!yearRangeBounds) return;
+  const input = handle === "start" ? yearStartInput : yearEndInput;
+  const text = input.value.trim();
+  const year = Number(text);
+  if (!/^\d{4}$/.test(text) || year < yearRangeBounds.minimum || year > yearRangeBounds.maximum) {
+    input.setAttribute("aria-invalid", "true");
+    yearInputStatus.textContent = `Enter a complete year from ${yearRangeBounds.minimum} to ${yearRangeBounds.maximum}. Press Escape to restore the selected range.`;
+    yearInputStatus.hidden = false;
+    return;
+  }
+  const slider = handle === "start" ? minYearFilter : maxYearFilter;
+  if (Number(slider.value) === year) {
+    syncYearInputs();
+    return;
+  }
+  slider.value = String(year);
+  yearHistoryStarted = false;
+  handleYearRangeInput(handle);
+  yearHistoryStarted = false;
 }
 
 function configureYearRange() {
@@ -6001,6 +6093,7 @@ function configureYearRange() {
     maxYearFilter.disabled = true;
     yearRangeMinimum.textContent = "\u2014";
     yearRangeMaximum.textContent = "\u2014";
+    syncYearInputs();
     return;
   }
   const selection = resolveYearSelection(yearRangeBounds, previousSelection);
@@ -6277,12 +6370,23 @@ function displayPublicPreviewDate(metadata) {
 
 async function readDataset(name) {
   const config = DATASET_CONFIG[name];
-  const response = await fetch(config.url, { cache: "no-cache" });
+  // Both public resources are independent; overlap network transfer while
+  // retaining revalidation and the existing validation/normalization order.
+  const readResource = async (url) => {
+    const response = await fetch(url, { cache: "no-cache" });
+    return { response, text: response.ok ? await response.text() : "" };
+  };
+  const mapRequest = readResource(config.url);
+  // Handle rejection immediately even if an empty/invalid map returns first.
+  const paperRequest = config.paperUrl ? readResource(config.paperUrl).then(
+    (value) => ({ status: "fulfilled", value }),
+    (reason) => ({ status: "rejected", reason }),
+  ) : null;
+  const { response, text: responseText } = await mapRequest;
   if (!response.ok) {
     throw new Error(`${name} data request failed with status ${response.status}`);
   }
 
-  const responseText = await response.text();
   if (!responseText.trim()) {
     return { metadata: {}, records: [] };
   }
@@ -6293,11 +6397,12 @@ async function readDataset(name) {
     throw new Error(`${name} data does not match the expected format`);
   }
   if (config.paperUrl) {
-    const paperResponse = await fetch(config.paperUrl, { cache: "no-cache" });
+    const paperResult = await paperRequest;
+    if (paperResult.status === "rejected") throw paperResult.reason;
+    const { response: paperResponse, text: paperText } = paperResult.value;
     if (!paperResponse.ok) {
       throw new Error(`${name} paper data request failed with status ${paperResponse.status}`);
     }
-    const paperText = await paperResponse.text();
     const normalizedPaperData = paperText.trim()
       ? normalizeDatasetPayload(JSON.parse(paperText))
       : { metadata: {}, records: [] };
@@ -6712,8 +6817,28 @@ minYearFilter.addEventListener("keydown", (event) => {
 maxYearFilter.addEventListener("keydown", (event) => {
   handleYearRangeKeydown(event, "end");
 });
+[[yearStartInput, "start"], [yearEndInput, "end"]].forEach(([input, handle]) => {
+  // Typing is a draft. Only Enter or leaving the field commits a complete year.
+  input.addEventListener("change", () => commitYearInput(handle));
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      commitYearInput(handle);
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      syncYearInputs();
+    }
+  });
+});
 [resultsList, paperDetails].forEach((container) => {
   container.addEventListener("click", (event) => {
+    const detailsAction = event.target.closest(".result-details-action");
+    if (detailsAction) {
+      selectResultItem(detailsAction.closest(".result-item"));
+      revealDesktopDetails();
+      return;
+    }
     const markerPaper = event.target.closest("[data-marker-paper]");
     if (markerPaper) {
       selectPaperFromInstitutionList(markerPaper);
@@ -6782,6 +6907,7 @@ maxYearFilter.addEventListener("keydown", (event) => {
   });
 });
 resultsList.addEventListener("keydown", (event) => {
+  if (!mobileFiltersMedia.matches) return;
   if (event.key !== "Enter" && event.key !== " ") return;
   if (event.target.closest("a, button, input, select, textarea")) return;
   const item = event.target.closest(".result-item");
@@ -6955,8 +7081,14 @@ function observeResultsToolbarLayout() {
   const toolbar = document.querySelector(".results-heading-row");
   const panel = document.querySelector(".results-panel");
   const measure = () => {
-    panel.style.setProperty("--results-header-height", `${Math.ceil(header.getBoundingClientRect().height)}px`);
+    const headerHeight = `${Math.ceil(header.getBoundingClientRect().height)}px`;
+    panel.style.setProperty("--results-header-height", headerHeight);
     panel.style.setProperty("--results-toolbar-height", `${Math.ceil(toolbar.getBoundingClientRect().height)}px`);
+    if (mobileFiltersMedia.matches) {
+      document.documentElement.style.removeProperty("--sticky-summary-offset");
+    } else {
+      document.documentElement.style.setProperty("--sticky-summary-offset", headerHeight);
+    }
   };
   measure();
   if (typeof ResizeObserver !== "undefined") {
@@ -6969,6 +7101,25 @@ function observeResultsToolbarLayout() {
 }
 
 observeResultsToolbarLayout();
+document.querySelectorAll(".desktop-skip-navigation a").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const target = document.querySelector(link.getAttribute("href"));
+    if (!target) return;
+    event.preventDefault();
+    target.focus({ preventScroll: true });
+    const top = target.getBoundingClientRect().top
+      - document.querySelector(".site-header").getBoundingClientRect().bottom - 12;
+    window.scrollBy({ top, behavior: "instant" });
+  });
+});
+mobileFiltersMedia.addEventListener("change", () => {
+  resultsList.querySelectorAll(".result-item").forEach((item) => {
+    const hadFocus = item === document.activeElement || item.contains(document.activeElement);
+    syncResultItemAccessibility(item);
+    if (hadFocus) resultFocusTarget(item).focus({ preventScroll: true });
+  });
+  if (interactionState.detailMode === "paper") renderActiveSelection({ preserveScroll: true });
+});
 const mapHelp = document.querySelector("#map-help");
 const mapHelpSummary = mapHelp.querySelector("summary");
 mapHelp.addEventListener("toggle", () => {
