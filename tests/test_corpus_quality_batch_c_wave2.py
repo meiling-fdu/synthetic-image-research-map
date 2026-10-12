@@ -151,20 +151,20 @@ def test_wave2_ledger_reconciles_both_actions_and_remaining_batch_c():
 def test_exact_corpus_and_unchanged_taxonomy_counts():
     context = load_context()
     assert context["counts"] == {
-        "public": 639,
-        "formal": 531,
-        "mapped": 617,
+        "public": 638,
+        "formal": 530,
+        "mapped": 616,
         "unmapped": 22,
-        "relationship_rows": 1421,
-        "unique_paper_institution_pairs": 1421,
+        "relationship_rows": 1419,
+        "unique_paper_institution_pairs": 1419,
     }
     tasks = Counter(label for row in context["papers"].values() for label in row["tasks"])
     research_types = Counter(
         label for row in context["papers"].values() for label in row["research_types"]
     )
-    assert tasks == {"detection": 587, "source_attribution": 85, "localization": 43}
+    assert tasks == {"detection": 587, "source_attribution": 84, "localization": 43}
     assert research_types == {
-        "method": 547,
+        "method": 546,
         "dataset": 132,
         "benchmark": 88,
         "survey": 20,

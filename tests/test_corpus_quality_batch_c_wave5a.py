@@ -213,8 +213,8 @@ def test_batch_c_remaining_ledger_reconciles_exact_identities():
 def test_recomputed_corpus_and_taxonomy_change_only_detection_by_one():
     context = load_context()
     assert context["counts"] == {
-        "public": 639, "formal": 531, "mapped": 617, "unmapped": 22,
-        "relationship_rows": 1421, "unique_paper_institution_pairs": 1421,
+        "public": 638, "formal": 530, "mapped": 616, "unmapped": 22,
+        "relationship_rows": 1419, "unique_paper_institution_pairs": 1419,
     }
     before = json.loads(previous(PUBLIC_PATHS[0]))["records"]
     old = Counter(label for row in before for key in ("tasks", "research_types") for label in row[key])
@@ -230,4 +230,5 @@ def test_recomputed_corpus_and_taxonomy_change_only_detection_by_one():
     assert old - wave5a == {"detection": 1}
     assert not wave5a - old
     assert current - wave5a == {"localization": 1}
-    assert wave5a - current == {"detection": 2}  # Approved later Wave 5C removals.
+    assert wave5a - current == {"detection": 2, "source_attribution": 1, "method": 1}
+    # Approved Wave 5C task removals and T527 closeout exclusion.

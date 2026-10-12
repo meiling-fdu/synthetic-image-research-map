@@ -12,6 +12,7 @@ from scripts.validate_corpus_quality_audit import load_context
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "805edcc5bbd2fb5c1afda348e900f32f02fcd450"
+PUBLISHED_WAVE5C = "829b3c79e28c02c622dde2129bd6ce7b62eeb27f"
 CASES = {
     "T572": ("curated:5a91cc922c8a3c4c3d0c", "https://arxiv.org/html/2308.11557v1"),
     "T503": ("curated:34fdf09ae334914a2723", "https://arxiv.org/html/2402.10401v2"),
@@ -26,6 +27,11 @@ def previous(path):
     return subprocess.check_output(["git", "show", f"{BASE}:{path}"], cwd=ROOT)
 
 
+def published(path):
+    # Frozen wave endpoint; closeout changes corpus membership separately.
+    return subprocess.check_output(["git", "show", f"{PUBLISHED_WAVE5C}:{path}"], cwd=ROOT)
+
+
 def csvrows(raw):
     return {r["paper_id"]: r for r in csv.DictReader(io.StringIO(raw.decode("utf-8-sig"), newline=""))}
 
@@ -36,7 +42,7 @@ def manifest():
 
 @pytest.mark.parametrize("path", ("data/curated/papers.csv", "data/curated/paper_taxonomy.csv"))
 def test_only_two_authoritative_rows_and_task_provenance_change(path):
-    old_bytes, new_bytes = previous(path), (ROOT / path).read_bytes()
+    old_bytes, new_bytes = previous(path), published(path)
     old, new = csvrows(old_bytes), csvrows(new_bytes)
     assert old.keys() == new.keys()
     assert {pid for pid in old if old[pid] != new[pid]} == PIDS
@@ -89,7 +95,7 @@ def test_manifest_supports_t1_decisions_without_overclaiming_detection():
 def test_public_exports_only_change_target_tasks_and_provenance():
     for path in EXPORTS:
         old = json.loads(previous(path))
-        new = json.loads((ROOT / path).read_text())
+        new = json.loads(published(path))
         assert old.keys() == new.keys()
         for key in old:
             if key not in ("records", "metadata"):
@@ -115,13 +121,15 @@ def test_public_exports_only_change_target_tasks_and_provenance():
 
 def test_counts_debt_and_historical_receipts():
     context = load_context()
-    assert context["counts"] == {"public": 639, "formal": 531, "mapped": 617,
-                                 "unmapped": 22, "relationship_rows": 1421,
-                                 "unique_paper_institution_pairs": 1421}
+    assert context["counts"] == {"public": 638, "formal": 530, "mapped": 616,
+                                 "unmapped": 22, "relationship_rows": 1419,
+                                 "unique_paper_institution_pairs": 1419}
     totals = Counter(label for p in context["papers"].values()
                      for key in ("tasks", "research_types") for label in p[key])
     wave = manifest()
-    assert dict(totals) == wave["taxonomy_after"] == {
+    wave5c_totals = Counter(label for p in json.loads(published(EXPORTS[0]))["records"]
+                           for key in ("tasks", "research_types") for label in p[key])
+    assert dict(wave5c_totals) == wave["taxonomy_after"] == {
         "detection": 587, "source_attribution": 85, "localization": 43,
         "method": 547, "dataset": 132, "benchmark": 88,
         "survey": 20, "analysis_study": 78,
@@ -130,7 +138,9 @@ def test_counts_debt_and_historical_receipts():
     old_totals = Counter(label for p in json.loads(previous(EXPORTS[0]))["records"]
                          for key in ("tasks", "research_types") for label in p[key])
     assert dict(old_totals) == wave["taxonomy_before"]
-    assert old_totals - totals == {"detection": 2} and not totals - old_totals
+    assert old_totals - wave5c_totals == {"detection": 2} and not wave5c_totals - old_totals
+    assert wave5c_totals - totals == {"source_attribution": 1, "method": 1}
+    assert not totals - wave5c_totals  # T527 successor exclusion only.
     old_wave = json.loads(previous("data/raw/corpus_quality_batch_c_wave5b_2026_10_09/evidence_manifest.json"))
     assert old_wave["taxonomy_after"]["detection"] == 589
     r = wave["resolution"]

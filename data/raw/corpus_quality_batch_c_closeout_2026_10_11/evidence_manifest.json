@@ -1,0 +1,344 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-12",
+  "manuscript_review_date": "2026-10-11",
+  "baseline_commit": "829b3c79e28c02c622dde2129bd6ce7b62eeb27f",
+  "decision_authority": "Maintainer conditional approval: exclude T527 if the exact identity-matched manuscript confirms retrieval outside all three core forensic tasks; condition verified.",
+  "source": {
+    "url": "https://gwern.net/doc/ai/anime/danbooru/2024-xia.pdf",
+    "host_class": "third_party_archive",
+    "version": "IEEE author-accepted manuscript, not fully edited",
+    "pages": 5,
+    "bytes": 2574756,
+    "sha256": "a2963dca6785f9531464d321d25a88b43ea4041d4ca26dd1a5e62175a461ee50",
+    "identity_verified": true,
+    "title": "Towards Generated Image Provenance Analysis via Conceptual-Similar-Guided-SLIP Retrieval",
+    "authors": [
+      "Xiaojie Xia",
+      "Liuan Wang",
+      "Jun Sun",
+      "Akira Nakagawa"
+    ],
+    "doi": "10.1109/lsp.2024.3388958",
+    "title_comparison": "Exact words/order, case and line-wrap normalization only",
+    "ieee_final_inspected": false,
+    "final_version_byte_equivalence_verified": false,
+    "appendix_present": false,
+    "pdf_committed": false,
+    "verification": "All five pages read; title, ordered authors and DOI agree with canonical local metadata; accepted-version notice visually verified. PDF retained only in temporary storage."
+  },
+  "scientific_evidence": {
+    "method_locator": "Sections III.A-C, pages 2-3; Figures 1-3",
+    "evaluation_locator": "Section IV.A, Table I, page 3; IV.B and Figure 5, page 4",
+    "retrieval_target": "Training/reference images similar to a generated-image query; image-text representation, visual retrieval and cross-modal re-ranking.",
+    "quantitative_protocol": "Danbooru-derived transformed-image retrieval; Recall@K, not authenticity or generator-identity accuracy.",
+    "table_I_ours": {
+      "R@1": 90.1,
+      "R@5": 96.0,
+      "R@10": 97.35,
+      "R@50": 99.25,
+      "R@100": 100.0
+    },
+    "generated_image_evaluation": "Qualitative examples without ground-truth query/source pairs; similarity does not establish replication causally.",
+    "core_tasks_substantively_evaluated": {
+      "detection": false,
+      "source_attribution": false,
+      "localization": false
+    },
+    "limitation": "Finding applies to the examined five-page accepted manuscript; referenced appendices and final IEEE PDF were not inspected."
+  },
+  "decision": {
+    "review_id": "T527",
+    "identity": "doi:10.1109/lsp.2024.3388958",
+    "disposition": "T527_SCOPE_EXCLUDE",
+    "reason": "TRAINING_IMAGE_PROVENANCE_RETRIEVAL_OUTSIDE_CORE_FORENSIC_SCOPE",
+    "applied": true,
+    "confidence": "high for examined manuscript and current narrow scope; final-version equivalence unverified",
+    "prior_review_state": "SCOPE_OR_TASK_EVIDENCE_REQUIRED",
+    "historical_taxonomy_retained": true
+  },
+  "exclusion": {
+    "exclusion_id": "exclusion:01bbb5fbdfbbaedf2870",
+    "review_decision_id": "review:3781fd7521baf1916ffc",
+    "registry": "data/curated/paper_exclusions.csv",
+    "review_registry": "data/curated/review_decisions.csv",
+    "reason": "out_of_scope",
+    "reversible": true,
+    "physical_deletion": false
+  },
+  "corpus_before": {
+    "public": 639,
+    "formal": 531,
+    "mapped": 617,
+    "unmapped": 22,
+    "relationship_rows": 1421,
+    "unique_paper_institution_pairs": 1421
+  },
+  "corpus_after": {
+    "public": 638,
+    "formal": 530,
+    "mapped": 616,
+    "unmapped": 22,
+    "relationship_rows": 1419,
+    "unique_paper_institution_pairs": 1419
+  },
+  "taxonomy_before": {
+    "detection": 587,
+    "method": 547,
+    "analysis_study": 78,
+    "survey": 20,
+    "source_attribution": 85,
+    "dataset": 132,
+    "benchmark": 88,
+    "localization": 43
+  },
+  "taxonomy_after": {
+    "detection": 587,
+    "method": 546,
+    "analysis_study": 78,
+    "survey": 20,
+    "source_attribution": 84,
+    "dataset": 132,
+    "benchmark": 88,
+    "localization": 43
+  },
+  "removed_public_identity": {
+    "id": null,
+    "paper_id": null,
+    "title": "Towards Generated Image Provenance Analysis via Conceptual-Similar-Guided-SLIP Retrieval",
+    "year": 2024,
+    "doi": "10.1109/lsp.2024.3388958",
+    "openalex_url": "https://openalex.org/W4394862914",
+    "authors": [
+      {
+        "name": "Xiaojie Xia",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "raw_affiliation",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Liuan Wang",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "raw_affiliation",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Jun Sun",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "raw_affiliation",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Akira Nakagawa",
+        "affiliation_indices": [
+          2
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "raw_affiliation",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      }
+    ],
+    "publication_type": "journal",
+    "tasks": [
+      "source_attribution"
+    ],
+    "research_types": [
+      "method"
+    ],
+    "image_scopes": [
+      "fully_generated"
+    ]
+  },
+  "removed_relationships": [
+    {
+      "id": "openalex-candidate-9eddccef9fa8ff84",
+      "paper_id": null,
+      "doi": "10.1109/lsp.2024.3388958",
+      "institution_id": "institution:213a2f107c1f76df",
+      "institution": "Fujitsu (China)",
+      "country": "China"
+    },
+    {
+      "id": "openalex-candidate-0376a6399f02eb49",
+      "paper_id": null,
+      "doi": "10.1109/lsp.2024.3388958",
+      "institution_id": "institution:33d54ba20fb76125",
+      "institution": "Fujitsu (Japan)",
+      "country": "Japan"
+    }
+  ],
+  "retained_file_sha256": {
+    "data/curated/papers.csv": "2d71358418da758a1d257cb5b4bc170d373cff39d2be9d191d4b34f430978b88",
+    "data/curated/paper_taxonomy.csv": "9bdef74c2be67e0c7ee5fc162bcf0514344ba476372ac7d24aa1ebb3e8c6563d",
+    "data/curated/author_institution_mappings.csv": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+    "data/curated/institutions.csv": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
+    "data/raw/openalex/20260619T193231Z_017_generated-image-provenance.json": "21c3cd3d7ab051965388d5a5fd935825773440fe6122ba8175dfd07fce76a516",
+    "data/raw/openalex/20260619T211726Z_017_generated-image-provenance.json": "711546431a4a627210f3cd25acdb87d7d68f5dc068ecef041f2c2f147f75c2b6",
+    "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+  },
+  "resolution": {
+    "total_actions": 41,
+    "resolved_before": 27,
+    "resolved": 28,
+    "external_unresolved": 13,
+    "maintainer_judgments": 0,
+    "total_unresolved": 13,
+    "remaining_external_ids": [
+      "T141",
+      "U010",
+      "R117",
+      "R176",
+      "R376",
+      "R455",
+      "R460",
+      "R535",
+      "R537",
+      "R548",
+      "R549",
+      "R580",
+      "R615"
+    ],
+    "alternative_primary_source_candidates": [
+      "R117",
+      "R176",
+      "R455",
+      "R460",
+      "R535",
+      "R537",
+      "R548",
+      "R549",
+      "R580",
+      "R615"
+    ],
+    "blocked_pending_authoritative_evidence": [
+      "T141",
+      "R376",
+      "U010"
+    ],
+    "scientific_status_of_external_debts": "EVIDENCE_STILL_INSUFFICIENT"
+  },
+  "validation": {
+    "status": "PASSED",
+    "focused": {
+      "passed": 137,
+      "subtests_passed": 12,
+      "failures": 0,
+      "exit_code": 0
+    },
+    "full_suite": {
+      "passed": 1719,
+      "subtests_passed": 389,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "warnings": 2,
+      "exit_code": 0,
+      "runs": 1,
+      "duration_seconds": 304.56,
+      "warnings_description": "Two existing PytestReturnNotNoneWarning warnings in legacy scope-exclusion tests."
+    },
+    "validators": {
+      "curated": {
+        "errors": 0,
+        "warnings": 253
+      },
+      "public_map": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "public_bibliography": {
+        "errors": 0,
+        "warnings": 23
+      },
+      "exclusions": {
+        "errors": 0,
+        "warnings": 2
+      },
+      "key_paper_coverage": {
+        "errors": 0,
+        "exit_code": 0
+      }
+    },
+    "curated_warning_delta": "One expected additional blank-paper_id warning: T527 is a DOI/OpenAlex candidate, so no curated paper ID is fabricated.",
+    "environment": {
+      "python": "3.14",
+      "node": "24.19.0",
+      "pytest": "9.1.1",
+      "localhost_tests_authorized": true,
+      "verified_ignored_operational_inputs": 104,
+      "verified_historical_fixtures": 15
+    },
+    "temporary_receipt_sha256": {
+      "focused.log": "976fd1aa5a1a8e75c1724917a4172a8524324f62b99d09b858bbd8d8b22fb420",
+      "focused.xml": "65ef60bc613fef461b0fd433a04f9c916692cf1f4cd74002eb805017aa016889",
+      "full.log": "d30dc194cff7a9d8aff0d5f39b50b5ec6a848df8b3318041167fbae488c426bc",
+      "full.xml": "80df9bee26471a4516fa605535bb1912b1dd39c923c3e59599f690e73427fd27",
+      "validate-curated.log": "2ada1b1d250eeeef11bfb0e393c86e857247396d217aa1d9ab1209522d4099ee",
+      "validate-public.log": "38ce53685f7c5661bfdcc0a6ebccd9b93b80fd3f0ece78a89146c164f9d49f4d",
+      "validate-exclusions.log": "315e283d967f9443f732d5d5163ddcd1d6f0f909f8fe0b3bb65c927ebd394869",
+      "validate-coverage.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "double-export.json": "08bef2113a60a6ef2a0d8d55f18ab786a63bc56417936be2e233d0426057c209",
+      "double-export-1.log": "96a0a613ca91baaf2972b230cd5650b9ff9e56e4cec4b1303d5dd88adc47c40d",
+      "double-export-2.log": "96a0a613ca91baaf2972b230cd5650b9ff9e56e4cec4b1303d5dd88adc47c40d"
+    },
+    "FULL_SUITE_FAILURES": 0,
+    "export_reproducibility": {
+      "EXPORT_REPRODUCIBLE": 1,
+      "runs": [
+        {
+          "run": 1,
+          "returncode": 0,
+          "changed_paths": []
+        },
+        {
+          "run": 2,
+          "returncode": 0,
+          "changed_paths": []
+        }
+      ],
+      "paths_compared": 4296,
+      "output_sha256": {
+        "web/data/public_preview_papers.json": "6186e841184e976a097d916f796f20401d754e2649c6fddbb524918d3b41aeda",
+        "web/data/public_preview_map_data.json": "0f0908fefcc985ccedc43c4f6754013767ca7128cb7488fc6cd3c700ea780060",
+        "docs/key_paper_coverage_report.md": "b61d2d86174e944a9ab214b31f171aa47ad6894a624a6f454432f34196c3fb1f",
+        "data/manual/key_paper_coverage_report.csv": "81e6323ee23ec8d8bf6ad6d2b5681e272981e92fc84a5930e58fd63b6a484fe5",
+        "docs/public_preview_report.md": "657ffa35cdd8fc4ee849b5962c9c85bb613a4b2ce17c5537231cc250a3773419",
+        "docs/missing_author_mappings_report.md": "01dd11970d436bb8b09cd1d9163a45a1952758c7735730ba891d0556d956c6b3",
+        "data/manual/missing_author_mappings_report.csv": "a868d305873a8559842bcd3c6168b309379a87e0dcd5475d27fe808b06465e27"
+      }
+    },
+    "EXPORT_REPRODUCIBLE": 1
+  },
+  "integrity": {
+    "UNEXPECTED_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "IGNORED_OPERATIONAL_INPUTS_COMMITTED": 0,
+    "frozen_files_verified": 49,
+    "excluded_local_files_verified": 128,
+    "primary_tracked_or_untracked_files_changed": 0,
+    "primary_head": "9e7666169cba098f62f022b7f9f60cdf7c7c72e1",
+    "scientific_public_delta": "Only T527 paper and its two map rows removed; all other records and non-timestamp metadata unchanged."
+  },
+  "publication": {
+    "commit_subject": "fix: resolve T527 scope and close batch-c audit",
+    "remote_sha_verified_after_publication": "Reported separately after the commit and normal fast-forward push; this receipt does not pre-assert publication."
+  },
+  "original_abstract_only_reports_sha256": {
+    "docs/corpus_quality_batch_c_t527_scope_decision_2026_10_11.md": "5d90824f6225aae14357ecdc1b609393257fdc7f22661a29ed39d927a356215d",
+    "docs/corpus_quality_batch_c_closeout_2026_10_11.md": "4998ffe7bcd329f5a3ac1810e39d4a9afd7c63d3a9e9300415f332df50513fdc"
+  }
+}

@@ -170,10 +170,13 @@ def test_residual_triage_has_evidence_and_no_applied_proposals(state):
     assert ledger['reconciliation']['triage_counts'] == {s:counts[s] for s in statuses}
 
 
-def test_t527_unchanged_and_no_new_empty_task_set(state):
+def test_t527_historical_taxonomy_unchanged_and_no_new_empty_task_set(state):
     context, ledger = state
     pid = 'doi:10.1109/lsp.2024.3388958'
-    current = context['taxonomy'][pid]
+    # Closeout excludes T527 publicly while preserving its historical taxonomy.
+    registry = csv_by_key((ROOT / 'data/curated/paper_taxonomy.csv').read_bytes(), 'taxonomy_id')
+    current = registry[pid]
+    assert pid not in context['papers'] and pid not in context['taxonomy']
     old_registry = csv_by_key(previous('data/curated/paper_taxonomy.csv'), 'taxonomy_id')
     assert current == old_registry[current['taxonomy_id']]
     assert current['tasks'] == 'source_attribution'
@@ -238,14 +241,15 @@ def test_recomputed_counts_and_registry_export_synchronization(state):
     # Wave 1 excludes R188; Wave 2 maps U017; Wave 3A adds T246 localization;
     # Wave 3B-2 removes detection from T024 and T136; Wave 4A removes R099 dataset;
     # Wave 5A removes unsupported detection from T611; Wave 5B adds T236 localization;
-    # Wave 5C removes detection from T572 and T503.
-    assert context['counts'] == dict(public=639, formal=531, mapped=617, unmapped=22,
-                                    relationship_rows=1421,
-                                    unique_paper_institution_pairs=1421)
+    # Wave 5C removes detection from T572 and T503; closeout excludes T527.
+    assert context['counts'] == dict(public=638, formal=530, mapped=616, unmapped=22,
+                                    relationship_rows=1419,
+                                    unique_paper_institution_pairs=1419)
     for dimension in ('tasks','research_types'):
         registry_totals = Counter(label for row in context['taxonomy'].values() for label in row[dimension].split(';') if label)
         expected_current = Counter(ledger['taxonomy_after'][dimension])
-        expected_current.subtract({'detection': 6} if dimension == 'tasks' else {'method': 1, 'dataset': 1})
+        expected_current.subtract({'detection': 6, 'source_attribution': 1} if dimension == 'tasks'
+                                  else {'method': 2, 'dataset': 1})
         if dimension == 'tasks':
             expected_current.update({'localization': 2})
         assert registry_totals == +expected_current

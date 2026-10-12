@@ -166,15 +166,15 @@ def test_public_exports_change_only_t236_tasks_and_review_provenance(path):
 
 def test_corpus_and_taxonomy_counts_recompute_from_current_export():
     context = load_context()
-    assert context["counts"] == {"public": 639, "formal": 531, "mapped": 617,
-                                 "unmapped": 22, "relationship_rows": 1421,
-                                 "unique_paper_institution_pairs": 1421}
+    assert context["counts"] == {"public": 638, "formal": 530, "mapped": 616,
+                                 "unmapped": 22, "relationship_rows": 1419,
+                                 "unique_paper_institution_pairs": 1419}
     totals = Counter(label for p in context["papers"].values()
                      for key in ("tasks", "research_types") for label in p[key])
     assert manifest()["taxonomy_after"]["detection"] == 589  # Published Wave 5B receipt.
     assert dict(totals) == {
-        "detection": 587, "source_attribution": 85, "localization": 43,
-        "method": 547, "dataset": 132, "benchmark": 88,
+        "detection": 587, "source_attribution": 84, "localization": 43,
+        "method": 546, "dataset": 132, "benchmark": 88,
         "survey": 20, "analysis_study": 78,
     }
     old = Counter(label for p in json.loads(previous(PUBLIC[0]))["records"]
@@ -183,6 +183,11 @@ def test_corpus_and_taxonomy_counts_recompute_from_current_export():
     previous_t527 = [x for x in json.loads(previous(PUBLIC[0]))["records"]
                      if x.get("doi") == "10.1109/lsp.2024.3388958"]
     assert len(previous_t527) == 1
-    assert context["papers"][T527]["tasks"] == previous_t527[0]["tasks"]
+    assert T527 not in context["papers"]  # Accepted successor scope exclusion.
+    retained = [r for r in rows((ROOT / "data/curated/paper_taxonomy.csv").read_bytes())
+                if r["taxonomy_id"] == T527]
+    assert len(retained) == 1
+    assert retained[0]["tasks"].split(";") == previous_t527[0]["tasks"]
     assert totals - old == {"localization": 1}
-    assert old - totals == {"detection": 2}  # Later Wave 5C task corrections.
+    assert old - totals == {"detection": 2, "source_attribution": 1, "method": 1}
+    # Later Wave 5C task corrections and T527 closeout exclusion.

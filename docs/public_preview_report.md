@@ -11,7 +11,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-10-11T06:38:18Z |
+| public_preview_generated_at | 2026-10-12T03:46:53Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1421 |
-| Unique mapped papers | 617 |
-| Unique institutions | 567 |
+| Map records | 1419 |
+| Unique mapped papers | 616 |
+| Unique institutions | 565 |
 | Countries | 47 |
 | arXiv/preprint records | 780 |
-| Records with DOI | 1097 |
-| Records with venue | 1417 |
+| Records with DOI | 1095 |
+| Records with venue | 1415 |
 | Records missing venue | 4 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -37,7 +37,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | Task | Records |
 | --- | ---: |
 | detection | 569 |
-| source_attribution | 81 |
+| source_attribution | 80 |
 | localization | 38 |
 
 ## Records by Year
@@ -47,7 +47,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | 2027 | 1 |
 | 2026 | 230 |
 | 2025 | 182 |
-| 2024 | 104 |
+| 2024 | 103 |
 | 2023 | 43 |
 | 2022 | 15 |
 | 2021 | 19 |
@@ -74,7 +74,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Country | Records |
 | --- | ---: |
-| China | 741 |
+| China | 740 |
 | United States | 189 |
 | Italy | 91 |
 | India | 55 |
@@ -104,7 +104,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1330 |
+| high | 1328 |
 | medium | 91 |
 
 ## Potential quality issues
