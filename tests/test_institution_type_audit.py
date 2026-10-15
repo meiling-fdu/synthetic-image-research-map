@@ -1,6 +1,8 @@
 import csv
 import json
 import subprocess
+import sys
+import tempfile
 import unittest
 from collections import Counter
 from pathlib import Path
@@ -158,11 +160,19 @@ class InstitutionTypeAuditTests(unittest.TestCase):
         self.assertTrue(cifake)
 
     def test_audit_output_is_deterministic_and_has_no_pending_high_confidence(self):
-        command = ["python3", "scripts/audit_institution_types.py", "--check"]
-        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
-        first = (ROOT / "data/processed/institution_type_audit.csv").read_text(encoding="utf-8")
-        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
-        second = (ROOT / "data/processed/institution_type_audit.csv").read_text(encoding="utf-8")
+        historical_report = ROOT / "data/processed/institution_type_audit.csv"
+        original = historical_report.read_bytes()
+        # --check still writes its report; do not overwrite a frozen receipt's
+        # input while checking current audit determinism.
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "institution_type_audit.csv"
+            command = [sys.executable, "scripts/audit_institution_types.py", "--check",
+                       "--output", str(output)]
+            subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+            first = output.read_text(encoding="utf-8")
+            subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+            second = output.read_text(encoding="utf-8")
+        self.assertEqual(historical_report.read_bytes(), original)
         self.assertEqual(first, second)
         rows = list(csv.DictReader(first.splitlines()))
         self.assertFalse([

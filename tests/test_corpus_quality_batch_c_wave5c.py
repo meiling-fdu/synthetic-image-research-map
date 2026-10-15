@@ -1,4 +1,9 @@
 """Wave 5C task adjudication and historical-boundary regression coverage."""
+from tests.baseline_expectations import (
+    CURRENT_CORPUS_COUNTS,
+    CURRENT_TAXONOMY_TOTALS,
+)
+
 from collections import Counter
 import csv
 import io
@@ -121,9 +126,7 @@ def test_public_exports_only_change_target_tasks_and_provenance():
 
 def test_counts_debt_and_historical_receipts():
     context = load_context()
-    assert context["counts"] == {"public": 638, "formal": 530, "mapped": 616,
-                                 "unmapped": 22, "relationship_rows": 1419,
-                                 "unique_paper_institution_pairs": 1419}
+    assert context["counts"] == CURRENT_CORPUS_COUNTS
     totals = Counter(label for p in context["papers"].values()
                      for key in ("tasks", "research_types") for label in p[key])
     wave = manifest()
@@ -139,8 +142,10 @@ def test_counts_debt_and_historical_receipts():
                          for key in ("tasks", "research_types") for label in p[key])
     assert dict(old_totals) == wave["taxonomy_before"]
     assert old_totals - wave5c_totals == {"detection": 2} and not wave5c_totals - old_totals
-    assert wave5c_totals - totals == {"source_attribution": 1, "method": 1}
-    assert not totals - wave5c_totals  # T527 successor exclusion only.
+    assert totals == CURRENT_TAXONOMY_TOTALS
+    assert wave5c_totals - totals == {"detection": 1, "source_attribution": 1,
+                                    "method": 2, "analysis_study": 1}
+    assert not totals - wave5c_totals  # T527 and B1A L015/P562 successor exclusions.
     old_wave = json.loads(previous("data/raw/corpus_quality_batch_c_wave5b_2026_10_09/evidence_manifest.json"))
     assert old_wave["taxonomy_after"]["detection"] == 589
     r = wave["resolution"]

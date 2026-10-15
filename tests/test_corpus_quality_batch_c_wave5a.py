@@ -1,5 +1,10 @@
 """Regression boundaries for the two accepted Wave 5A task decisions."""
 
+from tests.baseline_expectations import (
+    CURRENT_CORPUS_COUNTS,
+    CURRENT_TAXONOMY_TOTALS,
+)
+
 from collections import Counter
 import csv
 from functools import lru_cache
@@ -212,10 +217,7 @@ def test_batch_c_remaining_ledger_reconciles_exact_identities():
 
 def test_recomputed_corpus_and_taxonomy_change_only_detection_by_one():
     context = load_context()
-    assert context["counts"] == {
-        "public": 638, "formal": 530, "mapped": 616, "unmapped": 22,
-        "relationship_rows": 1419, "unique_paper_institution_pairs": 1419,
-    }
+    assert context["counts"] == CURRENT_CORPUS_COUNTS
     before = json.loads(previous(PUBLIC_PATHS[0]))["records"]
     old = Counter(label for row in before for key in ("tasks", "research_types") for label in row[key])
     wave5a = Counter(label for row in json.loads(adjudicated(PUBLIC_PATHS[0]))["records"]
@@ -229,6 +231,8 @@ def test_recomputed_corpus_and_taxonomy_change_only_detection_by_one():
                       "survey": 20, "analysis_study": 78}
     assert old - wave5a == {"detection": 1}
     assert not wave5a - old
+    assert current == CURRENT_TAXONOMY_TOTALS
     assert current - wave5a == {"localization": 1}
-    assert wave5a - current == {"detection": 2, "source_attribution": 1, "method": 1}
-    # Approved Wave 5C task removals and T527 closeout exclusion.
+    assert wave5a - current == {"detection": 3, "source_attribution": 1,
+                                "method": 2, "analysis_study": 1}
+    # Approved Wave 5C task removals, T527 closeout, and B1A L015/P562 exclusions.

@@ -1,5 +1,10 @@
 """Final Wave 5B boundaries: one T236 task edit, one T137 no-op, and ledger accounting."""
 
+from tests.baseline_expectations import (
+    CURRENT_CORPUS_COUNTS,
+    CURRENT_TAXONOMY_TOTALS,
+)
+
 from collections import Counter
 import csv
 from functools import lru_cache
@@ -166,17 +171,11 @@ def test_public_exports_change_only_t236_tasks_and_review_provenance(path):
 
 def test_corpus_and_taxonomy_counts_recompute_from_current_export():
     context = load_context()
-    assert context["counts"] == {"public": 638, "formal": 530, "mapped": 616,
-                                 "unmapped": 22, "relationship_rows": 1419,
-                                 "unique_paper_institution_pairs": 1419}
+    assert context["counts"] == CURRENT_CORPUS_COUNTS
     totals = Counter(label for p in context["papers"].values()
                      for key in ("tasks", "research_types") for label in p[key])
     assert manifest()["taxonomy_after"]["detection"] == 589  # Published Wave 5B receipt.
-    assert dict(totals) == {
-        "detection": 587, "source_attribution": 84, "localization": 43,
-        "method": 546, "dataset": 132, "benchmark": 88,
-        "survey": 20, "analysis_study": 78,
-    }
+    assert dict(totals) == CURRENT_TAXONOMY_TOTALS
     old = Counter(label for p in json.loads(previous(PUBLIC[0]))["records"]
                   for key in ("tasks", "research_types") for label in p[key])
     assert old == manifest()["taxonomy_before"]
@@ -189,5 +188,6 @@ def test_corpus_and_taxonomy_counts_recompute_from_current_export():
     assert len(retained) == 1
     assert retained[0]["tasks"].split(";") == previous_t527[0]["tasks"]
     assert totals - old == {"localization": 1}
-    assert old - totals == {"detection": 2, "source_attribution": 1, "method": 1}
-    # Later Wave 5C task corrections and T527 closeout exclusion.
+    assert old - totals == {"detection": 3, "source_attribution": 1,
+                            "method": 2, "analysis_study": 1}
+    # Later Wave 5C task corrections, T527 closeout, and B1A L015/P562 exclusions.

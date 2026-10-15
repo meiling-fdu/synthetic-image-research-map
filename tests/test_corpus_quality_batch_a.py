@@ -1,4 +1,8 @@
 """Approved Batch A outcomes and failure cases for scoped affiliation repairs."""
+from tests.baseline_expectations import (
+    CURRENT_TAXONOMY_SUPPRESSED_ROWS,
+)
+
 import copy
 import json
 
@@ -146,7 +150,7 @@ def test_current_taxonomy_round_trip_preserves_all_rows(tmp_path):
     summary=apply_paper_taxonomy_registry(current,maps,rebuilt,read_exclusion_rows())
     assert summary['public_papers_matched']==len(current)
     assert summary['map_records_matched']==len(maps)
-    assert summary['registry_rows_suppressed_by_active_exclusion']==45  # T527 retained historically.
+    assert summary['registry_rows_suppressed_by_active_exclusion'] == CURRENT_TAXONOMY_SUPPRESSED_ROWS
 
 
 def test_generated_key_paper_reports_are_current_and_scoped():

@@ -159,7 +159,19 @@ def verify_current_curation():
     assert sum(counts.values()) == totals['key_papers'] == 299
     assert all(totals[k] == counts[k] for k in audit.ALLOWED_STATUSES)
     current_public = json.loads((ROOT / 'web/data/public_preview_papers.json').read_text())['records']
-    assert totals['public_papers'] == len(current_public) and totals['excluded'] == 13
+    assert totals['public_papers'] == len(current_public)
+    # Current scope can change after the frozen primary-curation audit. Verify
+    # each live excluded checklist row against today's active registry instead
+    # of applying that historical excluded-row total to the current export.
+    active_ids = {row['exclusion_id'] for row in active_exclusions(
+        audit.read_exclusion_rows(ROOT / audit.EXCLUSIONS_PATH))}
+    for row in rows:
+        if row['coverage_status'] != 'excluded':
+            continue
+        evidence = json.loads(row['exclusion_evidence'])
+        assert evidence and all(item['exclusion_id'] in active_ids for item in evidence)
+        assert row['in_public_preview_paper_list'] == 'no'
+        assert row['map_record_count'] == '0'
     assert totals['candidate_only'] == totals['missing_from_candidate_pool'] == 0
     decisions = audit.load_json_records(ROOT / audit.RECONCILIATION_PATH)
     additions = [d['matched_record']['paper_id'] for d in decisions if d['action'] == 'added_needs_review']

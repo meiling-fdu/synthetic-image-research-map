@@ -1,5 +1,11 @@
 """Accepted T527 scope exclusion, retained provenance, and Batch C closeout."""
 
+from tests.baseline_expectations import (
+    CURRENT_CORPUS_COUNTS,
+    CURRENT_EMPTY_CORE_TASK_TITLES,
+    CURRENT_TAXONOMY_TOTALS,
+)
+
 from collections import Counter
 import csv
 from functools import lru_cache
@@ -19,11 +25,13 @@ from scripts.paper_exclusions import (
     read_exclusion_rows,
     record_is_excluded,
 )
+from scripts.curated_export import PaperIdentityCache, PaperIdentityIndex
 from scripts.review_decisions import read_review_decisions
 from scripts.validate_corpus_quality_audit import load_context
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "829b3c79e28c02c622dde2129bd6ce7b62eeb27f"
+PUBLISHED_CLOSEOUT = "b41a506453cd0a4c985bf7d1a63e6b2a2d391539"
 DOI = "10.1109/lsp.2024.3388958"
 TAXONOMY_ID = "doi:" + DOI
 OPENALEX = "https://openalex.org/W4394862914"
@@ -38,6 +46,11 @@ REMAINING = {"T141", "U010", "R117", "R176", "R376", "R455", "R460", "R535",
 @lru_cache
 def previous(path):
     return subprocess.check_output(["git", "show", f"{BASE}:{path}"], cwd=ROOT)
+
+
+@lru_cache
+def published(path):
+    return subprocess.check_output(["git", "show", f"{PUBLISHED_CLOSEOUT}:{path}"], cwd=ROOT)
 
 
 def csvrows(raw):
@@ -67,7 +80,11 @@ def test_one_durable_exclusion_and_review_decision_preserve_prior_decisions():
     assert "T527_SCOPE_EXCLUDE" in row["review_note"] and REASON in row["review_note"]
     assert row["created_at"] and row["created_by"]
     assert not row["restored_at"] and not row["restore_note"]
-    assert [r for r in read_exclusion_rows() if r != row] == csvrows(previous("data/curated/paper_exclusions.csv"))
+    published_exclusions = csvrows(published("data/curated/paper_exclusions.csv"))
+    assert row in published_exclusions
+    assert [r for r in published_exclusions if r != row] == csvrows(previous("data/curated/paper_exclusions.csv"))
+    # Later scope decisions append rows; every published closeout decision survives.
+    assert read_exclusion_rows()[:len(published_exclusions)] == published_exclusions
 
     decisions = read_review_decisions()
     selected = [r for r in decisions if normalize_doi(r.get("doi")) == DOI]
@@ -76,7 +93,10 @@ def test_one_durable_exclusion_and_review_decision_preserve_prior_decisions():
     assert decision["target_type"] == "paper"
     assert decision["action"] == "exclude_paper_scope"
     assert REASON in decision["review_note"]
-    assert [r for r in decisions if r != decision] == csvrows(previous("data/curated/review_decisions.csv"))
+    published_decisions = csvrows(published("data/curated/review_decisions.csv"))
+    assert decision in published_decisions
+    assert [r for r in published_decisions if r != decision] == csvrows(previous("data/curated/review_decisions.csv"))
+    assert decisions[:len(published_decisions)] == published_decisions
 
 
 def test_strong_identity_exclusion_is_reversible_without_relabeling():
@@ -120,13 +140,18 @@ def test_t527_taxonomy_and_source_provenance_survive_public_exclusion():
     context = load_context()
     assert TAXONOMY_ID not in context["papers"] and TAXONOMY_ID not in context["taxonomy"]
     prior_empty = {r["title"] for r in json.loads(previous(PUBLIC[0]))["records"] if not r["tasks"]}
-    assert {r["title"] for r in context["papers"].values() if not r["tasks"]} == prior_empty
+    closeout_empty = {r["title"] for r in json.loads(published(PUBLIC[0]))["records"] if not r["tasks"]}
+    assert closeout_empty == prior_empty
+    assert {r["title"] for r in context["papers"].values() if not r["tasks"]} == CURRENT_EMPTY_CORE_TASK_TITLES
+    assert prior_empty - CURRENT_EMPTY_CORE_TASK_TITLES == {
+        '"That\'s Another Doom I Haven\'t Thought About": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation'}
+    assert not CURRENT_EMPTY_CORE_TASK_TITLES - prior_empty
 
 
 @pytest.mark.parametrize("path,removed_count", ((PUBLIC[0], 1), (PUBLIC[1], 2)))
-def test_public_changes_remove_only_t527_and_preserve_every_other_record(path, removed_count):
+def test_published_closeout_removes_only_t527_and_preserves_every_other_record(path, removed_count):
     old = json.loads(previous(path))["records"]
-    new = json.loads((ROOT / path).read_text())["records"]
+    new = json.loads(published(path))["records"]
     target = [r for r in old if matches(r)]
     assert len(target) == removed_count
     assert not any(matches(r) for r in new)
@@ -138,10 +163,33 @@ def test_public_changes_remove_only_t527_and_preserve_every_other_record(path, r
 
 def test_corpus_and_overlapping_taxonomy_counts_are_recomputed():
     context = load_context()
-    assert context["counts"] == {"public": 638, "formal": 530, "mapped": 616,
-                                 "unmapped": 22, "relationship_rows": 1419,
-                                 "unique_paper_institution_pairs": 1419}
-    totals = Counter(label for paper in context["papers"].values()
+    assert context["counts"] == CURRENT_CORPUS_COUNTS
+    current_totals = Counter(label for paper in context["papers"].values()
+                             for key in ("tasks", "research_types") for label in paper[key])
+    assert current_totals == CURRENT_TAXONOMY_TOTALS
+
+    # Recompute the immutable T527 endpoint independently of later scope decisions.
+    papers, maps = (json.loads(published(path))["records"] for path in PUBLIC)
+    index = PaperIdentityIndex(csvrows(published("data/curated/paper_taxonomy.csv")), PaperIdentityCache())
+    paper_ids = set()
+    pairs = set()
+    for paper in papers:
+        identities = index.matches(paper)
+        assert len(identities) == 1
+        paper_ids.add(identities[0]["taxonomy_id"])
+    for row in maps:
+        identities = index.matches(row)
+        assert len(identities) == 1
+        pairs.add((identities[0]["taxonomy_id"], row["institution_id"]))
+    mapped_ids = {pid for pid, _ in pairs}
+    assert mapped_ids <= paper_ids and len(paper_ids) == len(papers)
+    assert {"public": len(papers),
+            "formal": sum(p["publication_type"] != "preprint" for p in papers),
+            "mapped": len(mapped_ids), "unmapped": len(paper_ids - mapped_ids),
+            "relationship_rows": len(maps), "unique_paper_institution_pairs": len(pairs)} == {
+        "public": 638, "formal": 530, "mapped": 616, "unmapped": 22,
+        "relationship_rows": 1419, "unique_paper_institution_pairs": 1419}
+    totals = Counter(label for paper in papers
                      for key in ("tasks", "research_types") for label in paper[key])
     assert totals == {"detection": 587, "source_attribution": 84, "localization": 43,
                       "method": 546, "dataset": 132, "benchmark": 88,

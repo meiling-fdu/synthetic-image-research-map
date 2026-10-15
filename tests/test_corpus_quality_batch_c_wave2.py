@@ -1,5 +1,11 @@
 """Focused regression checks for finalized Batch C Wave 2 adjudication."""
 
+from tests.baseline_expectations import (
+    CURRENT_CORPUS_COUNTS,
+    TASK_TOTALS,
+    RESEARCH_TYPE_TOTALS,
+)
+
 from collections import Counter
 import csv
 from functools import lru_cache
@@ -150,23 +156,10 @@ def test_wave2_ledger_reconciles_both_actions_and_remaining_batch_c():
 
 def test_exact_corpus_and_unchanged_taxonomy_counts():
     context = load_context()
-    assert context["counts"] == {
-        "public": 638,
-        "formal": 530,
-        "mapped": 616,
-        "unmapped": 22,
-        "relationship_rows": 1419,
-        "unique_paper_institution_pairs": 1419,
-    }
+    assert context["counts"] == CURRENT_CORPUS_COUNTS
     tasks = Counter(label for row in context["papers"].values() for label in row["tasks"])
     research_types = Counter(
         label for row in context["papers"].values() for label in row["research_types"]
     )
-    assert tasks == {"detection": 587, "source_attribution": 84, "localization": 43}
-    assert research_types == {
-        "method": 546,
-        "dataset": 132,
-        "benchmark": 88,
-        "survey": 20,
-        "analysis_study": 78,
-    }
+    assert tasks == TASK_TOTALS
+    assert research_types == RESEARCH_TYPE_TOTALS

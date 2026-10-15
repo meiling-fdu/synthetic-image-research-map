@@ -61,11 +61,18 @@ def test_current_reconciliation_counts_existing_exclusions_instead_of_missing_pa
     from scripts.verify_key_paper_reconciliation import verify_current_curation
     report = verify_current_curation()
     totals = report['final_audit']
-    assert totals['bibliography_covered'] == 284
-    assert totals['covered_as_map_marker'] == 283
+    assert totals['bibliography_covered'] == 283
+    assert totals['covered_as_map_marker'] == 282
     assert totals['covered_in_public_preview_paper_list'] == 1
-    assert totals['excluded'] == 13
+    assert totals['excluded'] == 14
     assert totals['possible_title_match_failure'] == 2
+    # The approved B1A exclusion changes only L015's current checklist status.
+    from scripts import audit_key_paper_coverage as coverage
+    current_rows = coverage.load_csv(coverage.ROOT / coverage.OUT_PATH)
+    l015 = next(row for row in current_rows if row['checklist_row'] == '270')
+    assert l015['coverage_status'] == 'excluded'
+    assert {item['exclusion_id'] for item in json.loads(l015['exclusion_evidence'])} == {
+        'exclusion:7e50c5a465577f9b9fac'}
     for row in report['exclusion_identity_traces']:
         assert row['exclusion_effective_date'].startswith('2026-07-13')
         assert row['exclusion_match_identity'].startswith('openalex:')

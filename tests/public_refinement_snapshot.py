@@ -109,11 +109,32 @@ def assert_public_refinement_snapshot():
     return expected
 
 
+# Explicitly reviewed B1A successor, not a blanket exception for test files.
+# The predecessor is pinned to the published pre-B1A commit. The new digest
+# covers the complete reviewed test, including its original assertions.
+B1A_TEST_SUCCESSOR = {
+    "path": "tests/test_institution_type_audit.py",
+    "predecessor_commit": "91de08a904847c47f60eb3dfd124e3db3300a459",
+    "predecessor_sha256": "319d131f4e1b5a4354e52fd190f1f96859815661e4c101159a1a076502130c9b",
+    "reviewed_sha256": "b6e31618daacbd3e0bea7919fee7ebcdd1805cb78e7b7aa99a226f0bd2b3b1d6",
+}
+
+
+def assert_b1a_test_successor():
+    entry = B1A_TEST_SUCCESSOR
+    relative = entry["path"]
+    assert committed_digest(entry["predecessor_commit"], relative) == entry["predecessor_sha256"], relative
+    actual = hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
+    assert actual == entry["reviewed_sha256"], "Unreviewed B1A test successor: " + relative
+    return {relative: actual}
+
+
 def assert_historical_integrity_with_public_refinement(integrity, baseline):
-    expected = assert_public_refinement_snapshot()
+    expected = {**assert_public_refinement_snapshot(), **assert_b1a_test_successor()}
     result = integrity()
     # The original audit still verifies every protected path and its prior
     # data-migration receipts. Only these byte-checked UI/test changes are new.
+    # Keep exact path equality: any additional path still fails both guards.
     changed = sorted(
         relative
         for relative, digest in expected.items()

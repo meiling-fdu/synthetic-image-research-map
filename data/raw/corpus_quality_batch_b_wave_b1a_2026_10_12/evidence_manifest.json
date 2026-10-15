@@ -1,0 +1,1601 @@
+{
+  "schema_version": 1,
+  "wave": "BATCH_B_WAVE_B1A",
+  "artifact_date": "2026-10-12",
+  "review_completed_date": "2026-10-13",
+  "timezone": "Asia/Shanghai",
+  "status": "ADJUDICATED_REVERSIBLE_EXCLUSIONS_APPLIED",
+  "manual_review": true,
+  "baseline": {
+    "intake_commit": "91de08a904847c47f60eb3dfd124e3db3300a459",
+    "subject": "docs: add batch-b intake and priority triage",
+    "published": true,
+    "remote_verification": "Prior successful normal push and fetch reused; continuation git ls-remote origin refs/heads/main also returned intake commit. No publication repeated.",
+    "remote_head": "91de08a904847c47f60eb3dfd124e3db3300a459",
+    "ahead": 0,
+    "behind": 0,
+    "committed_paths": [
+      "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md"
+    ],
+    "intake_report_sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+    "scientific_baseline_commit": "b41a506453cd0a4c985bf7d1a63e6b2a2d391539"
+  },
+  "scope": {
+    "selected_review_ids": [
+      "L015",
+      "P562"
+    ],
+    "authoritative_remediation_authorized": true,
+    "other_cases_reviewed": false,
+    "exports_regenerated": true,
+    "full_suite_run": true,
+    "pdfs_committed": false
+  },
+  "policy_source": {
+    "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+    "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+    "policies": [
+      {
+        "policy_id": "T1",
+        "decision": "ACCEPT",
+        "date": "2026-10-05",
+        "final_rule": "source_attribution does not imply detection. Assign detection only when the paper explicitly performs an authenticity / real-versus-generated task. Classification among already-synthetic generators is attribution only."
+      },
+      {
+        "policy_id": "T2",
+        "decision": "ACCEPT",
+        "date": "2026-10-05",
+        "final_rule": "localization requires an evaluated spatial forensic prediction task such as pixel-, mask-, patch-, region-, or equivalent spatial prediction of synthetic/generated/edited content. Artifact segmentation qualifies. Attention maps, saliency maps, explainability heatmaps, or visualization alone do not qualify."
+      },
+      {
+        "policy_id": "T3",
+        "decision": "MODIFY_AND_ACCEPT",
+        "date": "2026-10-05",
+        "final_rule": "Every public paper must remain connected to at least one core forensic task represented by the map: detection, source_attribution, or localization. If careful review establishes that none applies, the record requires scope review rather than an empty task set."
+      }
+    ],
+    "interpretation": "Use finalized T3 MODIFY_AND_ACCEPT, not the superseded permissive proposal. Lack of a supported core task triggers scope review. These evidence conclusions propose reversible exclusion; they neither create a new policy nor authorize a placeholder task. Human-study methodology alone is not an exclusion criterion."
+  },
+  "retrieval_budget": {
+    "maximum_full_manuscripts": 2,
+    "full_manuscripts_retrieved": 2,
+    "full_manuscripts_reviewed": 2,
+    "per_case": {
+      "L015": 1,
+      "P562": 1
+    },
+    "full_manuscript_retries": 0,
+    "separate_supplements": 0,
+    "new_manuscript_retrievals_on_resume": 0
+  },
+  "records": [
+    {
+      "review_id": "L015",
+      "canonical_identity": {
+        "canonical_paper_id": "curated:75cbd31c9946c7eb7977",
+        "canonical_title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation",
+        "doi": "10.1145/3772318.3791006",
+        "arxiv_id": "2505.22845",
+        "openalex_url": "https://openalex.org/W4416604008",
+        "ordered_authors": [
+          "Sandra Höltervennhoff",
+          "Jonas Ricker",
+          "Maike M. Raphael",
+          "Charlotte Schwedes",
+          "Rebecca Weil",
+          "Asja Fischer",
+          "Thorsten Holz",
+          "Lea Schönherr",
+          "Sascha Fahl"
+        ],
+        "author_count": 9,
+        "publication_year": "2026",
+        "venue": "CHI Conference on Human Factors in Computing Systems",
+        "venue_track": "main",
+        "publication_type": "conference",
+        "current_paper_url": "https://doi.org/10.1145/3772318.3791006",
+        "publisher_deposit_identity_check": "DOI, normalized title and all nine ordered names agree; checklist quote/apostrophe/capitalization variants already reconciled as same paper."
+      },
+      "original_review": {
+        "ledger": "data/raw/corpus_quality_audit_2026_10_04/relationship_review.json",
+        "locator": "records[review_id=L015]",
+        "issue": "PUBLIC_INSTITUTION_NOT_IN_CURATED_REGISTRY",
+        "question": "Retrieve the paper-time affiliation block for each listed public institution. Verify whether the name is an institution, a lab, a funder or an extraction error before proposing any registry/relationship change.",
+        "flagged_institution_ids": [
+          "institution:ac9dc63b4bd4669a",
+          "institution:aeb3cd858bb22d74"
+        ],
+        "flagged_names": [
+          "Leibniz University Hannover",
+          "Hannover Re (Germany)"
+        ],
+        "status": "PENDING_NOT_ADJUDICATED",
+        "post_exclusion_applicability": "No longer applicable to active public corpus; original affiliation/year uncertainty retained unresolved for historical provenance. Original ledger bytes and status unchanged."
+      },
+      "scope_question": "Does this existing empty-task public analysis study independently perform and evaluate a core forensic task, or does it study claim belief and AI-label perceptions outside the map scope?",
+      "policy_ids": [
+        "T1",
+        "T2",
+        "T3"
+      ],
+      "empty_task_history": {
+        "source_path": "data/curated/paper_taxonomy.csv",
+        "locator": "taxonomy_id=paper_id:curated:75cbd31c9946c7eb7977",
+        "reason": "No controlled detection, source-attribution, or localization task applies to this study.",
+        "evidence_tier": "reused_audit+abstract",
+        "evidence_source": "https://doi.org/10.1145/3772318.3791006",
+        "audited_at": "2026-09-04",
+        "scope_history": "Legacy July data assigned detection; September taxonomy migration deliberately retained an empty core set and in_scope analysis_study, on reused audit and abstract evidence. October locked T3 explicitly routed this baseline record to scope review without changing its labels. Empty tasks are an intentional reviewed legacy state, not an export omission.",
+        "historical_git_rows": [
+          {
+            "commit": "cb50812922a57df6a77a5701a7a3de50cc6e9cb2",
+            "path": "data/curated/papers.csv",
+            "row_paper_id": "curated:75cbd31c9946c7eb7977",
+            "task_or_tasks": "detection",
+            "scope_status": "in_scope",
+            "research_type_or_entry_type": "analysis",
+            "tasks_evidence_tier": null,
+            "tasks_review_reason": null
+          },
+          {
+            "commit": "02a324cb8ebc238a9332cb91aabbd902e2bd4090",
+            "path": "data/curated/papers.csv",
+            "row_paper_id": "curated:75cbd31c9946c7eb7977",
+            "task_or_tasks": "",
+            "scope_status": "in_scope",
+            "research_type_or_entry_type": "analysis_study",
+            "tasks_evidence_tier": null,
+            "tasks_review_reason": null
+          },
+          {
+            "commit": "02a324cb8ebc238a9332cb91aabbd902e2bd4090",
+            "path": "data/curated/paper_taxonomy.csv",
+            "row_paper_id": "curated:75cbd31c9946c7eb7977",
+            "task_or_tasks": "",
+            "scope_status": null,
+            "research_type_or_entry_type": "analysis_study",
+            "tasks_evidence_tier": "reused_audit+abstract",
+            "tasks_review_reason": "No controlled detection, source-attribution, or localization task applies to this study."
+          }
+        ]
+      },
+      "local_evidence_first": {
+        "sufficient_for_identity_and_policy": true,
+        "sufficient_for_scientific_scope": false,
+        "prior_evidence_tier": "reused_audit+abstract",
+        "missing_evidence": "Complete methods, dependent variables, scored ground truth, results and any independent forensic protocol.",
+        "sources": [
+          {
+            "path": "docs/paper_taxonomy_migration_audit_2026-09-04.md",
+            "line": 151,
+            "section": "Eight originally reviewed empty-task records",
+            "finding": "L015 row at155 retained empty tasks with analysis-of-labels/human-recognition basis."
+          },
+          {
+            "path": "docs/corpus_quality_batch_c_decision_sheet_2026_10_05.md",
+            "line": 325,
+            "section": "Final maintainer-approved policy ledger",
+            "finding": "Final T3 exact wording; historical permissive proposal superseded."
+          },
+          {
+            "path": "docs/corpus_quality_batch_c_decision_sheet_2026_10_05.md",
+            "line": 356,
+            "finding": "L015 explicitly named as existing empty-task baseline requiring scope review."
+          },
+          {
+            "path": "data/manual/key_paper_reconciliation.json",
+            "locator": "records[checklist_row=270]",
+            "finding": "Crossref DOI, arXiv identity and nine authors confirm quote/apostrophe and appended CHI citation variants.",
+            "action": "resolve_checklist_identity_only"
+          },
+          {
+            "path": "docs/key_paper_reconciliation.md",
+            "line": 120,
+            "finding": "Row270 identity-only title-variant reconciliation."
+          },
+          {
+            "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+            "line": 123,
+            "finding": "Published first-wave scope preflight; no full-method verification claimed."
+          },
+          {
+            "path": "data/raw/key_paper_reconciliation_2026_09_08/crossref_270.json",
+            "locator": "message.{DOI,title,author,link,resource,page}",
+            "finding": "Publisher-deposited identity/ordered authors/full-PDF pointer; does not contain a complete manuscript."
+          }
+        ]
+      },
+      "primary_source": {
+        "source_id": "L015-primary-1",
+        "role": "complete primary author manuscript",
+        "url": "https://arxiv.org/pdf/2505.22845v2",
+        "identity_landing_url": "https://arxiv.org/abs/2505.22845",
+        "version": "arXiv:2505.22845v2",
+        "version_date": "2026-03-09",
+        "version_status": "AUTHOR_VERSION",
+        "retrieved_at_utc": "2026-10-13T01:42:19Z",
+        "retrieval_timestamp_basis": "saved HTTP Date header",
+        "http_status": 200,
+        "retrieval_attempts": 1,
+        "retry_count": 0,
+        "pdf_pages": 32,
+        "local_temporary_path": "/private/tmp/batch-b-wave-b1a-2026-10-12/l015-arxiv-v2.pdf",
+        "bytes": 3296012,
+        "sha256": "e6bac57d853d5d7b33c8b068eafd128885de79bbe393baf93f016563f5aa3e8c",
+        "identity_verification": {
+          "title": "Matches canonical title, allowing capitalization and typographic punctuation.",
+          "authors": "All nine ordered authors verified on PDF page 1.",
+          "doi": "10.1145/3772318.3791006 printed on PDF page 1.",
+          "arxiv": "Versioned identifier and date printed on page 1.",
+          "publication_relation": "Page 1 identifies the definitive CHI 2026 version and DOI."
+        },
+        "version_limitations": [
+          "This is an author version; the publisher Version of Record was not retrieved or compared.",
+          "Bound appendices are part of the same 32-page PDF; no separate supplement, preregistration, analysis code or participant data was retrieved."
+        ],
+        "coverage": {
+          "text_review": "Full main methods, results, discussion and bound Appendix A/B instruments and stimuli; references are not evidence that this paper performs cited tasks.",
+          "visually_verified_pdf_pages": [
+            1,
+            8,
+            9,
+            11,
+            13,
+            26,
+            27
+          ]
+        },
+        "retrieval_history": [
+          {
+            "kind": "local_metadata",
+            "result": "Canonical DOI, arXiv identity and ordered authors recovered from existing corpus and publisher-deposited Crossref cache."
+          },
+          {
+            "kind": "metadata_only",
+            "url": "https://arxiv.org/abs/2505.22845",
+            "result": "Version and work identity verified before using full manuscript."
+          },
+          {
+            "kind": "full_manuscript",
+            "url": "https://arxiv.org/pdf/2505.22845v2",
+            "result": "One successful HTTP 200 retrieval; saved PDF reused after interruption."
+          },
+          {
+            "kind": "resume",
+            "result": "No redownload, alternate version, retry or external retrieval during continuation."
+          }
+        ],
+        "unretrieved_candidate": {
+          "url": "https://dl.acm.org/doi/pdf/10.1145/3772318.3791006",
+          "reason": "Publisher locator was known locally but not fetched; only the identity-matched arXiv author manuscript was retrieved."
+        }
+      },
+      "scientific_protocol": {
+        "research_question": "How do AI-image disclosure labels and label errors influence opinions, factual-claim judgments and trust?",
+        "qualitative_study": "Five focus groups, 18 participants; semi-structured discussions and thematic coding of label expectations and recognition experiences (sections 3.1–3.2, Appendix A).",
+        "input_images": "Human-made and AI-generated images paired with true or false claims in simulated social posts. Realistic AI images are stimulus material; generated origin and label assignment are controlled experimental variables.",
+        "human_response_endpoint": "Per-post yes/no factual-claim belief (Q1) and four-level confidence (Q2); supplementary aggregate perceptions of labels, mislabeling and trust. No computational image-origin predictor is evaluated.",
+        "experimental_class_space": "Claim response is yes/no against true/false claim ground truth. Human/AI image origin is crossed with claim veracity, not the scored response class. Group is control, labeling or mislabeling; post-study Q4/Q5 responses are yes/no/unsure impressions.",
+        "ground_truth_and_protocol": "Study 2 uses 1,354 valid respondents after excluding 51 of 1,405 completions, a 2 × 2 × 3 mixed design and 24 common posts (six in each image-origin × claim-veracity cell) plus two attention checks. Captions are adapted where needed, notably to construct AI-image/true-claim stimuli. Known claim veracity scores responses; origin and label correctness are assigned stimulus factors. See section 4.1, Tables 2–3, Figure 1 and Appendix B.5–B.7/Table 7.",
+        "metrics": "Claim-judgment accuracy; d-prime = z(H) − z(FA), where H is true claims rated true and FA is false claims rated true; response bias c = −(z(H)+z(FA))/2. GLMM models claim accuracy; ANOVA analyzes claim sensitivity/bias (sections 4.1–4.2, Tables 4–5).",
+        "core_forensic_endpoints": {
+          "detection": {
+            "established": false,
+            "status": "NOT_REPORTED_AS_AN_EVALUATED_TASK_IN_REVIEWED_MANUSCRIPT"
+          },
+          "source_attribution": {
+            "established": false,
+            "status": "NOT_REPORTED_AS_AN_EVALUATED_TASK_IN_REVIEWED_MANUSCRIPT"
+          },
+          "localization": {
+            "established": false,
+            "status": "NOT_REPORTED_AS_AN_EVALUATED_TASK_IN_REVIEWED_MANUSCRIPT"
+          }
+        },
+        "absence_boundary": "No independently evaluated authenticity, generator/model identification or spatial forensic prediction is established in this version. This is a report of examined evidence, not a claim that humans or any discussed system could never perform those tasks."
+      },
+      "quantitative_findings": [
+        {
+          "locator": "PDF p. 11, section 4.2, Figure 2a; statistical contrasts in Table 5",
+          "metric": "Correct false-claim judgment for AI/false posts",
+          "values": {
+            "labeled_percent": 84.9,
+            "unlabeled_percent": 82.1,
+            "control_vs_treatment_z": 3.47,
+            "p": "<0.001"
+          },
+          "interpretation": "Accuracy concerns claim veracity; these are not image-origin classification rates."
+        },
+        {
+          "locator": "PDF p. 11, section 4.2",
+          "metric": "Mean claim sensitivity d-prime, pooled image conditions",
+          "values": {
+            "control": 0.47,
+            "treatment": 0.41,
+            "p": 0.046
+          },
+          "interpretation": "Sensitivity separates true and false factual claims, not human and AI images."
+        },
+        {
+          "locator": "PDF p. 13, Figure 3b; PDF p. 26, Appendix B.5 Q4/Q5",
+          "metric": "Retrospective impression that unlabeled AI images occurred",
+          "values": {
+            "labeling_group_percent": 67.3,
+            "mislabeling_group_percent": 72.0
+          },
+          "interpretation": "Aggregate perception responses; the correctly labeled group nevertheless reported errors. No per-image authenticity score is defined for these questions."
+        }
+      ],
+      "counterexample_checks": [
+        {
+          "candidate": "Human authenticity detection may be hidden inside the survey.",
+          "finding": "Figure 1, section 4.1, the scored per-post Q1 questions in Appendix B.5, and Table 7 target factual claims; other questions measure confidence, retrospective impressions, opinions and demographics. Crossing AI/true and human/false conditions explicitly separates origin from claim truth. Exclusion is based on endpoint mismatch, not on use of human participants."
+        },
+        {
+          "candidate": "Signal-detection metrics may measure AI-image detection.",
+          "finding": "Section 4.1 defines hits and false alarms using claim truth; this terminology does not supply a forensic endpoint."
+        },
+        {
+          "candidate": "Q4/Q5 and focus-group questions concern recognition of AI images.",
+          "finding": "Q4/Q5 are global retrospective impressions, not identified-image predictions with scored ground truth. Appendix A.5 recognition prompts ask about prior experiences; qualitative opinions are not a separate evaluated forensic task."
+        },
+        {
+          "candidate": "Detectors, C2PA or watermarking are discussed.",
+          "finding": "These are background or candidate labeling mechanisms discussed in sections 2, 3 and 5. The manuscript does not evaluate their authenticity, attribution or localization outputs."
+        }
+      ],
+      "disposition": {
+        "scientific_evidence_outcome": "EXCLUDE_OUT_OF_SCOPE",
+        "scientifically_sufficient": true,
+        "provisional": false,
+        "maintainer_acceptance_pending": false,
+        "authoritative_remediation_required": false,
+        "authoritative_remediation_applied": true,
+        "original_action_resolved": false,
+        "reason": "AI_LABEL_EFFECTS_ON_FACTUAL_CLAIM_BELIEF_WITHOUT_EVALUATED_CORE_FORENSIC_ENDPOINT",
+        "confidence": "high within examined arXiv v2; publisher-final equivalence unverified",
+        "maintainer_adjudication_accepted": true,
+        "applied_action": "Reversible out_of_scope exclusion with exclude_paper_scope decision. No physical deletion or taxonomy/bibliographic/affiliation edits. Original metadata question remains unresolved.",
+        "original_proposal": "On separate maintainer acceptance, use established reversible exclusion; preserve canonical bibliography, source evidence and historical taxonomy. Do not assign placeholder detection. Original affiliation action remains pending until separate adjudication."
+      },
+      "evidence_baseline_state": {
+        "public": true,
+        "formal": true,
+        "mapped": true,
+        "tasks": [],
+        "research_types": [
+          "analysis_study"
+        ],
+        "relationship_rows": 5,
+        "unique_institution_pairs": 5,
+        "scope_status": "in_scope"
+      },
+      "current_public_state": {
+        "included": false,
+        "mapped": false,
+        "reversibly_excluded": true,
+        "canonical_metadata_and_historical_taxonomy_retained": true
+      },
+      "exclusion": {
+        "exclusion_id": "exclusion:7e50c5a465577f9b9fac",
+        "review_decision_id": "review:75b4ddd858a33a7bb3e5",
+        "registry": "data/curated/paper_exclusions.csv",
+        "review_registry": "data/curated/review_decisions.csv",
+        "reversible": true,
+        "physical_deletion": false,
+        "reason": "out_of_scope"
+      },
+      "actual_public_data_impact": {
+        "applied": true,
+        "basis": "Verified exact semantic removal from baseline public exports; all retained records identical.",
+        "public_papers_delta": -1,
+        "formal_delta": -1,
+        "mapped_delta": -1,
+        "relationship_rows_delta": -5,
+        "unique_pairs_delta": -5,
+        "public_taxonomy_totals_delta": {
+          "analysis_study": -1
+        },
+        "canonical_bibliography_or_historical_taxonomy_edits_proposed": false,
+        "removed_relationships": [
+          {
+            "record_key": "openalex-candidate-01f34db1cddbd93f",
+            "canonical_paper_id": "curated:75cbd31c9946c7eb7977",
+            "title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation",
+            "institution_id": "institution:068512c1b695fe0b",
+            "institution": "Max Planck Institute for Security and Privacy"
+          },
+          {
+            "record_key": "openalex-candidate-2d8466e77a874e50",
+            "canonical_paper_id": "curated:75cbd31c9946c7eb7977",
+            "title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation",
+            "institution_id": "institution:aeb3cd858bb22d74",
+            "institution": "Hannover Re (Germany)"
+          },
+          {
+            "record_key": "openalex-candidate-d2a030d99b35b5f8",
+            "canonical_paper_id": "curated:75cbd31c9946c7eb7977",
+            "title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation",
+            "institution_id": "institution:ac9dc63b4bd4669a",
+            "institution": "Leibniz University Hannover"
+          },
+          {
+            "record_key": "openalex-candidate-ee0060dfde947124",
+            "canonical_paper_id": "curated:75cbd31c9946c7eb7977",
+            "title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation",
+            "institution_id": "institution:8f8dd64c6339c8ff",
+            "institution": "Ruhr University Bochum"
+          },
+          {
+            "record_key": "openalex-candidate-ff2c575fbe73b2dd",
+            "canonical_paper_id": "curated:75cbd31c9946c7eb7977",
+            "title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation",
+            "institution_id": "institution:aea376936c88135b",
+            "institution": "CISPA Helmholtz Center for Information Security"
+          }
+        ]
+      }
+    },
+    {
+      "review_id": "P562",
+      "canonical_identity": {
+        "canonical_paper_id": "doi:10.1109/tii.2023.3329711",
+        "curated_paper_id": "",
+        "title": "Generating Synthetic Training Images to Detect Split Defects in Stamped Components",
+        "doi": "10.1109/tii.2023.3329711",
+        "openalex_url": "https://openalex.org/W4388666300",
+        "arxiv_id": "",
+        "public_author_order": [
+          "Aru Ranjan Singh",
+          "Thomas Bashford‐Rogers",
+          "Sumit Hazra",
+          "Kurt Debattista"
+        ],
+        "publisher_deposited_author_order": [
+          "Aru Ranjan Singh",
+          "Thomas Bashford-Rogers",
+          "Sumit Hazra",
+          "Kurt Debattista"
+        ],
+        "author_identity_note": "Ordered names match after hyphen-character normalization in Thomas Bashford-Rogers; preserve literal source forms. No identity merge proposed."
+      },
+      "original_review": {
+        "ledger": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+        "locator": "formal_records[review_id=P562]",
+        "issue": "SOURCE_CONFLICT",
+        "question": "Check publisher online and issue dates against the repository publication-year convention; resolve the difference with cited evidence.",
+        "reason": "Current year 2023 differs from cached publisher-deposited years [2024]. Online-first versus issue-year may explain this; no automatic year change.",
+        "status": "PENDING_NOT_ADJUDICATED",
+        "post_exclusion_applicability": "No longer applicable to active public corpus; original affiliation/year uncertainty retained unresolved for historical provenance. Original ledger bytes and status unchanged."
+      },
+      "scope_question": "Does the method detect generated image origin, or use synthetic images to improve manufacturing-defect recognition?",
+      "policy_ids": [
+        "T1",
+        "T2",
+        "T3"
+      ],
+      "local_evidence_first": {
+        "sufficient_for_identity_and_targeted_retrieval": true,
+        "sufficient_for_scientific_scope": false,
+        "sources": [
+          {
+            "path": "web/data/public_preview_papers.json",
+            "locator": "records exact DOI 10.1109/tii.2023.3329711; abstract; abstract_source",
+            "source_type": "OpenAlex local raw cache",
+            "finding_bounded_to_abstract": "Abstract describes generating realistic split-defect training images using finite-element deformation and a forming-limit curve, mapping captured real-split detail, then improving a deep neural network through synthetic training augmentation. It motivates an industrial-defect-versus-synthetic-origin endpoint check; it does not establish the complete set of tasks or exclusions."
+          },
+          {
+            "path": "data/curated/paper_taxonomy.csv",
+            "locator": "taxonomy_id=doi:10.1109/tii.2023.3329711",
+            "source_type": "existing reviewed taxonomy receipt, abstract tier",
+            "finding": "Current detection label has abstract-tier source OpenAlex local raw cache; its saved task excerpt is the title only. No method/evaluation locator is preserved for core forensic detection."
+          },
+          {
+            "path": "data/processed/openalex_candidate_papers.csv",
+            "locator": "openalex_id=https://openalex.org/W4388666300",
+            "source_type": "automatic candidate provenance",
+            "finding": "Original relevance rule matched generation term synthetic image and task term detect, and retains manual_review=true. This records ingestion provenance, not a scientific determination."
+          },
+          {
+            "path": "data/raw/venue_audit_crossref/b4d3dd6ca60b58bc701a.json",
+            "locator": "response.message",
+            "source_type": "saved publisher-deposited bibliographic metadata",
+            "finding": "Exact DOI/title and four ordered author names establish the targeted record and IEEE document10317079. Metadata does not contain full methods or evaluation targets."
+          },
+          {
+            "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+            "locator": "Proposed Wave B1, P562; action b-P562",
+            "source_type": "published intake routing",
+            "finding": "Scope preflight under T3 precedes the original year-conflict review; no exclusion or label decision approved."
+          }
+        ],
+        "missing_evidence": [
+          "Identity-matched manuscript title, ordered authors, DOI and version statement on the actual retrieved document.",
+          "Complete task/method definition, downstream detector outputs and predicted labels; determine whether predictions concern neck/split defects or synthetic-origin authenticity/generator identity/spatial forensic manipulation.",
+          "Training and test-set composition and ground truth, especially the role of real versus rendered samples: data domain versus actual classifier target.",
+          "Evaluation protocol, metric definitions and result tables for every claimed endpoint, including whether any authenticity, generator-source attribution or forensic localization is substantively evaluated.",
+          "Any region/bounding-box/segmentation output must be interpreted against its target: industrial defect localization is not by itself forensic localization.",
+          "Any real/synthetic realism comparison or synthesis discriminator must be distinguished from a claimed evaluated forensic task; abstract absence alone cannot establish no such task exists."
+        ],
+        "history": "Existing candidate provenance matched synthetic image and detect keywords; current detection receipt cites abstract-tier evidence with a title-only task excerpt. These were routing clues, not sufficient full-method evidence."
+      },
+      "primary_source": {
+        "source_id": "P562-primary-1",
+        "role": "complete primary author accepted manuscript from author institution",
+        "url": "https://wrap.warwick.ac.uk/id/eprint/180984/7/WRAP-generating-synthetic-training-images-detect-split-defects-stamped-components-2023.pdf",
+        "identity_landing_url": "https://wrap.warwick.ac.uk/id/eprint/180984/",
+        "repository": "University of Warwick Research Archive Portal",
+        "repository_item": "180984",
+        "version": "AUTHOR_ACCEPTED_MANUSCRIPT",
+        "retrieved_at_utc": "2026-10-13T01:44:12Z",
+        "retrieval_timestamp_basis": "saved HTTP Date header",
+        "http_status": 200,
+        "retrieval_attempts": 1,
+        "retry_count": 0,
+        "pdf_pages": 11,
+        "article_pages": 10,
+        "cover_pages": 1,
+        "local_temporary_path": "/private/tmp/batch-b-wave-b1a-2026-10-12/p562-warwick-accepted.pdf",
+        "bytes": 26454902,
+        "sha256": "38da430f65cd32c2cc73af4b827ea1a061ed7fbdc9835f2f1bced73947e38fd1",
+        "identity_verification": {
+          "title": "Article title on PDF page 2 matches canonical title.",
+          "doi": "10.1109/TII.2023.3329711 bound to this exact download by WRAP item 180984 and saved publisher-deposited metadata; no DOI printed in the extracted article was observed.",
+          "authors": "Repository and publisher cache give the same four ordered authors. PDF page 2 visibly prints Thomas Bashfod-Rogers, an apparent missing-r draft typo, versus canonical Bashford-Rogers. This discrepancy is retained, not silently normalized as a perfect literal match.",
+          "draft_formatting": "Odd article-page running headers retain a different title concerning HDR split-defect detection. Front title, repository binding and continuous article body establish work identity; running headers are not used as identity evidence."
+        },
+        "version_limitations": [
+          "PDF cover explicitly identifies an author accepted manuscript that may differ from the published Version of Record.",
+          "No publisher-final comparison or equivalence claim; canonical bibliographic fields and original year-review status remain unchanged.",
+          "Repository records acceptance 2023-10-18, availability 2023-11-14 and publication 2024-03. These version context dates do not adjudicate the repository publication-year convention."
+        ],
+        "coverage": {
+          "text_review": "All 11 PDF pages, including complete sections III–VII, methods, all experimental protocols, Tables II–IV and conclusion.",
+          "visually_verified_pdf_pages": [
+            1,
+            2,
+            7,
+            8,
+            9,
+            10
+          ]
+        },
+        "retrieval_history": [
+          {
+            "kind": "local_metadata",
+            "result": "Exact DOI/title/authors and IEEE document 10317079 recovered from existing Crossref cache."
+          },
+          {
+            "kind": "targeted_metadata_discovery",
+            "query": "\"10.1109/TII.2023.3329711\" manuscript",
+            "domains": [
+              "warwick.ac.uk",
+              "coventry.ac.uk",
+              "ieee.org"
+            ],
+            "result": "One exact-DOI search identified the author-institution WRAP item. Unrelated search hits were not opened or used. Search service reported IEEE robots restriction; no IEEE full-manuscript request or retry was attempted."
+          },
+          {
+            "kind": "metadata_only",
+            "url": "https://wrap.warwick.ac.uk/id/eprint/180984/",
+            "result": "Opened the exact repository identity/version record; saved its HTML once to extract the supplied download link. No constructed or guessed PDF URL."
+          },
+          {
+            "kind": "full_manuscript",
+            "url": "https://wrap.warwick.ac.uk/id/eprint/180984/7/WRAP-generating-synthetic-training-images-detect-split-defects-stamped-components-2023.pdf",
+            "result": "One successful HTTP 200 retrieval; saved accepted manuscript reused after interruption."
+          },
+          {
+            "kind": "resume",
+            "result": "No redownload, alternate version, supplement or retry."
+          }
+        ],
+        "saved_landing_html_sha256": "f07e4061fd86612c95b2e7b8a61c1c791eb33a5e234ab55fa670e492e0ff9b44",
+        "unretrieved_candidate": {
+          "url": "http://xplorestaging.ieee.org/ielx7/9424/10460264/10317079.pdf?arnumber=10317079",
+          "reason": "Saved publisher-deposited locator only; not requested. Author-institution accepted manuscript was the sole full manuscript retrieved."
+        }
+      },
+      "scientific_protocol": {
+        "research_question": "Can physically plausible rendered split defects improve industrial inspection when real defective stamping examples are scarce?",
+        "input_images": "Captured and rendered HDR images of stamped metal components. Necking and splitting are grouped as split defects. Synthetic imagery supplies annotated training examples; Stable Diffusion and DFMGAN are augmentation comparators.",
+        "method": "Finite-element geometry/strain and a forming-limit curve choose plausible defect sites; captured crack-displacement textures, surface reflectance/impurities and path-traced rendering produce synthetic training images (sections III–IV).",
+        "model_prediction_endpoint": "YOLOv5, Faster R-CNN and DETR predict physical split-defect regions/bounding boxes and confidence. Figures 12–13 compare predicted boxes to defect ground truth.",
+        "experimental_class_space": "Target is physical split defect (including neck defects), not image authenticity or generator identity. Numeric class IDs are not enumerated in the reviewed manuscript. Real/synthetic denotes training or test domain; generators denote augmentation methods.",
+        "ground_truth_and_protocol": "120 in-house defective Nakajima parts provide real HDR images. Ten real samples form a split-texture dictionary. Real defects have human annotations; generated masks supply synthetic defect labels, with label randomization. Section V reports 2,000 training epochs and five-fold cross-validation, retaining the same fold test sets across combinations. Table II varies real/synthetic training counts; Table III compares augmentation/pretraining; Table IV and Figures 12–13 check ablations and defect detections on real/synthetic test domains.",
+        "metrics": "mAP50 and mAP averaged over IoU thresholds 0.50–0.95 in 0.05 increments, measured against defect-region annotations (section VI.A; Tables II–IV).",
+        "core_forensic_endpoints": {
+          "detection": {
+            "established": false,
+            "status": "NOT_REPORTED_AS_AN_EVALUATED_TASK_IN_REVIEWED_MANUSCRIPT"
+          },
+          "source_attribution": {
+            "established": false,
+            "status": "NOT_REPORTED_AS_AN_EVALUATED_TASK_IN_REVIEWED_MANUSCRIPT"
+          },
+          "localization": {
+            "established": false,
+            "status": "NOT_REPORTED_AS_AN_EVALUATED_TASK_IN_REVIEWED_MANUSCRIPT"
+          }
+        },
+        "absence_boundary": "No evaluated synthetic-origin, generating-model or manipulated-region provenance output is reported across the examined protocols. Physical defect boxes and synthesis masks are not forensic localization. This does not assert general incapability of the architectures."
+      },
+      "quantitative_findings": [
+        {
+          "locator": "PDF p. 8 / article p. 7, Table II, YOLOv5, real=80 row",
+          "metric": "mAP50 (mAP), physical split-defect detection",
+          "values": {
+            "baseline_real_only": "0.978 (0.665)",
+            "plus_80_synthetic": "0.981 (0.688)"
+          },
+          "interpretation": "Rows are real training counts; columns are synthetic counts. Improvement is in downstream industrial inspection."
+        },
+        {
+          "locator": "PDF p. 9 / article p. 8, Table III, real=80 column",
+          "metric": "mAP50 (mAP), physical split-defect detection",
+          "values": {
+            "pre_trained": "0.928 (0.613)",
+            "stable_diffusion": "0.933 (0.605)",
+            "dfmgan": "0.956 (0.623)",
+            "ours": "0.981 (0.688)"
+          },
+          "interpretation": "Generators provide alternative training data; they are not predicted source labels."
+        },
+        {
+          "locator": "PDF p. 10 / article p. 9, Table IV, C2+C3 row",
+          "metric": "mAP50 (mAP), physical split-defect detection",
+          "values": {
+            "synthetic_test_domain": "0.990 (0.756)",
+            "real_test_domain": "0.822 (0.456)"
+          },
+          "interpretation": "Separate test domains for the defect task, not real-versus-synthetic classification."
+        }
+      ],
+      "counterexample_checks": [
+        {
+          "candidate": "Spatial masks or boxes might qualify as localization.",
+          "finding": "Section V.B/Figure 9 masks provide physical defect annotations. Figures 12–13 and section VI.C score physical cracks/splits; no synthetic/edit provenance target is evaluated."
+        },
+        {
+          "candidate": "Real/synthetic headings might be authenticity classes.",
+          "finding": "Tables II–IV and their surrounding protocol define training counts or test domains. Outputs remain defect boxes."
+        },
+        {
+          "candidate": "GAN/diffusion comparison might establish source attribution.",
+          "finding": "Section VI.B uses different augmentation sources for a common downstream defect detector. No predictor identifies which generator produced an input image."
+        },
+        {
+          "candidate": "Visual realism comparisons might hide authenticity evaluation.",
+          "finding": "Figures 10–11 illustrate generated defect appearance. Reported numerical endpoints in all inspected protocols are defect detections; no separate authenticity-classification or forensic-localization metric is reported."
+        }
+      ],
+      "disposition": {
+        "scientific_evidence_outcome": "EXCLUDE_OUT_OF_SCOPE",
+        "scientifically_sufficient": true,
+        "provisional": false,
+        "maintainer_acceptance_pending": false,
+        "authoritative_remediation_required": false,
+        "authoritative_remediation_applied": true,
+        "original_action_resolved": false,
+        "reason": "SYNTHETIC_TRAINING_AUGMENTATION_FOR_INDUSTRIAL_DEFECT_DETECTION_OUTSIDE_CORE_FORENSIC_SCOPE",
+        "confidence": "high within examined author accepted manuscript; publisher-final equivalence unverified",
+        "maintainer_adjudication_accepted": true,
+        "applied_action": "Reversible out_of_scope exclusion with exclude_paper_scope decision. No physical deletion or taxonomy/bibliographic/affiliation edits. Original metadata question remains unresolved.",
+        "original_proposal": "On separate maintainer acceptance, use established reversible scope exclusion while preserving canonical bibliography and historical detection/method taxonomy. Leave the publication-year action pending; no publication update or localization retag is proposed."
+      },
+      "evidence_baseline_state": {
+        "public": true,
+        "publication_type": "journal",
+        "year": 2023,
+        "publication_date": "2023-11-14",
+        "venue": "IEEE Transactions on Industrial Informatics",
+        "tasks": [
+          "detection"
+        ],
+        "image_scopes": [
+          "fully_generated"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "mapped_relationships": 1,
+        "institution_names": [
+          "University of Warwick"
+        ],
+        "formal": true,
+        "mapped": true,
+        "relationship_rows": 1,
+        "unique_institution_pairs": 1
+      },
+      "current_public_state": {
+        "included": false,
+        "mapped": false,
+        "reversibly_excluded": true,
+        "canonical_metadata_and_historical_taxonomy_retained": true
+      },
+      "exclusion": {
+        "exclusion_id": "exclusion:4976b3d405f97f81e049",
+        "review_decision_id": "review:bf0b0cda8c7c86b113d4",
+        "registry": "data/curated/paper_exclusions.csv",
+        "review_registry": "data/curated/review_decisions.csv",
+        "reversible": true,
+        "physical_deletion": false,
+        "reason": "out_of_scope"
+      },
+      "actual_public_data_impact": {
+        "applied": true,
+        "basis": "Verified exact semantic removal from baseline public exports; all retained records identical.",
+        "public_papers_delta": -1,
+        "formal_delta": -1,
+        "mapped_delta": -1,
+        "relationship_rows_delta": -1,
+        "unique_pairs_delta": -1,
+        "public_taxonomy_totals_delta": {
+          "detection": -1,
+          "method": -1
+        },
+        "canonical_bibliography_or_historical_taxonomy_edits_proposed": false,
+        "removed_relationships": [
+          {
+            "record_key": "openalex-candidate-80894cca69e5623d",
+            "canonical_paper_id": "doi:10.1109/tii.2023.3329711",
+            "title": "Generating Synthetic Training Images to Detect Split Defects in Stamped Components",
+            "institution_id": "institution:4d3dd6848c184118",
+            "institution": "University of Warwick"
+          }
+        ]
+      }
+    }
+  ],
+  "accounting": {
+    "scientific_scope_questions_reviewed": 2,
+    "scientific_scope_questions_sufficiently_resolved": 2,
+    "provisional_exclusion_proposals": 0,
+    "maintainer_acceptances": 2,
+    "authoritative_remediations_applied": 2,
+    "original_review_actions_closed": 0,
+    "cases_awaiting_maintainer_acceptance_and_remediation": 0,
+    "batch_b_pending_actions": 159,
+    "batch_b_unique_papers": 148,
+    "pending_by_dimension": {
+      "unmapped": 20,
+      "task_taxonomy": 9,
+      "research_type": 43,
+      "relationships": 25,
+      "publication": 62
+    },
+    "independent_multi_action_papers": 11,
+    "batch_c_total": 41,
+    "batch_c_resolved": 28,
+    "batch_c_deferred_external": 13,
+    "batch_c_maintainer_judgments": 0,
+    "rule": "159 historical pending actions and 148 identities retained. Two scope exclusions accepted/applied; zero original affiliation/year questions scientifically resolved or formally closed. 157 actions/146 papers remain public-applicable; L015/P562 retained as unresolved historical metadata.",
+    "original_review_actions_retained": 2,
+    "active_public_review_actions": 157,
+    "active_public_affected_papers": 146,
+    "inactive_public_review_actions": 2,
+    "metadata_questions_scientifically_resolved": 0,
+    "scope_decisions_completed": 2,
+    "active_pending_by_dimension": {
+      "unmapped": 20,
+      "task_taxonomy": 9,
+      "research_type": 43,
+      "relationships": 24,
+      "publication": 61
+    }
+  },
+  "artifact_paths": [
+    "data/raw/corpus_quality_batch_b_wave_b1a_2026_10_12/evidence_manifest.json",
+    "docs/corpus_quality_batch_b_wave_b1a_2026_10_12.md"
+  ],
+  "adjudication_completed_date": "2026-10-15",
+  "adjudication": {
+    "status": "FINAL",
+    "baseline_commit": "91de08a904847c47f60eb3dfd124e3db3300a459",
+    "scope_decisions_completed": 2,
+    "authority": "Explicit maintainer acceptance of EXCLUDE_OUT_OF_SCOPE for L015 and P562; reversible exclusion only.",
+    "exclusions_applied_date": "2026-10-13",
+    "manuscripts_retrieved_during_adjudication": 0
+  },
+  "evidence_only_validation": {
+    "status": "PASS",
+    "method": "Identity/source checks, quantitative visual verification, exact policy reconciliation, current count recomputation, selected-case completeness, original action inventory and Git/file hash integrity only.",
+    "visual_pages_checked": {
+      "L015": [
+        1,
+        8,
+        9,
+        11,
+        13,
+        26,
+        27
+      ],
+      "P562": [
+        1,
+        2,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "full_suite_run": false,
+    "exports_regenerated": false,
+    "checks_passed": 51,
+    "checks_failed": 0,
+    "checks": [
+      "exact selected cases",
+      "evidence-only authority",
+      "artifact identity/date and output allowlist",
+      "locked policy T1",
+      "locked policy T2",
+      "locked policy T3",
+      "report exact T3",
+      "L015 canonical identity",
+      "L015 ordered canonical authors",
+      "L015 current public/task/type/map state",
+      "L015 original action remains pending",
+      "L015 saved manuscript hash and size",
+      "L015 source and version completeness",
+      "L015 scientific protocol completeness",
+      "L015 provisional scope disposition and no remediation",
+      "L015 conditional implications only",
+      "L015 report identity/source/hash/outcome present",
+      "L015 quantitative locators and values",
+      "P562 canonical identity",
+      "P562 ordered canonical authors",
+      "P562 current public/task/type/map state",
+      "P562 original action remains pending",
+      "P562 saved manuscript hash and size",
+      "P562 source and version completeness",
+      "P562 scientific protocol completeness",
+      "P562 provisional scope disposition and no remediation",
+      "P562 conditional implications only",
+      "P562 report identity/source/hash/outcome present",
+      "P562 quantitative locators and values",
+      "saved local provenance hashes",
+      "strict two-manuscript budget",
+      "intake publication exactly one documentation file",
+      "intake report immutable",
+      "all 159 original IDs represented in intake",
+      "B inventory counts and independence",
+      "scientific vs authoritative accounting",
+      "current corpus recomputation",
+      "current taxonomy recomputation",
+      "C closeout 13 deferred preserved",
+      "all 4297 tracked paths unchanged",
+      "all 49 frozen NeurIPS hashes unchanged",
+      "primary tracked content unchanged",
+      "primary all 130 pre-existing untracked hashes unchanged",
+      "original 128 protected excluded files unchanged",
+      "primary HEAD/status and index preserved",
+      "isolated HEAD/origin synchronized",
+      "tracked working tree and index clean",
+      "only allowed new evidence files untracked",
+      "no whitespace errors",
+      "integrity flags and report reconcile",
+      "no exports/full suite or remediation claimed"
+    ]
+  },
+  "validation": {
+    "status": "PASSED",
+    "focused": {
+      "exit_code": 0,
+      "passed": 184,
+      "failed": 0,
+      "subtests_passed": 12,
+      "skipped": 0,
+      "warnings": 2,
+      "summary": "184 passed, 2 warnings, 12 subtests passed in 48.88s",
+      "elapsed_seconds": 49.391,
+      "log_sha256": "c6a171ef4d9b2ee2d1dcdd6f08f64efb055269591f8fb70d911e7ea053f37b32",
+      "junit_sha256": "334cd346913723e316f727f3ffdcefae187a8dd66c83919060ec5ab04d88f356",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_corpus_quality_batch_c_wave1.py",
+        "tests/test_corpus_quality_batch_c_wave2.py",
+        "tests/test_corpus_quality_batch_c_wave3a.py",
+        "tests/test_corpus_quality_batch_c_wave3b2.py",
+        "tests/test_corpus_quality_batch_c_wave4a.py",
+        "tests/test_corpus_quality_batch_a.py",
+        "tests/test_corpus_quality_batch_c_phase1.py",
+        "tests/test_corpus_quality_batch_c_wave5a.py",
+        "tests/test_corpus_quality_batch_c_wave5b.py",
+        "tests/test_corpus_quality_batch_c_wave5c.py",
+        "tests/test_corpus_quality_batch_c_closeout.py",
+        "tests/test_frontend_published_only_filter.py",
+        "tests/test_paper_metadata_consistency_audit.py",
+        "tests/test_corpus_quality_batch_b_wave_b1a.py",
+        "tests/test_repository_baseline.py",
+        "tests/test_legacy_scope_exclusion_migration.py",
+        "tests/test_key_paper_coverage.py",
+        "-o",
+        "cache_dir=/private/tmp/b1a-resume-2026-10-14/pytest-cache",
+        "--junitxml=/private/tmp/b1a-resume-2026-10-14/focused.xml"
+      ]
+    },
+    "affected_failure_regressions": {
+      "exit_code": 0,
+      "passed": 4,
+      "failed": 0,
+      "subtests_passed": 0,
+      "skipped": 0,
+      "warnings": 0,
+      "summary": "4 passed in 13.95s",
+      "elapsed_seconds": 14.334,
+      "log_sha256": "f106245cb04c7786aa3970de736214c9863ae8b12629fe269cb272af36b87a5f",
+      "junit_sha256": "b5fa8181f89e71e145eaa016516bd5d788ee82067adcd8fd00d7b19ca463b4a6",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_institution_type_audit.py::InstitutionTypeAuditTests::test_audit_output_is_deterministic_and_has_no_pending_high_confidence",
+        "tests/test_legacy_scope_exclusion_migration.py::test_ledger_report_and_validation_are_generated_from_locked_sources",
+        "tests/test_frontend_result_cards.py::FrontendResultCardTests::test_current_public_preview_record_matches_details_and_card_markers",
+        "tests/test_primary_paper_curation.py::test_current_reconciliation_counts_existing_exclusions_instead_of_missing_papers",
+        "-o",
+        "cache_dir=/private/tmp/b1a-resume-2026-10-14/pytest-cache",
+        "--junitxml=/private/tmp/b1a-resume-2026-10-14/affected.xml"
+      ]
+    },
+    "initial_full_suite": {
+      "exit_code": 1,
+      "passed": 1735,
+      "failed": 3,
+      "subtests_passed": 389,
+      "skipped": 0,
+      "warnings": 2,
+      "summary": "3 failed, 1735 passed, 2 warnings, 389 subtests passed in 324.15s (0:05:24)",
+      "log_sha256": "f74dd461bb32a7049565edbbc40663edbd5908478a48219fd13d97c656c0c47c",
+      "junit_sha256": "17e88c95646f3775f564ad51465d69d5456e3bdd5cde923e6cdbc9e9e54d4d8d",
+      "diagnosis_and_corrections": [
+        {
+          "test": "tests/test_frontend_result_cards.py::FrontendResultCardTests::test_current_public_preview_record_matches_details_and_card_markers",
+          "failure": "StopIteration selecting excluded L015 from the current public export.",
+          "correction": "Use the still-public ForensicHub fixture with five affiliations and nine authors; keep all card/details author-marker assertions unchanged."
+        },
+        {
+          "test": "tests/test_legacy_scope_exclusion_migration.py::test_ledger_report_and_validation_are_generated_from_locked_sources",
+          "failure": "Frozen reproducibility receipt reported stale because preceding institution audit test rewrote data/processed/institution_type_audit.csv. Only that CSV digest differed; two L015-only public institution rows were removed.",
+          "correction": "Send the institution audit test output to a TemporaryDirectory, preserve all checks and add repository-report preservation assertion. Restore only the accidental rewrite to its original receipt-matched bytes; frozen receipts unchanged."
+        },
+        {
+          "test": "tests/test_primary_paper_curation.py::test_current_reconciliation_counts_existing_exclusions_instead_of_missing_papers",
+          "failure": "Live verifier expected 13 excluded checklist rows; actual 14 after approved L015 exclusion of checklist row270. Live coverage is 283 bibliography / 282 map / 1 list-only / 14 excluded / 2 ambiguous.",
+          "correction": "Verify each live excluded checklist row against active registry evidence and zero public/map membership; update live regression totals and assert L015 exact exclusion identity. Preserve frozen primary-curation counts and traces."
+        }
+      ],
+      "followed_by_separately_authorized_diagnosed_reruns": true
+    },
+    "second_full_suite": {
+      "exit_code": 1,
+      "passed": 1736,
+      "failed": 2,
+      "subtests_passed": 389,
+      "skipped": 0,
+      "warnings": 2,
+      "summary": "2 failed, 1736 passed, 2 warnings, 389 subtests passed in 407.66s (0:06:47)",
+      "log_sha256": "dfb3f55ad01377c2c6bfc3910c1890829973a4712d1f0d5249ae2a4fa0694d2d",
+      "junit_sha256": "af6cc547596529c7909502007d98a55279fe0a1d804c9a2b5e16026456291951",
+      "failure_diagnosis": [
+        {
+          "check": "application",
+          "unexpected_changed_paths": [
+            "tests/test_institution_type_audit.py"
+          ],
+          "missing_expected_paths": [],
+          "actual_changed_count": 28,
+          "expected_changed_count": 27
+        },
+        {
+          "check": "policy",
+          "unexpected_changed_paths": [
+            "tests/test_institution_type_audit.py"
+          ],
+          "missing_expected_paths": [],
+          "actual_changed_count": 27,
+          "expected_changed_count": 26
+        }
+      ],
+      "correction": "Both historical guards now recognize exactly tests/test_institution_type_audit.py through their shared helper. Published predecessor SHA256 and complete reviewed successor SHA256 are pinned; original exact path/count comparisons remain. Negative tests reject unrelated paths, tampered successor bytes, and incorrect predecessor digests. No frozen receipt changed."
+    },
+    "historical_integrity_tests": {
+      "exit_code": 0,
+      "passed": 2,
+      "failed": 0,
+      "subtests_passed": 0,
+      "skipped": 0,
+      "warnings": 0,
+      "summary": "2 passed in 13.16s",
+      "elapsed_seconds": 13.46,
+      "log_sha256": "2fb221b1a3618522cddecff3fa4bf936ac6d5ba46feab9e003fee08f4e8761e5",
+      "junit_sha256": "ae3f1f354a05e0a1c5b24720423e5520ab8be9259d83516777bca18095d48846",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_systematic_tier2_application.py::test_pre_application_baseline_includes_and_preserves_previous_policy_pass",
+        "tests/test_systematic_tier2_policy.py::test_pre_task_repository_files_are_byte_identical",
+        "-o",
+        "cache_dir=/private/tmp/b1a-resume-2026-10-14/pytest-cache",
+        "--junitxml=/private/tmp/b1a-resume-2026-10-14/historical.xml"
+      ]
+    },
+    "institution_and_boundary_regressions": {
+      "exit_code": 0,
+      "passed": 5,
+      "failed": 0,
+      "subtests_passed": 0,
+      "skipped": 0,
+      "warnings": 0,
+      "summary": "5 passed in 0.85s",
+      "elapsed_seconds": 1.11,
+      "log_sha256": "d151e49c5902350eccede3cbcaaa27578a3606cc21473c07a67eda08d1dbbf22",
+      "junit_sha256": "96ba3d0f516e3cfdf56b51a77daf6cf5756062c441999bbf3cc6ea1440377c9a",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_institution_type_audit.py::InstitutionTypeAuditTests::test_audit_output_is_deterministic_and_has_no_pending_high_confidence",
+        "tests/test_historical_integrity_successors.py",
+        "-o",
+        "cache_dir=/private/tmp/b1a-resume-2026-10-14/pytest-cache",
+        "--junitxml=/private/tmp/b1a-resume-2026-10-14/boundary.xml"
+      ]
+    },
+    "HISTORICAL_INTEGRITY_FAILURES": 0,
+    "full_suite": {
+      "exit_code": 0,
+      "passed": 1742,
+      "failed": 0,
+      "subtests_passed": 389,
+      "skipped": 0,
+      "warnings": 2,
+      "summary": "1742 passed, 2 warnings, 389 subtests passed in 399.90s (0:06:39)",
+      "elapsed_seconds": 401.908,
+      "log_sha256": "69f54cc68127a4028184d2e6e586f8ce57ad3a7b8f413eda82d20a059f91a513",
+      "junit_sha256": "d6c5c7b9ae15e0e81752e1c5c4cc70e82b26c77f569ce55fa5a8640ff4b3a617",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "pytest",
+        "-q",
+        "tests",
+        "-o",
+        "cache_dir=/private/tmp/b1a-resume-2026-10-14/pytest-cache",
+        "--junitxml=/private/tmp/b1a-resume-2026-10-14/full.xml"
+      ]
+    },
+    "FULL_SUITE_FAILURES": 0,
+    "current_scope_validators": [
+      {
+        "name": "curated",
+        "exit_code": 0,
+        "elapsed_seconds": 6.577,
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "scripts/validate_curated_database.py"
+        ],
+        "log": "/private/tmp/b1a-resume-2026-10-14/curated.log",
+        "log_sha256": "ffe44bd5b3502ee702a0e24b8734f2dc36259c0adc24eff1168e58d713c42137",
+        "errors": 0,
+        "warnings": 254
+      },
+      {
+        "name": "public",
+        "exit_code": 0,
+        "elapsed_seconds": 6.118,
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "scripts/validate_public_preview.py"
+        ],
+        "log": "/private/tmp/b1a-resume-2026-10-14/public.log",
+        "log_sha256": "3f2040f03395c870e2c53583f2c9ff99138d5f23c4d970f4cad9d8c35baf456a",
+        "errors": 0,
+        "warnings": 23
+      },
+      {
+        "name": "exclusions",
+        "exit_code": 0,
+        "elapsed_seconds": 2.484,
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "scripts/validate_paper_exclusions.py"
+        ],
+        "log": "/private/tmp/b1a-resume-2026-10-14/exclusions.log",
+        "log_sha256": "52bf61c5c219773b2ae5fbe787f12f75c8e11120e73547e434bab5c9aaf325e1",
+        "errors": 0,
+        "warnings": 2
+      },
+      {
+        "name": "coverage",
+        "exit_code": 0,
+        "elapsed_seconds": 1.963,
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "scripts/audit_key_paper_coverage.py",
+          "--check"
+        ],
+        "log": "/private/tmp/b1a-resume-2026-10-14/coverage.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "errors": 0,
+        "warnings": 0
+      }
+    ],
+    "export_reproducibility": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/refresh_public_preview.py",
+        "--skip-search",
+        "--user-agent",
+        "SyntheticImageResearchMap/0.1 (local Batch B B1A adjudication)"
+      ],
+      "passes": [
+        {
+          "pass": 1,
+          "exit_code": 0,
+          "elapsed_seconds": 93.569,
+          "compared_path_count": 4420,
+          "changed_paths": [],
+          "output_sha256": {
+            "web/data/public_preview_papers.json": "5dd92e10da0f312e842bc31fe42f9ed2da279a42a820316194b2e1b010462940",
+            "web/data/public_preview_map_data.json": "c9faf509b7c6e646bdb8531af0b8d4b74f1255ec7ff371c64078e57331f4687b",
+            "docs/public_preview_report.md": "b880c8e3892f3da203d4d1d3d60b4aec2aaf84d4555eeb79c125a2a130f99f5a",
+            "docs/missing_author_mappings_report.md": "c9c5afa6cb38cbfcc2bdbbb28c28c7bb81daf9d1cd4c97522c49ead56b44ee48",
+            "data/manual/missing_author_mappings_report.csv": "462d33eb907d3362577a7d9788d1cfc1ebd307e6d6ca89f01008f636cb83f39e",
+            "docs/key_paper_coverage_report.md": "59266d2f8c34f4e019f0eff43ae02598f5e61940a55f396cf27c9bb38412ad9f",
+            "data/manual/key_paper_coverage_report.csv": "dbe1bd75e8d619a3a28354df1bccd79037f0aa281de49a37bbb49d3937d75099"
+          }
+        },
+        {
+          "pass": 2,
+          "exit_code": 0,
+          "elapsed_seconds": 95.014,
+          "compared_path_count": 4420,
+          "changed_paths": [],
+          "output_sha256": {
+            "web/data/public_preview_papers.json": "5dd92e10da0f312e842bc31fe42f9ed2da279a42a820316194b2e1b010462940",
+            "web/data/public_preview_map_data.json": "c9faf509b7c6e646bdb8531af0b8d4b74f1255ec7ff371c64078e57331f4687b",
+            "docs/public_preview_report.md": "b880c8e3892f3da203d4d1d3d60b4aec2aaf84d4555eeb79c125a2a130f99f5a",
+            "docs/missing_author_mappings_report.md": "c9c5afa6cb38cbfcc2bdbbb28c28c7bb81daf9d1cd4c97522c49ead56b44ee48",
+            "data/manual/missing_author_mappings_report.csv": "462d33eb907d3362577a7d9788d1cfc1ebd307e6d6ca89f01008f636cb83f39e",
+            "docs/key_paper_coverage_report.md": "59266d2f8c34f4e019f0eff43ae02598f5e61940a55f396cf27c9bb38412ad9f",
+            "data/manual/key_paper_coverage_report.csv": "dbe1bd75e8d619a3a28354df1bccd79037f0aa281de49a37bbb49d3937d75099"
+          }
+        }
+      ],
+      "compared_path_count": 4420,
+      "required_inputs_count": 119,
+      "generated_outputs": [
+        "web/data/public_preview_papers.json",
+        "web/data/public_preview_map_data.json",
+        "docs/public_preview_report.md",
+        "docs/missing_author_mappings_report.md",
+        "data/manual/missing_author_mappings_report.csv",
+        "docs/key_paper_coverage_report.md",
+        "data/manual/key_paper_coverage_report.csv"
+      ],
+      "pre_export_output_sha256": {
+        "web/data/public_preview_papers.json": "5dd92e10da0f312e842bc31fe42f9ed2da279a42a820316194b2e1b010462940",
+        "web/data/public_preview_map_data.json": "c9faf509b7c6e646bdb8531af0b8d4b74f1255ec7ff371c64078e57331f4687b",
+        "docs/public_preview_report.md": "b880c8e3892f3da203d4d1d3d60b4aec2aaf84d4555eeb79c125a2a130f99f5a",
+        "docs/missing_author_mappings_report.md": "c9c5afa6cb38cbfcc2bdbbb28c28c7bb81daf9d1cd4c97522c49ead56b44ee48",
+        "data/manual/missing_author_mappings_report.csv": "462d33eb907d3362577a7d9788d1cfc1ebd307e6d6ca89f01008f636cb83f39e",
+        "docs/key_paper_coverage_report.md": "59266d2f8c34f4e019f0eff43ae02598f5e61940a55f396cf27c9bb38412ad9f",
+        "data/manual/key_paper_coverage_report.csv": "dbe1bd75e8d619a3a28354df1bccd79037f0aa281de49a37bbb49d3937d75099"
+      },
+      "EXPORT_REPRODUCIBLE": 1
+    },
+    "focused_results_reused": "184 tests and 12 subtests reused: scientific sources, exports and those test contents unchanged by the four subsequent failure corrections. Four original failure regressions, two historical guards, five institution/boundary checks and the final full suite validate the corrections.",
+    "test_warning_status": "Two existing PytestReturnNotNoneWarning warnings in legacy_scope_exclusion_migration helper tests; no skips or warning suppression.",
+    "historical_receipts_modified": false
+  },
+  "evidence_baseline_integrity": {
+    "AUTHORITATIVE_CORPUS_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "tracked_files_compared": 4297,
+    "frozen_neurips_files": 49,
+    "primary_protected_excluded_files": 128,
+    "primary_untracked_total_preserved": 130,
+    "primary_extra_untracked_note": "Two pre-existing Wave 5B evidence artifacts accompany the 128 excluded files; none touched.",
+    "primary_checkout_modified": false,
+    "batch_c_debts_reopened": false,
+    "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+  },
+  "integrity": {
+    "status": "PASSED_PRESTAGING",
+    "UNEXPECTED_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "IGNORED_OPERATIONAL_INPUTS_COMMITTED": 0,
+    "OPERATIONAL_INPUTS_CHANGED": 0,
+    "EXPORT_REPRODUCIBLE": 1,
+    "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA",
+    "primary": {
+      "head": "9e7666169cba098f62f022b7f9f60cdf7c7c72e1",
+      "head_unchanged": true,
+      "status_unchanged": true,
+      "tracked_count": 4286,
+      "untracked_count": 130,
+      "tracked_mismatches": [],
+      "untracked_mismatches": [],
+      "tracked_inventory_added": [],
+      "tracked_inventory_removed": [],
+      "untracked_inventory_added": [],
+      "untracked_inventory_removed": [],
+      "protected_count": 128,
+      "protected_mismatches": [],
+      "protected_classifications": {
+        "LOCAL_RAW_REDUNDANT": 115,
+        "TEMPORARY": 3,
+        "LOCAL_GENERATED": 10
+      },
+      "index_empty": true,
+      "tracked_worktree_clean": true
+    },
+    "frozen_neurips": {
+      "count": 49,
+      "receipt_unchanged": true,
+      "isolated_mismatches": [],
+      "primary_mismatches": []
+    },
+    "ignored_inputs": {
+      "operational_count": 104,
+      "historical_count": 15,
+      "unique_count": 119,
+      "checksum_mismatches": [],
+      "ignored_count": 119,
+      "not_ignored": [],
+      "tracked_inputs": [],
+      "staged_inputs": [],
+      "committed_inputs": []
+    },
+    "limitations": [
+      "Primary preservation is exact against the recovered restart snapshot. Older continuity has 102 recovered whole-file digests and 20 response-payload digests; six older diagnostic-file digests were unavailable.",
+      "Input hashes are the recovered 104 operational and 15 historical receipt, not a claim that vanished earlier temporary receipts were recovered byte-for-byte.",
+      "This script verifies local Git/index/content state only. Fetch, remote-SHA equality, ancestry, and ahead/behind must be checked separately before/after publication."
+    ]
+  },
+  "corpus_before": {
+    "public": 638,
+    "formal": 530,
+    "mapped": 616,
+    "unmapped": 22,
+    "relationship_rows": 1419,
+    "unique_paper_institution_pairs": 1419
+  },
+  "taxonomy_before": {
+    "detection": 587,
+    "method": 546,
+    "analysis_study": 78,
+    "survey": 20,
+    "source_attribution": 84,
+    "dataset": 132,
+    "benchmark": 88,
+    "localization": 43
+  },
+  "corpus_after": {
+    "public": 636,
+    "formal": 528,
+    "mapped": 614,
+    "unmapped": 22,
+    "relationship_rows": 1413,
+    "unique_paper_institution_pairs": 1413
+  },
+  "taxonomy_after": {
+    "detection": 586,
+    "method": 545,
+    "analysis_study": 77,
+    "survey": 20,
+    "source_attribution": 84,
+    "dataset": 132,
+    "benchmark": 88,
+    "localization": 43
+  },
+  "export_semantic_verification": {
+    "web/data/public_preview_papers.json": {
+      "before_count": 638,
+      "after_count": 636,
+      "removed_count": 2,
+      "added_count": 0,
+      "removed_records": [
+        {
+          "record_key": "curated:75cbd31c9946c7eb7977",
+          "canonical_paper_id": "curated:75cbd31c9946c7eb7977",
+          "title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation",
+          "institution_id": null,
+          "institution": null
+        },
+        {
+          "record_key": "doi:10.1109/tii.2023.3329711",
+          "canonical_paper_id": "doi:10.1109/tii.2023.3329711",
+          "title": "Generating Synthetic Training Images to Detect Split Defects in Stamped Components",
+          "institution_id": null,
+          "institution": null
+        }
+      ],
+      "removed_identity_set": [
+        "curated:75cbd31c9946c7eb7977",
+        "doi:10.1109/tii.2023.3329711"
+      ],
+      "removed_identities_match_approved": true,
+      "unrelated_shared_record_changes": {},
+      "nonrecord_top_level_changes": [],
+      "metadata_changes": [
+        "public_preview_generated_at"
+      ],
+      "retained_record_order_unchanged": true
+    },
+    "web/data/public_preview_map_data.json": {
+      "before_count": 1419,
+      "after_count": 1413,
+      "removed_count": 6,
+      "added_count": 0,
+      "removed_records": [
+        {
+          "record_key": "openalex-candidate-01f34db1cddbd93f",
+          "canonical_paper_id": "curated:75cbd31c9946c7eb7977",
+          "title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation",
+          "institution_id": "institution:068512c1b695fe0b",
+          "institution": "Max Planck Institute for Security and Privacy"
+        },
+        {
+          "record_key": "openalex-candidate-2d8466e77a874e50",
+          "canonical_paper_id": "curated:75cbd31c9946c7eb7977",
+          "title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation",
+          "institution_id": "institution:aeb3cd858bb22d74",
+          "institution": "Hannover Re (Germany)"
+        },
+        {
+          "record_key": "openalex-candidate-80894cca69e5623d",
+          "canonical_paper_id": "doi:10.1109/tii.2023.3329711",
+          "title": "Generating Synthetic Training Images to Detect Split Defects in Stamped Components",
+          "institution_id": "institution:4d3dd6848c184118",
+          "institution": "University of Warwick"
+        },
+        {
+          "record_key": "openalex-candidate-d2a030d99b35b5f8",
+          "canonical_paper_id": "curated:75cbd31c9946c7eb7977",
+          "title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation",
+          "institution_id": "institution:ac9dc63b4bd4669a",
+          "institution": "Leibniz University Hannover"
+        },
+        {
+          "record_key": "openalex-candidate-ee0060dfde947124",
+          "canonical_paper_id": "curated:75cbd31c9946c7eb7977",
+          "title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation",
+          "institution_id": "institution:8f8dd64c6339c8ff",
+          "institution": "Ruhr University Bochum"
+        },
+        {
+          "record_key": "openalex-candidate-ff2c575fbe73b2dd",
+          "canonical_paper_id": "curated:75cbd31c9946c7eb7977",
+          "title": "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation",
+          "institution_id": "institution:aea376936c88135b",
+          "institution": "CISPA Helmholtz Center for Information Security"
+        }
+      ],
+      "removed_identity_set": [
+        "curated:75cbd31c9946c7eb7977",
+        "doi:10.1109/tii.2023.3329711"
+      ],
+      "removed_identities_match_approved": true,
+      "unrelated_shared_record_changes": {},
+      "nonrecord_top_level_changes": [],
+      "metadata_changes": [
+        "public_preview_generated_at"
+      ],
+      "retained_record_order_unchanged": true
+    }
+  },
+  "derived_report_verification": {
+    "missing_author_report_before": 638,
+    "missing_author_report_after": 636,
+    "removed_titles": [
+      "Generating Synthetic Training Images to Detect Split Defects in Stamped Components",
+      "\"That's Another Doom I Haven't Thought About\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation"
+    ],
+    "nonrank_changes_to_retained_rows": {},
+    "coverage_changed_rows": [
+      {
+        "checklist_row": "270",
+        "title": "\"That’s another doom I haven’t thought about\": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation. CHI, 2026",
+        "changed_fields": [
+          "in_public_preview_paper_list",
+          "covered_as_map_marker",
+          "in_public_preview",
+          "coverage_status",
+          "missing_stage",
+          "matched_public_title",
+          "map_record_count",
+          "match_method",
+          "matched_public_paper_id",
+          "exclusion_evidence"
+        ]
+      }
+    ],
+    "coverage_row_count_unchanged": true
+  },
+  "evidence_baseline_source_sha256": {
+    "data/curated/papers.csv": "2d71358418da758a1d257cb5b4bc170d373cff39d2be9d191d4b34f430978b88",
+    "data/curated/paper_taxonomy.csv": "9bdef74c2be67e0c7ee5fc162bcf0514344ba476372ac7d24aa1ebb3e8c6563d",
+    "web/data/public_preview_papers.json": "6186e841184e976a097d916f796f20401d754e2649c6fddbb524918d3b41aeda",
+    "web/data/public_preview_map_data.json": "0f0908fefcc985ccedc43c4f6754013767ca7128cb7488fc6cd3c700ea780060",
+    "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+    "data/raw/corpus_quality_audit_2026_10_04/relationship_review.json": "509a34edaeaf4648aa1bdeddc598ec069a9a547dc4fe90c5e5fc8d4cc52122ed",
+    "docs/corpus_quality_batch_c_decision_sheet_2026_10_05.md": "e5f329b7620e62bb041268059de60094d17284c3ae66b186abecd63a40d27d45",
+    "docs/paper_taxonomy_migration_audit_2026-09-04.md": "9b76656da58a73bce6831a256d0ea2cd5a621f6a67d8ae8196b814525521514c",
+    "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+    "docs/key_paper_reconciliation.md": "1788a0c1d947e749dca7f1fb40acb0b462f057263ec1dc4dc02e2434cabe8e44",
+    "data/manual/key_paper_reconciliation.json": "f90bb8d5e02c754e530ca927201108130b37035b41fc2ac82b2ab32aa0dc6701",
+    "data/raw/key_paper_reconciliation_2026_09_08/crossref_270.json": "1fcbf81d0be24fa2aa7f1443638d120523a1051200d7e7dd16c399f8eb989ebb",
+    "data/raw/key_paper_reconciliation_2026_09_08/manifest.json": "53725a5f764e5fe2bbc100e4aa8a17bd16bbe6e8ae2e9cc242e218cef1b8aae8",
+    "data/raw/venue_audit_crossref/b4d3dd6ca60b58bc701a.json": "1322b1363fdf41635fb718f982b2ba312f984ff8b3462d3514de69a1fd1052bf",
+    "data/processed/openalex_candidate_papers.csv": "9d6f0ff95f891a3f93816f34d828d23b12245567b243562b2181ba4dee839d1e",
+    "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+    "data/raw/corpus_quality_batch_c_closeout_2026_10_11/evidence_manifest.json": "39b8f7e4dc6643352d3858b36cfe5b53a8ad3f8b4fbf1b5761cdfe356cd32ecb"
+  },
+  "evidence_preservation": {
+    "original_manifest_sha256": "20c1260920c01e25ff2c87fd5a133d5a6f7fc147e6d58fb4394a13ae1975a84e",
+    "original_report_sha256": "ef555eb4a6116327acab13298809ad198c30d591c8d5a612297def64d0115590",
+    "canonical_identity_primary_source_protocol_quantitative_counterexample_fields_preserved": true,
+    "source_version_limitations_preserved": true,
+    "current_manuscript_availability": "Original temporary PDFs, text and renderings are no longer present. Prior manuscript review, exact retrieval provenance and scientific notes are preserved; no retrieval was repeated."
+  },
+  "publication": {
+    "intended_commit_subject": "fix: exclude out-of-scope batch-b wave b1a papers",
+    "gate": "Commit and normal fast-forward push only after focused tests, current validators, full suite and two-pass reproducibility pass. Remote SHA verification is reported after publication.",
+    "validation_gates_passed": true,
+    "explicit_allowlist": [
+      "data/curated/paper_exclusions.csv",
+      "data/curated/review_decisions.csv",
+      "data/manual/key_paper_coverage_report.csv",
+      "data/manual/missing_author_mappings_report.csv",
+      "data/raw/corpus_quality_batch_b_wave_b1a_2026_10_12/evidence_manifest.json",
+      "docs/corpus_quality_batch_b_wave_b1a_2026_10_12.md",
+      "docs/key_paper_coverage_report.md",
+      "docs/missing_author_mappings_report.md",
+      "docs/public_preview_report.md",
+      "scripts/verify_key_paper_reconciliation.py",
+      "tests/baseline_expectations.py",
+      "tests/public_refinement_snapshot.py",
+      "tests/test_corpus_quality_batch_a.py",
+      "tests/test_corpus_quality_batch_b_wave_b1a.py",
+      "tests/test_corpus_quality_batch_c_closeout.py",
+      "tests/test_corpus_quality_batch_c_phase1.py",
+      "tests/test_corpus_quality_batch_c_wave1.py",
+      "tests/test_corpus_quality_batch_c_wave2.py",
+      "tests/test_corpus_quality_batch_c_wave3a.py",
+      "tests/test_corpus_quality_batch_c_wave3b2.py",
+      "tests/test_corpus_quality_batch_c_wave4a.py",
+      "tests/test_corpus_quality_batch_c_wave5a.py",
+      "tests/test_corpus_quality_batch_c_wave5b.py",
+      "tests/test_corpus_quality_batch_c_wave5c.py",
+      "tests/test_frontend_published_only_filter.py",
+      "tests/test_frontend_result_cards.py",
+      "tests/test_historical_integrity_successors.py",
+      "tests/test_institution_type_audit.py",
+      "tests/test_paper_metadata_consistency_audit.py",
+      "tests/test_primary_paper_curation.py",
+      "web/data/public_preview_map_data.json",
+      "web/data/public_preview_papers.json"
+    ],
+    "remote_verification": "Commit SHA, normal-push result and fetched remote SHA are reported after publication; this pre-commit artifact does not claim a completed push."
+  },
+  "final_change_scope": {
+    "expected_count": 32,
+    "actual_count": 32,
+    "counts_by_category": {
+      "curated_csv": 2,
+      "generated": 7,
+      "evidence": 2,
+      "existing_tests": 14,
+      "new_test": 2,
+      "historical_boundary": 1,
+      "full_suite_test_corrections": 3,
+      "audit_verification_boundary": 1
+    },
+    "actual_paths": [
+      "data/curated/paper_exclusions.csv",
+      "data/curated/review_decisions.csv",
+      "data/manual/key_paper_coverage_report.csv",
+      "data/manual/missing_author_mappings_report.csv",
+      "data/raw/corpus_quality_batch_b_wave_b1a_2026_10_12/evidence_manifest.json",
+      "docs/corpus_quality_batch_b_wave_b1a_2026_10_12.md",
+      "docs/key_paper_coverage_report.md",
+      "docs/missing_author_mappings_report.md",
+      "docs/public_preview_report.md",
+      "scripts/verify_key_paper_reconciliation.py",
+      "tests/baseline_expectations.py",
+      "tests/public_refinement_snapshot.py",
+      "tests/test_corpus_quality_batch_a.py",
+      "tests/test_corpus_quality_batch_b_wave_b1a.py",
+      "tests/test_corpus_quality_batch_c_closeout.py",
+      "tests/test_corpus_quality_batch_c_phase1.py",
+      "tests/test_corpus_quality_batch_c_wave1.py",
+      "tests/test_corpus_quality_batch_c_wave2.py",
+      "tests/test_corpus_quality_batch_c_wave3a.py",
+      "tests/test_corpus_quality_batch_c_wave3b2.py",
+      "tests/test_corpus_quality_batch_c_wave4a.py",
+      "tests/test_corpus_quality_batch_c_wave5a.py",
+      "tests/test_corpus_quality_batch_c_wave5b.py",
+      "tests/test_corpus_quality_batch_c_wave5c.py",
+      "tests/test_frontend_published_only_filter.py",
+      "tests/test_frontend_result_cards.py",
+      "tests/test_historical_integrity_successors.py",
+      "tests/test_institution_type_audit.py",
+      "tests/test_paper_metadata_consistency_audit.py",
+      "tests/test_primary_paper_curation.py",
+      "web/data/public_preview_map_data.json",
+      "web/data/public_preview_papers.json"
+    ],
+    "unexpected_paths": [],
+    "missing_paths": [],
+    "staged_paths": [],
+    "unstaged_paths": [
+      "data/curated/paper_exclusions.csv",
+      "data/curated/review_decisions.csv",
+      "data/manual/key_paper_coverage_report.csv",
+      "data/manual/missing_author_mappings_report.csv",
+      "docs/key_paper_coverage_report.md",
+      "docs/missing_author_mappings_report.md",
+      "docs/public_preview_report.md",
+      "scripts/verify_key_paper_reconciliation.py",
+      "tests/baseline_expectations.py",
+      "tests/public_refinement_snapshot.py",
+      "tests/test_corpus_quality_batch_a.py",
+      "tests/test_corpus_quality_batch_c_closeout.py",
+      "tests/test_corpus_quality_batch_c_phase1.py",
+      "tests/test_corpus_quality_batch_c_wave1.py",
+      "tests/test_corpus_quality_batch_c_wave2.py",
+      "tests/test_corpus_quality_batch_c_wave3a.py",
+      "tests/test_corpus_quality_batch_c_wave3b2.py",
+      "tests/test_corpus_quality_batch_c_wave4a.py",
+      "tests/test_corpus_quality_batch_c_wave5a.py",
+      "tests/test_corpus_quality_batch_c_wave5b.py",
+      "tests/test_corpus_quality_batch_c_wave5c.py",
+      "tests/test_frontend_published_only_filter.py",
+      "tests/test_frontend_result_cards.py",
+      "tests/test_institution_type_audit.py",
+      "tests/test_paper_metadata_consistency_audit.py",
+      "tests/test_primary_paper_curation.py",
+      "web/data/public_preview_map_data.json",
+      "web/data/public_preview_papers.json"
+    ],
+    "untracked_paths": [
+      "data/raw/corpus_quality_batch_b_wave_b1a_2026_10_12/evidence_manifest.json",
+      "docs/corpus_quality_batch_b_wave_b1a_2026_10_12.md",
+      "tests/test_corpus_quality_batch_b_wave_b1a.py",
+      "tests/test_historical_integrity_successors.py"
+    ],
+    "baseline_to_head_paths": []
+  },
+  "reviewed_test_successor": {
+    "path": "tests/test_institution_type_audit.py",
+    "predecessor_commit": "91de08a904847c47f60eb3dfd124e3db3300a459",
+    "predecessor_sha256": "319d131f4e1b5a4354e52fd190f1f96859815661e4c101159a1a076502130c9b",
+    "reviewed_sha256": "b6e31618daacbd3e0bea7919fee7ebcdd1805cb78e7b7aa99a226f0bd2b3b1d6",
+    "exact_path_set_comparisons_retained": true,
+    "negative_tamper_tests_passed": 3
+  },
+  "runtime_verification": {
+    "versions": {
+      "python": "3.14.7",
+      "pytest": "9.1.1",
+      "node": "24.19.0"
+    },
+    "operational_inputs": 104,
+    "historical_inputs": 15,
+    "all_119_checksum_matched": true,
+    "inputs_ignored_untracked_and_unstaged": true,
+    "localhost_authorized": true,
+    "manuscript_retrievals_during_adjudication": 0
+  }
+}

@@ -11,7 +11,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-10-12T03:46:53Z |
+| public_preview_generated_at | 2026-10-13T12:29:20Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1419 |
-| Unique mapped papers | 616 |
-| Unique institutions | 565 |
+| Map records | 1413 |
+| Unique mapped papers | 614 |
+| Unique institutions | 562 |
 | Countries | 47 |
-| arXiv/preprint records | 780 |
-| Records with DOI | 1095 |
-| Records with venue | 1415 |
+| arXiv/preprint records | 775 |
+| Records with DOI | 1089 |
+| Records with venue | 1409 |
 | Records missing venue | 4 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -36,7 +36,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Task | Records |
 | --- | ---: |
-| detection | 569 |
+| detection | 568 |
 | source_attribution | 80 |
 | localization | 38 |
 
@@ -45,10 +45,10 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | Year | Records |
 | --- | ---: |
 | 2027 | 1 |
-| 2026 | 230 |
+| 2026 | 229 |
 | 2025 | 182 |
 | 2024 | 103 |
-| 2023 | 43 |
+| 2023 | 42 |
 | 2022 | 15 |
 | 2021 | 19 |
 | 2020 | 12 |
@@ -78,11 +78,11 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | United States | 189 |
 | Italy | 91 |
 | India | 55 |
-| Germany | 46 |
+| Germany | 41 |
 | South Korea | 39 |
 | Singapore | 32 |
-| United Kingdom | 29 |
 | France | 28 |
+| United Kingdom | 28 |
 | Australia | 27 |
 
 ## Top Institutions
@@ -104,8 +104,8 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1328 |
-| medium | 91 |
+| high | 1327 |
+| medium | 86 |
 
 ## Potential quality issues
 
@@ -138,14 +138,9 @@ None.
 
 ### Records with missing or unknown tasks
 
-Count: **6**
+Count: **1**
 
 - TWIGMA: A Dataset of AI-Generated Images with Metadata from Twitter (2023) - Stanford University; `openalex-candidate-dae59ecf24556992`
-- "That's Another Doom I Haven't Thought About": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation (2026) - Leibniz University Hannover; `openalex-candidate-d2a030d99b35b5f8`
-- "That's Another Doom I Haven't Thought About": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation (2026) - CISPA Helmholtz Center for Information Security; `openalex-candidate-ff2c575fbe73b2dd`
-- "That's Another Doom I Haven't Thought About": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation (2026) - Hannover Re (Germany); `openalex-candidate-2d8466e77a874e50`
-- "That's Another Doom I Haven't Thought About": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation (2026) - Ruhr University Bochum; `openalex-candidate-ee0060dfde947124`
-- "That's Another Doom I Haven't Thought About": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation (2026) - Max Planck Institute for Security and Privacy; `openalex-candidate-01f34db1cddbd93f`
 
 ### Records with low or unresolved confidence
 

@@ -73,10 +73,9 @@ class FrontendResultCardTests(unittest.TestCase):
         preview = json.loads((
             ROOT / "web" / "data" / "public_preview_papers.json"
         ).read_text(encoding="utf-8"))
-        title = (
-            '"That\'s Another Doom I Haven\'t Thought About": A User Study on '
-            "AI Labels as a Safeguard Against Image-Based Misinformation"
-        )
+        # L015 is now reversibly excluded. Keep this a live public-record test
+        # with the same five-affiliation and multi-author rendering coverage.
+        title = "ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization"
         record = next(
             item for item in preview["records"] if item["title"] == title
         )

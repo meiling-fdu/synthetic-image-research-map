@@ -1,4 +1,9 @@
 """Focused checks for the approved Batch C Phase 1, against committed Batch A."""
+from tests.baseline_expectations import (
+    CURRENT_CORPUS_COUNTS,
+    CURRENT_EMPTY_CORE_TASK_TITLES,
+)
+
 from collections import Counter
 import csv
 from functools import lru_cache
@@ -16,6 +21,7 @@ from scripts.validate_corpus_quality_audit import load_context, load_queues, dec
 ROOT = Path(__file__).resolve().parents[1]
 BASE = '0bc98c3e75636899e53114be3d9de0a71986990c'
 PHASE1 = 'ccb3fab'
+PUBLISHED_CLOSEOUT = 'b41a506453cd0a4c985bf7d1a63e6b2a2d391539'
 LEDGER = ROOT / 'data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json'
 PUBLIC = ('web/data/public_preview_papers.json', 'web/data/public_preview_map_data.json')
 TARGETS = {
@@ -33,6 +39,11 @@ def previous(path):
 @lru_cache
 def phase1(path):
     return subprocess.check_output(['git', 'show', PHASE1 + ':' + path], cwd=ROOT)
+
+
+@lru_cache
+def closeout(path):
+    return subprocess.check_output(['git', 'show', PUBLISHED_CLOSEOUT + ':' + path], cwd=ROOT)
 
 
 def csv_by_key(content, key):
@@ -184,8 +195,14 @@ def test_t527_historical_taxonomy_unchanged_and_no_new_empty_task_set(state):
     assert row['review_state'] == 'SCOPE_OR_TASK_EVIDENCE_REQUIRED'
     before = json.loads(previous(PUBLIC[0]))['records']
     after = list(context['papers'].values())
-    assert {r['title'] for r in before if not r['tasks']} == {r['title'] for r in after if not r['tasks']}
-    assert {r['title'] for r in ledger['t3_existing_empty_core_tasks']['records']} == {r['title'] for r in after if not r['tasks']}
+    historical_empty = {r['title'] for r in json.loads(closeout(PUBLIC[0]))['records'] if not r['tasks']}
+    assert {r['title'] for r in before if not r['tasks']} == historical_empty
+    assert {r['title'] for r in ledger['t3_existing_empty_core_tasks']['records']} == historical_empty
+    # B1A excludes L015; no new empty task set is introduced in the live corpus.
+    assert {r['title'] for r in after if not r['tasks']} == CURRENT_EMPTY_CORE_TASK_TITLES
+    assert historical_empty - CURRENT_EMPTY_CORE_TASK_TITLES == {
+        '"That\'s Another Doom I Haven\'t Thought About": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation'}
+    assert not CURRENT_EMPTY_CORE_TASK_TITLES - historical_empty
 
 
 def test_p222_canonical_identity_and_complete_noop(state):
@@ -242,14 +259,13 @@ def test_recomputed_counts_and_registry_export_synchronization(state):
     # Wave 3B-2 removes detection from T024 and T136; Wave 4A removes R099 dataset;
     # Wave 5A removes unsupported detection from T611; Wave 5B adds T236 localization;
     # Wave 5C removes detection from T572 and T503; closeout excludes T527.
-    assert context['counts'] == dict(public=638, formal=530, mapped=616, unmapped=22,
-                                    relationship_rows=1419,
-                                    unique_paper_institution_pairs=1419)
+    # Batch B B1A excludes L015 and P562 without altering their historical labels.
+    assert context['counts'] == CURRENT_CORPUS_COUNTS
     for dimension in ('tasks','research_types'):
         registry_totals = Counter(label for row in context['taxonomy'].values() for label in row[dimension].split(';') if label)
         expected_current = Counter(ledger['taxonomy_after'][dimension])
-        expected_current.subtract({'detection': 6, 'source_attribution': 1} if dimension == 'tasks'
-                                  else {'method': 2, 'dataset': 1})
+        expected_current.subtract({'detection': 7, 'source_attribution': 1} if dimension == 'tasks'
+                                  else {'method': 3, 'dataset': 1, 'analysis_study': 1})
         if dimension == 'tasks':
             expected_current.update({'localization': 2})
         assert registry_totals == +expected_current

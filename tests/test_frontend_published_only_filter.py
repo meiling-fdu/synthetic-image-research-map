@@ -1,3 +1,8 @@
+from tests.baseline_expectations import (
+    CURRENT_CORPUS_COUNTS,
+    PUBLICATION_TYPE_TOTALS,
+)
+
 import json
 import pathlib
 import shutil
@@ -58,14 +63,14 @@ class FrontendPublishedOnlyFilterTests(unittest.TestCase):
             counts[publication_type] = counts.get(publication_type, 0) + 1
         self.assertEqual(
             counts,
-            # Current scope excludes R188 and the T527 training-image retrieval paper.
-            {"conference": 389, "journal": 140, "preprint": 108, "book": 1},
+            # Current reviewed scope includes the B1A L015/P562 exclusions.
+            PUBLICATION_TYPE_TOTALS,
         )
-        self.assertEqual(counts["preprint"], 108)
+        self.assertEqual(counts["preprint"], PUBLICATION_TYPE_TOTALS["preprint"])
         published_only_count = sum(
             counts[key] for key in ("conference", "journal", "book")
         )
-        self.assertEqual(published_only_count, 530)
+        self.assertEqual(published_only_count, CURRENT_CORPUS_COUNTS["formal"])
 
     def test_predicate_semantics_and_filter_composition(self):
         helper = self.app[
