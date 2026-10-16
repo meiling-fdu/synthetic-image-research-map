@@ -127,7 +127,8 @@ def test_strong_identity_exclusion_is_reversible_without_relabeling():
     "data/curated/institution_locations.csv",
 ))
 def test_historical_bibliography_taxonomy_and_affiliations_are_byte_preserved(path):
-    assert (ROOT / path).read_bytes() == previous(path)
+    # Pin T527 closeout; B1B has independently tested later metadata corrections.
+    assert published(path) == previous(path)
 
 
 def test_t527_taxonomy_and_source_provenance_survive_public_exclusion():

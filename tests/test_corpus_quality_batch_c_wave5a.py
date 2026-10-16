@@ -232,7 +232,6 @@ def test_recomputed_corpus_and_taxonomy_change_only_detection_by_one():
     assert old - wave5a == {"detection": 1}
     assert not wave5a - old
     assert current == CURRENT_TAXONOMY_TOTALS
-    assert current - wave5a == {"localization": 1}
-    assert wave5a - current == {"detection": 3, "source_attribution": 1,
-                                "method": 2, "analysis_study": 1}
-    # Approved Wave 5C task removals, T527 closeout, and B1A L015/P562 exclusions.
+    assert current - wave5a == {"localization": 1, "benchmark": 1}
+    assert wave5a - current == {"detection": 3, "source_attribution": 1, "method": 2}
+    # Approved Wave 5C/T527/B1A successors plus B1B R137/R611 research-type additions.

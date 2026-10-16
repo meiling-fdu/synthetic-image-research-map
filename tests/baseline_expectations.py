@@ -11,7 +11,8 @@ data change and the identity and relationship invariants in
 # affiliations; T246 has evaluated localization; T024 and T136 retain only
 # source attribution. T527 closeout excludes training-image retrieval from the
 # narrow forensic scope. Batch B B1A additionally excludes the L015 user study
-# and P562 industrial defect detector. Prior baselines remain in dated receipts.
+# and P562 industrial defect detector. B1B accepts R137 benchmark and R611
+# analysis-study contributions. Prior baselines remain in dated receipts.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 636,
     "public_map_source_papers": 614,
@@ -72,7 +73,7 @@ CURRENT_CORPUS_COUNTS = {
     "unique_paper_institution_pairs": 1413
 }
 
-RESEARCH_TYPE_TOTALS = {'method': 545, 'dataset': 132, 'benchmark': 88, 'survey': 20, 'analysis_study': 77}
+RESEARCH_TYPE_TOTALS = {'method': 545, 'dataset': 132, 'benchmark': 89, 'survey': 20, 'analysis_study': 78}
 
 CURRENT_TAXONOMY_TOTALS = {**TASK_TOTALS, **RESEARCH_TYPE_TOTALS}
 

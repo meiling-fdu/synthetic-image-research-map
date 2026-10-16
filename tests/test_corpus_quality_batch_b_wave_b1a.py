@@ -24,6 +24,7 @@ from scripts.validate_corpus_quality_audit import load_context
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "91de08a904847c47f60eb3dfd124e3db3300a459"
+PUBLISHED_B1A = "1ea93c53a3d9f5f822ce27f818d8009274d3b12a"
 MANIFEST = "data/raw/corpus_quality_batch_b_wave_b1a_2026_10_12/evidence_manifest.json"
 PUBLIC = ("web/data/public_preview_papers.json", "web/data/public_preview_map_data.json")
 AUDIT = "data/raw/corpus_quality_audit_2026_10_04/"
@@ -58,6 +59,12 @@ def previous(path):
     return subprocess.check_output(["git", "show", f"{BASE}:{path}"], cwd=ROOT)
 
 
+@lru_cache
+def published(path):
+    # The B1A transaction is immutable; later reviewed metadata belongs to its own wave.
+    return subprocess.check_output(["git", "show", f"{PUBLISHED_B1A}:{path}"], cwd=ROOT)
+
+
 def csvrows(raw):
     return list(csv.DictReader(io.StringIO(raw.decode("utf-8-sig"), newline="")))
 
@@ -87,7 +94,8 @@ def test_exactly_two_new_scope_decisions_leave_every_prior_decision_unchanged():
     rows, selected = selected_exclusions()
     assert [row for row in rows if row not in selected.values()] == csvrows(
         previous("data/curated/paper_exclusions.csv"))
-    decisions = read_review_decisions(ROOT / "data/curated/review_decisions.csv")
+    decisions = csvrows(published("data/curated/review_decisions.csv"))
+    live_decisions = read_review_decisions(ROOT / "data/curated/review_decisions.csv")
     new_decisions = []
     packet = {record["review_id"]: record for record in manifest()["records"]}
     assert set(packet) == set(CASES)
@@ -104,6 +112,7 @@ def test_exactly_two_new_scope_decisions_leave_every_prior_decision_unchanged():
                  if normalize_doi(decision["doi"]) == case["doi"]]
         assert len(found) == 1, review_id
         decision = found[0]
+        assert [row for row in live_decisions if row["decision_id"] == decision["decision_id"]] == [decision]
         assert decision["target_type"] == "paper"
         assert decision["action"] == "exclude_paper_scope"
         assert decision["review_note"]
@@ -162,7 +171,7 @@ def test_canonical_metadata_historical_taxonomy_and_affiliations_are_retained(pa
         assert manifest()["evidence_baseline_source_sha256"][path] == expected
         assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected
     else:
-        assert (ROOT / path).read_bytes() == previous(path)
+        assert published(path) == previous(path)
 
 
 @pytest.mark.parametrize("review_id", CASES)
@@ -185,7 +194,9 @@ def test_excluded_scientific_records_remain_recoverable_without_retagging(review
 @pytest.mark.parametrize("path", PUBLIC)
 def test_public_delta_is_only_the_two_approved_exclusions(path):
     old = json.loads(previous(path))
-    new = json.loads((ROOT / path).read_text())
+    new = json.loads(published(path))
+    live = json.loads((ROOT / path).read_text())
+    assert not any(matches(row, case) for row in live["records"] for case in CASES.values())
     expected = [row for row in old["records"]
                 if not any(matches(row, case) for case in CASES.values())]
     assert new["records"] == expected
@@ -206,7 +217,8 @@ def test_corpus_delta_is_computed_from_public_membership():
     assert current == {"public": 636, "formal": 528, "mapped": 614,
                        "unmapped": 22, "relationship_rows": 1413,
                        "unique_paper_institution_pairs": 1413}
-    totals = Counter(label for paper in context["papers"].values()
+    endpoint = json.loads(published(PUBLIC[0]))["records"]
+    totals = Counter(label for paper in endpoint
                      for dimension in ("tasks", "research_types") for label in paper[dimension])
     before = Counter(label for paper in json.loads(previous(PUBLIC[0]))["records"]
                      for dimension in ("tasks", "research_types") for label in paper[dimension])

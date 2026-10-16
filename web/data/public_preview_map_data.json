@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-13T12:29:20Z"
+    "public_preview_generated_at": "2026-10-16T02:40:13Z"
   },
   "records": [
     {
@@ -12031,7 +12031,7 @@
             1
           ],
           "is_current_marker_author": true,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -12041,7 +12041,7 @@
             1
           ],
           "is_current_marker_author": true,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -12051,7 +12051,7 @@
             1
           ],
           "is_current_marker_author": true,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -12061,7 +12061,7 @@
             1
           ],
           "is_current_marker_author": true,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -12071,7 +12071,7 @@
             1
           ],
           "is_current_marker_author": true,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         }
@@ -12079,7 +12079,7 @@
       "institution_authors": [
         "Nan Zhong",
         "Yiran Xu",
-        "Li, Sheng",
+        "Sheng Li",
         "Zhenxing Qian",
         "Xinpeng Zhang"
       ],
@@ -12097,7 +12097,7 @@
       "resolution_method": "manual_key_paper_affiliation_enrichment",
       "resolution_confidence": "high",
       "needs_review": false,
-      "notes": "key-paper affiliation enrichment | arXiv HTML first page | Paper first page lists all authors under Fudan University. | Coordinates applied from local institution_resolution_cache.json; source=data/processed/institution_resolution_cache.json; detail=ROR. Manual review completed for explicit Fudan University, Shanghai, China affiliation. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt",
+      "notes": "key-paper affiliation enrichment | arXiv HTML first page | Paper first page lists all authors under Fudan University. | Coordinates applied from local institution_resolution_cache.json; source=data/processed/institution_resolution_cache.json; detail=ROR. Manual review completed for explicit Fudan University, Shanghai, China affiliation. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt | manual institution-author override applied | Approved B1B L013 name-order correction only: Li, Sheng -> Sheng Li in the existing third-author slot. Cached arXiv 2311.12397v3 byline and September 1 audit identify the same person. Preserve all five existing Fudan memberships and raw/enrichment provenance; no new author identity or affiliation certification. Complete primary affiliation block remains unavailable. | manual institution-author override applied | Approved B1B L013 name-order correction only: Li, Sheng -> Sheng Li in the existing third-author slot. Cached arXiv 2311.12397v3 byline and September 1 audit identify the same person. Preserve all five existing Fudan memberships and raw/enrichment provenance; no new author identity or affiliation certification. Complete primary affiliation block remains unavailable.",
       "tasks": [
         "detection"
       ],
@@ -12174,11 +12174,11 @@
           "authors": [
             "Nan Zhong",
             "Yiran Xu",
-            "Li, Sheng",
+            "Sheng Li",
             "Zhenxing Qian",
             "Xinpeng Zhang"
           ],
-          "mapping_source": "raw_affiliation",
+          "mapping_source": "curated_admin",
           "mapping_fallback": false
         }
       ],
@@ -12191,7 +12191,7 @@
           "institution_ids": [
             "institution:baa1df7c4adddbda"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -12202,7 +12202,7 @@
           "institution_ids": [
             "institution:baa1df7c4adddbda"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -12213,7 +12213,7 @@
           "institution_ids": [
             "institution:baa1df7c4adddbda"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -12224,7 +12224,7 @@
           "institution_ids": [
             "institution:baa1df7c4adddbda"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -12235,7 +12235,7 @@
           "institution_ids": [
             "institution:baa1df7c4adddbda"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         }
       ],
@@ -18497,9 +18497,7 @@
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
-      "venue_review_required": true,
-      "venue_review_reason": "Journal abbreviation has not been verified; confirm its established short name from the publisher or a bibliographic authority, or explicitly document that the full name is the standard short form.",
+      "venue_review_required": false,
       "institution_type": "research_unit",
       "canonical_name": "Netherlands Forensic Institute",
       "canonical_institution_name": "Netherlands Forensic Institute",
@@ -18698,10 +18696,6 @@
         "overall": "Source metadata",
         "default_field_status": "Source metadata",
         "field_overrides": {
-          "venue": {
-            "status": "Needs review",
-            "source": "OpenAlex"
-          },
           "affiliations": {
             "status": "Needs review"
           }
@@ -34803,8 +34797,7 @@
       ],
       "ambiguity_status": "unresolved",
       "raw_venue": "Computer Science Review",
-      "venue_review_required": true,
-      "venue_review_reason": "Journal abbreviation has not been verified; confirm its established short name from the publisher or a bibliographic authority, or explicitly document that the full name is the standard short form.",
+      "venue_review_required": false,
       "institution_type": "university",
       "canonical_name": "Florida International University",
       "canonical_institution_name": "Florida International University",
@@ -34917,10 +34910,6 @@
         "overall": "Source metadata",
         "default_field_status": "Source metadata",
         "field_overrides": {
-          "venue": {
-            "status": "Needs review",
-            "source": "OpenAlex"
-          },
           "arxiv": {
             "status": "Source metadata",
             "source": "arXiv"
@@ -71531,9 +71520,7 @@
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
-      "venue_review_required": true,
-      "venue_review_reason": "Journal abbreviation has not been verified; confirm its established short name from the publisher or a bibliographic authority, or explicitly document that the full name is the standard short form.",
+      "venue_review_required": false,
       "institution_type": "university",
       "canonical_name": "University of Amsterdam",
       "canonical_institution_name": "University of Amsterdam",
@@ -71732,10 +71719,6 @@
         "overall": "Source metadata",
         "default_field_status": "Source metadata",
         "field_overrides": {
-          "venue": {
-            "status": "Needs review",
-            "source": "OpenAlex"
-          },
           "affiliations": {
             "status": "Needs review"
           }
@@ -115865,7 +115848,8 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "analysis_study"
       ],
       "venue": "British Machine Vision Conference",
       "venue_name": "British Machine Vision Conference",
@@ -116088,7 +116072,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R611 accepted under R3: controlled simulation and architecture, seed, dataset and transformation investigations address fingerprint origins as a primary contribution, beyond routine ablations. Method and source_attribution retained; no detection task."
         }
       },
       "metadata_status": {
@@ -212239,7 +212224,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
       "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
@@ -212552,7 +212538,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R137 accepted under R2: IABench contributes reusable EP1/EP2 decision spaces, incremental schedules and metrics. Retain method and dataset; arXiv v2 five/six-author discrepancy and unverified CVF-final equivalence preserved."
         }
       },
       "metadata_status": {
@@ -212588,7 +212575,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
       "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
@@ -212898,7 +212886,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R137 accepted under R2: IABench contributes reusable EP1/EP2 decision spaces, incremental schedules and metrics. Retain method and dataset; arXiv v2 five/six-author discrepancy and unverified CVF-final equivalence preserved."
         }
       },
       "metadata_status": {

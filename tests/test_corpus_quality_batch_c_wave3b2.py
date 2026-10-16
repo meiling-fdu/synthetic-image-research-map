@@ -56,7 +56,10 @@ def adjudicated_csv(path):
     return list(csv.DictReader(io.StringIO(data.decode("utf-8-sig"), newline="")))
 
 
-def records(path, *, current=True):
+def records(path, *, current=True, adjudicated=False):
+    if adjudicated:
+        raw = subprocess.check_output(["git", "show", "9b7dec4:" + path], cwd=ROOT)
+        return json.loads(raw)["records"]
     payload = json.loads((ROOT / path).read_text()) if current else json.loads(previous(path))
     return payload["records"]
 
@@ -87,10 +90,10 @@ def test_exactly_two_authoritative_task_rows_change():
                 assert new["tasks_evidence_source"] == SOURCES[paper_id]
 
 
-def test_t137_and_t141_remain_semantically_unchanged():
+def test_t137_and_t141_remain_semantically_unchanged_at_the_wave_endpoint():
     for path in ("data/curated/papers.csv", "data/curated/paper_taxonomy.csv"):
         before = {row["paper_id"]: row for row in previous_csv(path)}
-        after = {row["paper_id"]: row for row in csv_rows(path)}
+        after = {row["paper_id"]: row for row in adjudicated_csv(path)}
         assert {paper_id: after[paper_id] for paper_id in FROZEN} == {
             paper_id: before[paper_id] for paper_id in FROZEN
         }
@@ -100,8 +103,13 @@ def test_public_exports_change_only_the_two_task_adjudications():
     for path in ("web/data/public_preview_papers.json", "web/data/public_preview_map_data.json"):
         before = {paper_id: [row for row in records(path, current=False) if row.get("paper_id") == paper_id]
                   for paper_id in CHANGED | FROZEN}
-        after = {paper_id: [row for row in records(path) if row.get("paper_id") == paper_id]
+        after = {paper_id: [row for row in records(path, adjudicated=True) if row.get("paper_id") == paper_id]
                  for paper_id in CHANGED | FROZEN}
+        # Later R137 benchmark review preserves these task decisions.
+        for paper_id in CHANGED | FROZEN:
+            assert [row["tasks"] for row in records(path) if row.get("paper_id") == paper_id] == [
+                row["tasks"] for row in after[paper_id]
+            ]
         for paper_id in CHANGED:
             assert len(after[paper_id]) == len(before[paper_id]) and after[paper_id]
             for old, new in zip(before[paper_id], after[paper_id]):

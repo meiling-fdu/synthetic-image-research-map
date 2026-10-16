@@ -236,8 +236,16 @@ def test_ucsb_provenance_and_public_relationships_are_unchanged(state):
         if row['paper_id'] != 'curated:0d918782407e05ade5bd'
     ]
     assert after_mappings == before_mappings
-    for path in ('data/curated/institution_author_overrides.csv',
-                 'data/raw/corpus_quality_audit_2026_10_04/relationship_review.json',
+    override_path = 'data/curated/institution_author_overrides.csv'
+    assert phase1(override_path) == previous(override_path)
+    # Later paper-specific rosters may be appended; UCSB's exact two reviews stay fixed.
+    expected_rosters = list(csv.DictReader(io.StringIO(previous(override_path).decode(), newline='')))
+    current_rosters = list(csv.DictReader((ROOT / override_path).open(newline='')))
+    ucsb_title = 'Detection, Attribution and Localization of GAN Generated Images'
+    assert [r for r in current_rosters if r['title'] == ucsb_title] == [
+        r for r in expected_rosters if r['title'] == ucsb_title
+    ]
+    for path in ('data/raw/corpus_quality_audit_2026_10_04/relationship_review.json',
                  'data/raw/corpus_quality_batch_a_2026_10_04/results.json'):
         assert (ROOT / path).read_bytes() == previous(path)
     history = json.loads((ROOT / 'data/raw/corpus_quality_audit_2026_10_04/relationship_review.json').read_text())
@@ -268,6 +276,9 @@ def test_recomputed_counts_and_registry_export_synchronization(state):
                                   else {'method': 3, 'dataset': 1, 'analysis_study': 1})
         if dimension == 'tasks':
             expected_current.update({'localization': 2})
+        else:
+            # Accepted B1B R137/R611 successors change only research-type totals.
+            expected_current.update({'benchmark': 1, 'analysis_study': 1})
         assert registry_totals == +expected_current
         old = Counter(label for row in json.loads(previous(PUBLIC[0]))['records'] for label in row[dimension])
         phase1_totals = Counter(label for row in json.loads(phase1(PUBLIC[0]))['records'] for label in row[dimension])

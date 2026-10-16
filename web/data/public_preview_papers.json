@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-13T12:29:20Z"
+    "public_preview_generated_at": "2026-10-16T02:40:13Z"
   },
   "records": [
     {
@@ -55591,8 +55591,22 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "R137 accepted under R2: IABench contributes reusable EP1/EP2 decision spaces, incremental schedules and metrics. Retain method and dataset; arXiv v2 five/six-author discrepancy and unverified CVF-final equivalence preserved."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -55617,19 +55631,7 @@
           "location_display": "Beijing, China"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:88b63de59a0eabcd1b02",
@@ -56326,16 +56328,11 @@
       "venue_aliases": [
         "Forensic Science International: Synergy"
       ],
-      "venue_review_required": true,
-      "venue_review_reason": "Journal abbreviation has not been verified; confirm its established short name from the publisher or a bibliographic authority, or explicitly document that the full name is the standard short form.",
+      "venue_review_required": false,
       "metadata_status": {
         "overall": "Source metadata",
         "default_field_status": "Source metadata",
         "field_overrides": {
-          "venue": {
-            "status": "Needs review",
-            "source": "OpenAlex"
-          },
           "affiliations": {
             "status": "Needs review"
           }
@@ -61506,8 +61503,7 @@
       ],
       "ambiguity_status": "unresolved",
       "raw_venue": "Computer Science Review",
-      "venue_review_required": true,
-      "venue_review_reason": "Journal abbreviation has not been verified; confirm its established short name from the publisher or a bibliographic authority, or explicitly document that the full name is the standard short form.",
+      "venue_review_required": false,
       "author_affiliation_counts": {
         "mapped": 2,
         "non_institutional": 0,
@@ -61603,10 +61599,6 @@
         "overall": "Source metadata",
         "default_field_status": "Source metadata",
         "field_overrides": {
-          "venue": {
-            "status": "Needs review",
-            "source": "OpenAlex"
-          },
           "arxiv": {
             "status": "Source metadata",
             "source": "arXiv"
@@ -231831,7 +231823,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -231841,7 +231833,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -231851,7 +231843,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -231861,7 +231853,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -231871,7 +231863,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         }
@@ -231960,11 +231952,11 @@
           "authors": [
             "Nan Zhong",
             "Yiran Xu",
-            "Li, Sheng",
+            "Sheng Li",
             "Zhenxing Qian",
             "Xinpeng Zhang"
           ],
-          "mapping_source": "raw_affiliation",
+          "mapping_source": "curated_admin",
           "mapping_fallback": false
         }
       ],
@@ -231977,7 +231969,7 @@
           "institution_ids": [
             "institution:baa1df7c4adddbda"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -231988,7 +231980,7 @@
           "institution_ids": [
             "institution:baa1df7c4adddbda"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -231999,7 +231991,7 @@
           "institution_ids": [
             "institution:baa1df7c4adddbda"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -232010,7 +232002,7 @@
           "institution_ids": [
             "institution:baa1df7c4adddbda"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -232021,7 +232013,7 @@
           "institution_ids": [
             "institution:baa1df7c4adddbda"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         }
       ],
@@ -245672,7 +245664,8 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "analysis_study"
       ],
       "taxonomy_status": "reviewed",
       "taxonomy_review": {
@@ -245684,7 +245677,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R611 accepted under R3: controlled simulation and architecture, seed, dataset and transformation investigations address fingerprint origins as a primary contribution, beyond routine ablations. Method and source_attribution retained; no detection task."
         }
       },
       "affiliations": [
