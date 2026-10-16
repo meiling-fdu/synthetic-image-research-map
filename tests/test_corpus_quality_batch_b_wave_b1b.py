@@ -21,6 +21,7 @@ from tests.baseline_expectations import CURRENT_CORPUS_COUNTS, CURRENT_TAXONOMY_
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "1ea93c53a3d9f5f822ce27f818d8009274d3b12a"
+B1B_ENDPOINT = "65e9422764c34eaad1d151fff2895e6c7503835f"
 R137 = "curated:246f07c81b9f91e527eb"
 R611 = "curated:07ee620b8169b67b900f"
 L013 = "curated:9d04c60c5b0b70859a63"
@@ -44,6 +45,11 @@ def published(path):
     return subprocess.check_output(["git", "show", f"{BASE}:{path}"], cwd=ROOT)
 
 
+@lru_cache
+def adjudicated(path):
+    return subprocess.check_output(["git", "show", f"{B1B_ENDPOINT}:{path}"], cwd=ROOT)
+
+
 def csvrows(raw):
     return list(csv.DictReader(io.StringIO(raw.decode("utf-8-sig"), newline="")))
 
@@ -53,7 +59,7 @@ def rows(path):
 
 
 def public(path, *, before=False):
-    raw = published(path) if before else (ROOT / path).read_bytes()
+    raw = published(path) if before else adjudicated(path)
     return json.loads(raw)["records"]
 
 
@@ -203,7 +209,7 @@ def test_l013_roster_retains_person_order_fudan_links_and_relationship_identity(
 
 @pytest.mark.parametrize("path", PUBLIC)
 def test_no_unrelated_public_paper_or_institution_changes_and_relationship_membership_stays_exact(path):
-    old_payload, new_payload = json.loads(published(path)), json.loads((ROOT / path).read_bytes())
+    old_payload, new_payload = json.loads(published(path)), json.loads(adjudicated(path))
     old, new = old_payload.pop("records"), new_payload.pop("records")
     assert [ordered_public_identity(r, path) for r in new] == [
         ordered_public_identity(r, path) for r in old]
@@ -243,7 +249,7 @@ def test_publication_no_change_decisions_preserve_bibliographic_history(path, pi
 
 def test_exactly_five_existing_schema_decisions_append_with_bounded_review_identity():
     path = "data/curated/review_decisions.csv"
-    before, after = csvrows(published(path)), read_review_decisions(ROOT / path)
+    before, after = csvrows(published(path)), csvrows(adjudicated(path))
     assert after[:len(before)] == before
     added = after[len(before):]
     assert len(added) == 5 and len({r["decision_id"] for r in added}) == 5
@@ -276,13 +282,13 @@ def test_batch_b_original_questions_preserved_and_only_five_public_questions_res
         assert (ROOT / path).read_bytes() == published(path)
     historical = [r for r in decision_rows(load_queues()) if r.get("batch") == "B"]
     assert len(historical) == 159 and len({r["paper_id"] for r in historical}) == 148
-    current_public = set(load_context()["papers"])
+    current_public = set(b1b_context()["papers"])
     applicable = [r for r in historical if r["paper_id"] in current_public]
     # Derive the effective closure set from persisted terminal decisions, not
     # from an arithmetic assumption about the five selected papers.
     decision_path = "data/curated/review_decisions.csv"
     previous_count = len(csvrows(published(decision_path)))
-    added = read_review_decisions(ROOT / decision_path)[previous_count:]
+    added = csvrows(adjudicated(decision_path))[previous_count:]
     resolved = set()
     for decision in added:
         assert decision["action"] == "no_action_after_review"
@@ -298,12 +304,12 @@ def test_batch_b_original_questions_preserved_and_only_five_public_questions_res
     assert {r["review_id"] for r in unresolved} == {r["review_id"] for r in applicable} - SELECTED.keys()
 
 
-def test_current_research_type_counts_recompute_with_exact_two_label_delta():
-    context = load_context()
-    assert context["counts"] == CURRENT_CORPUS_COUNTS
+def test_published_b1b_research_type_counts_recompute_with_exact_two_label_delta():
+    context = b1b_context()
+    assert context["counts"] == {"public": 636, "formal": 528, "mapped": 614, "unmapped": 22, "relationship_rows": 1413, "unique_paper_institution_pairs": 1413}
     current = Counter(label for p in context["papers"].values() for dimension in ("tasks", "research_types") for label in p[dimension])
     before = Counter(label for p in public(PUBLIC[0], before=True) for dimension in ("tasks", "research_types") for label in p[dimension])
-    assert current == CURRENT_TAXONOMY_TOTALS
+    assert current == {"detection": 586, "source_attribution": 84, "localization": 43, "method": 545, "dataset": 132, "benchmark": 89, "survey": 20, "analysis_study": 78}
     assert current - before == {"benchmark": 1, "analysis_study": 1}
     assert not before - current
 
@@ -337,7 +343,9 @@ def test_all_frozen_neurips_artifacts_remain_byte_identical():
     "data/manual/key_paper_affiliation_enrichment.csv",
 ])
 def test_unrelated_author_institution_and_scope_sources_remain_exact(path):
-    assert (ROOT / path).read_bytes() == published(path)
+    assert adjudicated(path) == published(path)
+    if path != "data/curated/paper_exclusions.csv":
+        assert (ROOT / path).read_bytes() == adjudicated(path)
 
 
 MANIFEST = "data/raw/corpus_quality_batch_b_wave_b1b_2026_10_15/evidence_manifest.json"
@@ -394,7 +402,7 @@ def test_manifest_binds_five_accepted_outcomes_to_persisted_decisions_and_preser
         decision = record["review_decision"]
         assert decisions[decision["decision_id"]] == decision
         assert f"Batch B review {review_id};" in decision["review_note"]
-        current = load_context()["papers"][SELECTED[review_id]]
+        current = b1b_context()["papers"][SELECTED[review_id]]
         assert record["post_adjudication_public_state"] == {
             key: current.get(key) for key in record["post_adjudication_public_state"]}
     assert packet["scope"]["selected_review_ids"] == list(SELECTED)
@@ -407,7 +415,7 @@ def test_manifest_binds_five_accepted_outcomes_to_persisted_decisions_and_preser
 
 def test_manifest_accounting_and_taxonomy_reconcile_actual_records_and_decisions():
     packet = adjudication_manifest()
-    context = load_context()
+    context = b1b_context()
     original = [row for row in decision_rows(load_queues()) if row.get("batch") == "B"]
     resolved = set(packet["accounting"]["resolved_review_ids"])
     decision_ids = {record["review_id"]: record["review_decision"]["decision_id"] for record in packet["records"]}
@@ -441,7 +449,49 @@ def test_manifest_preserves_original_source_provenance_and_current_source_hashes
     assert packet["evidence_only_source_sha256"] == source_hashes
     assert packet["current_source_sha256"].keys() == source_hashes.keys()
     for path, expected in packet["current_source_sha256"].items():
-        assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected, path
+        snapshot = ((ROOT / path).read_bytes() if path == "data/raw/openalex/20260619T211726Z_001_ai-generated-image-detection.json" else adjudicated(path))
+        assert hashlib.sha256(snapshot).hexdigest() == expected, path
     for path, expected in packet["core_unchanged_sha256"].items():
-        assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected, path
+        assert hashlib.sha256(adjudicated(path)).hexdigest() == expected, path
         assert hashlib.sha256(published(path)).hexdigest() == expected, path
+
+
+@lru_cache
+def b1b_context():
+    """Recompute the immutable B1B transaction independently of later scope decisions."""
+    papers, maps = (public(path) for path in PUBLIC)
+    paper_lookup = {canonical_paper_id(row): row for row in papers}
+    assert len(paper_lookup) == len(papers)
+    # Candidate relationships can omit paper_id even when the public paper has
+    # one (TWIGMA). Resolve both representations through the shared taxonomy ID.
+    taxonomy_to_id = {public_identity_index().matches(row)[0]["taxonomy_id"]: canonical_paper_id(row)
+                      for row in papers}
+    pairs = {(taxonomy_to_id[public_identity_index().matches(row)[0]["taxonomy_id"]], row["institution_id"])
+             for row in maps}
+    mapped = {pid for pid, _ in pairs}
+    assert mapped <= paper_lookup.keys()
+    return {"papers": paper_lookup, "counts": {
+        "public": len(papers),
+        "formal": sum(row["publication_type"] != "preprint" for row in papers),
+        "mapped": len(mapped), "unmapped": len(paper_lookup.keys() - mapped),
+        "relationship_rows": len(maps), "unique_paper_institution_pairs": len(pairs)}}
+
+
+def test_live_b1b_adjudications_survive_successor_scope_decisions():
+    current = load_context()
+    assert current["counts"] == CURRENT_CORPUS_COUNTS
+    totals = Counter(label for paper in current["papers"].values()
+                     for dimension in ("tasks", "research_types") for label in paper[dimension])
+    assert totals == CURRENT_TAXONOMY_TOTALS
+    for path in PUBLIC:
+        current_records = json.loads((ROOT / path).read_bytes())["records"]
+        assert [row for row in current_records if canonical_paper_id(row) in SELECTED.values()] == [
+            row for row in public(path) if canonical_paper_id(row) in SELECTED.values()]
+    published_decisions = csvrows(adjudicated("data/curated/review_decisions.csv"))
+    live_decisions = read_review_decisions(ROOT / "data/curated/review_decisions.csv")
+    assert live_decisions[:len(published_decisions)] == published_decisions
+    b1b_ids = {row["decision_id"] for row in published_decisions
+               if row["created_by"] == "maintainer-approved-batch-b-b1b"}
+    assert len(b1b_ids) == 5
+    assert all(sum(row["decision_id"] == decision_id for row in live_decisions) == 1
+               for decision_id in b1b_ids)

@@ -12,16 +12,17 @@ data change and the identity and relationship invariants in
 # source attribution. T527 closeout excludes training-image retrieval from the
 # narrow forensic scope. Batch B B1A additionally excludes the L015 user study
 # and P562 industrial defect detector. B1B accepts R137 benchmark and R611
-# analysis-study contributions. Prior baselines remain in dated receipts.
+# analysis-study contributions. B1C excludes P490 through the reversible scope
+# registry without changing historical taxonomy. Prior baselines remain in dated receipts.
 CURRENT_REPOSITORY_BASELINE = {
-    "public_unique_papers": 636,
-    "public_map_source_papers": 614,
-    "public_papers_with_map": 614,
+    "public_unique_papers": 635,
+    "public_map_source_papers": 613,
+    "public_papers_with_map": 613,
     "public_papers_without_map": 22,
     "total_institution_registry_rows": 748,
     "active_canonical_institutions": 727,
     "non_active_institution_registry_rows": 21,
-    "public_paper_institution_relationships": 1413,
+    "public_paper_institution_relationships": 1410,
     "institution_hierarchy_edges": 16,
     "institution_aliases": 120
 }
@@ -53,31 +54,31 @@ CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 537, 'company': 88, 'research
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 529, 'company': 86, 'research_unit': 94, 'other': 18}
 
-PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 604, 'research_unit': 136, 'company': 127, 'other': 27}
+PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 603, 'research_unit': 136, 'company': 127, 'other': 27}
 
 # Historical release artifacts are immutable; current effective venues have
 # changed since the 2026-08-24 checkpoint.
 RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint": 64, "book": 1}
 
-PUBLICATION_TYPE_TOTALS = {'conference': 388, 'journal': 139, 'preprint': 108, 'book': 1}
+PUBLICATION_TYPE_TOTALS = {'conference': 388, 'journal': 138, 'preprint': 108, 'book': 1}
 
-TASK_TOTALS = {'detection': 586, 'source_attribution': 84, 'localization': 43}
+TASK_TOTALS = {'detection': 585, 'source_attribution': 84, 'localization': 43}
 
 
 CURRENT_CORPUS_COUNTS = {
-    "public": 636,
-    "formal": 528,
-    "mapped": 614,
+    "public": 635,
+    "formal": 527,
+    "mapped": 613,
     "unmapped": 22,
-    "relationship_rows": 1413,
-    "unique_paper_institution_pairs": 1413
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
 }
 
-RESEARCH_TYPE_TOTALS = {'method': 545, 'dataset': 132, 'benchmark': 89, 'survey': 20, 'analysis_study': 78}
+RESEARCH_TYPE_TOTALS = {'method': 545, 'dataset': 132, 'benchmark': 89, 'survey': 20, 'analysis_study': 77}
 
 CURRENT_TAXONOMY_TOTALS = {**TASK_TOTALS, **RESEARCH_TYPE_TOTALS}
 
-CURRENT_TAXONOMY_SUPPRESSED_ROWS = 47
+CURRENT_TAXONOMY_SUPPRESSED_ROWS = 48
 
 CURRENT_EMPTY_CORE_TASK_TITLES = {'TWIGMA: A Dataset of AI-Generated Images with Metadata from Twitter'}
 

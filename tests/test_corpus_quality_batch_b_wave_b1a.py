@@ -11,6 +11,9 @@ import subprocess
 
 import pytest
 
+from scripts.curated_export import PaperIdentityCache, PaperIdentityIndex
+from tests.baseline_expectations import CURRENT_CORPUS_COUNTS
+
 from scripts.paper_exclusions import (
     build_active_exclusion_index,
     filter_public_output_pair,
@@ -92,7 +95,10 @@ def manifest():
 
 def test_exactly_two_new_scope_decisions_leave_every_prior_decision_unchanged():
     rows, selected = selected_exclusions()
-    assert [row for row in rows if row not in selected.values()] == csvrows(
+    published_rows = csvrows(published("data/curated/paper_exclusions.csv"))
+    # B1A is immutable; later approved scope exclusions append independently.
+    assert rows[:len(published_rows)] == published_rows
+    assert [row for row in published_rows if row not in selected.values()] == csvrows(
         previous("data/curated/paper_exclusions.csv"))
     decisions = csvrows(published("data/curated/review_decisions.csv"))
     live_decisions = read_review_decisions(ROOT / "data/curated/review_decisions.csv")
@@ -211,8 +217,8 @@ def test_public_delta_is_only_the_two_approved_exclusions(path):
     assert new == old
 
 
-def test_corpus_delta_is_computed_from_public_membership():
-    context = load_context()
+def test_corpus_delta_is_computed_from_published_b1a_membership():
+    context = b1a_context()
     current = context["counts"]
     assert current == {"public": 636, "formal": 528, "mapped": 614,
                        "unmapped": 22, "relationship_rows": 1413,
@@ -238,7 +244,7 @@ def test_original_batch_b_review_actions_are_preserved_not_closed_by_scope_exclu
     assert len(pending) == 159
     assert len({row["review_id"] for row in pending}) == 159
     assert len({row["paper_id"] for row in pending}) == 148
-    public_ids = set(load_context()["papers"])
+    public_ids = set(b1a_context()["papers"])
     applicable = [row for row in pending if row["paper_id"] in public_ids]
     assert len(applicable) == 157
     assert len({row["paper_id"] for row in applicable}) == 146
@@ -295,3 +301,42 @@ def test_evidence_report_reconciles_applied_dispositions_and_public_counts():
                        ("Unique paper–institution pairs", "unique_paper_institution_pairs")):
         assert f"| {label} | {packet['corpus_before'][key]:,} | {packet['corpus_after'][key]:,} |" in report
     assert "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA" in report
+
+
+@lru_cache
+def b1a_context():
+    """Recompute published B1A membership without conflating later scope decisions."""
+    papers, maps = (json.loads(published(path))["records"] for path in PUBLIC)
+    index = PaperIdentityIndex(csvrows(published("data/curated/paper_taxonomy.csv")), PaperIdentityCache())
+
+    def identity(record):
+        matched = index.matches(record)
+        assert len(matched) == 1, record.get("title")
+        return record.get("paper_id") or matched[0]["taxonomy_id"]
+
+    paper_lookup = {identity(row): row for row in papers}
+    assert len(paper_lookup) == len(papers)
+    taxonomy_to_id = {index.matches(row)[0]["taxonomy_id"]: identity(row) for row in papers}
+    pairs = {(taxonomy_to_id[index.matches(row)[0]["taxonomy_id"]], row["institution_id"]) for row in maps}
+    mapped = {paper_id for paper_id, _ in pairs}
+    assert mapped <= paper_lookup.keys()
+    return {"papers": paper_lookup, "counts": {
+        "public": len(papers),
+        "formal": sum(row["publication_type"] != "preprint" for row in papers),
+        "mapped": len(mapped), "unmapped": len(paper_lookup.keys() - mapped),
+        "relationship_rows": len(maps), "unique_paper_institution_pairs": len(pairs)}}
+
+
+def test_live_b1a_exclusions_and_original_pending_questions_survive_successors():
+    current = load_context()
+    assert current["counts"] == CURRENT_CORPUS_COUNTS
+    assert all(case["paper_id"] not in current["papers"]
+               for case in CASES.values() if case["paper_id"])
+    for path in PUBLIC:
+        live = json.loads((ROOT / path).read_bytes())["records"]
+        assert not any(matches(row, case) for row in live for case in CASES.values())
+    current_decisions = read_review_decisions(ROOT / "data/curated/review_decisions.csv")
+    for case in CASES.values():
+        assert [row for row in current_decisions if normalize_doi(row["doi"]) == case["doi"]] == [
+            row for row in csvrows(published("data/curated/review_decisions.csv"))
+            if normalize_doi(row["doi"]) == case["doi"]]

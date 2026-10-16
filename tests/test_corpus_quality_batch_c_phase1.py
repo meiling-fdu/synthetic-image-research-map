@@ -267,13 +267,13 @@ def test_recomputed_counts_and_registry_export_synchronization(state):
     # Wave 3B-2 removes detection from T024 and T136; Wave 4A removes R099 dataset;
     # Wave 5A removes unsupported detection from T611; Wave 5B adds T236 localization;
     # Wave 5C removes detection from T572 and T503; closeout excludes T527.
-    # Batch B B1A excludes L015 and P562 without altering their historical labels.
+    # Batch B B1A excludes L015/P562 and B1C excludes P490; historical labels survive.
     assert context['counts'] == CURRENT_CORPUS_COUNTS
     for dimension in ('tasks','research_types'):
         registry_totals = Counter(label for row in context['taxonomy'].values() for label in row[dimension].split(';') if label)
         expected_current = Counter(ledger['taxonomy_after'][dimension])
-        expected_current.subtract({'detection': 7, 'source_attribution': 1} if dimension == 'tasks'
-                                  else {'method': 3, 'dataset': 1, 'analysis_study': 1})
+        expected_current.subtract({'detection': 8, 'source_attribution': 1} if dimension == 'tasks'
+                                  else {'method': 3, 'dataset': 1, 'analysis_study': 2})
         if dimension == 'tasks':
             expected_current.update({'localization': 2})
         else:

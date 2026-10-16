@@ -11,7 +11,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-10-16T02:40:13Z |
+| public_preview_generated_at | 2026-10-16T15:00:49Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1413 |
-| Unique mapped papers | 614 |
-| Unique institutions | 562 |
+| Map records | 1410 |
+| Unique mapped papers | 613 |
+| Unique institutions | 559 |
 | Countries | 47 |
 | arXiv/preprint records | 775 |
-| Records with DOI | 1089 |
-| Records with venue | 1409 |
+| Records with DOI | 1086 |
+| Records with venue | 1406 |
 | Records missing venue | 4 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -36,7 +36,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Task | Records |
 | --- | ---: |
-| detection | 568 |
+| detection | 567 |
 | source_attribution | 80 |
 | localization | 38 |
 
@@ -47,7 +47,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | 2027 | 1 |
 | 2026 | 229 |
 | 2025 | 182 |
-| 2024 | 103 |
+| 2024 | 102 |
 | 2023 | 42 |
 | 2022 | 15 |
 | 2021 | 19 |
@@ -75,7 +75,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | Country | Records |
 | --- | ---: |
 | China | 740 |
-| United States | 189 |
+| United States | 188 |
 | Italy | 91 |
 | India | 55 |
 | Germany | 41 |
@@ -83,7 +83,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | Singapore | 32 |
 | France | 28 |
 | United Kingdom | 28 |
-| Australia | 27 |
+| Australia | 25 |
 
 ## Top Institutions
 
@@ -104,7 +104,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1327 |
+| high | 1324 |
 | medium | 86 |
 
 ## Potential quality issues

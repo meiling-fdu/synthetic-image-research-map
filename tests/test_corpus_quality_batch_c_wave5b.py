@@ -188,5 +188,5 @@ def test_corpus_and_taxonomy_counts_recompute_from_current_export():
     assert len(retained) == 1
     assert retained[0]["tasks"].split(";") == previous_t527[0]["tasks"]
     assert totals - old == {"localization": 1, "benchmark": 1}
-    assert old - totals == {"detection": 3, "source_attribution": 1, "method": 2}
-    # Later Wave 5C/T527/B1A successors plus B1B R137/R611 research-type additions.
+    assert old - totals == {"detection": 4, "source_attribution": 1, "method": 2, "analysis_study": 1}
+    # Later Wave 5C/T527/B1A successors plus B1B R137/R611 additions and the P490 scope exclusion.
