@@ -18,6 +18,7 @@ from scripts.name_matching import canonical_name_key
 from scripts.review_decisions import read_review_decisions
 from scripts.validate_corpus_quality_audit import decision_rows, load_context, load_queues
 from tests.baseline_expectations import CURRENT_CORPUS_COUNTS, CURRENT_TAXONOMY_TOTALS
+from tests.corpus_quality_test_helpers import published_context
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "1ea93c53a3d9f5f822ce27f818d8009274d3b12a"
@@ -458,23 +459,8 @@ def test_manifest_preserves_original_source_provenance_and_current_source_hashes
 
 @lru_cache
 def b1b_context():
-    """Recompute the immutable B1B transaction independently of later scope decisions."""
-    papers, maps = (public(path) for path in PUBLIC)
-    paper_lookup = {canonical_paper_id(row): row for row in papers}
-    assert len(paper_lookup) == len(papers)
-    # Candidate relationships can omit paper_id even when the public paper has
-    # one (TWIGMA). Resolve both representations through the shared taxonomy ID.
-    taxonomy_to_id = {public_identity_index().matches(row)[0]["taxonomy_id"]: canonical_paper_id(row)
-                      for row in papers}
-    pairs = {(taxonomy_to_id[public_identity_index().matches(row)[0]["taxonomy_id"]], row["institution_id"])
-             for row in maps}
-    mapped = {pid for pid, _ in pairs}
-    assert mapped <= paper_lookup.keys()
-    return {"papers": paper_lookup, "counts": {
-        "public": len(papers),
-        "formal": sum(row["publication_type"] != "preprint" for row in papers),
-        "mapped": len(mapped), "unmapped": len(paper_lookup.keys() - mapped),
-        "relationship_rows": len(maps), "unique_paper_institution_pairs": len(pairs)}}
+    """Recompute the immutable B1B transaction independently of later decisions."""
+    return published_context(B1B_ENDPOINT)
 
 
 def test_live_b1b_adjudications_survive_successor_scope_decisions():
@@ -483,6 +469,15 @@ def test_live_b1b_adjudications_survive_successor_scope_decisions():
     totals = Counter(label for paper in current["papers"].values()
                      for dimension in ("tasks", "research_types") for label in paper[dimension])
     assert totals == CURRENT_TAXONOMY_TOTALS
+    # Keep accepted canonical rows strict in the live registry while the whole
+    # original transaction is evaluated at its immutable published endpoint.
+    for path, key in (("data/curated/papers.csv", "paper_id"),
+                      ("data/curated/paper_taxonomy.csv", "taxonomy_id")):
+        historical = {row[key]: row for row in csvrows(adjudicated(path))}
+        live = {row[key]: row for row in rows(path)}
+        for pid in RESEARCH:
+            target = pid if key == "paper_id" else "paper_id:" + pid
+            assert live[target] == historical[target]
     for path in PUBLIC:
         current_records = json.loads((ROOT / path).read_bytes())["records"]
         assert [row for row in current_records if canonical_paper_id(row) in SELECTED.values()] == [

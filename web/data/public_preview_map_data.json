@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-17T02:36:45Z"
+    "public_preview_generated_at": "2026-10-17T08:31:04Z"
   },
   "records": [
     {
@@ -30797,8 +30797,7 @@
       "needs_review": false,
       "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "tasks": [
-        "detection",
-        "source_attribution"
+        "detection"
       ],
       "image_scopes": [
         "fully_generated",
@@ -31007,7 +31006,8 @@
       "taxonomy_status": "reviewed",
       "taxonomy_review": {
         "tasks": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "T1: T579 accepted; MCCL explicitly evaluates binary authenticity, while cross-GAN transfer and view-specific classifiers do not establish generator-ID attribution."
         },
         "image_scopes": {
           "status": "reviewed"
@@ -75131,8 +75131,7 @@
       "needs_review": false,
       "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "tasks": [
-        "detection",
-        "source_attribution"
+        "detection"
       ],
       "image_scopes": [
         "fully_generated",
@@ -75341,7 +75340,8 @@
       "taxonomy_status": "reviewed",
       "taxonomy_review": {
         "tasks": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "T1: T579 accepted; MCCL explicitly evaluates binary authenticity, while cross-GAN transfer and view-specific classifiers do not establish generator-ID attribution."
         },
         "image_scopes": {
           "status": "reviewed"
@@ -75452,8 +75452,7 @@
       "needs_review": false,
       "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "tasks": [
-        "detection",
-        "source_attribution"
+        "detection"
       ],
       "image_scopes": [
         "fully_generated",
@@ -75662,7 +75661,8 @@
       "taxonomy_status": "reviewed",
       "taxonomy_review": {
         "tasks": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "T1: T579 accepted; MCCL explicitly evaluates binary authenticity, while cross-GAN transfer and view-specific classifiers do not establish generator-ID attribution."
         },
         "image_scopes": {
           "status": "reviewed"

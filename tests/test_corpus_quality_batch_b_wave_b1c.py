@@ -20,16 +20,17 @@ from scripts.paper_exclusions import (build_active_exclusion_index, filter_publi
 from scripts.review_decisions import read_review_decisions
 from scripts.validate_corpus_quality_audit import decision_rows, load_context, load_queues
 from scripts.venue_audit import confirmation_fingerprint
-from tests.literature51_predecessor import load_main_baseline_context as load_context, main_baseline_constants
-from scripts.verify_literature51_main_integration import baseline_bytes
-
-# Exact P490 receipt endpoint; current merged state is checked independently.
-_PUBLISHED_BASELINES = main_baseline_constants()
-CURRENT_CORPUS_COUNTS = _PUBLISHED_BASELINES['CURRENT_CORPUS_COUNTS']
-CURRENT_TAXONOMY_TOTALS = _PUBLISHED_BASELINES['CURRENT_TAXONOMY_TOTALS']
+from tests.baseline_expectations import CURRENT_CORPUS_COUNTS, CURRENT_TAXONOMY_TOTALS
+from tests.corpus_quality_test_helpers import published_bytes, published_context
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "65e9422764c34eaad1d151fff2895e6c7503835f"
+B1C_ENDPOINT = "a74bdf79f4d8b3c4fb64af7b83701dce60238289"
+B1C_CORPUS_COUNTS = {"public": 635, "formal": 527, "mapped": 613, "unmapped": 22,
+                     "relationship_rows": 1410, "unique_paper_institution_pairs": 1410}
+B1C_TAXONOMY_TOTALS = {"detection": 585, "source_attribution": 84, "localization": 43,
+                       "method": 545, "dataset": 132, "benchmark": 89,
+                       "survey": 20, "analysis_study": 77}
 DOI = "10.1080/21670811.2024.2331769"
 P490 = "doi:" + DOI
 OPENALEX = "https://openalex.org/W4394571198"
@@ -47,6 +48,14 @@ def previous(path):
     return subprocess.check_output(["git", "show", f"{BASE}:{path}"], cwd=ROOT)
 
 
+def adjudicated(path):
+    return published_bytes(B1C_ENDPOINT, path)
+
+
+def b1c_context():
+    return published_context(B1C_ENDPOINT)
+
+
 def csvrows(raw):
     return list(csv.DictReader(io.StringIO(raw.decode("utf-8-sig"), newline="")))
 
@@ -61,7 +70,7 @@ def matches(record):
 
 @lru_cache
 def identity_index():
-    return PaperIdentityIndex(csvrows((ROOT / "data/curated/paper_taxonomy.csv").read_bytes()), PaperIdentityCache())
+    return PaperIdentityIndex(rows("data/curated/paper_taxonomy.csv"), PaperIdentityCache())
 
 
 def canonical_id(record):
@@ -86,9 +95,9 @@ def selected_exclusion():
 
 def test_exactly_one_reversible_exclusion_appends_with_prior_bytes_preserved():
     path = "data/curated/paper_exclusions.csv"
-    old, new = previous(path), baseline_bytes(ROOT, path)
+    old, new = previous(path), adjudicated(path)
     assert new.startswith(old)
-    added = rows(path)[len(csvrows(old)):]
+    added = csvrows(new)[len(csvrows(old)):]
     assert added == [selected_exclusion()]
     row = added[0]
     assert row["paper_id"] == ""  # Candidate identity; do not fabricate a curated paper ID.
@@ -108,7 +117,7 @@ def test_exactly_one_reversible_exclusion_appends_with_prior_bytes_preserved():
 @pytest.mark.parametrize("path,removed_count", [(PUBLIC[0], 1), (PUBLIC[1], 3)])
 def test_public_delta_removes_only_p490_and_preserves_every_retained_record(path, removed_count):
     old = json.loads(previous(path))
-    new = json.loads(baseline_bytes(ROOT, path))
+    new = json.loads(adjudicated(path))
     removed = [row for row in old["records"] if matches(row)]
     assert len(removed) == removed_count
     assert not any(matches(row) for row in new["records"])
@@ -144,13 +153,7 @@ def test_exclusion_filter_is_reversible_and_exactly_removes_three_existing_pairs
     "data/curated/institution_aliases.csv", "data/curated/institution_hierarchy.csv",
 ])
 def test_canonical_bibliography_taxonomy_authors_and_institutions_are_unchanged(path):
-    current = (ROOT / path).read_bytes()
-    if path in {'data/curated/papers.csv', 'data/curated/paper_taxonomy.csv', 'data/curated/venue_aliases.csv'}:
-        from scripts.verify_literature51_main_integration import expected_csv
-        assert current == expected_csv(ROOT, Path(path).name)
-        assert baseline_bytes(ROOT, path) == previous(path)
-    else:
-        assert current == previous(path)
+    assert adjudicated(path) == previous(path)
 
 
 def test_p490_historical_taxonomy_and_source_identity_survive_without_replacement_task():
@@ -170,9 +173,9 @@ def test_p490_historical_taxonomy_and_source_identity_survive_without_replacemen
 
 def test_scope_and_publication_decisions_are_distinct_existing_schema_rows_without_duplicates():
     path = "data/curated/review_decisions.csv"
-    old, new = previous(path), baseline_bytes(ROOT, path)
+    old, new = previous(path), adjudicated(path)
     assert new.startswith(old)
-    added = csvrows(baseline_bytes(ROOT, path))[len(csvrows(old)):]
+    added = csvrows(new)[len(csvrows(old)):]
     assert len(added) == 2 and added == p490_decisions()
     assert len({row["decision_id"] for row in added}) == 2
     by_action = {row["action"]: row for row in added}
@@ -241,15 +244,15 @@ def test_t526_and_p526_have_no_new_authoritative_decision_and_original_evidence_
 
 
 def test_counts_recompute_with_only_p490_detection_and_analysis_contributions_removed():
-    context = load_context()
-    assert context["counts"] == CURRENT_CORPUS_COUNTS == {
+    context = b1c_context()
+    assert context["counts"] == B1C_CORPUS_COUNTS == {
         "public": 635, "formal": 527, "mapped": 613, "unmapped": 22,
         "relationship_rows": 1410, "unique_paper_institution_pairs": 1410}
     old = Counter(label for row in json.loads(previous(PUBLIC[0]))["records"]
                   for dimension in ("tasks", "research_types") for label in row[dimension])
     new = Counter(label for row in context["papers"].values()
                   for dimension in ("tasks", "research_types") for label in row[dimension])
-    assert new == CURRENT_TAXONOMY_TOTALS
+    assert new == B1C_TAXONOMY_TOTALS
     assert old - new == {"detection": 1, "analysis_study": 1} and not new - old
 
 
@@ -258,14 +261,14 @@ def test_review_accounting_retains_original_159_questions_and_resolves_p490_only
     assert len(ledger) == 159 and len({row["paper_id"] for row in ledger}) == 148
     p490 = [row for row in ledger if row["paper_id"] == P490]
     assert len(p490) == 1 and p490[0]["review_id"] == "P490"
-    terminal = read_review_decisions(ROOT / "data/curated/review_decisions.csv")
+    terminal = csvrows(adjudicated("data/curated/review_decisions.csv"))
     closed = set()
     for decision in terminal:
         match = re.search(r"\bBatch B review ([A-Z]\d{3});", decision["review_note"])
         if match and decision["action"] == "no_action_after_review":
             closed.add(match.group(1))
     assert closed == {"R137", "R611", "L013", "P139", "P153", "P490"}
-    public = set(load_context()["papers"])
+    public = set(b1c_context()["papers"])
     pending = [row for row in ledger if row["paper_id"] in public and row["review_id"] not in closed]
     assert len(pending) == 151 and len({row["paper_id"] for row in pending}) == 140
     assert {row["review_id"] for row in pending if row["paper_id"] == T526} == {"T526", "P526"}
@@ -387,14 +390,14 @@ def test_final_packet_reconciles_separate_accepted_decisions_archive_fidelity_an
     assert delta["taxonomy_delta"] == {"detection": -1, "analysis_study": -1}
     assert delta["retained_paper_records_identical"] is delta["retained_relationship_records_identical"] is True
     assert delta["unrelated_institution_and_author_relationship_changes"] == 0
-    context = load_context()
+    context = b1c_context()
     assert evidence["corpus_before"] == original["corpus_counts"]
-    assert evidence["corpus_after"] == evidence["corpus_counts"] == context["counts"] == CURRENT_CORPUS_COUNTS
+    assert evidence["corpus_after"] == evidence["corpus_counts"] == context["counts"] == B1C_CORPUS_COUNTS
     assert evidence["taxonomy_before"] == original["taxonomy_counts"]
-    assert evidence["taxonomy_after"] == evidence["taxonomy_counts"] == CURRENT_TAXONOMY_TOTALS
+    assert evidence["taxonomy_after"] == evidence["taxonomy_counts"] == B1C_TAXONOMY_TOTALS
 
     historical = [row for row in decision_rows(load_queues()) if row.get("batch") == "B"]
-    decisions = read_review_decisions(ROOT / "data/curated/review_decisions.csv")
+    decisions = csvrows(adjudicated("data/curated/review_decisions.csv"))
     resolved = {}
     for decision in decisions:
         match = re.search(r"\bBatch B review ([A-Z]\d{3});", decision["review_note"])
@@ -420,3 +423,40 @@ def test_final_packet_reconciles_separate_accepted_decisions_archive_fidelity_an
     assert account["original_P490_short_name_question_pending"] is False
     assert account["independent_P526_venue_track_question_pending"] is account["T526_pending"] is True
     assert account["batch_c_deferred_cases"] == 13
+
+
+def test_live_p490_exclusion_and_separate_decisions_survive_successor_taxonomy_review():
+    context = load_context()
+    assert context["counts"] == CURRENT_CORPUS_COUNTS
+    totals = Counter(label for row in context["papers"].values()
+                     for dimension in ("tasks", "research_types") for label in row[dimension])
+    assert totals == CURRENT_TAXONOMY_TOTALS
+    assert P490 not in context["papers"] and P490 not in context["taxonomy"]
+    for path in PUBLIC:
+        assert not any(matches(row) for row in json.loads((ROOT / path).read_bytes())["records"])
+    for path in (MANIFEST, "docs/corpus_quality_batch_b_wave_b1c_2026_10_16.md"):
+        assert (ROOT / path).read_bytes() == adjudicated(path)
+    for path in ("data/curated/paper_exclusions.csv", "data/curated/paper_taxonomy.csv"):
+        assert [row for row in rows(path) if matches(row)] == [
+            row for row in csvrows(adjudicated(path)) if matches(row)]
+    decision_path = "data/curated/review_decisions.csv"
+    immutable = csvrows(adjudicated(decision_path))
+    live = rows(decision_path)
+    assert (ROOT / decision_path).read_bytes().startswith(adjudicated(decision_path))
+    assert live[:len(immutable)] == immutable
+    expected = [row for row in immutable if matches(row)]
+    assert len(expected) == 2 and p490_decisions() == expected
+    assert len({row["decision_id"] for row in live}) == len(live)
+
+
+def test_live_approved_literature_csv_additions_survive_the_separate_t579_adjudication():
+    from scripts.verify_literature51_main_integration import expected_csv
+    for path in ("data/curated/papers.csv", "data/curated/venue_aliases.csv"):
+        assert (ROOT / path).read_bytes() == expected_csv(ROOT, Path(path).name)
+    path = "data/curated/paper_taxonomy.csv"
+    imported = {row["taxonomy_id"]: row for row in csvrows(expected_csv(ROOT, Path(path).name))}
+    live = {row["taxonomy_id"]: row for row in rows(path)}
+    assert imported.keys() == live.keys()
+    assert {pid for pid in imported if imported[pid] != live[pid]} == {"doi:10.24963/ijcai.2023/52"}
+    # The new wave separately checks the six authorized target fields and all
+    # public/map objects. This guard keeps every literature addition exact.

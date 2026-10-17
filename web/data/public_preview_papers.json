@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-17T02:36:45Z"
+    "public_preview_generated_at": "2026-10-17T08:31:04Z"
   },
   "records": [
     {
@@ -240853,8 +240853,7 @@
       "publication_year": 2023,
       "publication_date": "2023-08-01",
       "tasks": [
-        "detection",
-        "source_attribution"
+        "detection"
       ],
       "image_scopes": [
         "fully_generated",
@@ -241168,7 +241167,8 @@
       "taxonomy_status": "reviewed",
       "taxonomy_review": {
         "tasks": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "T1: T579 accepted; MCCL explicitly evaluates binary authenticity, while cross-GAN transfer and view-specific classifiers do not establish generator-ID attribution."
         },
         "image_scopes": {
           "status": "reviewed"

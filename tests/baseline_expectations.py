@@ -13,7 +13,9 @@ data change and the identity and relationship invariants in
 # narrow forensic scope. Batch B B1A additionally excludes the L015 user study
 # and P562 industrial defect detector. B1B accepts R137 benchmark and R611
 # analysis-study contributions. B1C excludes P490 through the reversible scope
-# registry without changing historical taxonomy. Prior baselines remain in dated receipts.
+# registry without changing historical taxonomy. The approved literature import
+# adds 39 papers; B1D removes only T579 source attribution, retaining detection
+# and method. Prior baselines and literature contribution totals remain frozen.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 674,
     "public_map_source_papers": 613,
@@ -62,7 +64,7 @@ RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint"
 
 PUBLICATION_TYPE_TOTALS = {'conference': 400, 'journal': 156, 'preprint': 117, 'book': 1}
 
-TASK_TOTALS = {'detection': 621, 'source_attribution': 87, 'localization': 45}
+TASK_TOTALS = {'detection': 621, 'source_attribution': 86, 'localization': 45}
 
 
 CURRENT_CORPUS_COUNTS = {

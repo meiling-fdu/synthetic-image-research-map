@@ -8,7 +8,9 @@ import pytest
 
 from scripts import verify_literature51_main_integration as successor
 
-ROOT = Path(__file__).resolve().parents[1]
+from tests.literature51_published_endpoint import published_literature_endpoint
+
+ROOT = published_literature_endpoint()
 
 
 def test_remote_plus_reviewed_delta_is_exact():

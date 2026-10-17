@@ -190,5 +190,5 @@ def test_corpus_and_taxonomy_counts_recompute_from_current_export():
     assert retained[0]["tasks"].split(";") == previous_t527[0]["tasks"]
     pre_import = totals - Counter(LITERATURE51_TAXONOMY_ADDITIONS)
     assert pre_import - old == {"localization": 1, "benchmark": 1}
-    assert old - pre_import == {"detection": 4, "source_attribution": 1, "method": 2, "analysis_study": 1}
-    # Later Wave 5C/T527/B1A successors plus B1B R137/R611 additions and the P490 scope exclusion.
+    assert old - pre_import == {"detection": 4, "source_attribution": 2, "method": 2, "analysis_study": 1}
+    # Later Wave 5C/T527/B1A successors plus B1B R137/R611 additions and the P490 scope exclusion; B1D additionally removes T579 attribution.

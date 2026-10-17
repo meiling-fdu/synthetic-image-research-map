@@ -13,15 +13,19 @@ from scripts import reassess_literature51_2026_10_16 as followup
 from scripts.verify_literature51_main_integration import baseline_bytes
 from scripts.collect_literature51_sources import cache_sources, optional_retrieval_bodies
 
+from tests.literature51_published_endpoint import published_literature_endpoint
+
+ROOT = published_literature_endpoint()
+
 
 class Literature51FollowupTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.event=followup.receipt()
-        cls.review=batch.read(batch.ROOT/followup.OUT/'review.json')
-        cls.original=batch.read(batch.ROOT/batch.OUT/'plan.json')
-        cls.papers=batch.rows(batch.ROOT/'data/curated/papers.csv')
-        cls.tax=batch.rows(batch.ROOT/'data/curated/paper_taxonomy.csv')
+        cls.event=followup.receipt(ROOT)
+        cls.review=batch.read(ROOT/followup.OUT/'review.json')
+        cls.original=batch.read(ROOT/batch.OUT/'plan.json')
+        cls.papers=batch.rows(ROOT/'data/curated/papers.csv')
+        cls.tax=batch.rows(ROOT/'data/curated/paper_taxonomy.csv')
 
     def test_exhaustive_successor_without_restarting_the_batch(self):
         self.assertEqual(self.original['counts'],{'import':38,'held':13})
@@ -44,10 +48,10 @@ class Literature51FollowupTests(unittest.TestCase):
         self.assertFalse(p['doi'])
         self.assertIn('Learning from the Best',p['metadata_source'])
         self.assertIn('no formal proceedings',p['metadata_source'])
-        self.assertEqual(batch.read(batch.ROOT/'data/raw/literature51_2026_10_16/followup/hal_v2.json')['response']['docs'][0]['authFullName_s'],p['authors'].split('; '))
+        self.assertEqual(batch.read(ROOT/'data/raw/literature51_2026_10_16/followup/hal_v2.json')['response']['docs'][0]['authFullName_s'],p['authors'].split('; '))
 
     def test_immutable_holds_and_append_only_resolution(self):
-        decisions=batch.rows(batch.ROOT/'data/curated/review_decisions.csv')
+        decisions=batch.rows(ROOT/'data/curated/review_decisions.csv')
         original=next(r for r in self.original['audit'] if r['candidate_id']=='B03')
         old=next(r for r in decisions if r['decision_id']==original['new_review_decision_id'])
         self.assertEqual(old['action'],'unresolved')
@@ -80,10 +84,10 @@ class Literature51FollowupTests(unittest.TestCase):
         by_id={p['paper_id']:p for p in self.papers}
         for p in self.original['additions']['papers.csv']:
             self.assertEqual(by_id[p['paper_id']],p)
-        old_maps=json.loads(baseline_bytes(batch.ROOT,'web/data/public_preview_map_data.json'))
-        maps=batch.read(batch.ROOT/'web/data/public_preview_map_data.json')
+        old_maps=json.loads(baseline_bytes(ROOT,'web/data/public_preview_map_data.json'))
+        maps=batch.read(ROOT/'web/data/public_preview_map_data.json')
         self.assertEqual(maps['records'],old_maps['records'])
-        public=batch.read(batch.ROOT/'web/data/public_preview_papers.json')['records']
+        public=batch.read(ROOT/'web/data/public_preview_papers.json')['records']
         b03=next(p for p in public if p.get('paper_id')==self.event['paper_id'])
         self.assertFalse(b03['has_map_location'])
         self.assertTrue(all(a['affiliation_status']=='unresolved' for a in b03['authors']))
@@ -91,8 +95,8 @@ class Literature51FollowupTests(unittest.TestCase):
         self.assertEqual(sum(p['publication_type'] in ('conference','journal','book') for p in public),557)
 
     def test_only_approved_review_fields_drift_in_public_predecessor(self):
-        old=json.loads(baseline_bytes(batch.ROOT,'web/data/public_preview_papers.json'))['records']
-        current={batch.title_key(p['title']):p for p in batch.read(batch.ROOT/'web/data/public_preview_papers.json')['records']}
+        old=json.loads(baseline_bytes(ROOT,'web/data/public_preview_papers.json'))['records']
+        current={batch.title_key(p['title']):p for p in batch.read(ROOT/'web/data/public_preview_papers.json')['records']}
         changes=[]
         for p in old:
             q=current[batch.title_key(p['title'])]
@@ -105,18 +109,18 @@ class Literature51FollowupTests(unittest.TestCase):
         self.assertEqual(reviewed['taxonomy_status'],'reviewed')
 
     def test_compact_cache_keeps_all_primary_evidence(self):
-        sources=cache_sources()
-        optional=optional_retrieval_bodies()
+        sources=cache_sources(ROOT)
+        optional=optional_retrieval_bodies(ROOT)
         self.assertEqual(len(optional),34)
         self.assertTrue(all(s.get('raw_path') not in optional for s in sources if s['kind']=='crossref'))
-        expected,_=batch.extract_metadata()
+        expected,_=batch.extract_metadata(ROOT)
         with tempfile.TemporaryDirectory() as name:
             root=Path(name)
             for rel in (batch.RAW/'source_manifest.json',batch.RAW/'candidates.json',followup.OUT/'cache_policy.json'):
-                target=root/rel;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(batch.ROOT/rel,target)
+                target=root/rel;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/rel,target)
             for s in sources:
                 if s.get('raw_path') and s['raw_path'] not in optional:
-                    target=root/s['raw_path'];target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(batch.ROOT/s['raw_path'],target)
+                    target=root/s['raw_path'];target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/s['raw_path'],target)
             actual,_=batch.extract_metadata(root)
             self.assertEqual(actual,expected)
             self.assertEqual(len(list((root/batch.RAW/'sources').glob('*.json'))),0)
@@ -126,7 +130,7 @@ class Literature51FollowupTests(unittest.TestCase):
                 batch.extract_metadata(root)
 
     def test_present_optional_bodies_still_reject_hash_drift(self):
-        source=next(s for s in cache_sources() if s.get('raw_path') in optional_retrieval_bodies())
+        source=next(s for s in cache_sources(ROOT) if s.get('raw_path') in optional_retrieval_bodies(ROOT))
         with tempfile.TemporaryDirectory() as name:
             root=Path(name);path=root/source['raw_path'];path.parent.mkdir(parents=True)
             path.write_bytes(gzip.compress(b'changed response'))
@@ -134,10 +138,10 @@ class Literature51FollowupTests(unittest.TestCase):
                 batch.source_body(root,source)
 
     def test_successor_check_and_repeat_apply_are_read_only(self):
-        paths=[batch.ROOT/'data/curated'/n for n in self.event['additions']]
+        paths=[ROOT/'data/curated'/n for n in self.event['additions']]
         before={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
-        self.assertEqual(followup.check()['counts'],{'import':39,'held':12})
-        followup.apply()
+        self.assertEqual(followup.check(ROOT)['counts'],{'import':39,'held':12})
+        followup.apply(ROOT)
         self.assertEqual(before,{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths})
 
 

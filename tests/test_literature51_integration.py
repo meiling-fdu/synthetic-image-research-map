@@ -9,15 +9,19 @@ import unittest
 from scripts import integrate_literature51_2026_10_16 as batch
 from scripts.paper_taxonomy import taxonomy_from_record
 
+from tests.literature51_published_endpoint import published_literature_endpoint
+
+ROOT = published_literature_endpoint()
+
 
 class Literature51Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.plan = batch.read(batch.ROOT/batch.OUT/'plan.json')
+        cls.plan = batch.read(ROOT/batch.OUT/'plan.json')
         cls.audit = {r['candidate_id']:r for r in cls.plan['audit']}
-        cls.papers = {r['paper_id']:r for r in batch.rows(batch.ROOT/'data/curated/papers.csv')}
-        cls.tax = {r['paper_id']:r for r in batch.rows(batch.ROOT/'data/curated/paper_taxonomy.csv')}
-        cls.decisions = batch.rows(batch.ROOT/'data/curated/review_decisions.csv')
+        cls.papers = {r['paper_id']:r for r in batch.rows(ROOT/'data/curated/papers.csv')}
+        cls.tax = {r['paper_id']:r for r in batch.rows(ROOT/'data/curated/paper_taxonomy.csv')}
+        cls.decisions = batch.rows(ROOT/'data/curated/review_decisions.csv')
 
     def paper(self, cid):
         return self.papers[self.audit[cid]['paper_id']]
@@ -102,7 +106,7 @@ class Literature51Tests(unittest.TestCase):
 
     def test_no_author_institution_or_location_inference(self):
         pids = {r['paper_id'] for r in self.plan['additions']['papers.csv']}
-        mappings = batch.rows(batch.ROOT/'data/curated/author_institution_mappings.csv')
+        mappings = batch.rows(ROOT/'data/curated/author_institution_mappings.csv')
         self.assertFalse(any(r['paper_id'] in pids for r in mappings))
         for r in self.plan['additions']['papers.csv']:
             self.assertTrue(r['authors'])
@@ -114,12 +118,12 @@ class Literature51Tests(unittest.TestCase):
             self.assertFalse({k:n for k,n in counts.items() if n>1},key)
 
     def test_byte_preservation_provenance_and_repeat_application(self):
-        self.assertTrue(batch.check()['historical_and_unrelated_files_preserved'])
-        before = {name:batch.sha(batch.ROOT/'data/curated'/name) for name in self.plan['additions']}
-        batch.apply()
-        self.assertEqual(before,{name:batch.sha(batch.ROOT/'data/curated'/name) for name in before})
-        decisions_before = gzip.decompress((batch.ROOT/batch.OUT/'review_decisions.csv.before.gz').read_bytes())
-        self.assertTrue((batch.ROOT/'data/curated/review_decisions.csv').read_bytes().startswith(decisions_before))
+        self.assertTrue(batch.check(ROOT)['historical_and_unrelated_files_preserved'])
+        before = {name:batch.sha(ROOT/'data/curated'/name) for name in self.plan['additions']}
+        batch.apply(ROOT)
+        self.assertEqual(before,{name:batch.sha(ROOT/'data/curated'/name) for name in before})
+        decisions_before = gzip.decompress((ROOT/batch.OUT/'review_decisions.csv.before.gz').read_bytes())
+        self.assertTrue((ROOT/'data/curated/review_decisions.csv').read_bytes().startswith(decisions_before))
 
 
 if __name__=='__main__':
