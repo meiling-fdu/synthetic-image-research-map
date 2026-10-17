@@ -104,7 +104,8 @@ def test_bmvc_registry_reuses_existing_identity_without_duplicate_aliases():
     import csv
     import io
     historical=list(csv.DictReader(io.StringIO(before.decode())))
-    current=read_venue_aliases(include_evidence=False)
+    from tests.literature51_predecessor import predecessor_rows
+    current=predecessor_rows('data/curated/venue_aliases.csv')
     additions=[r for r in current if r not in historical]
     assert len(additions)==1
     row=additions[0]

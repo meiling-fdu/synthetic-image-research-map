@@ -3,6 +3,7 @@
 from tests.baseline_expectations import (
     CURRENT_CORPUS_COUNTS,
     CURRENT_TAXONOMY_TOTALS,
+    LITERATURE51_TAXONOMY_ADDITIONS,
 )
 
 from collections import Counter
@@ -187,6 +188,7 @@ def test_corpus_and_taxonomy_counts_recompute_from_current_export():
                 if r["taxonomy_id"] == T527]
     assert len(retained) == 1
     assert retained[0]["tasks"].split(";") == previous_t527[0]["tasks"]
-    assert totals - old == {"localization": 1, "benchmark": 1}
-    assert old - totals == {"detection": 4, "source_attribution": 1, "method": 2, "analysis_study": 1}
+    pre_import = totals - Counter(LITERATURE51_TAXONOMY_ADDITIONS)
+    assert pre_import - old == {"localization": 1, "benchmark": 1}
+    assert old - pre_import == {"detection": 4, "source_attribution": 1, "method": 2, "analysis_study": 1}
     # Later Wave 5C/T527/B1A successors plus B1B R137/R611 additions and the P490 scope exclusion.

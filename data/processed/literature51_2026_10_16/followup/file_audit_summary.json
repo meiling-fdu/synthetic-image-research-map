@@ -1,0 +1,23 @@
+{
+  "files": 257,
+  "categories": {
+    "Review/audit documentation": 8,
+    "Required reproducibility/test artifact": 77,
+    "Temporary retrieval cache or unnecessary intermediate": 172,
+    "Required production artifact": 0
+  },
+  "proposed_original_new_files": 85,
+  "omitted_original_new_files": 172,
+  "flag_counts": {
+    "possible_extended_copyrighted_article_text": 6,
+    "request_ip_embedded": 15,
+    "ephemeral_publisher_redirect_key": 14,
+    "anti_bot_challenge_state": 21
+  },
+  "all_130_preexisting_untracked_untouched": true,
+  "scope": "Exactly the original 257 Git-visible new files; nine ignored original test logs are preserved locally and listed separately in validation.json.",
+  "original_total_bytes": 6700305,
+  "current_audited_bytes": 6703315,
+  "auth_information": "No login cookies, Authorization headers, account tokens or private keys identified in the source metadata. Non-evidence responses contain transient WAF/redirect state and request IPs; all 34 such response bodies are excluded from staging.",
+  "copyright_review": "No full paper PDFs or manuscript HTML found among the 88 compressed response bodies. Six unstructured retrieval logs include Introduction/References sections and may contain extended copyrighted article text; all 14 broad retrieval logs are excluded from staging. Compact authored factual adjudications, original hashes and primary URLs replace them for traceability. All originals remain local. Newly inspected full manuscripts remain outside the repository."
+}

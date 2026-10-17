@@ -1,0 +1,30 @@
+{
+  "canonical_exporter": "scripts/export_public_preview.py --preserve-existing",
+  "before_sha256": {
+    "public_preview_map_data.json": "556c598dbe8bdad5e80dc7888c0e6072e5b85f4dd8a994de935463bf506c5f0b",
+    "public_preview_papers.json": "ddc2073a4b54b183a27abb9d3c935236239aae5c36c93683afe265382730e935"
+  },
+  "after_sha256": {
+    "public_preview_map_data.json": "556c598dbe8bdad5e80dc7888c0e6072e5b85f4dd8a994de935463bf506c5f0b",
+    "public_preview_papers.json": "ddc2073a4b54b183a27abb9d3c935236239aae5c36c93683afe265382730e935"
+  },
+  "byte_stable": true,
+  "existing_papers_unchanged": 639,
+  "existing_map_relationships_unchanged": 1421,
+  "approved_papers_added": 38,
+  "manual_files_written": 0,
+  "unrelated_location_queue_written": false,
+  "coverage": {
+    "public_papers": 677,
+    "unique_mapped_papers": 617,
+    "map_records": 1421,
+    "key_papers": 299,
+    "bibliography_covered": 284,
+    "candidate_only": 0,
+    "covered_as_map_marker": 283,
+    "covered_in_public_preview_paper_list": 1,
+    "excluded": 13,
+    "missing_from_candidate_pool": 0,
+    "possible_title_match_failure": 2
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "checks": {
+    "Focused final tests": "58 passed; 0 failed; 0 skipped (8.84 seconds)",
+    "Current-corpus regression follow-up": "30 passed; 0 failed; 12 subtests passed",
+    "Full final pytest suite": "1701 passed; 4 failed; 0 skipped; 389 subtests passed; 2 warnings (311.04 seconds)",
+    "Curated database": "0 errors; 0 duplicate candidates; 290 warnings (252 baseline + 38 new missing-affiliation warnings)",
+    "Public map validation": "0 errors; 0 warnings; 1421 relationships / 617 papers",
+    "Public paper validation": "0 errors; 61 warnings; 677 papers (38 new unresolved affiliation warnings)",
+    "Repeated canonical regeneration": "byte-identical public JSON pair; 639 existing papers and 1421 relationships exactly preserved",
+    "Repeated application": "idempotent; no duplicate append or timestamp churn",
+    "Global public identity checks": "no duplicate normalized titles, DOI values, or arXiv IDs",
+    "Source cache": "120 targeted references; 88 captured responses; 32 documented retrieval failures; 0 missing cache files",
+    "Unrelated-change audit": "0 unexpected tracked or new files; all 130 pre-existing untracked files preserved",
+    "Manual/frontend/locks": "all unchanged; schemas and validators unchanged; no institution or geographic changes",
+    "Git diff whitespace": "git diff --check passed; index empty; HEAD unchanged; no commit or push"
+  },
+  "full_suite_explanation": "The full suite is not green. Its four remaining failures are the same historical public-refinement snapshot failures observed before any curated-data edits; each fails with “Public refinement differs from its reviewed snapshot”. No new full-suite failures remain. The initial sandbox-limited baseline run reported 1566 passed, 71 failed, and 64 skipped because Node was absent from PATH and temporary localhost servers were restricted; the final full run used bundled Node and permitted temporary test servers. The first full run after data import had 22 failures; 18 count, report-freshness, or historical-boundary failures were resolved while retaining historical assertions and receipts. Unrelated frontend source and historical snapshot policy were not changed.",
+  "preexisting_full_suite_failures": [
+    "test_systematic_tier2_application::test_pre_application_baseline_includes_and_preserves_previous_policy_pass",
+    "test_systematic_tier2_normal_priority_evidence::test_authoritative_append_is_exact_and_preserves_existing_rows",
+    "test_systematic_tier2_normal_priority_evidence::test_report_reproduces_byte_for_byte",
+    "test_systematic_tier2_policy::test_pre_task_repository_files_are_byte_identical"
+  ],
+  "preexisting_failures_verified_against_baseline_xml": true,
+  "commands": {
+    "focused": "python3 -m pytest -q tests/test_literature51_integration.py tests/test_paper_level_venue_track.py tests/test_paper_taxonomy_migration.py tests/test_public_metadata_status.py tests/test_review_decision_idempotence.py tests/test_public_export_metadata.py",
+    "full": "python3 -m pytest -q --disable-warnings --junitxml=full-final.xml",
+    "curated": "python3 scripts/validate_curated_database.py",
+    "public": "python3 scripts/validate_public_preview.py",
+    "regeneration": "python3 scripts/regenerate_literature51_2026_10_16.py",
+    "integrity": "python3 scripts/integrate_literature51_2026_10_16.py --check"
+  },
+  "environment": {
+    "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "node": "v24.19.0",
+    "pytest_runtime": "/private/tmp/b1a-resume-2026-10-14/pytest-runtime",
+    "node_bin": "/Users/meilinger/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin",
+    "repository_dependencies_modified": false
+  },
+  "test_receipt_sha256": {
+    "test_results/baseline-full.xml": "cec4ff211102d514031a95e0426b312e1e16749083c785190daf12bd830457bf",
+    "test_results/full-before-test-boundaries.log": "689e27e93807a6aeb64878f14aa6b187ffa3cd0959f992e58e76f74e27948a84",
+    "test_results/full-final.xml": "a1bb0306ff618565a4b9da835d9c4b97cae138ee93e2f08e4766349c77045ef4",
+    "test_results/regeneration.log": "78d0748b67907e3af59f2175a8090f6c33ef748840d7c20154047848102da617",
+    "test_results/focused-final.log": "52f65b163d87f6ae940d2bb86309f5c1c4d1c327e6950a60af2217362968d5ac",
+    "test_results/curated-before.log": "6b639c052804e3b532606e2a3253c5944436e7e7b3fce10375d3b63b48b10a47",
+    "test_results/current-regressions.log": "12c5db1027b5ca784988daa9d2135ec2a244171a7f915c96788c45494135efe5",
+    "test_results/focused-final.xml": "6ea731891833f22550b598572a107fc8d18e6ebcc603eed9fd16cd52554e0984",
+    "test_results/public-final.log": "4f90152a7482cb2fa8070d3b8cfb2bee26fa170677b5a9f9aecd69f6e98766c3",
+    "test_results/current-regressions.xml": "73b9c9cf9655aeac7bb73cfd6961ccf818af5dc0cf9f37db180117c8d72d90a4",
+    "test_results/baseline-full.log": "b4835742c4a8fc835061b698e003b657c556546c1d6ad050d9957e4d6e8c1e70",
+    "test_results/curated-final.log": "4b81df938887feb5e09174770b222aa32d2fbd92461088e1fc6f4e226dfe4fa0",
+    "test_results/full-before-test-boundaries.xml": "41798551285198524d46cdc532691e3372f838c752941c9daa105eb6aa5f17ad",
+    "test_results/full-final.log": "c5b49ba48373f146ffb450e2e576233eae802b2061f9d67fc723000b4ed25b96"
+  }
+}

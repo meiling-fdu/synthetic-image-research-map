@@ -2,6 +2,7 @@
 from tests.baseline_expectations import (
     CURRENT_CORPUS_COUNTS,
     CURRENT_TAXONOMY_TOTALS,
+    LITERATURE51_TAXONOMY_ADDITIONS,
 )
 
 from collections import Counter
@@ -143,8 +144,9 @@ def test_counts_debt_and_historical_receipts():
     assert dict(old_totals) == wave["taxonomy_before"]
     assert old_totals - wave5c_totals == {"detection": 2} and not wave5c_totals - old_totals
     assert totals == CURRENT_TAXONOMY_TOTALS
-    assert wave5c_totals - totals == {"detection": 2, "source_attribution": 1, "method": 2, "analysis_study": 1}
-    assert totals - wave5c_totals == {"benchmark": 1}
+    pre_import = totals - Counter(LITERATURE51_TAXONOMY_ADDITIONS)
+    assert wave5c_totals - pre_import == {"detection": 2, "source_attribution": 1, "method": 2, "analysis_study": 1}
+    assert pre_import - wave5c_totals == {"benchmark": 1}
     # T527/B1A/P490 exclusions and B1B R137/R611 research-type successors.
     old_wave = json.loads(previous("data/raw/corpus_quality_batch_c_wave5b_2026_10_09/evidence_manifest.json"))
     assert old_wave["taxonomy_after"]["detection"] == 589

@@ -1,0 +1,44 @@
+{
+  "check": {
+    "candidate_count": 51,
+    "counts": {
+      "import": 38,
+      "held": 13
+    },
+    "historical_and_unrelated_files_preserved": true
+  },
+  "changed_tracked_files": [
+    "data/curated/paper_taxonomy.csv",
+    "data/curated/papers.csv",
+    "data/curated/review_decisions.csv",
+    "data/curated/venue_aliases.csv",
+    "docs/key_paper_coverage_report.md",
+    "tests/baseline_expectations.py",
+    "tests/test_corpus_quality_batch_a.py",
+    "tests/test_corpus_quality_batch_c_phase1.py",
+    "tests/test_corpus_quality_batch_c_wave1.py",
+    "tests/test_corpus_quality_batch_c_wave2.py",
+    "tests/test_corpus_quality_batch_c_wave3a.py",
+    "tests/test_corpus_quality_batch_c_wave3b2.py",
+    "tests/test_corpus_quality_batch_c_wave4a.py",
+    "tests/test_corpus_quality_batch_c_wave5a.py",
+    "tests/test_frontend_published_only_filter.py",
+    "tests/test_paper_metadata_consistency_audit.py",
+    "tests/test_repository_baseline.py",
+    "web/data/public_preview_map_data.json",
+    "web/data/public_preview_papers.json"
+  ],
+  "unexpected_tracked_changes": [],
+  "preexisting_untracked_count": 130,
+  "preexisting_untracked_changed": [],
+  "unexpected_new_files": [],
+  "public_duplicate_keys": {
+    "title": {},
+    "doi": {},
+    "arxiv_id": {}
+  },
+  "manual_files_unchanged": true,
+  "frontend_sources_unchanged": true,
+  "head_unchanged": true,
+  "index_changes": []
+}

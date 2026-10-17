@@ -20,7 +20,13 @@ from scripts.paper_exclusions import (build_active_exclusion_index, filter_publi
 from scripts.review_decisions import read_review_decisions
 from scripts.validate_corpus_quality_audit import decision_rows, load_context, load_queues
 from scripts.venue_audit import confirmation_fingerprint
-from tests.baseline_expectations import CURRENT_CORPUS_COUNTS, CURRENT_TAXONOMY_TOTALS
+from tests.literature51_predecessor import load_main_baseline_context as load_context, main_baseline_constants
+from scripts.verify_literature51_main_integration import baseline_bytes
+
+# Exact P490 receipt endpoint; current merged state is checked independently.
+_PUBLISHED_BASELINES = main_baseline_constants()
+CURRENT_CORPUS_COUNTS = _PUBLISHED_BASELINES['CURRENT_CORPUS_COUNTS']
+CURRENT_TAXONOMY_TOTALS = _PUBLISHED_BASELINES['CURRENT_TAXONOMY_TOTALS']
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "65e9422764c34eaad1d151fff2895e6c7503835f"
@@ -55,7 +61,7 @@ def matches(record):
 
 @lru_cache
 def identity_index():
-    return PaperIdentityIndex(csvrows(previous("data/curated/paper_taxonomy.csv")), PaperIdentityCache())
+    return PaperIdentityIndex(csvrows((ROOT / "data/curated/paper_taxonomy.csv").read_bytes()), PaperIdentityCache())
 
 
 def canonical_id(record):
@@ -80,7 +86,7 @@ def selected_exclusion():
 
 def test_exactly_one_reversible_exclusion_appends_with_prior_bytes_preserved():
     path = "data/curated/paper_exclusions.csv"
-    old, new = previous(path), (ROOT / path).read_bytes()
+    old, new = previous(path), baseline_bytes(ROOT, path)
     assert new.startswith(old)
     added = rows(path)[len(csvrows(old)):]
     assert added == [selected_exclusion()]
@@ -102,7 +108,7 @@ def test_exactly_one_reversible_exclusion_appends_with_prior_bytes_preserved():
 @pytest.mark.parametrize("path,removed_count", [(PUBLIC[0], 1), (PUBLIC[1], 3)])
 def test_public_delta_removes_only_p490_and_preserves_every_retained_record(path, removed_count):
     old = json.loads(previous(path))
-    new = json.loads((ROOT / path).read_bytes())
+    new = json.loads(baseline_bytes(ROOT, path))
     removed = [row for row in old["records"] if matches(row)]
     assert len(removed) == removed_count
     assert not any(matches(row) for row in new["records"])
@@ -138,7 +144,13 @@ def test_exclusion_filter_is_reversible_and_exactly_removes_three_existing_pairs
     "data/curated/institution_aliases.csv", "data/curated/institution_hierarchy.csv",
 ])
 def test_canonical_bibliography_taxonomy_authors_and_institutions_are_unchanged(path):
-    assert (ROOT / path).read_bytes() == previous(path)
+    current = (ROOT / path).read_bytes()
+    if path in {'data/curated/papers.csv', 'data/curated/paper_taxonomy.csv', 'data/curated/venue_aliases.csv'}:
+        from scripts.verify_literature51_main_integration import expected_csv
+        assert current == expected_csv(ROOT, Path(path).name)
+        assert baseline_bytes(ROOT, path) == previous(path)
+    else:
+        assert current == previous(path)
 
 
 def test_p490_historical_taxonomy_and_source_identity_survive_without_replacement_task():
@@ -158,9 +170,9 @@ def test_p490_historical_taxonomy_and_source_identity_survive_without_replacemen
 
 def test_scope_and_publication_decisions_are_distinct_existing_schema_rows_without_duplicates():
     path = "data/curated/review_decisions.csv"
-    old, new = previous(path), (ROOT / path).read_bytes()
+    old, new = previous(path), baseline_bytes(ROOT, path)
     assert new.startswith(old)
-    added = rows(path)[len(csvrows(old)):]
+    added = csvrows(baseline_bytes(ROOT, path))[len(csvrows(old)):]
     assert len(added) == 2 and added == p490_decisions()
     assert len({row["decision_id"] for row in added}) == 2
     by_action = {row["action"]: row for row in added}

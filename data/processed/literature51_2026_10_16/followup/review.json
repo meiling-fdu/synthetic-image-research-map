@@ -1,0 +1,407 @@
+{
+  "reviewed_on": "2026-10-16",
+  "baseline": "completed 38 imported / 13 held; original artifacts retained",
+  "released": {
+    "B03": {
+      "title": "DinoLizer: Separating VAE and Diffusion Artifacts in Generative Inpainting Localization",
+      "title_aliases": [
+        "DinoLizer: Learning from the Best for Generative Inpainting Localization",
+        "Dinolizer: Separating VAE and Diffusion Artifacts in Generative Inpainting Localization"
+      ],
+      "year": "2025",
+      "authors": [
+        "Minh Thong Doi",
+        "Vincent Itier",
+        "Jan Butora",
+        "Jérémie Boulanger",
+        "Patrick Bas"
+      ],
+      "doi": "",
+      "arxiv_id": "2511.20722",
+      "paper_url": "https://arxiv.org/abs/2511.20722v2",
+      "venue": "arXiv",
+      "publication_type": "preprint",
+      "venue_track": "",
+      "tasks": "localization",
+      "image_scopes": "generative_editing",
+      "research_types": "method",
+      "manuscript_url": "https://arxiv.org/html/2511.20722v2",
+      "scope_rationale": "The v2 manuscript localizes generatively inpainted regions with a DINOv2 patch classifier and sliding windows; its experiments report mask IoU on generative-inpainting datasets. No generator identity prediction is claimed.",
+      "version_resolution": "arXiv v1 (2025-11-25) uses the Learning from the Best title and Doi / Butora / Itier / Boulanger / Bas order. arXiv v2 (2026-07-30) uses the WIFS title and Doi / Itier / Butora / Boulanger / Bas order; its actual manuscript byline is controlling for the imported version. Current HAL API explicitly returns hal-05377107v2 with that same v2 order. One stable arXiv identity; no WIFS proceedings claimed.",
+      "publication_status": "preprint; WIFS 2026 accepted-only paper 137",
+      "source_affiliation_groups": [
+        {
+          "authors": [
+            "Minh Thong Doi",
+            "Vincent Itier"
+          ],
+          "source_text": "UMR 9189 CRIStAL, CERI SN; IMT Nord Europe; F-59000 Lille, France"
+        },
+        {
+          "authors": [
+            "Jan Butora",
+            "Jérémie Boulanger",
+            "Patrick Bas"
+          ],
+          "source_text": "Univ. Lille, CNRS, Centrale Lille; UMR 9189 CRIStAL; F-59000 Lille, France"
+        }
+      ],
+      "evidence_sources": [
+        "https://arxiv.org/html/2511.20722v2",
+        "https://arxiv.org/abs/2511.20722v1",
+        "https://api.archives-ouvertes.fr/search/?q=halId_s%3Ahal-05377107&fl=title_s,authFullName_s,docType_s,version_i,producedDate_s,uri_s,fileMain_s&wt=json",
+        "https://wifs2026.utt.fr/technical-program"
+      ]
+    }
+  },
+  "held": {
+    "B01": {
+      "title": "FARE: Forensic Acceptance Region Estimation for Catching Bait-and-Switch Image Generators",
+      "decision": "held",
+      "blocker": "Existing NeurIPS migration lock: accepted paper has no verified supported official conference track. No duplicate preprint bypass is permitted.",
+      "evidence_sources": [
+        "https://arxiv.org/abs/2609.30982"
+      ],
+      "manual_review": true
+    },
+    "C01": {
+      "title": "CAPN-Net: Category-Agnostic and Patch Noise feature fusion Network for universal AI-generated image detection",
+      "decision": "held",
+      "blocker": "Publisher-deposited registration and saved publisher XML provide an assigned future issue/cover date, not an actual online publication date. The targeted publisher landing page still returns HTTP 403; no stronger online-first evidence was found. DOI creation, acceptance and cover dates cannot substitute for release.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1016/j.ins.2026.124123"
+      ],
+      "manual_review": true,
+      "release_action": "Capture a primary publisher available-online/published-online date/status tied to this exact DOI, preserving the assigned issue date separately."
+    },
+    "C02": {
+      "title": "Gradient-guided up-sampling artifacts-aware adapter tuning for generalizable AI-generated image detection",
+      "decision": "held",
+      "blocker": "Publisher-deposited registration and saved publisher XML provide an assigned future issue/cover date, not an actual online publication date. The targeted publisher landing page still returns HTTP 403; no stronger online-first evidence was found. DOI creation, acceptance and cover dates cannot substitute for release.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1016/j.eswa.2026.134292"
+      ],
+      "manual_review": true,
+      "release_action": "Capture a primary publisher available-online/published-online date/status tied to this exact DOI, preserving the assigned issue date separately."
+    },
+    "C03": {
+      "title": "MFF-Net: Multi-view feature fusion network for AI-generated image detection",
+      "decision": "held",
+      "blocker": "Publisher-deposited registration and saved publisher XML provide an assigned future issue/cover date, not an actual online publication date. The targeted publisher landing page still returns HTTP 403; no stronger online-first evidence was found. DOI creation, acceptance and cover dates cannot substitute for release.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1016/j.eswa.2026.134394"
+      ],
+      "manual_review": true,
+      "release_action": "Capture a primary publisher available-online/published-online date/status tied to this exact DOI, preserving the assigned issue date separately."
+    },
+    "E01": {
+      "title": "Training-Free Detection of AI-Generated Images Based on Coherence Analysis of Image Representations",
+      "decision": "held",
+      "blocker": "Actual registered online release is scheduled for 2026-11-14, after this 2026-10-16 review; print 2026-11-15. Acceptance and the article DOI do not establish present formal publication.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1145/3843205.3845630",
+        "https://sites.google.com/view/3d-sec2026/program"
+      ],
+      "manual_review": true
+    },
+    "E04": {
+      "title": "AIGen4Det: Leveraging AI-Regeneration for Generalizable Synthetic Facial Image Detection",
+      "decision": "held",
+      "blocker": "Official workshop program now verifies the ordered roster and presentation. OpenReview forum, PDF and API are inaccessible; no exact primary manuscript/version or supported formal/preprint publication state was verified. Technical evidence for passive image experiments remains unavailable. Do not import from social-media descriptions.",
+      "evidence_sources": [
+        "https://openreview.net/forum?id=uOQ4L7aU7y",
+        "https://warwick.ac.uk/fac/sci/dcs/research/siplab/AI4MFDD2026/program/"
+      ],
+      "manual_review": true,
+      "ordered_authors": [
+        "Andrea Ciamarra",
+        "Stefano Berretti",
+        "Alberto Del Bimbo",
+        "Roberto Caldelli"
+      ],
+      "release_action": "Obtain the matching public primary manuscript, verify experiments and version, and establish a supported publication state; retain this official author order unless the manuscript establishes a revision."
+    },
+    "E06": {
+      "title": "Depth spectral fingerprints: AI-generated image detection via compact depth representations",
+      "decision": "held",
+      "blocker": "Publisher-deposited registration and saved publisher XML provide an assigned future issue/cover date, not an actual online publication date. The targeted publisher landing page still returns HTTP 403; no stronger online-first evidence was found. DOI creation, acceptance and cover dates cannot substitute for release. Primary technical evidence of passive depth-based image detection also remains insufficient.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1016/j.patrec.2026.09.024"
+      ],
+      "manual_review": true,
+      "release_action": "Capture a primary publisher available-online/published-online date/status tied to this exact DOI, preserving the assigned issue date separately. Inspect the primary abstract/experiments to establish passive detection."
+    },
+    "E07": {
+      "title": "Can Pixels Alone Reveal Image Origin? Minimax Limits and Learnable Interfaces for Passive Provenance",
+      "decision": "held",
+      "blocker": "Existing NeurIPS migration lock: accepted paper has no verified supported official conference track. Retain source_attribution/analysis_study and do not create a preprint duplicate.",
+      "evidence_sources": [
+        "https://arxiv.org/abs/2609.30997"
+      ],
+      "manual_review": true
+    },
+    "E09": {
+      "title": "Forged Image Model Attribution Based on Hierarchical Fine-Grained Classification",
+      "decision": "held",
+      "blocker": "The supplied abstract describes generative-model, architecture-level and model-level fingerprints, making generator attribution plausible. The IEEE original experiment section and author manuscript could not be accessed; no named synthetic generators/datasets or generator-label evaluation were inspected. Bibliography is complete; the remaining blocker is experimental scope evidence, not a missing DOI or author.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1109/icivc70586.2026.11686643"
+      ],
+      "manual_review": true,
+      "release_action": "Inspect the original experiment section showing named image synthesis architectures/model instances and attribution labels; import as source_attribution if confirmed. Otherwise retain or exclude with direct scope evidence."
+    },
+    "E13": {
+      "title": "RFF-Net: Robust frequency–noise fusion network for AI-generated image discrimination",
+      "decision": "held",
+      "blocker": "Publisher-deposited registration and saved publisher XML provide an assigned future issue/cover date, not an actual online publication date. The targeted publisher landing page still returns HTTP 403; no stronger online-first evidence was found. DOI creation, acceptance and cover dates cannot substitute for release.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1016/j.knosys.2026.117106"
+      ],
+      "manual_review": true,
+      "release_action": "Capture a primary publisher available-online/published-online date/status tied to this exact DOI, preserving the assigned issue date separately."
+    },
+    "E15": {
+      "title": "Hyperparameter-Aware Evaluation of Deep Learning Architectures for AI-Generated Image Detection",
+      "decision": "held",
+      "blocker": "Only an institution acceptance listing with initials was verified. Complete primary ordered author identity and a representable released publication state remain unsupported; do not reconstruct full names from acknowledgments.",
+      "evidence_sources": [
+        "https://tudoster.unideb.hu/en/szerzok/5404",
+        "data/raw/literature51_2026_10_16/priority_identity.json"
+      ],
+      "manual_review": true
+    },
+    "E18": {
+      "title": "Latent Optimization Dynamics for Latent Diffusion Model Attribution",
+      "decision": "held",
+      "blocker": "Official workshop program resolves order and Dahlgren spelling and verifies workshop presentation. Repository README establishes a VAE detector but supplies no manuscript or version. OpenReview forum/PDF/API remain inaccessible. The related single-author thesis has a different title and is not proof of the two-author workshop paper identity or publication status. No generator-ID experiment was verified.",
+      "evidence_sources": [
+        "https://openreview.net/forum?id=r46D1lErlM",
+        "https://github.com/dahlgrenmartin/LOD",
+        "https://warwick.ac.uk/fac/sci/dcs/research/siplab/AI4MFDD2026/program/"
+      ],
+      "manual_review": true,
+      "ordered_authors": [
+        "Martin Dahlgren",
+        "Abu Naser Masud"
+      ],
+      "proposed_tasks": "detection",
+      "release_action": "Obtain the exact two-author primary manuscript/version and supported publication state. Classify as detection; add attribution only after inspecting generator identity prediction experiments."
+    }
+  },
+  "taxonomy": {
+    "A02": {
+      "paper_id": "curated:eb779a62c0d905c3a146",
+      "title": "MF²DA: Multi-Level Feature Fusion for Robust Detection and Attribution of Universal AI-Generated Images",
+      "dimensions_pending": [
+        "tasks",
+        "image_scopes",
+        "research_types"
+      ],
+      "decision": "needs_review",
+      "rationale": "Existing primary captures provide bibliographic identity/title only, not a technical abstract or experiments sufficient to confirm all proposed dimensions. Preserve labels and explicit pending reasons; no title-based promotion.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1109/tifs.2026.3723156"
+      ]
+    },
+    "A05": {
+      "paper_id": "curated:e07e2b1ae3b0de2b056d",
+      "title": "Revisiting DIRE: towards universal AI-generated image detection",
+      "dimensions_pending": [
+        "tasks",
+        "image_scopes",
+        "research_types"
+      ],
+      "decision": "needs_review",
+      "rationale": "Existing primary captures provide bibliographic identity/title only, not a technical abstract or experiments sufficient to confirm all proposed dimensions. Preserve labels and explicit pending reasons; no title-based promotion.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1016/j.neunet.2025.108084"
+      ]
+    },
+    "A09": {
+      "paper_id": "curated:a5e09c7c747a03ff3cd6",
+      "title": "LiteUpdate: A Lightweight Framework for Updating AI-Generated Image Detectors",
+      "dimensions_pending": [
+        "tasks",
+        "image_scopes",
+        "research_types"
+      ],
+      "decision": "needs_review",
+      "rationale": "Existing primary captures provide bibliographic identity/title only, not a technical abstract or experiments sufficient to confirm all proposed dimensions. Preserve labels and explicit pending reasons; no title-based promotion.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1109/tcsvt.2026.3683200"
+      ]
+    },
+    "A10": {
+      "paper_id": "curated:2721935e2934487f3fb3",
+      "title": "Dual-path AI-generated image detection: Leveraging texture-rich and texture-poor patches with global semantic features",
+      "dimensions_pending": [
+        "tasks",
+        "image_scopes",
+        "research_types"
+      ],
+      "decision": "needs_review",
+      "rationale": "Existing primary captures provide bibliographic identity/title only, not a technical abstract or experiments sufficient to confirm all proposed dimensions. Preserve labels and explicit pending reasons; no title-based promotion.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1016/j.dsp.2025.105840"
+      ]
+    },
+    "A11": {
+      "paper_id": "curated:d450c63c3edaefd1f45a",
+      "title": "Lightweight AI-Generated image detection based on enhanced common artifact features",
+      "dimensions_pending": [
+        "tasks",
+        "image_scopes",
+        "research_types"
+      ],
+      "decision": "needs_review",
+      "rationale": "Existing primary captures provide bibliographic identity/title only, not a technical abstract or experiments sufficient to confirm all proposed dimensions. Preserve labels and explicit pending reasons; no title-based promotion.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1016/j.eswa.2025.130500"
+      ]
+    },
+    "A12": {
+      "paper_id": "curated:bb7e7c98caa6cfd8e540",
+      "title": "SDA-Det: A subpixel-aware dual-domain artifact detector for AI-generated image detection",
+      "dimensions_pending": [
+        "tasks",
+        "image_scopes",
+        "research_types"
+      ],
+      "decision": "needs_review",
+      "rationale": "Existing primary captures provide bibliographic identity/title only, not a technical abstract or experiments sufficient to confirm all proposed dimensions. Preserve labels and explicit pending reasons; no title-based promotion.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1016/j.eswa.2026.132304"
+      ]
+    },
+    "A14": {
+      "paper_id": "curated:0a43754e9c715ea9c33a",
+      "title": "MS-DCL: Multi-Scale Decoupled Contrastive Learning for universal AI-generated image detection",
+      "dimensions_pending": [
+        "tasks",
+        "image_scopes",
+        "research_types"
+      ],
+      "decision": "needs_review",
+      "rationale": "Existing primary captures provide bibliographic identity/title only, not a technical abstract or experiments sufficient to confirm all proposed dimensions. Preserve labels and explicit pending reasons; no title-based promotion.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1016/j.knosys.2026.116183"
+      ]
+    },
+    "A19": {
+      "paper_id": "curated:128d41903480b9eb4b6e",
+      "title": "Improving Generalization in AI-Generated Facial Image Detection via Explainable Recovery",
+      "dimensions_pending": [
+        "tasks",
+        "image_scopes",
+        "research_types"
+      ],
+      "decision": "needs_review",
+      "rationale": "Existing primary captures provide bibliographic identity/title only, not a technical abstract or experiments sufficient to confirm all proposed dimensions. Preserve labels and explicit pending reasons; no title-based promotion.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1145/3785353.3815082"
+      ]
+    },
+    "D06": {
+      "paper_id": "curated:a116171fee8869392bc0",
+      "title": "Unifying Semantic Priors and High-Frequency Traces: Enhancing V-JEPA with Mixture-of-Experts for Robust Synthetic Image Forensics",
+      "dimensions_pending": [
+        "image_scopes"
+      ],
+      "decision": "needs_review",
+      "rationale": "The existing primary abstract and targeted manuscript sections 4.1.1 and 5 describe Real/Fully Synthetic/Tampered classes on SID-Set. They do not disaggregate generative edits from conventional local manipulation. Retain the explicit image_scopes review for generative_editing; do not infer localization or attribution.",
+      "evidence_sources": [
+        "https://arxiv.org/abs/2609.16778",
+        "https://arxiv.org/html/2609.16778v1"
+      ]
+    },
+    "E08": {
+      "paper_id": "curated:e9d23abcebd5c5decf52",
+      "title": "DSC2F: A Multimodal AI-Generated Image Detection System Using Dual-Stream Convolutional Neural Networks with Fast Fourier Transform",
+      "dimensions_pending": [
+        "tasks",
+        "image_scopes",
+        "research_types"
+      ],
+      "decision": "needs_review",
+      "rationale": "Existing primary captures provide bibliographic identity/title only, not a technical abstract or experiments sufficient to confirm all proposed dimensions. Preserve labels and explicit pending reasons; no title-based promotion.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1109/icivc70586.2026.11686669"
+      ]
+    },
+    "E10": {
+      "paper_id": "curated:7666b05ad5d2877e6b2b",
+      "title": "A Sanity Check for AI-generated Underwater Image Detection",
+      "dimensions_pending": [
+        "tasks",
+        "image_scopes",
+        "research_types"
+      ],
+      "decision": "needs_review",
+      "rationale": "Existing primary captures provide bibliographic identity/title only, not a technical abstract or experiments sufficient to confirm all proposed dimensions. Preserve labels and explicit pending reasons; no title-based promotion.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1109/icivc70586.2026.11686696"
+      ]
+    },
+    "E11": {
+      "paper_id": "curated:59c932990aa26f14dd49",
+      "title": "Robust AIGC Image Detection via Unidirectional Consistency Regularization",
+      "dimensions_pending": [
+        "tasks",
+        "image_scopes",
+        "research_types"
+      ],
+      "decision": "needs_review",
+      "rationale": "Existing primary captures provide bibliographic identity/title only, not a technical abstract or experiments sufficient to confirm all proposed dimensions. Preserve labels and explicit pending reasons; no title-based promotion.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1109/icivc70586.2026.11686594"
+      ]
+    },
+    "E14": {
+      "paper_id": "curated:7f89e638ec42dfb2324d",
+      "title": "One Patch Is Not Enough: A General Framework for Full-Resolution AI Image Detection",
+      "dimensions_pending": [
+        "tasks",
+        "image_scopes",
+        "research_types"
+      ],
+      "decision": "needs_review",
+      "rationale": "Existing primary captures provide bibliographic identity/title only, not a technical abstract or experiments sufficient to confirm all proposed dimensions. Preserve labels and explicit pending reasons; no title-based promotion.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1109/lsp.2026.3737389"
+      ]
+    },
+    "E16": {
+      "paper_id": "curated:ab051450a8b2338c4575",
+      "title": "S-AODP++: Structure-Aware AOI-Guided Scanpath Attention for AI-Generated Image Identification",
+      "dimensions_pending": [
+        "tasks",
+        "image_scopes",
+        "research_types"
+      ],
+      "decision": "needs_review",
+      "rationale": "Existing primary captures provide bibliographic identity/title only, not a technical abstract or experiments sufficient to confirm all proposed dimensions. Preserve labels and explicit pending reasons; no title-based promotion.",
+      "evidence_sources": [
+        "https://api.crossref.org/works/10.1145/3776574.3831124",
+        "https://renweimeng.com/en"
+      ]
+    },
+    "E17": {
+      "paper_id": "curated:fa41c2810887fb216f5d",
+      "title": "Improving Synthesized Image Detection by Disentangling Generator-Shared and Generator-Specific Image Artifacts",
+      "dimensions_pending": [],
+      "decision": "reviewed",
+      "rationale": "The saved CVF primary abstract describes real-versus-synthetic classification, evaluation against unseen image generators, learnable artifact embeddings and contrastive loss. This supports detection / fully_generated / method. Generator-specific feature training is not experimental evidence of an attribution output. All labels remain unchanged.",
+      "evidence_sources": [
+        "https://openaccess.thecvf.com/content/CVPR2026F/html/Yang_Improving_Synthesized_Image_Detection_by_Disentangling_Generator-Shared_and_Generator-Specific_Image_CVPRF_2026_paper.html"
+      ]
+    }
+  },
+  "summary": {
+    "import": 39,
+    "held": 12,
+    "unexplained": 0,
+    "taxonomy_before": 15,
+    "taxonomy_after": 14
+  },
+  "full_text_storage": "Primary manuscript inspection copies stayed in /private/tmp. Response hashes/versions and authored factual notes retained; full manuscript text is not redistributed."
+}

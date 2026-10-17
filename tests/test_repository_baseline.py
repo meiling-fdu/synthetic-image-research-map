@@ -14,6 +14,7 @@ from tests.baseline_expectations import (
     CURRENT_REPOSITORY_BASELINE,
     CURATED_PAPERS_AWAITING_COORDINATES,
     CURATED_PAPERS_AWAITING_AFFILIATIONS,
+    BIBLIOGRAPHY_ONLY_PENDING_AFFILIATIONS,
     INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS,
     PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS,
     PUBLICATION_TYPE_TOTALS,
@@ -256,7 +257,7 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
         self.assert_current("public_papers_without_map", len(papers_without_map))
         self.assertEqual(
             {paper["title"] for paper in papers_without_map},
-            set(PUBLIC_PAPERS_WITHOUT_MAP) | CURATED_PAPERS_AWAITING_COORDINATES | CURATED_PAPERS_AWAITING_AFFILIATIONS,
+            set(PUBLIC_PAPERS_WITHOUT_MAP) | CURATED_PAPERS_AWAITING_COORDINATES | CURATED_PAPERS_AWAITING_AFFILIATIONS | BIBLIOGRAPHY_ONLY_PENDING_AFFILIATIONS,
         )
         with (ROOT / "data/manual/paper_marker_blocker_report.csv").open(
             encoding="utf-8-sig", newline=""
@@ -268,6 +269,10 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
             }
         self.assertEqual(blockers, PUBLIC_PAPERS_WITHOUT_MAP)
         for paper in papers_without_map:
+            if paper["title"] in BIBLIOGRAPHY_ONLY_PENDING_AFFILIATIONS:
+                self.assertTrue(paper["missing_affiliation"])
+                self.assertFalse(paper["has_map_location"])
+                self.assertTrue(all(a["affiliation_status"] == "unresolved" for a in paper["authors"]))
             if paper["title"] in CURATED_PAPERS_AWAITING_AFFILIATIONS:
                 self.assertTrue(paper["missing_affiliation"])
                 self.assertFalse(paper["has_map_location"])

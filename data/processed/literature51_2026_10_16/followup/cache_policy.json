@@ -1,0 +1,176 @@
+{
+  "manifest_sha256": "9d354e5e4405bbd67a444101983edaa2feda30e406ac996f8495198d92a3e65b",
+  "policy": "Only non-evidence challenge and redirect bodies may be absent from a compact checkout. All primary metadata/technical evidence captures remain mandatory. Bodies present locally must still match the historical response hash. No original file is deleted.",
+  "optional_bodies": [
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/3d971984f9e4dd00e278.gz",
+      "response_sha256": "1ca7055d287919945064c588e365d91ab42f2e34df42f733aed1224b32ca5853",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/da8ac0e3a50d9c7e3b75.gz",
+      "response_sha256": "1c26c309f41a6587c16bbbe511fbe6dd7fb5ea33751c6762a6e8683ea41e8901",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/7a44b2e37f23a9c0aedb.gz",
+      "response_sha256": "bdd75615327a9a66f922809c61cb6a879d4f30f786a265d53fe932122952dc43",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/08f262a2a1109947fa3c.gz",
+      "response_sha256": "3182c32859396f3f2e7e25e0820007ebd17fb829649357d01720aa8e071c8d42",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/d7ac1b1d37ec593ba16e.gz",
+      "response_sha256": "6dbb5b3d02392e679f5747cfc849c61c787ffbb779785c5af1502e013a79ae59",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/382e439397cbcb6423d2.gz",
+      "response_sha256": "8b48353c41579480f22228c2b81bc7c1a4b3c8a1ca35f8123ff33074606e63bd",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/aa173f47a58a6c289424.gz",
+      "response_sha256": "0be24a9e271db28e56eee69c0a789c7f889653b12f895926f5ec9692bb00d982",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/61cf0b5bee65f23cb387.gz",
+      "response_sha256": "3950658e9b23f69e9255a1fce78b6f150db7b106b6477764f9ed2694e10c77b1",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/69c6f9dc36c951830458.gz",
+      "response_sha256": "f199e3b577b37630dc8f5800c9e71eb9c43797d05b7c60b3c9a4f8d31e63b1c5",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/d73cddee094032948d21.gz",
+      "response_sha256": "c160005823064e537fa7d72b1e538fc884290f271830b9d3d8caf3ea69a196bb",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/bf6bfe326a12d03ae38a.gz",
+      "response_sha256": "66076247f1d5cbfa0cd42d295970b2efd37527752c2ac7b7a7f1c83f4991a472",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/9f6f27f13015e2ddbecc.gz",
+      "response_sha256": "88c54e3f96768955c8247c97d5f5e4b528739b4af989330eb25eff9c14f7dfbf",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/43ed62057dbd1055d7c3.gz",
+      "response_sha256": "e914fce536702393076c70840a17e5e6b74cbafcd11404750c8d617c45d57edd",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/d1fa3e6639705923db1c.gz",
+      "response_sha256": "cfb0b9293fb7465f1b6320e32e845d59dd247b72a19a5844e3e68b979bec29a4",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/534e9f6ff5e5916bf7ca.gz",
+      "response_sha256": "5b41d14ee60d126918a7422b13c888e7473bd2fbabd0a7b8ccdb3a508b6439c5",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/51c5e36fa4a9c411c6cf.gz",
+      "response_sha256": "b7c1ea5e75fc252d7f1134dbf710588c9b64db9cd192a1b08cfab35cdbed91b0",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/b241cfdee71f6442f666.gz",
+      "response_sha256": "c72da706204ca89990240b603cc20245b82a5e604038c1c0b1205e0ad85eb9be",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/c692928880bef67c2d72.gz",
+      "response_sha256": "34ebe7d825b9031064d4af0d1e348afd96c8297f0d410d3befdcf09106764381",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/1e864930f244c63239be.gz",
+      "response_sha256": "f8477951ecd1b6a17b5d30b8e06933e89cb6789466ec7e35cf459edd59abfcc5",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/b97fb66e25f59a27b3f3.gz",
+      "response_sha256": "42225d89cf3e952ac3ca579e30c801dfab11f655d307964ff3604d2afa8b4b75",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/f5289c734f0be0636e74.gz",
+      "response_sha256": "c453972126f4d3fb8a104cce3282aeb81223a0e922a5aeeac82ed7e073b1c4d1",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/126822ab4d6277efc4e6.gz",
+      "response_sha256": "6f50e82fa5689ff62ef864cf4743b0fe864cfa3380141fbbc8cca1a1c147b507",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/7396e73266d3fecfe8c4.gz",
+      "response_sha256": "6dc90327d2050a054290703da48ce7fe4ba672612542b2dbb7a1b1bcc94c26c6",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/9986cde2057a0e704826.gz",
+      "response_sha256": "67e7540b7e859e688023188ba195a33b66e61f8ae8bc41124adb5bacb099c53d",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/ccaf69eba5ade1563a96.gz",
+      "response_sha256": "b8d326733b34e767ac2535566086caaf3a422979a04bdfa0b4da4f1be2c253b6",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/6126a4ef83fad7b2dc48.gz",
+      "response_sha256": "228c915f976d142af0d56a68d81a1391ba204767817bfc39f12c9c69e8f8f4ca",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/68667d319d008541a932.gz",
+      "response_sha256": "d7c6745423fb582d2d6f1413e3026663f89004516d5348f9f474722c3718c923",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/e06a87e841aa5b09b6c8.gz",
+      "response_sha256": "2c452ce370375ca81e2475f7a08b11b8043b0815ae1c6815526a7de72b2a3688",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/1d50091d823421f9a72e.gz",
+      "response_sha256": "0266d36f197be1bf311bab1888d48b1abf3516d259b75faf3855009551b8ce3f",
+      "reason": "publisher_redirect"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/a66b89e79cc8317f1bb6.gz",
+      "response_sha256": "77443464d796b1c586e6c56eec49c1b652df0504763e547c182700ed0066e894",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/bb39c1ebd53e6c92bf91.gz",
+      "response_sha256": "3f9ab1bed50e0f1df00eaa20d4d90a35f6595a90232475b9b400c79ef0d8e445",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/092cccc67ce57a3c04cb.gz",
+      "response_sha256": "979e61917e5ebd44668c17ab69fd1d17e54f5a9dd294aecac88a6a3343d1b3b6",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/901d91824f9c2f547902.gz",
+      "response_sha256": "c352f20139ecd24890bc0bbb500b2583005f131ff3a3959dc922d38a92cd3a60",
+      "reason": "bot_challenge"
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/sources/0f7d5eae5edaea95b759.gz",
+      "response_sha256": "8946192073d383695cb747a14ae38860972e318428fa2656278708f073991251",
+      "reason": "access_challenge"
+    }
+  ]
+}

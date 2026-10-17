@@ -3,6 +3,7 @@
 from tests.baseline_expectations import (
     CURRENT_CORPUS_COUNTS,
     CURRENT_TAXONOMY_TOTALS,
+    LITERATURE51_TAXONOMY_ADDITIONS,
 )
 
 from collections import Counter
@@ -232,6 +233,7 @@ def test_recomputed_corpus_and_taxonomy_change_only_detection_by_one():
     assert old - wave5a == {"detection": 1}
     assert not wave5a - old
     assert current == CURRENT_TAXONOMY_TOTALS
-    assert current - wave5a == {"localization": 1, "benchmark": 1}
-    assert wave5a - current == {"detection": 4, "source_attribution": 1, "method": 2, "analysis_study": 1}
+    pre_import = current - Counter(LITERATURE51_TAXONOMY_ADDITIONS)
+    assert pre_import - wave5a == {"localization": 1, "benchmark": 1}
+    assert wave5a - pre_import == {"detection": 4, "source_attribution": 1, "method": 2, "analysis_study": 1}
     # Approved Wave 5C/T527/B1A successors plus B1B R137/R611 additions and the P490 scope exclusion.

@@ -1,0 +1,544 @@
+# TASK: Integrate 51 Verified Literature Candidates into Synthetic Image Research Map
+
+You are working in the existing repository:
+
+`meiling-fdu/synthetic-image-research-map`
+
+## 1. Objective
+
+Implement the literature gap-fill integration for the **51 candidate papers listed below**, based on the previously completed Wave B1A/B1B literature audit.
+
+**IMPORTANT: This instruction is entirely self-contained.**
+
+- All 51 candidate titles and their available bibliographic links are embedded below.
+- Do NOT require any external input files such as `sia_revised_51_2026-10-16.json`, `sia_verified_45_2026-10-16.json`, or `sia_51_scope_preflight_2026-10-16.csv`.
+- Do NOT ask the user to upload, locate, or recreate those files.
+- Do NOT repeat the previous broad literature discovery process.
+- Use the information below as your initial candidate manifest.
+- Perform targeted source verification only when necessary.
+- Inspect the actual repository and implement the integration, rather than stopping after producing a plan.
+
+The target is **51 unique, relevant candidate papers**, subject to mandatory bibliographic verification, duplicate reconciliation, and existing repository validation rules.
+
+A scope-eligible candidate lacking mandatory evidence must remain explicitly held rather than being silently omitted or imported with fabricated metadata.
+
+## 2. Strict research scope
+
+The Synthetic Image Research Map focuses on passive forensic analysis of AI-generated images.
+
+Include:
+
+- Synthetic Image Detection (SID): real vs. AI-generated images, including fully synthetic faces.
+- Synthetic Image Attribution (SIA): generator identification, generator-family attribution, architecture attribution, open-set attribution, and source verification.
+- Generative Editing Localization: localization of regions created or modified using generative models.
+- Directly relevant datasets, benchmarks, surveys, theoretical analyses, and forensic representation studies.
+- Mixed-task forensic papers when synthetic-image detection or generative-editing localization is a substantive, experimentally supported component.
+- Passive extraction of generator fingerprints, spectral traces, reconstruction artifacts, and latent representations.
+
+Exclude:
+
+- Watermark embedding, active provenance, or active fingerprint injection into generated outputs.
+- Purely conventional splicing/copy-move image forensics without a substantive generative-image component.
+- Video-only, audio-only, or text-only deepfake detection.
+- Face-swapping-only research without relevant synthetic-image generation or generative editing experiments.
+- Generic AI content identification without technical image-forensic evidence.
+
+Do not broaden the project's existing taxonomy or override historical exclusions merely to reach a desired count.
+
+## 3. Complete 51-paper candidate inventory
+
+The following IDs are stable identifiers for this import batch. Preserve them in the audit report.
+
+### Group A — Published journal and conference papers (20)
+
+**A01 — Proto-LeakNet: Towards Signal-Leak Aware Attribution in Synthetic Human Face Imagery**
+- Venue: Computer Vision and Image Understanding (CVIU), 2026
+- Task: source_attribution
+- DOI: https://doi.org/10.1016/j.cviu.2026.104848
+- Special: Reconcile existing historical HOLD decision before insertion.
+
+**A02 — MF2DA: Multi-Level Feature Fusion for Robust Detection and Attribution of Universal AI-Generated Images**
+- Venue: IEEE Transactions on Information Forensics and Security, 2026
+- Tasks: detection; source_attribution
+- DOI: https://doi.org/10.1109/TIFS.2026.3723156
+
+**A03 — Synthetic Frequency Patterns Injection for Data-Agnostic Deepfake Detection**
+- Venue: CVIU, 2026
+- Task: detection
+- DOI: https://doi.org/10.1016/j.cviu.2026.104781
+- Special: Verify that frequency injection is detector-training augmentation, not active watermark/provenance embedding.
+
+**A04 — Exploring Real–Synthetic Boundaries in Diffusion Latent Space**
+- Venue: CVIU, 2026
+- Task: detection
+- DOI: https://doi.org/10.1016/j.cviu.2026.104815
+
+**A05 — Revisiting DIRE: Towards Universal AI-Generated Image Detection**
+- Venue: Neural Networks, volume 193, 2026
+- Task: detection
+- DOI: https://doi.org/10.1016/j.neunet.2025.108084
+- Special: Preserve 2025 online-first vs. 2026 issue-year distinction.
+
+**A06 — Dual-Branch Asymmetric Discrepancy Learning Based on Fake Image Pattern-Coexistence for AI-Generated Image Detection**
+- Venue: AAAI 2026 Main Conference
+- Task: detection
+- DOI: https://doi.org/10.1609/aaai.v40i2.37071
+
+**A07 — Leveraging Arbitrary Data Sources for AI-Generated Image Detection Without Sacrificing Generalization**
+- Venue: CVPR 2026 Findings
+- Task: detection
+- Official: https://openaccess.thecvf.com/content/CVPR2026F/html/He_Leveraging_Arbitrary_Data_Sources_for_AI-Generated_Image_Detection_Without_Sacrificing_CVPRF_2026_paper.html
+- Special: Findings, not CVPR Main.
+
+**A08 — GRE-Net: A Forgery Image Detection Framework Based on Gradient Feature and Reconstruction Error**
+- Venue: CVIU, 2025
+- Task: detection
+- DOI: https://doi.org/10.1016/j.cviu.2025.104494
+- Special: Include only its experimentally supported synthetic-image detection component.
+
+**A09 — LiteUpdate: A Lightweight Framework for Updating AI-Generated Image Detectors**
+- Venue: IEEE TCSVT, 2026
+- Task: detection
+- DOI: https://doi.org/10.1109/TCSVT.2026.3683200
+
+**A10 — Dual-Path AI-Generated Image Detection: Leveraging Texture-Rich and Texture-Poor Patches with Global Semantic Features**
+- Venue: Digital Signal Processing, 2026
+- Task: detection
+- DOI: https://doi.org/10.1016/j.dsp.2025.105840
+
+**A11 — Lightweight AI-Generated Image Detection Based on Enhanced Common Artifact Features**
+- Venue: Expert Systems with Applications, 2026
+- Task: detection
+- DOI: https://doi.org/10.1016/j.eswa.2025.130500
+
+**A12 — SDA-Det: A Subpixel-Aware Dual-Domain Artifact Detector for AI-Generated Image Detection**
+- Venue: Expert Systems with Applications, 2026
+- Task: detection
+- DOI: https://doi.org/10.1016/j.eswa.2026.132304
+
+**A13 — SCA-Det: A Structure-Context Artifact Detector for AI-Generated Image Detection**
+- Venue: Neurocomputing, 2026
+- Task: detection
+- DOI: https://doi.org/10.1016/j.neucom.2026.133627
+- Special: Reconcile existing historical HOLD decision before insertion.
+
+**A14 — MS-DCL: Multi-Scale Decoupled Contrastive Learning for Universal AI-Generated Image Detection**
+- Venue: Knowledge-Based Systems, 2026
+- Task: detection
+- DOI: https://doi.org/10.1016/j.knosys.2026.116183
+
+**A15 — Structure Searchable Network Model for Deepfake Image Detection**
+- Venue: Pattern Recognition, 2026
+- Task: detection
+- DOI: https://doi.org/10.1016/j.patcog.2026.113813
+- Special: Verify real-photo vs. generated-image experiments; do not assume generic forgery coverage.
+
+**A16 — Diversity Matters: Dataset Diversification and Dual-Branch Network for Generalized AI-Generated Image Detection**
+- Venue: CVPR 2026 Workshops
+- Task: detection
+- Official: https://openaccess.thecvf.com/content/CVPR2026W/SVC/html/Tasnim_Diversity_Matters_Dataset_Diversification_and_Dual-Branch_Network_for_Generalized_AI-Generated_CVPRW_2026_paper.html
+
+**A17 — S²F-Net: A Robust Spatial-Spectrum Fusion Framework for Cross-Model AIGC Detection**
+- Venue: Expert Systems with Applications, 2026
+- Task: detection
+- DOI: https://doi.org/10.1016/j.eswa.2026.134399
+- Special: Online-first publication.
+
+**A18 — Explainable AI-Generated Image Forensics: A Low-Resolution Perspective with Novel Artifact Taxonomy**
+- Venue: ICCV 2025 Workshops
+- Task: detection
+- Types: method; analysis_study
+- Official: https://openaccess.thecvf.com/content/ICCV2025W/APAI/html/Sharma_Explainable_AI-Generated_Image_Forensics_A_Low-Resolution_Perspective_with_Novel_Artifact_ICCVW_2025_paper.html
+
+**A19 — Improving Generalization in AI-Generated Facial Image Detection via Explainable Recovery**
+- Venue: ACM IH&MMSec 2026
+- Task: detection
+- DOI: https://doi.org/10.1145/3785353.3815082
+- Special: Fully synthetic facial images are within scope.
+
+**A20 — Spotting the Fakes: A Deep Dive into GAN-Generated Face Detection**
+- Venue: ACM Transactions on Multimedia Computing, Communications, and Applications, 2025
+- Task: detection
+- Type: survey
+- DOI: https://doi.org/10.1145/3742786
+- Special: Survey of GAN-generated face detection, not generic face swapping.
+
+### Group B — Major conference / accepted works (3)
+
+**B01 — FARE: Forensic Acceptance Region Estimation for Catching Bait-and-Switch Image Generators**
+- Venue: NeurIPS 2026, accepted
+- Task: source_attribution / verification
+- arXiv: https://arxiv.org/abs/2609.30982
+- Special: Respect the existing NeurIPS 2026 migration, official-track verification requirements, historical review locks, and 7+1 blocked migration decisions. Do not invent conference tracks.
+
+**B02 — LEGO: LoRA-Enabled Generator-Oriented Framework for Synthetic Image Detection**
+- Venue: arXiv preprint, 2026
+- Task: detection
+- arXiv: https://arxiv.org/abs/2605.04445
+- Special: Do not claim ACM Multimedia publication without official evidence.
+
+**B03 — Dinolizer: Separating VAE and Diffusion Artifacts in Generative Inpainting Localization**
+- Venue: IEEE WIFS 2026, accepted
+- Task: localization
+- Official: https://wifs2026.utt.fr/technical-program
+- Special: Verify title and accepted-paper identity (previously identified as paper ID 137). Do not prematurely mark as formally published.
+
+### Group C — Online-first / future-issue papers (3)
+
+**C01 — CAPN-Net: Category-Agnostic and Patch Noise Feature Fusion Network for Universal AI-Generated Image Detection**
+- Venue: Information Sciences, assigned 2027 issue
+- Task: detection
+- DOI: https://doi.org/10.1016/j.ins.2026.124123
+
+**C02 — Gradient-Guided Up-Sampling Artifacts-Aware Adapter Tuning for Generalizable AI-Generated Image Detection**
+- Venue: Expert Systems with Applications, assigned 2027 issue
+- Task: detection
+- DOI: https://doi.org/10.1016/j.eswa.2026.134292
+
+**C03 — MFF-Net: Multi-View Feature Fusion Network for AI-Generated Image Detection**
+- Venue: Expert Systems with Applications, assigned 2027 issue
+- Task: detection
+- DOI: https://doi.org/10.1016/j.eswa.2026.134394
+
+For C01–C03, distinguish an actual publisher online-publication date from a future volume/issue date. Use the repository's existing publication-status rules.
+
+### Group D — Relevant research preprints (6)
+
+**D01 — REALIS: A Curated Dataset for Studying the Challenges of AI Image Detection**
+- Task: detection
+- Type: dataset; benchmark
+- arXiv: https://arxiv.org/abs/2609.32734
+
+**D02 — Face-Trace: Open-Set Attribution and Progressive Discovery of Synthetic Face Generators**
+- Task: source_attribution
+- arXiv: https://arxiv.org/abs/2607.07545
+
+**D03 — Unleashing the Potential of Vision-Language Models for Generalizable AI-Generated Image Detection**
+- Task: detection
+- arXiv: https://arxiv.org/abs/2608.04935
+
+**D04 — RED: Reconstruction Evolution Dynamics for Generalizable AI-Generated Image Detection**
+- Task: detection
+- arXiv: https://arxiv.org/abs/2609.36822
+
+**D05 — Relative Patch Response Learning for Generalizable AI-Generated Image Detection**
+- Task: detection
+- arXiv: https://arxiv.org/abs/2610.11876
+
+**D06 — Unifying Semantic Priors and High-Frequency Traces: Enhancing V-JEPA with Mixture-of-Experts for Robust Synthetic Image Forensics**
+- Task: detection
+- arXiv: https://arxiv.org/abs/2609.16778
+- Special: In-scope experiments on fully synthetic and generatively edited images must be distinguished from conventional manipulation tasks.
+
+For Group D, preserve preprint status unless an official publication can be verified.
+
+### Group E — Additional gap-fill papers (19)
+
+**E01 — Training-Free Detection of AI-Generated Images Based on Coherence Analysis of Image Representations**
+- Task: detection
+- Candidate ACM article DOI: https://doi.org/10.1145/3843205.3845630
+- Likely venue: 3D-Sec 2026 Workshop / ACM CCS-associated proceedings
+- Special: Verify exact title-to-article-DOI mapping and authors from ACM. Do not confuse article DOI with proceedings DOI. Resolve publication status according to official online publication date.
+
+**E02 — MIDNet: Multi-Scale Interaction and Dynamic Hard-Sample Mining for AI-Generated Image Detection**
+- Venue: Journal of Electronic Imaging, 2026
+- Task: detection
+- DOI: https://doi.org/10.1117/1.JEI.35.5.053003
+
+**E03 — Dissecting Agentic Forensics: The Role of Triage, Prompting, and Evidence Arbitration in Open-World Fake Image Detection**
+- Venue: ECCV 2026 AI4MFDD Workshop
+- Task: detection; localization where experimentally supported
+- arXiv: https://arxiv.org/abs/2609.24359
+- Special: Cross-task forensic analysis with substantive whole-image synthesis detection. Do not misclassify evidence arbitration as generator source attribution. Workshop, not ECCV Main.
+
+**E04 — AIGen4Det: Leveraging AI-Regeneration for Generalizable Synthetic Facial Image Detection**
+- Venue: ECCV 2026 AI4MFDD Workshop
+- Task: detection
+- OpenReview: https://openreview.net/forum?id=uOQ4L7aU7y
+- Special: Extract original author ordering and exact status from the primary paper. AI-regeneration for fully synthetic facial image detection is in scope.
+
+**E05 — ASAP: Visual Analytics for Identifying and Analyzing Image Patterns in AI-Generated Images**
+- Venue: Information Visualization, 2026
+- Task: detection-related analysis
+- Type: analysis_study
+- DOI: https://doi.org/10.1177/14738716261481077
+- Special: Do not label as a conventional detection method unless supported by the experiments.
+
+**E06 — Depth Spectral Fingerprints: AI-Generated Image Detection via Compact Depth Representations**
+- Venue: Pattern Recognition Letters, 2026
+- Task: detection
+- Candidate publisher DOI: https://doi.org/10.1016/j.patrec.2026.09.024
+- Special: Verify DOI, title, original author ordering, volume and online-publication date. Passive depth/spectral fingerprints are in scope; not active fingerprint embedding.
+
+**E07 — Can Pixels Alone Reveal Image Origin? Minimax Limits and Learnable Interfaces for Passive Provenance**
+- Venue: arXiv, 2026
+- Tasks: detection; source_attribution if generator-origin experiments support it
+- Type: analysis_study
+- arXiv: https://arxiv.org/abs/2609.30997
+- Special: Passive pixel-level origin verification, not watermark-based provenance.
+
+**E08 — DSC2F: A Multimodal AI-Generated Image Detection System Using Dual-Stream Convolutional Neural Networks with Fast Fourier Transform**
+- Venue: ICIVC 2026
+- Task: detection
+- DOI: https://doi.org/10.1109/ICIVC70586.2026.11686669
+
+**E09 — Forged Image Model Attribution Based on Hierarchical Fine-Grained Classification**
+- Venue: ICIVC 2026
+- Task: source_attribution, conditional on actual generator-identity evaluation
+- DOI: https://doi.org/10.1109/ICIVC70586.2026.11686643
+- Special: Ensure attribution means synthetic generator/model identity, not conventional editing-tool attribution.
+
+**E10 — A Sanity Check for AI-Generated Underwater Image Detection**
+- Venue: ICIVC 2026
+- Task: detection
+- Types: benchmark; analysis_study; method where supported
+- DOI: https://doi.org/10.1109/ICIVC70586.2026.11686696
+
+**E11 — Robust AIGC Image Detection via Unidirectional Consistency Regularization**
+- Venue: ICIVC 2026
+- Task: detection
+- DOI: https://doi.org/10.1109/ICIVC70586.2026.11686594
+
+**E12 — Hierarchical Channel Stacking: A Structured Decision Framework for AI-Generated Image Detection**
+- Venue: ICANN 2026
+- Task: detection
+- Springer volume: https://link.springer.com/book/10.1007/978-3-032-38407-2
+- arXiv: https://arxiv.org/abs/2608.26648
+- Special: Springer volume DOI is not the individual paper DOI. Find the actual chapter-level metadata and page range; do not insert a book DOI into the paper DOI field.
+
+**E13 — RFF-Net: Robust Frequency–Noise Fusion Network for AI-Generated Image Discrimination**
+- Venue: Knowledge-Based Systems, 2026
+- Task: detection
+- DOI: https://doi.org/10.1016/j.knosys.2026.117106
+- Special: Assigned issue date may be after October 16, 2026; verify online-first status.
+
+**E14 — One Patch Is Not Enough: A General Framework for Full-Resolution AI Image Detection**
+- Venue: IEEE Signal Processing Letters, 2026
+- Task: detection
+- DOI: https://doi.org/10.1109/LSP.2026.3737389
+
+**E15 — Hyperparameter-Aware Evaluation of Deep Learning Architectures for AI-Generated Image Detection**
+- Venue: IEEE CITDS 2026, author/institution-reported acceptance
+- Task: detection-related analysis
+- Evidence: https://tudoster.unideb.hu/en/szerzok/5404
+- Special: Verify paper identity, publication state, and complete authors. If official proceedings are unavailable, preserve accepted/unpublished state or hold if mandatory fields are unresolved. Do not invent a DOI.
+
+**E16 — S-AODP++: Structure-Aware AOI-Guided Scanpath Attention for AI-Generated Image Identification**
+- Venue: ACM ICMI 2026
+- Task: detection
+- Candidate DOI: https://doi.org/10.1145/3776574.3831124
+- Additional source: https://renweimeng.com/en
+- Special: Verify full author order and article DOI. Human gaze/scanpath supervision for AI-generated image identification is within scope.
+
+**E17 — Improving Synthesized Image Detection by Disentangling Generator-Shared and Generator-Specific Image Artifacts**
+- Venue: CVPR 2026 Findings
+- Task: detection
+- Official: https://openaccess.thecvf.com/content/CVPR2026F/html/Yang_Improving_Synthesized_Image_Detection_by_Disentangling_Generator-Shared_and_Generator-Specific_Image_CVPRF_2026_paper.html
+
+**E18 — Latent Optimization Dynamics for Latent Diffusion Model Attribution**
+- Venue: ECCV 2026 AI4MFDD Workshop
+- Task: detection primarily; source_attribution only if generator-ID classification is demonstrated
+- OpenReview: https://openreview.net/forum?id=r46D1lErlM
+- Code: https://github.com/dahlgrenmartin/LOD
+- Special: Verify exact author names and original paper metadata, including "Dahlgren" spelling. Preserve the distinction between binary detection and generator attribution.
+
+**E19 — Asymmetric Anchoring: Opening the MLLM Black Box for Forgery Detection**
+- Venue: ECCV 2026 Main Conference
+- Tasks: detection; localization where demonstrated
+- DOI: https://doi.org/10.1007/978-3-032-37132-4_2
+- Special: Explicitly verify synthetic-generation and generative-editing evaluations such as SID-Set / OpenSDID. Do not broaden the project to generic splicing-only forensics.
+
+**Inventory integrity requirement:**
+20 Group A + 3 Group B + 3 Group C + 6 Group D + 19 Group E = **51 candidates**.
+
+## 4. Repository inspection and deduplication
+
+Before modifying data:
+
+1. Inspect git status, current branch, HEAD, repository guidance, schema, generators, import scripts, validation scripts, and relevant tests.
+2. Preserve unrelated working-tree changes.
+3. Read the existing:
+   - `data/curated/papers.csv`
+   - `data/curated/paper_taxonomy.csv`
+   - `data/curated/paper_exclusions.csv`
+   - `data/curated/review_decisions.csv`
+   - Relevant public paper exports, migration manifests, and review-lock files.
+4. Reconcile all 51 papers against current HEAD using normalized titles, DOI, arXiv ID, canonical publisher URL, and any available identity aliases.
+5. Do not create duplicate identities if a paper exists as curated, excluded, historically reviewed, or already imported.
+6. Treat previous corpus counts as historical references only. Derive the actual baseline from current repository data.
+
+The previous audit found no ordinary imported entries for these 51 candidates at snapshot `1ea93c53a3d9f5f822ce27f818d8009274d3b12a`, but this is NOT a substitute for checking the current HEAD.
+
+## 5. Preserve existing review decisions
+
+Two candidates have known historical review decisions:
+
+- A01 Proto-LeakNet
+- A13 SCA-Det
+
+Both were previously marked `HOLD_EVIDENCE_INSUFFICIENT` in `review_decisions.csv`.
+
+You must:
+
+- Read their actual historical decision records.
+- Verify new publisher-level evidence against the exact paper identities.
+- Use the repository's sanctioned review/reconciliation procedure.
+- Preserve provenance and historical decisions.
+- Explicitly report the evidence supporting any change in disposition.
+- Never silently bypass, delete, or overwrite the prior HOLD.
+
+Also preserve historical NeurIPS 2026 migration locks, exclusions, ambiguous cases, and venue-track requirements.
+
+Do not revive unrelated excluded papers.
+
+## 6. Metadata and taxonomy requirements
+
+Use only the repository's existing approved schema and vocabulary.
+
+For each inserted paper, populate all supported, reliably evidenced fields, including:
+
+- Canonical title
+- Full author list in publisher/paper order
+- Publication year
+- Venue and precise conference track
+- Publication type and status
+- DOI and/or arXiv ID
+- Primary publication URL
+- Abstract or description only when supported
+- Research task(s)
+- Image scope(s)
+- Research type(s)
+- Source/provenance metadata
+- Curation and review status
+
+Use exact venue distinctions:
+
+- CVPR Main vs. CVPR Findings vs. CVPR Workshops
+- ECCV Main vs. ECCV AI4MFDD Workshops
+- Accepted conference paper vs. formally published proceedings paper
+- Journal online-first vs. future assigned issue
+- arXiv preprint vs. peer-reviewed publication
+
+Never fabricate metadata.
+
+Do not patch validators, introduce unofficial venue types, invent track labels, or force publication flags simply to pass the tests.
+
+Do not assign institution affiliations or geographic markers without reliable evidence.
+
+## 7. Efficient verification strategy
+
+Minimize unnecessary browsing and Codex token usage.
+
+- Do not perform an internet-wide discovery sweep.
+- Do not search for additional unrelated papers.
+- For DOI-backed records, open the supplied canonical publisher page only when necessary to verify required metadata or settle a conflict.
+- For arXiv and OpenReview records, use the provided identifiers as starting points.
+- For already well-supported candidates, avoid redundant multi-source research.
+- Prioritize targeted verification of E01, E04, E06, E12, E15, E16, E18, A01, and A13.
+- Resolve any additional discrepancies discovered during conversion rather than propagating errors.
+- If a supplied DOI is incorrect, identify the correct primary reference or place the candidate on hold; do not silently use an unrelated article.
+
+If source access is temporarily unavailable, use existing repository evidence where independently sufficient. Otherwise retain an explicit, item-specific hold.
+
+Do not block the whole batch merely because a few records remain unresolved.
+
+## 8. Perform the actual integration
+
+After inspection and verification:
+
+1. Build the deterministic 51-candidate inventory directly from this prompt.
+2. Normalize identifiers and fields.
+3. Reconcile current repository identities and historical decisions.
+4. Import each eligible, adequately verified paper using existing repository mechanisms.
+5. Integrate accompanying taxonomy and review metadata consistently.
+6. Preserve all existing paper IDs and relationships.
+7. Regenerate the public/preview datasets through canonical repository scripts.
+8. Regenerate institution and map outputs only through supported workflows.
+9. Run targeted validation and regression tests.
+10. Run the full available test suite.
+11. Verify deterministic regeneration and stable output.
+12. Inspect the final Git diff for unrelated changes.
+
+Do not add dummy institution markers, infer geographic coordinates, or fabricate relationships to make counts increase.
+
+Do not alter frontend appearance, CSS, visualization design, unrelated paper metadata, dependencies, or taxonomy policy.
+
+## 9. Final audit report
+
+Produce a complete integration report containing:
+
+### Summary
+
+- Candidate count: 51
+- Newly imported
+- Already present / reconciled
+- Held due to insufficient mandatory evidence
+- Excluded after substantive scope verification
+- Other failed or blocked records
+
+These dispositions must account for exactly 51 unique candidates.
+
+### Per-paper audit
+
+For every ID A01–A20, B01–B03, C01–C03, D01–D06, and E01–E19, report:
+
+- Title
+- Final scope decision
+- Final import decision
+- Verified DOI/arXiv/primary URL
+- Publication status
+- Correct taxonomy
+- Any metadata corrections
+- Duplicate or review-decision handling
+- Outstanding blockers, if any
+
+### Repository integrity
+
+Report actual before/after counts for:
+
+- Total curated papers
+- Public papers
+- Formally published papers
+- Mapped papers
+- Institution markers
+- Relationships
+- Active exclusions
+- Pending review items
+
+Report modified files and summarize why each change was necessary.
+
+### Testing
+
+Report:
+
+- Focused tests passed/failed
+- Full-suite tests passed/failed/skipped
+- Regeneration result
+- Integrity checks
+- Unexpected diff or baseline drift
+
+Do not claim validation passed unless the actual tests completed successfully.
+
+## 10. Execution constraints
+
+**Perform the complete integration in the current task.**
+
+Do not stop after writing an implementation plan or ask for missing manifest files.
+
+If some candidate records cannot be safely imported, integrate the verified remainder and document the exact reasons for each hold.
+
+Do not assume the current working tree is clean.
+
+Do not reset, discard, or overwrite unrelated edits.
+
+Do not bypass historical review locks.
+
+Do not rewrite repository policy to fit the input records.
+
+Do not commit.
+
+Do not push.
+
+Leave a fully reviewable working-tree diff and a precise final integration report.
+
+**Start now by inspecting the repository, then implement the 51-paper literature integration.**

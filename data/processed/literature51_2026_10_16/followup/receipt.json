@@ -1,0 +1,170 @@
+{
+  "released_candidates": [
+    "B03"
+  ],
+  "counts": {
+    "import": 39,
+    "held": 12
+  },
+  "paper_id": "curated:d2d715db72fca20ad5c4",
+  "superseded_decision_ids": [
+    "review:92e13d4bd227400aaf08"
+  ],
+  "review_sha256": "cdf83d05b4ab57fe5a37034f5213aef40f7c6ee0095c5d22d3988ca784d03312",
+  "cache_policy_sha256": "0850751737d09cdd50ad12e83183f930681ed1c466c0227a30e73e09a0939fbf",
+  "additions": {
+    "papers.csv": [
+      {
+        "paper_id": "curated:d2d715db72fca20ad5c4",
+        "title": "DinoLizer: Separating VAE and Diffusion Artifacts in Generative Inpainting Localization",
+        "year": "2025",
+        "authors": "Minh Thong Doi; Vincent Itier; Jan Butora; Jérémie Boulanger; Patrick Bas",
+        "venue": "arXiv",
+        "venue_id": "venue:arxiv",
+        "venue_name": "arXiv",
+        "venue_acronym": "",
+        "venue_type": "preprint",
+        "venue_track": "",
+        "raw_venue": "arXiv",
+        "doi": "",
+        "arxiv_id": "2511.20722",
+        "openalex_url": "",
+        "paper_url": "",
+        "publication_type": "preprint",
+        "abstract": "",
+        "tasks": "localization",
+        "image_scopes": "generative_editing",
+        "research_types": "method",
+        "scope_status": "in_scope",
+        "source_database": "arxiv",
+        "metadata_source": "Primary-source review Literature51 follow-up: {\"candidate_id\": \"B03\", \"evidence\": \"data/processed/literature51_2026_10_16/followup/review.json\", \"publication_status\": \"preprint\", \"version\": \"arXiv:2511.20722v2\", \"first_posted\": \"2025-11-25\", \"revised\": \"2026-07-30\", \"accepted_only\": \"WIFS 2026 paper 137; no formal proceedings claimed\", \"title_aliases\": [\"DinoLizer: Learning from the Best for Generative Inpainting Localization\", \"Dinolizer: Separating VAE and Diffusion Artifacts in Generative Inpainting Localization\"], \"affiliations\": \"Unresolved mapping; original manuscript groups retained in review.json\"}",
+        "curation_status": "confirmed",
+        "review_status": "reviewed",
+        "created_at": "2026-10-16T12:00:00Z",
+        "updated_at": "2026-10-16T12:00:00Z"
+      }
+    ],
+    "paper_taxonomy.csv": [
+      {
+        "taxonomy_id": "paper_id:curated:d2d715db72fca20ad5c4",
+        "paper_id": "curated:d2d715db72fca20ad5c4",
+        "title": "DinoLizer: Separating VAE and Diffusion Artifacts in Generative Inpainting Localization",
+        "year": "2025",
+        "doi": "",
+        "arxiv_id": "2511.20722",
+        "openalex_url": "",
+        "tasks": "localization",
+        "image_scopes": "generative_editing",
+        "research_types": "method",
+        "tasks_status": "reviewed",
+        "tasks_review_reason": "Primary manuscript v2 objective and inpainting localization experiments reviewed",
+        "tasks_evidence_tier": "primary_full_text",
+        "tasks_evidence_source": "https://arxiv.org/html/2511.20722v2",
+        "tasks_evidence_excerpt": "The v2 manuscript localizes generatively inpainted regions with a DINOv2 patch classifier and sliding windows; its experiments report mask IoU on generative-inpainting datasets. No generator identity prediction is claimed.",
+        "image_scopes_status": "reviewed",
+        "image_scopes_review_reason": "Primary manuscript v2 objective and inpainting localization experiments reviewed",
+        "image_scopes_evidence_tier": "primary_full_text",
+        "image_scopes_evidence_source": "https://arxiv.org/html/2511.20722v2",
+        "image_scopes_evidence_excerpt": "The v2 manuscript localizes generatively inpainted regions with a DINOv2 patch classifier and sliding windows; its experiments report mask IoU on generative-inpainting datasets. No generator identity prediction is claimed.",
+        "research_types_status": "reviewed",
+        "research_types_review_reason": "Primary manuscript v2 objective and inpainting localization experiments reviewed",
+        "research_types_evidence_tier": "primary_full_text",
+        "research_types_evidence_source": "https://arxiv.org/html/2511.20722v2",
+        "research_types_evidence_excerpt": "The v2 manuscript localizes generatively inpainted regions with a DINOv2 patch classifier and sliding windows; its experiments report mask IoU on generative-inpainting datasets. No generator identity prediction is claimed.",
+        "taxonomy_status": "reviewed",
+        "audited_at": "2026-10-16T12:00:00Z"
+      }
+    ],
+    "review_decisions.csv": [
+      {
+        "decision_id": "review:55a49154e05c6b1780ee",
+        "review_queue": "manual_import",
+        "target_type": "paper",
+        "title": "DinoLizer: Separating VAE and Diffusion Artifacts in Generative Inpainting Localization",
+        "year": "2025",
+        "doi": "",
+        "openalex_url": "",
+        "institution": "",
+        "action": "add_paper",
+        "review_note": "Literature51 B03 released as one arXiv preprint. Supersedes disposition only: review:92e13d4bd227400aaf08. v1/v2 titles are one identity; use v2 ordered byline verified with HAL v2. WIFS paper 137 is accepted only. Evidence: data/processed/literature51_2026_10_16/followup/review.json",
+        "created_at": "2026-10-16T12:00:00Z",
+        "updated_at": "2026-10-16T12:00:00Z",
+        "created_by": "literature51-followup-2026-10-16"
+      }
+    ]
+  },
+  "patches": {
+    "paper_taxonomy.csv": [
+      {
+        "paper_id": "curated:fa41c2810887fb216f5d",
+        "before": {
+          "taxonomy_status": "needs_review",
+          "audited_at": "2026-10-16T10:00:00Z",
+          "tasks_status": "needs_review",
+          "tasks_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+          "tasks_evidence_tier": "title",
+          "tasks_evidence_excerpt": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+          "image_scopes_status": "needs_review",
+          "image_scopes_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+          "image_scopes_evidence_tier": "title",
+          "image_scopes_evidence_excerpt": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+          "research_types_status": "needs_review",
+          "research_types_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+          "research_types_evidence_tier": "title",
+          "research_types_evidence_excerpt": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper."
+        },
+        "after": {
+          "taxonomy_status": "reviewed",
+          "audited_at": "2026-10-16T12:00:00Z",
+          "tasks_status": "reviewed",
+          "tasks_review_reason": "Saved CVF primary abstract reviewed; labels unchanged",
+          "tasks_evidence_tier": "primary_abstract",
+          "tasks_evidence_excerpt": "The saved CVF primary abstract describes real-versus-synthetic classification, evaluation against unseen image generators, learnable artifact embeddings and contrastive loss. This supports detection / fully_generated / method. Generator-specific feature training is not experimental evidence of an attribution output. All labels remain unchanged.",
+          "image_scopes_status": "reviewed",
+          "image_scopes_review_reason": "Saved CVF primary abstract reviewed; labels unchanged",
+          "image_scopes_evidence_tier": "primary_abstract",
+          "image_scopes_evidence_excerpt": "The saved CVF primary abstract describes real-versus-synthetic classification, evaluation against unseen image generators, learnable artifact embeddings and contrastive loss. This supports detection / fully_generated / method. Generator-specific feature training is not experimental evidence of an attribution output. All labels remain unchanged.",
+          "research_types_status": "reviewed",
+          "research_types_review_reason": "Saved CVF primary abstract reviewed; labels unchanged",
+          "research_types_evidence_tier": "primary_abstract",
+          "research_types_evidence_excerpt": "The saved CVF primary abstract describes real-versus-synthetic classification, evaluation against unseen image generators, learnable artifact embeddings and contrastive loss. This supports detection / fully_generated / method. Generator-specific feature training is not experimental evidence of an attribution output. All labels remain unchanged."
+        }
+      }
+    ]
+  },
+  "tracked_changes": {
+    "tests/baseline_expectations.py": {
+      "before_sha256": "9c94652ef3ee802fe1c1eb60f76bf3e8cd070ea25797bcb147df75717e90a411",
+      "after_sha256": "8b4397ed284fe61a16a5909b9d29fa51d7d917e28744b9275009471d2c3f7d8e"
+    },
+    "docs/key_paper_coverage_report.md": {
+      "before_sha256": "b1f2773aa9caf1f2e3dd04628d28a6e1706250ce6eaf7d8df4c0dd35d4c15571",
+      "after_sha256": "c96b1c8b8053f2de4516197fd37c5077db499f7601c68ee5810d72abab4a2d07"
+    }
+  },
+  "retrieval_manifest_sha256": "564b47e6da9c01a9d6de1eca8025ab2c9d440e8c745c6c46ae9069afc9c93ebe",
+  "file_audit_sha256": "84e0dc49fe9ff5fc789cd41cbd19f5cdfaf58ba8dd713486573df14f70217337",
+  "export": {
+    "existing_public_papers_unchanged": 676,
+    "approved_existing_object_changes": [
+      {
+        "paper_id": "curated:fa41c2810887fb216f5d",
+        "fields": [
+          "taxonomy_status",
+          "taxonomy_review"
+        ]
+      }
+    ],
+    "map_relationships_unchanged": 1421,
+    "public_papers": 678,
+    "formally_published": 561,
+    "taxonomy_pending": 14,
+    "sha256": {
+      "public_preview_map_data.json": "135d0b9e1422c1dc6dfc118421787abf3a6048be77c82fa051087e03bf26dda0",
+      "public_preview_papers.json": "58f4dfda96cbd7988b42e62e2575eb3dcbfe0ba51deb821db635125231de2249"
+    },
+    "map_metadata_only_change": true,
+    "unrelated_location_queue_written": false
+  },
+  "evidence_index_sha256": "bf249d97bf6e0fa546d103a6c707ced0cd678c56e6af3c549b9494ae670f7902"
+}

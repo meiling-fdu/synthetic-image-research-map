@@ -1,0 +1,145 @@
+[
+  {
+    "key": "b03-hal",
+    "url": "https://api.archives-ouvertes.fr/search/?q=halId_s%3Ahal-05377107&fl=title_s,authFullName_s,docType_s,version_i,producedDate_s,uri_s,fileMain_s&wt=json",
+    "final_url": "https://api.archives-ouvertes.fr/search/?q=halId_s%3Ahal-05377107&fl=title_s,authFullName_s,docType_s,version_i,producedDate_s,uri_s,fileMain_s&wt=json",
+    "status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "bytes": 548,
+    "sha256": "333862b5856891b0b661c21399ebccb0c1fd8418a28f2545b8f0da56771ff927",
+    "retrieved_on": "2026-10-16",
+    "raw_path": "data/raw/literature51_2026_10_16/followup/hal_v2.json"
+  },
+  {
+    "key": "b03-v2",
+    "url": "https://arxiv.org/html/2511.20722v2",
+    "final_url": "https://arxiv.org/html/2511.20722v2",
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 145844,
+    "sha256": "f9033c9580054531172d87f49f9e8cd9305bb58cd37a4d87886d921f84ae39c2",
+    "retrieved_on": "2026-10-16",
+    "repository_body_stored": false
+  },
+  {
+    "key": "b03-v1",
+    "url": "https://arxiv.org/abs/2511.20722v1",
+    "final_url": "https://arxiv.org/abs/2511.20722v1",
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 42835,
+    "sha256": "aef3b38c71a76f8e3c7a15f3136f7456444ada0036173db5d215e9f3d97b607c",
+    "retrieved_on": "2026-10-16",
+    "raw_path": "data/raw/literature51_2026_10_16/followup/arxiv_v1.html.gz"
+  },
+  {
+    "key": "e04-pdf",
+    "url": "https://openreview.net/pdf?id=uOQ4L7aU7y",
+    "error": "HTTP 403",
+    "retrieved_on": "2026-10-16",
+    "repository_body_stored": false
+  },
+  {
+    "key": "e18-pdf",
+    "url": "https://openreview.net/pdf?id=r46D1lErlM",
+    "error": "HTTP 403",
+    "retrieved_on": "2026-10-16",
+    "repository_body_stored": false
+  },
+  {
+    "key": "e09-pdf",
+    "url": "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11686643",
+    "error": "Primary endpoint unavailable (TLS/network error)",
+    "retrieved_on": "2026-10-16",
+    "repository_body_stored": false
+  },
+  {
+    "key": "hal-author",
+    "url": "https://pro.univ-lille.fr/patrick-bas/publications",
+    "error": "Primary endpoint unavailable (TLS/network error)",
+    "retrieved_on": "2026-10-16",
+    "repository_body_stored": false
+  },
+  {
+    "key": "b03-abs-v2",
+    "url": "https://arxiv.org/abs/2511.20722v2",
+    "final_url": "https://arxiv.org/abs/2511.20722v2",
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 41665,
+    "sha256": "8937812eec26193bf5d27455561c8eb4ec3d209d2c8fadd32255c51c94a2e0c3",
+    "retrieved_on": "2026-10-16",
+    "raw_path": "data/raw/literature51_2026_10_16/followup/arxiv_v2.html.gz"
+  },
+  {
+    "key": "workshop-program",
+    "url": "https://warwick.ac.uk/fac/sci/dcs/research/siplab/AI4MFDD2026/program/",
+    "final_url": "https://warwick.ac.uk/fac/sci/dcs/research/siplab/AI4MFDD2026/program/",
+    "status": 200,
+    "content_type": "text/html;charset=UTF-8",
+    "bytes": 29429,
+    "sha256": "d28b0136d502d51024dbff3c6432697dd99fe9b1df551eb8372a082179813780",
+    "retrieved_on": "2026-10-16",
+    "raw_path": "data/raw/literature51_2026_10_16/followup/workshop_program.html.gz"
+  },
+  {
+    "key": "d06-html",
+    "url": "https://arxiv.org/html/2609.16778v1",
+    "final_url": "https://arxiv.org/html/2609.16778v1",
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 233300,
+    "sha256": "d6efd737cbbe114147f862829d780d436640c81cdd4c9ae89b28b88a73ca3965",
+    "retrieved_on": "2026-10-16",
+    "repository_body_stored": false
+  },
+  {
+    "key": "e04-api",
+    "url": "https://api2.openreview.net/notes?id=uOQ4L7aU7y",
+    "error": "HTTP 403",
+    "retrieved_on": "2026-10-16",
+    "repository_body_stored": false
+  },
+  {
+    "key": "e18-api",
+    "url": "https://api2.openreview.net/notes?id=r46D1lErlM",
+    "error": "HTTP 403",
+    "retrieved_on": "2026-10-16",
+    "repository_body_stored": false
+  },
+  {
+    "candidate_id": "C01",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0020025526010546",
+    "retrieved_on": "2026-10-16",
+    "status": 403,
+    "inspection": "One targeted publisher landing-page check; no stronger online date evidence; stopped."
+  },
+  {
+    "candidate_id": "C02",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0957417426031982",
+    "retrieved_on": "2026-10-16",
+    "status": 403,
+    "inspection": "One targeted publisher landing-page check; no stronger online date evidence; stopped."
+  },
+  {
+    "candidate_id": "C03",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0957417426032987",
+    "retrieved_on": "2026-10-16",
+    "status": 403,
+    "inspection": "One targeted publisher landing-page check; no stronger online date evidence; stopped."
+  },
+  {
+    "candidate_id": "E06",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0167865526003417",
+    "retrieved_on": "2026-10-16",
+    "status": 403,
+    "inspection": "One targeted publisher landing-page check; no stronger online date evidence; stopped."
+  },
+  {
+    "candidate_id": "E13",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0950705126018320",
+    "retrieved_on": "2026-10-16",
+    "status": 403,
+    "inspection": "One targeted publisher landing-page check; no stronger online date evidence; stopped."
+  }
+]

@@ -1,0 +1,138 @@
+{
+  "remote_base": "a74bdf79f4d8b3c4fb64af7b83701dce60238289",
+  "original_validated_commit": "0c1f4089c64fa768ab2a07d6a1bfc394bd0e7f6b",
+  "independent_index_tree": "ab3f023af1ab4087d0127c81d17aa1df40b3c22d",
+  "scope": "Git-index-only disposable Git checkout. All 14 ignored reproduction inputs restored from committed checksum-verified archives. No local excluded retrieval caches or original worktree files copied.",
+  "remote_affected_baseline": {
+    "tests": 393,
+    "failed": {
+      "tests.test_corpus_quality_batch_b_wave_b1b::test_manifest_preserves_original_source_provenance_and_current_source_hashes": "FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/data/raw/openalex/20260619T211726Z_001_ai-generated-image-detection.json'",
+      "tests.test_systematic_tier2_application::test_pre_application_baseline_includes_and_preserves_previous_policy_pass": "AssertionError: historical artifacts missing: ['data/processed/systematic_tier1_2026_09/baseline/data/.DS_Store', 'data/processed/systematic_tier1_2026_09/baseline/web/.DS_Store', 'data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/.DS_Store', 'data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/.DS_Store']",
+      "tests.test_systematic_tier2_normal_priority_evidence::test_authoritative_append_is_exact_and_preserves_existing_rows": "FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/.DS_Store'",
+      "tests.test_systematic_tier2_normal_priority_evidence::test_frozen_high_predecessor_remains_reproducible": "FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/web/.DS_Store'",
+      "tests.test_systematic_tier2_normal_priority_evidence::test_report_reproduces_byte_for_byte": "FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/.DS_Store'",
+      "tests.test_systematic_tier2_policy::test_pre_task_repository_files_are_byte_identical": "AssertionError: historical artifacts missing: ['data/processed/systematic_tier1_2026_09/baseline/data/.DS_Store', 'data/processed/systematic_tier1_2026_09/baseline/web/.DS_Store', 'data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/.DS_Store', 'data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/.DS_Store']"
+    },
+    "passed": 387,
+    "errors": 0,
+    "skipped": 0
+  },
+  "affected_regression_run": {
+    "tests": 437,
+    "failed": {
+      "tests.test_corpus_quality_batch_b_wave_b1b::test_manifest_preserves_original_source_provenance_and_current_source_hashes": "FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/data/raw/openalex/20260619T211726Z_001_ai-generated-image-detection.json'",
+      "tests.test_corpus_quality_batch_b_wave_b1c::test_all_49_frozen_neurips_artifacts_remain_byte_identical": "subprocess.CalledProcessError: Command '['git', 'show', 'a74bdf79f4d8b3c4fb64af7b83701dce60238289:data/processed/neurips_2026_targeted_gap_fill_2026_10/baseline_validation.log']' returned non-zero exit status 128.",
+      "tests.test_systematic_tier2_application::test_pre_application_baseline_includes_and_preserves_previous_policy_pass": "AssertionError: historical artifacts missing: ['data/processed/systematic_tier1_2026_09/baseline/data/.DS_Store', 'data/processed/systematic_tier1_2026_09/baseline/web/.DS_Store', 'data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/.DS_Store', 'data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/.DS_Store']",
+      "tests.test_systematic_tier2_normal_priority_evidence::test_authoritative_append_is_exact_and_preserves_existing_rows": "FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/.DS_Store'",
+      "tests.test_systematic_tier2_normal_priority_evidence::test_frozen_high_predecessor_remains_reproducible": "FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/web/.DS_Store'",
+      "tests.test_systematic_tier2_normal_priority_evidence::test_report_reproduces_byte_for_byte": "FileNotFoundError: [Errno 2] No such file or directory: '<checkout>/data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/.DS_Store'",
+      "tests.test_systematic_tier2_policy::test_pre_task_repository_files_are_byte_identical": "AssertionError: historical artifacts missing: ['data/processed/systematic_tier1_2026_09/baseline/data/.DS_Store', 'data/processed/systematic_tier1_2026_09/baseline/web/.DS_Store', 'data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/.DS_Store', 'data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/.DS_Store']"
+    },
+    "passed": 430,
+    "errors": 0,
+    "skipped": 0
+  },
+  "fixed_historical_endpoint_failure": {
+    "test": "tests.test_corpus_quality_batch_b_wave_b1c::test_all_49_frozen_neurips_artifacts_remain_byte_identical",
+    "passed_in_final_index_focused_run": true
+  },
+  "effective_new_regressions": 0,
+  "index_focused": {
+    "tests": 95,
+    "failed": {},
+    "passed": 95,
+    "errors": 0,
+    "skipped": 0,
+    "subtests_passed": 12
+  },
+  "byte_prefix_focused": {
+    "tests": 6,
+    "failed": {},
+    "passed": 6,
+    "errors": 0,
+    "skipped": 0
+  },
+  "canonical_regeneration": {
+    "candidate_count": 51,
+    "counts": {
+      "import": 39,
+      "held": 12
+    },
+    "corpus": {
+      "curated": 535,
+      "public": 674,
+      "formal": 557,
+      "mapped": 613,
+      "unmapped": 61,
+      "relationship_rows": 1410,
+      "taxonomy_pending": 14,
+      "review_decisions": 81
+    },
+    "historical_and_unrelated_files_preserved": true,
+    "workspace_verification_scope": "isolated_checkout_local_files_absent",
+    "remote_public_objects_unchanged": 635,
+    "remote_map_objects_unchanged": 1410,
+    "unexplained": 0,
+    "restored_committed_inputs": [
+      "data/processed/openalex_candidate_papers_in_scope.csv",
+      "data/processed/openalex_candidate_papers.csv",
+      "data/processed/openalex_candidate_affiliations.csv",
+      "web/data/openalex_candidate_map_data.json",
+      "data/manual/institution_consistency_audit.csv",
+      "data/processed/neurips_2026_targeted_gap_fill_2026_10/baseline_validation.log",
+      "data/processed/neurips_2026_targeted_gap_fill_2026_10/baseline_public_validation.log",
+      "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged_validation.log",
+      "data/processed/neurips_2026_targeted_gap_fill_2026_10/targeted_tests.log",
+      "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/institutions.csv",
+      "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/institution_location_review.csv",
+      "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/paper_taxonomy.csv",
+      "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/author_institution_mappings.csv",
+      "data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/papers.csv"
+    ],
+    "regeneration": {
+      "canonical_runs": 2,
+      "byte_identical_to_staged_exports": true,
+      "sha256": {
+        "public_preview_map_data.json": "93581c716dc905f8f3b5dab55b0414bfcb99f40654e711e3a6dbc3a08a1a2e1f",
+        "public_preview_papers.json": "36822f54348e8ca396f7e2f4fca416823abc284e8d2fdc94ab2409ebc393f2cf"
+      }
+    }
+  },
+  "validators": {
+    "curated": {
+      "errors": 0,
+      "warnings": 294,
+      "duplicates": 0
+    },
+    "public_map": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "public_papers": {
+      "errors": 0,
+      "warnings": 62
+    }
+  },
+  "original_saved_full_suite_failures_unchanged": {
+    "test_systematic_tier2_application::test_pre_application_baseline_includes_and_preserves_previous_policy_pass": "AssertionError: Public refinement differs from its reviewed snapshot",
+    "test_systematic_tier2_normal_priority_evidence::test_authoritative_append_is_exact_and_preserves_existing_rows": "AssertionError: Public refinement differs from its reviewed snapshot",
+    "test_systematic_tier2_normal_priority_evidence::test_report_reproduces_byte_for_byte": "AssertionError: Public refinement differs from its reviewed snapshot",
+    "test_systematic_tier2_policy::test_pre_task_repository_files_are_byte_identical": "AssertionError: Public refinement differs from its reviewed snapshot"
+  },
+  "full_suite_rerun": false,
+  "security": {
+    "staged_paths": 148,
+    "original_evidence_unchanged": 117,
+    "triaged_matches": [
+      {
+        "path": "data/raw/literature51_2026_10_16/sources/893808e8adcc5289250b.gz",
+        "kind": "full_manuscript_html",
+        "resolution": "False positive: Springer chapter landing-page CSS uses c-article-body; visible contents are abstract, references, affiliations and access controls, with no manuscript sections."
+      }
+    ],
+    "sensitive_or_full_manuscript_findings": []
+  },
+  "original_untracked_files": 304,
+  "original_worktree_modified": false,
+  "runtime_test_packages": "External pytest runtime; no project evidence or retrieval inputs."
+}

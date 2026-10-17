@@ -1,0 +1,518 @@
+{
+  "batch_id": "literature51_2026_10_16",
+  "candidates": [
+    {
+      "candidate_id": "A01",
+      "title": "Proto-LeakNet: Towards Signal-Leak Aware Attribution in Synthetic Human Face Imagery",
+      "doi": "10.1016/j.cviu.2026.104848",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.cviu.2026.104848"
+      ],
+      "request_metadata": "- Venue: Computer Vision and Image Understanding (CVIU), 2026\n- Task: source_attribution\n- DOI: https://doi.org/10.1016/j.cviu.2026.104848\n- Special: Reconcile existing historical HOLD decision before insertion."
+    },
+    {
+      "candidate_id": "A02",
+      "title": "MF2DA: Multi-Level Feature Fusion for Robust Detection and Attribution of Universal AI-Generated Images",
+      "doi": "10.1109/tifs.2026.3723156",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1109/TIFS.2026.3723156"
+      ],
+      "request_metadata": "- Venue: IEEE Transactions on Information Forensics and Security, 2026\n- Tasks: detection; source_attribution\n- DOI: https://doi.org/10.1109/TIFS.2026.3723156"
+    },
+    {
+      "candidate_id": "A03",
+      "title": "Synthetic Frequency Patterns Injection for Data-Agnostic Deepfake Detection",
+      "doi": "10.1016/j.cviu.2026.104781",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.cviu.2026.104781"
+      ],
+      "request_metadata": "- Venue: CVIU, 2026\n- Task: detection\n- DOI: https://doi.org/10.1016/j.cviu.2026.104781\n- Special: Verify that frequency injection is detector-training augmentation, not active watermark/provenance embedding."
+    },
+    {
+      "candidate_id": "A04",
+      "title": "Exploring Real–Synthetic Boundaries in Diffusion Latent Space",
+      "doi": "10.1016/j.cviu.2026.104815",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.cviu.2026.104815"
+      ],
+      "request_metadata": "- Venue: CVIU, 2026\n- Task: detection\n- DOI: https://doi.org/10.1016/j.cviu.2026.104815"
+    },
+    {
+      "candidate_id": "A05",
+      "title": "Revisiting DIRE: Towards Universal AI-Generated Image Detection",
+      "doi": "10.1016/j.neunet.2025.108084",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.neunet.2025.108084"
+      ],
+      "request_metadata": "- Venue: Neural Networks, volume 193, 2026\n- Task: detection\n- DOI: https://doi.org/10.1016/j.neunet.2025.108084\n- Special: Preserve 2025 online-first vs. 2026 issue-year distinction."
+    },
+    {
+      "candidate_id": "A06",
+      "title": "Dual-Branch Asymmetric Discrepancy Learning Based on Fake Image Pattern-Coexistence for AI-Generated Image Detection",
+      "doi": "10.1609/aaai.v40i2.37071",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1609/aaai.v40i2.37071"
+      ],
+      "request_metadata": "- Venue: AAAI 2026 Main Conference\n- Task: detection\n- DOI: https://doi.org/10.1609/aaai.v40i2.37071"
+    },
+    {
+      "candidate_id": "A07",
+      "title": "Leveraging Arbitrary Data Sources for AI-Generated Image Detection Without Sacrificing Generalization",
+      "doi": "",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://openaccess.thecvf.com/content/CVPR2026F/html/He_Leveraging_Arbitrary_Data_Sources_for_AI-Generated_Image_Detection_Without_Sacrificing_CVPRF_2026_paper.html"
+      ],
+      "request_metadata": "- Venue: CVPR 2026 Findings\n- Task: detection\n- Official: https://openaccess.thecvf.com/content/CVPR2026F/html/He_Leveraging_Arbitrary_Data_Sources_for_AI-Generated_Image_Detection_Without_Sacrificing_CVPRF_2026_paper.html\n- Special: Findings, not CVPR Main."
+    },
+    {
+      "candidate_id": "A08",
+      "title": "GRE-Net: A Forgery Image Detection Framework Based on Gradient Feature and Reconstruction Error",
+      "doi": "10.1016/j.cviu.2025.104494",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.cviu.2025.104494"
+      ],
+      "request_metadata": "- Venue: CVIU, 2025\n- Task: detection\n- DOI: https://doi.org/10.1016/j.cviu.2025.104494\n- Special: Include only its experimentally supported synthetic-image detection component."
+    },
+    {
+      "candidate_id": "A09",
+      "title": "LiteUpdate: A Lightweight Framework for Updating AI-Generated Image Detectors",
+      "doi": "10.1109/tcsvt.2026.3683200",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1109/TCSVT.2026.3683200"
+      ],
+      "request_metadata": "- Venue: IEEE TCSVT, 2026\n- Task: detection\n- DOI: https://doi.org/10.1109/TCSVT.2026.3683200"
+    },
+    {
+      "candidate_id": "A10",
+      "title": "Dual-Path AI-Generated Image Detection: Leveraging Texture-Rich and Texture-Poor Patches with Global Semantic Features",
+      "doi": "10.1016/j.dsp.2025.105840",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.dsp.2025.105840"
+      ],
+      "request_metadata": "- Venue: Digital Signal Processing, 2026\n- Task: detection\n- DOI: https://doi.org/10.1016/j.dsp.2025.105840"
+    },
+    {
+      "candidate_id": "A11",
+      "title": "Lightweight AI-Generated Image Detection Based on Enhanced Common Artifact Features",
+      "doi": "10.1016/j.eswa.2025.130500",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.eswa.2025.130500"
+      ],
+      "request_metadata": "- Venue: Expert Systems with Applications, 2026\n- Task: detection\n- DOI: https://doi.org/10.1016/j.eswa.2025.130500"
+    },
+    {
+      "candidate_id": "A12",
+      "title": "SDA-Det: A Subpixel-Aware Dual-Domain Artifact Detector for AI-Generated Image Detection",
+      "doi": "10.1016/j.eswa.2026.132304",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.eswa.2026.132304"
+      ],
+      "request_metadata": "- Venue: Expert Systems with Applications, 2026\n- Task: detection\n- DOI: https://doi.org/10.1016/j.eswa.2026.132304"
+    },
+    {
+      "candidate_id": "A13",
+      "title": "SCA-Det: A Structure-Context Artifact Detector for AI-Generated Image Detection",
+      "doi": "10.1016/j.neucom.2026.133627",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.neucom.2026.133627"
+      ],
+      "request_metadata": "- Venue: Neurocomputing, 2026\n- Task: detection\n- DOI: https://doi.org/10.1016/j.neucom.2026.133627\n- Special: Reconcile existing historical HOLD decision before insertion."
+    },
+    {
+      "candidate_id": "A14",
+      "title": "MS-DCL: Multi-Scale Decoupled Contrastive Learning for Universal AI-Generated Image Detection",
+      "doi": "10.1016/j.knosys.2026.116183",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.knosys.2026.116183"
+      ],
+      "request_metadata": "- Venue: Knowledge-Based Systems, 2026\n- Task: detection\n- DOI: https://doi.org/10.1016/j.knosys.2026.116183"
+    },
+    {
+      "candidate_id": "A15",
+      "title": "Structure Searchable Network Model for Deepfake Image Detection",
+      "doi": "10.1016/j.patcog.2026.113813",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.patcog.2026.113813"
+      ],
+      "request_metadata": "- Venue: Pattern Recognition, 2026\n- Task: detection\n- DOI: https://doi.org/10.1016/j.patcog.2026.113813\n- Special: Verify real-photo vs. generated-image experiments; do not assume generic forgery coverage."
+    },
+    {
+      "candidate_id": "A16",
+      "title": "Diversity Matters: Dataset Diversification and Dual-Branch Network for Generalized AI-Generated Image Detection",
+      "doi": "",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://openaccess.thecvf.com/content/CVPR2026W/SVC/html/Tasnim_Diversity_Matters_Dataset_Diversification_and_Dual-Branch_Network_for_Generalized_AI-Generated_CVPRW_2026_paper.html"
+      ],
+      "request_metadata": "- Venue: CVPR 2026 Workshops\n- Task: detection\n- Official: https://openaccess.thecvf.com/content/CVPR2026W/SVC/html/Tasnim_Diversity_Matters_Dataset_Diversification_and_Dual-Branch_Network_for_Generalized_AI-Generated_CVPRW_2026_paper.html"
+    },
+    {
+      "candidate_id": "A17",
+      "title": "S²F-Net: A Robust Spatial-Spectrum Fusion Framework for Cross-Model AIGC Detection",
+      "doi": "10.1016/j.eswa.2026.134399",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.eswa.2026.134399"
+      ],
+      "request_metadata": "- Venue: Expert Systems with Applications, 2026\n- Task: detection\n- DOI: https://doi.org/10.1016/j.eswa.2026.134399\n- Special: Online-first publication."
+    },
+    {
+      "candidate_id": "A18",
+      "title": "Explainable AI-Generated Image Forensics: A Low-Resolution Perspective with Novel Artifact Taxonomy",
+      "doi": "",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://openaccess.thecvf.com/content/ICCV2025W/APAI/html/Sharma_Explainable_AI-Generated_Image_Forensics_A_Low-Resolution_Perspective_with_Novel_Artifact_ICCVW_2025_paper.html"
+      ],
+      "request_metadata": "- Venue: ICCV 2025 Workshops\n- Task: detection\n- Types: method; analysis_study\n- Official: https://openaccess.thecvf.com/content/ICCV2025W/APAI/html/Sharma_Explainable_AI-Generated_Image_Forensics_A_Low-Resolution_Perspective_with_Novel_Artifact_ICCVW_2025_paper.html"
+    },
+    {
+      "candidate_id": "A19",
+      "title": "Improving Generalization in AI-Generated Facial Image Detection via Explainable Recovery",
+      "doi": "10.1145/3785353.3815082",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1145/3785353.3815082"
+      ],
+      "request_metadata": "- Venue: ACM IH&MMSec 2026\n- Task: detection\n- DOI: https://doi.org/10.1145/3785353.3815082\n- Special: Fully synthetic facial images are within scope."
+    },
+    {
+      "candidate_id": "A20",
+      "title": "Spotting the Fakes: A Deep Dive into GAN-Generated Face Detection",
+      "doi": "10.1145/3742786",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1145/3742786"
+      ],
+      "request_metadata": "- Venue: ACM Transactions on Multimedia Computing, Communications, and Applications, 2025\n- Task: detection\n- Type: survey\n- DOI: https://doi.org/10.1145/3742786\n- Special: Survey of GAN-generated face detection, not generic face swapping."
+    },
+    {
+      "candidate_id": "B01",
+      "title": "FARE: Forensic Acceptance Region Estimation for Catching Bait-and-Switch Image Generators",
+      "doi": "",
+      "arxiv_id": "2609.30982",
+      "source_urls": [
+        "https://arxiv.org/abs/2609.30982"
+      ],
+      "request_metadata": "- Venue: NeurIPS 2026, accepted\n- Task: source_attribution / verification\n- arXiv: https://arxiv.org/abs/2609.30982\n- Special: Respect the existing NeurIPS 2026 migration, official-track verification requirements, historical review locks, and 7+1 blocked migration decisions. Do not invent conference tracks."
+    },
+    {
+      "candidate_id": "B02",
+      "title": "LEGO: LoRA-Enabled Generator-Oriented Framework for Synthetic Image Detection",
+      "doi": "",
+      "arxiv_id": "2605.04445",
+      "source_urls": [
+        "https://arxiv.org/abs/2605.04445"
+      ],
+      "request_metadata": "- Venue: arXiv preprint, 2026\n- Task: detection\n- arXiv: https://arxiv.org/abs/2605.04445\n- Special: Do not claim ACM Multimedia publication without official evidence."
+    },
+    {
+      "candidate_id": "B03",
+      "title": "Dinolizer: Separating VAE and Diffusion Artifacts in Generative Inpainting Localization",
+      "doi": "",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://wifs2026.utt.fr/technical-program"
+      ],
+      "request_metadata": "- Venue: IEEE WIFS 2026, accepted\n- Task: localization\n- Official: https://wifs2026.utt.fr/technical-program\n- Special: Verify title and accepted-paper identity (previously identified as paper ID 137). Do not prematurely mark as formally published."
+    },
+    {
+      "candidate_id": "C01",
+      "title": "CAPN-Net: Category-Agnostic and Patch Noise Feature Fusion Network for Universal AI-Generated Image Detection",
+      "doi": "10.1016/j.ins.2026.124123",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.ins.2026.124123"
+      ],
+      "request_metadata": "- Venue: Information Sciences, assigned 2027 issue\n- Task: detection\n- DOI: https://doi.org/10.1016/j.ins.2026.124123"
+    },
+    {
+      "candidate_id": "C02",
+      "title": "Gradient-Guided Up-Sampling Artifacts-Aware Adapter Tuning for Generalizable AI-Generated Image Detection",
+      "doi": "10.1016/j.eswa.2026.134292",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.eswa.2026.134292"
+      ],
+      "request_metadata": "- Venue: Expert Systems with Applications, assigned 2027 issue\n- Task: detection\n- DOI: https://doi.org/10.1016/j.eswa.2026.134292"
+    },
+    {
+      "candidate_id": "C03",
+      "title": "MFF-Net: Multi-View Feature Fusion Network for AI-Generated Image Detection",
+      "doi": "10.1016/j.eswa.2026.134394",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.eswa.2026.134394"
+      ],
+      "request_metadata": "- Venue: Expert Systems with Applications, assigned 2027 issue\n- Task: detection\n- DOI: https://doi.org/10.1016/j.eswa.2026.134394"
+    },
+    {
+      "candidate_id": "D01",
+      "title": "REALIS: A Curated Dataset for Studying the Challenges of AI Image Detection",
+      "doi": "",
+      "arxiv_id": "2609.32734",
+      "source_urls": [
+        "https://arxiv.org/abs/2609.32734"
+      ],
+      "request_metadata": "- Task: detection\n- Type: dataset; benchmark\n- arXiv: https://arxiv.org/abs/2609.32734"
+    },
+    {
+      "candidate_id": "D02",
+      "title": "Face-Trace: Open-Set Attribution and Progressive Discovery of Synthetic Face Generators",
+      "doi": "",
+      "arxiv_id": "2607.07545",
+      "source_urls": [
+        "https://arxiv.org/abs/2607.07545"
+      ],
+      "request_metadata": "- Task: source_attribution\n- arXiv: https://arxiv.org/abs/2607.07545"
+    },
+    {
+      "candidate_id": "D03",
+      "title": "Unleashing the Potential of Vision-Language Models for Generalizable AI-Generated Image Detection",
+      "doi": "",
+      "arxiv_id": "2608.04935",
+      "source_urls": [
+        "https://arxiv.org/abs/2608.04935"
+      ],
+      "request_metadata": "- Task: detection\n- arXiv: https://arxiv.org/abs/2608.04935"
+    },
+    {
+      "candidate_id": "D04",
+      "title": "RED: Reconstruction Evolution Dynamics for Generalizable AI-Generated Image Detection",
+      "doi": "",
+      "arxiv_id": "2609.36822",
+      "source_urls": [
+        "https://arxiv.org/abs/2609.36822"
+      ],
+      "request_metadata": "- Task: detection\n- arXiv: https://arxiv.org/abs/2609.36822"
+    },
+    {
+      "candidate_id": "D05",
+      "title": "Relative Patch Response Learning for Generalizable AI-Generated Image Detection",
+      "doi": "",
+      "arxiv_id": "2610.11876",
+      "source_urls": [
+        "https://arxiv.org/abs/2610.11876"
+      ],
+      "request_metadata": "- Task: detection\n- arXiv: https://arxiv.org/abs/2610.11876"
+    },
+    {
+      "candidate_id": "D06",
+      "title": "Unifying Semantic Priors and High-Frequency Traces: Enhancing V-JEPA with Mixture-of-Experts for Robust Synthetic Image Forensics",
+      "doi": "",
+      "arxiv_id": "2609.16778",
+      "source_urls": [
+        "https://arxiv.org/abs/2609.16778"
+      ],
+      "request_metadata": "- Task: detection\n- arXiv: https://arxiv.org/abs/2609.16778\n- Special: In-scope experiments on fully synthetic and generatively edited images must be distinguished from conventional manipulation tasks."
+    },
+    {
+      "candidate_id": "E01",
+      "title": "Training-Free Detection of AI-Generated Images Based on Coherence Analysis of Image Representations",
+      "doi": "10.1145/3843205.3845630",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1145/3843205.3845630"
+      ],
+      "request_metadata": "- Task: detection\n- Candidate ACM article DOI: https://doi.org/10.1145/3843205.3845630\n- Likely venue: 3D-Sec 2026 Workshop / ACM CCS-associated proceedings\n- Special: Verify exact title-to-article-DOI mapping and authors from ACM. Do not confuse article DOI with proceedings DOI. Resolve publication status according to official online publication date."
+    },
+    {
+      "candidate_id": "E02",
+      "title": "MIDNet: Multi-Scale Interaction and Dynamic Hard-Sample Mining for AI-Generated Image Detection",
+      "doi": "10.1117/1.jei.35.5.053003",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1117/1.JEI.35.5.053003"
+      ],
+      "request_metadata": "- Venue: Journal of Electronic Imaging, 2026\n- Task: detection\n- DOI: https://doi.org/10.1117/1.JEI.35.5.053003"
+    },
+    {
+      "candidate_id": "E03",
+      "title": "Dissecting Agentic Forensics: The Role of Triage, Prompting, and Evidence Arbitration in Open-World Fake Image Detection",
+      "doi": "",
+      "arxiv_id": "2609.24359",
+      "source_urls": [
+        "https://arxiv.org/abs/2609.24359"
+      ],
+      "request_metadata": "- Venue: ECCV 2026 AI4MFDD Workshop\n- Task: detection; localization where experimentally supported\n- arXiv: https://arxiv.org/abs/2609.24359\n- Special: Cross-task forensic analysis with substantive whole-image synthesis detection. Do not misclassify evidence arbitration as generator source attribution. Workshop, not ECCV Main."
+    },
+    {
+      "candidate_id": "E04",
+      "title": "AIGen4Det: Leveraging AI-Regeneration for Generalizable Synthetic Facial Image Detection",
+      "doi": "",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://openreview.net/forum?id=uOQ4L7aU7y"
+      ],
+      "request_metadata": "- Venue: ECCV 2026 AI4MFDD Workshop\n- Task: detection\n- OpenReview: https://openreview.net/forum?id=uOQ4L7aU7y\n- Special: Extract original author ordering and exact status from the primary paper. AI-regeneration for fully synthetic facial image detection is in scope."
+    },
+    {
+      "candidate_id": "E05",
+      "title": "ASAP: Visual Analytics for Identifying and Analyzing Image Patterns in AI-Generated Images",
+      "doi": "10.1177/14738716261481077",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1177/14738716261481077"
+      ],
+      "request_metadata": "- Venue: Information Visualization, 2026\n- Task: detection-related analysis\n- Type: analysis_study\n- DOI: https://doi.org/10.1177/14738716261481077\n- Special: Do not label as a conventional detection method unless supported by the experiments."
+    },
+    {
+      "candidate_id": "E06",
+      "title": "Depth Spectral Fingerprints: AI-Generated Image Detection via Compact Depth Representations",
+      "doi": "10.1016/j.patrec.2026.09.024",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.patrec.2026.09.024"
+      ],
+      "request_metadata": "- Venue: Pattern Recognition Letters, 2026\n- Task: detection\n- Candidate publisher DOI: https://doi.org/10.1016/j.patrec.2026.09.024\n- Special: Verify DOI, title, original author ordering, volume and online-publication date. Passive depth/spectral fingerprints are in scope; not active fingerprint embedding."
+    },
+    {
+      "candidate_id": "E07",
+      "title": "Can Pixels Alone Reveal Image Origin? Minimax Limits and Learnable Interfaces for Passive Provenance",
+      "doi": "",
+      "arxiv_id": "2609.30997",
+      "source_urls": [
+        "https://arxiv.org/abs/2609.30997"
+      ],
+      "request_metadata": "- Venue: arXiv, 2026\n- Tasks: detection; source_attribution if generator-origin experiments support it\n- Type: analysis_study\n- arXiv: https://arxiv.org/abs/2609.30997\n- Special: Passive pixel-level origin verification, not watermark-based provenance."
+    },
+    {
+      "candidate_id": "E08",
+      "title": "DSC2F: A Multimodal AI-Generated Image Detection System Using Dual-Stream Convolutional Neural Networks with Fast Fourier Transform",
+      "doi": "10.1109/icivc70586.2026.11686669",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1109/ICIVC70586.2026.11686669"
+      ],
+      "request_metadata": "- Venue: ICIVC 2026\n- Task: detection\n- DOI: https://doi.org/10.1109/ICIVC70586.2026.11686669"
+    },
+    {
+      "candidate_id": "E09",
+      "title": "Forged Image Model Attribution Based on Hierarchical Fine-Grained Classification",
+      "doi": "10.1109/icivc70586.2026.11686643",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1109/ICIVC70586.2026.11686643"
+      ],
+      "request_metadata": "- Venue: ICIVC 2026\n- Task: source_attribution, conditional on actual generator-identity evaluation\n- DOI: https://doi.org/10.1109/ICIVC70586.2026.11686643\n- Special: Ensure attribution means synthetic generator/model identity, not conventional editing-tool attribution."
+    },
+    {
+      "candidate_id": "E10",
+      "title": "A Sanity Check for AI-Generated Underwater Image Detection",
+      "doi": "10.1109/icivc70586.2026.11686696",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1109/ICIVC70586.2026.11686696"
+      ],
+      "request_metadata": "- Venue: ICIVC 2026\n- Task: detection\n- Types: benchmark; analysis_study; method where supported\n- DOI: https://doi.org/10.1109/ICIVC70586.2026.11686696"
+    },
+    {
+      "candidate_id": "E11",
+      "title": "Robust AIGC Image Detection via Unidirectional Consistency Regularization",
+      "doi": "10.1109/icivc70586.2026.11686594",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1109/ICIVC70586.2026.11686594"
+      ],
+      "request_metadata": "- Venue: ICIVC 2026\n- Task: detection\n- DOI: https://doi.org/10.1109/ICIVC70586.2026.11686594"
+    },
+    {
+      "candidate_id": "E12",
+      "title": "Hierarchical Channel Stacking: A Structured Decision Framework for AI-Generated Image Detection",
+      "doi": "",
+      "arxiv_id": "2608.26648",
+      "source_urls": [
+        "https://link.springer.com/book/10.1007/978-3-032-38407-2",
+        "https://arxiv.org/abs/2608.26648"
+      ],
+      "request_metadata": "- Venue: ICANN 2026\n- Task: detection\n- Springer volume: https://link.springer.com/book/10.1007/978-3-032-38407-2\n- arXiv: https://arxiv.org/abs/2608.26648\n- Special: Springer volume DOI is not the individual paper DOI. Find the actual chapter-level metadata and page range; do not insert a book DOI into the paper DOI field."
+    },
+    {
+      "candidate_id": "E13",
+      "title": "RFF-Net: Robust Frequency–Noise Fusion Network for AI-Generated Image Discrimination",
+      "doi": "10.1016/j.knosys.2026.117106",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1016/j.knosys.2026.117106"
+      ],
+      "request_metadata": "- Venue: Knowledge-Based Systems, 2026\n- Task: detection\n- DOI: https://doi.org/10.1016/j.knosys.2026.117106\n- Special: Assigned issue date may be after October 16, 2026; verify online-first status."
+    },
+    {
+      "candidate_id": "E14",
+      "title": "One Patch Is Not Enough: A General Framework for Full-Resolution AI Image Detection",
+      "doi": "10.1109/lsp.2026.3737389",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1109/LSP.2026.3737389"
+      ],
+      "request_metadata": "- Venue: IEEE Signal Processing Letters, 2026\n- Task: detection\n- DOI: https://doi.org/10.1109/LSP.2026.3737389"
+    },
+    {
+      "candidate_id": "E15",
+      "title": "Hyperparameter-Aware Evaluation of Deep Learning Architectures for AI-Generated Image Detection",
+      "doi": "",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://tudoster.unideb.hu/en/szerzok/5404"
+      ],
+      "request_metadata": "- Venue: IEEE CITDS 2026, author/institution-reported acceptance\n- Task: detection-related analysis\n- Evidence: https://tudoster.unideb.hu/en/szerzok/5404\n- Special: Verify paper identity, publication state, and complete authors. If official proceedings are unavailable, preserve accepted/unpublished state or hold if mandatory fields are unresolved. Do not invent a DOI."
+    },
+    {
+      "candidate_id": "E16",
+      "title": "S-AODP++: Structure-Aware AOI-Guided Scanpath Attention for AI-Generated Image Identification",
+      "doi": "10.1145/3776574.3831124",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1145/3776574.3831124",
+        "https://renweimeng.com/en"
+      ],
+      "request_metadata": "- Venue: ACM ICMI 2026\n- Task: detection\n- Candidate DOI: https://doi.org/10.1145/3776574.3831124\n- Additional source: https://renweimeng.com/en\n- Special: Verify full author order and article DOI. Human gaze/scanpath supervision for AI-generated image identification is within scope."
+    },
+    {
+      "candidate_id": "E17",
+      "title": "Improving Synthesized Image Detection by Disentangling Generator-Shared and Generator-Specific Image Artifacts",
+      "doi": "",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://openaccess.thecvf.com/content/CVPR2026F/html/Yang_Improving_Synthesized_Image_Detection_by_Disentangling_Generator-Shared_and_Generator-Specific_Image_CVPRF_2026_paper.html"
+      ],
+      "request_metadata": "- Venue: CVPR 2026 Findings\n- Task: detection\n- Official: https://openaccess.thecvf.com/content/CVPR2026F/html/Yang_Improving_Synthesized_Image_Detection_by_Disentangling_Generator-Shared_and_Generator-Specific_Image_CVPRF_2026_paper.html"
+    },
+    {
+      "candidate_id": "E18",
+      "title": "Latent Optimization Dynamics for Latent Diffusion Model Attribution",
+      "doi": "",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://openreview.net/forum?id=r46D1lErlM",
+        "https://github.com/dahlgrenmartin/LOD"
+      ],
+      "request_metadata": "- Venue: ECCV 2026 AI4MFDD Workshop\n- Task: detection primarily; source_attribution only if generator-ID classification is demonstrated\n- OpenReview: https://openreview.net/forum?id=r46D1lErlM\n- Code: https://github.com/dahlgrenmartin/LOD\n- Special: Verify exact author names and original paper metadata, including \"Dahlgren\" spelling. Preserve the distinction between binary detection and generator attribution."
+    },
+    {
+      "candidate_id": "E19",
+      "title": "Asymmetric Anchoring: Opening the MLLM Black Box for Forgery Detection",
+      "doi": "10.1007/978-3-032-37132-4_2",
+      "arxiv_id": "",
+      "source_urls": [
+        "https://doi.org/10.1007/978-3-032-37132-4_2"
+      ],
+      "request_metadata": "- Venue: ECCV 2026 Main Conference\n- Tasks: detection; localization where demonstrated\n- DOI: https://doi.org/10.1007/978-3-032-37132-4_2\n- Special: Explicitly verify synthetic-generation and generative-editing evaluations such as SID-Set / OpenSDID. Do not broaden the project to generic splicing-only forensics."
+    }
+  ]
+}

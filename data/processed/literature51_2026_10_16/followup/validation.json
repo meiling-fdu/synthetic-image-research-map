@@ -1,0 +1,102 @@
+{
+  "counts": {
+    "candidates": 51,
+    "imported": 39,
+    "held": 12,
+    "unexplained": 0,
+    "curated_papers": 535,
+    "taxonomy_rows": 722,
+    "taxonomy_needs_review": 14,
+    "review_decisions": 71,
+    "public_papers": 678,
+    "formally_published": 561,
+    "publication_types": {
+      "conference": 401,
+      "journal": 159,
+      "preprint": 117,
+      "book": 1
+    },
+    "mapped_papers": 617,
+    "without_map": 61,
+    "map_relationships": 1421
+  },
+  "focused": {
+    "unique_tests_passed": 55,
+    "subtests_passed": 12,
+    "final_failed": 0,
+    "final_skipped": 0,
+    "initial_invocation": "53 passed, 2 Node-dependent skips, 12 subtests passed (24.18s)",
+    "node_invocation": "6 passed (0.38s); includes the 2 skipped cases and 4 overlapping cases",
+    "latest_followup_check": ".........                                                                [100%]\n9 passed in 0.96s",
+    "full_suite_rerun": false
+  },
+  "validators": {
+    "curated": {
+      "errors": 0,
+      "warnings": 291,
+      "duplicates": 0
+    },
+    "public_map": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "public_papers": {
+      "errors": 0,
+      "warnings": 62
+    },
+    "new_warning_reason": "One additional unresolved-affiliation paper (B03); no invented institution/marker."
+  },
+  "original_full_suite_checkpoint": {
+    "passed": 1701,
+    "failed": 4,
+    "comparison": "All four saved final failures match baseline failure names and assertion messages exactly. This is historical evidence, not a newly executed full suite.",
+    "failures": {
+      "test_systematic_tier2_application::test_pre_application_baseline_includes_and_preserves_previous_policy_pass": "AssertionError: Public refinement differs from its reviewed snapshot",
+      "test_systematic_tier2_normal_priority_evidence::test_authoritative_append_is_exact_and_preserves_existing_rows": "AssertionError: Public refinement differs from its reviewed snapshot",
+      "test_systematic_tier2_normal_priority_evidence::test_report_reproduces_byte_for_byte": "AssertionError: Public refinement differs from its reviewed snapshot",
+      "test_systematic_tier2_policy::test_pre_task_repository_files_are_byte_identical": "AssertionError: Public refinement differs from its reviewed snapshot"
+    }
+  },
+  "preservation": {
+    "original_38_imported_rows_unchanged": true,
+    "original_review_rows_preserved": 70,
+    "new_review_rows": 1,
+    "previous_public_objects_unchanged": 676,
+    "approved_public_drift": [
+      {
+        "paper_id": "curated:fa41c2810887fb216f5d",
+        "fields": [
+          "taxonomy_review",
+          "taxonomy_status"
+        ]
+      }
+    ],
+    "map_relationships_unchanged": 1421,
+    "map_json_change": "shared generated-at timestamp only",
+    "preexisting_untracked_files_unchanged": 130,
+    "raw_original_files_unchanged": 225,
+    "historical_processed_artifacts_unchanged": 25,
+    "manual_validators_taxonomy_policy_frontend_source_unchanged": true,
+    "head_unchanged": true,
+    "index_empty": true,
+    "commit_or_push": false
+  },
+  "source_cache": {
+    "references": 120,
+    "responses_retained_locally": 88,
+    "mandatory_commit_bodies": 54,
+    "local_only_non_evidence_bodies": 34,
+    "documented_failures": 32,
+    "missing_required_bodies": 0
+  },
+  "receipt_sha256": {
+    "browser.log": "0ce88768a9473be1e7b8becbb63962f3be004760e3e27bda4664d1d0167f549a",
+    "browser.xml": "8076e9f3611c14779997d726a0afb4470803742d499a43a36f8931f5065d1c85",
+    "curated_validation.log": "c6f046c7267718a67d632216f3bfe0a26cef02ba319830fd7b09c221fff1c8ec",
+    "focused.log": "15092a5888323a0dd8134238ea945c117dda274786ea607a90881306db78e2d9",
+    "focused.xml": "d17c022b5a2fed6c787b0151f143ac1464cd12b2e792bd0cbd2f3b281cd4cd15",
+    "followup_final.log": "971240c0fdd5c3ada26ebc90947d2fc1e105b86cf86bb9ccd2ceb0a54684cccf",
+    "followup_final.xml": "2ce8a87b7a52f8b83f26f323aad76982fc05beb6a0c46e327e9b16f9fdd767f2",
+    "public_validation.log": "718cb5996350599312354ca98c461a9ed26276dbea00420e330212886360c4f5"
+  }
+}

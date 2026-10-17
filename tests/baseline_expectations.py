@@ -15,10 +15,10 @@ data change and the identity and relationship invariants in
 # analysis-study contributions. B1C excludes P490 through the reversible scope
 # registry without changing historical taxonomy. Prior baselines remain in dated receipts.
 CURRENT_REPOSITORY_BASELINE = {
-    "public_unique_papers": 635,
+    "public_unique_papers": 674,
     "public_map_source_papers": 613,
     "public_papers_with_map": 613,
-    "public_papers_without_map": 22,
+    "public_papers_without_map": 61,
     "total_institution_registry_rows": 748,
     "active_canonical_institutions": 727,
     "non_active_institution_registry_rows": 21,
@@ -60,23 +60,28 @@ PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 603, 'research_unit': 136,
 # changed since the 2026-08-24 checkpoint.
 RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint": 64, "book": 1}
 
-PUBLICATION_TYPE_TOTALS = {'conference': 388, 'journal': 138, 'preprint': 108, 'book': 1}
+PUBLICATION_TYPE_TOTALS = {'conference': 400, 'journal': 156, 'preprint': 117, 'book': 1}
 
-TASK_TOTALS = {'detection': 585, 'source_attribution': 84, 'localization': 43}
+TASK_TOTALS = {'detection': 621, 'source_attribution': 87, 'localization': 45}
 
 
 CURRENT_CORPUS_COUNTS = {
-    "public": 635,
-    "formal": 527,
+    "public": 674,
+    "formal": 557,
     "mapped": 613,
-    "unmapped": 22,
+    "unmapped": 61,
     "relationship_rows": 1410,
     "unique_paper_institution_pairs": 1410
 }
 
-RESEARCH_TYPE_TOTALS = {'method': 545, 'dataset': 132, 'benchmark': 89, 'survey': 20, 'analysis_study': 77}
+RESEARCH_TYPE_TOTALS = {'method': 579, 'analysis_study': 81, 'survey': 21, 'dataset': 134, 'benchmark': 90}
 
 CURRENT_TAXONOMY_TOTALS = {**TASK_TOTALS, **RESEARCH_TYPE_TOTALS}
+
+# Exact contributions of the 39 reviewed bibliography additions.
+LITERATURE51_TASK_ADDITIONS = {'detection': 36, 'source_attribution': 3, 'localization': 2}
+LITERATURE51_RESEARCH_ADDITIONS = {'method': 34, 'dataset': 2, 'benchmark': 1, 'survey': 1, 'analysis_study': 4}
+LITERATURE51_TAXONOMY_ADDITIONS = {**LITERATURE51_TASK_ADDITIONS, **LITERATURE51_RESEARCH_ADDITIONS}
 
 CURRENT_TAXONOMY_SUPPRESSED_ROWS = 48
 
@@ -103,6 +108,51 @@ PUBLIC_PAPERS_WITHOUT_MAP = {
 
 # New reviewed papers use the curated author-review ledger; the older manual
 # marker-blocker report remains a historical input and is not rewritten.
+# Bibliography imports have unresolved affiliations without a completed
+# paper-specific author affiliation review; keep that distinct from reviewed
+# unresolved author events in the earlier medical-paper audit.
+BIBLIOGRAPHY_ONLY_PENDING_AFFILIATIONS = {
+    'DinoLizer: Separating VAE and Diffusion Artifacts in Generative Inpainting Localization',
+    'A Sanity Check for AI-Generated Underwater Image Detection',
+    'ASAP: Visual Analytics for Identifying and Analyzing Image Patterns in AI-Generated Images',
+    'Asymmetric Anchoring: Opening the MLLM Black Box for Forgery Detection',
+    'DSC2F: A Multimodal AI-Generated Image Detection System Using Dual-Stream Convolutional Neural Networks with Fast Fourier Transform',
+    'Dissecting Agentic Forensics: The Role of Triage, Prompting, and Evidence Arbitration in Open-World Fake Image Detection',
+    'Diversity Matters: Dataset Diversification and Dual-Branch Network for Generalized AI-Generated Image Detection',
+    'Dual-Branch Asymmetric Discrepancy Learning Based on Fake Image Pattern-Coexistence for AI-Generated Image Detection',
+    'Dual-Path AI-Generated Image Detection: Leveraging Texture-Rich and Texture-Poor Patches with Global Semantic Features',
+    'Explainable AI-Generated Image Forensics: A Low-Resolution Perspective with Novel Artifact Taxonomy',
+    'Exploring Real–Synthetic Boundaries in Diffusion Latent Space',
+    'Face-Trace: Open-Set Attribution and Progressive Discovery of Synthetic Face Generators',
+    'GRE-Net: A Forgery Image Detection Framework Based on Gradient Feature and Reconstruction Error',
+    'Hierarchical Channel Stacking: A Structured Decision Framework for AI-Generated Image Detection',
+    'Improving Generalization in AI-Generated Facial Image Detection via Explainable Recovery',
+    'Improving Synthesized Image Detection by Disentangling Generator-Shared and Generator-Specific Image Artifacts',
+    'LEGO: LoRA-Enabled Generator-Oriented Framework for Synthetic Image Detection',
+    'Leveraging Arbitrary Data Sources for AI-Generated Image Detection Without Sacrificing Generalization',
+    'Lightweight AI-Generated Image Detection Based on Enhanced Common Artifact Features',
+    'LiteUpdate: A Lightweight Framework for Updating AI-Generated Image Detectors',
+    'MF²DA: Multi-Level Feature Fusion for Robust Detection and Attribution of Universal AI-Generated Images',
+    'MIDNet: Multi-Scale Interaction and Dynamic Hard-Sample Mining for AI-Generated Image Detection',
+    'MS-DCL: Multi-Scale Decoupled Contrastive Learning for Universal AI-Generated Image Detection',
+    'One Patch Is Not Enough: A General Framework for Full-Resolution AI Image Detection',
+    'Proto-LeakNet: Towards Signal-Leak Aware Attribution in Synthetic Human Face Imagery',
+    'REALIS: A Curated Dataset for Studying the Challenges of AI Image Detection',
+    'RED: Reconstruction Evolution Dynamics for Generalizable AI-Generated Image Detection',
+    'Relative Patch Response Learning for Generalizable AI-Generated Image Detection',
+    'Revisiting DIRE: Towards Universal AI-Generated Image Detection',
+    'Robust AIGC Image Detection via Unidirectional Consistency Regularization',
+    'S-AODP++: Structure-Aware AOI-Guided Scanpath Attention for AI-Generated Image Identification',
+    'SCA-Det: A Structure-Context Artifact Detector for AI-Generated Image Detection',
+    'SDA-Det: A Subpixel-Aware Dual-Domain Artifact Detector for AI-Generated Image Detection',
+    'Spotting the Fakes: A Deep Dive Into GAN-Generated Face Detection',
+    'Structure Searchable Network Model for Deepfake Image Detection',
+    'Synthetic Frequency Patterns Injection for Data-Agnostic Deepfake Detection',
+    'S²F-Net: A Robust Spatial-Spectrum Fusion Framework for Cross-Model AIGC Detection',
+    'Unifying Semantic Priors and High-Frequency Traces: Enhancing V-JEPA with Mixture-of-Experts for Robust Synthetic Image Forensics',
+    'Unleashing the Potential of Vision-Language Models for Generalizable AI-Generated Image Detection',
+}
+
 CURATED_PAPERS_AWAITING_AFFILIATIONS = {
     "Beyond Visual Forensics: Auditing Multimodal Robustness for Synthetic Medical Image Detection",
 }

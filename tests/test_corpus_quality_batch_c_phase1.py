@@ -269,6 +269,7 @@ def test_recomputed_counts_and_registry_export_synchronization(state):
     # Wave 5C removes detection from T572 and T503; closeout excludes T527.
     # Batch B B1A excludes L015/P562 and B1C excludes P490; historical labels survive.
     assert context['counts'] == CURRENT_CORPUS_COUNTS
+    from tests.baseline_expectations import LITERATURE51_TASK_ADDITIONS, LITERATURE51_RESEARCH_ADDITIONS
     for dimension in ('tasks','research_types'):
         registry_totals = Counter(label for row in context['taxonomy'].values() for label in row[dimension].split(';') if label)
         expected_current = Counter(ledger['taxonomy_after'][dimension])
@@ -279,6 +280,7 @@ def test_recomputed_counts_and_registry_export_synchronization(state):
         else:
             # Accepted B1B R137/R611 successors change only research-type totals.
             expected_current.update({'benchmark': 1, 'analysis_study': 1})
+        expected_current.update(LITERATURE51_TASK_ADDITIONS if dimension == 'tasks' else LITERATURE51_RESEARCH_ADDITIONS)
         assert registry_totals == +expected_current
         old = Counter(label for row in json.loads(previous(PUBLIC[0]))['records'] for label in row[dimension])
         phase1_totals = Counter(label for row in json.loads(phase1(PUBLIC[0]))['records'] for label in row[dimension])

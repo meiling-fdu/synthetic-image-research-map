@@ -1,0 +1,214 @@
+{
+  "changed_existing_files_since_resume": {
+    "scripts/collect_literature51_sources.py": {
+      "before_sha256": "fb5ef0c6aaea9c899b55b78f5ca46fec4e28528eef5a5ba336ca713a0e0a4b67",
+      "after_sha256": "8d62a0df1edd8a63e062a6b26f9eeaab896ec1ab00da0c442f9c6e1bcad6565d"
+    },
+    "scripts/integrate_literature51_2026_10_16.py": {
+      "before_sha256": "0716f21171724e1715dbd048b1efef592025e2ab7ae2701449bca4a157cdf959",
+      "after_sha256": "119d7432078593692ee9b177a1aafc77d36faac1763cef08d4e2615b52d32fd7"
+    },
+    "data/curated/paper_taxonomy.csv": {
+      "before_sha256": "d5385e47445b160fecc78c77626f0977d43e7a7d1f71b9747d152fd05a55dab4",
+      "after_sha256": "7403732f062e1304212786c99c2a07475e5981269c5e08c6a761e20d76005dad"
+    },
+    "data/curated/papers.csv": {
+      "before_sha256": "714fd75a5f318616d27d57001b405b9b1e5d8b413a0c423e9fbeebe79dd1cb55",
+      "after_sha256": "964e6da868932ab9ae779a4ccfdf5d80a2c322e1ae559474c05c8a2c830390d9"
+    },
+    "data/curated/review_decisions.csv": {
+      "before_sha256": "cf559023aef2fa2d88d1878bcb3d27567dd3f74122a230ba9a6ae1f5ed06c3d9",
+      "after_sha256": "9db8a141caa74fbd0917407c659086997e6798f94bd1ea4ac885c28b6cc325c7"
+    },
+    "docs/key_paper_coverage_report.md": {
+      "before_sha256": "b1f2773aa9caf1f2e3dd04628d28a6e1706250ce6eaf7d8df4c0dd35d4c15571",
+      "after_sha256": "c96b1c8b8053f2de4516197fd37c5077db499f7601c68ee5810d72abab4a2d07"
+    },
+    "tests/baseline_expectations.py": {
+      "before_sha256": "9c94652ef3ee802fe1c1eb60f76bf3e8cd070ea25797bcb147df75717e90a411",
+      "after_sha256": "8b4397ed284fe61a16a5909b9d29fa51d7d917e28744b9275009471d2c3f7d8e"
+    },
+    "web/data/public_preview_map_data.json": {
+      "before_sha256": "556c598dbe8bdad5e80dc7888c0e6072e5b85f4dd8a994de935463bf506c5f0b",
+      "after_sha256": "135d0b9e1422c1dc6dfc118421787abf3a6048be77c82fa051087e03bf26dda0"
+    },
+    "web/data/public_preview_papers.json": {
+      "before_sha256": "ddc2073a4b54b183a27abb9d3c935236239aae5c36c93683afe265382730e935",
+      "after_sha256": "58f4dfda96cbd7988b42e62e2575eb3dcbfe0ba51deb821db635125231de2249"
+    }
+  },
+  "new_files_this_followup": [
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/baseline.json",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/browser.log",
+      "category": "Temporary retrieval cache or unnecessary intermediate",
+      "proposed_stage": false
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/browser.xml",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/cache_policy.json",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/curated_validation.log",
+      "category": "Temporary retrieval cache or unnecessary intermediate",
+      "proposed_stage": false
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/evidence_index.json",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/file_audit.csv",
+      "category": "Review/audit documentation",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/file_audit_summary.json",
+      "category": "Review/audit documentation",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/focused.log",
+      "category": "Temporary retrieval cache or unnecessary intermediate",
+      "proposed_stage": false
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/focused.xml",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/followup_final.log",
+      "category": "Temporary retrieval cache or unnecessary intermediate",
+      "proposed_stage": false
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/followup_final.xml",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/proposed_staging.txt",
+      "category": "Review/audit documentation",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/public_papers.before.gz",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/public_validation.log",
+      "category": "Temporary retrieval cache or unnecessary intermediate",
+      "proposed_stage": false
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/receipt.json",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/review.json",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/validation.json",
+      "category": "Review/audit documentation",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/processed/literature51_2026_10_16/followup/workspace_integrity.json",
+      "category": "Review/audit documentation",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/followup/arxiv_v1.html.gz",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/followup/arxiv_v2.html.gz",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/followup/hal_v2.json",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/followup/retrieval_manifest.json",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "data/raw/literature51_2026_10_16/followup/workshop_program.html.gz",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "docs/literature51_followup_2026_10_17.md",
+      "category": "Review/audit documentation",
+      "proposed_stage": true
+    },
+    {
+      "path": "scripts/reassess_literature51_2026_10_16.py",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    },
+    {
+      "path": "tests/test_literature51_followup.py",
+      "category": "Required reproducibility/test artifact",
+      "proposed_stage": true
+    }
+  ],
+  "all_modified_tracked_files_vs_head": [
+    "data/curated/paper_taxonomy.csv",
+    "data/curated/papers.csv",
+    "data/curated/review_decisions.csv",
+    "data/curated/venue_aliases.csv",
+    "docs/key_paper_coverage_report.md",
+    "tests/baseline_expectations.py",
+    "tests/test_corpus_quality_batch_a.py",
+    "tests/test_corpus_quality_batch_c_phase1.py",
+    "tests/test_corpus_quality_batch_c_wave1.py",
+    "tests/test_corpus_quality_batch_c_wave2.py",
+    "tests/test_corpus_quality_batch_c_wave3a.py",
+    "tests/test_corpus_quality_batch_c_wave3b2.py",
+    "tests/test_corpus_quality_batch_c_wave4a.py",
+    "tests/test_corpus_quality_batch_c_wave5a.py",
+    "tests/test_frontend_published_only_filter.py",
+    "tests/test_paper_metadata_consistency_audit.py",
+    "tests/test_repository_baseline.py",
+    "web/data/public_preview_map_data.json",
+    "web/data/public_preview_papers.json"
+  ],
+  "preexisting_untracked_count": 130,
+  "preexisting_untracked_unchanged": true,
+  "preexisting_untracked_omitted_from_staging": 130,
+  "original_new_file_cohort": {
+    "total": 257,
+    "unchanged": 255,
+    "intentionally_changed_scripts": [
+      "scripts/collect_literature51_sources.py",
+      "scripts/integrate_literature51_2026_10_16.py"
+    ]
+  },
+  "proposed_staging_count": 126,
+  "proposed_staging_sha256": "768d0fd3d0ae131f1d05e3a32c767dba50e4ae21a59b5b57fa01a80b7f07df28",
+  "index_empty": true,
+  "head": "9e7666169cba098f62f022b7f9f60cdf7c7c72e1",
+  "no_deleted_files": true
+}

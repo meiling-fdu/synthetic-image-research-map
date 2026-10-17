@@ -1,0 +1,57 @@
+{
+  "reason": "Preserve historical assertions against verified pre-import inputs; update only reviewed current count expectations and generated coverage freshness. No validators or historical receipts changed.",
+  "files": {
+    "tests/baseline_expectations.py": {
+      "before_sha256": "4dac33ca002c06c894acd889f4dd6161153e07f660b04f4fef2d547aaf7190d6",
+      "after_sha256": "9c94652ef3ee802fe1c1eb60f76bf3e8cd070ea25797bcb147df75717e90a411"
+    },
+    "tests/test_corpus_quality_batch_a.py": {
+      "before_sha256": "6b5473c55c6c5bd63efa0827a59b9ba5d9e71b4b0dba6cda90491ebeb03c060a",
+      "after_sha256": "14ef07069c44b38c81cb839c62ac1e0c5482e91726c9725276a752b5b3074f4e"
+    },
+    "tests/test_corpus_quality_batch_c_phase1.py": {
+      "before_sha256": "2c067a56b6ec0f8515af2507c676c9d6be96b3b5211918ed4f4cd3345b8f1261",
+      "after_sha256": "61016bbd7e8d98dd7b80d505eefc2b9a0577b74188ae3895db5bc55bd33477ae"
+    },
+    "tests/test_corpus_quality_batch_c_wave1.py": {
+      "before_sha256": "4bd21b54bed54e1311dbe208d3463c86f42a239348a037e62a7844b162366113",
+      "after_sha256": "4db07a0befae23a9ae3e85d5a5d4e388b62677190dddfd9c5123df5f63d9523a"
+    },
+    "tests/test_corpus_quality_batch_c_wave2.py": {
+      "before_sha256": "c9aa46406edfac8f27e5350e5abe5d2f8bb4e7eadf8a262826efc122c7d1cbd2",
+      "after_sha256": "ac28d8f929f6d7f8dff4b57a8adca33c8baeafa96155e01e47c0e850a4f65c4b"
+    },
+    "tests/test_corpus_quality_batch_c_wave3a.py": {
+      "before_sha256": "8f88b33aba039dec218b471aceab2cb212acb4e278a4255d0ba382a00de4bc9d",
+      "after_sha256": "fba249c07a5f0696e79f6392f0885964cc551cef707935775764a2ceb22d6716"
+    },
+    "tests/test_corpus_quality_batch_c_wave3b2.py": {
+      "before_sha256": "52f4c2cbfb20f8e3a776ed7d9c98b3c651fc64468948fe9cd401a755b4a8dbdf",
+      "after_sha256": "05392cf37c927f5a8716a04407a070d0cc21358b42b972162e11e62b12b12b67"
+    },
+    "tests/test_corpus_quality_batch_c_wave4a.py": {
+      "before_sha256": "e0e5c9bb37b7011128deb26026a47201fe6bd8830adc759c48a295286fad987c",
+      "after_sha256": "0b0a1dd05d10bd9c123c0fa55e319397907dafb038f5ebbcdf85d5ed858a305b"
+    },
+    "tests/test_corpus_quality_batch_c_wave5a.py": {
+      "before_sha256": "f7d1d42e2b934f7039dd7fa24edeaa1468d2b60cf8cdd08173ba8df09bbfa793",
+      "after_sha256": "5b326890099075be531ef47df82264f9301e7e9463a48531d3de11a43689d76c"
+    },
+    "tests/test_paper_metadata_consistency_audit.py": {
+      "before_sha256": "bbdb07e3af1fb3ca52d3b53dcfff9f87b227a6f93275c10c16d5d415a0947b60",
+      "after_sha256": "a23c99d4d3f9f0051b389c320d09569be8a5b1b0125567aa80594063eab3b860"
+    },
+    "docs/key_paper_coverage_report.md": {
+      "before_sha256": "082985cdf059956e379644a004a117aa09e268a9f6ebd1fa17faa98380a4cb52",
+      "after_sha256": "b1f2773aa9caf1f2e3dd04628d28a6e1706250ce6eaf7d8df4c0dd35d4c15571"
+    },
+    "tests/test_repository_baseline.py": {
+      "before_sha256": "52c998bd1929104d45d7fc1b9366b9f0a7fafea4bee965be91c78aff5aa90203",
+      "after_sha256": "eb335b149870e2f5f0e3aa687653fccdfc7a97e764e1be86456f795a11997884"
+    },
+    "tests/test_frontend_published_only_filter.py": {
+      "before_sha256": "c7047ec60f44d9223e2d2c6ea4c51f42a481808c925fec2ec19303c77ada729f",
+      "after_sha256": "4f1cfb227bfb73e98707d59bb6ba92bf15573ceb3510e8ce8bfb1c36c72d7333"
+    }
+  }
+}

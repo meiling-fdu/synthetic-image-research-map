@@ -1,0 +1,2353 @@
+{
+  "A01": {
+    "title": "Proto-LeakNet: Towards signal-leak aware attribution in synthetic human face imagery",
+    "authors": [
+      "Claudio Giusti",
+      "Luca Guarnera",
+      "Sebastiano Battiato"
+    ],
+    "year": "2026",
+    "doi": "10.1016/j.cviu.2026.104848",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.cviu.2026.104848",
+    "venue": "Computer Vision and Image Understanding",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            8
+          ]
+        ]
+      },
+      "volume": "270",
+      "page": "104848"
+    },
+    "tasks": "source_attribution",
+    "image_scopes": "fully_generated;deepfake",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://www.sciencedirect.com/science/article/pii/S1077314226002158",
+      "https://api.crossref.org/works/10.1016/j.cviu.2026.104848",
+      "data/raw/literature51_2026_10_16/priority_search.json"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "Publisher abstract describes closed-set generator classification and open-set rejection using passive diffusion latent signal-leaks, without modifying generator outputs. The synthetic face domain is explicitly retained.",
+    "notes": "Publisher title, DOI, ordered authors, and technical abstract now independently verify the exact held identity and passive generator attribution. Resolve the disposition while retaining the October 3 HOLD row unchanged.",
+    "abstract": "Description (primary-source summary): Publisher abstract describes closed-set generator classification and open-set rejection using passive diffusion latent signal-leaks, without modifying generator outputs. The synthetic face domain is explicitly retained.",
+    "resolves_decision_ids": [
+      "review:6fdf776f884597171f66"
+    ],
+    "title_aliases": [
+      "Proto-LeakNet: Towards Signal-Leak Aware Attribution in Synthetic Human Face Imagery",
+      "Proto-LeakNet: Towards signal-leak aware attribution in synthetic human face imagery"
+    ]
+  },
+  "A02": {
+    "title": "MF²DA: Multi-Level Feature Fusion for Robust Detection and Attribution of Universal AI-Generated Images",
+    "authors": [
+      "Wenpeng Mu",
+      "Qiang Xu",
+      "Yining Zhang",
+      "Xiao Zhang",
+      "Huiyuan Wang",
+      "Yuefan Li",
+      "Xinghao Jiang",
+      "Tanfeng Sun"
+    ],
+    "year": "2026",
+    "doi": "10.1109/tifs.2026.3723156",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1109/tifs.2026.3723156",
+    "venue": "IEEE Transactions on Information Forensics and Security",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "volume": "21",
+      "page": "7842-7857"
+    },
+    "tasks": "detection;source_attribution",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1109/tifs.2026.3723156"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection and source_attribution of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned. Normalize publisher superscript markup in MF²DA; preserve submitted MF2DA as an identity alias.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "title_aliases": [
+      "MF2DA: Multi-Level Feature Fusion for Robust Detection and Attribution of Universal AI-Generated Images",
+      "MF²DA: Multi-Level Feature Fusion for Robust Detection and Attribution of Universal AI-Generated Images"
+    ]
+  },
+  "A03": {
+    "title": "Synthetic frequency patterns injection for data-agnostic deepfake detection",
+    "authors": [
+      "Davide Alessandro Coccomini",
+      "Roberto Caldelli",
+      "Claudio Gennaro",
+      "Giuseppe Fiameni",
+      "Giuseppe Amato",
+      "Fabrizio Falchi"
+    ],
+    "year": "2026",
+    "doi": "10.1016/j.cviu.2026.104781",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.cviu.2026.104781",
+    "venue": "Computer Vision and Image Understanding",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            5
+          ]
+        ]
+      },
+      "volume": "268",
+      "page": "104781"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated;deepfake",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.cviu.2026.104781",
+      "data/raw/literature51_2026_10_16/publisher_scope_a.json"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The publisher describes injecting crafted frequency patterns into pristine detector-training images and evaluating on 25 GAN/diffusion generators. This is detector augmentation, not watermark or provenance insertion into released generator outputs.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The publisher describes injecting crafted frequency patterns into pristine detector-training images and evaluating on 25 GAN/diffusion generators. This is detector augmentation, not watermark or provenance insertion into released generator outputs.",
+    "title_aliases": [
+      "Synthetic Frequency Patterns Injection for Data-Agnostic Deepfake Detection",
+      "Synthetic frequency patterns injection for data-agnostic deepfake detection"
+    ]
+  },
+  "A04": {
+    "title": "Exploring real–synthetic boundaries in diffusion latent space",
+    "authors": [
+      "Simone Bonechi",
+      "Paolo Andreini",
+      "Barbara Toniella Corradini"
+    ],
+    "year": "2026",
+    "doi": "10.1016/j.cviu.2026.104815",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.cviu.2026.104815",
+    "venue": "Computer Vision and Image Understanding",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            8
+          ]
+        ]
+      },
+      "volume": "270",
+      "page": "104815"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.cviu.2026.104815",
+      "data/raw/literature51_2026_10_16/publisher_scope_a.json"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The publisher describes real/synthetic discrimination in diffusion latent representations. This concerns passive image detection rather than modifying generated images.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The publisher describes real/synthetic discrimination in diffusion latent representations. This concerns passive image detection rather than modifying generated images.",
+    "title_aliases": [
+      "Exploring Real–Synthetic Boundaries in Diffusion Latent Space",
+      "Exploring real–synthetic boundaries in diffusion latent space"
+    ]
+  },
+  "A05": {
+    "title": "Revisiting DIRE: towards universal AI-generated image detection",
+    "authors": [
+      "Huanqi Lin",
+      "Jinghui Qin",
+      "Xiaoqi Wu",
+      "Tianshui Chen",
+      "Zhijing Yang"
+    ],
+    "year": "2026",
+    "doi": "10.1016/j.neunet.2025.108084",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.neunet.2025.108084",
+    "venue": "Neural Networks",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            1
+          ]
+        ]
+      },
+      "volume": "193",
+      "page": "108084",
+      "reported_online_year": 2025,
+      "reported_online_year_source": "data/raw/literature51_2026_10_16/request.txt"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.neunet.2025.108084"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned. Keep the 2026 volume-193 issue year. The supplied audit reports 2025 online-first; no exact online date was recovered, so retain that distinction as reported rather than infer a date from its DOI.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "title_aliases": [
+      "Revisiting DIRE: Towards Universal AI-Generated Image Detection",
+      "Revisiting DIRE: towards universal AI-generated image detection"
+    ]
+  },
+  "A06": {
+    "title": "Dual-Branch Asymmetric Discrepancy Learning Based on Fake Image Pattern-Coexistence for AI-Generated Image Detection",
+    "authors": [
+      "Chunli Song",
+      "Jie Liu",
+      "Peiyang Wang",
+      "Ying Huang",
+      "Guixuan Zhang",
+      "Zhi Zeng",
+      "Shuwu Zhang"
+    ],
+    "year": "2026",
+    "doi": "10.1609/aaai.v40i2.37071",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1609/aaai.v40i2.37071",
+    "venue": "AAAI Conference on Artificial Intelligence",
+    "publication_type": "conference",
+    "venue_track": "Main",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {},
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://ojs.aaai.org/index.php/AAAI/article/view/37071"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The official AAAI abstract evaluates DADL on AIGCDetectBenchmark, GenImage, and Chameleon, including Midjourney and Stable Diffusion images. This is whole-image real/generated detection.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The official AAAI abstract evaluates DADL on AIGCDetectBenchmark, GenImage, and Chameleon, including Midjourney and Stable Diffusion images. This is whole-image real/generated detection.",
+    "title_aliases": [
+      "Dual-Branch Asymmetric Discrepancy Learning Based on Fake Image Pattern-Coexistence for AI-Generated Image Detection"
+    ]
+  },
+  "A07": {
+    "title": "Leveraging Arbitrary Data Sources for AI-Generated Image Detection Without Sacrificing Generalization",
+    "authors": [
+      "Qinghui He",
+      "Haifeng Zhang",
+      "Xiuli Bi",
+      "Bo Liu",
+      "Chi-Man Pun",
+      "Bin Xiao"
+    ],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "",
+    "primary_url": "https://openaccess.thecvf.com/content/CVPR2026F/html/He_Leveraging_Arbitrary_Data_Sources_for_AI-Generated_Image_Detection_Without_Sacrificing_CVPRF_2026_paper.html",
+    "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+    "publication_type": "conference",
+    "venue_track": "Findings",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {},
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://openaccess.thecvf.com/content/CVPR2026F/html/He_Leveraging_Arbitrary_Data_Sources_for_AI-Generated_Image_Detection_Without_Sacrificing_CVPRF_2026_paper.html"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The official CVF page presents generalizable AI-generated image detection using arbitrary training data. Its publication identity is CVPR Findings, not the main conference.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The official CVF page presents generalizable AI-generated image detection using arbitrary training data. Its publication identity is CVPR Findings, not the main conference.",
+    "title_aliases": [
+      "Leveraging Arbitrary Data Sources for AI-Generated Image Detection Without Sacrificing Generalization"
+    ]
+  },
+  "A08": {
+    "title": "GRE-Net: A forgery image detection framework based on gradient feature and reconstruction error",
+    "authors": [
+      "Wenqing Wu",
+      "Xinyi Shi",
+      "Jinghai Ai",
+      "Xiaodong Wang"
+    ],
+    "year": "2025",
+    "doi": "10.1016/j.cviu.2025.104494",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.cviu.2025.104494",
+    "venue": "Computer Vision and Image Understanding",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            11
+          ]
+        ]
+      },
+      "volume": "261",
+      "page": "104494"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.cviu.2025.104494",
+      "data/raw/literature51_2026_10_16/scope_dates_followup.json"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The publisher evaluates GRE-Net on images from ten GAN and diffusion generators, combining ProjectedGAN discriminator gradients with DIRE reconstruction error. Only the synthetic-image detection component is included.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The publisher evaluates GRE-Net on images from ten GAN and diffusion generators, combining ProjectedGAN discriminator gradients with DIRE reconstruction error. Only the synthetic-image detection component is included.",
+    "title_aliases": [
+      "GRE-Net: A Forgery Image Detection Framework Based on Gradient Feature and Reconstruction Error",
+      "GRE-Net: A forgery image detection framework based on gradient feature and reconstruction error"
+    ]
+  },
+  "A09": {
+    "title": "LiteUpdate: A Lightweight Framework for Updating AI-Generated Image Detectors",
+    "authors": [
+      "Jiajie Lu",
+      "Zhenkan Fu",
+      "Na Zhao",
+      "Long Xing",
+      "Xiangkun Wang",
+      "Kejiang Chen",
+      "Weiming Zhang",
+      "Nenghai Yu"
+    ],
+    "year": "2026",
+    "doi": "10.1109/tcsvt.2026.3683200",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1109/tcsvt.2026.3683200",
+    "venue": "IEEE Transactions on Circuits and Systems for Video Technology",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            8
+          ]
+        ]
+      },
+      "volume": "36",
+      "issue": "8",
+      "page": "11788-11801"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1109/tcsvt.2026.3683200"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "title_aliases": [
+      "LiteUpdate: A Lightweight Framework for Updating AI-Generated Image Detectors"
+    ]
+  },
+  "A10": {
+    "title": "Dual-path AI-generated image detection: Leveraging texture-rich and texture-poor patches with global semantic features",
+    "authors": [
+      "Jiapeng Lin",
+      "Qihao Zhou",
+      "Jie Li"
+    ],
+    "year": "2026",
+    "doi": "10.1016/j.dsp.2025.105840",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.dsp.2025.105840",
+    "venue": "Digital Signal Processing",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            3
+          ]
+        ]
+      },
+      "volume": "171",
+      "page": "105840"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.dsp.2025.105840"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "venue_acronym": "DSP",
+    "title_aliases": [
+      "Dual-Path AI-Generated Image Detection: Leveraging Texture-Rich and Texture-Poor Patches with Global Semantic Features",
+      "Dual-path AI-generated image detection: Leveraging texture-rich and texture-poor patches with global semantic features"
+    ]
+  },
+  "A11": {
+    "title": "Lightweight AI-Generated image detection based on enhanced common artifact features",
+    "authors": [
+      "Shuyi Li",
+      "Li Li",
+      "Yanli Ren",
+      "Xinpeng Zhang",
+      "Guorui Feng"
+    ],
+    "year": "2026",
+    "doi": "10.1016/j.eswa.2025.130500",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.eswa.2025.130500",
+    "venue": "Expert Systems with Applications",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            3
+          ]
+        ]
+      },
+      "volume": "301",
+      "page": "130500"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.eswa.2025.130500"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "title_aliases": [
+      "Lightweight AI-Generated Image Detection Based on Enhanced Common Artifact Features",
+      "Lightweight AI-Generated image detection based on enhanced common artifact features"
+    ]
+  },
+  "A12": {
+    "title": "SDA-Det: A subpixel-aware dual-domain artifact detector for AI-generated image detection",
+    "authors": [
+      "Pei Lu",
+      "Kunming Liang",
+      "Xiaoyong Liu",
+      "Xi Lu",
+      "Ansheng Li"
+    ],
+    "year": "2026",
+    "doi": "10.1016/j.eswa.2026.132304",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.eswa.2026.132304",
+    "venue": "Expert Systems with Applications",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            8
+          ]
+        ]
+      },
+      "volume": "322",
+      "page": "132304"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.eswa.2026.132304"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "title_aliases": [
+      "SDA-Det: A Subpixel-Aware Dual-Domain Artifact Detector for AI-Generated Image Detection",
+      "SDA-Det: A subpixel-aware dual-domain artifact detector for AI-generated image detection"
+    ]
+  },
+  "A13": {
+    "title": "SCA-Det: A Structure-Context Artifact Detector for AI-Generated Image Detection",
+    "authors": [
+      "Kunming Liang",
+      "Pei Lu",
+      "Xiaoyong Liu",
+      "Xi Lu",
+      "Ansheng Li"
+    ],
+    "year": "2026",
+    "doi": "10.1016/j.neucom.2026.133627",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.neucom.2026.133627",
+    "venue": "Neurocomputing",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "volume": "685",
+      "issue_date": "2026-07-07"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://www.sciencedirect.com/science/article/pii/S0925231226010246",
+      "https://doi.org/10.1016/j.neucom.2026.133627",
+      "data/raw/literature51_2026_10_16/priority_search.json"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "Publisher evidence evaluates SCA-Det on 45 GAN/diffusion image groups. Structure and context artifacts support passive real/generated detection, including unseen generators.",
+    "notes": "Publisher title, DOI, ordered authors and GAN/diffusion evaluations now verify the exact held identity. Preserve the October 3 HOLD row and append an explicit resolution.",
+    "abstract": "Description (primary-source summary): Publisher evidence evaluates SCA-Det on 45 GAN/diffusion image groups. Structure and context artifacts support passive real/generated detection, including unseen generators.",
+    "resolves_decision_ids": [
+      "review:ba4eefe10289ef9e8a31"
+    ],
+    "title_aliases": [
+      "SCA-Det: A Structure-Context Artifact Detector for AI-Generated Image Detection"
+    ]
+  },
+  "A14": {
+    "title": "MS-DCL: Multi-Scale Decoupled Contrastive Learning for universal AI-generated image detection",
+    "authors": [
+      "Wei Qu",
+      "Cong Chen",
+      "Wei Lu",
+      "Tao Li"
+    ],
+    "year": "2026",
+    "doi": "10.1016/j.knosys.2026.116183",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.knosys.2026.116183",
+    "venue": "Knowledge-Based Systems",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "volume": "346",
+      "page": "116183"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.knosys.2026.116183"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "title_aliases": [
+      "MS-DCL: Multi-Scale Decoupled Contrastive Learning for Universal AI-Generated Image Detection",
+      "MS-DCL: Multi-Scale Decoupled Contrastive Learning for universal AI-generated image detection"
+    ]
+  },
+  "A15": {
+    "title": "Structure Searchable Network Model for Deepfake Image Detection",
+    "authors": [
+      "Zinian Liu",
+      "Xiaofeng Wang",
+      "Qin Wang",
+      "Ningning Bai",
+      "Ruidong Han",
+      "Shanmin Pang"
+    ],
+    "year": "2026",
+    "doi": "10.1016/j.patcog.2026.113813",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.patcog.2026.113813",
+    "venue": "Pattern Recognition",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "journal_online_first",
+    "publication_verified": true,
+    "publication_details": {
+      "volume": "179",
+      "article": "113813",
+      "online_date": "2026-04-21",
+      "assigned_issue": "2026-11"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated;deepfake",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://www.sciencedirect.com/science/article/pii/S0031320326007788",
+      "data/raw/literature51_2026_10_16/publisher_scope_a.json",
+      "data/raw/literature51_2026_10_16/online_dates_other.json"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The publisher explicitly compares AI-generated images against camera images, using color-space correlation and low-frequency-spectrum inputs in a genetic-algorithm network search. Synthetic-generation experiments establish scope.",
+    "notes": "Publisher abstract proves generated-vs-camera experiments. Online April 21, 2026; assigned November 2026 issue. No face-swap-only assumption is made.",
+    "abstract": "Description (primary-source summary): The publisher explicitly compares AI-generated images against camera images, using color-space correlation and low-frequency-spectrum inputs in a genetic-algorithm network search. Synthetic-generation experiments establish scope.",
+    "title_aliases": [
+      "Structure Searchable Network Model for Deepfake Image Detection"
+    ]
+  },
+  "A16": {
+    "title": "Diversity Matters: Dataset Diversification and Dual-Branch Network for Generalized AI-Generated Image Detection",
+    "authors": [
+      "Nusrat Tasnim",
+      "Kutub Uddin",
+      "Khalid Malik"
+    ],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "",
+    "primary_url": "https://openaccess.thecvf.com/content/CVPR2026W/SVC/html/Tasnim_Diversity_Matters_Dataset_Diversification_and_Dual-Branch_Network_for_Generalized_AI-Generated_CVPRW_2026_paper.html",
+    "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+    "publication_type": "conference",
+    "venue_track": "Workshop",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {},
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://openaccess.thecvf.com/content/CVPR2026W/SVC/html/Tasnim_Diversity_Matters_Dataset_Diversification_and_Dual-Branch_Network_for_Generalized_AI-Generated_CVPRW_2026_paper.html"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The official CVF workshop paper proposes dataset diversification and a dual-branch network for generalized AI-generated image detection.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The official CVF workshop paper proposes dataset diversification and a dual-branch network for generalized AI-generated image detection.",
+    "title_aliases": [
+      "Diversity Matters: Dataset Diversification and Dual-Branch Network for Generalized AI-Generated Image Detection"
+    ]
+  },
+  "A17": {
+    "title": "S²F-Net: A Robust Spatial-Spectrum Fusion Framework for Cross-Model AIGC Detection",
+    "authors": [
+      "Xiangyu Hu",
+      "Hongchuang Zheng",
+      "Yicheng Hong",
+      "Wenjun Zeng",
+      "Bingyao Liu"
+    ],
+    "year": "2027",
+    "doi": "10.1016/j.eswa.2026.134399",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.eswa.2026.134399",
+    "venue": "Expert Systems with Applications",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "journal_online_first",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2027,
+            2
+          ]
+        ]
+      },
+      "volume": "334",
+      "page": "134399",
+      "online_date": "2026-09-12",
+      "assigned_issue_date": "2027-02-01"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.eswa.2026.134399",
+      "data/raw/literature51_2026_10_16/chapter_and_dates.json"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The publisher describes a passive spatial-spectrum detector evaluated on AIGCDetectBenchmark with 17 categories of generators. Fingerprints are extracted from existing images, not actively embedded.",
+    "notes": "Correct the supplied 2026 issue-year claim: publisher DOI registration assigns volume 334 to February 2027. Retain the verified September 12, 2026 online-first date separately; journal publication is already online.",
+    "abstract": "Description (primary-source summary): The publisher describes a passive spatial-spectrum detector evaluated on AIGCDetectBenchmark with 17 categories of generators. Fingerprints are extracted from existing images, not actively embedded.",
+    "title_aliases": [
+      "S²F-Net: A Robust Spatial-Spectrum Fusion Framework for Cross-Model AIGC Detection"
+    ]
+  },
+  "A18": {
+    "title": "Explainable AI-Generated Image Forensics: A Low-Resolution Perspective with Novel Artifact Taxonomy",
+    "authors": [
+      "Kaustubh Sharma"
+    ],
+    "year": "2025",
+    "doi": "",
+    "arxiv_id": "",
+    "primary_url": "https://openaccess.thecvf.com/content/ICCV2025W/APAI/html/Sharma_Explainable_AI-Generated_Image_Forensics_A_Low-Resolution_Perspective_with_Novel_Artifact_ICCVW_2025_paper.html",
+    "venue": "IEEE/CVF International Conference on Computer Vision",
+    "publication_type": "conference",
+    "venue_track": "Workshop",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "pages": "1587–1596"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method;analysis_study",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://openaccess.thecvf.com/content/ICCV2025W/APAI/html/Sharma_Explainable_AI-Generated_Image_Forensics_A_Low-Resolution_Perspective_with_Novel_Artifact_ICCVW_2025_paper.html",
+      "data/raw/literature51_2026_10_16/other_identity.json"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "Official CVF evidence evaluates low-resolution real/generated classification on augmented CIFAKE and introduces an explainable visual-artifact taxonomy. This is a detection method and forensic analysis.",
+    "notes": "Official ICCV APAI workshop record and BibTeX verify sole author and pages; keep Workshop rather than Main.",
+    "abstract": "Description (primary-source summary): Official CVF evidence evaluates low-resolution real/generated classification on augmented CIFAKE and introduces an explainable visual-artifact taxonomy. This is a detection method and forensic analysis.",
+    "title_aliases": [
+      "Explainable AI-Generated Image Forensics: A Low-Resolution Perspective with Novel Artifact Taxonomy"
+    ]
+  },
+  "A19": {
+    "title": "Improving Generalization in AI-Generated Facial Image Detection via Explainable Recovery",
+    "authors": [
+      "Giulia Ciacci",
+      "Alessandra Spinaci",
+      "Niccolò Biondi",
+      "Andrea Ciamarra",
+      "Roberto Caldelli"
+    ],
+    "year": "2026",
+    "doi": "10.1145/3785353.3815082",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1145/3785353.3815082",
+    "venue": "ACM Workshop on Information Hiding and Multimedia Security",
+    "publication_type": "conference",
+    "venue_track": "Main",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            6,
+            16
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            6,
+            17
+          ]
+        ]
+      },
+      "page": "229-240"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated;deepfake",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1145/3785353.3815082"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned. Fully synthetic faces are in scope. The standalone IH&MMSec event identity is preserved; the registered online publication date is June 16, 2026.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "title_aliases": [
+      "Improving Generalization in AI-Generated Facial Image Detection via Explainable Recovery"
+    ]
+  },
+  "A20": {
+    "title": "Spotting the Fakes: A Deep Dive into GAN-Generated Face Detection",
+    "authors": [
+      "Xin Wang",
+      "Ting Yu Tsai",
+      "Li Lin",
+      "Hui Guo",
+      "Shu Hu",
+      "Ming-Ching Chang",
+      "Pradeep K. Atrey",
+      "Siwei Lyu"
+    ],
+    "year": "2025",
+    "doi": "10.1145/3742786",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1145/3742786",
+    "venue": "ACM Transactions on Multimedia Computing, Communications, and Applications",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-online": {
+        "date-parts": [
+          [
+            2025,
+            7,
+            24
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            7,
+            31
+          ]
+        ]
+      },
+      "volume": "21",
+      "issue": "7",
+      "page": "1-24"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated;deepfake",
+    "research_types": "survey",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1145/3742786"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The publisher-deposited abstract explicitly reviews detection of fully GAN-generated facial images and compares detector families and human performance. This is a survey, not a face-swap-only detector.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The publisher-deposited abstract explicitly reviews detection of fully GAN-generated facial images and compares detector families and human performance. This is a survey, not a face-swap-only detector.",
+    "title_aliases": [
+      "Spotting the Fakes: A Deep Dive into GAN-Generated Face Detection"
+    ]
+  },
+  "B01": {
+    "title": "FARE: Forensic Acceptance Region Estimation for Catching Bait-and-Switch Image Generators",
+    "authors": [
+      "Kai Yao",
+      "Marc Juarez"
+    ],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "2609.30982",
+    "primary_url": "https://arxiv.org/abs/2609.30982",
+    "venue": "Advances in Neural Information Processing Systems",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "accepted_track_unresolved",
+    "publication_verified": false,
+    "publication_details": {},
+    "tasks": "source_attribution",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "held",
+    "evidence_sources": [
+      "https://arxiv.org/abs/2609.30982"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive source_attribution of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Official NeurIPS acceptance is already established in the immutable 7+1 migration. Its official track remains unresolved. Preserve the blocked migration, including its proposed FARE identity; do not import a second preprint identity.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "manual_review": true,
+    "title_aliases": [
+      "FARE: Forensic Acceptance Region Estimation for Catching Bait-and-Switch Image Generators"
+    ]
+  },
+  "B02": {
+    "title": "LEGO: LoRA-Enabled Generator-Oriented Framework for Synthetic Image Detection",
+    "authors": [
+      "Yutong Xiao",
+      "Ran Ran",
+      "Jiwei Wei",
+      "Shuchang Zhou",
+      "Ke Liu",
+      "Zheng Ziqiang",
+      "Caiyan Qin"
+    ],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "2605.04445",
+    "primary_url": "https://arxiv.org/abs/2605.04445",
+    "venue": "arXiv",
+    "publication_type": "preprint",
+    "venue_track": "",
+    "publication_status": "preprint",
+    "publication_verified": true,
+    "publication_details": {},
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://arxiv.org/abs/2605.04445"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The arXiv abstract proposes generator-specific LoRA modules combined for binary synthetic-image detection. Generator-oriented features alone do not establish a source-attribution output.",
+    "notes": "Preserve arXiv preprint status. No official ACM Multimedia publication is verified. Preserve the arXiv ordered spelling Zheng Ziqiang, without merging author identities.",
+    "abstract": "Description (primary-source summary): The arXiv abstract proposes generator-specific LoRA modules combined for binary synthetic-image detection. Generator-oriented features alone do not establish a source-attribution output.",
+    "title_aliases": [
+      "LEGO: LoRA-Enabled Generator-Oriented Framework for Synthetic Image Detection"
+    ]
+  },
+  "B03": {
+    "title": "Dinolizer: Separating VAE and Diffusion Artifacts in Generative Inpainting Localization",
+    "authors": [],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "",
+    "primary_url": "https://wifs2026.utt.fr/technical-program",
+    "venue": "IEEE International Workshop on Information Forensics and Security",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "accepted_unpublished",
+    "publication_verified": false,
+    "publication_details": {},
+    "tasks": "localization",
+    "image_scopes": "generative_editing",
+    "research_types": "method",
+    "scope_decision": "provisionally_in_scope",
+    "decision": "held",
+    "evidence_sources": [
+      "https://wifs2026.utt.fr/technical-program",
+      "https://wifs2026.utt.fr/technical-program"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive localization of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Official WIFS technical program verifies exact title and paper ID 137. It provides no complete ordered author roster or formally published proceedings record. Do not label an accepted December conference paper as published.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "manual_review": true,
+    "title_aliases": [
+      "Dinolizer: Separating VAE and Diffusion Artifacts in Generative Inpainting Localization"
+    ]
+  },
+  "C01": {
+    "title": "CAPN-Net: Category-Agnostic and Patch Noise feature fusion Network for universal AI-generated image detection",
+    "authors": [
+      "Jiayu Liang",
+      "Weisen Li",
+      "Dongdong Ling"
+    ],
+    "year": "2027",
+    "doi": "10.1016/j.ins.2026.124123",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.ins.2026.124123",
+    "venue": "Information Sciences",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "future_issue_online_date_unverified",
+    "publication_verified": false,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2027,
+            1
+          ]
+        ]
+      },
+      "volume": "760",
+      "page": "124123"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "held",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.ins.2026.124123"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "DOI registration verifies ordered authors, Information Sciences volume 760, article 124123, assigned January 25, 2027 issue. Publisher online-publication date remains unverified; neither issue date nor metadata deposit date establishes online publication.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "manual_review": true,
+    "title_aliases": [
+      "CAPN-Net: Category-Agnostic and Patch Noise Feature Fusion Network for Universal AI-Generated Image Detection",
+      "CAPN-Net: Category-Agnostic and Patch Noise feature fusion Network for universal AI-generated image detection"
+    ]
+  },
+  "C02": {
+    "title": "Gradient-guided up-sampling artifacts-aware adapter tuning for generalizable AI-generated image detection",
+    "authors": [
+      "Zheng Zou",
+      "Dunlu Peng",
+      "Lin Cheng",
+      "Yuru Hou",
+      "Ping Kong",
+      "Yingzi Chen"
+    ],
+    "year": "2027",
+    "doi": "10.1016/j.eswa.2026.134292",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.eswa.2026.134292",
+    "venue": "Expert Systems with Applications",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "future_issue_online_date_unverified",
+    "publication_verified": false,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2027,
+            1
+          ]
+        ]
+      },
+      "volume": "333",
+      "page": "134292"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "held",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.eswa.2026.134292"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "DOI registration and publisher preview verify ordered authors and ESWA volume 333, part G, assigned January 15, 2027 issue. Actual online-publication date is absent from retrieved publisher metadata.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "manual_review": true,
+    "title_aliases": [
+      "Gradient-Guided Up-Sampling Artifacts-Aware Adapter Tuning for Generalizable AI-Generated Image Detection",
+      "Gradient-guided up-sampling artifacts-aware adapter tuning for generalizable AI-generated image detection"
+    ]
+  },
+  "C03": {
+    "title": "MFF-Net: Multi-view feature fusion network for AI-generated image detection",
+    "authors": [
+      "Hongji Zhang",
+      "Hao Tan",
+      "Jinghui Qin",
+      "Zhijing Yang"
+    ],
+    "year": "2027",
+    "doi": "10.1016/j.eswa.2026.134394",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.eswa.2026.134394",
+    "venue": "Expert Systems with Applications",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "future_issue_online_date_unverified",
+    "publication_verified": false,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2027,
+            2
+          ]
+        ]
+      },
+      "volume": "334",
+      "page": "134394"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "held",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.eswa.2026.134394"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "DOI registration and publisher preview verify ordered authors and ESWA volume 334, part A, assigned February 1, 2027 issue. Actual online-publication date is unverified.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "manual_review": true,
+    "title_aliases": [
+      "MFF-Net: Multi-View Feature Fusion Network for AI-Generated Image Detection",
+      "MFF-Net: Multi-view feature fusion network for AI-generated image detection"
+    ]
+  },
+  "D01": {
+    "title": "REALIS: A Curated Dataset for Studying the Challenges of AI Image Detection",
+    "authors": [
+      "Aleksandr Gushchin",
+      "Khaled Abud",
+      "Georgii Bychkov",
+      "Ekaterina Shumitskaya",
+      "Artem Filippov",
+      "Sergey Lavrushkin",
+      "Dmitriy S. Vatolin",
+      "Anastasia Antsiferova"
+    ],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "2609.32734",
+    "primary_url": "https://arxiv.org/abs/2609.32734",
+    "venue": "arXiv",
+    "publication_type": "preprint",
+    "venue_track": "",
+    "publication_status": "preprint",
+    "publication_verified": true,
+    "publication_details": {},
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "dataset;benchmark",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://arxiv.org/abs/2609.32734"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The primary abstract introduces REALIS and REALIS-Expert for real/generated image evaluation under generator and post-processing shifts, with a detector benchmark and robustness protocol.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The primary abstract introduces REALIS and REALIS-Expert for real/generated image evaluation under generator and post-processing shifts, with a detector benchmark and robustness protocol.",
+    "title_aliases": [
+      "REALIS: A Curated Dataset for Studying the Challenges of AI Image Detection"
+    ]
+  },
+  "D02": {
+    "title": "Face-Trace: Open-Set Attribution and Progressive Discovery of Synthetic Face Generators",
+    "authors": [
+      "Alessia Infantino",
+      "Claudio Schiavella",
+      "Irene Amerini"
+    ],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "2607.07545",
+    "primary_url": "https://arxiv.org/abs/2607.07545",
+    "venue": "arXiv",
+    "publication_type": "preprint",
+    "venue_track": "",
+    "publication_status": "preprint",
+    "publication_verified": true,
+    "publication_details": {},
+    "tasks": "source_attribution",
+    "image_scopes": "fully_generated;deepfake",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://arxiv.org/abs/2607.07545"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The paper evaluates classification, open-set rejection, and incremental discovery of synthetic face generators. Its forensic output is generator source attribution.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The paper evaluates classification, open-set rejection, and incremental discovery of synthetic face generators. Its forensic output is generator source attribution.",
+    "title_aliases": [
+      "Face-Trace: Open-Set Attribution and Progressive Discovery of Synthetic Face Generators"
+    ]
+  },
+  "D03": {
+    "title": "Unleashing the Potential of Vision-Language Models for Generalizable AI-Generated Image Detection",
+    "authors": [
+      "Weihan Cai",
+      "Hao Tan",
+      "Zichang Tan",
+      "Jun Wan",
+      "Xinping Gao"
+    ],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "2608.04935",
+    "primary_url": "https://arxiv.org/abs/2608.04935",
+    "venue": "arXiv",
+    "publication_type": "preprint",
+    "venue_track": "",
+    "publication_status": "preprint",
+    "publication_verified": true,
+    "publication_details": {},
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://arxiv.org/abs/2608.04935"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The primary arXiv abstract studies vision-language representations for generalizable AI-generated image detection.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The primary arXiv abstract studies vision-language representations for generalizable AI-generated image detection.",
+    "title_aliases": [
+      "Unleashing the Potential of Vision-Language Models for Generalizable AI-Generated Image Detection"
+    ]
+  },
+  "D04": {
+    "title": "RED: Reconstruction Evolution Dynamics for Generalizable AI-Generated Image Detection",
+    "authors": [
+      "Wenpeng Mu",
+      "Junshan Jin",
+      "Tanfeng Sun",
+      "Xinghao Jiang",
+      "Qiang Xu"
+    ],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "2609.36822",
+    "primary_url": "https://arxiv.org/abs/2609.36822",
+    "venue": "arXiv",
+    "publication_type": "preprint",
+    "venue_track": "",
+    "publication_status": "preprint",
+    "publication_verified": true,
+    "publication_details": {},
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://arxiv.org/abs/2609.36822"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The primary arXiv abstract uses reconstruction evolution dynamics to discriminate real and generated images without modifying their generator.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The primary arXiv abstract uses reconstruction evolution dynamics to discriminate real and generated images without modifying their generator.",
+    "title_aliases": [
+      "RED: Reconstruction Evolution Dynamics for Generalizable AI-Generated Image Detection"
+    ]
+  },
+  "D05": {
+    "title": "Relative Patch Response Learning for Generalizable AI-Generated Image Detection",
+    "authors": [
+      "Tianyu Wang",
+      "Ouxiang Li",
+      "Yanbin Hao",
+      "Zhenhua Tang",
+      "Shuo Wang"
+    ],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "2610.11876",
+    "primary_url": "https://arxiv.org/abs/2610.11876",
+    "venue": "arXiv",
+    "publication_type": "preprint",
+    "venue_track": "",
+    "publication_status": "preprint",
+    "publication_verified": true,
+    "publication_details": {},
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://arxiv.org/abs/2610.11876"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The primary arXiv abstract proposes relative patch responses for generalizable real/generated image detection.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The primary arXiv abstract proposes relative patch responses for generalizable real/generated image detection.",
+    "title_aliases": [
+      "Relative Patch Response Learning for Generalizable AI-Generated Image Detection"
+    ]
+  },
+  "D06": {
+    "title": "Unifying Semantic Priors and High-Frequency Traces: Enhancing V-JEPA with Mixture-of-Experts for Robust Synthetic Image Forensics",
+    "authors": [
+      "Simone Teglia",
+      "Irene Amerini"
+    ],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "2609.16778",
+    "primary_url": "https://arxiv.org/abs/2609.16778",
+    "venue": "arXiv",
+    "publication_type": "preprint",
+    "venue_track": "",
+    "publication_status": "preprint",
+    "publication_verified": true,
+    "publication_details": {},
+    "tasks": "detection",
+    "image_scopes": "fully_generated;generative_editing",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://arxiv.org/abs/2609.16778"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The primary paper evaluates MoE-JEPA on SID-Set with authentic, fully synthetic, and locally tampered images. Whole-image detection is supported; pixel-level localization is not established by the abstract. Generative-editing scope requires a further experimental check.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The primary paper evaluates MoE-JEPA on SID-Set with authentic, fully synthetic, and locally tampered images. Whole-image detection is supported; pixel-level localization is not established by the abstract. Generative-editing scope requires a further experimental check.",
+    "taxonomy_needs_review": [
+      "image_scopes"
+    ],
+    "taxonomy_review_reason": "The abstract establishes fully synthetic evaluation and local tampering but does not disaggregate generative edits from conventional manipulation in the experimental results; review the proposed generative_editing label.",
+    "title_aliases": [
+      "Unifying Semantic Priors and High-Frequency Traces: Enhancing V-JEPA with Mixture-of-Experts for Robust Synthetic Image Forensics"
+    ]
+  },
+  "E01": {
+    "title": "Training-Free Detection of AI-Generated Images Based on Coherence Analysis of Image Representations",
+    "authors": [
+      "Ji Li",
+      "Kai Wang"
+    ],
+    "year": "2026",
+    "doi": "10.1145/3843205.3845630",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1145/3843205.3845630",
+    "venue": "Proceedings of the 2nd ACM Workshop on Deepfake, Deception, and Disinformation Security",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "scheduled_publication",
+    "publication_verified": false,
+    "publication_details": {
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            11,
+            14
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            11,
+            15
+          ]
+        ]
+      },
+      "page": "14-21",
+      "article_doi": "10.1145/3843205.3845630"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "held",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1145/3843205.3845630",
+      "https://sites.google.com/view/3d-sec2026/program"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Crossref maps this exact article title and ordered Ji Li/Kai Wang authors to article DOI 10.1145/3843205.3845630 (not proceedings DOI). The registered online date is November 14, 2026, after this October 16 audit; the workshop program corroborates acceptance only. No supported accepted-only public representation is used.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "manual_review": true,
+    "title_aliases": [
+      "Training-Free Detection of AI-Generated Images Based on Coherence Analysis of Image Representations"
+    ]
+  },
+  "E02": {
+    "title": "MIDNet: multi-scale interaction and dynamic hard-sample mining for AI-generated image detection",
+    "authors": [
+      "Tian Zhang",
+      "Yuhan Liu",
+      "Gang Cao",
+      "Zhen Li",
+      "Weiheng Zhu"
+    ],
+    "year": "2026",
+    "doi": "10.1117/1.jei.35.5.053003",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1117/1.jei.35.5.053003",
+    "venue": "Journal of Electronic Imaging",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            2
+          ]
+        ]
+      },
+      "volume": "35",
+      "issue": "05",
+      "page": "1-20"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method;dataset",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1117/1.jei.35.5.053003"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The publisher-deposited abstract proposes multi-scale feature interaction and hard-sample mining, introduces a mixed-source AI-generated training dataset, and evaluates on seven detection benchmarks.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The publisher-deposited abstract proposes multi-scale feature interaction and hard-sample mining, introduces a mixed-source AI-generated training dataset, and evaluates on seven detection benchmarks.",
+    "venue_acronym": "JEI",
+    "title_aliases": [
+      "MIDNet: Multi-Scale Interaction and Dynamic Hard-Sample Mining for AI-Generated Image Detection",
+      "MIDNet: multi-scale interaction and dynamic hard-sample mining for AI-generated image detection"
+    ]
+  },
+  "E03": {
+    "title": "Dissecting Agentic Forensics: The Role of Triage, Prompting, and Evidence Arbitration in Open-World Fake Image Detection",
+    "authors": [
+      "Xianlong Li",
+      "Pietro Bongini",
+      "Niccoló Pancino",
+      "Marco Blanchini",
+      "Benedetta Tondi",
+      "Mauro Barni"
+    ],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "2609.24359",
+    "primary_url": "https://arxiv.org/abs/2609.24359",
+    "venue": "arXiv",
+    "publication_type": "preprint",
+    "venue_track": "",
+    "publication_status": "preprint",
+    "publication_verified": true,
+    "publication_details": {
+      "reported_acceptance": "ECCV 2026 AI4MFDD Workshop",
+      "acceptance_source": "data/raw/literature51_2026_10_16/request.txt"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "analysis_study",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://arxiv.org/abs/2609.24359"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The primary paper studies triage and evidence arbitration over specialist detectors for fully synthetic images and local manipulations. Detection is substantive. Arbitration is not generator attribution; pixel-localization metrics are not established by the abstract.",
+    "notes": "Preserve arXiv status; the supplied audit identifies an ECCV AI4MFDD workshop association, which is retained in provenance rather than promoted to published proceedings. Evidence arbitration is not source attribution. No pixel-localization claim is imported.",
+    "abstract": "Description (primary-source summary): The primary paper studies triage and evidence arbitration over specialist detectors for fully synthetic images and local manipulations. Detection is substantive. Arbitration is not generator attribution; pixel-localization metrics are not established by the abstract.",
+    "title_aliases": [
+      "Dissecting Agentic Forensics: The Role of Triage, Prompting, and Evidence Arbitration in Open-World Fake Image Detection"
+    ]
+  },
+  "E04": {
+    "title": "AIGen4Det: Leveraging AI-Regeneration for Generalizable Synthetic Facial Image Detection",
+    "authors": [],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "",
+    "primary_url": "https://openreview.net/forum?id=uOQ4L7aU7y",
+    "venue": "ECCV AI4MFDD Workshop",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "workshop_identity_incomplete",
+    "publication_verified": false,
+    "publication_details": {},
+    "tasks": "detection",
+    "image_scopes": "fully_generated;deepfake",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "held",
+    "evidence_sources": [
+      "https://openreview.net/forum?id=uOQ4L7aU7y"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "OpenReview landing page, API, and PDF each return a browser-verification challenge. Author-reported workshop presentation supports relevance, but original ordered authors and exact publication state cannot be established from the primary paper. No author ordering is reconstructed from social posts.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "manual_review": true,
+    "title_aliases": [
+      "AIGen4Det: Leveraging AI-Regeneration for Generalizable Synthetic Facial Image Detection"
+    ]
+  },
+  "E05": {
+    "title": "ASAP: Visual analytics for identifying and analyzing image patterns in AI-generated images",
+    "authors": [
+      "Jinbin Huang",
+      "Yuki Ueno",
+      "Chen Chen",
+      "Aditi Mishra",
+      "Bum Chul Kwon",
+      "Zhicheng Liu",
+      "Chris Bryan"
+    ],
+    "year": "2026",
+    "doi": "10.1177/14738716261481077",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1177/14738716261481077",
+    "venue": "Information Visualization",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            14
+          ]
+        ]
+      }
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "analysis_study",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1177/14738716261481077"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The publisher-deposited abstract describes a visual analytics system and user study for authenticity-indicative image patterns across GAN and diffusion benchmarks. It supports detection-related analysis, without claiming a conventional detector or generator-ID classifier.",
+    "notes": "Retain analysis_study only: an interactive visual analytics system and user study, not a conventional binary detection method. Official deposited online date September 14, 2026.",
+    "abstract": "Description (primary-source summary): The publisher-deposited abstract describes a visual analytics system and user study for authenticity-indicative image patterns across GAN and diffusion benchmarks. It supports detection-related analysis, without claiming a conventional detector or generator-ID classifier.",
+    "venue_acronym": "",
+    "title_aliases": [
+      "ASAP: Visual Analytics for Identifying and Analyzing Image Patterns in AI-Generated Images",
+      "ASAP: Visual analytics for identifying and analyzing image patterns in AI-generated images"
+    ]
+  },
+  "E06": {
+    "title": "Depth spectral fingerprints: AI-generated image detection via compact depth representations",
+    "authors": [
+      "Zihang Lyu",
+      "Zhuoyuan Li",
+      "Cong Zhang",
+      "Yun Li",
+      "Kin-Man Lam"
+    ],
+    "year": "2026",
+    "doi": "10.1016/j.patrec.2026.09.024",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.patrec.2026.09.024",
+    "venue": "Pattern Recognition Letters",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "future_issue_online_date_unverified",
+    "publication_verified": false,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            12
+          ]
+        ]
+      },
+      "volume": "210",
+      "page": "20-25"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "held",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.patrec.2026.09.024"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Crossref and publisher XML verify exact DOI/title and ordered Zihang Lyu, Zhuoyuan Li, Cong Zhang, Yun Li, Kin-Man Lam authors; PRL volume 210, pages 20–25, December 2026 issue. Publisher online-publication date and primary technical abstract remain unavailable; no online-first date is inferred from the DOI month.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "manual_review": true,
+    "title_aliases": [
+      "Depth Spectral Fingerprints: AI-Generated Image Detection via Compact Depth Representations",
+      "Depth spectral fingerprints: AI-generated image detection via compact depth representations"
+    ]
+  },
+  "E07": {
+    "title": "Can Pixels Alone Reveal Image Origin? Minimax Limits and Learnable Interfaces for Passive Provenance",
+    "authors": [
+      "Kai Yao"
+    ],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "2609.30997",
+    "primary_url": "https://arxiv.org/abs/2609.30997",
+    "venue": "Advances in Neural Information Processing Systems",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "accepted_track_unresolved",
+    "publication_verified": false,
+    "publication_details": {},
+    "tasks": "source_attribution",
+    "image_scopes": "fully_generated",
+    "research_types": "analysis_study",
+    "scope_decision": "in_scope",
+    "decision": "held",
+    "evidence_sources": [
+      "https://arxiv.org/abs/2609.30997"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive source_attribution of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "The immutable NeurIPS 7+1 migration includes this same arXiv identity. Keep its source_attribution/analysis_study determination and unresolved official track; do not bypass the lock by importing an arXiv duplicate.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "manual_review": true,
+    "title_aliases": [
+      "Can Pixels Alone Reveal Image Origin? Minimax Limits and Learnable Interfaces for Passive Provenance"
+    ]
+  },
+  "E08": {
+    "title": "DSC2F: A Multimodal AI-Generated Image Detection System Using Dual-Stream Convolutional Neural Networks with Fast Fourier Transform",
+    "authors": [
+      "Tri-Vinh Nguyen",
+      "Khoa H.-A. Ngo",
+      "Khoi H.-A. Ngo"
+    ],
+    "year": "2026",
+    "doi": "10.1109/icivc70586.2026.11686669",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1109/icivc70586.2026.11686669",
+    "venue": "International Conference on Image, Vision and Computing",
+    "publication_type": "conference",
+    "venue_track": "Main",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "page": "727-731"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1109/icivc70586.2026.11686669"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "venue_acronym": "ICIVC",
+    "title_aliases": [
+      "DSC2F: A Multimodal AI-Generated Image Detection System Using Dual-Stream Convolutional Neural Networks with Fast Fourier Transform"
+    ]
+  },
+  "E09": {
+    "title": "Forged Image Model Attribution Based on Hierarchical Fine-Grained Classification",
+    "authors": [
+      "Hui Yang",
+      "ShiYu Liu",
+      "Xiang Zhang",
+      "Wenbo Zhang",
+      "WenYong Zhang"
+    ],
+    "year": "2026",
+    "doi": "10.1109/icivc70586.2026.11686643",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1109/icivc70586.2026.11686643",
+    "venue": "International Conference on Image, Vision and Computing",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "scope_evidence_insufficient",
+    "publication_verified": false,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "page": "714-720"
+    },
+    "tasks": "source_attribution",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "unresolved_generator_identity",
+    "decision": "held",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1109/icivc70586.2026.11686643"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive source_attribution of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Crossref verifies exact article DOI/title and complete ordered authors, but IEEE serves an empty HTTP 202 response and targeted primary search yields no abstract. Actual generator/model-identity evaluation remains unverified, so conventional editing-tool attribution cannot be ruled out.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "manual_review": true,
+    "title_aliases": [
+      "Forged Image Model Attribution Based on Hierarchical Fine-Grained Classification"
+    ]
+  },
+  "E10": {
+    "title": "A Sanity Check for AI-generated Underwater Image Detection",
+    "authors": [
+      "Siyi Lv",
+      "Yutao Liu"
+    ],
+    "year": "2026",
+    "doi": "10.1109/icivc70586.2026.11686696",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1109/icivc70586.2026.11686696",
+    "venue": "International Conference on Image, Vision and Computing",
+    "publication_type": "conference",
+    "venue_track": "Main",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "page": "721-726"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "analysis_study",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1109/icivc70586.2026.11686696"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "venue_acronym": "ICIVC",
+    "title_aliases": [
+      "A Sanity Check for AI-Generated Underwater Image Detection",
+      "A Sanity Check for AI-generated Underwater Image Detection"
+    ]
+  },
+  "E11": {
+    "title": "Robust AIGC Image Detection via Unidirectional Consistency Regularization",
+    "authors": [
+      "Yifan Yang"
+    ],
+    "year": "2026",
+    "doi": "10.1109/icivc70586.2026.11686594",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1109/icivc70586.2026.11686594",
+    "venue": "International Conference on Image, Vision and Computing",
+    "publication_type": "conference",
+    "venue_track": "Main",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "page": "702-707"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1109/icivc70586.2026.11686594"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "venue_acronym": "ICIVC",
+    "title_aliases": [
+      "Robust AIGC Image Detection via Unidirectional Consistency Regularization"
+    ]
+  },
+  "E12": {
+    "title": "Hierarchical Channel Stacking: A Structured Decision Framework for AI-Generated Image Detection",
+    "authors": [
+      "Saifullah Shoaib",
+      "Akash Borigi",
+      "Rupendra Lekkala",
+      "Amaury Lendasse",
+      "Edward Ratner",
+      "Sai Sowjanya Bhamidipati",
+      "Alexander Schlager",
+      "Peggy Lindner"
+    ],
+    "year": "2027",
+    "doi": "10.1007/978-3-032-38407-2_23",
+    "arxiv_id": "2608.26648",
+    "primary_url": "https://doi.org/10.1007/978-3-032-38407-2_23",
+    "venue": "International Conference on Artificial Neural Networks",
+    "publication_type": "conference",
+    "venue_track": "Main",
+    "publication_status": "conference_online_first",
+    "publication_verified": true,
+    "publication_details": {
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            9,
+            14
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2027
+          ]
+        ]
+      },
+      "page": "285-297",
+      "online_date": "2026-09-14",
+      "print_year": 2027,
+      "pages": "285–297"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://link.springer.com/chapter/10.1007/978-3-032-38407-2_23",
+      "https://arxiv.org/abs/2608.26648"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The primary arXiv abstract evaluates hierarchical channel stacking for real/generated image classification on GAN and diffusion sources. The matching Springer chapter supplies the formal publication identity.",
+    "notes": "Resolve to chapter DOI 10.1007/978-3-032-38407-2_23, pages 285–297; never use the volume DOI as an article DOI. The chapter deposit verifies eight authors in the same order as arXiv. Preserve 2027 print/citation year and September 14, 2026 online date for ICANN 2026.",
+    "abstract": "Description (primary-source summary): The primary arXiv abstract evaluates hierarchical channel stacking for real/generated image classification on GAN and diffusion sources. The matching Springer chapter supplies the formal publication identity.",
+    "venue_acronym": "ICANN",
+    "title_aliases": [
+      "Hierarchical Channel Stacking: A Structured Decision Framework for AI-Generated Image Detection"
+    ]
+  },
+  "E13": {
+    "title": "RFF-Net: Robust frequency–noise fusion network for AI-generated image discrimination",
+    "authors": [
+      "Yuntong Xu",
+      "Ronggui Yang",
+      "Shengyuan Zhou"
+    ],
+    "year": "2026",
+    "doi": "10.1016/j.knosys.2026.117106",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1016/j.knosys.2026.117106",
+    "venue": "Knowledge-Based Systems",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "future_issue_online_date_unverified",
+    "publication_verified": false,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            10
+          ]
+        ]
+      },
+      "volume": "352",
+      "page": "117106"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "held",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1016/j.knosys.2026.117106"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Crossref and publisher XML verify DOI/title and authors; KBS volume 352, article 117106, issue October 25, 2026. That date is after this audit and no actual online-publication date was recovered.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "manual_review": true,
+    "title_aliases": [
+      "RFF-Net: Robust Frequency–Noise Fusion Network for AI-Generated Image Discrimination",
+      "RFF-Net: Robust frequency–noise fusion network for AI-generated image discrimination"
+    ]
+  },
+  "E14": {
+    "title": "One Patch Is Not Enough: A General Framework for Full-Resolution AI Image Detection",
+    "authors": [
+      "Yakun Niu",
+      "Yingjian Chen",
+      "Lei Zhang",
+      "Baojun Qiao"
+    ],
+    "year": "2026",
+    "doi": "10.1109/lsp.2026.3737389",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1109/lsp.2026.3737389",
+    "venue": "IEEE Signal Processing Letters",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-print": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "page": "1-5"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1109/lsp.2026.3737389"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "title_aliases": [
+      "One Patch Is Not Enough: A General Framework for Full-Resolution AI Image Detection"
+    ]
+  },
+  "E15": {
+    "title": "Hyperparameter-Aware Evaluation of Deep Learning Architectures for AI-Generated Image Detection",
+    "authors": [],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "",
+    "primary_url": "https://tudoster.unideb.hu/en/szerzok/5404",
+    "venue": "IEEE Conference on Information Technology and Data Science",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "accepted_metadata_incomplete",
+    "publication_verified": false,
+    "publication_details": {},
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "analysis_study",
+    "scope_decision": "provisionally_in_scope",
+    "decision": "held",
+    "evidence_sources": [
+      "https://tudoster.unideb.hu/en/szerzok/5404",
+      "data/raw/literature51_2026_10_16/priority_identity.json"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "The supplied University of Debrecen page reports Accepted by Publisher and pages 1–6 for Gafarov, I.; Qasem, Z.; Düzenli, K.; Harangi, B.; Al-Hamadani, M. N. A. Complete original author names and official proceedings/publication state remain unresolved. No DOI is invented.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "manual_review": true,
+    "title_aliases": [
+      "Hyperparameter-Aware Evaluation of Deep Learning Architectures for AI-Generated Image Detection"
+    ]
+  },
+  "E16": {
+    "title": "S-AODP++: Structure-Aware AOI-Guided Scanpath Attention for AI-Generated Image Identification",
+    "authors": [
+      "Jingming Wang",
+      "Renwei Meng",
+      "Yunjie Si"
+    ],
+    "year": "2026",
+    "doi": "10.1145/3776574.3831124",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1145/3776574.3831124",
+    "venue": "International Conference on Multimodal Interaction",
+    "publication_type": "conference",
+    "venue_track": "Main",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            10,
+            4
+          ]
+        ]
+      },
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            10,
+            5
+          ]
+        ]
+      },
+      "page": "123-130"
+    },
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://api.crossref.org/works/10.1145/3776574.3831124",
+      "https://renweimeng.com/en"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Crossref publisher deposit verifies article DOI, October 4, 2026 online publication and author order Jingming Wang; Renwei Meng; Yunjie Si. The supplied author website independently agrees. Co-first status does not reorder names.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "venue_acronym": "ICMI",
+    "title_aliases": [
+      "S-AODP++: Structure-Aware AOI-Guided Scanpath Attention for AI-Generated Image Identification"
+    ]
+  },
+  "E17": {
+    "title": "Improving Synthesized Image Detection by Disentangling Generator-Shared and Generator-Specific Image Artifacts",
+    "authors": [
+      "Yongqi Yang",
+      "Yuke Li",
+      "Heng Huang",
+      "Zhihui Li",
+      "Bo Du",
+      "Yu Wu"
+    ],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "",
+    "primary_url": "https://openaccess.thecvf.com/content/CVPR2026F/html/Yang_Improving_Synthesized_Image_Detection_by_Disentangling_Generator-Shared_and_Generator-Specific_Image_CVPRF_2026_paper.html",
+    "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+    "publication_type": "conference",
+    "venue_track": "Findings",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {},
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://openaccess.thecvf.com/content/CVPR2026F/html/Yang_Improving_Synthesized_Image_Detection_by_Disentangling_Generator-Shared_and_Generator-Specific_Image_CVPRF_2026_paper.html"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "title_aliases": [
+      "Improving Synthesized Image Detection by Disentangling Generator-Shared and Generator-Specific Image Artifacts"
+    ]
+  },
+  "E18": {
+    "title": "Latent Optimization Dynamics for Latent Diffusion Model Attribution",
+    "authors": [],
+    "year": "2026",
+    "doi": "",
+    "arxiv_id": "",
+    "primary_url": "https://openreview.net/forum?id=r46D1lErlM",
+    "venue": "ECCV AI4MFDD Workshop",
+    "publication_type": "journal",
+    "venue_track": "",
+    "publication_status": "workshop_identity_incomplete",
+    "publication_verified": false,
+    "publication_details": {},
+    "tasks": "detection",
+    "image_scopes": "fully_generated",
+    "research_types": "method",
+    "scope_decision": "provisionally_in_scope",
+    "decision": "held",
+    "evidence_sources": [
+      "https://openreview.net/forum?id=r46D1lErlM",
+      "https://github.com/dahlgrenmartin/LOD"
+    ],
+    "evidence_tier": "title",
+    "scope_rationale": "Primary bibliographic title explicitly concerns passive detection of AI-generated images. Taxonomy is provisional until checked against a technical abstract or full paper.",
+    "notes": "The supplied author repository confirms a VAE detector inspired by AEROBLADE/LatentTracer. OpenReview landing/API/PDF return challenges. An author post describes binary real/synthetic experiments, but the primary ordered author roster and Dahlgren spelling cannot be verified. Do not assign source_attribution from the title alone.",
+    "abstract": "",
+    "taxonomy_needs_review": [
+      "tasks",
+      "image_scopes",
+      "research_types"
+    ],
+    "taxonomy_review_reason": "Only the publisher-registered title was recoverable for taxonomy; confirm the proposed labels against the primary abstract/full paper. manual_review=true in the batch audit.",
+    "manual_review": true,
+    "title_aliases": [
+      "Latent Optimization Dynamics for Latent Diffusion Model Attribution"
+    ]
+  },
+  "E19": {
+    "title": "Asymmetric Anchoring: Opening the MLLM Black Box for Forgery Detection",
+    "authors": [
+      "Zhiqiang Yang",
+      "Renshuai Tao",
+      "Chunjie Zhang",
+      "Zhaoxiang Liu",
+      "Xiaolong Zheng",
+      "Yao Zhao"
+    ],
+    "year": "2026",
+    "doi": "10.1007/978-3-032-37132-4_2",
+    "arxiv_id": "",
+    "primary_url": "https://doi.org/10.1007/978-3-032-37132-4_2",
+    "venue": "European Conference on Computer Vision",
+    "publication_type": "conference",
+    "venue_track": "Main",
+    "publication_status": "published",
+    "publication_verified": true,
+    "publication_details": {},
+    "tasks": "detection;localization",
+    "image_scopes": "fully_generated;generative_editing",
+    "research_types": "method",
+    "scope_decision": "in_scope",
+    "decision": "import",
+    "evidence_sources": [
+      "https://doi.org/10.1007/978-3-032-37132-4_2"
+    ],
+    "evidence_tier": "primary_abstract",
+    "scope_rationale": "The official Springer abstract evaluates detection and localization on SID-Set and OpenSDID. Synthetic-image and generative-editing evaluation is substantive, rather than a conventional splicing-only scope.",
+    "notes": "Ordered authors and article identity verified against the cited primary bibliographic metadata. No affiliations or coordinates assigned.",
+    "abstract": "Description (primary-source summary): The official Springer abstract evaluates detection and localization on SID-Set and OpenSDID. Synthetic-image and generative-editing evaluation is substantive, rather than a conventional splicing-only scope.",
+    "title_aliases": [
+      "Asymmetric Anchoring: Opening the MLLM Black Box for Forgery Detection"
+    ]
+  }
+}

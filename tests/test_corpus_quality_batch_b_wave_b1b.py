@@ -66,7 +66,7 @@ def public(path, *, before=False):
 @lru_cache
 def public_identity_index():
     # The canonical registry covers candidate records that do not export paper_id.
-    return PaperIdentityIndex(csvrows(published("data/curated/paper_taxonomy.csv")), PaperIdentityCache())
+    return PaperIdentityIndex(rows("data/curated/paper_taxonomy.csv"), PaperIdentityCache())
 
 
 def canonical_paper_id(record):
@@ -86,7 +86,7 @@ def ordered_public_identity(record, path):
 
 @pytest.mark.parametrize("path", ["data/curated/papers.csv", "data/curated/paper_taxonomy.csv"])
 def test_only_r137_and_r611_research_type_rows_change_with_original_csv_bytes_retained(path):
-    old_bytes, new_bytes = published(path), (ROOT / path).read_bytes()
+    old_bytes, new_bytes = published(path), adjudicated(path)
     before = {row["paper_id"]: row for row in csvrows(old_bytes)}
     after = {row["paper_id"]: row for row in csvrows(new_bytes)}
     assert before.keys() == after.keys()
