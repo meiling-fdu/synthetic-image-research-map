@@ -17,9 +17,11 @@ import subprocess
 import pytest
 
 from scripts.validate_corpus_quality_audit import load_context
+from tests.corpus_quality_test_helpers import published_context
 
 
 ROOT = Path(__file__).resolve().parents[1]
+PUBLISHED_B1D = "d02b952489b10df438f79ed1b87aee4170ee8aa5"
 BASE = "70a0bd330b76a493597c53f6117dcfa18f2a3c4e"
 PUBLISHED_WAVE5B = "805edcc5bbd2fb5c1afda348e900f32f02fcd450"
 T236 = "curated:64635535d7b7b6a12a32"
@@ -188,7 +190,11 @@ def test_corpus_and_taxonomy_counts_recompute_from_current_export():
                 if r["taxonomy_id"] == T527]
     assert len(retained) == 1
     assert retained[0]["tasks"].split(";") == previous_t527[0]["tasks"]
-    pre_import = totals - Counter(LITERATURE51_TAXONOMY_ADDITIONS)
+    # Preserve this historical cumulative formula at the published B1D endpoint;
+    # current taxonomy totals above include any later accepted task corrections.
+    successor = Counter(label for paper in published_context(PUBLISHED_B1D)["papers"].values()
+                        for dimension in ("tasks", "research_types") for label in paper[dimension])
+    pre_import = successor - Counter(LITERATURE51_TAXONOMY_ADDITIONS)
     assert pre_import - old == {"localization": 1, "benchmark": 1}
     assert old - pre_import == {"detection": 4, "source_attribution": 2, "method": 2, "analysis_study": 1}
     # Later Wave 5C/T527/B1A successors plus B1B R137/R611 additions and the P490 scope exclusion; B1D additionally removes T579 attribution.

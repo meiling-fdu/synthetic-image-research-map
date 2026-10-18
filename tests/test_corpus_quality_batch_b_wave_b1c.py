@@ -24,6 +24,7 @@ from tests.baseline_expectations import CURRENT_CORPUS_COUNTS, CURRENT_TAXONOMY_
 from tests.corpus_quality_test_helpers import published_bytes, published_context
 
 ROOT = Path(__file__).resolve().parents[1]
+PUBLISHED_B1D = "d02b952489b10df438f79ed1b87aee4170ee8aa5"
 BASE = "65e9422764c34eaad1d151fff2895e6c7503835f"
 B1C_ENDPOINT = "a74bdf79f4d8b3c4fb64af7b83701dce60238289"
 B1C_CORPUS_COUNTS = {"public": 635, "formal": 527, "mapped": 613, "unmapped": 22,
@@ -451,12 +452,26 @@ def test_live_p490_exclusion_and_separate_decisions_survive_successor_taxonomy_r
 
 def test_live_approved_literature_csv_additions_survive_the_separate_t579_adjudication():
     from scripts.verify_literature51_main_integration import expected_csv
+    # The exact integration -> T579 delta ends at published B1D. Later task
+    # corrections must not rewrite that historical expectation.
     for path in ("data/curated/papers.csv", "data/curated/venue_aliases.csv"):
-        assert (ROOT / path).read_bytes() == expected_csv(ROOT, Path(path).name)
+        assert published_bytes(PUBLISHED_B1D, path) == expected_csv(ROOT, Path(path).name)
     path = "data/curated/paper_taxonomy.csv"
     imported = {row["taxonomy_id"]: row for row in csvrows(expected_csv(ROOT, Path(path).name))}
-    live = {row["taxonomy_id"]: row for row in rows(path)}
-    assert imported.keys() == live.keys()
-    assert {pid for pid in imported if imported[pid] != live[pid]} == {"doi:10.24963/ijcai.2023/52"}
-    # The new wave separately checks the six authorized target fields and all
-    # public/map objects. This guard keeps every literature addition exact.
+    successor = {row["taxonomy_id"]: row for row in csvrows(published_bytes(PUBLISHED_B1D, path))}
+    assert imported.keys() == successor.keys()
+    assert {pid for pid in imported if imported[pid] != successor[pid]} == {"doi:10.24963/ijcai.2023/52"}
+    # Preserve the original live import guard independently of later decisions
+    # on existing papers. All 39 approved addition identities remain exact.
+    plan = json.loads((ROOT / "data/processed/literature51_2026_10_16/plan.json").read_bytes())
+    followup = json.loads((ROOT / "data/processed/literature51_2026_10_16/followup/receipt.json").read_bytes())
+    imported_ids = {row["paper_id"] for row in plan["additions"]["papers.csv"]} | {followup["paper_id"]}
+    assert len(imported_ids) == 39
+    for path in ("data/curated/papers.csv", "data/curated/paper_taxonomy.csv"):
+        expected = {row["paper_id"]: row for row in csvrows(expected_csv(ROOT, Path(path).name))
+                    if row["paper_id"] in imported_ids}
+        live = {row["paper_id"]: row for row in rows(path) if row["paper_id"] in imported_ids}
+        assert expected.keys() == live.keys() == imported_ids
+        assert live == expected
+    path = "data/curated/venue_aliases.csv"
+    assert (ROOT / path).read_bytes() == expected_csv(ROOT, Path(path).name)

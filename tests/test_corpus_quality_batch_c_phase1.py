@@ -1,6 +1,7 @@
 """Focused checks for the approved Batch C Phase 1, against committed Batch A."""
 from tests.baseline_expectations import (
     CURRENT_CORPUS_COUNTS,
+    CURRENT_TAXONOMY_TOTALS,
     CURRENT_EMPTY_CORE_TASK_TITLES,
 )
 
@@ -16,9 +17,11 @@ import subprocess
 import pytest
 
 from scripts.validate_corpus_quality_audit import load_context, load_queues, decision_rows
+from tests.corpus_quality_test_helpers import published_context
 
 
 ROOT = Path(__file__).resolve().parents[1]
+PUBLISHED_B1D = 'd02b952489b10df438f79ed1b87aee4170ee8aa5'
 BASE = '0bc98c3e75636899e53114be3d9de0a71986990c'
 PHASE1 = 'ccb3fab'
 PUBLISHED_CLOSEOUT = 'b41a506453cd0a4c985bf7d1a63e6b2a2d391539'
@@ -269,9 +272,15 @@ def test_recomputed_counts_and_registry_export_synchronization(state):
     # Wave 5C removes detection from T572 and T503; closeout excludes T527.
     # Batch B B1A excludes L015/P562, B1C excludes P490 and B1D removes T579 attribution.
     assert context['counts'] == CURRENT_CORPUS_COUNTS
+    assert Counter(label for paper in context['papers'].values()
+                   for dimension in ('tasks', 'research_types')
+                   for label in paper[dimension]) == CURRENT_TAXONOMY_TOTALS
+    # This cumulative Phase 1 -> B1D formula ends at its published d02 endpoint;
+    # later accepted taxonomy decisions are checked by the live totals above.
+    successor = published_context(PUBLISHED_B1D)
     from tests.baseline_expectations import LITERATURE51_TASK_ADDITIONS, LITERATURE51_RESEARCH_ADDITIONS
     for dimension in ('tasks','research_types'):
-        registry_totals = Counter(label for row in context['taxonomy'].values() for label in row[dimension].split(';') if label)
+        registry_totals = Counter(label for row in successor['taxonomy'].values() for label in row[dimension].split(';') if label)
         expected_current = Counter(ledger['taxonomy_after'][dimension])
         expected_current.subtract({'detection': 8, 'source_attribution': 2} if dimension == 'tasks'
                                   else {'method': 3, 'dataset': 1, 'analysis_study': 2})

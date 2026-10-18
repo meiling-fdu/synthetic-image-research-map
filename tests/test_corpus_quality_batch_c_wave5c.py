@@ -15,8 +15,10 @@ import subprocess
 import pytest
 
 from scripts.validate_corpus_quality_audit import load_context
+from tests.corpus_quality_test_helpers import published_context
 
 ROOT = Path(__file__).resolve().parents[1]
+PUBLISHED_B1D = "d02b952489b10df438f79ed1b87aee4170ee8aa5"
 BASE = "805edcc5bbd2fb5c1afda348e900f32f02fcd450"
 PUBLISHED_WAVE5C = "829b3c79e28c02c622dde2129bd6ce7b62eeb27f"
 CASES = {
@@ -144,7 +146,11 @@ def test_counts_debt_and_historical_receipts():
     assert dict(old_totals) == wave["taxonomy_before"]
     assert old_totals - wave5c_totals == {"detection": 2} and not wave5c_totals - old_totals
     assert totals == CURRENT_TAXONOMY_TOTALS
-    pre_import = totals - Counter(LITERATURE51_TAXONOMY_ADDITIONS)
+    # Preserve this historical cumulative formula at the published B1D endpoint;
+    # current taxonomy totals above include any later accepted task corrections.
+    successor = Counter(label for paper in published_context(PUBLISHED_B1D)["papers"].values()
+                        for dimension in ("tasks", "research_types") for label in paper[dimension])
+    pre_import = successor - Counter(LITERATURE51_TAXONOMY_ADDITIONS)
     assert wave5c_totals - pre_import == {"detection": 2, "source_attribution": 2, "method": 2, "analysis_study": 1}
     assert pre_import - wave5c_totals == {"benchmark": 1}
     # T527/B1A/P490 exclusions, B1B research-type successors and T579 attribution removal.

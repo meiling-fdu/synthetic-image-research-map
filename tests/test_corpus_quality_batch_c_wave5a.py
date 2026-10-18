@@ -17,9 +17,11 @@ import subprocess
 import pytest
 
 from scripts.validate_corpus_quality_audit import load_context
+from tests.corpus_quality_test_helpers import published_context
 
 
 ROOT = Path(__file__).resolve().parents[1]
+PUBLISHED_B1D = "d02b952489b10df438f79ed1b87aee4170ee8aa5"
 BASE = "114d2e5f352f39f6c3a484e43f3aac593eb7cf64"
 WAVE5A = "70a0bd330b76a493597c53f6117dcfa18f2a3c4e"
 MANIFEST_PATH = "data/raw/corpus_quality_batch_c_wave5a_2026_10_08/evidence_manifest.json"
@@ -233,7 +235,11 @@ def test_recomputed_corpus_and_taxonomy_change_only_detection_by_one():
     assert old - wave5a == {"detection": 1}
     assert not wave5a - old
     assert current == CURRENT_TAXONOMY_TOTALS
-    pre_import = current - Counter(LITERATURE51_TAXONOMY_ADDITIONS)
+    # Preserve this historical cumulative formula at the published B1D endpoint;
+    # current taxonomy totals above include any later accepted task corrections.
+    successor = Counter(label for paper in published_context(PUBLISHED_B1D)["papers"].values()
+                        for dimension in ("tasks", "research_types") for label in paper[dimension])
+    pre_import = successor - Counter(LITERATURE51_TAXONOMY_ADDITIONS)
     assert pre_import - wave5a == {"localization": 1, "benchmark": 1}
     assert wave5a - pre_import == {"detection": 4, "source_attribution": 2, "method": 2, "analysis_study": 1}
     # Approved Wave 5C/T527/B1A successors plus B1B R137/R611 additions and the P490 scope exclusion; B1D additionally removes T579 attribution.

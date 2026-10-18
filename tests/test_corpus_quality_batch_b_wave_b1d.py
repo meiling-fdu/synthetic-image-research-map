@@ -1,4 +1,4 @@
-"""Accepted T579 taxonomy change preserves T608, provenance and audit boundaries."""
+"""Published B1D endpoint: accepted T579 change preserves T608 and provenance."""
 from collections import Counter
 import base64
 from functools import lru_cache
@@ -12,13 +12,12 @@ import pytest
 
 from scripts.curated_schema import ALLOWED_REVIEW_ACTIONS, ALLOWED_REVIEW_QUEUES
 from scripts.paper_exclusions import normalize_doi
-from scripts.review_decisions import read_review_decisions
-from scripts.validate_corpus_quality_audit import decision_rows, load_context, load_queues
-from tests.baseline_expectations import CURRENT_CORPUS_COUNTS, CURRENT_TAXONOMY_TOTALS
+from scripts.validate_corpus_quality_audit import decision_rows, load_queues
 from tests.corpus_quality_test_helpers import csv_records, published_bytes, published_context
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "8e60ee5729ab0b29703078b91cf83fb245048f6c"
+PUBLISHED = "d02b952489b10df438f79ed1b87aee4170ee8aa5"
 EVIDENCE_BASE = "a74bdf79f4d8b3c4fb64af7b83701dce60238289"
 DOI = "10.24963/ijcai.2023/52"
 T579 = "doi:" + DOI
@@ -38,12 +37,29 @@ EVIDENCE_ONLY_HASHES = {
     "report": "60071ce822a25d1d0074a586256edca673c8b662f6da6356fcc63d9d4d99a6f2"}
 
 
+def endpoint_bytes(path):
+    # B1D receipts describe its published endpoint; later approved waves must
+    # not be compared with the earlier one-paper transaction. B1E tests cover
+    # the exact live successor delta and preserve all B1D artifact bytes.
+    return published_bytes(PUBLISHED, path)
+
+
+@lru_cache
+def endpoint_context():
+    return published_context(PUBLISHED)
+
+
+def endpoint_taxonomy_totals():
+    return Counter(label for row in endpoint_context()["papers"].values()
+                   for dimension in ("tasks", "research_types") for label in row[dimension])
+
+
 def previous(path):
     return published_bytes(BASE, path)
 
 
 def rows(path):
-    return csv_records((ROOT / path).read_bytes())
+    return csv_records(endpoint_bytes(path))
 
 
 def matching(records, doi):
@@ -52,7 +68,7 @@ def matching(records, doi):
 
 @lru_cache
 def packet():
-    return json.loads((ROOT / MANIFEST).read_bytes())
+    return json.loads(endpoint_bytes(MANIFEST))
 
 
 @lru_cache
@@ -62,13 +78,13 @@ def original_packet():
 
 
 def selected_decision():
-    selected = matching(read_review_decisions(ROOT / DECISIONS), DOI)
+    selected = matching(rows(DECISIONS), DOI)
     assert len(selected) == 1
     return selected[0]
 
 
 def test_only_t579_task_and_six_evidence_fields_change_without_losing_original_csv_bytes():
-    before_raw, after_raw = previous(TAXONOMY), (ROOT / TAXONOMY).read_bytes()
+    before_raw, after_raw = previous(TAXONOMY), endpoint_bytes(TAXONOMY)
     before = {row["taxonomy_id"]: row for row in csv_records(before_raw)}
     after = {row["taxonomy_id"]: row for row in csv_records(after_raw)}
     assert before.keys() == after.keys()
@@ -101,12 +117,12 @@ def test_only_t579_task_and_six_evidence_fields_change_without_losing_original_c
     "data/curated/institution_aliases.csv", "data/curated/institution_hierarchy.csv",
 ])
 def test_bibliography_authors_affiliations_institutions_and_exclusions_are_byte_exact(path):
-    assert (ROOT / path).read_bytes() == previous(path)
+    assert endpoint_bytes(path) == previous(path)
 
 
 @pytest.mark.parametrize("path,target_rows", [(PUBLIC[0], 1), (PUBLIC[1], 3)])
 def test_public_records_change_only_t579_task_without_changing_any_identity_or_relationship(path, target_rows):
-    before, after = json.loads(previous(path)), json.loads((ROOT / path).read_bytes())
+    before, after = json.loads(previous(path)), json.loads(endpoint_bytes(path))
     assert len(before["records"]) == len(after["records"])
     assert len(matching(before["records"], DOI)) == len(matching(after["records"], DOI)) == target_rows
     changed = []
@@ -137,7 +153,7 @@ def test_public_records_change_only_t579_task_without_changing_any_identity_or_r
 
 
 def test_exactly_one_terminal_t579_decision_appends_and_retains_all_existing_rows():
-    old, new = previous(DECISIONS), (ROOT / DECISIONS).read_bytes()
+    old, new = previous(DECISIONS), endpoint_bytes(DECISIONS)
     assert new.startswith(old)
     old_rows, new_rows = csv_records(old), rows(DECISIONS)
     assert new_rows[:len(old_rows)] == old_rows
@@ -160,7 +176,7 @@ def test_exactly_one_terminal_t579_decision_appends_and_retains_all_existing_row
 def test_t608_canonical_public_and_review_states_remain_exact_without_scientific_endorsement():
     for path in PUBLIC:
         old = matching(json.loads(previous(path))["records"], T608_DOI)
-        new = matching(json.loads((ROOT / path).read_bytes())["records"], T608_DOI)
+        new = matching(json.loads(endpoint_bytes(path))["records"], T608_DOI)
         assert old and old == new
         assert all(row["tasks"] == ["detection", "source_attribution"] for row in new)
     assert matching(rows(TAXONOMY), T608_DOI) == matching(csv_records(previous(TAXONOMY)), T608_DOI)
@@ -174,9 +190,9 @@ def test_t608_canonical_public_and_review_states_remain_exact_without_scientific
     assert after["formal_review_action_closed"] is after["authoritative_changes_applied"] is False
 
 
-def test_current_counts_and_taxonomy_delta_recompute_from_preferred_public_identities():
-    old, new = published_context(BASE), load_context()
-    assert old["counts"] == new["counts"] == CURRENT_CORPUS_COUNTS == {
+def test_published_counts_and_taxonomy_delta_recompute_from_preferred_public_identities():
+    old, new = published_context(BASE), endpoint_context()
+    assert old["counts"] == new["counts"] == endpoint_context()["counts"] == {
         "public": 674, "formal": 557, "mapped": 613, "unmapped": 61,
         "relationship_rows": 1410, "unique_paper_institution_pairs": 1410}
     assert list(old["papers"]) == list(new["papers"])
@@ -186,7 +202,7 @@ def test_current_counts_and_taxonomy_delta_recompute_from_preferred_public_ident
     after = Counter(label for row in new["papers"].values()
                     for dimension in ("tasks", "research_types") for label in row[dimension])
     assert before - after == {"source_attribution": 1} and not after - before
-    assert after == CURRENT_TAXONOMY_TOTALS == {
+    assert after == endpoint_taxonomy_totals() == {
         "detection": 621, "source_attribution": 86, "localization": 45,
         "method": 579, "dataset": 134, "benchmark": 90, "survey": 21, "analysis_study": 81}
     # Preserve aliases such as TWIGMA's preferred public ID in map pair keys.
@@ -195,7 +211,7 @@ def test_current_counts_and_taxonomy_delta_recompute_from_preferred_public_ident
         assert (old["papers"][public_id].get("paper_id") or taxonomy_id) == public_id
 
 
-def test_original_questions_survive_and_only_t579_resolves_in_live_accounting():
+def test_original_questions_survive_and_only_t579_resolves_in_published_accounting():
     ledger = [row for row in decision_rows(load_queues()) if row.get("batch") == "B"]
     assert len(ledger) == 159 and len({row["paper_id"] for row in ledger}) == 148
     assert [(row["review_id"], row["dimension"]) for row in ledger if row["paper_id"] == T579] == [("T579", "tasks")]
@@ -211,7 +227,7 @@ def test_original_questions_survive_and_only_t579_resolves_in_live_accounting():
     assert after == {**before, "T579": DECISION} and "T608" not in after
     assert set(before) == {"L013", "P139", "P153", "P490", "R137", "R611"}
     pending = [row for row in ledger if row["review_id"] not in after]
-    public = load_context()["papers"]
+    public = endpoint_context()["papers"]
     active = [row for row in pending if row["paper_id"] in public]
     inactive = [row for row in pending if row["paper_id"] not in public]
     assert len(pending) == 152 and len(active) == 150
@@ -267,20 +283,20 @@ def test_complete_evidence_only_packet_and_report_are_archived_without_retrieval
     assert accepted["taxonomy_after"] == matching(rows(TAXONOMY), DOI)[0]
     assert set(accepted["changed_fields"]) == T579_FIELDS
     assert accepted["review_decision"] == selected_decision()
-    assert new["post_adjudication_public_state"] == load_context()["papers"][T579]
-    assert evidence["corpus_after"] == load_context()["counts"]
-    assert evidence["taxonomy_after"] == CURRENT_TAXONOMY_TOTALS
+    assert new["post_adjudication_public_state"] == endpoint_context()["papers"][T579]
+    assert evidence["corpus_after"] == endpoint_context()["counts"]
+    assert evidence["taxonomy_after"] == endpoint_taxonomy_totals()
     original_hashes = {entry["path"]: entry["sha256"] for entry in original["source_files"]}
     assert len(original_hashes) == 12
     assert evidence["current_source_sha256"].keys() == original_hashes.keys()
     for path, expected in evidence["current_source_sha256"].items():
-        assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected, path
+        assert hashlib.sha256(endpoint_bytes(path)).hexdigest() == expected, path
 
 
 @pytest.mark.parametrize("filename", ["unmapped_papers.json", "taxonomy_review.json", "relationship_review.json", "publication_metadata_review.json", "batch_c_policy_decisions.json"])
 def test_original_audit_ledgers_and_locked_policies_are_frozen(filename):
     path = AUDIT + filename
-    assert (ROOT / path).read_bytes() == previous(path)
+    assert endpoint_bytes(path) == previous(path)
 
 
 @pytest.mark.parametrize("path", [
@@ -294,7 +310,7 @@ def test_original_audit_ledgers_and_locked_policies_are_frozen(filename):
     "docs/corpus_quality_batch_c_closeout_2026_10_11.md",
 ])
 def test_earlier_published_decisions_and_batch_c_thirteen_debts_remain_frozen(path):
-    assert (ROOT / path).read_bytes() == previous(path)
+    assert endpoint_bytes(path) == previous(path)
 
 
 def test_all_49_frozen_neurips_artifacts_are_identical():

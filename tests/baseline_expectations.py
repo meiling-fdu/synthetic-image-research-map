@@ -15,7 +15,8 @@ data change and the identity and relationship invariants in
 # analysis-study contributions. B1C excludes P490 through the reversible scope
 # registry without changing historical taxonomy. The approved literature import
 # adds 39 papers; B1D removes only T579 source attribution, retaining detection
-# and method. Prior baselines and literature contribution totals remain frozen.
+# and method. B1E removes only T056/T345 source attribution, retaining detection
+# and their research types. Prior baselines and literature totals remain frozen.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 674,
     "public_map_source_papers": 613,
@@ -64,7 +65,7 @@ RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint"
 
 PUBLICATION_TYPE_TOTALS = {'conference': 400, 'journal': 156, 'preprint': 117, 'book': 1}
 
-TASK_TOTALS = {'detection': 621, 'source_attribution': 86, 'localization': 45}
+TASK_TOTALS = {'detection': 621, 'source_attribution': 84, 'localization': 45}
 
 
 CURRENT_CORPUS_COUNTS = {
