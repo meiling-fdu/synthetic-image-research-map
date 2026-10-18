@@ -1,0 +1,1807 @@
+{
+  "schema_version": 1,
+  "wave": "Batch B Wave B1F",
+  "phase": "EVIDENCE_ONLY_PENDING_MAINTAINER_ADJUDICATION",
+  "artifact_date": "2026-10-18",
+  "created_at_utc": "2026-10-18T08:16:34.811876+00:00",
+  "baseline": {
+    "published_commit": "cc1e1b3d10c2a030e8b2cdda19fc9aaa1c7e8a0f",
+    "origin_main_verified": "cc1e1b3d10c2a030e8b2cdda19fc9aaa1c7e8a0f",
+    "ahead_behind": [
+      0,
+      0
+    ],
+    "worktree": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+    "primary_checkout": "/Users/meilinger/Desktop/synthetic-image-research-map",
+    "tracked_file_count": 4453,
+    "tracked_inventory_sha256": "45ced790bd34cd9ddb4e8ddbcda442162055566d3d0d9557b099e81bd1f2af5a",
+    "fetch_completed_before_review": true
+  },
+  "scope": {
+    "review_ids": [
+      "T093",
+      "T303"
+    ],
+    "records": 2,
+    "authoritative_changes_applied": false,
+    "review_actions_closed": 0,
+    "terminal_decisions_created": 0,
+    "exports_run": 0,
+    "full_suites_run": 0,
+    "git_commits_created": 0,
+    "pushes": 0,
+    "other_reviews_performed": false
+  },
+  "locked_policies": [
+    {
+      "policy_id": "T1",
+      "decision": "ACCEPT",
+      "final_rule": "source_attribution does not imply detection. Assign detection only when the paper explicitly performs an authenticity / real-versus-generated task. Classification among already-synthetic generators is attribution only.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "T024",
+        "T136",
+        "T137",
+        "T141",
+        "T299",
+        "T446",
+        "T503",
+        "T572",
+        "T576",
+        "T611",
+        "T634"
+      ],
+      "policy_alone_resolves": {
+        "T024": false,
+        "T136": false,
+        "T137": false,
+        "T141": false,
+        "T299": false,
+        "T446": false,
+        "T503": false,
+        "T572": false,
+        "T576": false,
+        "T611": false,
+        "T634": false
+      }
+    },
+    {
+      "policy_id": "T2",
+      "decision": "ACCEPT",
+      "final_rule": "localization requires an evaluated spatial forensic prediction task such as pixel-, mask-, patch-, region-, or equivalent spatial prediction of synthetic/generated/edited content. Artifact segmentation qualifies. Attention maps, saliency maps, explainability heatmaps, or visualization alone do not qualify.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "T236",
+        "T246",
+        "T363"
+      ],
+      "policy_alone_resolves": {
+        "T236": false,
+        "T246": false,
+        "T363": true
+      }
+    },
+    {
+      "policy_id": "T3",
+      "decision": "MODIFY_AND_ACCEPT",
+      "final_rule": "Every public paper must remain connected to at least one core forensic task represented by the map: detection, source_attribution, or localization. If careful review establishes that none applies, the record requires scope review rather than an empty task set.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "T527"
+      ],
+      "policy_alone_resolves": {
+        "T527": false
+      }
+    }
+  ],
+  "source_files_sha256": {
+    "data/curated/papers.csv": "edb1744a04968fb8a63d20f04aaa088866e9b37c0d261a94e6f98beb8947bc38",
+    "data/curated/paper_taxonomy.csv": "17b59d6a33ae77ebfad1d58f3791b051197f5117834faa4c93342f8a79323417",
+    "data/curated/review_decisions.csv": "471b5542bb3619cce2997b244114f047b36ece15dcdfa43e67dfbb864aa73506",
+    "web/data/public_preview_papers.json": "9b1565482ab2095fa43ab3b9e60504c733fd0d43cd84bc4d5f3f8d98f2eb9781",
+    "web/data/public_preview_map_data.json": "09b6f815597b2c14349dffc359b7844eab9c2b9a758ec02ef669476e009b627b",
+    "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+    "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+    "data/raw/corpus_quality_audit_2026_10_04/source_checks.json": "78c2aed641161705a0a22658a2df38cc7e53550eb1857d119106a4a419b02227",
+    "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+    "data/raw/ant_gap_fill_2026_09_05/openalex_exact_title_results.json": "01786d62d432542cab8184bcb65c486990a1c9b3111b65400bf3e2977608769f",
+    "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+    "data/raw/systematic_literature_2026_09/a58a312ed612f8266c74.gz": "6c0ce05348d64215ccf0195281b51d197a685af17680e4c0ebe7dda5d6d81962",
+    "data/raw/systematic_gap_audit_2026_10_02/discovery_records.json": "6ec9e001aa007ef4fcd528243c0e2da099a8e9fed359d8050cb27ef8088edc0d",
+    "data/processed/literature51_2026_10_16/plan.json": "b6af4975b2be41958176448000d240dcdbc2dd00a507e8edc3a7a7b0027356ab",
+    "data/processed/literature51_2026_10_16/followup/review.json": "cdf83d05b4ab57fe5a37034f5213aef40f7c6ee0095c5d22d3988ca784d03312",
+    "data/processed/literature51_2026_10_16/followup/receipt.json": "b24deabfd36186ed278d2afd4ac60814a4c78d71e04151c25cee52d27460d4f3",
+    "data/processed/literature51_2026_10_16/main_integration/manifest.json": "5959e8628cc7e272ac45f0a2afd5e508412a416615c61d411b4529e135077a79",
+    "docs/literature51_main_integration_2026_10_17.md": "6f0e138d4bbdbd1d8032f84479cca0fae791f819ac998003f502faecc59101c4"
+  },
+  "retrieval_accounting": {
+    "maximum_new_full_manuscripts": 2,
+    "full_text_request_attempts": 2,
+    "successful_new_full_manuscripts": 1,
+    "by_case": {
+      "T093": {
+        "review_id": "T093",
+        "url": "https://www.sciencedirect.com/science/article/pii/S1077314226002389/pdfft?isDTMRedir=true&download=true",
+        "version_description": "Official DOI/PII-matched journal PDF candidate; derived standard publisher PDF route, not yet verified full text",
+        "title_expected": "EXACT: An Explainable Adaptive SemantiC-Trace Framework for AI-Generated Image Forensics",
+        "started_at_utc": "2026-10-18T08:00:27.586940+00:00",
+        "method": "One urllib GET; standard redirects only; no retries",
+        "attempts": 1,
+        "automatic_retries": 0,
+        "successful_full_manuscripts": 0,
+        "status": "HTTP_ERROR",
+        "http_status": 403,
+        "final_url": "https://www.sciencedirect.com/science/article/pii/S1077314226002389/pdfft?isDTMRedir=true&download=true",
+        "bytes": 832803,
+        "sha256": "274df033d55d7098c168403fc1d5df0ab7e5d9ac74e56b2070ac2b042690215f",
+        "response_path": "/private/tmp/b1f-evidence-2026-10-18/t093/http_failure.bin",
+        "response_headers": {
+          "Date": "Sun, 18 Oct 2026 08:00:28 GMT",
+          "Content-Type": "text/html; charset=UTF-8",
+          "Transfer-Encoding": "chunked",
+          "Connection": "close",
+          "Cache-Control": "private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0",
+          "Expires": "Thu, 01 Jan 1970 00:00:01 GMT",
+          "Referrer-Policy": "same-origin",
+          "X-Frame-Options": "SAMEORIGIN",
+          "Strict-Transport-Security": "max-age=2678400; preload",
+          "X-Content-Type-Options": "nosniff",
+          "set-cookie": "__cf_bm=j9whbZ2nifZ3Fea_rS6lmjlaL3rVKqXAa3qo9v3_a_c-1792310428.6283932-1.0.1.1-9HiavySOmwb5CEgp6YCSDgEhsywRYRPm3_nenHozuJ6TAEoDXDHxiTzz9QQhEX7SGJQgW6zkhyfFOmbJKYwwcw6dF21Kd1yufPxTJuB9_0lafPp2KjdpWWGr.9g0SS98; HttpOnly; SameSite=None; Secure; Path=/; Domain=sciencedirect.com; Expires=Sun, 18 Oct 2026 08:30:28 GMT",
+          "tdm-policy": "https://www.elsevier.com/tdm/tdmrep-policy.json",
+          "tdm-reservation": "1",
+          "Server": "cloudflare",
+          "CF-RAY": "a4c60272ed21deb7-NRT"
+        },
+        "error": "HTTP Error 403: Forbidden",
+        "completed_at_utc": "2026-10-18T08:00:31.370173+00:00"
+      },
+      "T303": {
+        "review_id": "T303",
+        "url": "https://arxiv.org/pdf/2511.19111v2",
+        "version_description": "arXiv:2511.19111v2, revised2025-11-26; author manuscript, canonical preprint",
+        "title_expected": "DiffSeg30k: A Multi-Turn Diffusion Editing Benchmark for Localized AIGC Detection",
+        "started_at_utc": "2026-10-18T08:00:27.587161+00:00",
+        "method": "One urllib GET; standard redirects only; no retries",
+        "attempts": 1,
+        "automatic_retries": 0,
+        "successful_full_manuscripts": 1,
+        "status": "FULL_PDF_RETRIEVED_IDENTITY_REVIEW_PENDING",
+        "http_status": 200,
+        "final_url": "https://arxiv.org/pdf/2511.19111v2",
+        "response_headers": {
+          "Connection": "close",
+          "Content-Length": "4166186",
+          "etag": "\"sha256:dcaf135630e9a8c09cb27d6d35ca7180552186b6c8d1568a384ffd903af37740\"",
+          "access-control-allow-origin": "*",
+          "server": "Google Frontend",
+          "via": "1.1 google, 1.1 varnish, 1.1 varnish, 1.1 varnish",
+          "last-modified": "Thu, 27 Nov 2025 01:42:02 GMT",
+          "x-cloud-trace-context": "b86210b9f099dc3243c91d92ab558ec9",
+          "content-type": "application/pdf",
+          "content-disposition": "inline; filename=\"2511.19111v2.pdf\"",
+          "link": "<https://arxiv.org/pdf/2511.19111>; rel='canonical'",
+          "Accept-Ranges": "bytes",
+          "Age": "102954",
+          "Date": "Sun, 18 Oct 2026 08:00:28 GMT",
+          "X-Served-By": "cache-lga-kjfk8660054-LGA, cache-lga-kjfk8660054-LGA, cache-lga-kjfk8660054-LGA, cache-nrt-rjtt7900029-NRT",
+          "X-Cache": "MISS, HIT, HIT",
+          "X-Timer": "S1792310428.273175,VS0,VE160"
+        },
+        "bytes": 4166186,
+        "sha256": "3cd4e425289716e7389a65c13d2bc1ec5fa25b90aa8f16633258dd63c6ef2f65",
+        "pdf_path": "/private/tmp/b1f-evidence-2026-10-18/t303/manuscript.pdf",
+        "pages": 17,
+        "pdf_metadata": {
+          "/Author": "Hai Ci; Ziheng Peng; Pei Yang; Yingxin Xuan; Mike Zheng Shou",
+          "/Creator": "arXiv GenPDF (tex2pdf:4177c2c)",
+          "/DOI": "https://doi.org/10.48550/arXiv.2511.19111",
+          "/License": "http://creativecommons.org/licenses/by/4.0/",
+          "/PTEX.Fullbanner": "This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) kpathsea version 6.4.1",
+          "/Producer": "pikepdf 8.15.1",
+          "/Title": "DiffSeg30k: A Multi-Turn Diffusion Editing Benchmark for Localized AIGC Detection",
+          "/Trapped": "/False",
+          "/arXivID": "https://arxiv.org/abs/2511.19111v2"
+        },
+        "extracted_text_sha256": "88499071b285ceb0869eacfa90633bcc75e38493a386ce73b9ff11b0ad38a9d5",
+        "completed_at_utc": "2026-10-18T08:00:33.473008+00:00"
+      }
+    },
+    "retries": 0,
+    "additional_manuscript_versions_retrieved": 0,
+    "separately_retrieved_supplements": 0,
+    "bundled_supplement_pages_in_single_T303_PDF": [
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "dataset_payloads_retrieved": 0,
+    "code_downloads": 0,
+    "metadata_access_history": [
+      {
+        "review_id": "T093",
+        "kind": "official_article_landing",
+        "url": "https://www.sciencedirect.com/science/article/pii/S1077314226002389",
+        "outcome": "HTTP_403",
+        "raw_response_file": "metadata-open.txt",
+        "scientific_full_text": false
+      },
+      {
+        "review_id": "T303",
+        "kind": "official_arxiv_metadata",
+        "url": "https://arxiv.org/abs/2511.19111",
+        "outcome": "METADATA_AVAILABLE",
+        "version": "v2",
+        "first_submitted": "2025-11-24",
+        "latest_revision": "2025-11-26",
+        "reported_pages": 16,
+        "reported_figures": 10,
+        "raw_response_file": "metadata-open.txt",
+        "scientific_full_text": false
+      },
+      {
+        "review_id": "T093",
+        "kind": "one_exact_title_discovery_search",
+        "query": "\"EXACT\" \"Explainable Adaptive\" \"SemantiC-Trace\" full text",
+        "outcome": "OFFICIAL_INDEXED_PARTIAL_TEXT_ONLY",
+        "primary_result_url": "https://www.sciencedirect.com/science/article/pii/S1077314226002389",
+        "primary_result_scope": "Publisher abstract, introduction and section snippets only, not complete scientific text or tables",
+        "other_access_result_url": "https://www.researchgate.net/publication/410434127_EXACT_An_explainable_adaptive_semantic-trace_framework_for_AI-generated_image_forensics",
+        "other_result_use": "Request-only/no-full-text search snippet; not opened, not used for scientific adjudication, no author contact",
+        "raw_response_retained": false,
+        "raw_response_sha256": null,
+        "note": "This is a normalized observation, not a raw search capture. No raw-response hash is asserted.",
+        "scientific_full_text": false
+      },
+      {
+        "review_id": "T303",
+        "kind": "official_dataset_card_web_fallback",
+        "url": "https://huggingface.co/datasets/Chaos2629/Diffseg30k",
+        "outcome": "PUBLIC_CARD_TEXT_AVAILABLE",
+        "raw_response_file": "hf-card-web-response.json",
+        "version": "Current public page, no revision pinned",
+        "dataset_payloads_retrieved": 0,
+        "scientific_full_text": false,
+        "purpose": "Annotation encoding only, not a substitute for manuscript experimental evidence"
+      }
+    ],
+    "hf_cli_history": {
+      "source_url": "https://huggingface.co/datasets/Chaos2629/Diffseg30k",
+      "command": [
+        "hf",
+        "datasets",
+        "card",
+        "Chaos2629/Diffseg30k",
+        "--format",
+        "json"
+      ],
+      "started_at_utc": "2026-10-18T08:00:25.590886+00:00",
+      "attempts": 1,
+      "metadata_only": true,
+      "dataset_payloads_retrieved": 0,
+      "version_limitation": "Current public dataset card; no revision-pinned dataset payload or implementation was retrieved.",
+      "exit_code": 0,
+      "status": "COMPLETED_WITH_NO_USABLE_CARD_CONTENT",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "92f7d28d094973d817560a9e29d8cfe9c18c2805463046d39cf0e2f7c5780917",
+      "completed_at_utc": "2026-10-18T08:00:30.878979+00:00",
+      "original_exit_based_status": "RETRIEVED",
+      "content_verified": false,
+      "stdout_bytes": 0,
+      "content_limitation": "The command exited zero but returned an empty stdout; it did not supply a usable card. The warning/hint is preserved separately.",
+      "fallback": "One official public dataset-page open supplied card text; no repeated CLI request and no dataset payload download."
+    },
+    "counting_rule": "HTTP403 HTML is not a full manuscript. Public landing/search/card access is metadata access, not a second manuscript retrieval. All network work ended before packet construction."
+  },
+  "records": [
+    {
+      "schema_version": 1,
+      "review_id": "T093",
+      "paper_id": "curated:41a934ce12ecfd2f17e9",
+      "review_kind": "B1F_EVIDENCE_ONLY",
+      "reviewed_at_utc": "2026-10-18T08:04:00.268825+00:00",
+      "outcome": "EVIDENCE_STILL_INSUFFICIENT",
+      "canonical_identity": {
+        "paper_id": "curated:41a934ce12ecfd2f17e9",
+        "title": "EXACT: An Explainable Adaptive SemantiC-Trace Framework for AI-Generated Image Forensics",
+        "year": "2026",
+        "authors": "Hui Shi; Mingyang Liu; Chengcheng Gong",
+        "venue": "Computer Vision and Image Understanding",
+        "doi": "10.1016/j.cviu.2026.104871",
+        "arxiv_id": "",
+        "openalex_url": "https://openalex.org/W7169504023",
+        "paper_url": "https://doi.org/10.1016/j.cviu.2026.104871",
+        "publication_type": "journal"
+      },
+      "current_authoritative_taxonomy": {
+        "tasks": "detection;source_attribution",
+        "image_scopes": "fully_generated",
+        "research_types": "method",
+        "tasks_status": "reviewed",
+        "tasks_evidence_tier": "reused_audit+abstract",
+        "tasks_evidence_source": "openalex",
+        "taxonomy_status": "reviewed"
+      },
+      "original_review": {
+        "review_id": "T093",
+        "paper_id": "curated:41a934ce12ecfd2f17e9",
+        "title": "EXACT: An Explainable Adaptive SemantiC-Trace Framework for AI-Generated Image Forensics",
+        "dimension": "tasks",
+        "current_labels": [
+          "detection",
+          "source_attribution"
+        ],
+        "proposed_labels": [
+          "detection",
+          "source_attribution",
+          "localization"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "EXACT explicitly claims a pixel-level localization head and evaluates localization; existing two task labels omit it.",
+        "evidence_url": "https://doi.org/10.1016/j.cviu.2026.104871",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:41a934ce12ecfd2f17e9",
+        "evidence_excerpt": "AI-generated images have become increasingly photorealistic, making robust and interpretable forensic analysis more challenging under generator shift and post-processing. Existing methods often rely on",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: EXACT explicitly claims a pixel-level localization head and evaluates localization; existing two task labels omit it.",
+        "batch": "B",
+        "current_tasks": [
+          "detection",
+          "source_attribution"
+        ],
+        "proposed_tasks": [
+          "detection",
+          "source_attribution",
+          "localization"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method"
+        ]
+      },
+      "original_intake_question": "Primary localization head specification, spatial ground truth and quantitative spatial metrics; the abstract claim of meaningful localization is insufficient by itself. Stored audit and current public/taxonomy excerpts establish the pending question but do not replace the requested contribution/evaluation check. No scientific verdict is made during intake.",
+      "locked_policies": [
+        {
+          "policy_id": "T1",
+          "decision": "ACCEPT",
+          "final_rule": "source_attribution does not imply detection. Assign detection only when the paper explicitly performs an authenticity / real-versus-generated task. Classification among already-synthetic generators is attribution only.",
+          "date": "2026-10-05",
+          "affected_review_ids": [
+            "T024",
+            "T136",
+            "T137",
+            "T141",
+            "T299",
+            "T446",
+            "T503",
+            "T572",
+            "T576",
+            "T611",
+            "T634"
+          ],
+          "policy_alone_resolves": {
+            "T024": false,
+            "T136": false,
+            "T137": false,
+            "T141": false,
+            "T299": false,
+            "T446": false,
+            "T503": false,
+            "T572": false,
+            "T576": false,
+            "T611": false,
+            "T634": false
+          }
+        },
+        {
+          "policy_id": "T2",
+          "decision": "ACCEPT",
+          "final_rule": "localization requires an evaluated spatial forensic prediction task such as pixel-, mask-, patch-, region-, or equivalent spatial prediction of synthetic/generated/edited content. Artifact segmentation qualifies. Attention maps, saliency maps, explainability heatmaps, or visualization alone do not qualify.",
+          "date": "2026-10-05",
+          "affected_review_ids": [
+            "T236",
+            "T246",
+            "T363"
+          ],
+          "policy_alone_resolves": {
+            "T236": false,
+            "T246": false,
+            "T363": true
+          }
+        },
+        {
+          "policy_id": "T3",
+          "decision": "MODIFY_AND_ACCEPT",
+          "final_rule": "Every public paper must remain connected to at least one core forensic task represented by the map: detection, source_attribution, or localization. If careful review establishes that none applies, the record requires scope review rather than an empty task set.",
+          "date": "2026-10-05",
+          "affected_review_ids": [
+            "T527"
+          ],
+          "policy_alone_resolves": {
+            "T527": false
+          }
+        }
+      ],
+      "scientific_sufficiency": {
+        "complete_primary_manuscript_available": false,
+        "complete_main_paper_read": false,
+        "scientific_task_finding_established": false,
+        "confidence": "High confidence that the retained evidence is insufficient for the requested localization decision; localization capability itself remains unverified.",
+        "scope": "No complete official or author manuscript was obtained. This is an accessibility/evidence-limit finding, not a negative scientific finding about EXACT."
+      },
+      "primary_retrieval": {
+        "candidate_url": "https://www.sciencedirect.com/science/article/pii/S1077314226002389/pdfft?isDTMRedir=true&download=true",
+        "candidate_landing_url": "https://www.sciencedirect.com/science/article/pii/S1077314226002389",
+        "doi_url": "https://doi.org/10.1016/j.cviu.2026.104871",
+        "version_description": "Official DOI/PII-matched journal PDF candidate; derived standard publisher PDF route, not yet verified full text",
+        "document_version_verified": false,
+        "manuscript_page_count": null,
+        "attempts": 1,
+        "automatic_retries": 0,
+        "successful_full_manuscripts": 0,
+        "http_status": 403,
+        "status": "HTTP_ERROR",
+        "started_at_utc": "2026-10-18T08:00:27.586940+00:00",
+        "completed_at_utc": "2026-10-18T08:00:31.370173+00:00",
+        "response_bytes": 832803,
+        "response_sha256": "274df033d55d7098c168403fc1d5df0ab7e5d9ac74e56b2070ac2b042690215f",
+        "response_content_type": "text/html; charset=UTF-8",
+        "response_path": "/private/tmp/b1f-evidence-2026-10-18/t093/http_failure.bin",
+        "response_is_manuscript": false,
+        "receipt_path": "/private/tmp/b1f-evidence-2026-10-18/t093/retrieval.json",
+        "receipt_sha256": "6422b7d0fb527e2651205c72953e4859c54cae3cab0231f09ad891a23cf4783a",
+        "retrieved_by": "root; this reviewer made no network request",
+        "budget_note": "One direct official PDF-candidate request was attempted; HTTP403 HTML is not counted as a successfully retrieved full manuscript. No retries or alternate full versions were requested."
+      },
+      "additional_access_context_from_root": {
+        "provenance": "Root coordinator message during this B1F review; no new source access by this reviewer.",
+        "official_landing": "The first official publisher landing open also returned HTTP403.",
+        "single_title_search": "One exact-title search returned indexed official publisher abstract/introduction/section snippets, without complete tables, equations, spatial metrics or full evaluation protocol.",
+        "other_search_snippet": "A ResearchGate search snippet indicated no full text; this is access metadata only, not scientific evidence.",
+        "full_primary_evidence_obtained": false
+      },
+      "existing_local_evidence": {
+        "recovery_file": "/private/tmp/b1f-evidence-2026-10-18/t093/local_findings.json",
+        "recovery_sha256": "f5649ab2b1addaa87de189cfea19ed25c0dcb3d9458f27dcfbf762010ce4ea1a",
+        "reused_pdf_inventory": "/private/tmp/b1e-evidence-2026-10-17/t345/local_pdf_identity_inventory.json",
+        "inventory_sha256": "fa4de5ad696242dc7416cbbe8f7a4439d79a5ec4a893e6e35f1fa8e6eb38c31b",
+        "inventory_unique_pdfs": 49,
+        "identity_matched_full_manuscript_found": false,
+        "evidence_type": "Current canonical/taxonomy/public records; historical original task/research/publication reviews; cached identity-matched OpenAlex metadata/abstract; retained title-linked publisher discovery/search metadata. These do not replace full scientific text.",
+        "local_search_limitations": "Reused prior PDF identity inventory avoids re-review of other papers. Absence from this known retained inventory and title/identifier searches is not proof that every newly-created binary PDF everywhere was inspected."
+      },
+      "partial_claims_not_full_scientific_verification": [
+        {
+          "source": "Retained canonical/OpenAlex abstract; root-reported indexed official publisher snippets",
+          "claim": "A dual-evidence framework combines a CLIP-based semantic branch with a Haar-wavelet/Transformer trace branch and adaptive per-image fusion.",
+          "verification_boundary": "Feature processing components do not independently establish a spatial forensic output or evaluation."
+        },
+        {
+          "source": "Retained canonical/OpenAlex abstract; root-reported publisher snippets",
+          "claim": "The framework claims joint detection, source attribution and pixel-level localization, including meaningful localization.",
+          "verification_boundary": "A claimed task inventory does not prove a localization head, supervision, spatial ground truth or quantitative localization benchmark."
+        },
+        {
+          "source": "Retained canonical/OpenAlex abstract; root-reported publisher snippets",
+          "claim": "A frozen Large Multimodal Model generates concise natural-language forensic reports from model outputs.",
+          "verification_boundary": "Reporting/explanation is not itself evidence of an independently evaluated spatial prediction task."
+        }
+      ],
+      "quantitative_values_available": [
+        {
+          "value": 99.49,
+          "unit": "percent",
+          "metric_as_claimed": "in-domain image-level detection accuracy",
+          "source": "Retained canonical/OpenAlex abstract, also within root-reported publisher partial claims",
+          "localization_evidence": false,
+          "full_protocol_verified": false
+        },
+        {
+          "value": 84.88,
+          "unit": "percent",
+          "metric_as_claimed": "extended cross-dataset average image-level detection accuracy",
+          "source": "Retained canonical/OpenAlex abstract, also within root-reported publisher partial claims",
+          "localization_evidence": false,
+          "full_protocol_verified": false
+        },
+        {
+          "value": 94.18,
+          "unit": "percent",
+          "metric_as_claimed": "extended cross-dataset average precision for detection",
+          "source": "Retained canonical/OpenAlex abstract, also within root-reported publisher partial claims",
+          "localization_evidence": false,
+          "full_protocol_verified": false
+        }
+      ],
+      "spatial_quantitative_evidence": {
+        "status": "UNAVAILABLE_NOT_NEGATIVE_EVIDENCE",
+        "published_table_identifiers": null,
+        "metric_definitions": null,
+        "pixel_or_region_metrics": null,
+        "localization_baseline_names": null,
+        "exact_comparative_values": null,
+        "ground_truth_and_sample_counts": null,
+        "note": "These items are not verified in the available material. Do not describe them as absent from the complete paper."
+      },
+      "seven_requested_scientific_checks": [
+        {
+          "check": "spatial_output",
+          "question": "Does EXACT actually output a predicted localization mask, pixel map, bounding region or equivalent spatial localization result?",
+          "status": "UNVERIFIED_INSUFFICIENT_PRIMARY_EVIDENCE",
+          "finding": "The abstract claims pixel-level localization but a complete output/head specification and actual prediction label space are unavailable.",
+          "negative_conclusion_about_paper": false
+        },
+        {
+          "check": "mechanism",
+          "question": "Is the spatial output generated by a learned forensic localization module, or merely by an explanation/attention mechanism?",
+          "status": "UNVERIFIED_INSUFFICIENT_PRIMARY_EVIDENCE",
+          "finding": "Partial architecture descriptions identify semantic/trace feature branches and adaptive fusion, but do not establish a learned localization head, its loss, or its relation to attention/explanation maps.",
+          "negative_conclusion_about_paper": false
+        },
+        {
+          "check": "spatial_ground_truth",
+          "question": "Is localization evaluated against independent spatial ground truth?",
+          "status": "UNVERIFIED_INSUFFICIENT_PRIMARY_EVIDENCE",
+          "finding": "No complete spatial annotation construction, forensic target definition, sample counts, split protocol or ground-truth evaluation procedure was obtained.",
+          "negative_conclusion_about_paper": false
+        },
+        {
+          "check": "spatial_metrics",
+          "question": "Are pixel-level precision, recall, F1, IoU, Dice, AUC or other appropriate localization metrics reported?",
+          "status": "UNVERIFIED_INSUFFICIENT_PRIMARY_EVIDENCE",
+          "finding": "No full localization metric definitions or numerical localization results were obtained. Abstract detection accuracy/AP values cannot substitute for spatial metrics.",
+          "negative_conclusion_about_paper": false
+        },
+        {
+          "check": "localization_baselines",
+          "question": "Are the results quantitatively compared with localization baselines?",
+          "status": "UNVERIFIED_INSUFFICIENT_PRIMARY_EVIDENCE",
+          "finding": "Complete localization tables, baseline identities, training/evaluation conditions and exact comparative values are unavailable.",
+          "negative_conclusion_about_paper": false
+        },
+        {
+          "check": "task_separation",
+          "question": "Are detection, source attribution and localization evaluated as separate tasks?",
+          "status": "UNVERIFIED_INSUFFICIENT_PRIMARY_EVIDENCE",
+          "finding": "The abstract describes a unified framework supporting these tasks, but separate heads/decision spaces, losses, protocols and quantitative task-specific evaluations cannot be verified.",
+          "negative_conclusion_about_paper": false
+        },
+        {
+          "check": "natural_language_reporting",
+          "question": "Does the natural-language reporting merely describe other model outputs, or provide an independently evaluated forensic task?",
+          "status": "UNVERIFIED_INSUFFICIENT_PRIMARY_EVIDENCE",
+          "finding": "The abstract/partial description says a frozen Large Multimodal Model produces reports from model outputs; the complete reporting inputs, protocol, independence and evaluation remain unverified.",
+          "negative_conclusion_about_paper": false
+        }
+      ],
+      "contradictions_and_ambiguities": [
+        {
+          "issue": "Original audit reason versus evidence actually available",
+          "finding": "The original T093 reason says a pixel-level head/evaluation is explicit, but its retained tier is reused_audit+abstract. Current abstract claims support motivation to inspect the full paper; neither the reason nor abstract establishes the requested complete mechanism/GT/metric evidence."
+        },
+        {
+          "issue": "Detection metric versus localization metric",
+          "finding": "The three available percentages are described as image-level detection accuracy/average precision. Reusing them as pixel F1, IoU, Dice or other localization scores would be unsupported."
+        },
+        {
+          "issue": "Explainability versus evaluated localization",
+          "finding": "Architecture and frozen-reporting descriptions may coexist with a true localization task, but accessible partial text does not settle whether spatial output is learned/evaluated or only visualized. Neither outcome is forced."
+        },
+        {
+          "issue": "Separate existing tasks",
+          "finding": "No material contradiction sufficient to alter detection or source_attribution was established from the bounded partial evidence. Current labels are preserved administratively, not newly scientifically certified."
+        }
+      ],
+      "policy_application": {
+        "T2": "An evaluated spatial forensic prediction against spatial ground truth is required; attention, saliency or explanation alone is insufficient. The available evidence cannot verify either qualifying localization or a merely explanatory mechanism.",
+        "T1": "Detection/source-attribution must be evaluated separately; abstract claims and generator domains cannot supply the missing complete protocol. No separate task correction is proposed.",
+        "T3": "No empty task set or scope action is proposed; existing detection/source_attribution labels remain unchanged."
+      },
+      "precise_blocker": "The only official DOI/PII-matched full-PDF candidate request returned HTTP403 with a text/html payload. Existing local caches and indexed partial publisher text do not contain the complete architecture, training/evaluation protocol, spatial ground truth or quantitative localization comparisons required by the original question.",
+      "needed_primary_evidence": [
+        "An accessible identity-matched complete main manuscript with a verifiable publication/author version.",
+        "Complete architecture/output-head and training-loss definitions identifying any learned spatial forensic output.",
+        "Localization ground-truth definition, annotation origin, sample counts, train/validation/test splits and evaluation protocol.",
+        "Complete localization metric definitions and exact numerical results in their published tables/figures, including localization baselines and comparable settings.",
+        "Task-specific detection, attribution, localization and natural-language reporting definitions/results sufficient to distinguish predictive tasks from explanations."
+      ],
+      "proposed_authoritative_remediation": null,
+      "proposed_taxonomy_correction": null,
+      "administrative_disposition": "Keep T093 open pending sufficient complete primary evidence. Preserve tasks detection;source_attribution, image_scopes fully_generated and research_types method. Do not add or reject localization from these partial sources.",
+      "maintainer_acceptance_pending": true,
+      "review_closed": false,
+      "terminal_review_decision_created": false,
+      "authoritative_changes_applied": false,
+      "public_data_effect": {
+        "public_count": 0,
+        "relationships": 0,
+        "detection": 0,
+        "source_attribution": 0,
+        "localization": 0
+      },
+      "change_and_access_constraints": {
+        "R_or_primary_writes": false,
+        "Git_mutations": false,
+        "tests_or_exports": false,
+        "network_requests_by_this_reviewer": 0,
+        "new_retrieval_attempts_by_this_reviewer": 0,
+        "additional_source_attempts": 0,
+        "only_output": "/private/tmp/b1f-evidence-2026-10-18/t093/scientific_findings.json",
+        "other_cases_or_prior_data_changed": false
+      }
+    },
+    {
+      "review_id": "T303",
+      "paper_id": "curated:33788a5e5e6efbd6bddd",
+      "review_kind": "B1F_EVIDENCE_ONLY_COMPLETE_PRIMARY_REVIEW",
+      "reviewed_at_utc": "2026-10-18T08:09:18.142055+00:00",
+      "baseline_commit": "cc1e1b3d10c2a030e8b2cdda19fc9aaa1c7e8a0f",
+      "provisional_outcome": "RETAIN_SOURCE_ATTRIBUTION",
+      "proposed_tasks": [
+        "detection",
+        "source_attribution",
+        "localization"
+      ],
+      "proposed_authoritative_remediation": "No task-taxonomy correction is supported: retain the current three tasks. The old proposed removal of source_attribution conflicts with substantive model-aware semantic segmentation evaluation. This is provisional evidence only; no review resolution is recorded.",
+      "confidence": "high for the existence of evaluated closed-set regional editing-model attribution; bounded by the reported validation protocol, annotation limitations and unresolved overlap semantics",
+      "applied": false,
+      "review_closed": false,
+      "identity": {
+        "title": "DiffSeg30k: A Multi-Turn Diffusion Editing Benchmark for Localized AIGC Detection",
+        "authors": [
+          "Hai Ci",
+          "Ziheng Peng",
+          "Pei Yang",
+          "Yingxin Xuan",
+          "Mike Zheng Shou"
+        ],
+        "arxiv_id": "2511.19111v2",
+        "version_date": "2025-11-26",
+        "canonical_publication_type": "preprint",
+        "canonical_doi": "",
+        "canonical_openalex": "https://openalex.org/W7106655390",
+        "identity_locator": "PDF p1 complete title/byline, author metadata, and arXiv v2 footer; matches all five canonical authors in order.",
+        "source_url": "https://arxiv.org/pdf/2511.19111v2",
+        "local_path": "/private/tmp/b1f-evidence-2026-10-18/t303/manuscript.pdf",
+        "sha256": "3cd4e425289716e7389a65c13d2bc1ec5fa25b90aa8f16633258dd63c6ef2f65",
+        "bytes": 4166186,
+        "actual_pdf_pages": 17,
+        "retained_arxiv_metadata_comment_pages": 16,
+        "page_count_boundary": "The retrieved PDF actually contains 17 pages; earlier arXiv comment says 16 pages. Identity is established by version stamp and complete title/byline rather than page-count assumption.",
+        "manuscript_structure": "Main scientific text pp1–8; references pp9–12; bundled Supplementary Material pp13–17 in the same single retrieved PDF.",
+        "version_limitation": "Findings are tied to arXiv2511.19111v2. No different version, formal publication, code, dataset payload or separate supplement was retrieved."
+      },
+      "retrieval_accounting": {
+        "successful_new_full_manuscripts": 1,
+        "attempts": 1,
+        "automatic_retries": 0,
+        "extra_network_requests_by_this_reviewer": 0,
+        "separate_supplements_retrieved": 0,
+        "bundled_supplement_pages_reviewed": [
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "root_receipt_path": "/private/tmp/b1f-evidence-2026-10-18/t303/retrieval.json",
+        "retrieved_at_utc": "2026-10-18T08:00:33.473008+00:00",
+        "manuscript_text_sha256": "88499071b285ceb0869eacfa90633bcc75e38493a386ce73b9ff11b0ad38a9d5"
+      },
+      "coverage": {
+        "complete_pages_read": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "visual_pages_inspected": [
+          5,
+          7,
+          13
+        ],
+        "other_page_coverage": "Full pp1–4 introduction, benchmark definitions, construction and statistics; p6 edit examples; p8 qualitative segmentation caption, classification training and conclusion; pp9–12 complete references; pp14–17 quality-rating prompts, examples and additional image edits.",
+        "main_attribution_anchors": [
+          "p5 Section4.1–4.2 and Table2",
+          "p7 Figure5 semantic true/predicted model-class confusion matrices"
+        ],
+        "supplementary_corroboration_only": [
+          "Bundled pages13–17 observed in the same PDF; no supplementary numerical result is needed for this packet’s positive task finding."
+        ],
+        "coordinator_visual_pages_inspected": [
+          1,
+          3,
+          4,
+          5,
+          7,
+          8
+        ]
+      },
+      "original_question": {
+        "original_review": {
+          "review_id": "T303",
+          "paper_id": "curated:33788a5e5e6efbd6bddd",
+          "title": "DiffSeg30k: A Multi-Turn Diffusion Editing Benchmark for Localized AIGC Detection",
+          "dimension": "tasks",
+          "current_labels": [
+            "detection",
+            "source_attribution",
+            "localization"
+          ],
+          "proposed_labels": [
+            "detection",
+            "localization"
+          ],
+          "status": "LIKELY_FIX",
+          "confidence": "medium",
+          "reason": "Fresh arXiv abstract describes edit masks and whole-image classification; no source-generator identification task is established. Verify the full evaluation before removal.",
+          "evidence_url": "https://arxiv.org/abs/2511.19111",
+          "evidence_basis": "fresh primary arXiv abstract",
+          "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:33788a5e5e6efbd6bddd",
+          "evidence_excerpt": "Diffusion-based editing enables realistic modification of local image regions, making AI-generated content harder to detect. Existing AIGC detection benchmarks focus on classifying entire images,",
+          "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: Fresh arXiv abstract describes edit masks and whole-image classification; no source-generator identification task is established. Verify the full evaluation before removal.",
+          "batch": "B",
+          "current_tasks": [
+            "detection",
+            "source_attribution",
+            "localization"
+          ],
+          "proposed_tasks": [
+            "detection",
+            "localization"
+          ],
+          "current_research_types": [
+            "dataset",
+            "benchmark",
+            "analysis_study"
+          ],
+          "proposed_research_types": [
+            "dataset",
+            "benchmark",
+            "analysis_study"
+          ]
+        },
+        "intake_exact_question": "Reconcile the ledger reason with the current abstract explicitly naming editing-model identification: full semantic class definitions, generator/model-ID outputs, and attribution-specific metrics or exhaustive task evaluation. Conflicting local cues: the old action reason says no generator-identification task was established, but the current abstract explicitly states simultaneous localization and identification of editing models. Preserve current labels; prioritize source-level reconciliation rather than assuming the proposed removal.",
+        "contradiction_resolution": "The old audit treated source-generator identification as unestablished even though its retained fresh arXiv abstract already named editing-model identification. The full v2 paper now supplies the previously missing evaluated prediction protocol and quantitative results. This is a correction of an interpretive premise, not demonstrated evidence of an abstract change between versions.",
+        "independent_questions": "R303 remains original BatchD/NO_CHANGE_AFTER_REVIEW for dataset;benchmark;analysis_study. P303 remains original BatchD/TRUE_PREPRINT. Neither is independently adjudicated or closed in this evidence-only review."
+      },
+      "task_inventory": {
+        "detection": {
+          "supported": true,
+          "scope": "Image-level presence of local diffusion editing, evaluated separately from the spatial/model-aware tasks.",
+          "decision_rule": "p7: classify an image as edited when its predicted non-background mask area exceeds 1% of total image area.",
+          "evaluation": "Table5 p7 reports binary classification Acc and mAP; Table6 p7 reports cross-generator binary classification. Segmentation models are adapted by mask-area thresholding, not by a generator-ID image classifier.",
+          "limits": "The paper does not detail a continuous score used to compute mAP or a separate pixel probability cutoff. It does not establish whole-image model-ID classification."
+        },
+        "localization": {
+          "supported": true,
+          "scope": "Learned per-pixel edited-region predictions assessed against editing-mask ground truth.",
+          "prediction": "Binary foreground/background segmentation by trained FCN-8s, SegFormer-B2 and DeepLabv3+ baselines.",
+          "ground_truth": "Object masks from Grounded-SAM define the known inpainting regions in the editing pipeline; they are evaluation targets, separate from each baseline’s predicted masks. These are not merely baseline explanation or attention maps.",
+          "evaluation": "Main Table2 p5 binary pixel accuracy, foreground mIoU and boundary-F1; Table3 p5 distortion stress tests; Table4 p7 binary cross-generator segmentation.",
+          "limits": "Masks are constructed automatically, with acknowledged mask errors and quality filtering; no independent manual pixel-perfect validation is reported."
+        },
+        "source_attribution": {
+          "supported": true,
+          "scope": "Closed-set editing-model identity assigned per edited pixel/region as model-aware semantic segmentation.",
+          "prediction": "A spatial class map over background and eight editing-model classes. Model identity is part of the predicted mask, rather than a domain label applied only when tabulating results.",
+          "main_evaluation_proof": "Table2 explicitly evaluates semantic segmentation as localization plus attribution to specific diffusion models; Figure5 compares predicted versus true values for the nine named classes. Thus the result exceeds an annotation-schema or dataset-capability claim.",
+          "main_metrics": "Class-aware semantic mIoU, semantic boundary-F1 and pixel accuracy in Table2; class-specific normalized confusion entries in Figure5.",
+          "not_required": "A separate whole-image generator classifier is not needed for this demonstrated regional attribution task.",
+          "not_established": "Global source-model identification for a mixed-source image, attribution of the original base-image generator, complete editing history, and open-set identification of unseen editing models are not established."
+        }
+      },
+      "labels_outputs_and_training": {
+        "semantic_class_count": 9,
+        "semantic_named_classes_in_Fig5_order": [
+          "BG",
+          "SD2",
+          "Kolors",
+          "SD3.5",
+          "Flux",
+          "SDXL",
+          "Glide",
+          "HunyuanDiT",
+          "Kandinsky2.2"
+        ],
+        "binary_class_count": 2,
+        "binary_labels": [
+          "background/unedited region",
+          "diffusion-edited foreground region"
+        ],
+        "numeric_encoding_boundary": "The user-supplied dataset schema describes background0 and model IDs1–8. The full PDF displays background plus eight named predicted/true classes, but does not itself spell out a numeric ID-to-model mapping. Figure5’s plotting order must not be assumed to equal dataset integer encoding. Any card-sourced 0..8 mapping should have separate provenance.",
+        "model_identity_vs_content": "Unlike the earlier T056/T345 cases, the semantic prediction classes here are actual named editing models, not object content categories or generator names used only as evaluation domains.",
+        "architectures": "Section4.1 pp4–5: FCN-8s and DeepLabv3+ with ResNet50, plus SegFormer-B2. Both binary and model-aware semantic segmentation are explicitly trained/evaluated.",
+        "output_detail_boundary": "The paper establishes the categorical output spaces through task definitions and confusion matrices, but does not specify final layer channel dimensions, activation details or implementation-level mask decoding. Nine semantic classes are supported; precise tensor shape is not independently reported.",
+        "losses_and_equations": "No explicit numbered task-loss equations or novel classification/localization objective are given. The benchmark uses default hyperparameters from existing implementations; a particular cross-entropy implementation must not be inferred as a paper-specified detail.",
+        "training_and_validation": "8:2 train/validation split, all results on validation; 512x512 baseline training; 5,000 additional unedited real COCO training images to suppress segmentation false positives; approximate training times FCN/SegFormer/DeepLab 8/6/3h on a4090.",
+        "classification_negative_training": "p8: additionally30,000 real COCO images are used as negatives when training CNNSpot and UniversalFakeDet classification baselines.",
+        "split_limits": "Exact per-task validation counts and the separation of related editing sequences/base images are not specified. The distribution/split of negative real evaluation samples is not fully detailed."
+      },
+      "construction_and_multi_turn_semantics": {
+        "main_locators": [
+          "pp2–4 Sections3.1–3.3/Figures2–3",
+          "p8 classification interpretation"
+        ],
+        "construction": "Qwen2.5-VL identifies object categories; Grounded-SAM supplies object masks. Candidate masks with pairwise IoU>70% are removed as redundant. One to three masks are randomly selected. For each selected region, a VLM generates an attribute/add/remove prompt and a randomly selected one of eight diffusion models performs inpainting.",
+        "multi_turn": "An edited image is paired with remaining masks for up to three sequential turns. p8 explicitly describes images with multiple interleaved edited regions from different generators. Thus more than one model identity can occur in a single image.",
+        "model_choice_limit": "Random selection from eight models does not demonstrate that every turn in every image uses a distinct model or sampling without replacement.",
+        "base_images": "About half are real COCO bases and half generated from COCO-derived prompts. Figure3 reports47.9% real-base and52.1% AI-base; edit-turn distribution10.0% one,38.7% two and51.3% three.",
+        "background_scope": "The semantic background means not locally edited by the benchmark operation; it is not a guarantee of camera-origin authenticity, since AI-generated bases are included. The task attributes local inpainting operations rather than all original-image synthesis.",
+        "overlap_rule_verified": false,
+        "overlap_finding": "The paper filters highly overlapping duplicate masks at IoU>70%, but that does not rule out partial overlap. No explicit rule for resolving labels in overlapping sequential edits, overwriting/last-writer ownership, recovering earlier covered edits, or separately evaluating overwritten regions appears in the17-page PDF.",
+        "evaluation_boundary": "Figure5 shows a mutually exclusive categorical prediction map, with one named class per evaluated pixel. This supports final visible-region model-aware segmentation as evaluated, while it does not establish reconstruction of all historical sources on overwritten pixels. A last-write annotation rule must remain unverified unless independently sourced from permitted dataset documentation.",
+        "quality_limit": "A VLM quality score<3 discards approximately50% of generated candidates; the paper acknowledges quality scoring may use the whole image and erroneously filter acceptable edits. Automatic masks may be imperfect."
+      },
+      "quantitative_main_evidence": {
+        "metric_definition": {
+          "locator": "p5 Section4.1 Evaluation metric",
+          "classification": [
+            "accuracy",
+            "mean average precision"
+          ],
+          "segmentation": [
+            "pixel-wise accuracy",
+            "mIoU, called mask Intersection-over-Union in Section4.1; semantic class-aware evaluation, exact averaging formula not given",
+            "boundary-F1"
+          ],
+          "background_excluded_from": [
+            "mIoU",
+            "boundary-F1"
+          ],
+          "metric_limit": "Boundary-F1 is a spatial boundary measure, not macro-F1 over model identities. Confusion-matrix diagonal entries are not per-model IoU. Results below are reported by the paper, not independently rerun."
+        },
+        "Table2_p5_baseline_tasks": {
+          "column_order": [
+            "Acc",
+            "mIoU",
+            "bF1"
+          ],
+          "SegFormer": {
+            "binary": [
+              0.989,
+              0.961,
+              0.678
+            ],
+            "semantic": [
+              0.952,
+              0.825,
+              0.532
+            ]
+          },
+          "DeepLabv3plus": {
+            "binary": [
+              0.984,
+              0.974,
+              0.761
+            ],
+            "semantic": [
+              0.916,
+              0.76,
+              0.431
+            ]
+          },
+          "FCN8s": {
+            "binary": [
+              0.838,
+              0.699,
+              0.457
+            ],
+            "semantic": [
+              0.331,
+              0.203,
+              0.024
+            ]
+          },
+          "interpretation": "The semantic mIoUs are measured on editing-model-specific predicted classes, distinct from the stronger binary foreground localization mIoUs. This is a main-paper quantitative attribution result."
+        },
+        "Figure5_p7_semantic_confusions": {
+          "axes": "True Label versus Predicted Label for BG plus8 named editing-model classes.",
+          "column_order": [
+            "BG",
+            "SD2",
+            "Kolors",
+            "SD3.5",
+            "Flux",
+            "SDXL",
+            "Glide",
+            "HunyuanDiT",
+            "Kandinsky2.2"
+          ],
+          "FCN8s_diagonal": [
+            0.97,
+            0.0,
+            0.0,
+            0.09,
+            0.01,
+            0.0,
+            0.1,
+            0.22,
+            0.75
+          ],
+          "SegFormerB2_diagonal": [
+            0.98,
+            0.95,
+            0.88,
+            0.87,
+            0.83,
+            0.93,
+            0.98,
+            0.92,
+            0.95
+          ],
+          "DeepLabv3plus_diagonal": [
+            0.98,
+            0.84,
+            0.72,
+            0.9,
+            0.84,
+            0.76,
+            0.96,
+            0.89,
+            0.93
+          ],
+          "interpretation": "These are displayed normalized class-confusion diagonal values, not per-model IoUs or image-level model-ID accuracy. SegFormerFlux→SD2 confusion is0.12; DeepLab has lower correct Kolors/SDXL proportions0.72/0.76. The named predicted-class axes directly demonstrate evaluated identity prediction."
+        },
+        "Table3_p5_transformations": {
+          "tuple_order": [
+            "Acc",
+            "mIoU",
+            "bF1"
+          ],
+          "SegFormer": {
+            "baseline": {
+              "binary": [
+                0.989,
+                0.961,
+                0.678
+              ],
+              "semantic": [
+                0.953,
+                0.825,
+                0.532
+              ]
+            },
+            "JPEG60": {
+              "binary": [
+                0.705,
+                0.26,
+                0.257
+              ],
+              "semantic": [
+                0.665,
+                0.032,
+                0.197
+              ]
+            },
+            "JPEG80": {
+              "binary": [
+                0.775,
+                0.291,
+                0.338
+              ],
+              "semantic": [
+                0.724,
+                0.188,
+                0.305
+              ]
+            },
+            "resize256": {
+              "binary": [
+                0.565,
+                0.36,
+                0.286
+              ],
+              "semantic": [
+                0.616,
+                0.299,
+                0.338
+              ]
+            },
+            "resize1024": {
+              "binary": [
+                0.966,
+                0.898,
+                0.548
+              ],
+              "semantic": [
+                0.821,
+                0.414,
+                0.296
+              ]
+            }
+          },
+          "DeepLabv3plus": {
+            "baseline": {
+              "binary": [
+                0.984,
+                0.974,
+                0.761
+              ],
+              "semantic": [
+                0.916,
+                0.76,
+                0.431
+              ]
+            },
+            "JPEG60": {
+              "binary": [
+                0.867,
+                0.782,
+                0.556
+              ],
+              "semantic": [
+                0.184,
+                0.013,
+                0.019
+              ]
+            },
+            "JPEG80": {
+              "binary": [
+                0.907,
+                0.847,
+                0.613
+              ],
+              "semantic": [
+                0.19,
+                0.014,
+                0.019
+              ]
+            },
+            "resize256": {
+              "binary": [
+                0.811,
+                0.751,
+                0.631
+              ],
+              "semantic": [
+                0.021,
+                0.012,
+                0.021
+              ]
+            },
+            "resize1024": {
+              "binary": [
+                0.816,
+                0.729,
+                0.499
+              ],
+              "semantic": [
+                0.168,
+                0.168,
+                0.014
+              ]
+            }
+          },
+          "interpretation": "Semantic attribution performance is fragile under distortions, particularly JPEG. Weak robustness does not erase the existence of the evaluated task."
+        },
+        "Table4_p7_binary_cross_generator_segmentation": {
+          "tuple_order": [
+            "Acc",
+            "mIoU",
+            "bF1"
+          ],
+          "training": "Six known editing models; evaluate edits from two unseen models, using binary segmentation. Baseline uses all8 models.",
+          "SegFormer": {
+            "baseline": [
+              0.989,
+              0.961,
+              0.678
+            ],
+            "Flux_Hunyuan": [
+              0.935,
+              0.93,
+              0.491
+            ],
+            "SD2_SD3.5": [
+              0.927,
+              0.926,
+              0.497
+            ],
+            "Glide_Kolors": [
+              0.957,
+              0.951,
+              0.578
+            ]
+          },
+          "DeepLabv3plus": {
+            "baseline": [
+              0.984,
+              0.974,
+              0.761
+            ],
+            "Flux_Hunyuan": [
+              0.92,
+              0.867,
+              0.526
+            ],
+            "SD2_SD3.5": [
+              0.931,
+              0.833,
+              0.372
+            ],
+            "Glide_Kolors": [
+              0.953,
+              0.927,
+              0.648
+            ]
+          },
+          "boundary": "This experiment supports transferable binary localization, not identification of unknown model classes. Do not promote these generator-domain columns to additional attribution evidence."
+        },
+        "Table5_p7_binary_image_classification": {
+          "tuple_order": [
+            "Acc",
+            "mAP"
+          ],
+          "CNNSpot": [
+            0.942,
+            0.979
+          ],
+          "UniversalFakeDet": [
+            0.86,
+            0.934
+          ],
+          "SegFormer": [
+            0.997,
+            0.999
+          ],
+          "DeepLabv3plus": [
+            0.98,
+            0.994
+          ],
+          "decision": "Predict edited when non-background mask fraction>0.01.",
+          "interpretation": "An independently reported image-level edited/unedited evaluation, not generator-ID classification."
+        },
+        "Table6_p7_binary_classification_cross_generator": {
+          "tuple_order": [
+            "Acc",
+            "mAP"
+          ],
+          "UniversalFakeDet": {
+            "baseline": [
+              0.86,
+              0.934
+            ],
+            "Flux_Hunyuan": [
+              0.768,
+              0.877
+            ],
+            "SD2_SD3.5": [
+              0.714,
+              0.817
+            ],
+            "Glide_Kolors": [
+              0.749,
+              0.844
+            ]
+          },
+          "SegFormer": {
+            "baseline": [
+              0.997,
+              0.999
+            ],
+            "Flux_Hunyuan": [
+              0.978,
+              0.986
+            ],
+            "SD2_SD3.5": [
+              0.982,
+              0.986
+            ],
+            "Glide_Kolors": [
+              0.987,
+              0.996
+            ]
+          },
+          "DeepLabv3plus": {
+            "baseline": [
+              0.98,
+              0.994
+            ],
+            "Flux_Hunyuan": [
+              0.935,
+              0.967
+            ],
+            "SD2_SD3.5": [
+              0.942,
+              0.965
+            ],
+            "Glide_Kolors": [
+              0.964,
+              0.985
+            ]
+          },
+          "boundary": "Six-train/two-held-out generator split measures edited-image detection transfer only."
+        }
+      },
+      "contradictions_and_limitations": [
+        {
+          "issue": "Old audit interpretation versus its retained abstract",
+          "finding": "Editing-model identification was already claimed in the captured primary abstract; full evaluated semantic prediction now substantiates that claim. The removal premise must not be treated as accepted."
+        },
+        {
+          "issue": "Dataset labels versus evaluated identity task",
+          "finding": "MainTable2 and Fig5 establish predicted model-specific labels and quantitative evaluation, independently of any dataset card. Retaining attribution does not rest on a multiclass annotation schema alone."
+        },
+        {
+          "issue": "No whole-image generator classifier",
+          "finding": "Attribution is regional. Multiple generators can contribute to one image; a single whole-image generator ID would not describe the demonstrated task. This is not a reason to remove the existing core source_attribution label."
+        },
+        {
+          "issue": "Class-aware metrics versus binary results",
+          "finding": "Semantic mIoU.825/.760/.203 is distinct from binary mIoU.961/.974/.699. MainTables4/6 cross-generator transfer concern binary segmentation/detection, not unknown-model attribution."
+        },
+        {
+          "issue": "FCN prose versus table",
+          "locator": "p5 Section4.2 and Table2",
+          "finding": "The prose gives FCN semantic mIoU0.23 whereas Table2 reports0.203. Preserve the discrepancy and use the exact table value for quantitative reporting."
+        },
+        {
+          "issue": "SegFormer baseline pixel accuracy discrepancy",
+          "locator": "p5 Tables2/3",
+          "finding": "Semantic pixel accuracy is0.952 in Table2 and0.953 in Table3 baseline. Shared semantic mIoU.825/bF1.532 agree. No cause is established."
+        },
+        {
+          "issue": "Overlapping and overwritten edits",
+          "finding": "Partial overlaps are possible after the>70%duplicate filter, but an explicit overwrite/last-writer rule is not documented in the PDF. Do not claim hidden earlier edit history is recovered."
+        },
+        {
+          "issue": "Numeric encoding",
+          "finding": "Nine named classes are explicit in the predictions. Exact integerID assignment0..8 requires separate dataset-documentation provenance; confusion-axis order is not integer encoding proof."
+        },
+        {
+          "issue": "Mask quality and split/reproduction details",
+          "finding": "Ground truth derives from automatic masks with admitted errors; per-base/sequence split leakage controls, exact evaluation-negative counts, task-loss implementation and decoding details are not fully stated. These limit reproducibility/generalization claims without negating the demonstrated regional task."
+        },
+        {
+          "issue": "Actual downloaded pagination",
+          "finding": "v2PDF has17pages including bundled supplementary content; retained metadata comment says16. No different version is inferred."
+        }
+      ],
+      "policy_application": {
+        "detection": "Explicitly scored edited-versus-unedited decisions supply the detection evidence required by T1.",
+        "localization": "Actual learned spatial maps are quantitatively compared with editing ground truth; this exceeds saliency/attention-only evidence.",
+        "source_attribution": "Named editing-model classes are predicted spatially and quantitatively evaluated in the main paper, meeting substantive model identity prediction within the existing source_attribution vocabulary.",
+        "taxonomy": "Preserve detection;source_attribution;localization and generative_editing. Do not invent a new region-attribution taxonomy label or modify research_types/metadata.",
+        "T3": "At least one core task is positively supported; no empty-task or scope-removal issue arises."
+      },
+      "constraints_observed": {
+        "R_or_primary_writes": false,
+        "authoritative_changes": false,
+        "review_actions_closed": false,
+        "Git_mutations": false,
+        "tests_or_exports_run": false,
+        "network_requests_by_this_reviewer": 0,
+        "separate_dataset_payload_code_or_supplement_downloads": 0
+      },
+      "current_authoritative_taxonomy": {
+        "tasks": "detection;source_attribution;localization",
+        "image_scopes": "generative_editing",
+        "research_types": "dataset;benchmark;analysis_study",
+        "taxonomy_status": "reviewed",
+        "tasks_evidence_tier": "authoritative_abstract",
+        "tasks_evidence_source": "https://arxiv.org/abs/2511.19111"
+      },
+      "maintainer_acceptance_pending": true,
+      "proposed_taxonomy_correction": null,
+      "scientific_sufficiency": {
+        "sufficient_for_provisional_task_retention": true,
+        "scope": "Reported closed-set regional editing-model prediction and separately evaluated binary localization/detection; not replication or a proof of complete edit-history attribution."
+      },
+      "dataset_documentation": {
+        "url": "https://huggingface.co/datasets/Chaos2629/Diffseg30k",
+        "access": "One CLI metadata attempt returned no usable stdout; one official web-page fallback supplied card text. No payloads downloaded.",
+        "version_limitation": "Current unpinned public card; not verified identical to the v2 experiment snapshot, no dataset or code execution.",
+        "encoding": {
+          "0": "background",
+          "1": "stabilityai/stable-diffusion-2-inpainting",
+          "2": "kolors",
+          "3": "stabilityai/stable-diffusion-3.5-medium",
+          "4": "flux",
+          "5": "diffusers/stable-diffusion-xl-1.0-inpainting-0.1",
+          "6": "glide",
+          "7": "Tencent-Hunyuan/HunyuanDiT-Diffusers",
+          "8": "kandinsky-community/kandinsky-2-2-decoder-inpaint"
+        },
+        "capability": "The card describes grayscale masks that may contain multiple model labels in one image.",
+        "numeric_order_boundary": "Integer labels come from the card, not the ordering of the manuscript confusion matrix.",
+        "overlap_rule": "Neither the reviewed manuscript nor the card specifies how overlapping/overwritten turns receive final pixel ownership; no last-writer rule is asserted.",
+        "not_experimental_proof": "The class encoding alone does not prove predictions or metrics. Main Table2 and Figure5 independently establish evaluated model-aware predictions.",
+        "distribution_boundary": "Current page preview totals are not used to replace the paper’s 30k description or infer experiment sample counts."
+      }
+    }
+  ],
+  "corpus_counts": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "taxonomy_counts": {
+    "detection": 621,
+    "method": 579,
+    "analysis_study": 81,
+    "survey": 21,
+    "source_attribution": 84,
+    "dataset": 134,
+    "benchmark": 90,
+    "localization": 45
+  },
+  "batch_b_accounting": {
+    "historical_actions": 159,
+    "historical_papers": 148,
+    "resolved_review_ids": [
+      "L013",
+      "P139",
+      "P153",
+      "P490",
+      "R137",
+      "R611",
+      "T056",
+      "T345",
+      "T579"
+    ],
+    "historical_unresolved_actions": 150,
+    "active_public_unresolved_actions": 148,
+    "active_public_unresolved_papers": 137,
+    "active_public_unresolved_review_ids": [
+      "U001",
+      "U002",
+      "U003",
+      "U005",
+      "U006",
+      "U007",
+      "U008",
+      "U009",
+      "U011",
+      "U012",
+      "U013",
+      "U014",
+      "U015",
+      "U016",
+      "U018",
+      "U019",
+      "U020",
+      "U021",
+      "U022",
+      "U023",
+      "R223",
+      "R234",
+      "R187",
+      "R231",
+      "R363",
+      "T631",
+      "R024",
+      "R482",
+      "R574",
+      "R477",
+      "T303",
+      "R026",
+      "R100",
+      "T093",
+      "R156",
+      "R161",
+      "R335",
+      "R596",
+      "R236",
+      "R566",
+      "R110",
+      "R267",
+      "R275",
+      "R509",
+      "R045",
+      "R138",
+      "R154",
+      "R215",
+      "T046",
+      "R171",
+      "R034",
+      "R400",
+      "R181",
+      "R512",
+      "R256",
+      "R284",
+      "R149",
+      "R124",
+      "R625",
+      "T526",
+      "R359",
+      "R253",
+      "R251",
+      "T608",
+      "R564",
+      "R467",
+      "R542",
+      "L003",
+      "L004",
+      "L005",
+      "L006",
+      "L007",
+      "L008",
+      "L009",
+      "L010",
+      "L011",
+      "L012",
+      "L014",
+      "L016",
+      "L017",
+      "L018",
+      "L019",
+      "L020",
+      "L021",
+      "L022",
+      "L023",
+      "L024",
+      "L025",
+      "L026",
+      "L028",
+      "P001",
+      "P025",
+      "P028",
+      "P032",
+      "P034",
+      "P048",
+      "P049",
+      "P050",
+      "P058",
+      "P068",
+      "P097",
+      "P105",
+      "P150",
+      "P160",
+      "P177",
+      "P216",
+      "P229",
+      "P231",
+      "P242",
+      "P251",
+      "P254",
+      "P268",
+      "P269",
+      "P279",
+      "P305",
+      "P312",
+      "P351",
+      "P360",
+      "P397",
+      "P418",
+      "P424",
+      "P430",
+      "P435",
+      "P442",
+      "P457",
+      "P464",
+      "P467",
+      "P478",
+      "P497",
+      "P510",
+      "P520",
+      "P526",
+      "P547",
+      "P565",
+      "P604",
+      "P626",
+      "P632",
+      "P635",
+      "P063",
+      "P099",
+      "P193",
+      "P224",
+      "P257",
+      "P326",
+      "P357",
+      "P369",
+      "P466",
+      "P495"
+    ]
+  },
+  "accounting_effect": {
+    "historical_unresolved_delta": 0,
+    "active_public_unresolved_delta": 0,
+    "T093_pending": true,
+    "T303_pending": true,
+    "evidence_sufficiency_is_not_maintainer_acceptance": true
+  },
+  "separate_import_review_inventory": {
+    "scope": "Separate successor inventory, never combined with original159 BatchB actions. Different units overlap. Existing imported records only checked for preservation.",
+    "imported_affiliation_debt_papers": 39,
+    "overlapping_taxonomy_review_papers": 14,
+    "held_candidates": 12,
+    "source_receipt": "data/raw/corpus_quality_batch_b_wave_b1e_2026_10_17/evidence_manifest.json#separate_import_review_inventory",
+    "historical_receipt_hashes_preserved": true,
+    "fresh_source_fingerprints": "source_files_sha256 uses current cc1e baseline, not the historical pre-B1E taxonomy hash."
+  },
+  "batch_c_deferred_accounting": {
+    "total_actions": 41,
+    "resolved_before": 27,
+    "resolved": 28,
+    "external_unresolved": 13,
+    "maintainer_judgments": 0,
+    "total_unresolved": 13,
+    "remaining_external_ids": [
+      "T141",
+      "U010",
+      "R117",
+      "R176",
+      "R376",
+      "R455",
+      "R460",
+      "R535",
+      "R537",
+      "R548",
+      "R549",
+      "R580",
+      "R615"
+    ],
+    "alternative_primary_source_candidates": [
+      "R117",
+      "R176",
+      "R455",
+      "R460",
+      "R535",
+      "R537",
+      "R548",
+      "R549",
+      "R580",
+      "R615"
+    ],
+    "blocked_pending_authoritative_evidence": [
+      "T141",
+      "R376",
+      "U010"
+    ],
+    "scientific_status_of_external_debts": "EVIDENCE_STILL_INSUFFICIENT"
+  },
+  "preservation": {
+    "groups": {
+      "protected128_primary": {
+        "root": "/Users/meilinger/Desktop/synthetic-image-research-map",
+        "files": 128,
+        "sha256_inventory_digest": "aa38c361be91090844a8d3d3a2314225cdb59c327dbcb0e4d6dc9bfee97d5d29",
+        "inventory_source": "/private/tmp/b1d-adjudication-2026-10-17/integration-origin8e60/baseline.json#protected_128_sha256",
+        "verified_against_fresh_baseline": true
+      },
+      "original130_primary": {
+        "root": "/Users/meilinger/Desktop/synthetic-image-research-map",
+        "files": 130,
+        "sha256_inventory_digest": "cb055277711905b0b37928bcd216d4e33cf902e23cab3c7f44d7c0c131b03019",
+        "inventory_source": "/private/tmp/b1d-adjudication-2026-10-17/integration-origin8e60/baseline.json#original_primary_130_sha256",
+        "verified_against_fresh_baseline": true
+      },
+      "neurips49_isolated": {
+        "root": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "files": 49,
+        "sha256_inventory_digest": "51c27a849b9bdb40c26ae849da57b558a121a694a34f1e07e534a98b024ea3e5",
+        "inventory_source": "/private/tmp/b1d-adjudication-2026-10-17/integration-origin8e60/baseline.json#frozen_sha256",
+        "verified_against_fresh_baseline": true
+      },
+      "neurips49_primary": {
+        "root": "/Users/meilinger/Desktop/synthetic-image-research-map",
+        "files": 49,
+        "sha256_inventory_digest": "51c27a849b9bdb40c26ae849da57b558a121a694a34f1e07e534a98b024ea3e5",
+        "inventory_source": "/private/tmp/b1d-adjudication-2026-10-17/integration-origin8e60/baseline.json#frozen_sha256",
+        "verified_against_fresh_baseline": true
+      },
+      "ignored119_isolated": {
+        "root": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "files": 119,
+        "sha256_inventory_digest": "3d1baf44410c5978876b44097e2d6dfd1bf325c0e1c64397f7488f390ad5e514",
+        "inventory_source": "/private/tmp/b1d-adjudication-2026-10-17/integration-origin8e60/baseline.json#operational_historical_sha256",
+        "verified_against_fresh_baseline": true
+      },
+      "batch_c13_debt_receipts": {
+        "root": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "files": 4,
+        "sha256_inventory_digest": "b3dc74ad0c372931b44354ed9f6b684e54e74298edc6e8bce939678ab9857927",
+        "inventory_source": "/private/tmp/b1d-adjudication-2026-10-17/integration-origin8e60/baseline.json#batch_c_debt_receipt_sha256",
+        "verified_against_fresh_baseline": true
+      }
+    },
+    "prior_B1A_to_B1E_artifact_sha256": {
+      "data/raw/corpus_quality_batch_b_wave_b1a_2026_10_12/evidence_manifest.json": "ea455b6de9c3e495fb5893f558804b0dcc2d565b3b26eeb07177cc284530518d",
+      "data/raw/corpus_quality_batch_b_wave_b1b_2026_10_15/evidence_manifest.json": "560da2c20d1f871c8231718ecc62922c810d1d693bc1152cfb590a358e690a4e",
+      "data/raw/corpus_quality_batch_b_wave_b1c_2026_10_16/evidence_manifest.json": "bef6eb0de4eccd2d4cce5282eb78eede8f5b7ccf15a8eb888c41eabfddba9ddf",
+      "data/raw/corpus_quality_batch_b_wave_b1d_2026_10_16/evidence_manifest.json": "15e5bef92f3de2b7e2ebae33b53588106ec73d8e0d770910fb085f7720116385",
+      "data/raw/corpus_quality_batch_b_wave_b1e_2026_10_17/evidence_manifest.json": "1eb5ce5c86a07631376f3e1b9b12cc54cbc996d93af51285fdd1e254676d27de",
+      "docs/corpus_quality_batch_b_wave_b1a_2026_10_12.md": "5c74db551fc104ec7e1bc38956239b2eed5cba722787c11cd59f7d5623efb8a6",
+      "docs/corpus_quality_batch_b_wave_b1b_2026_10_15.md": "79e474c07a2e493a86411afa0144c030347fe1add6b0d1d3123b612b8ba8ca6c",
+      "docs/corpus_quality_batch_b_wave_b1c_2026_10_16.md": "9bb7137801590020a53bca6fb94d48cd994d4228b2087041ac02c47f10408109",
+      "docs/corpus_quality_batch_b_wave_b1d_2026_10_16.md": "64cec346f5323b626e6cc062cbe4e86cdd0f74a15ff701b4c46702b3a730b84b",
+      "docs/corpus_quality_batch_b_wave_b1e_2026_10_17.md": "3b1dd3dd8e21bdbfe31ab0f55dead4ae1bf54fb674c946998b09a956f8f05a07"
+    },
+    "primary_access": "Read-only; no primary reset, merge, checkout, fetch, update, staging or other write. Independent concurrent work preserved.",
+    "fresh_baseline_receipt": "/private/tmp/b1f-evidence-2026-10-18/baseline.json"
+  },
+  "operational_source_files": {
+    "/private/tmp/b1f-evidence-2026-10-18/baseline.json": {
+      "sha256": "03f727ca5c7a386fa146eb616378bd8907410345a5e79fbe5bd27bb243c8f44a",
+      "bytes": 2573240,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/accounting.json": {
+      "sha256": "4ad4087979cc7f7d316632cba75ddb1b8ace555847faad90e9c281dd5a46a058",
+      "bytes": 74720,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/metadata-open.txt": {
+      "sha256": "1367350e877ced56178a3de9f6c89f5ce75a13ca5bcf890cf08a64bc8e30adf0",
+      "bytes": 8782,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/metadata-events.json": {
+      "sha256": "37064e83fdc9411c6cf3669dcad2a85d34fc76f329c38f91898f20a2c40d7cbf",
+      "bytes": 2335,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/hf-card-web-response.json": {
+      "sha256": "19497086eaeaf734855c0247b9ede139d829d05277f911b024d885e1bc92c092",
+      "bytes": 17931,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/preservation-independent.json": {
+      "sha256": "f1ca47a228837d8ca00f6982610522f59e4ee3d5803cc79ca4ed73722c510c99",
+      "bytes": 16429,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/t093/local_findings.json": {
+      "sha256": "f5649ab2b1addaa87de189cfea19ed25c0dcb3d9458f27dcfbf762010ce4ea1a",
+      "bytes": 36942,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/t093/scientific_findings.json": {
+      "sha256": "a6b1b95f5c98d1db93c4caf6b769506f48012c3fb2103e583dfc2c88987ea642",
+      "bytes": 18866,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/t093/retrieval.json": {
+      "sha256": "6422b7d0fb527e2651205c72953e4859c54cae3cab0231f09ad891a23cf4783a",
+      "bytes": 2059,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/t093/http_failure.bin": {
+      "sha256": "274df033d55d7098c168403fc1d5df0ab7e5d9ac74e56b2070ac2b042690215f",
+      "bytes": 832803,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/t303/local_findings.json": {
+      "sha256": "b8f2fa6070d1de59d16fb82b084da5a63c3457cbbd3334064d0de7967676f0d0",
+      "bytes": 62807,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/t303/scientific_findings.json": {
+      "sha256": "664b64745f9ebe974e4c51ef90c6f843e98ec98b17b73c6835a4cbcf1cd7121d",
+      "bytes": 28254,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/t303/retrieval.json": {
+      "sha256": "4a207ca077059b5e12e012b242fa98af7b0b0249b595cb1ad30f4f5f928f092c",
+      "bytes": 2475,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/t303/manuscript.pdf": {
+      "sha256": "3cd4e425289716e7389a65c13d2bc1ec5fa25b90aa8f16633258dd63c6ef2f65",
+      "bytes": 4166186,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/t303/manuscript.txt": {
+      "sha256": "88499071b285ceb0869eacfa90633bcc75e38493a386ce73b9ff11b0ad38a9d5",
+      "bytes": 53202,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/t303/pages.json": {
+      "sha256": "8fc1a22e9a89268451ca46bf31c2aed15eaa3b10ed70946e952b46619cb8cca2",
+      "bytes": 54076,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/t303/dataset-card-retrieval.json": {
+      "sha256": "3eb6f0c937bc7c1894ccfee5b5a799725fc26c485ee56f1119a22e76ab3c5041",
+      "bytes": 1131,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/t303/dataset-card.json": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "committed": false
+    },
+    "/private/tmp/b1f-evidence-2026-10-18/t303/dataset-card.stderr": {
+      "sha256": "92f7d28d094973d817560a9e29d8cfe9c18c2805463046d39cf0e2f7c5780917",
+      "bytes": 234,
+      "committed": false
+    }
+  },
+  "validation": {
+    "status": "PASS",
+    "lightweight_checks_passed": 49,
+    "failed": 0,
+    "measured_at_utc": "2026-10-18T08:18:10.363418+00:00",
+    "check_names": [
+      "isolated HEAD and fetched remote-tracking baseline unchanged",
+      "ahead/behind remains0/0",
+      "baseline ancestry safe",
+      "index empty",
+      "tracked diff empty including modes",
+      "all4453 tracked identities/modes preserved",
+      "all4453 tracked working contents preserved",
+      "exactly two authorized evidence files untracked",
+      "evidence files neither tracked nor ignored",
+      "exactly two review records no remediation",
+      "original independent questions preserved",
+      "canonical identities unchanged",
+      "existing taxonomy retained exactly",
+      "T093 seven checks insufficient rather than negative",
+      "T093 partial detection values never spatial evidence",
+      "T303 evaluated regional identity positive provisional",
+      "main Table2 transcription matches visually verified rows",
+      "separate Table5 detection and Figure5 model-class evidence",
+      "overlap uncertainty and whole-image boundary preserved",
+      "version and internal scientific discrepancies preserved",
+      "no authoritative acceptance or terminal decisions implied",
+      "T1 T2 modifiedT3 exact locked policy reconciliation",
+      "manuscript budget2 attempts1 success no retries extras",
+      "T093403 body not mistaken for manuscript",
+      "single T303 pinned PDF checksum and byte count",
+      "PDF full identity and v2 stamp verified",
+      "single PDF bundled supplement distinguished",
+      "dataset encoding separately supported no payloads",
+      "empty HF CLI output explicitly not successful card",
+      "complete metadata history and unknown raw search hash honest",
+      "all fresh primary repository source fingerprints match",
+      "all retained operational source hashes match",
+      "corpus counts recomputed unchanged",
+      "taxonomy totals recomputed unchanged",
+      "original B159/148 pending150 active148/137 unchanged",
+      "T093 T303 T608 T526 P526 snapshots and pending state unchanged",
+      "protected128_primary every protected byte unchanged",
+      "original130_primary every protected byte unchanged",
+      "neurips49_isolated every protected byte unchanged",
+      "neurips49_primary every protected byte unchanged",
+      "ignored119_isolated every protected byte unchanged",
+      "batch_c13_debt_receipts every protected byte unchanged",
+      "all ten previous B1A-E reports/manifests preserved",
+      "BatchC13 exact deferred accounting preserved",
+      "separate39/14/12 import inventory independently reconciled",
+      "primary HEAD index status unchanged read-only",
+      "evidence report no trailing whitespace and code fences balanced",
+      "NeurIPS blocker preserved exactly",
+      "all required measured integrity flags zero"
+    ],
+    "full_suite_run": false,
+    "export_run": false,
+    "operational_receipt": "/private/tmp/b1f-evidence-2026-10-18/validation.json",
+    "independent_preservation_checks_passed": 20
+  },
+  "integrity": {
+    "AUTHORITATIVE_CORPUS_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0
+  },
+  "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA",
+  "final_git_requirements": {
+    "tracked_changes": 0,
+    "index_entries": 0,
+    "untracked_evidence_paths": [
+      "data/raw/corpus_quality_batch_b_wave_b1f_2026_10_18/evidence_manifest.json",
+      "docs/corpus_quality_batch_b_wave_b1f_2026_10_18.md"
+    ],
+    "uncommitted": true,
+    "unpushed": true
+  }
+}
