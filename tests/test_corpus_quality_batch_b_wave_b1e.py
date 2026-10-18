@@ -14,13 +14,13 @@ import pytest
 
 from scripts.curated_schema import ALLOWED_REVIEW_ACTIONS, ALLOWED_REVIEW_QUEUES
 from scripts.paper_exclusions import normalize_doi
-from scripts.review_decisions import read_review_decisions
 from scripts.validate_corpus_quality_audit import decision_rows, load_context, load_queues
 from tests.baseline_expectations import CURRENT_CORPUS_COUNTS, CURRENT_TAXONOMY_TOTALS
 from tests.corpus_quality_test_helpers import csv_records, published_bytes, published_context
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "d02b952489b10df438f79ed1b87aee4170ee8aa5"
+PUBLISHED = "cc1e1b3d10c2a030e8b2cdda19fc9aaa1c7e8a0f"
 TAXONOMY = "data/curated/paper_taxonomy.csv"
 PAPERS = "data/curated/papers.csv"
 DECISIONS = "data/curated/review_decisions.csv"
@@ -84,6 +84,13 @@ HISTORICAL_RECEIPT_HASHES = {
 
 def previous(path):
     return published_bytes(BASE, path)
+
+
+def endpoint_bytes(path):
+    # B1E's exact transaction/accounting and recorded source fingerprints belong
+    # to its published endpoint. B1F tests check the live one-decision successor;
+    # live corpus, carryover, frozen-receipt and NeurIPS guards below remain live.
+    return published_bytes(PUBLISHED, path)
 
 
 def rows(path):
@@ -230,11 +237,11 @@ def test_only_two_taxonomy_records_and_tasks_only_compatibility_fields_change():
         assert record["audited_at"] == "2026-10-18"
 
 
-# Requirement 6: exactly two terminal decisions, with all existing decision bytes retained.
+# Requirement 6: the published B1E endpoint appended exactly two decisions.
 def test_exactly_two_accepted_terminal_decisions_append_without_duplicate_ids():
-    before_raw, after_raw = previous(DECISIONS), (ROOT / DECISIONS).read_bytes()
+    before_raw, after_raw = previous(DECISIONS), endpoint_bytes(DECISIONS)
     assert after_raw.startswith(before_raw)
-    before, after = csv_records(before_raw), read_review_decisions(ROOT / DECISIONS)
+    before, after = csv_records(before_raw), csv_records(after_raw)
     assert after[:len(before)] == before
     added = after[len(before):]
     assert len(added) == 2
@@ -302,12 +309,12 @@ def test_batch_b_accounting_recomputes_after_exactly_two_action_resolutions():
     ledger = [r for r in decision_rows(load_queues()) if r.get("batch") == "B"]
     assert len(ledger) == 159 and len({r["paper_id"] for r in ledger}) == 148
     old_resolved = terminal_by_review(csv_records(previous(DECISIONS)))
-    new_resolved = terminal_by_review(rows(DECISIONS))
+    new_resolved = terminal_by_review(csv_records(endpoint_bytes(DECISIONS)))
     assert set(new_resolved) - set(old_resolved) == set(CASES)
     assert set(old_resolved) == {"L013", "P139", "P153", "P490", "R137", "R611", "T579"}
     old_pending = [r for r in ledger if r["review_id"] not in old_resolved]
     new_pending = [r for r in ledger if r["review_id"] not in new_resolved]
-    public = load_context()["papers"]
+    public = published_context(PUBLISHED)["papers"]
     old_public = published_context(BASE)["papers"]
     old_active = [r for r in old_pending if r["paper_id"] in old_public]
     active = [r for r in new_pending if r["paper_id"] in public]
@@ -411,13 +418,13 @@ def test_original_evidence_archives_retrievals_and_scientific_findings_survive_a
         assert set(adjudication["changed_fields"]) == TASK_FIELDS
         assert adjudication["review_decision"] == selected_rows(rows(DECISIONS), review_id)[0]
         assert new["post_adjudication_public_state"] == load_context()["papers"][case["paper_id"]]
-    # A source_files hash is a historical fingerprint of d02, not a rule freezing
-    # the current taxonomy/decisions/public JSON against their pre-correction bytes.
+    # source_files fingerprints describe d02; current_source_sha256 describes
+    # the published B1E endpoint, not files changed by a later approved wave.
     historic_sources = {entry["path"]: entry["sha256"] for entry in original["source_files"]}
     assert packet()["current_source_sha256"].keys() == historic_sources.keys()
     for path, historical_sha in historic_sources.items():
         assert hashlib.sha256(previous(path)).hexdigest() == historical_sha
-        assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == packet()["current_source_sha256"][path]
+        assert hashlib.sha256(endpoint_bytes(path)).hexdigest() == packet()["current_source_sha256"][path]
 
 
 # Requirement 14: fixed fingerprints are confined to genuinely historical artifacts.

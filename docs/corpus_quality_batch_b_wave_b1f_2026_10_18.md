@@ -1,13 +1,13 @@
 # Batch B Wave B1F — Localization and regional attribution evidence
 
-Evidence-only packet, 2026-10-18. Baseline: `cc1e1b3d10c2a030e8b2cdda19fc9aaa1c7e8a0f`, verified equal to fetched `origin/main` before review. Exactly two actions: **T093** and **T303**. No authoritative correction, inclusion decision, review closure, export, commit or push is authorized or applied.
+Maintainer adjudication, 2026-10-18. Original evidence baseline: `cc1e1b3d10c2a030e8b2cdda19fc9aaa1c7e8a0f`, verified equal to fetched `origin/main` before review. The evidence packet was independently published in `990c8221728a44b6ab78cfff5159612edb0983a7`; both files are already tracked. Exactly T303 is now accepted as `SUPPORTED_NO_CHANGE`; T093 remains unresolved. One terminal review decision closes T303 without any taxonomy, bibliographic, relationship, inclusion or public-export change.
 
-| Review | Provisional scientific outcome | Proposed tasks | Scientific sufficiency | Maintainer acceptance |
+| Review | Scientific outcome | Retained tasks | Scientific sufficiency | Maintainer acceptance |
 |---|---|---|---|---|
 | T093 | `EVIDENCE_STILL_INSUFFICIENT` | Preserve `detection;source_attribution` administratively; no proposed correction | Insufficient for a localization finding | Pending; review remains open |
-| T303 | `RETAIN_SOURCE_ATTRIBUTION` | Retain `detection;source_attribution;localization` | Sufficient for provisional retention based on evaluated regional model identity | Pending; review remains open |
+| T303 | `SUPPORTED_NO_CHANGE` (scientific finding: `RETAIN_SOURCE_ATTRIBUTION`) | `detection;source_attribution;localization` | Sufficient for regional model identity retention | Accepted; terminal `review:75d76227af6d1a934c41` |
 
-The manifest is `data/raw/corpus_quality_batch_b_wave_b1f_2026_10_18/evidence_manifest.json`. It preserves the exact original reviews, full task checks, quantitative tables, source fingerprints and retrieval receipts. Both evidence artifacts remain untracked and unstaged.
+The manifest is `data/raw/corpus_quality_batch_b_wave_b1f_2026_10_18/evidence_manifest.json`. It preserves the exact original reviews, full task checks, quantitative tables, source fingerprints and retrieval receipts. The existing tracked artifacts are finalized in place; no duplicate evidence copy or new manuscript is introduced.
 
 ## Locked rules and source recovery
 
@@ -117,7 +117,7 @@ The [official Diffseg30k card](https://huggingface.co/datasets/Chaos2629/Diffseg
 
 The card confirms multiple model labels can occur in one grayscale mask, but does not supply an overwrite rule. Figure5’s ordering is not assumed to define the integer encoding. Annotation capability supports interpreting the labels; Table2 and Figure5 provide independent experimental proof.
 
-**Provisional decision:** `RETAIN_SOURCE_ATTRIBUTION`; retain `detection;source_attribution;localization`. High confidence that closed-set regional editing-model identity is substantively evaluated. No taxonomy correction is proposed. No new task label or image-level generator experiment is required for this existing `source_attribution` label. This scientific proposal awaits maintainer acceptance; T303 remains an unresolved authoritative action.
+**Accepted decision:** `SUPPORTED_NO_CHANGE`; retain exactly `detection;source_attribution;localization` and `dataset;benchmark;analysis_study`. The prior scientific finding `RETAIN_SOURCE_ATTRIBUTION` is accepted with its reported-protocol/version/overlap/robustness limitations. Terminal decision `review:75d76227af6d1a934c41` uses the established `other` / `paper` / `no_action_after_review` schema. Source attribution is regional editing-model prediction; no separate whole-image single-generator classifier is required. No task, compatibility field, canonical metadata, affiliation or relationship is changed. Only T303 closes; T093 and independent historical R303/P303 questions do not.
 
 ## Retrieval budget and provenance
 
@@ -139,25 +139,30 @@ Metadata-only access was one official article landing, one arXiv abstract/versio
 | Detection / source attribution / localization |621 /84 /45|
 | Method / dataset / benchmark / survey / analysis study |579 /134 /90 /21 /81|
 
-Original BatchB remains159actions/148historical papers,150historical unresolved and148active-public unresolved actions/137papers. The nine already published closure IDs remain L013,P139,P153,P490,R137,R611,T056,T345,T579. Evidence-only completion changes none of these counts; T093/T303 and pending carryovers T608/T526/P526 stay open. The separate import inventory remains39affiliation-debt papers,14overlapping taxonomy-review papers and12held candidates; it is not combined with the original BatchB ledger. BatchC remains41total/28resolved/13deferred/0maintainer judgments, with the same13debt IDs.
+Original Batch B remains **159 actions / 148 historical papers**. Recomputed unresolved accounting is **149 historical actions / 147 active-public actions / 136 distinct active-public papers**, previously150/148/137. The ten terminal IDs cover L013,P139,P153,P490,R137,R611,T056,T303,T345,T579. T303 has no other unresolved original Batch B action; that fact was checked against the ledger rather than assumed. T093 and pending carryovers T608/T526/P526 remain open. Independent historical R303/P303 questions are unchanged. The separate import inventory remains39affiliation-debt papers,14overlapping taxonomy-review papers and12held candidates; it is not combined with the original BatchB ledger. BatchC remains41total/28resolved/13deferred/0maintainer judgments, with the same13debt IDs.
 
-All4,453baseline-tracked files, authoritative CSVs, public exports, ten previous B1A–E artifacts and frozen receipts are compared by content hash. The128protected and original130primary-checkout files,49frozen NeurIPS artifacts in each checkout,119ignored operational inputs and four BatchC receipt files are preserved. Primary HEAD/index/status are checked read-only; no primary change is made. Full suites and exports are deliberately not run for this evidence-only wave.
+The fresh published baseline contains4,455 tracked files. All unchanged paths are compared by content hash; the review ledger must retain its exact prior byte prefix plus one T303 row. Authoritative paper/taxonomy/relationship files, public exports, ten prior B1A–E artifacts and frozen receipts remain byte-identical. The128protected and original130primary-checkout files,49frozen NeurIPS artifacts in each checkout,119ignored operational inputs and four BatchC receipt files are preserved. Primary HEAD/index/status are checked read-only; no primary change is made. The exact `other/no_action_after_review` append is ignored by production-affecting venue, mapping and institution decision consumers; coverage input fingerprints do not depend on this ledger. No public/review derived output needs regeneration. The repository has no universal full-suite mandate for this Git adjudication. Run focused regressions and all four current-scope validators; do not regenerate unaffected exports or claim export reproducibility was rerun.
 
 <!-- B1F_VALIDATION_START -->
-49 lightweight checks passed, zero failures; independent preservation/accounting review passed20/20. Full suite: not run. Export: not run.
+Recovered successful validation: **128 focused tests and 12 subtests passed**, zero failures, errors, skips or pytest warnings. The four current-scope validators passed with zero errors: curated database, public preview, paper exclusions and key-paper coverage (`--check`). Existing warning lines are unchanged from published B1E: curated294, public62, exclusions2, coverage0. They are validator data warnings, distinct from pytest warnings.
 
-`AUTHORITATIVE_CORPUS_CHANGED = 0`
+The tested five-file hashes were checked before receipt finalization. No test process is repeated: only this receipt section and manifest validation/publication bookkeeping are finalized. Original evidence-only49/49 and independent20/20 results remain explicitly historical. Current semantic/preservation gate:31checks passed, zero failures.
+
+Full suite: **not run**. Public exports/two-pass exporter: **not run**, because the exact `other/no_action_after_review` decision affects only review accounting and no production export consumer or dependent generated output. Existing public paper/relationship JSON and all scientific tables remain byte-identical; no fresh export-reproducibility claim is made.
+
+`UNEXPECTED_CHANGED = 0`
 `FROZEN_NEURIPS_CHANGED = 0`
 `PREEXISTING_LOCAL_FILES_CHANGED = 0`
+`IGNORED_OPERATIONAL_INPUTS_COMMITTED = 0`
 
-Tracked working tree clean; index empty; exactly the two authorized evidence files untracked. HEAD and origin/main remain at the fetched baseline, ahead/behind0/0. No commit or push.
+The staged publication allowlist is the one-row registry append, this tracked report and manifest, the new focused B1F regression module, and the narrow B1E historical endpoint repair. Historical B1E exact-transaction/accounting/source fingerprints use published `cc1e1b3d10c2a030e8b2cdda19fc9aaa1c7e8a0f`; their expected values, receipts, fixtures and live NeurIPS guards are unchanged. No public export, manuscript, operational cache or protected file is included.
 <!-- B1F_VALIDATION_END -->
 
 `7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA`
 
-## Fresh source fingerprints
+## Original evidence source fingerprints
 
-Hashes below bind the packet to the current published baseline; historical fingerprints in older receipts remain unchanged.
+The following evidence-phase hashes are retained as historical provenance at `cc1e1b3`. The manifest separately records current adjudication source fingerprints, including the intentional one-row review-ledger append.
 
 | Source | SHA256 |
 |---|---|
@@ -179,3 +184,7 @@ Hashes below bind the packet to the current published baseline; historical finge
 | `docs/literature51_main_integration_2026_10_17.md` | `6f0e138d4bbdbd1d8032f84479cca0fae791f819ac998003f502faecc59101c4` |
 | `web/data/public_preview_map_data.json` | `09b6f815597b2c14349dffc359b7844eab9c2b9a758ec02ef669476e009b627b` |
 | `web/data/public_preview_papers.json` | `9b1565482ab2095fa43ab3b9e60504c733fd0d43cd84bc4d5f3f8d98f2eb9781` |
+
+## Publication receipts
+
+The original two-file evidence packet is already published at `990c8221728a44b6ab78cfff5159612edb0983a7`, verified by fetch and ancestry. This adjudication is identified by the Git commit containing the finalized packet. Exact created-commit SHA and post-push fetched remote equality are recorded after publication in `/private/tmp/b1f-adjudication-2026-10-18/publication.json` and the final response; a successful future push is not asserted in advance. Publication uses one normal fast-forward commit, with no primary-checkout update.

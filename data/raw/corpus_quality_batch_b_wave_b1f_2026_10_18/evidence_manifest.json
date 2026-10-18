@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "wave": "Batch B Wave B1F",
-  "phase": "EVIDENCE_ONLY_PENDING_MAINTAINER_ADJUDICATION",
+  "phase": "ADJUDICATED_T303_SUPPORTED_NO_CHANGE_T093_DEFERRED",
   "artifact_date": "2026-10-18",
   "created_at_utc": "2026-10-18T08:16:34.811876+00:00",
   "baseline": {
@@ -24,13 +24,15 @@
     ],
     "records": 2,
     "authoritative_changes_applied": false,
-    "review_actions_closed": 0,
-    "terminal_decisions_created": 0,
+    "review_actions_closed": 1,
+    "terminal_decisions_created": 1,
     "exports_run": 0,
     "full_suites_run": 0,
-    "git_commits_created": 0,
-    "pushes": 0,
-    "other_reviews_performed": false
+    "other_reviews_performed": false,
+    "authoritative_scientific_data_changes": false,
+    "review_decision_appended": true,
+    "planned_adjudication_commits": 1,
+    "publication_strategy": "normal_fast_forward_only"
   },
   "locked_policies": [
     {
@@ -645,10 +647,10 @@
         "source_attribution",
         "localization"
       ],
-      "proposed_authoritative_remediation": "No task-taxonomy correction is supported: retain the current three tasks. The old proposed removal of source_attribution conflicts with substantive model-aware semantic segmentation evaluation. This is provisional evidence only; no review resolution is recorded.",
+      "proposed_authoritative_remediation": "Maintainer accepted the supported no-change disposition; exactly one terminal T303 decision is recorded. Existing tasks and all paper/research-type metadata remain unchanged.",
       "confidence": "high for the existence of evaluated closed-set regional editing-model attribution; bounded by the reported validation protocol, annotation limitations and unresolved overlap semantics",
       "applied": false,
-      "review_closed": false,
+      "review_closed": true,
       "identity": {
         "title": "DiffSeg30k: A Multi-Turn Diffusion Editing Benchmark for Localized AIGC Detection",
         "authors": [
@@ -1298,7 +1300,7 @@
         "tasks_evidence_tier": "authoritative_abstract",
         "tasks_evidence_source": "https://arxiv.org/abs/2511.19111"
       },
-      "maintainer_acceptance_pending": true,
+      "maintainer_acceptance_pending": false,
       "proposed_taxonomy_correction": null,
       "scientific_sufficiency": {
         "sufficient_for_provisional_task_retention": true,
@@ -1324,6 +1326,44 @@
         "overlap_rule": "Neither the reviewed manuscript nor the card specifies how overlapping/overwritten turns receive final pixel ownership; no last-writer rule is asserted.",
         "not_experimental_proof": "The class encoding alone does not prove predictions or metrics. Main Table2 and Figure5 independently establish evaluated model-aware predictions.",
         "distribution_boundary": "Current page preview totals are not used to replace the paper’s 30k description or infer experiment sample counts."
+      },
+      "evidence_only_disposition": {
+        "provisional_outcome": "RETAIN_SOURCE_ATTRIBUTION",
+        "proposed_authoritative_remediation": "No task-taxonomy correction is supported: retain the current three tasks. The old proposed removal of source_attribution conflicts with substantive model-aware semantic segmentation evaluation. This is provisional evidence only; no review resolution is recorded.",
+        "maintainer_acceptance_pending": true,
+        "review_closed": false,
+        "proposed_taxonomy_correction": null
+      },
+      "terminal_review_decision_created": true,
+      "terminal_review_decision_id": "review:75d76227af6d1a934c41",
+      "accepted_outcome": "SUPPORTED_NO_CHANGE",
+      "adjudication": {
+        "status": "ACCEPTED",
+        "outcome": "SUPPORTED_NO_CHANGE",
+        "decision_id": "review:75d76227af6d1a934c41",
+        "review_id": "T303",
+        "paper_id": "curated:33788a5e5e6efbd6bddd",
+        "retained_tasks": [
+          "detection",
+          "source_attribution",
+          "localization"
+        ],
+        "retained_research_types": [
+          "dataset",
+          "benchmark",
+          "analysis_study"
+        ],
+        "authoritative_taxonomy_changed": false,
+        "canonical_metadata_changed": false,
+        "source_attribution_granularity": "Regional editing-model identity; a single whole-image generator classifier is not required.",
+        "source_version": "arXiv2511.19111v2,2025-11-26; preprint, no publisher-final equivalence claimed.",
+        "limitations_preserved": [
+          "Overlap/overwrite pixel ownership rule not verified.",
+          "Complete overwritten-edit history is not established.",
+          "Closed-set reported validation protocol, incomplete split and metric-averaging details.",
+          "Semantic attribution degrades under JPEG compression/resizing."
+        ],
+        "accepted_at_utc": "2026-10-18T09:10:24Z"
       }
     }
   ],
@@ -1356,12 +1396,13 @@
       "R137",
       "R611",
       "T056",
+      "T303",
       "T345",
       "T579"
     ],
-    "historical_unresolved_actions": 150,
-    "active_public_unresolved_actions": 148,
-    "active_public_unresolved_papers": 137,
+    "historical_unresolved_actions": 149,
+    "active_public_unresolved_actions": 147,
+    "active_public_unresolved_papers": 136,
     "active_public_unresolved_review_ids": [
       "U001",
       "U002",
@@ -1393,7 +1434,6 @@
       "R482",
       "R574",
       "R477",
-      "T303",
       "R026",
       "R100",
       "T093",
@@ -1514,11 +1554,13 @@
     ]
   },
   "accounting_effect": {
-    "historical_unresolved_delta": 0,
-    "active_public_unresolved_delta": 0,
+    "historical_unresolved_delta": -1,
+    "active_public_unresolved_delta": -1,
+    "distinct_active_public_papers_delta": -1,
     "T093_pending": true,
-    "T303_pending": true,
-    "evidence_sufficiency_is_not_maintainer_acceptance": true
+    "T303_pending": false,
+    "T303_other_pending_B_actions": [],
+    "scope": "Only original T303 task action closes. Original159-action inventory, independent R303/P303 historical questions, all other B cases, C13 and separate39 import inventory remain unchanged."
   },
   "separate_import_review_inventory": {
     "scope": "Separate successor inventory, never combined with original159 BatchB actions. Different units overlap. Existing imported records only checked for preservation.",
@@ -1729,6 +1771,150 @@
   },
   "validation": {
     "status": "PASS",
+    "full_suite_run": false,
+    "export_run": false,
+    "scope_rationale": "other/no_action_after_review changes only review accounting; production export consumers require other queues/actions. No derived public output is affected. No mandatory full-suite rule applies. Four current-scope validators and focused decision/evidence/accounting/no-drift regressions are required.",
+    "policy_and_dependency_receipt": "/private/tmp/b1f-adjudication-2026-10-18/validation-plan.json",
+    "completed_at_utc": "2026-10-18T09:14:42.999025+00:00",
+    "focused": {
+      "tests_passed": 128,
+      "subtests_passed": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "pytest_warnings": 0,
+      "execution": {
+        "name": "focused",
+        "exit_code": 0,
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_corpus_quality_batch_b_wave_b1f.py",
+          "tests/test_corpus_quality_batch_b_wave_b1e.py",
+          "tests/test_corpus_quality_batch_b_wave_b1b.py",
+          "tests/test_review_decision_idempotence.py",
+          "tests/test_repository_baseline.py",
+          "tests/test_publication_venue_audit.py",
+          "tests/test_public_export_metadata.py",
+          "-o",
+          "cache_dir=/private/tmp/b1f-adjudication-2026-10-18/pytest-cache",
+          "--junitxml=/private/tmp/b1f-adjudication-2026-10-18/focused.xml"
+        ],
+        "elapsed_seconds": 39.522,
+        "started_at_utc": "2026-10-18T09:14:03.477142+00:00",
+        "completed_at_utc": "2026-10-18T09:14:42.999025+00:00",
+        "log": "/private/tmp/b1f-adjudication-2026-10-18/focused.log",
+        "log_sha256": "d907c7ba411206f9675a4bd4b572bfb8005b991b3bd9eecb0eb6637b808d47ef"
+      },
+      "junit_sha256": "11ab528040dd8dd34df24405d4686db727f36eba40c7d6dc79b096043abdb8d6"
+    },
+    "current_scope_validators": [
+      {
+        "name": "curated",
+        "exit_code": 0,
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "scripts/validate_curated_database.py"
+        ],
+        "elapsed_seconds": 6.785,
+        "started_at_utc": "2026-10-18T09:14:03.271350+00:00",
+        "completed_at_utc": "2026-10-18T09:14:10.056581+00:00",
+        "log": "/private/tmp/b1f-adjudication-2026-10-18/curated.log",
+        "log_sha256": "72b0732a3381b742d6808c482cb30da6f5c3819f0f415b7f9ee8b24162f3d920",
+        "errors": 0,
+        "warnings": 294,
+        "warning_lines_identical_to_published_B1E": true
+      },
+      {
+        "name": "public",
+        "exit_code": 0,
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "scripts/validate_public_preview.py"
+        ],
+        "elapsed_seconds": 6.362,
+        "started_at_utc": "2026-10-18T09:14:10.057136+00:00",
+        "completed_at_utc": "2026-10-18T09:14:16.419385+00:00",
+        "log": "/private/tmp/b1f-adjudication-2026-10-18/public.log",
+        "log_sha256": "84ed5a622291a93a89b16c5407cd03ce7e3a891f84a4cc1d4caa6e7b2171749a",
+        "errors": 0,
+        "warnings": 62,
+        "warning_lines_identical_to_published_B1E": true
+      },
+      {
+        "name": "exclusions",
+        "exit_code": 0,
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "scripts/validate_paper_exclusions.py"
+        ],
+        "elapsed_seconds": 2.63,
+        "started_at_utc": "2026-10-18T09:14:16.419940+00:00",
+        "completed_at_utc": "2026-10-18T09:14:19.050436+00:00",
+        "log": "/private/tmp/b1f-adjudication-2026-10-18/exclusions.log",
+        "log_sha256": "1fadfe0741a198eaf009a4c2dc08fc234e7b451238157f8e1709960fe9732513",
+        "errors": 0,
+        "warnings": 2,
+        "warning_lines_identical_to_published_B1E": true
+      },
+      {
+        "name": "coverage",
+        "exit_code": 0,
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "scripts/audit_key_paper_coverage.py",
+          "--check"
+        ],
+        "elapsed_seconds": 2.07,
+        "started_at_utc": "2026-10-18T09:14:19.050878+00:00",
+        "completed_at_utc": "2026-10-18T09:14:21.121359+00:00",
+        "log": "/private/tmp/b1f-adjudication-2026-10-18/coverage.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "errors": 0,
+        "warnings": 0,
+        "warning_lines_identical_to_published_B1E": true
+      }
+    ],
+    "integrity_checks_passed": 31,
+    "integrity_receipt": "/private/tmp/b1f-adjudication-2026-10-18/integrity-pre-stage.json",
+    "integrity_receipt_sha256": "219073f2068152daddb2eb9acf2a36147b36816b0f450c1356a87e760f83cbcf",
+    "validated_input_sha256": {
+      "data/curated/review_decisions.csv": "59023f2bf9e0f88a2f83bffc06b5947e8ce3855cee5ca90a188e5a61066a6a6e",
+      "data/raw/corpus_quality_batch_b_wave_b1f_2026_10_18/evidence_manifest.json": "c17d5862ba88ee3b6af1ca25490363293824d64b08cca54dc4152ae93ee7709f",
+      "docs/corpus_quality_batch_b_wave_b1f_2026_10_18.md": "ee3d67159da455fcef8ea4f0135a7ffd793e8ea6ab1158975a60002007df9450",
+      "tests/test_corpus_quality_batch_b_wave_b1e.py": "98507b37105110b5de3262c91479b1e547e13d691f4530a00950c0f511d31a1e",
+      "tests/test_corpus_quality_batch_b_wave_b1f.py": "2c39e600ee5c4f22df9dd535ffff4e17fc53aaef22b2744e74d474873f965564"
+    },
+    "test_result_reuse": "All five tested input hashes match their successful run. This finalization changes only manifest validation/integrity/publication/scope bookkeeping and the report validation-receipt section; scientific, decision and test inputs remain unchanged.",
+    "export_regeneration_required": false,
+    "export_dependency_analysis_confirmed_by_final_diff": true
+  },
+  "integrity": {
+    "UNEXPECTED_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "IGNORED_OPERATIONAL_INPUTS_COMMITTED": 0
+  },
+  "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA",
+  "evidence_only_scope": {
+    "review_ids": [
+      "T093",
+      "T303"
+    ],
+    "records": 2,
+    "authoritative_changes_applied": false,
+    "review_actions_closed": 0,
+    "terminal_decisions_created": 0,
+    "exports_run": 0,
+    "full_suites_run": 0,
+    "git_commits_created": 0,
+    "pushes": 0,
+    "other_reviews_performed": false
+  },
+  "evidence_only_validation": {
+    "status": "PASS",
     "lightweight_checks_passed": 49,
     "failed": 0,
     "measured_at_utc": "2026-10-18T08:18:10.363418+00:00",
@@ -1788,13 +1974,19 @@
     "operational_receipt": "/private/tmp/b1f-evidence-2026-10-18/validation.json",
     "independent_preservation_checks_passed": 20
   },
-  "integrity": {
+  "evidence_only_integrity": {
     "AUTHORITATIVE_CORPUS_CHANGED": 0,
     "FROZEN_NEURIPS_CHANGED": 0,
     "PREEXISTING_LOCAL_FILES_CHANGED": 0
   },
-  "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA",
-  "final_git_requirements": {
+  "evidence_only_accounting_effect": {
+    "historical_unresolved_delta": 0,
+    "active_public_unresolved_delta": 0,
+    "T093_pending": true,
+    "T303_pending": true,
+    "evidence_sufficiency_is_not_maintainer_acceptance": true
+  },
+  "evidence_only_final_git_requirements": {
     "tracked_changes": 0,
     "index_entries": 0,
     "untracked_evidence_paths": [
@@ -1803,5 +1995,267 @@
     ],
     "uncommitted": true,
     "unpushed": true
+  },
+  "evidence_only_packet_source": {
+    "published_commit": "990c8221728a44b6ab78cfff5159612edb0983a7",
+    "manifest_path": "data/raw/corpus_quality_batch_b_wave_b1f_2026_10_18/evidence_manifest.json",
+    "manifest_sha256": "d2a60d1de44fdf57b2373636c4f9afcaff1662cfdf733785c60f38f732a9d48c",
+    "report_path": "docs/corpus_quality_batch_b_wave_b1f_2026_10_18.md",
+    "report_sha256": "e6c6fe4ed5fcb2c03f60535f8db48280a7e8348c5028ab8ff3bfa97287b12c2a",
+    "status": "Both evidence files already tracked and independently published; no duplicate evidence artifacts created."
+  },
+  "adjudication_baseline": {
+    "commit": "990c8221728a44b6ab78cfff5159612edb0983a7",
+    "fetched_origin_main": "990c8221728a44b6ab78cfff5159612edb0983a7",
+    "head_equal_origin_main": true,
+    "requested_baseline_is_remote_ancestor": true,
+    "fresh_baseline_receipt": "/private/tmp/b1f-adjudication-2026-10-18/baseline.json",
+    "tracked_file_count": 4455
+  },
+  "adjudicated_at_utc": "2026-10-18T09:10:24Z",
+  "batch_b_accounting_before": {
+    "historical_actions": 159,
+    "historical_papers": 148,
+    "resolved_review_ids": [
+      "L013",
+      "P139",
+      "P153",
+      "P490",
+      "R137",
+      "R611",
+      "T056",
+      "T345",
+      "T579"
+    ],
+    "historical_unresolved_actions": 150,
+    "active_public_unresolved_actions": 148,
+    "active_public_unresolved_papers": 137,
+    "active_public_unresolved_review_ids": [
+      "U001",
+      "U002",
+      "U003",
+      "U005",
+      "U006",
+      "U007",
+      "U008",
+      "U009",
+      "U011",
+      "U012",
+      "U013",
+      "U014",
+      "U015",
+      "U016",
+      "U018",
+      "U019",
+      "U020",
+      "U021",
+      "U022",
+      "U023",
+      "R223",
+      "R234",
+      "R187",
+      "R231",
+      "R363",
+      "T631",
+      "R024",
+      "R482",
+      "R574",
+      "R477",
+      "T303",
+      "R026",
+      "R100",
+      "T093",
+      "R156",
+      "R161",
+      "R335",
+      "R596",
+      "R236",
+      "R566",
+      "R110",
+      "R267",
+      "R275",
+      "R509",
+      "R045",
+      "R138",
+      "R154",
+      "R215",
+      "T046",
+      "R171",
+      "R034",
+      "R400",
+      "R181",
+      "R512",
+      "R256",
+      "R284",
+      "R149",
+      "R124",
+      "R625",
+      "T526",
+      "R359",
+      "R253",
+      "R251",
+      "T608",
+      "R564",
+      "R467",
+      "R542",
+      "L003",
+      "L004",
+      "L005",
+      "L006",
+      "L007",
+      "L008",
+      "L009",
+      "L010",
+      "L011",
+      "L012",
+      "L014",
+      "L016",
+      "L017",
+      "L018",
+      "L019",
+      "L020",
+      "L021",
+      "L022",
+      "L023",
+      "L024",
+      "L025",
+      "L026",
+      "L028",
+      "P001",
+      "P025",
+      "P028",
+      "P032",
+      "P034",
+      "P048",
+      "P049",
+      "P050",
+      "P058",
+      "P068",
+      "P097",
+      "P105",
+      "P150",
+      "P160",
+      "P177",
+      "P216",
+      "P229",
+      "P231",
+      "P242",
+      "P251",
+      "P254",
+      "P268",
+      "P269",
+      "P279",
+      "P305",
+      "P312",
+      "P351",
+      "P360",
+      "P397",
+      "P418",
+      "P424",
+      "P430",
+      "P435",
+      "P442",
+      "P457",
+      "P464",
+      "P467",
+      "P478",
+      "P497",
+      "P510",
+      "P520",
+      "P526",
+      "P547",
+      "P565",
+      "P604",
+      "P626",
+      "P632",
+      "P635",
+      "P063",
+      "P099",
+      "P193",
+      "P224",
+      "P257",
+      "P326",
+      "P357",
+      "P369",
+      "P466",
+      "P495"
+    ]
+  },
+  "terminal_decision": {
+    "path": "data/curated/review_decisions.csv",
+    "record": {
+      "decision_id": "review:75d76227af6d1a934c41",
+      "review_queue": "other",
+      "target_type": "paper",
+      "title": "DiffSeg30k: A Multi-Turn Diffusion Editing Benchmark for Localized AIGC Detection",
+      "year": "2025",
+      "doi": "",
+      "openalex_url": "https://openalex.org/W7106655390",
+      "institution": "",
+      "action": "no_action_after_review",
+      "review_note": "Batch B review T303; SUPPORTED_NO_CHANGE; RETAIN_SOURCE_ATTRIBUTION. Maintainer accepted retaining tasks detection;source_attribution;localization for curated:33788a5e5e6efbd6bddd under locked T1/T2. The identity-matched arXiv:2511.19111v2 manuscript dated 2025-11-26 establishes evaluated closed-set regional editing-model attribution: Section 4.1 and Table 2 define and evaluate background plus eight named editing-model semantic classes; Figure 5 has true-versus-predicted model-class confusion matrices. Table 2 semantic mIoU is 0.825 for SegFormer, 0.760 for DeepLabv3+ and 0.203 for FCN-8s, distinct from their binary localization mIoUs 0.961, 0.974 and 0.699. Table 5 separately evaluates edited/unedited image detection, with SegFormer Acc/mAP 0.997/0.999. Regional identity prediction supports source_attribution without requiring a whole-image generator classifier. Preserve detection, source_attribution, localization, generative_editing, dataset;benchmark;analysis_study, all canonical metadata, authors, affiliations and relationships. Findings are limited to this version and its reported validation protocol; overlap/overwrite ownership semantics and exact metric averaging details remain unverified. Reported semantic attribution is fragile under JPEG compression and resizing; no general robustness or complete overwritten-edit history claim is accepted. No taxonomy or compatibility field correction was applied. Evidence: https://arxiv.org/pdf/2511.19111v2; exact 17-page retrieved PDF includes bundled supplementary pages, not a separate retrieval. Original pending review evidence remains historical. This resolves only the original T303 task question; R303/P303 and T093 are not resolved. Approved no-change disposition is recorded; no further action remains for this exact bounded review.",
+      "created_at": "2026-10-18T09:10:24Z",
+      "updated_at": "2026-10-18T09:10:24Z",
+      "created_by": "maintainer-approved-batch-b-b1f"
+    },
+    "before_rows": 84,
+    "after_rows": 85,
+    "before_sha256": "471b5542bb3619cce2997b244114f047b36ece15dcdfa43e67dfbb864aa73506",
+    "after_sha256": "59023f2bf9e0f88a2f83bffc06b5947e8ce3855cee5ca90a188e5a61066a6a6e",
+    "append_only_prefix_preserved": true
+  },
+  "current_source_sha256": {
+    "data/curated/papers.csv": "edb1744a04968fb8a63d20f04aaa088866e9b37c0d261a94e6f98beb8947bc38",
+    "data/curated/paper_taxonomy.csv": "17b59d6a33ae77ebfad1d58f3791b051197f5117834faa4c93342f8a79323417",
+    "data/curated/review_decisions.csv": "59023f2bf9e0f88a2f83bffc06b5947e8ce3855cee5ca90a188e5a61066a6a6e",
+    "web/data/public_preview_papers.json": "9b1565482ab2095fa43ab3b9e60504c733fd0d43cd84bc4d5f3f8d98f2eb9781",
+    "web/data/public_preview_map_data.json": "09b6f815597b2c14349dffc359b7844eab9c2b9a758ec02ef669476e009b627b",
+    "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+    "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+    "data/raw/corpus_quality_audit_2026_10_04/source_checks.json": "78c2aed641161705a0a22658a2df38cc7e53550eb1857d119106a4a419b02227",
+    "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+    "data/raw/ant_gap_fill_2026_09_05/openalex_exact_title_results.json": "01786d62d432542cab8184bcb65c486990a1c9b3111b65400bf3e2977608769f",
+    "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+    "data/raw/systematic_literature_2026_09/a58a312ed612f8266c74.gz": "6c0ce05348d64215ccf0195281b51d197a685af17680e4c0ebe7dda5d6d81962",
+    "data/raw/systematic_gap_audit_2026_10_02/discovery_records.json": "6ec9e001aa007ef4fcd528243c0e2da099a8e9fed359d8050cb27ef8088edc0d",
+    "data/processed/literature51_2026_10_16/plan.json": "b6af4975b2be41958176448000d240dcdbc2dd00a507e8edc3a7a7b0027356ab",
+    "data/processed/literature51_2026_10_16/followup/review.json": "cdf83d05b4ab57fe5a37034f5213aef40f7c6ee0095c5d22d3988ca784d03312",
+    "data/processed/literature51_2026_10_16/followup/receipt.json": "b24deabfd36186ed278d2afd4ac60814a4c78d71e04151c25cee52d27460d4f3",
+    "data/processed/literature51_2026_10_16/main_integration/manifest.json": "5959e8628cc7e272ac45f0a2afd5e508412a416615c61d411b4529e135077a79",
+    "docs/literature51_main_integration_2026_10_17.md": "6f0e138d4bbdbd1d8032f84479cca0fae791f819ac998003f502faecc59101c4"
+  },
+  "publication": {
+    "evidence_publication": {
+      "commit": "990c8221728a44b6ab78cfff5159612edb0983a7",
+      "origin_main_verified": "990c8221728a44b6ab78cfff5159612edb0983a7",
+      "files_already_tracked": true
+    },
+    "adjudication_publication": {
+      "strategy": "normal_fast_forward_only",
+      "identity": "The Git commit containing this adjudication; its self-SHA cannot be embedded before that commit exists.",
+      "precommit_remote_observation": {
+        "fetched_origin_main": "990c8221728a44b6ab78cfff5159612edb0983a7",
+        "local_head": "990c8221728a44b6ab78cfff5159612edb0983a7",
+        "ahead_behind": [
+          0,
+          0
+        ],
+        "baseline_is_remote_ancestor": true,
+        "verified_at_utc": "2026-10-18T15:01:01.134914+00:00"
+      },
+      "post_push_receipt": "/private/tmp/b1f-adjudication-2026-10-18/publication.json",
+      "receipt_semantics": "Exact created commit, push exit, fetched remote SHA, ahead/behind and final preservation are verified after push in the external operational receipt and final response. This packet makes no advance claim of a successful future push."
+    }
+  },
+  "final_git_requirements": {
+    "after_publication": "HEAD equals fetched origin/main; ahead/behind0/0; clean isolated worktree and index; primary and protected inventories preserved.",
+    "allowlist": [
+      "data/curated/review_decisions.csv",
+      "data/raw/corpus_quality_batch_b_wave_b1f_2026_10_18/evidence_manifest.json",
+      "docs/corpus_quality_batch_b_wave_b1f_2026_10_18.md",
+      "tests/test_corpus_quality_batch_b_wave_b1e.py",
+      "tests/test_corpus_quality_batch_b_wave_b1f.py"
+    ],
+    "no_authoritative_scientific_or_public_output_changes": true
   }
 }
