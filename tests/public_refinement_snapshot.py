@@ -29,6 +29,10 @@ NODE_TEST_PATHS = (
     "tests/test_frontend_interaction_model.py",
     "tests/test_frontend_marker_sizing.py",
 )
+# Reviewed portable Node resolution: two date tests now execute rather than skip.
+HEADER_NODE_PREDECESSOR = "e495b62cbfadc5fed866dc6a49b9c14b2a173005"
+HEADER_NODE_SUCCESSOR = "9bad8cebcb1b5e46cda5b08778737d4bbb0f6b24"
+HEADER_NODE_PATH = "tests/test_public_header_metadata.py"
 PUBLISHED_FRONTEND_SUCCESSORS = (
     ("c514bea1dbd7645dc4baed49819f14764b9f177b", (
         "tests/test_public_header_metadata.py",
@@ -73,6 +77,7 @@ PUBLISHED_FRONTEND_SUCCESSORS = (
     (LEAFLET_SRI_SUCCESSOR, ("web/index.html",)),
     # Pin only the two reviewed Node-path test files read by historical guards.
     (NODE_TEST_SUCCESSOR, NODE_TEST_PATHS),
+    (HEADER_NODE_SUCCESSOR, (HEADER_NODE_PATH,)),
 )
 
 
@@ -122,8 +127,35 @@ def assert_node_test_path_transition():
         expected = expected.replace(old, new, 1)
         assert after == expected, "Unreviewed Node test delta: " + relative
 
+def assert_header_node_path_transition():
+    """Authenticate the exact removal of two Mac-only test skips."""
+    parent = subprocess.check_output(
+        ["git", "rev-parse", HEADER_NODE_SUCCESSOR + "^"], cwd=ROOT, text=True
+    ).strip()
+    assert parent == HEADER_NODE_PREDECESSOR, "Unexpected date test predecessor"
+    before = committed_bytes(HEADER_NODE_PREDECESSOR, HEADER_NODE_PATH)
+    after = committed_bytes(HEADER_NODE_SUCCESSOR, HEADER_NODE_PATH)
+    old = (
+        b'        node = Path(\n'
+        b'            "/Users/meilinger/.cache/codex-runtimes/"\n'
+        b'            "codex-primary-runtime/dependencies/node/bin/node"\n'
+        b'        )\n'
+        b'        if not node.exists():\n'
+        b'            self.skipTest("Bundled Node.js is unavailable")'
+    )
+    new = (
+        b'        node = shutil.which("node")\n'
+        b'        self.assertIsNotNone(node, "Node.js must be available on PATH for date tests")'
+    )
+    assert before.count(old) == 2
+    assert before.count(b"import subprocess\n") == 1
+    expected = before.replace(b"import subprocess\n", b"import subprocess\nimport shutil\n", 1)
+    expected = expected.replace(old, new)
+    assert after == expected, "Unreviewed date test delta"
+
 def assert_public_refinement_snapshot():
     assert_node_test_path_transition()
+    assert_header_node_path_transition()
     assert_leaflet_sri_transition()
     expected = {
         relative: digest

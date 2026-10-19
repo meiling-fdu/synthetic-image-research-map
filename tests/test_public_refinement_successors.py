@@ -81,3 +81,28 @@ def test_node_test_successor_rejects_current_unreviewed_edit(monkeypatch, relati
                         original(path) + (b"\n# unauthorized\n" if path == target else b""))
     with pytest.raises(AssertionError, match="Public refinement differs"):
         history.assert_public_refinement_snapshot()
+
+
+def test_date_header_node_test_successor_is_exactly_reviewed():
+    history.assert_header_node_path_transition()
+    expected = history.assert_public_refinement_snapshot()
+    assert (history.HEADER_NODE_SUCCESSOR, (history.HEADER_NODE_PATH,)) in history.PUBLISHED_FRONTEND_SUCCESSORS
+    assert expected[history.HEADER_NODE_PATH] == history.committed_digest(history.HEADER_NODE_SUCCESSOR, history.HEADER_NODE_PATH)
+
+
+@pytest.mark.parametrize("commit", [history.HEADER_NODE_PREDECESSOR, history.HEADER_NODE_SUCCESSOR])
+def test_date_header_node_successor_rejects_changed_commit_bytes(monkeypatch, commit):
+    original = history.committed_bytes
+    monkeypatch.setattr(history, "committed_bytes", lambda ref, path:
+                        original(ref, path) + (b"\n# unauthorized\n" if ref == commit and path == history.HEADER_NODE_PATH else b""))
+    with pytest.raises(AssertionError):
+        history.assert_header_node_path_transition()
+
+
+def test_date_header_node_successor_rejects_unreviewed_current_test(monkeypatch):
+    original = history.historical_bytes
+    target = history.ROOT / history.HEADER_NODE_PATH
+    monkeypatch.setattr(history, "historical_bytes", lambda path:
+                        original(path) + (b"\n# unauthorized\n" if path == target else b""))
+    with pytest.raises(AssertionError, match="Public refinement differs"):
+        history.assert_public_refinement_snapshot()
