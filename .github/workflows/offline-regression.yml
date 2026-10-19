@@ -39,6 +39,23 @@ jobs:
         with:
           node-version: "24.19.0"
 
+      # Compatibility shim only: legacy checksum-locked tests contain Mac-specific
+      # Node executable locations. Keep those historical sources immutable until a
+      # separately reviewed successor migration can replace their paths.
+      - name: Provide Node at frozen historical test locations
+        shell: bash
+        run: |
+          set -euo pipefail
+          node_bin="$(command -v node)"
+          mac_node="/Users/meilinger/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node"
+          sudo mkdir -p "$(dirname "$mac_node")"
+          sudo ln -s "$node_bin" "$mac_node"
+          runner_node="$HOME/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node"
+          mkdir -p "$(dirname "$runner_node")"
+          ln -s "$node_bin" "$runner_node"
+          "$mac_node" --version
+          "$runner_node" --version
+
       - name: Install pinned Python test dependencies
         run: python -m pip install --disable-pip-version-check -r requirements-test.txt
 

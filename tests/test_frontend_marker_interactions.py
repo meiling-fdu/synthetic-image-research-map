@@ -1,13 +1,15 @@
 import json
 import re
 import subprocess
-import shutil
 import unittest
 from pathlib import Path
 
 
 REPOSITORY = Path(__file__).resolve().parents[1]
-NODE = shutil.which("node") or "node"
+NODE = Path(
+    "/Users/meilinger/.cache/codex-runtimes/"
+    "codex-primary-runtime/dependencies/node/bin/node"
+)
 
 
 class FrontendMarkerInteractionTests(unittest.TestCase):

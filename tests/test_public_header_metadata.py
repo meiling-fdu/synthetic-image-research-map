@@ -2,7 +2,6 @@ import json
 import os
 import re
 import subprocess
-import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -62,8 +61,12 @@ class PublicHeaderMetadataTests(unittest.TestCase):
         self.assertIn('"statistics statistics"', mobile)
 
     def test_date_rendering_is_deterministic_across_timezones(self):
-        node = shutil.which("node")
-        self.assertIsNotNone(node, "Node.js must be available on PATH for date tests")
+        node = Path(
+            "/Users/meilinger/.cache/codex-runtimes/"
+            "codex-primary-runtime/dependencies/node/bin/node"
+        )
+        if not node.exists():
+            self.skipTest("Bundled Node.js is unavailable")
         script = (
             "const m=require('./web/public_metadata.js');"
             "process.stdout.write(m.formatPublicPreviewDate("
@@ -83,8 +86,12 @@ class PublicHeaderMetadataTests(unittest.TestCase):
         self.assertEqual(values, ["18 July 2026"] * 3)
 
     def test_missing_or_invalid_timestamp_returns_empty_fallback(self):
-        node = shutil.which("node")
-        self.assertIsNotNone(node, "Node.js must be available on PATH for date tests")
+        node = Path(
+            "/Users/meilinger/.cache/codex-runtimes/"
+            "codex-primary-runtime/dependencies/node/bin/node"
+        )
+        if not node.exists():
+            self.skipTest("Bundled Node.js is unavailable")
         script = (
             "const m=require('./web/public_metadata.js');"
             "process.stdout.write(JSON.stringify(["

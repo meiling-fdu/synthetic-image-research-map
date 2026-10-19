@@ -1,6 +1,5 @@
 import json
 import subprocess
-import shutil
 from copy import deepcopy
 from pathlib import Path
 
@@ -224,7 +223,7 @@ def test_production_frontend_normalizer_matches_every_curated_paper():
         "function " + name + "(" + app.split("function " + name + "(", 1)[1].split("\nfunction ", 1)[0]
         for name in names
     )
-    node = shutil.which("node") or "node"
+    node = Path("/Users/meilinger/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node")
     script = r"""
 const fs = require('fs');
 const root = process.argv[1];

@@ -1,5 +1,4 @@
 import subprocess
-import shutil
 from copy import deepcopy
 from pathlib import Path
 
@@ -14,7 +13,10 @@ from scripts.export_public_preview import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-NODE = shutil.which("node") or "node"
+NODE = Path(
+    "/Users/meilinger/.cache/codex-runtimes/codex-primary-runtime/"
+    "dependencies/node/bin/node"
+)
 
 
 def fixture():
