@@ -1,16 +1,14 @@
 import json
 import re
 import subprocess
+import shutil
 import unittest
 from html.parser import HTMLParser
 from pathlib import Path
 
 
 REPOSITORY = Path(__file__).resolve().parents[1]
-NODE = Path(
-    "/Users/meilinger/.cache/codex-runtimes/"
-    "codex-primary-runtime/dependencies/node/bin/node"
-)
+NODE = shutil.which("node") or "node"
 
 
 class FrontendPaperDetailsTests(unittest.TestCase):

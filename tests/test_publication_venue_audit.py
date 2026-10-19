@@ -1,6 +1,7 @@
 import csv
 import json
 import subprocess
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -215,7 +216,7 @@ class PublicationVenueAuditTests(unittest.TestCase):
         output = canonicalize_records([row])[0]
         for field in ("publication_type", "venue_id", "venue_name", "venue_acronym", "venue_track"):
             self.assertEqual(output[field], exported[field])
-        node = str(Path.home() / ".cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node")
+        node = shutil.which("node") or "node"
         script = "const h=require('./web/paper_details_helpers.js'); const p=" + json.dumps(output) + "; console.log(h.publicationMetadata(p,p.venue_label,p.year).typeLabel)"
         result = subprocess.run([node, "-e", script], cwd=ROOT, capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)

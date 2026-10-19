@@ -1,14 +1,12 @@
 import json
 import subprocess
+import shutil
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-NODE = Path(
-    "/Users/meilinger/.cache/codex-runtimes/"
-    "codex-primary-runtime/dependencies/node/bin/node"
-)
+NODE = shutil.which("node") or "node"
 
 
 class FrontendResultCardTests(unittest.TestCase):

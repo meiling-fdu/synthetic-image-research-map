@@ -1,5 +1,6 @@
 import json
 import subprocess
+import shutil
 import unittest
 from copy import deepcopy
 from pathlib import Path
@@ -1660,10 +1661,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
             / "web"
             / "paper_details_helpers.js"
         )
-        node = Path(
-            "/Users/meilinger/.cache/codex-runtimes/"
-            "codex-primary-runtime/dependencies/node/bin/node"
-        )
+        node = shutil.which("node") or "node"
         script = """
 const helpers = require(process.argv[1]);
 const html = helpers.renderPaperAuthors(
@@ -1694,10 +1692,7 @@ process.stdout.write(JSON.stringify(html));
             / "web"
             / "paper_details_helpers.js"
         )
-        node = Path(
-            "/Users/meilinger/.cache/codex-runtimes/"
-            "codex-primary-runtime/dependencies/node/bin/node"
-        )
+        node = shutil.which("node") or "node"
         script = """
 const helpers = require(process.argv[1]);
 process.stdout.write(JSON.stringify({
@@ -1723,10 +1718,7 @@ process.stdout.write(JSON.stringify({
             / "web"
             / "paper_link_helpers.js"
         )
-        node = Path(
-            "/Users/meilinger/.cache/codex-runtimes/"
-            "codex-primary-runtime/dependencies/node/bin/node"
-        )
+        node = shutil.which("node") or "node"
         script = """
 const helpers = require(process.argv[1]);
 const normalize = (links) => helpers.deduplicatePaperLinks(links);
@@ -1788,10 +1780,7 @@ process.stdout.write(JSON.stringify({
             / "web"
             / "paper_link_helpers.js"
         )
-        node = Path(
-            "/Users/meilinger/.cache/codex-runtimes/"
-            "codex-primary-runtime/dependencies/node/bin/node"
-        )
+        node = shutil.which("node") or "node"
         script = """
 const helpers = require(process.argv[1]);
 const published = (record) => helpers.publishedVersionUrl(record);
