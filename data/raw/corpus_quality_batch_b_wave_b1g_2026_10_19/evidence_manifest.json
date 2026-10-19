@@ -1,0 +1,3002 @@
+{
+  "schema_version": 1,
+  "wave": "Batch B Wave B1G",
+  "phase": "T631_ADJUDICATED_T046_DEFERRED",
+  "artifact_date": "2026-10-19",
+  "date_basis": "User/client Asia/Shanghai date; retrieval timestamps retain actual UTC observation times.",
+  "created_at_utc": "2026-10-19T04:46:51.794141+00:00",
+  "baseline": {
+    "published_commit": "3bcd95fd45b12b3d7a711232b0ba3ae687e8771d",
+    "fetched_origin_main": "3bcd95fd45b12b3d7a711232b0ba3ae687e8771d",
+    "ahead_behind": [
+      0,
+      0
+    ],
+    "isolated_root": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+    "primary_root": "/Users/meilinger/Desktop/synthetic-image-research-map",
+    "tracked_files": 4456,
+    "tracked_inventory_sha256": "696f8ac7b9945c36f2dd95af3d02cdcd0ffc968b8c2a387a565f28029490e0df"
+  },
+  "scope": {
+    "review_ids": [
+      "T046",
+      "T631"
+    ],
+    "records": 2,
+    "authoritative_scientific_changes": 0,
+    "review_decisions_added": 1,
+    "review_actions_closed": 1,
+    "exports_run": 0,
+    "full_suites_run": 0,
+    "precursor_papers_reviewed": 0
+  },
+  "locked_policies": [
+    {
+      "policy_id": "T1",
+      "decision": "ACCEPT",
+      "final_rule": "source_attribution does not imply detection. Assign detection only when the paper explicitly performs an authenticity / real-versus-generated task. Classification among already-synthetic generators is attribution only.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "T024",
+        "T136",
+        "T137",
+        "T141",
+        "T299",
+        "T446",
+        "T503",
+        "T572",
+        "T576",
+        "T611",
+        "T634"
+      ],
+      "policy_alone_resolves": {
+        "T024": false,
+        "T136": false,
+        "T137": false,
+        "T141": false,
+        "T299": false,
+        "T446": false,
+        "T503": false,
+        "T572": false,
+        "T576": false,
+        "T611": false,
+        "T634": false
+      }
+    },
+    {
+      "policy_id": "T2",
+      "decision": "ACCEPT",
+      "final_rule": "localization requires an evaluated spatial forensic prediction task such as pixel-, mask-, patch-, region-, or equivalent spatial prediction of synthetic/generated/edited content. Artifact segmentation qualifies. Attention maps, saliency maps, explainability heatmaps, or visualization alone do not qualify.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "T236",
+        "T246",
+        "T363"
+      ],
+      "policy_alone_resolves": {
+        "T236": false,
+        "T246": false,
+        "T363": true
+      }
+    },
+    {
+      "policy_id": "T3",
+      "decision": "MODIFY_AND_ACCEPT",
+      "final_rule": "Every public paper must remain connected to at least one core forensic task represented by the map: detection, source_attribution, or localization. If careful review establishes that none applies, the record requires scope review rather than an empty task set.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "T527"
+      ],
+      "policy_alone_resolves": {
+        "T527": false
+      }
+    }
+  ],
+  "records": [
+    {
+      "review_id": "T046",
+      "paper_id": "curated:9b7e6c57a9f75e06fddf",
+      "title": "CLIP-SegFusion: An Attention-Guided Feature Fusion Framework for Multi-Level Detection on AI-Generated Artworks",
+      "original_review": {
+        "review_id": "T046",
+        "paper_id": "curated:9b7e6c57a9f75e06fddf",
+        "title": "CLIP-SegFusion: An Attention-Guided Feature Fusion Framework for Multi-Level Detection on AI-Generated Artworks",
+        "dimension": "tasks",
+        "current_labels": [
+          "detection"
+        ],
+        "proposed_labels": [
+          "detection",
+          "localization"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "Joint image classification and pixel segmentation explicitly localize manipulated regions.",
+        "evidence_url": "https://doi.org/10.1145/3805622.3810639",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:9b7e6c57a9f75e06fddf",
+        "evidence_excerpt": "Recent advances in AI-generated image models significantly impact the digital art domain, raising concerns about the misuse of AI-generated imagery. To address the limitations",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: Joint image classification and pixel segmentation explicitly localize manipulated regions.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection",
+          "localization"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method"
+        ]
+      },
+      "original_intake_question": "Primary method and evaluation: spatial prediction head, forensic ground truth and spatial metric; distinguish segmentation scores from image-classification F1 and attention visualization. Stored audit and current public/taxonomy excerpts establish the pending question but do not replace the requested contribution/evaluation check. No scientific verdict is made during intake.",
+      "current_authoritative_taxonomy": {
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "image_scopes": [
+          "fully_generated"
+        ]
+      },
+      "provisional_disposition": "EVIDENCE_STILL_INSUFFICIENT",
+      "proposed_authoritative_tasks": null,
+      "administrative_retained_tasks": [
+        "detection"
+      ],
+      "proposed_taxonomy_correction": null,
+      "maintainer_acceptance_pending": true,
+      "review_closed": false,
+      "terminal_review_decision_created": false,
+      "authoritative_changes_applied": false,
+      "scientific_evidence": {
+        "schema_version": 1,
+        "review_id": "T046",
+        "paper_id": "curated:9b7e6c57a9f75e06fddf",
+        "review_kind": "B1G_EVIDENCE_ONLY_STATIC_CODE_SUPPORT_WITH_PRIMARY_ACCESS_LIMIT",
+        "reviewed_at_utc": "2026-10-19T02:45:01.273122+00:00",
+        "outcome": "EVIDENCE_STILL_INSUFFICIENT",
+        "canonical_identity": {
+          "paper_id": "curated:9b7e6c57a9f75e06fddf",
+          "title": "CLIP-SegFusion: An Attention-Guided Feature Fusion Framework for Multi-Level Detection on AI-Generated Artworks",
+          "year": "2026",
+          "authors": "Yuqian Zheng; Hyeongjin Ahn; Juyeob Lee; Eunil Park",
+          "venue": "ACM International Conference on Multimedia Retrieval",
+          "venue_id": "venue:icmr",
+          "venue_type": "conference",
+          "venue_track": "main",
+          "doi": "10.1145/3805622.3810639",
+          "arxiv_id": "",
+          "openalex_url": "https://openalex.org/W7164834461",
+          "paper_url": "https://doi.org/10.1145/3805622.3810639",
+          "publication_type": "conference"
+        },
+        "current_authoritative_taxonomy": {
+          "tasks": "detection",
+          "image_scopes": "fully_generated",
+          "research_types": "method",
+          "tasks_status": "reviewed",
+          "tasks_review_reason": "",
+          "tasks_evidence_tier": "reused_audit+abstract",
+          "tasks_evidence_source": "openalex",
+          "taxonomy_status": "reviewed",
+          "audited_at": "2026-09-04"
+        },
+        "original_review": {
+          "review_id": "T046",
+          "paper_id": "curated:9b7e6c57a9f75e06fddf",
+          "title": "CLIP-SegFusion: An Attention-Guided Feature Fusion Framework for Multi-Level Detection on AI-Generated Artworks",
+          "dimension": "tasks",
+          "current_labels": [
+            "detection"
+          ],
+          "proposed_labels": [
+            "detection",
+            "localization"
+          ],
+          "status": "LIKELY_FIX",
+          "confidence": "medium",
+          "reason": "Joint image classification and pixel segmentation explicitly localize manipulated regions.",
+          "evidence_url": "https://doi.org/10.1145/3805622.3810639",
+          "evidence_basis": "reused_audit+abstract",
+          "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:9b7e6c57a9f75e06fddf",
+          "evidence_excerpt": "Recent advances in AI-generated image models significantly impact the digital art domain, raising concerns about the misuse of AI-generated imagery. To address the limitations",
+          "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: Joint image classification and pixel segmentation explicitly localize manipulated regions.",
+          "batch": "B",
+          "current_tasks": [
+            "detection"
+          ],
+          "proposed_tasks": [
+            "detection",
+            "localization"
+          ],
+          "current_research_types": [
+            "method"
+          ],
+          "proposed_research_types": [
+            "method"
+          ]
+        },
+        "original_intake_question": "Primary method and evaluation: spatial prediction head, forensic ground truth and spatial metric; distinguish segmentation scores from image-classification F1 and attention visualization. Stored audit and current public/taxonomy excerpts establish the pending question but do not replace the requested contribution/evaluation check. No scientific verdict is made during intake.",
+        "locked_policies": [
+          {
+            "policy_id": "T1",
+            "decision": "ACCEPT",
+            "final_rule": "source_attribution does not imply detection. Assign detection only when the paper explicitly performs an authenticity / real-versus-generated task. Classification among already-synthetic generators is attribution only.",
+            "date": "2026-10-05",
+            "affected_review_ids": [
+              "T024",
+              "T136",
+              "T137",
+              "T141",
+              "T299",
+              "T446",
+              "T503",
+              "T572",
+              "T576",
+              "T611",
+              "T634"
+            ],
+            "policy_alone_resolves": {
+              "T024": false,
+              "T136": false,
+              "T137": false,
+              "T141": false,
+              "T299": false,
+              "T446": false,
+              "T503": false,
+              "T572": false,
+              "T576": false,
+              "T611": false,
+              "T634": false
+            }
+          },
+          {
+            "policy_id": "T2",
+            "decision": "ACCEPT",
+            "final_rule": "localization requires an evaluated spatial forensic prediction task such as pixel-, mask-, patch-, region-, or equivalent spatial prediction of synthetic/generated/edited content. Artifact segmentation qualifies. Attention maps, saliency maps, explainability heatmaps, or visualization alone do not qualify.",
+            "date": "2026-10-05",
+            "affected_review_ids": [
+              "T236",
+              "T246",
+              "T363"
+            ],
+            "policy_alone_resolves": {
+              "T236": false,
+              "T246": false,
+              "T363": true
+            }
+          },
+          {
+            "policy_id": "T3",
+            "decision": "MODIFY_AND_ACCEPT",
+            "final_rule": "Every public paper must remain connected to at least one core forensic task represented by the map: detection, source_attribution, or localization. If careful review establishes that none applies, the record requires scope review rather than an empty task set.",
+            "date": "2026-10-05",
+            "affected_review_ids": [
+              "T527"
+            ],
+            "policy_alone_resolves": {
+              "T527": false
+            }
+          }
+        ],
+        "scientific_sufficiency": {
+          "complete_primary_manuscript_available": false,
+          "complete_main_paper_read": false,
+          "supporting_implementation_read": true,
+          "sufficient_to_propose_localization_addition": false,
+          "confidence": "High confidence in the positive static-code observations and present evidence gap; the existence and quality of the published localization evaluation remain unverified.",
+          "scope": "The available code supports an actual learned spatial-mask branch and an independent metric routine. It does not supply the missing identity/version-matched main-paper experimental protocol, spatial results and localization-baseline comparison."
+        },
+        "primary_retrieval": {
+          "candidate_url": "https://dl.acm.org/doi/pdf/10.1145/3805622.3810639",
+          "version_description": "Official DOI-matched ACM ICMR2026 publisher PDF candidate; derived standard PDF route, identity to verify after receipt",
+          "document_version_verified": false,
+          "expected_publication": "ACM ICMR2026, author listing pp2486-2495; no PDF page count verified",
+          "attempts": 1,
+          "automatic_retries": 0,
+          "successful_full_manuscripts": 0,
+          "http_status": 403,
+          "response_content_type": "text/html; charset=UTF-8",
+          "response_bytes": 5590,
+          "response_sha256": "6fbd1f11ecffaa708cef94dfce330190363d1f499854e0c5a3c00d8a6b6ab178",
+          "response_path": "/private/tmp/b1g-evidence-2026-10-19/t046/http_failure.bin",
+          "response_is_manuscript": false,
+          "receipt_path": "/private/tmp/b1g-evidence-2026-10-19/t046/retrieval.json",
+          "retrieval_by": "root",
+          "network_by_this_reviewer": 0,
+          "no_more_full_requests": true
+        },
+        "supporting_source_identity": {
+          "official_author_listing_url": "https://sites.google.com/view/dxlab/publications",
+          "capture": "/private/tmp/b1g-evidence-2026-10-19/metadata-open.json",
+          "locator": "Author listing webL60 [c74]",
+          "finding": "Matches target title and ordered Zheng/Ahn/Lee/Park authors, ICMR2026 and pp2486-2495; links the ACM paper and target author repository. The DOI open in the saved capture was inaccessible, not a successful publisher full-text read.",
+          "author_repository": "https://github.com/dxlabskku/CLIP-SegFusion",
+          "repository_linkage": "The retained canonical abstract, user source and official author listing identify the same target repository.",
+          "code_version_boundary": "Captured GitHub main branch, no verified immutable commit ID or experiment release tag. Browser crawl timestamps differ across captures. Matching title and author linkage do not prove that these exact code bytes generated the paper tables.",
+          "models_source": {
+            "source_url": "https://github.com/dxlabskku/CLIP-SegFusion/blob/main/models.py",
+            "capture": "/private/tmp/b1g-evidence-2026-10-19/t046/source-support-web.json",
+            "locator_kind": "Saved web-text L-numbers, not claimed as repository-native code line numbers."
+          },
+          "training_source": {
+            "source_url": "https://github.com/dxlabskku/CLIP-SegFusion/blob/main/train.py",
+            "captures": [
+              "/private/tmp/b1g-evidence-2026-10-19/t046/code-details-search.json",
+              "/private/tmp/b1g-evidence-2026-10-19/t046/code-tail-web.json"
+            ],
+            "locator_kind": "Saved web-text L-numbers."
+          },
+          "evaluation_source": {
+            "source_url": "https://github.com/dxlabskku/CLIP-SegFusion/blob/main/evaluate.py",
+            "captures": [
+              "/private/tmp/b1g-evidence-2026-10-19/t046/code-details-search.json",
+              "/private/tmp/b1g-evidence-2026-10-19/t046/code-tail-web.json"
+            ],
+            "locator_kind": "Saved web-text L-numbers."
+          },
+          "code_execution": false,
+          "cloning": false,
+          "weights_or_data_payloads_downloaded": false,
+          "raw_support_access_failures": {
+            "capture": "/private/tmp/b1g-evidence-2026-10-19/t046/raw-code-access.json",
+            "count": 2,
+            "kind": "Raw evaluate.py and train.py clicks failed with cache miss; HTML code captures were used. These are supporting-code access failures, not extra manuscript attempts."
+          }
+        },
+        "nine_requested_scientific_checks": [
+          {
+            "number": 1,
+            "question": "Model input and output dimensions",
+            "status": "SUPPORTED_IN_STATIC_CODE; PUBLISHED_PROTOCOL_UNVERIFIED",
+            "finding": "Captured model accepts image tensors plus caption text. Image loader uses RGB images; transformation details are delegated to uncaptured get_transforms. Default outputs are two image-class logits per sample and one 224x224 mask-logit plane per sample. The exact published input/crop protocol is unavailable.",
+            "locators": [
+              "models.py webL419-455, L446, L484-535, L565-567",
+              "evaluate.py webL627-646"
+            ],
+            "bounds": "Bx2 and Bx1x224x224 describe default captured code, not directly verified publisher output dimensions."
+          },
+          {
+            "number": 2,
+            "question": "Classification heads versus segmentation heads",
+            "status": "DISTINCT_HEADS_SUPPORTED_IN_STATIC_CODE; PAPER_DETAILS_UNVERIFIED",
+            "finding": "A linear image classifier is separate from a convolutional mask head with one output channel by default. Training explicitly includes mask_head parameters and a mask loss. This is positive evidence for a learned mask branch.",
+            "locators": [
+              "models.py webL417-474",
+              "train.py webL967-985, L1015-1019, L1055-1069"
+            ]
+          },
+          {
+            "number": 3,
+            "question": "Pixel, patch, mask or region predictions",
+            "status": "SPATIAL_MASK_OUTPUT_SUPPORTED_IN_STATIC_CODE; REPORTED_RESULTS_UNVERIFIED",
+            "finding": "Visual patch tokens are reshaped to a spatial map, passed through the mask head, and bilinearly upsampled to 224x224. Raw mask logits are returned alongside class logits.",
+            "locators": [
+              "models.py webL524-535, L565-567"
+            ]
+          },
+          {
+            "number": 4,
+            "question": "Whether spatial predictions represent AI-generated/edited content",
+            "status": "INTENDED_FORENSIC_MEANING_CLAIMED; GROUND_TRUTH_SEMANTICS_UNVERIFIED",
+            "finding": "The identity-matched abstract describes localization of manipulated regions, and the repository loads a separate mask_label path. Captured code alone does not document what each target pixel means, how edited regions were created or how mask semantics correspond to the published experiment.",
+            "locators": [
+              "Retained canonical abstract in local_findings.json",
+              "train.py webL919-925",
+              "evaluate.py webL628-640"
+            ]
+          },
+          {
+            "number": 5,
+            "question": "Availability of forensic spatial ground truth",
+            "status": "MASK_LOADING_AND_VALIDITY_SUPPORTED_IN_CODE; ANNOTATION_PROVENANCE_UNVERIFIED",
+            "finding": "Existing mask files are loaded as grayscale targets. Training uses a validity flag when a mask path exists and substitutes a zero target with false validity when absent. Evaluation also substitutes zero masks for absent paths. Annotation origin, correctness, binarization/transform behavior, sample counts and forensic interpretation cannot be established without the full protocol or dataset metadata.",
+            "locators": [
+              "train.py webL815-829, L868-883, L919-925",
+              "evaluate.py webL628-640"
+            ],
+            "bounds": "No target mask, CSV dataset payload or image was downloaded or inspected."
+          },
+          {
+            "number": 6,
+            "question": "Independent spatial prediction metrics",
+            "status": "SEPARATE_SPATIAL_METRIC_ROUTINE_SUPPORTED_IN_CODE; PUBLISHED_VALUES_UNAVAILABLE",
+            "finding": "The captured evaluator computes spatial pixel accuracy, IoU, precision, recall and F1 into separate *_seg output fields, alongside image-classification accuracy/macro-F1/AP/precision/recall/AUC. No executed outputs, paper spatial table values or localization-baseline comparison were obtained.",
+            "locators": [
+              "evaluate.py webL719-799"
+            ]
+          },
+          {
+            "number": 7,
+            "question": "Segmentation outputs evaluated against ground-truth masks",
+            "status": "PREDICTION_VS_TARGET_COMPARISON_IMPLEMENTED; ACTUAL_REPORTED_EVALUATION_UNVERIFIED",
+            "finding": "The evaluator compares binarized predicted masks with loaded target masks and calculates TP/FP/FN. It includes only samples whose target mask sum is positive. This establishes a coded comparison path, not proof that the target paper quantitatively reported it under an identified split/baseline protocol.",
+            "locators": [
+              "evaluate.py webL721-752, L777-799"
+            ],
+            "bounds": "Code not executed; positive-mask filtering excludes empty-target examples from the spatial metric aggregate."
+          },
+          {
+            "number": 8,
+            "question": "Whether reported F1/AUC are image-level or pixel/region-level",
+            "status": "README_NUMBERS_CLASSIFICATION_STYLE; PAPER_SPATIAL_NUMBERS_UNAVAILABLE",
+            "finding": "README ID tables contain accuracy/precision/recall/F1/AUC and OOD tables contain F1/AUC. They lack IoU or separately named spatial-score columns. The evaluator separately names image macro_f1/auc and spatial f1_seg/iou_seg. The README values support classification-style detection claims and must not be relabeled as localization metrics. Precise mapping to a pinned paper table remains unverified.",
+            "locators": [
+              "Repository README in metadata-open.json webL235-275",
+              "evaluate.py webL764-799",
+              "Retained canonical abstract"
+            ]
+          },
+          {
+            "number": 9,
+            "question": "Attention/saliency visualization confused with localization",
+            "status": "NOT_ATTENTION_ONLY_IN_CAPTURED_IMPLEMENTATION; PUBLISHED_LOCALIZATION_SUFFICIENCY_UNVERIFIED",
+            "finding": "The predicted mask also weights spatial features through sigmoid attention, but it has its own returned output, trainable convolutional head and supervised mask loss. Therefore an attention-only or no-spatial-output description would contradict available code. The missing published GT/protocol/numerical evidence still prevents a confident T2 task-addition proposal.",
+            "locators": [
+              "models.py webL531-546, L565-567",
+              "train.py webL1015-1069"
+            ],
+            "bounds": "Supporting implementation evidence is stronger than a README or visualization claim, but does not replace a complete experimental main paper."
+          }
+        ],
+        "implementation_details_supported_but_not_publisher_verified": {
+          "feature_backbone": "CLIP ViT-L/14, visual patch tokens and caption/text features.",
+          "default_class_output": "B x2 image-class logits.",
+          "default_spatial_output": "B x1 x224 x224 raw mask logits; convolutional patch-map head with bilinear upsampling.",
+          "mask_as_attention": "Sigmoid(mask logits) also gates interpolated spatial features before pooling and classification fusion.",
+          "training_loss": "Image cross-entropy plus mask BCE-with-logits, mask weight1.0; mask loss only on mask_valid samples.",
+          "mask_training_threshold": "Training/validation mask accuracy uses sigmoid(mask logits)>0.5.",
+          "evaluation_class_rule": "Softmax class1 probability>=0.5, then image-level accuracy/macro-F1/AP/precision/recall/ROC-AUC.",
+          "evaluation_spatial_rule": "Only target-mask-positive samples; raw returned mask output>0.5; aggregate pixel accuracy and per-image IoU/precision/recall/F1 into *_seg fields.",
+          "training_split_boundary": "Code uses CSV dataset=train for training and dataset=test for validation; exact paper split, counts and leak controls are not available.",
+          "reported_code_hyperparameters": "Captured training tail lists batch16,100epochs, learning rate3e-3 and SGD. These are source-code settings, not claimed verified paper settings."
+        },
+        "quantitative_evidence": {
+          "abstract_claims": {
+            "source": "Retained canonical/OpenAlex abstract in local_findings.json",
+            "ID_average_F1_percent": 92.63,
+            "OOD_average_F1_percent": 83.66,
+            "claimed_OOD_margin_percentage_points": 5.8,
+            "interpretation": "Detection/classification-style claims; no evidence that these are pixel/region scores. README ID F1 values are consistent with the ID average. Small rounding differences in displayed OOD values are not independently diagnosed.",
+            "full_paper_protocol_verified": false
+          },
+          "README_detection_values": {
+            "source_url": "https://github.com/dxlabskku/CLIP-SegFusion",
+            "capture": "/private/tmp/b1g-evidence-2026-10-19/metadata-open.json",
+            "metric_interpretation": "Classification-style image authenticity results in README; not independently verified paper spatial metrics. All numbers below are transcriptions, not reproduced experiments.",
+            "ID_LA_Inpainting": {
+              "locator": "README webL235-248",
+              "accuracy_percent": 94.8,
+              "precision_percent": 94.8,
+              "recall_percent": 94.8,
+              "F1_percent": 94.8,
+              "AUC_percent": 98.77
+            },
+            "ID_Inpainting": {
+              "locator": "README webL249-261",
+              "accuracy_percent": 90.47,
+              "precision_percent": 90.55,
+              "recall_percent": 90.47,
+              "F1_percent": 90.46,
+              "AUC_percent": 96.88
+            },
+            "OOD": {
+              "locator": "README webL263-275",
+              "tuple_order": [
+                "F1_percent",
+                "AUC_percent"
+              ],
+              "Latent_Diffusion": [
+                77.22,
+                89.8
+              ],
+              "Midjourney": [
+                87.77,
+                95.03
+              ],
+              "DALLE": [
+                82.96,
+                92.48
+              ],
+              "Imagen": [
+                68.61,
+                85.99
+              ],
+              "Janus": [
+                91.5,
+                97.27
+              ],
+              "StyleGAN2": [
+                93.93,
+                98.51
+              ]
+            },
+            "comparison_boundary": "These README comparisons are to detection methods, not established localization baselines. For example the target has ID LA_Inpainting F1/AUC94.80/98.77 versus LaRE95.50/99.08, and OOD Imagen68.61/85.99 versus LaRE92.40/97.76. Do not claim uniformly best results. These values do not settle the localization question."
+          },
+          "published_spatial_values": {
+            "status": "UNAVAILABLE_NOT_NEGATIVE_EVIDENCE",
+            "paper_section_figure_table_locators": null,
+            "pixel_or_region_metric_values": null,
+            "spatial_sample_counts_splits": null,
+            "spatial_baseline_names_and_comparative_results": null,
+            "note": "Do not equate missing accessible values with absence of a localization evaluation in the complete paper."
+          }
+        },
+        "contradictions_and_limitations": [
+          {
+            "issue": "Positive spatial implementation versus attention-only inference",
+            "finding": "The supervised returned mask head is explicit in code; calling the method attention-only or asserting no spatial prediction would be unsupported."
+          },
+          {
+            "issue": "Code capability versus published evaluated task",
+            "finding": "A metric routine can calculate localization scores, but no actual output file, main-paper spatial table, GT construction protocol or baseline comparison was obtained. The author repository README is not a replacement for these experiments."
+          },
+          {
+            "issue": "Spatial threshold mismatch in supporting code",
+            "locators": [
+              "models.py webL533-535/L567",
+              "evaluate.py webL735",
+              "train.py webL1080/L1144"
+            ],
+            "finding": "The model returns raw mask logits. evaluate.py thresholds them directly at0.5; training/validation apply sigmoid before threshold0.5. These are different operating points. No code was executed and no correspondence to the unavailable paper protocol is asserted."
+          },
+          {
+            "issue": "Positive-target-only spatial aggregate",
+            "locator": "evaluate.py webL721-725",
+            "finding": "Spatial metrics skip examples with an empty target mask. This does not by itself measure localization false positives on all negative/real images. The full paper may use a different or more complete protocol; it is unverified."
+          },
+          {
+            "issue": "Ground-truth provenance",
+            "finding": "Grayscale mask loading and mask validity flags establish only an intended data path. Annotation construction, target semantics, transforms/thresholding, independent GT quality and sample counts remain unverified."
+          },
+          {
+            "issue": "Code/publication equivalence",
+            "finding": "The unpinned main branch and differently aged browser captures are supporting evidence only; no immutable code release or direct publisher-version comparison was established."
+          },
+          {
+            "issue": "Potential image-scope cues",
+            "finding": "README includes inpainting datasets and the abstract refers to manipulated regions. Any image-scope implication is independent of this bounded task-addition review; current fully_generated is preserved and no scope correction is proposed."
+          },
+          {
+            "issue": "Related2025 precursor",
+            "finding": "No complete target manuscript was available to establish a precise precursor dependency. No related2025 paper was retrieved or scientifically reviewed; no scientific content is imported from a precursor."
+          }
+        ],
+        "policy_application": {
+          "T2": "An evaluated spatial forensic task requires more than saliency. Static code positively supports a trained mask output and GT-comparison machinery, but complete forensic GT/protocol and reported quantitative spatial evidence remain missing, so a supported localization addition cannot yet be proposed.",
+          "T1": "Existing detection is preserved; code/README classify images but no new task or source-attribution action is adjudicated.",
+          "T3": "No empty task set arises; maintain current detection administratively."
+        },
+        "precise_blocker": "The sole official DOI-matched ACM PDF candidate returnedHTTP403 HTML. Permitted static author-code captures provide implementation support but no complete main-paper experimental protocol or reported spatial metric/baseline results. Therefore the bounded original localization-addition question remains unresolved.",
+        "needed_primary_evidence": [
+          "Accessible complete DOI/title/byline-matched target manuscript with verified version.",
+          "Exact paper architecture/head/loss/input-output definitions and their relation to the available code.",
+          "Forensic mask semantics, annotation construction, sample counts/splits and prediction-versus-mask protocol.",
+          "Exact published spatial metric values and localization-baseline comparisons, separately from image-classification F1/AUC.",
+          "Clarification of spatial threshold/negative-image handling and code-paper version relationship where material."
+        ],
+        "proposed_authoritative_tasks": null,
+        "proposed_taxonomy_correction": null,
+        "administrative_retained_tasks": [
+          "detection"
+        ],
+        "administrative_disposition": "Keep T046 open pending sufficient main-paper evaluation evidence. Preserve detection, method and every other current authoritative field. Do not add localization now and do not reject its scientific existence from failed access.",
+        "maintainer_acceptance_pending": true,
+        "review_closed": false,
+        "terminal_review_decision_created": false,
+        "authoritative_changes_applied": false,
+        "source_hashes": [
+          {
+            "path": "/private/tmp/b1g-evidence-2026-10-19/t046/local_findings.json",
+            "sha256": "80b6b5de2cf2489986c74204959478d9c155788dd4070ac1a3e16f2fe407a41f"
+          },
+          {
+            "path": "/private/tmp/b1g-evidence-2026-10-19/t046/retrieval.json",
+            "sha256": "c7ff690ec1cdcde61d64ac36cbf3f2a53edc764cc6449703cd86c4a60b871933"
+          },
+          {
+            "path": "/private/tmp/b1g-evidence-2026-10-19/t046/source-support-web.json",
+            "sha256": "d306ace853ba0f6cb5b87fdf031941f036e7663bf7c67ec35f2f627c509561ba"
+          },
+          {
+            "path": "/private/tmp/b1g-evidence-2026-10-19/t046/code-details-search.json",
+            "sha256": "a57cbd56ff95faa9e9db12d7cfee481f40ad03e131a134cf30640f0bb883d559"
+          },
+          {
+            "path": "/private/tmp/b1g-evidence-2026-10-19/t046/code-tail-web.json",
+            "sha256": "0228e211d585ffe9778fb5e7ccfbaaffffb6b8bd2a62464bf3a8b7a433003b55"
+          },
+          {
+            "path": "/private/tmp/b1g-evidence-2026-10-19/t046/raw-code-access.json",
+            "sha256": "d2e4c7cde553c763c3121d71ea9bbfa3fe3053f201ff431af618d52b94d7b639"
+          },
+          {
+            "path": "/private/tmp/b1g-evidence-2026-10-19/metadata-open.json",
+            "sha256": "a1f546c6959970d4dbf978c7e8cd53dc922253cd985115c1ae27c7fc83d66b40"
+          }
+        ],
+        "constraints_observed": {
+          "new_network_requests_by_this_reviewer": 0,
+          "new_manuscripts_retrieved_by_this_reviewer": 0,
+          "supporting_code_executed": false,
+          "R_or_primary_writes": false,
+          "tests_exports_Git_mutations": false,
+          "other_papers_reviewed": false,
+          "only_output": "/private/tmp/b1g-evidence-2026-10-19/t046/scientific_findings.json"
+        }
+      }
+    },
+    {
+      "review_id": "T631",
+      "paper_id": "curated:170f07b3d7020611e566",
+      "title": "Attributing Fake Images to GANs: Learning and Analyzing GAN Fingerprints",
+      "original_review": {
+        "review_id": "T631",
+        "paper_id": "curated:170f07b3d7020611e566",
+        "title": "Attributing Fake Images to GANs: Learning and Analyzing GAN Fingerprints",
+        "dimension": "tasks",
+        "current_labels": [
+          "source_attribution"
+        ],
+        "proposed_labels": [
+          "detection",
+          "source_attribution"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "Abstract explicitly describes real-versus-GAN classification before source attribution; detection is missing.",
+        "evidence_url": "https://doi.org/10.1109/iccv.2019.00765",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:170f07b3d7020611e566",
+        "evidence_excerpt": "Recent advances in Generative Adversarial Networks (GANs) have shown increasing success in generating photorealistic images. But they also raise challenges to visual forensics and",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: Abstract explicitly describes real-versus-GAN classification before source attribution; detection is missing.",
+        "batch": "B",
+        "current_tasks": [
+          "source_attribution"
+        ],
+        "proposed_tasks": [
+          "detection",
+          "source_attribution"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method"
+        ]
+      },
+      "original_intake_question": "Primary real/generated decision rule and authenticity-specific metric, distinguished from a real source class in multiclass source attribution. Stored audit and current public/taxonomy excerpts establish the pending question but do not replace the requested contribution/evaluation check. No scientific verdict is made during intake.",
+      "current_authoritative_taxonomy": {
+        "tasks": [
+          "source_attribution"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "image_scopes": [
+          "fully_generated"
+        ]
+      },
+      "provisional_disposition": "SUPPORTED_NO_CHANGE",
+      "proposed_authoritative_tasks": [
+        "source_attribution"
+      ],
+      "administrative_retained_tasks": [
+        "source_attribution"
+      ],
+      "proposed_taxonomy_correction": null,
+      "maintainer_acceptance_pending": false,
+      "review_closed": true,
+      "terminal_review_decision_created": true,
+      "authoritative_changes_applied": false,
+      "scientific_evidence": {
+        "review_id": "T631",
+        "paper_id": "curated:170f07b3d7020611e566",
+        "review_kind": "B1G_EVIDENCE_ONLY_COMPLETE_OFFICIAL_PRIMARY_REVIEW",
+        "reviewed_at_utc": "2026-10-19T02:47:18.704989+00:00",
+        "baseline_commit": "3bcd95fd45b12b3d7a711232b0ba3ae687e8771d",
+        "provisional_disposition": "SUPPORTED_NO_CHANGE",
+        "proposed_authoritative_tasks": [
+          "source_attribution"
+        ],
+        "proposed_task_addition": null,
+        "scientific_answer": "The official main paper substantively evaluates image-source attribution with the real world as one source alongside GAN instances. Its real/GAN distinction is a stated motivation and is embedded in that joint label space, but the complete main paper does not define and separately score an authenticity decision or operating point. Under the explicitly requested standard, detection should not be added solely from the real source class or from joint-source accuracy. Retain source_attribution.",
+        "scientific_sufficiency": {
+          "complete_official_main_paper_available": true,
+          "complete_main_paper_read": true,
+          "sufficient_for_provisional_no_change": true,
+          "scope": "Sufficient to characterize all defined and measured endpoints in the11-page ICCV main paper and reject automatic promotion of N+1 source results into independently scored detection. It is not proof that no possible binary detector could be derived or that unreviewed supplementary materials contain no additional experiment.",
+          "confidence": "High for the reported joint-source label space and numerical results; bounded confidence for the no-addition recommendation under the maintainer’s independent-authenticity-evaluation criterion."
+        },
+        "identity": {
+          "title": "Attributing Fake Images to GANs: Learning and Analyzing GAN Fingerprints",
+          "canonical_authors": [
+            "Ning Yu",
+            "Larry Davis",
+            "Mario Fritz"
+          ],
+          "printed_byline": "Ning Yu; Larry Davis; Mario Fritz",
+          "pdf_metadata_authors": "Ning Yu; Larry S. Davis; Mario Fritz",
+          "author_boundary": "Printed title/byline/order match canonical work. The PDF metadata’s middle initial does not authorize altering canonical author identities.",
+          "venue": "ICCV2019 official proceedings main paper",
+          "canonical_doi": "10.1109/iccv.2019.00765",
+          "source_url": "https://openaccess.thecvf.com/content_ICCV_2019/papers/Yu_Attributing_Fake_Images_to_GANs_Learning_and_Analyzing_GAN_Fingerprints_ICCV_2019_paper.pdf",
+          "sha256": "be717607d2204d42d4a8e96f092bcbbef4e749a43df587bd9e0940afea5cebea",
+          "bytes": 1860415,
+          "pdf_pages": 11,
+          "printed_pages": "7556–7566",
+          "version_boundary": "This review uses the official ICCV2019 main paper, not arXiv1811.08180v3. Canonical papers.csv retains the v3 suffix while taxonomy normalizes the arXiv ID; no equivalence to every arXiv version or correction of those identity fields is claimed.",
+          "related_material_not_retrieved": "The paper links external code/data/models/supplementary material, which were not opened or retrieved."
+        },
+        "retrieval_provenance": {
+          "receipt_path": "/private/tmp/b1g-evidence-2026-10-19/t631/retrieval.json",
+          "local_pdf_path": "/private/tmp/b1g-evidence-2026-10-19/t631/manuscript.pdf",
+          "successful_new_full_manuscripts": 1,
+          "full_text_attempts": 1,
+          "automatic_retries": 0,
+          "separate_supplements_retrieved": 0,
+          "extra_versions_retrieved": 0,
+          "code_or_dataset_downloads": 0,
+          "network_requests_by_this_reviewer": 0,
+          "retrieved_by": "root",
+          "retrieval_completed_utc": "2026-10-19T02:39:05.220794+00:00",
+          "extracted_text_sha256": "5ac2ee78625cdeccc5adaaddc60e18b1020fd221581ee42609d272384b80bd74"
+        },
+        "coverage": {
+          "pages_read_completely": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "scientific_content": "pp1–2 abstract/claims/contributions and related work; p3 finite source-label definitions and attribution network; p4 all network variants/visualization losses/Eqs1–4; pp5–8 all datasets, source-class configurations, main Tables1–8, feature/patch/attack analyses and conclusion; pp9–11 complete references.",
+          "visual_pages_inspected": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "visual_targets": [
+            "p3/7558 Sec3.1 source-label definition and service-authenticity wording",
+            "p4/7559 Fig2 final #labels head and Fig3 source-fingerprint visualization/Eqs1–4",
+            "p5/7560 dataset counts and multi-source class settings",
+            "p6/7561 Tables1–5",
+            "p7/7562 Table6 and attack/defense protocol",
+            "p8/7563 Tables7–8 and Figure7 fingerprint interactions"
+          ],
+          "absence_check_scope": "All main-paper method definitions and Tables1–8 were inspected, rather than relying on missing abstract keywords."
+        },
+        "original_review": {
+          "review_id": "T631",
+          "paper_id": "curated:170f07b3d7020611e566",
+          "title": "Attributing Fake Images to GANs: Learning and Analyzing GAN Fingerprints",
+          "dimension": "tasks",
+          "current_labels": [
+            "source_attribution"
+          ],
+          "proposed_labels": [
+            "detection",
+            "source_attribution"
+          ],
+          "status": "LIKELY_FIX",
+          "confidence": "medium",
+          "reason": "Abstract explicitly describes real-versus-GAN classification before source attribution; detection is missing.",
+          "evidence_url": "https://doi.org/10.1109/iccv.2019.00765",
+          "evidence_basis": "reused_audit+abstract",
+          "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:170f07b3d7020611e566",
+          "evidence_excerpt": "Recent advances in Generative Adversarial Networks (GANs) have shown increasing success in generating photorealistic images. But they also raise challenges to visual forensics and",
+          "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: Abstract explicitly describes real-versus-GAN classification before source attribution; detection is missing.",
+          "batch": "B",
+          "current_tasks": [
+            "source_attribution"
+          ],
+          "proposed_tasks": [
+            "detection",
+            "source_attribution"
+          ],
+          "current_research_types": [
+            "method"
+          ],
+          "proposed_research_types": [
+            "method"
+          ]
+        },
+        "original_intake_question": "Primary real/generated decision rule and authenticity-specific metric, distinguished from a real source class in multiclass source attribution. Stored audit and current public/taxonomy excerpts establish the pending question but do not replace the requested contribution/evaluation check. No scientific verdict is made during intake.",
+        "original_review_reconciliation": "The original audit infers a missing detection label from the abstract’s real-versus-GAN claim. Complete primary evidence confirms that claim is implemented within joint source classification, while all scored main-paper endpoints remain source attribution or source-feature separation. This resolves the bounded question without endorsing an unreported binary score.",
+        "independent_original_actions": "R631 is original BatchD/NO_CHANGE_AFTER_REVIEW for method; P631 is original BatchD/COMPLETE_FOR_CURRENT_SCHEMA. Neither is adjudicated here.",
+        "eight_requested_checks": [
+          {
+            "check": 1,
+            "question": "Are real images included in the prediction label space?",
+            "answer": "Yes. Section3.1 defines a finite source-ground-truth set consisting of pretrained GAN instances plus the real world. Table1 explicitly uses five classes: real, ProGAN, SNGAN, CramerGAN and MMDGAN.",
+            "locators": [
+              "p3/7558 Sec3.1",
+              "p5/7560 Sec4.2",
+              "p6/7561 Table1"
+            ]
+          },
+          {
+            "check": 2,
+            "question": "Is a real-versus-GAN decision rule explicitly defined?",
+            "answer": "The paper repeatedly states that it distinguishes real and generated images, and a real source can be predicted by the source classifier. It does not specify a separate binary head, a real-versus-sum-of-GAN score, threshold, source-collapse rule or distinct two-stage real/fake decision protocol. The operationally specified output is a source label from finiteY.",
+            "locators": [
+              "pp1–2/7556–7557 task claims",
+              "p3/7558 Sec3.1",
+              "p4/7559 Fig2/Eq3"
+            ]
+          },
+          {
+            "check": 3,
+            "question": "Is genuine authenticity detection quantitatively evaluated?",
+            "answer": "No independently scored authenticity endpoint was found in the complete main paper. The reported classification accuracies evaluate correctness of the exact source label, including real as one source. Such joint correctness is not a separately measured real/fake metric.",
+            "locators": [
+              "p5/7560 Sec4.1 Evaluation",
+              "pp6–8/7561–7563 Tables1–8"
+            ]
+          },
+          {
+            "check": 4,
+            "question": "Are detection results separated from generator-attribution results?",
+            "answer": "No. There is no separate detection table, binary ROC/PR curve, authenticity confusion table or binary subgroup result. Tables1–8 retain source-attribution settings; FD ratios quantify feature separation across source classes.",
+            "locators": [
+              "pp5–8/7560–7563 full Section4"
+            ]
+          },
+          {
+            "check": 5,
+            "question": "Are real images treated as another source class?",
+            "answer": "Yes in the defined and evaluated classifier. A real-source label is trained alongside GAN instance labels. The authors also motivate visual-forensics use, so describing this as a mere absence of a real/GAN claim would be inaccurate; the distinction is claim/joint capability versus independent detection evaluation.",
+            "locators": [
+              "p3/7558 Sec3.1",
+              "pp5–6/7560–7561 source settings"
+            ]
+          },
+          {
+            "check": 6,
+            "question": "Would generator-ID accuracy be incorrectly reused as detection accuracy?",
+            "answer": "Yes if the joint-source scores were relabeled as binary accuracy. A ProGAN→SNGAN error is an attribution error while leaving binary generated status unchanged. A real→GAN error changes authenticity. The aggregate source accuracy does not supply the full binary error breakdown, and no binary score is derived here.",
+            "locators": [
+              "p6/7561 Tables1–3",
+              "p5/7560 metric definition"
+            ]
+          },
+          {
+            "check": 7,
+            "question": "Are binary accuracy, ROC/AUC, F1 or equivalent authenticity-specific measures reported?",
+            "answer": "None found for the proposed forensic classifier in the main paper. Accuracy percentages are exact source-class accuracy; FD ratio is an inter-/intra-source Fréchet distance ratio. No ROC/AUC, F1, authenticity AP or real-class sensitivity/specificity/operating point is provided.",
+            "locators": [
+              "p5/7560 Evaluation",
+              "pp6–8/7561–7563 all quantitative tables"
+            ]
+          },
+          {
+            "check": 8,
+            "question": "Are separate detection operating points or protocols evaluated?",
+            "answer": "None found. The experiments vary source architecture, GAN training data, initialization seed, frequency band, effective patch size, perceptual selection and perturbation immunization while retaining attribution labels. These variations do not create an independently measured binary protocol.",
+            "locators": [
+              "pp5–8/7560–7563 Sections4.2–4.5"
+            ]
+          }
+        ],
+        "method_and_label_space": {
+          "input": "128x128x3 images in the reported experiments.",
+          "main_output": "A finite source class fromY: known pretrained GAN instances plus the real world. Figure2’s terminal output is #labels, preceded by a1x1x512 representation.",
+          "image_fingerprint": "The1x1x512 penultimate classifier feature vector.",
+          "model_fingerprint": "The corresponding1x1x512 weights of the final fully connected source classifier for a GAN instance.",
+          "main_loss": "Figure2 caption specifies cross-entropy classification loss over image-source ground truth.",
+          "architecture_variants": "Pre-downsampling, residual frequency-band extraction and post-pooling alter source-fingerprint evidence. Even patch-statistics variants end in a source prediction; they do not supply a separate forensic localization or detection output.",
+          "visualization_network": "Section3.3 learns an autoencoder reconstructionR(I), image residual fingerprintR(I)-I and trainable model fingerprint per source. Correlation with each source fingerprint supplies the class logits. This variant is explicitly for visualization/interpretation and has extra complexity.",
+          "visualization_objective": "Eqs1–4 combine pixel L1 reconstruction, reconstruction adversarial regularization with gradient penalty, and source-ground-truth classification; weights20.0,0.1,1.0. No independent binary authenticity objective or evaluation is added by those terms.",
+          "discriminator_boundary": "D_rec in Eq2 is a reconstruction adversarial critic, not a reported real-versus-GAN forensic head. Original GAN discriminators are discussed as using unaligned embedding spaces; the evaluated external network predicts sources.",
+          "service_authenticity_boundary": "The last paragraph of Sec3.1 uses authenticity to mean membership in a desired GAN API/service and service identity by majority source prediction. That is source/model verification, not a separately scored camera-real-versus-generated protocol."
+        },
+        "experimental_protocol": {
+          "datasets": "CelebA faces and LSUN bedrooms.",
+          "reported_dataset_size": "Sec4.1 p5 states20,000 real-world RGB images for each dataset.",
+          "GANs": "ProGAN, SNGAN, CramerGAN and MMDGAN; trained from scratch with defaults except240epochs and128x128x3 output size.",
+          "architecture_source_experiment": "Table1:5-way real+4GAN architecture classification. Sec4.2 states100,000 images per source for classifier training and10,000 per source for testing.",
+          "training_set_source_experiment": "A100,000-image real base subset and10other100,000-image subsets are constructed. The listed replacement counts are1,10,100,1000,10000,20000,40000,60000,80000,100000. ProGAN instances trained on varied subsets are treated as distinct attribution sources; Table2 aggregates attribution results. The prose/table notation does not supply a separate binary result per replacement count. No exact total class-count assumption is required here.",
+          "seed_source_experiment": "Table3: real plus10ProGAN instances trained with different initialization seeds on the entire real dataset; hence11source classes. Paper reports100,000 train and10,000 test images in that sampling setup. Two identically seeded instances are reported indistinguishable at random attribution chance as a sanity check.",
+          "frequency_patch_experiments": "Tables4–5 reuse real+seed-instance source labels; vary frequency components and effective local receptive fields while still reporting global source accuracy.",
+          "high_quality_subset": "Table6 selects the10%test-generated images most perceptually similar to the real dataset via1-nearest-neighbor perceptual similarity. The classifier was trained on non-selected images. This is the authors’ artifact-bias probe, not independent proof that every selected image is artifact-free.",
+          "perturbation_experiments": "Tables7–8 use the real+ProGANseed label set. Atk measures the pretrained source classifier under perturbation; Dfs measures attack-category-aware fine-tuning.",
+          "known_source_boundary": "All reported source experiments concern known source classes/instances. Changed GAN architecture/data/seed is a source distinction trained for attribution, not a demonstrated held-out-generator authenticity test.",
+          "sample_count_inconsistency": "The visually verified20,000-real-image dataset statement conflicts with later100,000-image real subsets and100,000train+10,000test images per real source. The main paper does not explain this discrepancy; do not silently rewrite20,000 as200,000 or infer sampling with replacement."
+        },
+        "quantitative_results": {
+          "metric_boundary": "All accuracy values below are percentages of source-class attribution correctness as defined in Sec4.1. They are not separately reported binary real/fake accuracies. FD ratios are source-feature separation statistics, not detector operating points.",
+          "Table1_p6_printed7561": {
+            "label_set": [
+              "real",
+              "ProGAN",
+              "SNGAN",
+              "CramerGAN",
+              "MMDGAN"
+            ],
+            "dataset_order": [
+              "CelebA",
+              "LSUN"
+            ],
+            "source_accuracy_percent": {
+              "kNN": [
+                28.0,
+                36.3
+              ],
+              "Eigenface": [
+                53.28,
+                null
+              ],
+              "PRNU": [
+                86.61,
+                67.84
+              ],
+              "Ours": [
+                99.43,
+                98.58
+              ]
+            },
+            "FD_ratio": {
+              "Inception": [
+                2.36,
+                5.27
+              ],
+              "Our_fingerprint": [
+                454.76,
+                226.59
+              ]
+            }
+          },
+          "Table2_p6_printed7561": {
+            "label_set": "real plus ProGAN_subset_diff#i sources; multiple data-overlap variants, not a standalone binary source pair result.",
+            "dataset_order": [
+              "CelebA",
+              "LSUN"
+            ],
+            "source_accuracy_percent": {
+              "kNN": [
+                11.46,
+                10.72
+              ],
+              "Eigenface": [
+                27.98,
+                null
+              ],
+              "PRNU": [
+                92.28,
+                70.55
+              ],
+              "Ours": [
+                99.5,
+                97.66
+              ]
+            },
+            "FD_ratio": {
+              "Inception": [
+                1.08,
+                1.64
+              ],
+              "Our_fingerprint": [
+                111.41,
+                39.96
+              ]
+            }
+          },
+          "Table3_p6_printed7561": {
+            "label_set": "real plus10ProGAN_seed_v#i sources",
+            "dataset_order": [
+              "CelebA",
+              "LSUN"
+            ],
+            "source_accuracy_percent": {
+              "kNN": [
+                10.88,
+                10.58
+              ],
+              "Eigenface": [
+                23.12,
+                null
+              ],
+              "PRNU": [
+                89.4,
+                69.73
+              ],
+              "Ours": [
+                99.14,
+                97.04
+              ],
+              "Our_visNet": [
+                97.07,
+                96.58
+              ]
+            },
+            "FD_ratio": {
+              "Inception": [
+                1.1,
+                1.29
+              ],
+              "Our_fingerprint": [
+                80.28,
+                36.48
+              ]
+            }
+          },
+          "Table4_p6_printed7561": {
+            "label_set": "real+ProGANseed sources",
+            "column_order": [
+              "downsampling_factor",
+              "image_resolution_side",
+              "CelebA_low_frequency",
+              "CelebA_high_frequency",
+              "LSUN_low_frequency",
+              "LSUN_high_frequency"
+            ],
+            "source_accuracy_percent_rows": [
+              [
+                1,
+                128,
+                99.14,
+                99.14,
+                97.04,
+                97.04
+              ],
+              [
+                2,
+                64,
+                98.74,
+                98.64,
+                96.78,
+                96.84
+              ],
+              [
+                4,
+                32,
+                95.5,
+                98.52,
+                91.08,
+                96.04
+              ],
+              [
+                8,
+                16,
+                87.2,
+                92.9,
+                83.02,
+                91.58
+              ],
+              [
+                16,
+                8,
+                67.44,
+                78.74,
+                63.8,
+                80.58
+              ],
+              [
+                32,
+                4,
+                26.58,
+                48.42,
+                28.24,
+                54.5
+              ]
+            ]
+          },
+          "Table5_p6_printed7561": {
+            "label_set": "real+ProGANseed sources",
+            "column_order": [
+              "pooling_start_tensor_side",
+              "effective_patch_side",
+              "CelebA_source_accuracy_percent",
+              "LSUN_source_accuracy_percent"
+            ],
+            "rows": [
+              [
+                4,
+                128,
+                99.34,
+                97.44
+              ],
+              [
+                8,
+                108,
+                99.32,
+                96.3
+              ],
+              [
+                16,
+                52,
+                99.3,
+                95.94
+              ],
+              [
+                32,
+                24,
+                99.24,
+                88.36
+              ],
+              [
+                64,
+                10,
+                89.6,
+                18.26
+              ],
+              [
+                128,
+                3,
+                13.42,
+                17.1
+              ]
+            ]
+          },
+          "Table6_p7_printed7562": {
+            "label_set": "10%perceptually selected images from real+ProGANseed sources",
+            "dataset_order": [
+              "CelebA",
+              "LSUN"
+            ],
+            "source_accuracy_percent": {
+              "kNN": [
+                11.99,
+                10.35
+              ],
+              "Eigenface": [
+                26.69,
+                null
+              ],
+              "PRNU": [
+                93.5,
+                74.49
+              ],
+              "Ours": [
+                99.93,
+                98.16
+              ]
+            },
+            "FD_ratio": {
+              "Inception": [
+                1.04,
+                1.22
+              ],
+              "Our_fingerprint": [
+                15.63,
+                6.27
+              ]
+            }
+          },
+          "Table7_p8_printed7563_CelebA": {
+            "label_set": "real+ProGANseed sources",
+            "condition_order": [
+              "Noise",
+              "Blur",
+              "Cropping",
+              "Compression",
+              "Relighting",
+              "Combination"
+            ],
+            "tuple_order": [
+              "Atk_source_accuracy_percent",
+              "Dfs_source_accuracy_percent"
+            ],
+            "PRNU": [
+              [
+                57.88,
+                63.82
+              ],
+              [
+                27.37,
+                42.43
+              ],
+              [
+                9.84,
+                10.68
+              ],
+              [
+                26.15,
+                44.55
+              ],
+              [
+                86.59,
+                87.02
+              ],
+              [
+                19.93,
+                21.77
+              ]
+            ],
+            "Ours": [
+              [
+                9.14,
+                93.02
+              ],
+              [
+                49.64,
+                97.2
+              ],
+              [
+                46.8,
+                98.28
+              ],
+              [
+                8.77,
+                88.02
+              ],
+              [
+                94.02,
+                98.66
+              ],
+              [
+                19.31,
+                72.64
+              ]
+            ]
+          },
+          "Table8_p8_printed7563_LSUN": {
+            "label_set": "real+ProGANseed sources",
+            "condition_order": [
+              "Noise",
+              "Blur",
+              "Cropping",
+              "Compression",
+              "Relighting",
+              "Combination"
+            ],
+            "tuple_order": [
+              "Atk_source_accuracy_percent",
+              "Dfs_source_accuracy_percent"
+            ],
+            "PRNU": [
+              [
+                39.59,
+                40.97
+              ],
+              [
+                26.92,
+                30.79
+              ],
+              [
+                9.3,
+                9.42
+              ],
+              [
+                18.27,
+                23.66
+              ],
+              [
+                60.86,
+                63.31
+              ],
+              [
+                16.54,
+                16.89
+              ]
+            ],
+            "Ours": [
+              [
+                11.8,
+                95.3
+              ],
+              [
+                74.48,
+                96.68
+              ],
+              [
+                86.2,
+                97.3
+              ],
+              [
+                24.73,
+                92.4
+              ],
+              [
+                62.21,
+                97.36
+              ],
+              [
+                24.44,
+                83.42
+              ]
+            ]
+          },
+          "Figure7_p8_printed7563": {
+            "finding": "A visualization of real/CelebA and example ProGAN image/model fingerprint interactions, with strongest interaction for matching source. It is not an aggregate binary detection confusion matrix or an ROC/operating-point result."
+          }
+        },
+        "attack_details": {
+          "locator": "p7/7562 Section4.4",
+          "noise": "Add iidGaussian noise with variance drawn fromU[5.0,20.0] as reported; intensity normalization is not specified.",
+          "blur": "Gaussian filtering with kernel chosen from1,3,5,7,9.",
+          "cropping": "Random offset5%–20%ofimage side lengths, then resize to original dimensions.",
+          "compression": "JPEG quality factor sampled fromU[10,75].",
+          "relighting": "SfSNet changes the illumination condition to a sampled condition.",
+          "combination": "Each operation has50%probability, ordered relighting,cropping,blur,JPEG,noise.",
+          "boundary": "Attack/defense rows retain source accuracy. They are not independent binary detector threshold sweeps."
+        },
+        "contradictions_and_limitations": [
+          {
+            "issue": "Strong real-versus-GAN language",
+            "locators": [
+              "abstractp1",
+              "introductionp2",
+              "Sec3.1p3",
+              "Sec4.2p5"
+            ],
+            "finding": "The authors explicitly claim using fingerprints to classify real versus generated content and interpret Table1 as differentiating real/GAN and attributing sources. This is positive contrary evidence to any blanket statement that authenticity is never considered. The measured main-paper protocol is still a single finite-source task; it does not give a separately scored detection endpoint."
+          },
+          {
+            "issue": "N+1classification versus independent binary detection",
+            "finding": "A real source in a multiway output could enable a derived real/anyGAN decision, but that derivation and its binary errors/operating point are not reported. No such metric is calculated or invented during this review."
+          },
+          {
+            "issue": "Table2notation",
+            "finding": "The real/ProGAN_subset_diff#i notation represents a family of source variants with one aggregate score per dataset. The main paper does not present per-i binary detection values or an explicit binary authenticity metric. An uncertain exact Table2 class count does not create positive evidence of a binary protocol."
+          },
+          {
+            "issue": "Authencity as API membership",
+            "finding": "The service-authenticity discussion is desired-source verification, not separately measured camera-real-versus-generated detection."
+          },
+          {
+            "issue": "Dataset sample counts",
+            "finding": "Visually confirmed20,000realimages per dataset is inconsistent with later100,000-image subsets and100,000/10,000classifier source sampling. The discrepancy is retained, not corrected by inference."
+          },
+          {
+            "issue": "Unreviewed supplementary material",
+            "finding": "The main paper references external supplementary material for additional figures and FD-ratio details. It was not retrieved under the one-main-manuscript budget. The conclusion is bounded to complete official main-paper evidence, not an assertion about every unretrieved artifact."
+          },
+          {
+            "issue": "Version and metadata",
+            "finding": "This is the official ICCV2019 main paper. No arXiv version comparison, code reproduction, author rename, metadata correction or independent research-type review is performed."
+          }
+        ],
+        "policy_application": {
+          "T1": "Real/GAN language and a real source class are insufficient to relabel source-attribution accuracy as an independently evaluated authenticity task. No detection addition is proposed under the specific review standard.",
+          "source_attribution": "Finite known GAN architecture/data/seed identities are explicitly predicted and quantitatively evaluated. Preserve the existing source_attribution task.",
+          "T3": "The source_attribution task remains substantively supported; no empty-task set or scope review is needed."
+        },
+        "maintainer_acceptance_pending": true,
+        "formal_review_action_closed": false,
+        "authoritative_changes_applied": false,
+        "proposed_public_data_effect": 0,
+        "constraints_observed": {
+          "R_or_primary_writes": false,
+          "Git_mutations": false,
+          "tests_or_exports_run": false,
+          "network_requests_by_this_reviewer": 0,
+          "extra_manuscript_versions_or_supplements_downloaded": 0
+        }
+      },
+      "accepted_outcome": "SUPPORTED_NO_CHANGE",
+      "terminal_review_decision_id": "review:09ce07963903ecd891c5",
+      "review_registry_change_applied": true,
+      "adjudication": {
+        "review_id": "T631",
+        "paper_id": "curated:170f07b3d7020611e566",
+        "outcome": "SUPPORTED_NO_CHANGE",
+        "decision_id": "review:09ce07963903ecd891c5",
+        "terminal_decision": {
+          "decision_id": "review:09ce07963903ecd891c5",
+          "review_queue": "other",
+          "target_type": "paper",
+          "title": "Attributing Fake Images to GANs: Learning and Analyzing GAN Fingerprints",
+          "year": "2019",
+          "doi": "10.1109/iccv.2019.00765",
+          "openalex_url": "https://openalex.org/W2991318208",
+          "institution": "",
+          "action": "no_action_after_review",
+          "review_note": "Batch B review T631; SUPPORTED_NO_CHANGE. Maintainer accepted retaining tasks source_attribution -> source_attribution for curated:170f07b3d7020611e566 under locked T1. The complete official ICCV 2019 proceedings main paper defines multiclass source-identity prediction over GAN instances plus a real-world source class. Table 1 reports five-way attribution accuracy 99.43% on CelebA and 98.58% on LSUN; Table 3 reports attribution accuracy 99.14% and 97.04% for real images plus ten ProGAN instances. These are multiclass attribution scores, not binary detection accuracies. Main-paper review established no separately defined and independently evaluated binary real-versus-generated detection protocol, authenticity-specific metric or operating-point analysis. The paper claims that its real-inclusive classifier differentiates generated images from real ones, but that claim and desired-service authenticity discussion do not supply an independent binary evaluation. Preserve source_attribution, method, fully_generated, all canonical bibliography, authors, affiliations and relationships. Do not add detection or alter task compatibility fields. Evidence: https://openaccess.thecvf.com/content_ICCV_2019/papers/Yu_Attributing_Fake_Images_to_GANs_Learning_and_Analyzing_GAN_Fingerprints_ICCV_2019_paper.pdf; official eleven-page ICCV main paper, printed pages 7556-7566, SHA256 be717607d2204d42d4a8e96f092bcbbef4e749a43df587bd9e0940afea5cebea. The conclusion is bounded to this reviewed main paper; no separate supplement, code, model/data payload or alternate arXiv version was reviewed. This resolves only the original T631 task-taxonomy action. T046 remains EVIDENCE_STILL_INSUFFICIENT and open; all independent questions and original pending-review evidence remain unchanged. Approved no-change disposition is recorded; no further action remains for this exact bounded review.",
+          "created_at": "2026-10-19T12:46:28Z",
+          "updated_at": "2026-10-19T12:46:28Z",
+          "created_by": "maintainer-approved-batch-b-b1g"
+        },
+        "retained_tasks": [
+          "source_attribution"
+        ],
+        "retained_research_types": [
+          "method"
+        ],
+        "review_registry_rows_before": 85,
+        "review_registry_rows_after": 86,
+        "before_registry_sha256": "59023f2bf9e0f88a2f83bffc06b5947e8ce3855cee5ca90a188e5a61066a6a6e",
+        "after_registry_sha256": "22291dab5343361c63547f09d741683a5f5204ed96338c1798552ecf3dc3f0e8",
+        "prior_registry_bytes_preserved": true,
+        "scientific_data_changed": false,
+        "main_paper_limitation": "Complete official ICCV 2019 main paper only; supplementary contents and alternate versions unreviewed. Real-inclusive source classification and authors' real/GAN claims do not establish a separately evaluated binary authenticity endpoint."
+      }
+    }
+  ],
+  "retrieval_accounting": {
+    "maximum_new_full_manuscripts": 2,
+    "full_text_attempts": 2,
+    "successful_new_full_manuscripts": 1,
+    "maximum_attempts_used_per_case": 1,
+    "by_case": {
+      "T046": {
+        "review_id": "T046",
+        "url": "https://dl.acm.org/doi/pdf/10.1145/3805622.3810639",
+        "version_description": "Official DOI-matched ACM ICMR2026 publisher PDF candidate; derived standard PDF route, identity to verify after receipt",
+        "title_expected": "CLIP-SegFusion: An Attention-Guided Feature Fusion Framework for Multi-Level Detection on AI-Generated Artworks",
+        "started_at_utc": "2026-10-19T02:39:02.064777+00:00",
+        "method": "One urllib GET; standard redirects only; no retries",
+        "attempts": 1,
+        "automatic_retries": 0,
+        "successful_full_manuscripts": 0,
+        "status": "HTTP_ERROR",
+        "http_status": 403,
+        "final_url": "https://dl.acm.org/doi/pdf/10.1145/3805622.3810639",
+        "bytes": 5590,
+        "sha256": "6fbd1f11ecffaa708cef94dfce330190363d1f499854e0c5a3c00d8a6b6ab178",
+        "response_path": "/private/tmp/b1g-evidence-2026-10-19/t046/http_failure.bin",
+        "response_headers": {
+          "Date": "Mon, 19 Oct 2026 02:39:02 GMT",
+          "Content-Type": "text/html; charset=UTF-8",
+          "Content-Length": "5590",
+          "Connection": "close",
+          "Accept-Ch": "Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA",
+          "Cf-Mitigated": "challenge",
+          "Content-Security-Policy": "default-src 'none'; script-src 'nonce-eIIRiuoTkZ2RB8LWmtNo9s' 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self'",
+          "Server": "cloudflare",
+          "Critical-Ch": "Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA",
+          "Cross-Origin-Embedder-Policy": "require-corp",
+          "Cross-Origin-Opener-Policy": "same-origin",
+          "Cross-Origin-Resource-Policy": "same-origin",
+          "Origin-Agent-Cluster": "?1",
+          "Permissions-Policy": "accelerometer=(),camera=(),clipboard-read=(),clipboard-write=(),geolocation=(),gyroscope=(),hid=(),magnetometer=(),microphone=(),payment=(),publickey-credentials-get=(),screen-wake-lock=(),serial=(),sync-xhr=(),usb=(),xr-spatial-tracking=*",
+          "Referrer-Policy": "same-origin",
+          "Server-Timing": "chlray;desc=\"a4cc68f94e5cb63d\"",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "SAMEORIGIN",
+          "Strict-Transport-Security": "max-age=15552000",
+          "Vary": "accept-encoding",
+          "CF-RAY": "a4cc68f94e5cb63d-NRT",
+          "alt-svc": "h3=\":443\"; ma=86400"
+        },
+        "error": "HTTP Error 403: Forbidden",
+        "completed_at_utc": "2026-10-19T02:39:02.833423+00:00"
+      },
+      "T631": {
+        "review_id": "T631",
+        "url": "https://openaccess.thecvf.com/content_ICCV_2019/papers/Yu_Attributing_Fake_Images_to_GANs_Learning_and_Analyzing_GAN_Fingerprints_ICCV_2019_paper.pdf",
+        "version_description": "Official ICCV2019 proceedings main-paper candidate derived from identity-matched CVF HTML route; not arXiv or supplement",
+        "title_expected": "Attributing Fake Images to GANs: Learning and Analyzing GAN Fingerprints",
+        "started_at_utc": "2026-10-19T02:39:02.065116+00:00",
+        "method": "One urllib GET; standard redirects only; no retries",
+        "attempts": 1,
+        "automatic_retries": 0,
+        "successful_full_manuscripts": 1,
+        "status": "FULL_PDF_RETRIEVED_IDENTITY_REVIEW_PENDING",
+        "http_status": 200,
+        "final_url": "https://openaccess.thecvf.com/content_ICCV_2019/papers/Yu_Attributing_Fake_Images_to_GANs_Learning_and_Analyzing_GAN_Fingerprints_ICCV_2019_paper.pdf",
+        "response_headers": {
+          "Date": "Mon, 19 Oct 2026 02:39:03 GMT",
+          "Server": "Apache/2.4.58 (Ubuntu)",
+          "Last-Modified": "Wed, 23 Oct 2019 04:33:12 GMT",
+          "ETag": "\"1c633f-5958c6a242cc8\"",
+          "Accept-Ranges": "bytes",
+          "Content-Length": "1860415",
+          "Connection": "close",
+          "Content-Type": "application/pdf"
+        },
+        "bytes": 1860415,
+        "sha256": "be717607d2204d42d4a8e96f092bcbbef4e749a43df587bd9e0940afea5cebea",
+        "pdf_path": "/private/tmp/b1g-evidence-2026-10-19/t631/manuscript.pdf",
+        "pages": 11,
+        "pdf_metadata": {
+          "/Title": "Attributing Fake Images to GANs: Learning and Analyzing GAN Fingerprints",
+          "/Producer": "PyPDF2",
+          "/Author": "Ning Yu,  Larry S. Davis,  Mario Fritz",
+          "/Subject": "IEEE International Conference on Computer Vision"
+        },
+        "extracted_text_sha256": "5ac2ee78625cdeccc5adaaddc60e18b1020fd221581ee42609d272384b80bd74",
+        "completed_at_utc": "2026-10-19T02:39:05.220794+00:00"
+      }
+    },
+    "retries": 0,
+    "additional_manuscript_versions": 0,
+    "supplements_retrieved": 0,
+    "dataset_or_weight_payloads_retrieved": 0,
+    "repository_clones": 0,
+    "code_executions": 0,
+    "successful_standalone_raw_code_downloads": 0,
+    "supporting_code_web_pages_read": 3,
+    "metadata_history": {
+      "artifact_date": "2026-10-19",
+      "metadata_accounting_boundary": "The following are logical web-tool accesses, including cached page displays/continuations. They are not asserted to be separate HTTP requests or manuscript downloads. Exact manuscript GET receipts are recorded separately.",
+      "events": [
+        {
+          "stage": 1,
+          "operation": "open",
+          "url": "https://doi.org/10.1145/3805622.3810639",
+          "outcome": "TOOL_INACCESSIBLE",
+          "http_status": null
+        },
+        {
+          "stage": 1,
+          "operation": "open",
+          "url": "https://github.com/dxlabskku/CLIP-SegFusion",
+          "outcome": "README_AND_TREE_AVAILABLE",
+          "version": "main, not pinned"
+        },
+        {
+          "stage": 1,
+          "operation": "open",
+          "url": "https://sites.google.com/view/dxlab/publications",
+          "outcome": "AUTHOR_LISTING_AVAILABLE",
+          "locator": "c74, exact target title/byline/ICMR2026/pp2486-2495"
+        },
+        {
+          "stage": 1,
+          "operation": "open",
+          "url": "https://openaccess.thecvf.com/content_ICCV_2019/html/Yu_Attributing_Fake_Images_to_GANs_Learning_and_Analyzing_GAN_Fingerprints_ICCV_2019_paper.html",
+          "outcome": "TOOL_INTERNAL_ERROR",
+          "http_status": null
+        },
+        {
+          "stage": 2,
+          "operation": "author_listing_paper_link_click",
+          "url": "https://dl.acm.org/doi/10.1145/3805622.3810639",
+          "outcome": "TOOL_INTERNAL_ERROR",
+          "http_status": null
+        },
+        {
+          "stage": 2,
+          "operation": "open_code_page",
+          "url": "https://github.com/dxlabskku/CLIP-SegFusion/blob/main/models.py",
+          "outcome": "CODE_TEXT_AVAILABLE",
+          "version": "main, not pinned; cached browser text"
+        },
+        {
+          "stage": 2,
+          "operation": "open_code_page",
+          "url": "https://github.com/dxlabskku/CLIP-SegFusion/blob/main/evaluate.py",
+          "outcome": "CODE_TEXT_AVAILABLE",
+          "version": "main, not pinned; cached browser text"
+        },
+        {
+          "stage": 2,
+          "operation": "open_code_page",
+          "url": "https://github.com/dxlabskku/CLIP-SegFusion/blob/main/train.py",
+          "outcome": "CODE_TEXT_AVAILABLE",
+          "version": "main, not pinned; cached browser text"
+        },
+        {
+          "stage": 3,
+          "operation": "cached_code_continuation",
+          "url": "https://github.com/dxlabskku/CLIP-SegFusion/blob/main/evaluate.py",
+          "outcome": "PARTIAL_CODE_DISPLAY"
+        },
+        {
+          "stage": 3,
+          "operation": "cached_code_continuation",
+          "url": "https://github.com/dxlabskku/CLIP-SegFusion/blob/main/train.py",
+          "outcome": "PARTIAL_CODE_DISPLAY"
+        },
+        {
+          "stage": 3,
+          "operation": "one_exact_identity_search",
+          "query": "\"CLIP-SegFusion\" \"3805622\" filetype:pdf",
+          "outcome": "NO_RESULTS",
+          "scope": "No unrelated literature opened"
+        },
+        {
+          "stage": 4,
+          "operation": "raw_code_link_click",
+          "url": "https://github.com/dxlabskku/CLIP-SegFusion/raw/refs/heads/main/evaluate.py",
+          "outcome": "CACHE_MISS",
+          "manuscript": false
+        },
+        {
+          "stage": 4,
+          "operation": "raw_code_link_click",
+          "url": "https://github.com/dxlabskku/CLIP-SegFusion/raw/refs/heads/main/train.py",
+          "outcome": "CACHE_MISS",
+          "manuscript": false
+        },
+        {
+          "stage": 5,
+          "operation": "find_in_cached_code",
+          "url": "https://github.com/dxlabskku/CLIP-SegFusion/blob/main/evaluate.py",
+          "pattern": "precision",
+          "outcome": "METRIC_ROUTINE_DISPLAY"
+        },
+        {
+          "stage": 5,
+          "operation": "find_in_cached_code",
+          "url": "https://github.com/dxlabskku/CLIP-SegFusion/blob/main/train.py",
+          "pattern": "criterion",
+          "outcome": "FIND_RETURNED_NO_MATCH; CODE_CONTINUATION_INDEPENDENTLY_DISPLAYED_LOSS"
+        },
+        {
+          "stage": 5,
+          "operation": "find_in_cached_code",
+          "url": "https://github.com/dxlabskku/CLIP-SegFusion/blob/main/evaluate.py",
+          "pattern": "iou_total",
+          "outcome": "METRIC_ROUTINE_DISPLAY"
+        },
+        {
+          "stage": 5,
+          "operation": "cached_code_continuation",
+          "url": "https://github.com/dxlabskku/CLIP-SegFusion/blob/main/evaluate.py",
+          "outcome": "COMPLETE_RELEVANT_EVALUATION_TAIL"
+        },
+        {
+          "stage": 5,
+          "operation": "cached_code_continuation",
+          "url": "https://github.com/dxlabskku/CLIP-SegFusion/blob/main/train.py",
+          "outcome": "COMPLETE_RELEVANT_TRAINING_VALIDATION_LOSS_TAIL"
+        }
+      ],
+      "support_only": true,
+      "datasets_weights_supplements_precursor_manuscripts_retrieved": 0,
+      "code_executed": false,
+      "repository_cloned": false,
+      "new_full_manuscript_requests": "See t046/retrieval.json and t631/retrieval.json: exactly one attempt per case, one successful PDF in total."
+    },
+    "counting_boundary": "One failed ACM PDF GET is not a complete manuscript. Cached code pages/continuations, DOI and landing-page accesses are supporting metadata/code observations, not extra full-manuscript retrievals."
+  },
+  "corpus_counts": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "taxonomy_counts": {
+    "detection": 621,
+    "method": 579,
+    "analysis_study": 81,
+    "survey": 21,
+    "source_attribution": 84,
+    "dataset": 134,
+    "benchmark": 90,
+    "localization": 45
+  },
+  "batch_b_accounting": {
+    "historical_actions": 159,
+    "historical_papers": 148,
+    "resolved_review_ids": [
+      "L013",
+      "P139",
+      "P153",
+      "P490",
+      "R137",
+      "R611",
+      "T056",
+      "T303",
+      "T345",
+      "T579",
+      "T631"
+    ],
+    "historical_unresolved_actions": 148,
+    "active_public_unresolved_actions": 146,
+    "active_public_unresolved_papers": 135,
+    "active_public_unresolved_review_ids": [
+      "U001",
+      "U002",
+      "U003",
+      "U005",
+      "U006",
+      "U007",
+      "U008",
+      "U009",
+      "U011",
+      "U012",
+      "U013",
+      "U014",
+      "U015",
+      "U016",
+      "U018",
+      "U019",
+      "U020",
+      "U021",
+      "U022",
+      "U023",
+      "R223",
+      "R234",
+      "R187",
+      "R231",
+      "R363",
+      "R024",
+      "R482",
+      "R574",
+      "R477",
+      "R026",
+      "R100",
+      "T093",
+      "R156",
+      "R161",
+      "R335",
+      "R596",
+      "R236",
+      "R566",
+      "R110",
+      "R267",
+      "R275",
+      "R509",
+      "R045",
+      "R138",
+      "R154",
+      "R215",
+      "T046",
+      "R171",
+      "R034",
+      "R400",
+      "R181",
+      "R512",
+      "R256",
+      "R284",
+      "R149",
+      "R124",
+      "R625",
+      "T526",
+      "R359",
+      "R253",
+      "R251",
+      "T608",
+      "R564",
+      "R467",
+      "R542",
+      "L003",
+      "L004",
+      "L005",
+      "L006",
+      "L007",
+      "L008",
+      "L009",
+      "L010",
+      "L011",
+      "L012",
+      "L014",
+      "L016",
+      "L017",
+      "L018",
+      "L019",
+      "L020",
+      "L021",
+      "L022",
+      "L023",
+      "L024",
+      "L025",
+      "L026",
+      "L028",
+      "P001",
+      "P025",
+      "P028",
+      "P032",
+      "P034",
+      "P048",
+      "P049",
+      "P050",
+      "P058",
+      "P068",
+      "P097",
+      "P105",
+      "P150",
+      "P160",
+      "P177",
+      "P216",
+      "P229",
+      "P231",
+      "P242",
+      "P251",
+      "P254",
+      "P268",
+      "P269",
+      "P279",
+      "P305",
+      "P312",
+      "P351",
+      "P360",
+      "P397",
+      "P418",
+      "P424",
+      "P430",
+      "P435",
+      "P442",
+      "P457",
+      "P464",
+      "P467",
+      "P478",
+      "P497",
+      "P510",
+      "P520",
+      "P526",
+      "P547",
+      "P565",
+      "P604",
+      "P626",
+      "P632",
+      "P635",
+      "P063",
+      "P099",
+      "P193",
+      "P224",
+      "P257",
+      "P326",
+      "P357",
+      "P369",
+      "P466",
+      "P495"
+    ]
+  },
+  "accounting_effect": {
+    "historical_unresolved_delta": -1,
+    "active_public_unresolved_delta": -1,
+    "active_public_unresolved_papers_delta": -1,
+    "T631_closed": true,
+    "T046_remains_pending": true,
+    "other_original_B_actions_pending_for_T631_paper": [],
+    "separate_import_inventory_unchanged": true
+  },
+  "separate_import_review_inventory": {
+    "scope": "Separate successor inventory, never combined with original159 BatchB actions. Different units overlap. Existing imported records only checked for preservation.",
+    "imported_affiliation_debt_papers": 39,
+    "overlapping_taxonomy_review_papers": 14,
+    "held_candidates": 12,
+    "source_receipt": "data/raw/corpus_quality_batch_b_wave_b1e_2026_10_17/evidence_manifest.json#separate_import_review_inventory",
+    "historical_receipt_hashes_preserved": true,
+    "fresh_source_fingerprints": "source_files_sha256 uses current cc1e baseline, not the historical pre-B1E taxonomy hash."
+  },
+  "batch_c_deferred_accounting": {
+    "total_actions": 41,
+    "resolved_before": 27,
+    "resolved": 28,
+    "external_unresolved": 13,
+    "maintainer_judgments": 0,
+    "total_unresolved": 13,
+    "remaining_external_ids": [
+      "T141",
+      "U010",
+      "R117",
+      "R176",
+      "R376",
+      "R455",
+      "R460",
+      "R535",
+      "R537",
+      "R548",
+      "R549",
+      "R580",
+      "R615"
+    ],
+    "alternative_primary_source_candidates": [
+      "R117",
+      "R176",
+      "R455",
+      "R460",
+      "R535",
+      "R537",
+      "R548",
+      "R549",
+      "R580",
+      "R615"
+    ],
+    "blocked_pending_authoritative_evidence": [
+      "T141",
+      "R376",
+      "U010"
+    ],
+    "scientific_status_of_external_debts": "EVIDENCE_STILL_INSUFFICIENT"
+  },
+  "source_files_sha256": {
+    "data/curated/papers.csv": "edb1744a04968fb8a63d20f04aaa088866e9b37c0d261a94e6f98beb8947bc38",
+    "data/curated/paper_taxonomy.csv": "17b59d6a33ae77ebfad1d58f3791b051197f5117834faa4c93342f8a79323417",
+    "web/data/public_preview_papers.json": "9b1565482ab2095fa43ab3b9e60504c733fd0d43cd84bc4d5f3f8d98f2eb9781",
+    "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+    "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+    "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+    "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+    "data/raw/systematic_literature_2026_09/2554e5b57b6a121f3e5b.gz": "14df2b9f22f52e28cf8f239f237d9c6be71ce1c7a17e36268cdb7c3dc53037bb",
+    "data/raw/systematic_gap_audit_2026_10_02/icml2026_screening.json": "09c1387fd655d3ef6dc6340b29c11b3d52a1a1c4a99c88f260b862123515ee5d",
+    "data/processed/systematic_tier2_application_2026_09/legacy_screening_636.json": "005509ff252b0bf4d04769c6c1a65c8796f58db8f9844b871d4b0b39e02eab47",
+    "data/curated/review_decisions.csv": "59023f2bf9e0f88a2f83bffc06b5947e8ce3855cee5ca90a188e5a61066a6a6e",
+    "data/raw/openalex/20260619T122106Z_009_source-attribution-generated-images.json": "839f6f68766637be72cdefa9265d35b412a871b5e84d0b219aee22af01964690",
+    "web/data/public_preview_map_data.json": "09b6f815597b2c14349dffc359b7844eab9c2b9a758ec02ef669476e009b627b",
+    "data/raw/corpus_quality_audit_2026_10_04/source_checks.json": "78c2aed641161705a0a22658a2df38cc7e53550eb1857d119106a4a419b02227",
+    "data/raw/ant_gap_fill_2026_09_05/openalex_exact_title_results.json": "01786d62d432542cab8184bcb65c486990a1c9b3111b65400bf3e2977608769f",
+    "data/raw/systematic_literature_2026_09/a58a312ed612f8266c74.gz": "6c0ce05348d64215ccf0195281b51d197a685af17680e4c0ebe7dda5d6d81962",
+    "data/raw/systematic_gap_audit_2026_10_02/discovery_records.json": "6ec9e001aa007ef4fcd528243c0e2da099a8e9fed359d8050cb27ef8088edc0d",
+    "data/processed/literature51_2026_10_16/plan.json": "b6af4975b2be41958176448000d240dcdbc2dd00a507e8edc3a7a7b0027356ab",
+    "data/processed/literature51_2026_10_16/followup/review.json": "cdf83d05b4ab57fe5a37034f5213aef40f7c6ee0095c5d22d3988ca784d03312",
+    "data/processed/literature51_2026_10_16/followup/receipt.json": "b24deabfd36186ed278d2afd4ac60814a4c78d71e04151c25cee52d27460d4f3",
+    "data/processed/literature51_2026_10_16/main_integration/manifest.json": "5959e8628cc7e272ac45f0a2afd5e508412a416615c61d411b4529e135077a79",
+    "docs/literature51_main_integration_2026_10_17.md": "6f0e138d4bbdbd1d8032f84479cca0fae791f819ac998003f502faecc59101c4"
+  },
+  "preservation": {
+    "groups": {
+      "protected128_primary": {
+        "root": "/Users/meilinger/Desktop/synthetic-image-research-map",
+        "files": 128,
+        "inventory_sha256": "aa38c361be91090844a8d3d3a2314225cdb59c327dbcb0e4d6dc9bfee97d5d29"
+      },
+      "original130_primary": {
+        "root": "/Users/meilinger/Desktop/synthetic-image-research-map",
+        "files": 130,
+        "inventory_sha256": "cb055277711905b0b37928bcd216d4e33cf902e23cab3c7f44d7c0c131b03019"
+      },
+      "neurips49_isolated": {
+        "root": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "files": 49,
+        "inventory_sha256": "51c27a849b9bdb40c26ae849da57b558a121a694a34f1e07e534a98b024ea3e5"
+      },
+      "neurips49_primary": {
+        "root": "/Users/meilinger/Desktop/synthetic-image-research-map",
+        "files": 49,
+        "inventory_sha256": "51c27a849b9bdb40c26ae849da57b558a121a694a34f1e07e534a98b024ea3e5"
+      },
+      "ignored119_isolated": {
+        "root": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "files": 119,
+        "inventory_sha256": "3d1baf44410c5978876b44097e2d6dfd1bf325c0e1c64397f7488f390ad5e514"
+      },
+      "batch_c13_debt_receipts": {
+        "root": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "files": 4,
+        "inventory_sha256": "b3dc74ad0c372931b44354ed9f6b684e54e74298edc6e8bce939678ab9857927"
+      }
+    },
+    "prior_B1A_to_B1F_artifact_sha256": {
+      "data/raw/corpus_quality_batch_b_wave_b1a_2026_10_12/evidence_manifest.json": "ea455b6de9c3e495fb5893f558804b0dcc2d565b3b26eeb07177cc284530518d",
+      "data/raw/corpus_quality_batch_b_wave_b1b_2026_10_15/evidence_manifest.json": "560da2c20d1f871c8231718ecc62922c810d1d693bc1152cfb590a358e690a4e",
+      "data/raw/corpus_quality_batch_b_wave_b1c_2026_10_16/evidence_manifest.json": "bef6eb0de4eccd2d4cce5282eb78eede8f5b7ccf15a8eb888c41eabfddba9ddf",
+      "data/raw/corpus_quality_batch_b_wave_b1d_2026_10_16/evidence_manifest.json": "15e5bef92f3de2b7e2ebae33b53588106ec73d8e0d770910fb085f7720116385",
+      "data/raw/corpus_quality_batch_b_wave_b1e_2026_10_17/evidence_manifest.json": "1eb5ce5c86a07631376f3e1b9b12cc54cbc996d93af51285fdd1e254676d27de",
+      "data/raw/corpus_quality_batch_b_wave_b1f_2026_10_18/evidence_manifest.json": "bf951b4a8c3bfdcbd79a87aaba3699befd1b50f5f3fe8426065a8440a640996a",
+      "docs/corpus_quality_batch_b_wave_b1a_2026_10_12.md": "5c74db551fc104ec7e1bc38956239b2eed5cba722787c11cd59f7d5623efb8a6",
+      "docs/corpus_quality_batch_b_wave_b1b_2026_10_15.md": "79e474c07a2e493a86411afa0144c030347fe1add6b0d1d3123b612b8ba8ca6c",
+      "docs/corpus_quality_batch_b_wave_b1c_2026_10_16.md": "9bb7137801590020a53bca6fb94d48cd994d4228b2087041ac02c47f10408109",
+      "docs/corpus_quality_batch_b_wave_b1d_2026_10_16.md": "64cec346f5323b626e6cc062cbe4e86cdd0f74a15ff701b4c46702b3a730b84b",
+      "docs/corpus_quality_batch_b_wave_b1e_2026_10_17.md": "3b1dd3dd8e21bdbfe31ab0f55dead4ae1bf54fb674c946998b09a956f8f05a07",
+      "docs/corpus_quality_batch_b_wave_b1f_2026_10_18.md": "3a78fe68de510aabc416fda4bcbea39b36852949e9f091ae6bb05d16378823de"
+    },
+    "primary_tracked_files": 4414,
+    "primary_access": "Read only; no reset, checkout, staging, deletion or primary file writes.",
+    "fresh_baseline_receipt": "/private/tmp/b1g-evidence-2026-10-19/baseline.json",
+    "independent_preservation_receipt": "/private/tmp/b1g-evidence-2026-10-19/preservation-independent.json"
+  },
+  "operational_source_files": {
+    "/private/tmp/b1g-evidence-2026-10-19/baseline.json": {
+      "sha256": "3300239389fa1ffc1e996b2dc989f5abb9738c1b649500e6cc17ceda9ace665a",
+      "bytes": 3210765,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/accounting.json": {
+      "sha256": "f57fe10f67f486f4405c08fd5d783f0721f352cbbc6c794393ce798673078732",
+      "bytes": 88651,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/preservation-independent.json": {
+      "sha256": "6e4dd17b77a1d320d023573813ab44285cb7a88314fdf3e4a3e8f414b9d97cdb",
+      "bytes": 42218,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/metadata-open.json": {
+      "sha256": "a1f546c6959970d4dbf978c7e8cd53dc922253cd985115c1ae27c7fc83d66b40",
+      "bytes": 24913,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/metadata-events.json": {
+      "sha256": "a31d5d228ac1198bda07434775214267d93335322d44ad89bf2ffc7fc3fa83be",
+      "bytes": 4060,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t046/local_findings.json": {
+      "sha256": "80b6b5de2cf2489986c74204959478d9c155788dd4070ac1a3e16f2fe407a41f",
+      "bytes": 36876,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t046/scientific_findings.json": {
+      "sha256": "c6a7ddfc2193900e75c9f850411fd08f165bb7a72d75d690981b83ebd063caa4",
+      "bytes": 25852,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t046/retrieval.json": {
+      "sha256": "c7ff690ec1cdcde61d64ac36cbf3f2a53edc764cc6449703cd86c4a60b871933",
+      "bytes": 3070,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t046/http_failure.bin": {
+      "sha256": "6fbd1f11ecffaa708cef94dfce330190363d1f499854e0c5a3c00d8a6b6ab178",
+      "bytes": 5590,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t046/source-support-web.json": {
+      "sha256": "d306ace853ba0f6cb5b87fdf031941f036e7663bf7c67ec35f2f627c509561ba",
+      "bytes": 23445,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t046/code-details-search.json": {
+      "sha256": "a57cbd56ff95faa9e9db12d7cfee481f40ad03e131a134cf30640f0bb883d559",
+      "bytes": 21658,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t046/raw-code-access.json": {
+      "sha256": "d2e4c7cde553c763c3121d71ea9bbfa3fe3053f201ff431af618d52b94d7b639",
+      "bytes": 564,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t046/code-tail-web.json": {
+      "sha256": "0228e211d585ffe9778fb5e7ccfbaaffffb6b8bd2a62464bf3a8b7a433003b55",
+      "bytes": 25863,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t631/local_findings.json": {
+      "sha256": "388163fdc831c8b51d4bbe340ff701922883618d0d5397d18ff9a6ad970ec89a",
+      "bytes": 67507,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t631/scientific_findings.json": {
+      "sha256": "1bbbd78c7d2aa39787b5e6277a8a893b9a35416c5aa984f0e7b0ae0e09a7d4aa",
+      "bytes": 27345,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t631/retrieval.json": {
+      "sha256": "6012028397a94efa51e82cc280270edfb3fbdbb0827065631a3d65a938cd951d",
+      "bytes": 1827,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t631/manuscript.pdf": {
+      "sha256": "be717607d2204d42d4a8e96f092bcbbef4e749a43df587bd9e0940afea5cebea",
+      "bytes": 1860415,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t631/manuscript.txt": {
+      "sha256": "5ac2ee78625cdeccc5adaaddc60e18b1020fd221581ee42609d272384b80bd74",
+      "bytes": 52537,
+      "committed": false
+    },
+    "/private/tmp/b1g-evidence-2026-10-19/t631/pages.json": {
+      "sha256": "4b29795330e556ee694ce394ccb1d8556d993cb0cedae6c875ef1d30aca0c71f",
+      "bytes": 53542,
+      "committed": false
+    }
+  },
+  "validation": {
+    "status": "PASS",
+    "measured_at_utc": "2026-10-19T12:54:35.106922+00:00",
+    "test_runs": [
+      {
+        "name": "b1g-tests",
+        "command": [
+          "/private/tmp/b1g-adjudication-2026-10-19/test-env/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_corpus_quality_batch_b_wave_b1g.py",
+          "-o",
+          "cache_dir=/private/tmp/b1g-adjudication-2026-10-19/pytest-cache",
+          "--junitxml=/private/tmp/b1g-adjudication-2026-10-19/b1g-tests.xml"
+        ],
+        "cwd": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "started_at_utc": "2026-10-19T12:51:33.014473+00:00",
+        "completed_at_utc": "2026-10-19T12:51:38.666395+00:00",
+        "exit_code": 0,
+        "log_sha256": "fdfd66ade9ea74a97228f7e6ec9ebb055ff482ff85d9a5bbfa73b4fd2412268a",
+        "junit": {
+          "tests": 21,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "sha256": "e1dabac0bca91de35ef5c1385249291f64ecaa9503c99ccc49000883829e570a"
+        },
+        "ordinary_passed": 21,
+        "subtests_passed": 0
+      },
+      {
+        "name": "historical-and-consumer-tests",
+        "command": [
+          "/private/tmp/b1g-adjudication-2026-10-19/test-env/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_corpus_quality_batch_b_wave_b1b.py",
+          "tests/test_frontend_leaflet_assets.py",
+          "tests/test_historical_integrity_successors.py",
+          "tests/test_historical_test_fixtures.py",
+          "tests/test_legacy_scope_cleanup_audit.py",
+          "tests/test_legacy_scope_exclusion_migration.py",
+          "tests/test_literature51_reproducibility.py",
+          "tests/test_public_export_metadata.py",
+          "tests/test_public_preview_deduplication.py",
+          "tests/test_public_refinement_successors.py",
+          "tests/test_repository_baseline.py",
+          "tests/test_systematic_literature_audit.py",
+          "tests/test_systematic_tier2_application.py",
+          "tests/test_systematic_tier2_high_priority_evidence.py",
+          "tests/test_systematic_tier2_normal_priority_evidence.py",
+          "tests/test_systematic_tier2_policy.py",
+          "tests/test_workshop_venue_audit.py",
+          "tests/test_corpus_quality_batch_b_wave_b1f.py",
+          "tests/test_review_decision_idempotence.py",
+          "-o",
+          "cache_dir=/private/tmp/b1g-adjudication-2026-10-19/pytest-cache",
+          "--junitxml=/private/tmp/b1g-adjudication-2026-10-19/historical-and-consumer-tests.xml"
+        ],
+        "cwd": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "started_at_utc": "2026-10-19T12:47:20.155877+00:00",
+        "completed_at_utc": "2026-10-19T12:49:47.414736+00:00",
+        "exit_code": 0,
+        "log_sha256": "cbf6e8e140794ee3b6d547a688d03c233866d49364b500063ded3df9f07d934d",
+        "junit": {
+          "tests": 272,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "sha256": "c5a1fe50c5b39e8cebf7ffa14c735f0b2e5161f95ac200f3a6c496f9ea2ceca6"
+        },
+        "ordinary_passed": 254,
+        "subtests_passed": 18
+      }
+    ],
+    "ordinary_tests_passed": 275,
+    "subtests_passed": 18,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "validators": [
+      {
+        "name": "curated-validator",
+        "command": [
+          "/private/tmp/b1g-adjudication-2026-10-19/test-env/bin/python",
+          "scripts/validate_curated_database.py"
+        ],
+        "cwd": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "started_at_utc": "2026-10-19T12:47:13.492756+00:00",
+        "completed_at_utc": "2026-10-19T12:47:22.315272+00:00",
+        "exit_code": 0,
+        "log_sha256": "7e86efe8b936315639f03e29b63251e86b52451d40dd6b72ee6fe26cab3bee0f",
+        "errors": 0,
+        "reported_warning_counts": [
+          294
+        ],
+        "warning_baseline": "Existing data warnings; curated294, public map0/public papers62, exclusions2, coverage0. No warning suppression or unrelated remediation."
+      },
+      {
+        "name": "public-validator",
+        "command": [
+          "/private/tmp/b1g-adjudication-2026-10-19/test-env/bin/python",
+          "scripts/validate_public_preview.py"
+        ],
+        "cwd": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "started_at_utc": "2026-10-19T12:47:22.315778+00:00",
+        "completed_at_utc": "2026-10-19T12:47:30.761612+00:00",
+        "exit_code": 0,
+        "log_sha256": "84ed5a622291a93a89b16c5407cd03ce7e3a891f84a4cc1d4caa6e7b2171749a",
+        "errors": 0,
+        "reported_warning_counts": [
+          0,
+          62
+        ],
+        "warning_baseline": "Existing data warnings; curated294, public map0/public papers62, exclusions2, coverage0. No warning suppression or unrelated remediation."
+      },
+      {
+        "name": "exclusions-validator",
+        "command": [
+          "/private/tmp/b1g-adjudication-2026-10-19/test-env/bin/python",
+          "scripts/validate_paper_exclusions.py"
+        ],
+        "cwd": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "started_at_utc": "2026-10-19T12:47:30.762209+00:00",
+        "completed_at_utc": "2026-10-19T12:47:34.301150+00:00",
+        "exit_code": 0,
+        "log_sha256": "1fadfe0741a198eaf009a4c2dc08fc234e7b451238157f8e1709960fe9732513",
+        "errors": 0,
+        "reported_warning_counts": [
+          2
+        ],
+        "warning_baseline": "Existing data warnings; curated294, public map0/public papers62, exclusions2, coverage0. No warning suppression or unrelated remediation."
+      },
+      {
+        "name": "coverage-validator",
+        "command": [
+          "/private/tmp/b1g-adjudication-2026-10-19/test-env/bin/python",
+          "scripts/audit_key_paper_coverage.py",
+          "--check"
+        ],
+        "cwd": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "started_at_utc": "2026-10-19T12:47:34.301646+00:00",
+        "completed_at_utc": "2026-10-19T12:47:37.152471+00:00",
+        "exit_code": 0,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "errors": 0,
+        "reported_warning_counts": [],
+        "warning_baseline": "Existing data warnings; curated294, public map0/public papers62, exclusions2, coverage0. No warning suppression or unrelated remediation."
+      }
+    ],
+    "historical_fixture_checks": [
+      {
+        "name": "fixture-check-before",
+        "command": [
+          "/private/tmp/b1g-adjudication-2026-10-19/test-env/bin/python",
+          "scripts/restore_historical_test_fixtures.py",
+          "--check"
+        ],
+        "cwd": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "started_at_utc": "2026-10-19T12:47:11.842000+00:00",
+        "completed_at_utc": "2026-10-19T12:47:13.492068+00:00",
+        "exit_code": 0,
+        "log_sha256": "29e270c07d9d80fadf406d09c082f7fc0cf5f64caeb81bd90b0d6984c500a5bd",
+        "fixture_summary": {
+          "legacy_inputs": 14,
+          "historical_inputs": 103,
+          "verified_inputs": 117,
+          "created": 0,
+          "mode": "check"
+        }
+      },
+      {
+        "name": "fixture-check-after",
+        "command": [
+          "/private/tmp/b1g-adjudication-2026-10-19/test-env/bin/python",
+          "scripts/restore_historical_test_fixtures.py",
+          "--check"
+        ],
+        "cwd": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+        "started_at_utc": "2026-10-19T12:51:34.167889+00:00",
+        "completed_at_utc": "2026-10-19T12:51:35.813991+00:00",
+        "exit_code": 0,
+        "log_sha256": "29e270c07d9d80fadf406d09c082f7fc0cf5f64caeb81bd90b0d6984c500a5bd",
+        "fixture_summary": {
+          "legacy_inputs": 14,
+          "historical_inputs": 103,
+          "verified_inputs": 117,
+          "created": 0,
+          "mode": "check"
+        }
+      }
+    ],
+    "preservation_guard": {
+      "status": "PASS",
+      "passed": 49,
+      "failed": 0,
+      "scope": "Fresh integrated baseline, all tracked bytes/modes outside exact allowlist, full primary snapshot, frozen/protected/ignored/prior receipt groups, original scientific records, complete review accounting and Git/index status.",
+      "receipt_sha256": "bb6cab299b7508d9b248b31ce029fd803a07765cd220d31cb3aae429dbb28447",
+      "checks": [
+        {
+          "check": "fresh baseline is PASS at the integrated tested predecessor",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "decision plan names the same integrated predecessor and sole target",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "original evidence backups match both integration-protected hashes",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "all4467 baseline Git names modes and blob IDs match the saved inventory",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "exact five-path B1G allowlist accounts for every change",
+          "passed": true,
+          "detail": [
+            "data/curated/review_decisions.csv",
+            "data/raw/corpus_quality_batch_b_wave_b1g_2026_10_19/evidence_manifest.json",
+            "docs/corpus_quality_batch_b_wave_b1g_2026_10_19.md",
+            "tests/test_corpus_quality_batch_b_wave_b1f.py",
+            "tests/test_corpus_quality_batch_b_wave_b1g.py"
+          ]
+        },
+        {
+          "check": "all approved files exist as regular100644 files",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "all4465 nonallowlisted baseline working bytes unchanged",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "all4465 nonallowlisted baseline working modes unchanged",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "all nonallowlisted HEAD blobs modes and names unchanged",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "no tracked mode changes or deletions anywhere",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "all12 independent predecessor repair paths remain exact published bytes/modes",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "protected128_primary exact protected inventory unchanged",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "original130_primary exact protected inventory unchanged",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "neurips49_isolated exact protected inventory unchanged",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "neurips49_primary exact protected inventory unchanged",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "ignored119_isolated exact protected inventory unchanged",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "batch_c13_debt_receipts exact protected inventory unchanged",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "all4414 primary tracked names and working bytes unchanged",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "primary HEAD and full index/worktree/untracked status unchanged",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "original130 primary paths remain untracked",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "all12 prior B1A-F artifacts immutable",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "all119 operational inputs remain ignored and outside tracked inventory",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "review ledger is exact85to86 append with every prior byte retained",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "sole new T631 decision has the schema-derived stable ID and exact identity",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "exactly T046 and T631 remain the packet identities",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "T046 full evidence and unresolved disposition are untouched",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "T631 complete original science identity protocol and limitations retained",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "T631 accepted only as no-change with one matching terminal decision",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "original retrieval history policy source hashes C13 and separate import receipt preserved",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "current source fingerprint map is explicit and correct",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "corpus674/557/613/61/1410 recomputes unchanged",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "taxonomy621/84/45 and research totals recompute unchanged",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "all scientific metadata relationship and public tables byte-exact",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "T631 retains source_attribution only and method without compatibility edits",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "no duplicate original B terminal closures",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "only T631 joins the ten previously closed B questions",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "B159/148 inventory and148historical146active135paper accounting exact",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "six selected review questions and scientific public snapshots unchanged",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "T046 T093 T608 T526 P526 remain independently open",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "T631 has no remaining independent original B question",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "C41/28/13 exact deferred IDs preserved",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "separate39 existing imports remain unmapped without relationships",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "separate14 taxonomy debts and12 held candidates remain preserved",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "all literature source and receipt bytes unchanged",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "NeurIPS official-metadata blocker remains explicit",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "pre-stage HEAD/origin equal reviewed integrated BASE",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "pre-stage index empty and exactly Gmanifest Greport newGtest untracked",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "check": "no ignored or protected operational input staged or committed",
+          "passed": true,
+          "detail": []
+        },
+        {
+          "check": "all four required integrity flags zero",
+          "passed": true,
+          "detail": {
+            "UNEXPECTED_CHANGED": 0,
+            "FROZEN_NEURIPS_CHANGED": 0,
+            "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+            "IGNORED_OPERATIONAL_INPUTS_COMMITTED": 0
+          }
+        }
+      ]
+    },
+    "full_suite_run": false,
+    "public_export_run": false,
+    "historical_full_suite_receipt": {
+      "commit": "3feff7d6b609183cb8dda4949d2c087e77639003",
+      "ordinary_passed": 1963,
+      "subtests_passed": 389,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "junit_sha256": "5c3dc041c99f6e10b1eeb83e9ddd648cb7f9799dcb76a3c73a2ab2e841671102",
+      "source": "docs/historical_test_repair_2026_10_19.md; recovered full.xml and publication.json"
+    },
+    "receipt_scope": "Focused combined-state results only. Historical predecessor full suite and evidence-only checks are separately labeled. External operational logs/receipts remain in TMP and are not commit inputs.",
+    "independent_scientific_packet_review": {
+      "status": "PASS",
+      "passed": 38,
+      "failed": 0,
+      "measured_at_utc": "2026-10-19T12:51:12.040812+00:00",
+      "scope": "Independent scientific/admin diff and packet consistency review; not a test run, validation completion, or staging authorization. No R/P/Git mutation or new retrieval.",
+      "receipt_sha256": "9ee91e744a85270a5a14b17d95bc91b0ad5b083d9103f27b147ec3df7d73a70d"
+    }
+  },
+  "integrity": {
+    "UNEXPECTED_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "IGNORED_OPERATIONAL_INPUTS_COMMITTED": 0
+  },
+  "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA",
+  "final_git_requirements": {
+    "commit_subject": "fix: resolve T631 source attribution review",
+    "exact_files": [
+      "data/curated/review_decisions.csv",
+      "data/raw/corpus_quality_batch_b_wave_b1g_2026_10_19/evidence_manifest.json",
+      "docs/corpus_quality_batch_b_wave_b1g_2026_10_19.md",
+      "tests/test_corpus_quality_batch_b_wave_b1f.py",
+      "tests/test_corpus_quality_batch_b_wave_b1g.py"
+    ],
+    "safe_normal_fast_forward_only": true,
+    "head_equals_fetched_origin_main": true,
+    "ahead_behind": [
+      0,
+      0
+    ],
+    "isolated_tracked_and_index_clean": true,
+    "primary_checkout_untouched": true
+  },
+  "evidence_only_scope": {
+    "review_ids": [
+      "T046",
+      "T631"
+    ],
+    "records": 2,
+    "authoritative_scientific_changes": 0,
+    "review_decisions_added": 0,
+    "review_actions_closed": 0,
+    "exports_run": 0,
+    "full_suites_run": 0,
+    "commits_created": 0,
+    "pushes": 0,
+    "precursor_papers_reviewed": 0
+  },
+  "evidence_only_validation": {
+    "status": "PASS",
+    "lightweight_checks_passed": 43,
+    "failures": 0,
+    "measured_at_utc": "2026-10-19T04:46:57.306751+00:00",
+    "check_names": [
+      "HEAD and fetched originbaseline remain3bcd95f equal0/0",
+      "index empty tracked diff clean",
+      "all4456 Gitidentities/modes unchanged",
+      "all4456 tracked working contents unchanged",
+      "exactly two authorized new evidencefiles untracked",
+      "both evidencepaths untracked and notignored",
+      "all4414 primarytrackedbytes preserved",
+      "primaryHEAD index fullstatus unchanged",
+      "protected128_primary bytepreservation",
+      "original130_primary bytepreservation",
+      "neurips49_isolated bytepreservation",
+      "neurips49_primary bytepreservation",
+      "ignored119_isolated bytepreservation",
+      "batch_c13_debt_receipts bytepreservation",
+      "all12 prior B1A-F artifacts unchanged",
+      "two correctcase records only evidence noacceptance",
+      "canonical identities and original reviewquestions matchledger",
+      "currenttaxonomy and types exactly preserved",
+      "lockedT1 T2 modifiedT3 exact",
+      "T046ninechecks and correctinsufficiency boundary",
+      "T046positive maskhead not falsely attentiononly",
+      "T046no inventedpublishedspatialtables or metrics",
+      "T046codeversion threshold and GTlimits explicit",
+      "T631eightchecks and provisionalnochange sourceonly",
+      "T631fivewaytable1 and11source table3 exactscores",
+      "T631no binaryscore substitution contraryclaims acknowledged",
+      "T631mainversion and unreviewedsupplement boundary",
+      "retrievalbudget1attempt/case2attempts1success no extras",
+      "T046failedHTML403 notmanuscript",
+      "onlysingleofficialT631PDF checkedbyactualbytes",
+      "T631PDFtitle bylineauthor metadata paging verified",
+      "complete18supportmetadata operations failures retained",
+      "allrepositorysourcehashes match",
+      "alloperationalPDFcapturefailureprovenancehashes match",
+      "corpuscounts recomputedunchanged6745576131410",
+      "taxonomycounts recomputedunchanged",
+      "originalB159148 and149147136pending unchanged",
+      "registry85rows no newterminaldecision T303preserved",
+      "selectedtwo and T093T608T526P526 exactsnapshots pending",
+      "C13deferredandseparate39intakeunchanged",
+      "independent45preservationaccountingchecks passed",
+      "report no whitespaceissues and NeurIPSblocker exact",
+      "allthree requiredintegrityflags measuredzero"
+    ],
+    "independent_preservation_checks_passed": 45,
+    "full_suite_run": false,
+    "public_export_run": false,
+    "operational_receipt": "/private/tmp/b1g-evidence-2026-10-19/validation.json"
+  },
+  "evidence_only_integrity": {
+    "AUTHORITATIVE_CORPUS_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0
+  },
+  "evidence_only_final_git_requirements": {
+    "tracked_changes": 0,
+    "index_empty": true,
+    "untracked_evidence_paths": [
+      "docs/corpus_quality_batch_b_wave_b1g_2026_10_19.md",
+      "data/raw/corpus_quality_batch_b_wave_b1g_2026_10_19/evidence_manifest.json"
+    ],
+    "uncommitted": true,
+    "unpushed": true
+  },
+  "evidence_only_accounting_effect": {
+    "historical_unresolved_delta": 0,
+    "active_public_unresolved_delta": 0,
+    "active_public_unresolved_papers_delta": 0,
+    "both_selected_reviews_remain_pending": true,
+    "evidence_sufficiency_is_not_maintainer_acceptance": true
+  },
+  "evidence_only_batch_b_accounting": {
+    "historical_actions": 159,
+    "historical_papers": 148,
+    "resolved_review_ids": [
+      "L013",
+      "P139",
+      "P153",
+      "P490",
+      "R137",
+      "R611",
+      "T056",
+      "T303",
+      "T345",
+      "T579"
+    ],
+    "historical_unresolved_actions": 149,
+    "active_public_unresolved_actions": 147,
+    "active_public_unresolved_papers": 136,
+    "active_public_unresolved_review_ids": [
+      "U001",
+      "U002",
+      "U003",
+      "U005",
+      "U006",
+      "U007",
+      "U008",
+      "U009",
+      "U011",
+      "U012",
+      "U013",
+      "U014",
+      "U015",
+      "U016",
+      "U018",
+      "U019",
+      "U020",
+      "U021",
+      "U022",
+      "U023",
+      "R223",
+      "R234",
+      "R187",
+      "R231",
+      "R363",
+      "T631",
+      "R024",
+      "R482",
+      "R574",
+      "R477",
+      "R026",
+      "R100",
+      "T093",
+      "R156",
+      "R161",
+      "R335",
+      "R596",
+      "R236",
+      "R566",
+      "R110",
+      "R267",
+      "R275",
+      "R509",
+      "R045",
+      "R138",
+      "R154",
+      "R215",
+      "T046",
+      "R171",
+      "R034",
+      "R400",
+      "R181",
+      "R512",
+      "R256",
+      "R284",
+      "R149",
+      "R124",
+      "R625",
+      "T526",
+      "R359",
+      "R253",
+      "R251",
+      "T608",
+      "R564",
+      "R467",
+      "R542",
+      "L003",
+      "L004",
+      "L005",
+      "L006",
+      "L007",
+      "L008",
+      "L009",
+      "L010",
+      "L011",
+      "L012",
+      "L014",
+      "L016",
+      "L017",
+      "L018",
+      "L019",
+      "L020",
+      "L021",
+      "L022",
+      "L023",
+      "L024",
+      "L025",
+      "L026",
+      "L028",
+      "P001",
+      "P025",
+      "P028",
+      "P032",
+      "P034",
+      "P048",
+      "P049",
+      "P050",
+      "P058",
+      "P068",
+      "P097",
+      "P105",
+      "P150",
+      "P160",
+      "P177",
+      "P216",
+      "P229",
+      "P231",
+      "P242",
+      "P251",
+      "P254",
+      "P268",
+      "P269",
+      "P279",
+      "P305",
+      "P312",
+      "P351",
+      "P360",
+      "P397",
+      "P418",
+      "P424",
+      "P430",
+      "P435",
+      "P442",
+      "P457",
+      "P464",
+      "P467",
+      "P478",
+      "P497",
+      "P510",
+      "P520",
+      "P526",
+      "P547",
+      "P565",
+      "P604",
+      "P626",
+      "P632",
+      "P635",
+      "P063",
+      "P099",
+      "P193",
+      "P224",
+      "P257",
+      "P326",
+      "P357",
+      "P369",
+      "P466",
+      "P495"
+    ]
+  },
+  "evidence_only_packet_archives": {
+    "manifest": {
+      "path": "data/raw/corpus_quality_batch_b_wave_b1g_2026_10_19/evidence_manifest.json",
+      "encoding": "gzip+base64",
+      "sha256": "b30253c33060547a412326b12d62725c575bfd9dd8025a5553b91b2b98afbfbf",
+      "bytes": 98656,
+      "gzip_base64": "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"
+    },
+    "report": {
+      "path": "docs/corpus_quality_batch_b_wave_b1g_2026_10_19.md",
+      "encoding": "gzip+base64",
+      "sha256": "7b7d1d6a65b1633a4b2e50c91a42d12abd5bda8680134a90ee702fd60d13d8fb",
+      "bytes": 27965,
+      "gzip_base64": "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"
+    }
+  },
+  "adjudicated_at_utc": "2026-10-19T12:46:28Z",
+  "adjudication_baseline": {
+    "commit": "3feff7d6b609183cb8dda4949d2c087e77639003",
+    "evidence_baseline": {
+      "published_commit": "3bcd95fd45b12b3d7a711232b0ba3ae687e8771d",
+      "fetched_origin_main": "3bcd95fd45b12b3d7a711232b0ba3ae687e8771d",
+      "ahead_behind": [
+        0,
+        0
+      ],
+      "isolated_root": "/Users/meilinger/.codex/worktrees/batch-c-wave5c-evidence/synthetic-image-research-map",
+      "primary_root": "/Users/meilinger/Desktop/synthetic-image-research-map",
+      "tracked_files": 4456,
+      "tracked_inventory_sha256": "696f8ac7b9945c36f2dd95af3d02cdcd0ffc968b8c2a387a565f28029490e0df"
+    },
+    "integration": "Previously completed safe fast-forward; evidence bytes unchanged. No integration repeated.",
+    "predecessor_repair_sha256": {
+      "docs/historical_test_repair_2026_10_19.md": "92348f497341a2cfa4ffb86abab97e51d15e58bc45872cf63010ae77c063379d",
+      "docs/test_failure_root_cause_2026_10_18.md": "b9a33718c9b17bf560f6ae8b7fe41e26719938e2b3ace98d9d0a9f93946d6747",
+      "docs/testing.md": "7a36f0beaf9dc4e4c035963656f8a39ffde1ee9db64c2bf0c1b9ad5ba4263a9b",
+      "requirements-test.txt": "e22a20f58eb61cca2c69763903558b21548175aa80ccbeae590216358b7613c5",
+      "scripts/restore_historical_test_fixtures.py": "f71e7de86b11b6fa52a485db927ab6ad2b099b05a6afbcc16a4f0cdfcbe50512",
+      "tests/fixtures/historical_os_metadata/1d7480faeebe24871c938c8c1751eea1883ace7f057716eccfff35ec167a3079.gz": "917a6300c0acc8bdcd864ea8ef2c017940699ec9217bf1cb52bd2bc9a249e2f9",
+      "tests/fixtures/historical_os_metadata/6df64df87f90aed4dee71be480b2e5d710d5aa2ab24924f04eb409432b83b773.gz": "ab0f42facfcdab41c209f847cc2c33c5274fd0d9c5270e8bfa0e192988ba2cfa",
+      "tests/fixtures/historical_os_metadata/a68cb7b62b51611eadfae68c198f05dd4990a76e7cbfc523c33c74c7b7a1c3eb.gz": "1ce5a1cca51dc522337b5f7011c15eacd741daa96f6eae1f987a582de7bb0871",
+      "tests/fixtures/historical_test_fixture_manifest.json": "0f63e446299e8a73794dadb0b35b1af6e5156a584422493db6d4591ce4816c2b",
+      "tests/public_refinement_snapshot.py": "7d654ae6a8e606172749a4aadea082ed28a8146bd787168873d71a9258719d26",
+      "tests/test_historical_test_fixtures.py": "14cf0638a4788bd221faed6fcd4f21ff7df5d847389f6c06333a25de3d2161e8",
+      "tests/test_public_refinement_successors.py": "a69fd2a03a3e91925b9ecd4d486e8506eed2198822b627cbc1bfe155bcbebc5e"
+    }
+  },
+  "adjudication": {
+    "review_id": "T631",
+    "paper_id": "curated:170f07b3d7020611e566",
+    "outcome": "SUPPORTED_NO_CHANGE",
+    "decision_id": "review:09ce07963903ecd891c5",
+    "terminal_decision": {
+      "decision_id": "review:09ce07963903ecd891c5",
+      "review_queue": "other",
+      "target_type": "paper",
+      "title": "Attributing Fake Images to GANs: Learning and Analyzing GAN Fingerprints",
+      "year": "2019",
+      "doi": "10.1109/iccv.2019.00765",
+      "openalex_url": "https://openalex.org/W2991318208",
+      "institution": "",
+      "action": "no_action_after_review",
+      "review_note": "Batch B review T631; SUPPORTED_NO_CHANGE. Maintainer accepted retaining tasks source_attribution -> source_attribution for curated:170f07b3d7020611e566 under locked T1. The complete official ICCV 2019 proceedings main paper defines multiclass source-identity prediction over GAN instances plus a real-world source class. Table 1 reports five-way attribution accuracy 99.43% on CelebA and 98.58% on LSUN; Table 3 reports attribution accuracy 99.14% and 97.04% for real images plus ten ProGAN instances. These are multiclass attribution scores, not binary detection accuracies. Main-paper review established no separately defined and independently evaluated binary real-versus-generated detection protocol, authenticity-specific metric or operating-point analysis. The paper claims that its real-inclusive classifier differentiates generated images from real ones, but that claim and desired-service authenticity discussion do not supply an independent binary evaluation. Preserve source_attribution, method, fully_generated, all canonical bibliography, authors, affiliations and relationships. Do not add detection or alter task compatibility fields. Evidence: https://openaccess.thecvf.com/content_ICCV_2019/papers/Yu_Attributing_Fake_Images_to_GANs_Learning_and_Analyzing_GAN_Fingerprints_ICCV_2019_paper.pdf; official eleven-page ICCV main paper, printed pages 7556-7566, SHA256 be717607d2204d42d4a8e96f092bcbbef4e749a43df587bd9e0940afea5cebea. The conclusion is bounded to this reviewed main paper; no separate supplement, code, model/data payload or alternate arXiv version was reviewed. This resolves only the original T631 task-taxonomy action. T046 remains EVIDENCE_STILL_INSUFFICIENT and open; all independent questions and original pending-review evidence remain unchanged. Approved no-change disposition is recorded; no further action remains for this exact bounded review.",
+      "created_at": "2026-10-19T12:46:28Z",
+      "updated_at": "2026-10-19T12:46:28Z",
+      "created_by": "maintainer-approved-batch-b-b1g"
+    },
+    "retained_tasks": [
+      "source_attribution"
+    ],
+    "retained_research_types": [
+      "method"
+    ],
+    "review_registry_rows_before": 85,
+    "review_registry_rows_after": 86,
+    "before_registry_sha256": "59023f2bf9e0f88a2f83bffc06b5947e8ce3855cee5ca90a188e5a61066a6a6e",
+    "after_registry_sha256": "22291dab5343361c63547f09d741683a5f5204ed96338c1798552ecf3dc3f0e8",
+    "prior_registry_bytes_preserved": true,
+    "scientific_data_changed": false,
+    "main_paper_limitation": "Complete official ICCV 2019 main paper only; supplementary contents and alternate versions unreviewed. Real-inclusive source classification and authors' real/GAN claims do not establish a separately evaluated binary authenticity endpoint."
+  },
+  "current_source_sha256": {
+    "data/curated/papers.csv": "edb1744a04968fb8a63d20f04aaa088866e9b37c0d261a94e6f98beb8947bc38",
+    "data/curated/paper_taxonomy.csv": "17b59d6a33ae77ebfad1d58f3791b051197f5117834faa4c93342f8a79323417",
+    "web/data/public_preview_papers.json": "9b1565482ab2095fa43ab3b9e60504c733fd0d43cd84bc4d5f3f8d98f2eb9781",
+    "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+    "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+    "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+    "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+    "data/raw/systematic_literature_2026_09/2554e5b57b6a121f3e5b.gz": "14df2b9f22f52e28cf8f239f237d9c6be71ce1c7a17e36268cdb7c3dc53037bb",
+    "data/raw/systematic_gap_audit_2026_10_02/icml2026_screening.json": "09c1387fd655d3ef6dc6340b29c11b3d52a1a1c4a99c88f260b862123515ee5d",
+    "data/processed/systematic_tier2_application_2026_09/legacy_screening_636.json": "005509ff252b0bf4d04769c6c1a65c8796f58db8f9844b871d4b0b39e02eab47",
+    "data/curated/review_decisions.csv": "22291dab5343361c63547f09d741683a5f5204ed96338c1798552ecf3dc3f0e8",
+    "data/raw/openalex/20260619T122106Z_009_source-attribution-generated-images.json": "839f6f68766637be72cdefa9265d35b412a871b5e84d0b219aee22af01964690",
+    "web/data/public_preview_map_data.json": "09b6f815597b2c14349dffc359b7844eab9c2b9a758ec02ef669476e009b627b",
+    "data/raw/corpus_quality_audit_2026_10_04/source_checks.json": "78c2aed641161705a0a22658a2df38cc7e53550eb1857d119106a4a419b02227",
+    "data/raw/ant_gap_fill_2026_09_05/openalex_exact_title_results.json": "01786d62d432542cab8184bcb65c486990a1c9b3111b65400bf3e2977608769f",
+    "data/raw/systematic_literature_2026_09/a58a312ed612f8266c74.gz": "6c0ce05348d64215ccf0195281b51d197a685af17680e4c0ebe7dda5d6d81962",
+    "data/raw/systematic_gap_audit_2026_10_02/discovery_records.json": "6ec9e001aa007ef4fcd528243c0e2da099a8e9fed359d8050cb27ef8088edc0d",
+    "data/processed/literature51_2026_10_16/plan.json": "b6af4975b2be41958176448000d240dcdbc2dd00a507e8edc3a7a7b0027356ab",
+    "data/processed/literature51_2026_10_16/followup/review.json": "cdf83d05b4ab57fe5a37034f5213aef40f7c6ee0095c5d22d3988ca784d03312",
+    "data/processed/literature51_2026_10_16/followup/receipt.json": "b24deabfd36186ed278d2afd4ac60814a4c78d71e04151c25cee52d27460d4f3",
+    "data/processed/literature51_2026_10_16/main_integration/manifest.json": "5959e8628cc7e272ac45f0a2afd5e508412a416615c61d411b4529e135077a79",
+    "docs/literature51_main_integration_2026_10_17.md": "6f0e138d4bbdbd1d8032f84479cca0fae791f819ac998003f502faecc59101c4"
+  },
+  "export_dependency_analysis": {
+    "expected_semantic_effect": "None. No paper/taxonomy/provenance/relationship/public count changes are authorized; all existing public-export bytes should be preserved.",
+    "admin_review_queues": "ReviewContext.reason filters matching decision review_queue to the actual queue name; ACTION_QUEUES has no other queue. This other/no_action_after_review row does not resolve publication, marker, affiliation, coordinate or import queues.",
+    "venue_audit": "No-change confirmations require review_queue publication_venues and a venue-state token. T631 uses other and has no venue token.",
+    "public_export_guard": "Relationship exclusion decisions require action exclude_wrong_mapping. T631 uses no_action_after_review and has no institution target.",
+    "institution_consistency": "Production warning overrides consume accept_mapping/ignore_warning; T631 uses neither action.",
+    "literature_report": "Literature51 pending counts depend on unresolved actions and needs_review taxonomy, neither modified by this terminal other row.",
+    "dynamic_review_effect": "read_review_decisions/administrative views and original-B terminal accounting gain exactly T631. Preserve original raw pending-review records.",
+    "required_packet_updates": [
+      "Finalize existing B1G report and manifest with accepted T631, exact decision ID, derived accounting and unchanged T046 evidence.",
+      "Preserve original scientific findings, full numerical rows, source hashes and retrieval history.",
+      "Add focused B1G regression coverage; root determines publication test scope after predecessor integration."
+    ],
+    "export_regeneration": "No genuine scientific/public export dependency identified. Preserve exports byte-identically and document non-regeneration; no manual generated JSON edits.",
+    "no_frozen_test_receipt_rewrites": "Independent predecessor historical-test repair is not a new B1G change. Do not restage its files as B1G modifications."
+  },
+  "validation_scope_decision": {
+    "full_suite": {
+      "required_for_current_bounded_adjudication": false,
+      "basis": [
+        "Latest user instruction section8 expressly makes a combined full run conditional on an existing publication requirement; no unconditional requirement was found.",
+        "AGENTS.md has scoped verification and data-integrity requirements, with no full-suite mandate.",
+        "docs/testing.md documents how to reproduce the full suite; it does not require that command for every publication.",
+        "Published B1F report explicitly documents focused validation for an other/no_action_after_review append with unchanged scientific data and exports.",
+        "The 12 infrastructure repair files remain byte-identical to the independently validated published predecessor; B1G changes no infrastructure or production/export logic."
+      ],
+      "historical_receipt_only": {
+        "commit": "3feff7d6b609183cb8dda4949d2c087e77639003",
+        "ordinary_passed": 1963,
+        "subtests_passed": 389,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0,
+        "junit_sha256": "5c3dc041c99f6e10b1eeb83e9ddd648cb7f9799dcb76a3c73a2ab2e841671102",
+        "source": "docs/historical_test_repair_2026_10_19.md; recovered full.xml and publication.json"
+      },
+      "required_truthful_wording": "The predecessor repair passed its full suite. B1G was validated against the integrated state with the exact focused modules and four validators reported separately; no new full suite was run.",
+      "reconsider_if": "Unexpected infrastructure/production changes, new unexplained focused failures, output dependencies, or later explicit publication policy/user requirement."
+    },
+    "exports": {
+      "regeneration_required": false,
+      "basis": "other/no_action_after_review does not meet venue confirmation queue, mapping exclusion action, or institution consistency action filters. No tasks, research type, bibliography, relationships or generated public fields change; key-coverage input fingerprint excludes review_decisions. Preserve public bytes.",
+      "verify": "Whole-file and semantic equality of curated tables except ledger, manual mappings, and all public exports against3feff; identify the one terminal append exactly. Do not claim deterministic export execution/reproducibility was rerun."
+    },
+    "documented_environment": {
+      "python": "3.14.7",
+      "pytest": "9.1.1",
+      "pytest_subtests": "0.15.0",
+      "node": "24.19.0"
+    },
+    "historical_fixture_preflight": {
+      "verified_inputs": 117,
+      "created": 0,
+      "restoration_run": false,
+      "reason": "All declared inputs already existed with correct checksums; --check only."
+    },
+    "historical_B1F_boundary": "Two exact transaction/accounting tests use the immutable published B1F endpoint 3bcd95f; all original assertions preserved, with live complete-prefix and unique-T303 guards. No predecessor repair file or historical receipt changed."
+  },
+  "publication": {
+    "status": "VALIDATED_COMMIT_INPUTS",
+    "receipt_boundary": "This packet records validated commit inputs. Its containing commit is identified by Git; the post-push SHA and remote equality are verified separately after publication to avoid a self-referential SHA.",
+    "validated_at_utc": "2026-10-19T12:54:35.106922+00:00"
+  }
+}

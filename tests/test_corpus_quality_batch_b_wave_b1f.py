@@ -16,6 +16,8 @@ from tests.corpus_quality_test_helpers import csv_records, published_bytes, publ
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "990c8221728a44b6ab78cfff5159612edb0983a7"
+# Evaluate B1F's exact transaction at its immutable published endpoint.
+PUBLISHED = "3bcd95fd45b12b3d7a711232b0ba3ae687e8771d"
 DECISIONS = "data/curated/review_decisions.csv"
 MANIFEST = "data/raw/corpus_quality_batch_b_wave_b1f_2026_10_18/evidence_manifest.json"
 REPORT = "docs/corpus_quality_batch_b_wave_b1f_2026_10_18.md"
@@ -59,10 +61,14 @@ def published_paths(*prefixes):
 
 def test_exactly_one_terminal_append_preserves_all_prior_decision_bytes():
     before = published_bytes(BASE, DECISIONS)
-    after = (ROOT / DECISIONS).read_bytes()
+    after = published_bytes(PUBLISHED, DECISIONS)
     assert after.startswith(before)
     old = csv_records(before)
-    rows = read_review_decisions(ROOT / DECISIONS)
+    rows = csv_records(after)
+    # Later approved decisions append; B1F's complete accepted bytes survive live.
+    assert (ROOT / DECISIONS).read_bytes().startswith(after)
+    live = read_review_decisions(ROOT / DECISIONS)
+    assert sum(row["decision_id"] == DECISION_ID for row in live) == 1
     assert len(old) == 84 and len(rows) == 85
     assert rows[:-1] == old
     assert len({r["decision_id"] for r in rows}) == len(rows)
@@ -160,11 +166,11 @@ def test_regional_attribution_is_evaluated_separately_from_binary_tasks():
 def test_pending_accounting_is_action_based_and_distinct_papers_recompute():
     ledger = [r for r in decision_rows(load_queues()) if r["batch"] == "B"]
     old_done = terminal(csv_records(published_bytes(BASE, DECISIONS)))
-    done = terminal(read_review_decisions(ROOT / DECISIONS))
+    done = terminal(csv_records(published_bytes(PUBLISHED, DECISIONS)))
     assert set(done) - set(old_done) == {"T303"}
     assert len(ledger) == 159 and len({r["paper_id"] for r in ledger}) == 148
     pending = [r for r in ledger if r["review_id"] not in done]
-    public = load_context()["papers"]
+    public = published_context(PUBLISHED)["papers"]
     active = [r for r in pending if r["paper_id"] in public]
     assert len(pending) == 149 and len(active) == 147
     assert len({r["paper_id"] for r in active}) == 136
