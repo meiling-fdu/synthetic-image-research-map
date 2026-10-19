@@ -18,6 +18,10 @@ SNAPSHOT = ROOT / "tests/fixtures/public_website_refinement_2026_10_01.json"
 # The fixture records the reviewed 2026-10-01 frontend, while source_head in
 # that fixture identifies the earlier corpus baseline. Keep those contracts distinct.
 REFINEMENT_COMMIT = "3c0a5fbc25d7434cf4c80de27aae16fc8761a921"
+LEAFLET_SRI_PREDECESSOR = "d02b952489b10df438f79ed1b87aee4170ee8aa5"
+LEAFLET_SRI_SUCCESSOR = "c589f61b628b787251410964ed50a0fe696a4038"
+LEAFLET_INDEX_BEFORE = "ba43571ce429f16d422277597d7e51d95ca1f612d08ecfb02aba18bb8dbf3f58"
+LEAFLET_INDEX_AFTER = "f080d23a34c9863eb439b857eb2bf9032b80b8abb659631d6b49ac5de58510c1"
 PUBLISHED_FRONTEND_SUCCESSORS = (
     ("c514bea1dbd7645dc4baed49819f14764b9f177b", (
         "tests/test_public_header_metadata.py",
@@ -58,15 +62,37 @@ PUBLISHED_FRONTEND_SUCCESSORS = (
         "web/methodology.html",
         "web/style.css",
     )),
+    # Only the published, byte-verified Leaflet stylesheet integrity correction.
+    (LEAFLET_SRI_SUCCESSOR, ("web/index.html",)),
 )
 
 
+def committed_bytes(commit, relative):
+    return subprocess.check_output(["git", "show", f"{commit}:{relative}"], cwd=ROOT)
+
+
 def committed_digest(commit, relative):
-    value = subprocess.check_output(["git", "show", f"{commit}:{relative}"], cwd=ROOT)
+    value = committed_bytes(commit, relative)
     return hashlib.sha256(value).hexdigest()
 
 
+def assert_leaflet_sri_transition():
+    parent = subprocess.check_output(
+        ["git", "rev-parse", LEAFLET_SRI_SUCCESSOR + "^"], cwd=ROOT, text=True
+    ).strip()
+    assert parent == LEAFLET_SRI_PREDECESSOR, "Unexpected Leaflet predecessor"
+    before = committed_bytes(LEAFLET_SRI_PREDECESSOR, "web/index.html")
+    after = committed_bytes(LEAFLET_SRI_SUCCESSOR, "web/index.html")
+    assert hashlib.sha256(before).hexdigest() == LEAFLET_INDEX_BEFORE
+    assert hashlib.sha256(after).hexdigest() == LEAFLET_INDEX_AFTER
+    old = b"sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
+    new = b"sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    assert before.count(old) == 1
+    assert before.replace(old, new, 1) == after, "Unreviewed Leaflet HTML delta"
+
+
 def assert_public_refinement_snapshot():
+    assert_leaflet_sri_transition()
     expected = {
         relative: digest
         for relative, digest in json.loads(SNAPSHOT.read_text(encoding="utf-8"))["sha256"].items()

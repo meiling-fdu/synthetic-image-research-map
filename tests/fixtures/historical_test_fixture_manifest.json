@@ -1,0 +1,941 @@
+{
+  "schema_version": 1,
+  "purpose": "Exact offline test inputs; original research and historical authority manifests remain unchanged.",
+  "provenance": {
+    "os_metadata": "Recovered frozen historical snapshots; payload hashes match the immutable predecessor_666_snapshot.json and Tier1/HIGH/NORMAL baseline manifests.",
+    "openalex": "Existing committed frozen Tier1 response copies; each full response hash matches workshop_venue_baseline.json."
+  },
+  "authorities": {
+    "data/processed/legacy_scope_exclusion_migration_2026_09/predecessor_666_snapshot.json": "2999da7901044df18f64c29e68f58daedc6d5b9c23dad774ef79a7fe18d8e6ec",
+    "data/processed/workshop_venue_baseline.json": "9e7a6f89e6a261a738b05e2e3de3d2d45cca76b0aaed4b5c3a0acc9e54f6575e"
+  },
+  "entries": [
+    {
+      "path": "data/processed/systematic_tier1_2026_09/baseline/data/.DS_Store",
+      "source": "tests/fixtures/historical_os_metadata/1d7480faeebe24871c938c8c1751eea1883ace7f057716eccfff35ec167a3079.gz",
+      "compression": "gzip",
+      "sha256": "1d7480faeebe24871c938c8c1751eea1883ace7f057716eccfff35ec167a3079",
+      "source_sha256": "917a6300c0acc8bdcd864ea8ef2c017940699ec9217bf1cb52bd2bc9a249e2f9",
+      "bytes": 16388,
+      "authority": "data/processed/legacy_scope_exclusion_migration_2026_09/predecessor_666_snapshot.json"
+    },
+    {
+      "path": "data/processed/systematic_tier1_2026_09/baseline/web/.DS_Store",
+      "source": "tests/fixtures/historical_os_metadata/6df64df87f90aed4dee71be480b2e5d710d5aa2ab24924f04eb409432b83b773.gz",
+      "compression": "gzip",
+      "sha256": "6df64df87f90aed4dee71be480b2e5d710d5aa2ab24924f04eb409432b83b773",
+      "source_sha256": "ab0f42facfcdab41c209f847cc2c33c5274fd0d9c5270e8bfa0e192988ba2cfa",
+      "bytes": 6148,
+      "authority": "data/processed/legacy_scope_exclusion_migration_2026_09/predecessor_666_snapshot.json"
+    },
+    {
+      "path": "data/processed/systematic_tier2_high_priority_evidence_review_2026_09/baseline/web/.DS_Store",
+      "source": "tests/fixtures/historical_os_metadata/a68cb7b62b51611eadfae68c198f05dd4990a76e7cbfc523c33c74c7b7a1c3eb.gz",
+      "compression": "gzip",
+      "sha256": "a68cb7b62b51611eadfae68c198f05dd4990a76e7cbfc523c33c74c7b7a1c3eb",
+      "source_sha256": "1ce5a1cca51dc522337b5f7011c15eacd741daa96f6eae1f987a582de7bb0871",
+      "bytes": 6148,
+      "authority": "data/processed/legacy_scope_exclusion_migration_2026_09/predecessor_666_snapshot.json"
+    },
+    {
+      "path": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline/web/.DS_Store",
+      "source": "tests/fixtures/historical_os_metadata/a68cb7b62b51611eadfae68c198f05dd4990a76e7cbfc523c33c74c7b7a1c3eb.gz",
+      "compression": "gzip",
+      "sha256": "a68cb7b62b51611eadfae68c198f05dd4990a76e7cbfc523c33c74c7b7a1c3eb",
+      "source_sha256": "1ce5a1cca51dc522337b5f7011c15eacd741daa96f6eae1f987a582de7bb0871",
+      "bytes": 6148,
+      "authority": "data/processed/legacy_scope_exclusion_migration_2026_09/predecessor_666_snapshot.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T204924Z_001_synthetic-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T204924Z_001_synthetic-image-detection.json",
+      "compression": "none",
+      "sha256": "6aaa2bea52902378202a8feb44604eb691940d4e8a5ebd15c318d9eaad26ceb1",
+      "source_sha256": "6aaa2bea52902378202a8feb44604eb691940d4e8a5ebd15c318d9eaad26ceb1",
+      "bytes": 104843,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T204924Z_002_ai-generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T204924Z_002_ai-generated-image-detection.json",
+      "compression": "none",
+      "sha256": "9dc957acae42c12fe7c09e62a9c96d4b230eec606cd9a98d07f253b2c2182e36",
+      "source_sha256": "9dc957acae42c12fe7c09e62a9c96d4b230eec606cd9a98d07f253b2c2182e36",
+      "bytes": 98517,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T204924Z_003_generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T204924Z_003_generated-image-detection.json",
+      "compression": "none",
+      "sha256": "55643b197c5a591c7382df71048b3901b5287a2a76ea41e4d935b86d2292a5f1",
+      "source_sha256": "55643b197c5a591c7382df71048b3901b5287a2a76ea41e4d935b86d2292a5f1",
+      "bytes": 109673,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T204924Z_004_diffusion-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T204924Z_004_diffusion-image-detection.json",
+      "compression": "none",
+      "sha256": "b37c17dd686aa408ab8c28a6ed6039f0a56f2afd18183c06648e661bd7cbd8d6",
+      "source_sha256": "b37c17dd686aa408ab8c28a6ed6039f0a56f2afd18183c06648e661bd7cbd8d6",
+      "bytes": 92291,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T204924Z_005_gan-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T204924Z_005_gan-image-detection.json",
+      "compression": "none",
+      "sha256": "3232adf0b7158ca8d65ad5d16c62590577b54c9ff57cd92113e038bfcfe525c3",
+      "source_sha256": "3232adf0b7158ca8d65ad5d16c62590577b54c9ff57cd92113e038bfcfe525c3",
+      "bytes": 106542,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T204924Z_006_synthetic-image-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T204924Z_006_synthetic-image-attribution.json",
+      "compression": "none",
+      "sha256": "6d419b1016279642833f27af038cb101751880573ded0747cf5e8ca4474c3fc5",
+      "source_sha256": "6d419b1016279642833f27af038cb101751880573ded0747cf5e8ca4474c3fc5",
+      "bytes": 115056,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T204924Z_007_ai-generated-image-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T204924Z_007_ai-generated-image-attribution.json",
+      "compression": "none",
+      "sha256": "814b2fcdb03d878c15d3606adad84251a3a32023f7f296ad3246f6ad36f1fc35",
+      "source_sha256": "814b2fcdb03d878c15d3606adad84251a3a32023f7f296ad3246f6ad36f1fc35",
+      "bytes": 252720,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T204924Z_008_generative-model-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T204924Z_008_generative-model-attribution.json",
+      "compression": "none",
+      "sha256": "702a5a46b94abec185e29c7006d84f0eba99ff208df5c2e074e51537b937fad1",
+      "source_sha256": "702a5a46b94abec185e29c7006d84f0eba99ff208df5c2e074e51537b937fad1",
+      "bytes": 343469,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T204924Z_009_source-attribution-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T204924Z_009_source-attribution-generated-images.json",
+      "compression": "none",
+      "sha256": "4dcca7689cc81cab1d4dadfdbc6fe041a1cfdd76a560f1015d4c8795f44669dc",
+      "source_sha256": "4dcca7689cc81cab1d4dadfdbc6fe041a1cfdd76a560f1015d4c8795f44669dc",
+      "bytes": 138930,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T204924Z_010_generated-image-source-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T204924Z_010_generated-image-source-attribution.json",
+      "compression": "none",
+      "sha256": "31250824ee8d45efba87ff1a10e79695d3cc8057e44f882b032d06a5ff25aa49",
+      "source_sha256": "31250824ee8d45efba87ff1a10e79695d3cc8057e44f882b032d06a5ff25aa49",
+      "bytes": 138925,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T215435Z_001_synthetic-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T215435Z_001_synthetic-image-detection.json",
+      "compression": "none",
+      "sha256": "03d95a79fa4f1181e4a6fdda626db5036c6eb1a1b039c1311750764bfa51d613",
+      "source_sha256": "03d95a79fa4f1181e4a6fdda626db5036c6eb1a1b039c1311750764bfa51d613",
+      "bytes": 104843,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T215435Z_002_ai-generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T215435Z_002_ai-generated-image-detection.json",
+      "compression": "none",
+      "sha256": "88a6dbb7096be15a1b0e31cdc87c09cbb6b20fc12ba89e8c6259ca96cfcf130f",
+      "source_sha256": "88a6dbb7096be15a1b0e31cdc87c09cbb6b20fc12ba89e8c6259ca96cfcf130f",
+      "bytes": 98517,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T215435Z_003_generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T215435Z_003_generated-image-detection.json",
+      "compression": "none",
+      "sha256": "6eee1532c9391775c455c356ad5fc6f8d75dea549be44e4a892c5a9b95a7ff8f",
+      "source_sha256": "6eee1532c9391775c455c356ad5fc6f8d75dea549be44e4a892c5a9b95a7ff8f",
+      "bytes": 109673,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T215435Z_004_diffusion-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T215435Z_004_diffusion-image-detection.json",
+      "compression": "none",
+      "sha256": "c880a67f3a839e62f3e2661fe45916a1cb3abb083be418380498541b0764ac6e",
+      "source_sha256": "c880a67f3a839e62f3e2661fe45916a1cb3abb083be418380498541b0764ac6e",
+      "bytes": 92291,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T215435Z_005_gan-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T215435Z_005_gan-image-detection.json",
+      "compression": "none",
+      "sha256": "63bf72901cf7f660ee7725850dbfd56855a568016fe82165629cde51d42fb6df",
+      "source_sha256": "63bf72901cf7f660ee7725850dbfd56855a568016fe82165629cde51d42fb6df",
+      "bytes": 106541,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T215435Z_006_synthetic-image-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T215435Z_006_synthetic-image-attribution.json",
+      "compression": "none",
+      "sha256": "c54a0d6274938f0805a9762d2df3bf33116453f34e99f44eb0e380c7a78e5bcb",
+      "source_sha256": "c54a0d6274938f0805a9762d2df3bf33116453f34e99f44eb0e380c7a78e5bcb",
+      "bytes": 115055,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T215435Z_007_ai-generated-image-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T215435Z_007_ai-generated-image-attribution.json",
+      "compression": "none",
+      "sha256": "654d8433afd806758ab82d27fe46e2958e8b30d349dda142086f53346a123fb8",
+      "source_sha256": "654d8433afd806758ab82d27fe46e2958e8b30d349dda142086f53346a123fb8",
+      "bytes": 252721,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T215435Z_008_generative-model-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T215435Z_008_generative-model-attribution.json",
+      "compression": "none",
+      "sha256": "872837b8ba53027a44214f1ea248bd654cdf1ffda416a184651e196632feae89",
+      "source_sha256": "872837b8ba53027a44214f1ea248bd654cdf1ffda416a184651e196632feae89",
+      "bytes": 343469,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T215435Z_009_source-attribution-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T215435Z_009_source-attribution-generated-images.json",
+      "compression": "none",
+      "sha256": "cc4a462464b6c6402fc93705a026f0a4289e9ff69a85cbc8305fa4f43a09d383",
+      "source_sha256": "cc4a462464b6c6402fc93705a026f0a4289e9ff69a85cbc8305fa4f43a09d383",
+      "bytes": 138930,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260618T215435Z_010_generated-image-source-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260618T215435Z_010_generated-image-source-attribution.json",
+      "compression": "none",
+      "sha256": "e2116df07d3b762130b911a8ab0e18702a3bec64498757772a73124653fe0937",
+      "source_sha256": "e2116df07d3b762130b911a8ab0e18702a3bec64498757772a73124653fe0937",
+      "bytes": 138925,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T122106Z_001_synthetic-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T122106Z_001_synthetic-image-detection.json",
+      "compression": "none",
+      "sha256": "8f5084bc69f37cba9f6918a280b2e0ceabac8788f57b43fa06c76e2b639dfc55",
+      "source_sha256": "8f5084bc69f37cba9f6918a280b2e0ceabac8788f57b43fa06c76e2b639dfc55",
+      "bytes": 4045601,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T122106Z_002_ai-generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T122106Z_002_ai-generated-image-detection.json",
+      "compression": "none",
+      "sha256": "6df9aec3b1a8f3ebd3cd09aa3746db0bfc22313b0db897b0b963920d793e2892",
+      "source_sha256": "6df9aec3b1a8f3ebd3cd09aa3746db0bfc22313b0db897b0b963920d793e2892",
+      "bytes": 4181091,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T122106Z_003_generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T122106Z_003_generated-image-detection.json",
+      "compression": "none",
+      "sha256": "6b43b9fed3012f4e67602febc3b55ac4a9f9afac79ead0ebd591773fb84aaa0a",
+      "source_sha256": "6b43b9fed3012f4e67602febc3b55ac4a9f9afac79ead0ebd591773fb84aaa0a",
+      "bytes": 4119613,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T122106Z_004_diffusion-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T122106Z_004_diffusion-image-detection.json",
+      "compression": "none",
+      "sha256": "80e633dcc6a33b11795e04ff17a2c43f0f4a3153ced7bfdd6075880b56f088a2",
+      "source_sha256": "80e633dcc6a33b11795e04ff17a2c43f0f4a3153ced7bfdd6075880b56f088a2",
+      "bytes": 4983079,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T122106Z_005_gan-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T122106Z_005_gan-image-detection.json",
+      "compression": "none",
+      "sha256": "cfb5eb84156c827b75218d6a61b9d56ec8e98884652aeac85c75ae1fcf64c08b",
+      "source_sha256": "cfb5eb84156c827b75218d6a61b9d56ec8e98884652aeac85c75ae1fcf64c08b",
+      "bytes": 3801592,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T122106Z_006_synthetic-image-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T122106Z_006_synthetic-image-attribution.json",
+      "compression": "none",
+      "sha256": "b982a18869a4e0989c7105ce1ef4971f75e5227840d4007b209815523bca200c",
+      "source_sha256": "b982a18869a4e0989c7105ce1ef4971f75e5227840d4007b209815523bca200c",
+      "bytes": 5746044,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T122106Z_007_ai-generated-image-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T122106Z_007_ai-generated-image-attribution.json",
+      "compression": "none",
+      "sha256": "5b99a04f18a76e9aae94365bdfbcf0d3caf523ea71b89e55e732ebc169df2d50",
+      "source_sha256": "5b99a04f18a76e9aae94365bdfbcf0d3caf523ea71b89e55e732ebc169df2d50",
+      "bytes": 5002003,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T122106Z_008_generative-model-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T122106Z_008_generative-model-attribution.json",
+      "compression": "none",
+      "sha256": "28b5a7a2e355bf0d0562d1f0203f5af73bf648e964b92ec6d0d129afe9e7b77f",
+      "source_sha256": "28b5a7a2e355bf0d0562d1f0203f5af73bf648e964b92ec6d0d129afe9e7b77f",
+      "bytes": 4859681,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T122106Z_009_source-attribution-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T122106Z_009_source-attribution-generated-images.json",
+      "compression": "none",
+      "sha256": "839f6f68766637be72cdefa9265d35b412a871b5e84d0b219aee22af01964690",
+      "source_sha256": "839f6f68766637be72cdefa9265d35b412a871b5e84d0b219aee22af01964690",
+      "bytes": 5651538,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T122106Z_010_generated-image-source-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T122106Z_010_generated-image-source-attribution.json",
+      "compression": "none",
+      "sha256": "976cd6429b7344eac2e89b01b0524b7db6140989a63e13ad2f34a4fd10df1a30",
+      "source_sha256": "976cd6429b7344eac2e89b01b0524b7db6140989a63e13ad2f34a4fd10df1a30",
+      "bytes": 5651533,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T132121Z_001_synthetic-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T132121Z_001_synthetic-image-detection.json",
+      "compression": "none",
+      "sha256": "7a03754664919372fe1d8de589c54fe04ffe55be666b953423cf8e71985b16fc",
+      "source_sha256": "7a03754664919372fe1d8de589c54fe04ffe55be666b953423cf8e71985b16fc",
+      "bytes": 4045601,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T132121Z_002_ai-generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T132121Z_002_ai-generated-image-detection.json",
+      "compression": "none",
+      "sha256": "ab0af3862714a60f65940f195138b29e29eea3791a77629bdef3f069bbeec9ec",
+      "source_sha256": "ab0af3862714a60f65940f195138b29e29eea3791a77629bdef3f069bbeec9ec",
+      "bytes": 4181091,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T132121Z_003_generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T132121Z_003_generated-image-detection.json",
+      "compression": "none",
+      "sha256": "b93af855523050943276147418d29ddbce727efaa38f745e15183c90e1e7e983",
+      "source_sha256": "b93af855523050943276147418d29ddbce727efaa38f745e15183c90e1e7e983",
+      "bytes": 4119613,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T132121Z_004_diffusion-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T132121Z_004_diffusion-image-detection.json",
+      "compression": "none",
+      "sha256": "16e7b05f68ed98814a5b8773313db372c0f80e401c106b747988f0a326778ff9",
+      "source_sha256": "16e7b05f68ed98814a5b8773313db372c0f80e401c106b747988f0a326778ff9",
+      "bytes": 4983079,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T132121Z_005_gan-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T132121Z_005_gan-image-detection.json",
+      "compression": "none",
+      "sha256": "5eb0e74dabb623bb0581aca0884c9a67a3def003c1f0cf86c87bdab4c61d55c2",
+      "source_sha256": "5eb0e74dabb623bb0581aca0884c9a67a3def003c1f0cf86c87bdab4c61d55c2",
+      "bytes": 3801592,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T132121Z_006_synthetic-image-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T132121Z_006_synthetic-image-attribution.json",
+      "compression": "none",
+      "sha256": "3b29749f3eed34ec7f70374f43dfd2ad1f4866d8f6c1d1ddae49ec6ac89f913a",
+      "source_sha256": "3b29749f3eed34ec7f70374f43dfd2ad1f4866d8f6c1d1ddae49ec6ac89f913a",
+      "bytes": 5746044,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T132121Z_007_ai-generated-image-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T132121Z_007_ai-generated-image-attribution.json",
+      "compression": "none",
+      "sha256": "6476d82d5f4dd19028fc4acb76df34cee22502a98fa9fb37e5ff6ad1f022a65e",
+      "source_sha256": "6476d82d5f4dd19028fc4acb76df34cee22502a98fa9fb37e5ff6ad1f022a65e",
+      "bytes": 5002003,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T132121Z_008_generative-model-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T132121Z_008_generative-model-attribution.json",
+      "compression": "none",
+      "sha256": "d42bd094739126d8c89f135326c7cdeaa2ebed61b561046c4f9d3a487271c731",
+      "source_sha256": "d42bd094739126d8c89f135326c7cdeaa2ebed61b561046c4f9d3a487271c731",
+      "bytes": 4859681,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T132121Z_009_source-attribution-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T132121Z_009_source-attribution-generated-images.json",
+      "compression": "none",
+      "sha256": "e65bba68c4b2f23e329814a710951a67ffb12af0c56334f33790b9ef913e4f60",
+      "source_sha256": "e65bba68c4b2f23e329814a710951a67ffb12af0c56334f33790b9ef913e4f60",
+      "bytes": 5651538,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T132121Z_010_generated-image-source-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T132121Z_010_generated-image-source-attribution.json",
+      "compression": "none",
+      "sha256": "88a04e5a4e41ea9d51557bca4ad7e0170ffe269f18e5cc043442911d527d77e4",
+      "source_sha256": "88a04e5a4e41ea9d51557bca4ad7e0170ffe269f18e5cc043442911d527d77e4",
+      "bytes": 5651533,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T134722Z_001_ai-generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T134722Z_001_ai-generated-image-detection.json",
+      "compression": "none",
+      "sha256": "219c5c4fb6550654a04ddd4c7362a3c5dd6cd6a556a4b9eb470dac5762f2de2a",
+      "source_sha256": "219c5c4fb6550654a04ddd4c7362a3c5dd6cd6a556a4b9eb470dac5762f2de2a",
+      "bytes": 4181091,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T134722Z_002_synthetic-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T134722Z_002_synthetic-image-detection.json",
+      "compression": "none",
+      "sha256": "0b8d791c994303017d87239a650eacdf9c8e16750f21f7b56c4eb5e7f6c9a1cf",
+      "source_sha256": "0b8d791c994303017d87239a650eacdf9c8e16750f21f7b56c4eb5e7f6c9a1cf",
+      "bytes": 4045601,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T134722Z_003_generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T134722Z_003_generated-image-detection.json",
+      "compression": "none",
+      "sha256": "7ed85c5cbc11f2534daf92c4b837f3d4a8679d069b7ab51acf2f6b9f3d5860fc",
+      "source_sha256": "7ed85c5cbc11f2534daf92c4b837f3d4a8679d069b7ab51acf2f6b9f3d5860fc",
+      "bytes": 4119613,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T134722Z_004_gan-generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T134722Z_004_gan-generated-image-detection.json",
+      "compression": "none",
+      "sha256": "561ff3ace19ed34e649f02870df45bdb342abfc294279483075e4b16bdfff99f",
+      "source_sha256": "561ff3ace19ed34e649f02870df45bdb342abfc294279483075e4b16bdfff99f",
+      "bytes": 3866004,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T134722Z_005_diffusion-generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T134722Z_005_diffusion-generated-image-detection.json",
+      "compression": "none",
+      "sha256": "e0d13949a3c855d152c513967c56ce2c774401505cb8f7e80a4e9af6e95f21ce",
+      "source_sha256": "e0d13949a3c855d152c513967c56ce2c774401505cb8f7e80a4e9af6e95f21ce",
+      "bytes": 5580177,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T134722Z_006_ai-generated-image-source-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T134722Z_006_ai-generated-image-source-attribution.json",
+      "compression": "none",
+      "sha256": "5d3ad0e902a10538771ddcc7b4ba78614286e2583d7825fb4d5ed58a91ad412e",
+      "source_sha256": "5d3ad0e902a10538771ddcc7b4ba78614286e2583d7825fb4d5ed58a91ad412e",
+      "bytes": 5018979,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T134722Z_007_synthetic-image-source-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T134722Z_007_synthetic-image-source-attribution.json",
+      "compression": "none",
+      "sha256": "7795af3b553d08d266e657cc46e6d12bd181a45c0dc238034b12b38c457604d3",
+      "source_sha256": "7795af3b553d08d266e657cc46e6d12bd181a45c0dc238034b12b38c457604d3",
+      "bytes": 5131495,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T134722Z_008_generated-image-source-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T134722Z_008_generated-image-source-attribution.json",
+      "compression": "none",
+      "sha256": "f8581f30f4f34f4cb01fc34716568553c2d4e842a14b57c2d70abf579fa503a2",
+      "source_sha256": "f8581f30f4f34f4cb01fc34716568553c2d4e842a14b57c2d70abf579fa503a2",
+      "bytes": 5651533,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T134722Z_009_source-attribution-of-ai-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T134722Z_009_source-attribution-of-ai-generated-images.json",
+      "compression": "none",
+      "sha256": "c9301a1ab56fabe2b4928b6c3e074a1220f0a7fe35e7f430431fb8a9d60f63c6",
+      "source_sha256": "c9301a1ab56fabe2b4928b6c3e074a1220f0a7fe35e7f430431fb8a9d60f63c6",
+      "bytes": 5018999,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T134722Z_010_forensic-attribution-of-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T134722Z_010_forensic-attribution-of-generated-images.json",
+      "compression": "none",
+      "sha256": "674cf5ea24afd84695f0aa3933ed0f43bf60adf8817f48b4edf41f4ff825b53d",
+      "source_sha256": "674cf5ea24afd84695f0aa3933ed0f43bf60adf8817f48b4edf41f4ff825b53d",
+      "bytes": 4161370,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T134722Z_011_deepfake-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T134722Z_011_deepfake-image-detection.json",
+      "compression": "none",
+      "sha256": "19eca5271ac32a741e193b2f36e65da9219a05f27c2322ecd87d18d4afe9b971",
+      "source_sha256": "19eca5271ac32a741e193b2f36e65da9219a05f27c2322ecd87d18d4afe9b971",
+      "bytes": 3275913,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_001_ai-generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_001_ai-generated-image-detection.json",
+      "compression": "none",
+      "sha256": "3611174c5f3fcc3a2a421052f0685f2da57f20d7b79f8c4f0ee3847179770210",
+      "source_sha256": "3611174c5f3fcc3a2a421052f0685f2da57f20d7b79f8c4f0ee3847179770210",
+      "bytes": 4192323,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_002_synthetic-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_002_synthetic-image-detection.json",
+      "compression": "none",
+      "sha256": "996996083f1fa9df0b771f0879280f0784b4c4f7f592b2bb4f86d7710a49c642",
+      "source_sha256": "996996083f1fa9df0b771f0879280f0784b4c4f7f592b2bb4f86d7710a49c642",
+      "bytes": 4048561,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_003_generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_003_generated-image-detection.json",
+      "compression": "none",
+      "sha256": "69fde3326465c827b31ffdaf0bd4bd12d2184da320617bec749fb419a57bad2a",
+      "source_sha256": "69fde3326465c827b31ffdaf0bd4bd12d2184da320617bec749fb419a57bad2a",
+      "bytes": 4109545,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_004_gan-generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_004_gan-generated-image-detection.json",
+      "compression": "none",
+      "sha256": "d8b03fa696ebf2d5d6ff599e62f623ad4a78fefd22e96fee9a57dff6f20f0c21",
+      "source_sha256": "d8b03fa696ebf2d5d6ff599e62f623ad4a78fefd22e96fee9a57dff6f20f0c21",
+      "bytes": 3874780,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_005_diffusion-generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_005_diffusion-generated-image-detection.json",
+      "compression": "none",
+      "sha256": "a5b80653a8711095bdf8ae70cd953d3a1b4feef2892f9d248b7244554560cd02",
+      "source_sha256": "a5b80653a8711095bdf8ae70cd953d3a1b4feef2892f9d248b7244554560cd02",
+      "bytes": 5569838,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_006_detecting-ai-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_006_detecting-ai-generated-images.json",
+      "compression": "none",
+      "sha256": "5378a5c8f83c7bba6ad9702af7e754e7cd9b46ec7806a94f02210fe77ecf3d97",
+      "source_sha256": "5378a5c8f83c7bba6ad9702af7e754e7cd9b46ec7806a94f02210fe77ecf3d97",
+      "bytes": 4613572,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_007_detecting-synthetic-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_007_detecting-synthetic-images.json",
+      "compression": "none",
+      "sha256": "f6dd7b7c046bbe500bf2452aaefb2e96f15ee053c631ce1e47fd251085febafd",
+      "source_sha256": "f6dd7b7c046bbe500bf2452aaefb2e96f15ee053c631ce1e47fd251085febafd",
+      "bytes": 4518624,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_008_fake-image-detection-generative-ai.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_008_fake-image-detection-generative-ai.json",
+      "compression": "none",
+      "sha256": "0f1f0feeeedc436c1f9b5495b1058ae8162d6d9c10da9ffcc75528b5128e840a",
+      "source_sha256": "0f1f0feeeedc436c1f9b5495b1058ae8162d6d9c10da9ffcc75528b5128e840a",
+      "bytes": 4504991,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_009_deepfake-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_009_deepfake-image-detection.json",
+      "compression": "none",
+      "sha256": "d1f9bcc24084794580e08b3bacd22cd60d9aa5ac4571502881d08c5f6c21e91e",
+      "source_sha256": "d1f9bcc24084794580e08b3bacd22cd60d9aa5ac4571502881d08c5f6c21e91e",
+      "bytes": 3277818,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_010_forensic-detection-of-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_010_forensic-detection-of-generated-images.json",
+      "compression": "none",
+      "sha256": "45f4c94e4f339619a64de1315ce8b3f41942bceae6ccf8d1663c353b46c524d3",
+      "source_sha256": "45f4c94e4f339619a64de1315ce8b3f41942bceae6ccf8d1663c353b46c524d3",
+      "bytes": 3972834,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_011_ai-generated-image-source-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_011_ai-generated-image-source-attribution.json",
+      "compression": "none",
+      "sha256": "5cddf0ad2845b64835e58f290d670731f916fab4cee094380f511b9e80c31756",
+      "source_sha256": "5cddf0ad2845b64835e58f290d670731f916fab4cee094380f511b9e80c31756",
+      "bytes": 5046960,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_012_synthetic-image-source-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_012_synthetic-image-source-attribution.json",
+      "compression": "none",
+      "sha256": "20cef7bec4fdfe5a9fe2959daf78243f18a024d292960a17c9deef5c814de61f",
+      "source_sha256": "20cef7bec4fdfe5a9fe2959daf78243f18a024d292960a17c9deef5c814de61f",
+      "bytes": 5297898,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_013_generated-image-source-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_013_generated-image-source-attribution.json",
+      "compression": "none",
+      "sha256": "3270ffacfa726019e422368c326429004cb1d2040c3be5d562a4a41fa4190744",
+      "source_sha256": "3270ffacfa726019e422368c326429004cb1d2040c3be5d562a4a41fa4190744",
+      "bytes": 5815529,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_014_source-attribution-of-ai-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_014_source-attribution-of-ai-generated-images.json",
+      "compression": "none",
+      "sha256": "f6ad9680564c0538276fbcfbceeccf16595cb8d9266764c631fafb175c0680a9",
+      "source_sha256": "f6ad9680564c0538276fbcfbceeccf16595cb8d9266764c631fafb175c0680a9",
+      "bytes": 5046980,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_015_source-attribution-of-synthetic-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_015_source-attribution-of-synthetic-images.json",
+      "compression": "none",
+      "sha256": "f81256cc5e812c82cc70cfc9204e06b7b7fbfa8cdf19dde8a4caaeacda954efb",
+      "source_sha256": "f81256cc5e812c82cc70cfc9204e06b7b7fbfa8cdf19dde8a4caaeacda954efb",
+      "bytes": 5297918,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_016_forensic-attribution-of-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_016_forensic-attribution-of-generated-images.json",
+      "compression": "none",
+      "sha256": "992112d587a87863a269657bbd0b39f2383450c956861f12ab1a972ad5afd99f",
+      "source_sha256": "992112d587a87863a269657bbd0b39f2383450c956861f12ab1a972ad5afd99f",
+      "bytes": 4161684,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_017_generated-image-provenance.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_017_generated-image-provenance.json",
+      "compression": "none",
+      "sha256": "21c3cd3d7ab051965388d5a5fd935825773440fe6122ba8175dfd07fce76a516",
+      "source_sha256": "21c3cd3d7ab051965388d5a5fd935825773440fe6122ba8175dfd07fce76a516",
+      "bytes": 4741479,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_018_source-identification-of-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_018_source-identification-of-generated-images.json",
+      "compression": "none",
+      "sha256": "7d72224053deddf0b8bb1710380293010fab6373472fdb66251ebc4b5a3fe50c",
+      "source_sha256": "7d72224053deddf0b8bb1710380293010fab6373472fdb66251ebc4b5a3fe50c",
+      "bytes": 6100716,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_019_source-verification-of-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_019_source-verification-of-generated-images.json",
+      "compression": "none",
+      "sha256": "17b589ffcc7053753b2b565a5a02302cb35fd7edf32e42894ff6b8b9c34c46d8",
+      "source_sha256": "17b589ffcc7053753b2b565a5a02302cb35fd7edf32e42894ff6b8b9c34c46d8",
+      "bytes": 5915543,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T193231Z_020_which-model-generated-this-image.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T193231Z_020_which-model-generated-this-image.json",
+      "compression": "none",
+      "sha256": "146c2a265c6d81796a49b64c39552785f3ac448fca596d61e7a7c1bf3160eef1",
+      "source_sha256": "146c2a265c6d81796a49b64c39552785f3ac448fca596d61e7a7c1bf3160eef1",
+      "bytes": 4369322,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_001_ai-generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_001_ai-generated-image-detection.json",
+      "compression": "none",
+      "sha256": "8947d198999a1f066c344640747d472f2e99d722d0980a2570901f62430bbdbd",
+      "source_sha256": "8947d198999a1f066c344640747d472f2e99d722d0980a2570901f62430bbdbd",
+      "bytes": 6264098,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_002_synthetic-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_002_synthetic-image-detection.json",
+      "compression": "none",
+      "sha256": "1cb256129bea7fdfbed277f1af335850bb3b6369a9268cf74d5bf0f840221118",
+      "source_sha256": "1cb256129bea7fdfbed277f1af335850bb3b6369a9268cf74d5bf0f840221118",
+      "bytes": 5934976,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_003_generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_003_generated-image-detection.json",
+      "compression": "none",
+      "sha256": "d3943792dd771370110b03b572b83aca5e672883e7436746f7753dd974184cd7",
+      "source_sha256": "d3943792dd771370110b03b572b83aca5e672883e7436746f7753dd974184cd7",
+      "bytes": 6466366,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_004_gan-generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_004_gan-generated-image-detection.json",
+      "compression": "none",
+      "sha256": "39fc5049056651fab1036199a8f2a5590339527afee8966e9e3efc6740c23817",
+      "source_sha256": "39fc5049056651fab1036199a8f2a5590339527afee8966e9e3efc6740c23817",
+      "bytes": 5798538,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_005_diffusion-generated-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_005_diffusion-generated-image-detection.json",
+      "compression": "none",
+      "sha256": "900942a9fb41c05b86c5feaa82184c53756ed4bc33f1b446db7cec5842dcf2cf",
+      "source_sha256": "900942a9fb41c05b86c5feaa82184c53756ed4bc33f1b446db7cec5842dcf2cf",
+      "bytes": 8157456,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_006_detecting-ai-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_006_detecting-ai-generated-images.json",
+      "compression": "none",
+      "sha256": "c5e25e9abb8297a25b6eca8e053a1b53b6a6730662bdf48a492860db4b7d8a95",
+      "source_sha256": "c5e25e9abb8297a25b6eca8e053a1b53b6a6730662bdf48a492860db4b7d8a95",
+      "bytes": 6905312,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_007_detecting-synthetic-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_007_detecting-synthetic-images.json",
+      "compression": "none",
+      "sha256": "da7f09a5269c5d1a793f9c0c1f8749f59c67c06e4d960e8a0dd0afde532a969f",
+      "source_sha256": "da7f09a5269c5d1a793f9c0c1f8749f59c67c06e4d960e8a0dd0afde532a969f",
+      "bytes": 6954963,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_008_fake-image-detection-generative-ai.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_008_fake-image-detection-generative-ai.json",
+      "compression": "none",
+      "sha256": "22ecbf4d4451e2250f9c507284e8e2fbdbf049e2dda726667fedba5595bb66be",
+      "source_sha256": "22ecbf4d4451e2250f9c507284e8e2fbdbf049e2dda726667fedba5595bb66be",
+      "bytes": 6388822,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_009_deepfake-image-detection.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_009_deepfake-image-detection.json",
+      "compression": "none",
+      "sha256": "a9abea253b6be24a1343b6409000ce830ecd683330ae3d43db19794d779ee98e",
+      "source_sha256": "a9abea253b6be24a1343b6409000ce830ecd683330ae3d43db19794d779ee98e",
+      "bytes": 4881312,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_010_forensic-detection-of-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_010_forensic-detection-of-generated-images.json",
+      "compression": "none",
+      "sha256": "e167f1164ae76837f15edabd799a80d101620f2fe01f60853d3bee407f59219e",
+      "source_sha256": "e167f1164ae76837f15edabd799a80d101620f2fe01f60853d3bee407f59219e",
+      "bytes": 5945128,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_011_ai-generated-image-source-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_011_ai-generated-image-source-attribution.json",
+      "compression": "none",
+      "sha256": "234490dcf375b2d09e5f1c04fb2d25f7918270ec12269705ce378f8ddc4f76d4",
+      "source_sha256": "234490dcf375b2d09e5f1c04fb2d25f7918270ec12269705ce378f8ddc4f76d4",
+      "bytes": 7369442,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_012_synthetic-image-source-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_012_synthetic-image-source-attribution.json",
+      "compression": "none",
+      "sha256": "d28f1f3095bc1948d46b0680799d2937fcb5df19a95faa9e154489a46ac70760",
+      "source_sha256": "d28f1f3095bc1948d46b0680799d2937fcb5df19a95faa9e154489a46ac70760",
+      "bytes": 8066419,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_013_generated-image-source-attribution.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_013_generated-image-source-attribution.json",
+      "compression": "none",
+      "sha256": "0b66265395a9253cb192b2bf72a000ceb856ff846f2d66403c9b8cf341c91d2e",
+      "source_sha256": "0b66265395a9253cb192b2bf72a000ceb856ff846f2d66403c9b8cf341c91d2e",
+      "bytes": 8904062,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_014_source-attribution-of-ai-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_014_source-attribution-of-ai-generated-images.json",
+      "compression": "none",
+      "sha256": "436ff2b44a9109993dc5908a169bb33d393ea48d890a89b864a72248ceffae8d",
+      "source_sha256": "436ff2b44a9109993dc5908a169bb33d393ea48d890a89b864a72248ceffae8d",
+      "bytes": 7369462,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_015_source-attribution-of-synthetic-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_015_source-attribution-of-synthetic-images.json",
+      "compression": "none",
+      "sha256": "d19b040a558e4012f9fdac7eb71a4e89340d639bfcaff890ac93f935950d002f",
+      "source_sha256": "d19b040a558e4012f9fdac7eb71a4e89340d639bfcaff890ac93f935950d002f",
+      "bytes": 8066438,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_016_forensic-attribution-of-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_016_forensic-attribution-of-generated-images.json",
+      "compression": "none",
+      "sha256": "670a64b4c921ce3df4019ba287e1c2ffc62fb92e06bc6b9ca73d8d4ea57a1b69",
+      "source_sha256": "670a64b4c921ce3df4019ba287e1c2ffc62fb92e06bc6b9ca73d8d4ea57a1b69",
+      "bytes": 6148977,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_017_generated-image-provenance.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_017_generated-image-provenance.json",
+      "compression": "none",
+      "sha256": "711546431a4a627210f3cd25acdb87d7d68f5dc068ecef041f2c2f147f75c2b6",
+      "source_sha256": "711546431a4a627210f3cd25acdb87d7d68f5dc068ecef041f2c2f147f75c2b6",
+      "bytes": 7398585,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_018_source-identification-of-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_018_source-identification-of-generated-images.json",
+      "compression": "none",
+      "sha256": "6189d816ce4b44140dda3ac22d4447acc312a2eac5c6735a24266007c4138558",
+      "source_sha256": "6189d816ce4b44140dda3ac22d4447acc312a2eac5c6735a24266007c4138558",
+      "bytes": 9282257,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_019_source-verification-of-generated-images.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_019_source-verification-of-generated-images.json",
+      "compression": "none",
+      "sha256": "4ea0cee21964ceb0e7de0cbed63a633e499e95efc31b955bb73ac59d47fee0e1",
+      "source_sha256": "4ea0cee21964ceb0e7de0cbed63a633e499e95efc31b955bb73ac59d47fee0e1",
+      "bytes": 8902696,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/20260619T211726Z_020_which-model-generated-this-image.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/20260619T211726Z_020_which-model-generated-this-image.json",
+      "compression": "none",
+      "sha256": "eb8dcdd82630df33b281b5b702aa580243e4c736903c821f39a856f8c659abf4",
+      "source_sha256": "eb8dcdd82630df33b281b5b702aa580243e4c736903c821f39a856f8c659abf4",
+      "bytes": 6271166,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/manifest_20260618T204924Z.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/manifest_20260618T204924Z.json",
+      "compression": "none",
+      "sha256": "417e7dec2f17c06a16868ba49ff37b01d861c1f1fcba19994d0e0031fdf27996",
+      "source_sha256": "417e7dec2f17c06a16868ba49ff37b01d861c1f1fcba19994d0e0031fdf27996",
+      "bytes": 2507,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/manifest_20260618T215435Z.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/manifest_20260618T215435Z.json",
+      "compression": "none",
+      "sha256": "6975242298f164284ae126f5de28f1bc386b554ab19911f96a1e412f1d6c2e9e",
+      "source_sha256": "6975242298f164284ae126f5de28f1bc386b554ab19911f96a1e412f1d6c2e9e",
+      "bytes": 2507,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/manifest_20260619T122106Z.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/manifest_20260619T122106Z.json",
+      "compression": "none",
+      "sha256": "17ccb43c076735014ae6269d1219f3ec15829cdf07fee4ab586590e052e814e2",
+      "source_sha256": "17ccb43c076735014ae6269d1219f3ec15829cdf07fee4ab586590e052e814e2",
+      "bytes": 2529,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/manifest_20260619T132121Z.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/manifest_20260619T132121Z.json",
+      "compression": "none",
+      "sha256": "920403769b9b5f4d50b883794293c33b4ff5ad811f7f656c7323a9d0ee7f927e",
+      "source_sha256": "920403769b9b5f4d50b883794293c33b4ff5ad811f7f656c7323a9d0ee7f927e",
+      "bytes": 2529,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/manifest_20260619T134722Z.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/manifest_20260619T134722Z.json",
+      "compression": "none",
+      "sha256": "961e8cca42104b7d0657c36d2612fd97635b72d466ea8642dcee3cf6ff29c0ff",
+      "source_sha256": "961e8cca42104b7d0657c36d2612fd97635b72d466ea8642dcee3cf6ff29c0ff",
+      "bytes": 2865,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/manifest_20260619T193231Z.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/manifest_20260619T193231Z.json",
+      "compression": "none",
+      "sha256": "196a149c638e69f6f6aa614ee50cc7d9cfad2257563a3bcc438ba1b5d570c22a",
+      "source_sha256": "196a149c638e69f6f6aa614ee50cc7d9cfad2257563a3bcc438ba1b5d570c22a",
+      "bytes": 5127,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/manifest_20260619T211726Z.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/manifest_20260619T211726Z.json",
+      "compression": "none",
+      "sha256": "43d0f1fd7b56c50ff693c5e2fdfd7863def588f10313bfc5a0fd3ff48c6682bb",
+      "source_sha256": "43d0f1fd7b56c50ff693c5e2fdfd7863def588f10313bfc5a0fd3ff48c6682bb",
+      "bytes": 5127,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    },
+    {
+      "path": "data/raw/openalex/manifest_20260701T131746Z.json",
+      "source": "data/processed/systematic_tier1_2026_09/baseline/data/raw/openalex/manifest_20260701T131746Z.json",
+      "compression": "none",
+      "sha256": "c988e2c901a0f87eced44b4aae487451ac233214c3ad91a7c6dbcd5c25caa301",
+      "source_sha256": "c988e2c901a0f87eced44b4aae487451ac233214c3ad91a7c6dbcd5c25caa301",
+      "bytes": 442,
+      "authority": "data/processed/workshop_venue_baseline.json"
+    }
+  ]
+}
