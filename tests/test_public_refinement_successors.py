@@ -53,3 +53,31 @@ def test_extra_frontend_file_is_rejected_without_mutating_the_checkout(monkeypat
     monkeypatch.setattr(Path, "is_file", lambda path: path == extra or original_is_file(path))
     with pytest.raises(AssertionError):
         history.assert_public_refinement_snapshot()
+
+
+def test_reviewed_node_test_successor_and_snapshot_are_accepted():
+    history.assert_node_test_path_transition()
+    expected = history.assert_public_refinement_snapshot()
+    assert (history.NODE_TEST_SUCCESSOR, history.NODE_TEST_PATHS) in history.PUBLISHED_FRONTEND_SUCCESSORS
+    for relative in history.NODE_TEST_PATHS:
+        assert expected[relative] == history.committed_digest(history.NODE_TEST_SUCCESSOR, relative)
+
+
+@pytest.mark.parametrize("commit", [history.NODE_TEST_PREDECESSOR, history.NODE_TEST_SUCCESSOR])
+@pytest.mark.parametrize("relative", history.NODE_TEST_PATHS)
+def test_node_test_successor_rejects_modified_history(monkeypatch, commit, relative):
+    original = history.committed_bytes
+    monkeypatch.setattr(history, "committed_bytes", lambda ref, path:
+                        original(ref, path) + (b"\n# unreviewed\n" if (ref, path) == (commit, relative) else b""))
+    with pytest.raises(AssertionError):
+        history.assert_node_test_path_transition()
+
+
+@pytest.mark.parametrize("relative", history.NODE_TEST_PATHS)
+def test_node_test_successor_rejects_current_unreviewed_edit(monkeypatch, relative):
+    original = history.historical_bytes
+    target = history.ROOT / relative
+    monkeypatch.setattr(history, "historical_bytes", lambda path:
+                        original(path) + (b"\n# unauthorized\n" if path == target else b""))
+    with pytest.raises(AssertionError, match="Public refinement differs"):
+        history.assert_public_refinement_snapshot()

@@ -22,6 +22,13 @@ LEAFLET_SRI_PREDECESSOR = "d02b952489b10df438f79ed1b87aee4170ee8aa5"
 LEAFLET_SRI_SUCCESSOR = "c589f61b628b787251410964ed50a0fe696a4038"
 LEAFLET_INDEX_BEFORE = "ba43571ce429f16d422277597d7e51d95ca1f612d08ecfb02aba18bb8dbf3f58"
 LEAFLET_INDEX_AFTER = "f080d23a34c9863eb439b857eb2bf9032b80b8abb659631d6b49ac5de58510c1"
+# Reviewed CI-only successor: two exact Node-path corrections in historical UI tests.
+NODE_TEST_PREDECESSOR = "e43ca0fd84dd92b52d939b1c2f02c78448e3dbf5"
+NODE_TEST_SUCCESSOR = "8ae2f1a190f992ddbecfdd4bc602682e5162dfb1"
+NODE_TEST_PATHS = (
+    "tests/test_frontend_interaction_model.py",
+    "tests/test_frontend_marker_sizing.py",
+)
 PUBLISHED_FRONTEND_SUCCESSORS = (
     ("c514bea1dbd7645dc4baed49819f14764b9f177b", (
         "tests/test_public_header_metadata.py",
@@ -64,6 +71,8 @@ PUBLISHED_FRONTEND_SUCCESSORS = (
     )),
     # Only the published, byte-verified Leaflet stylesheet integrity correction.
     (LEAFLET_SRI_SUCCESSOR, ("web/index.html",)),
+    # Pin only the two reviewed Node-path test files read by historical guards.
+    (NODE_TEST_SUCCESSOR, NODE_TEST_PATHS),
 )
 
 
@@ -91,7 +100,30 @@ def assert_leaflet_sri_transition():
     assert before.replace(old, new, 1) == after, "Unreviewed Leaflet HTML delta"
 
 
+def assert_node_test_path_transition():
+    """Verify only the approved Mac-specific Node executable correction."""
+    parent = subprocess.check_output(
+        ["git", "rev-parse", NODE_TEST_SUCCESSOR + "^"], cwd=ROOT, text=True
+    ).strip()
+    assert parent == NODE_TEST_PREDECESSOR, "Unexpected Node test predecessor"
+    old = (
+        b'NODE = Path(\n'
+        b'    "/Users/meilinger/.cache/codex-runtimes/"\n'
+        b'    "codex-primary-runtime/dependencies/node/bin/node"\n'
+        b')'
+    )
+    new = b'NODE = shutil.which("node") or "node"'
+    for relative in NODE_TEST_PATHS:
+        before = committed_bytes(NODE_TEST_PREDECESSOR, relative)
+        after = committed_bytes(NODE_TEST_SUCCESSOR, relative)
+        assert before.count(old) == 1, relative
+        assert before.count(b"import subprocess\n") == 1, relative
+        expected = before.replace(b"import subprocess\n", b"import subprocess\nimport shutil\n", 1)
+        expected = expected.replace(old, new, 1)
+        assert after == expected, "Unreviewed Node test delta: " + relative
+
 def assert_public_refinement_snapshot():
+    assert_node_test_path_transition()
     assert_leaflet_sri_transition()
     expected = {
         relative: digest
