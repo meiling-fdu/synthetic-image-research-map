@@ -119,7 +119,7 @@ def logical_csv_chunks(raw):
 
 
 def changed_csv_rows_only(path, expected_fields):
-    before_raw, after_raw = previous(path), (ROOT / path).read_bytes()
+    before_raw, after_raw = previous(path), endpoint_bytes(path)
     before_records, after_records = csv_records(before_raw), csv_records(after_raw)
     identity_key = "taxonomy_id" if path == TAXONOMY else "paper_id"
     before = {row[identity_key]: row for row in before_records}
@@ -188,7 +188,7 @@ def test_selected_paper_is_detection_only_and_preserves_research_types(review_id
 # Requirements 3, 5 and 12: inspect every existing public relationship, not only totals.
 @pytest.mark.parametrize("path", PUBLIC)
 def test_public_delta_contains_only_selected_tasks_and_dependent_review_provenance(path):
-    before, after = json.loads(previous(path)), json.loads((ROOT / path).read_bytes())
+    before, after = json.loads(previous(path)), json.loads(endpoint_bytes(path))
     assert len(before["records"]) == len(after["records"])
     assert [r.get("id") for r in before["records"]] == [r.get("id") for r in after["records"]]
     for review_id, case in CASES.items():
@@ -339,7 +339,7 @@ def test_batch_b_accounting_recomputes_after_exactly_two_action_resolutions():
 
 # Requirements 5 and 13: count preferred public identities, never repeated map rows.
 def test_current_taxonomy_totals_and_exact_two_label_delta_are_recomputed():
-    old, current = published_context(BASE), load_context()
+    old, current = published_context(BASE), published_context(PUBLISHED)
     assert old["counts"] == current["counts"] == CURRENT_CORPUS_COUNTS == {
         "public": 674, "formal": 557, "mapped": 613, "unmapped": 61,
         "relationship_rows": 1410, "unique_paper_institution_pairs": 1410}
@@ -350,7 +350,7 @@ def test_current_taxonomy_totals_and_exact_two_label_delta_are_recomputed():
                        for dim in ("tasks", "research_types") for label in record[dim])
     before, after = totals(old), totals(current)
     assert before - after == {"source_attribution": 2} and not after - before
-    assert after == CURRENT_TAXONOMY_TOTALS == {
+    assert after == {
         "detection": 621, "source_attribution": 84, "localization": 45,
         "method": 579, "dataset": 134, "benchmark": 90, "survey": 21, "analysis_study": 81}
     assert packet()["corpus_after"] == current["counts"]
@@ -358,6 +358,11 @@ def test_current_taxonomy_totals_and_exact_two_label_delta_are_recomputed():
     assert not any("source_attribution" in current["papers"][pid]["tasks"] for pid in TARGETS)
     current_aliases = {row["taxonomy_id"]: pid for pid, row in current["taxonomy"].items()}
     assert old["taxonomy_to_public_id"] == current_aliases
+    # Keep the exact B1E transaction historical and the successor corpus live.
+    live = load_context()
+    assert live["counts"] == CURRENT_CORPUS_COUNTS
+    assert totals(live) == CURRENT_TAXONOMY_TOTALS
+    assert live["pairs"] == current["pairs"]
 
 
 # Requirement 12, including authoritative identity rows hidden from any public view.

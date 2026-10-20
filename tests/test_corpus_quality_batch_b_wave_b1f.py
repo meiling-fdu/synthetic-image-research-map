@@ -12,6 +12,7 @@ import pytest
 from scripts.curated_schema import ALLOWED_REVIEW_ACTIONS, ALLOWED_REVIEW_QUEUES
 from scripts.review_decisions import read_review_decisions, upsert_review_decision
 from scripts.validate_corpus_quality_audit import decision_rows, load_context, load_queues
+from tests.baseline_expectations import CURRENT_CORPUS_COUNTS, CURRENT_TAXONOMY_TOTALS
 from tests.corpus_quality_test_helpers import csv_records, published_bytes, published_context
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -101,7 +102,10 @@ def test_accepted_decision_is_idempotent_without_duplicate_or_timestamp_churn(tm
 @pytest.mark.parametrize("path", ["data/curated/papers.csv", "data/curated/paper_taxonomy.csv"])
 def test_no_taxonomy_or_canonical_metadata_edit_for_a_no_change_decision(path):
     before = published_bytes(BASE, path)
-    assert (ROOT / path).read_bytes() == before
+    assert published_bytes(PUBLISHED, path) == before
+    # T303 itself remains exact in the live successor; unrelated reviews append.
+    selected = [row for row in csv_records((ROOT / path).read_bytes()) if row["paper_id"] == TARGET]
+    assert selected == [row for row in csv_records(before) if row["paper_id"] == TARGET]
     row = next(r for r in csv_records(before) if r["paper_id"] == TARGET)
     assert row["tasks"] == TASKS and row["research_types"] == TYPES
     assert row["image_scopes"] == "generative_editing" and row["arxiv_id"] == "2511.19111"
@@ -112,7 +116,7 @@ def test_every_other_authoritative_table_and_public_output_is_byte_identical():
     assert len(paths) > 30
     for path in paths:
         if path != DECISIONS:
-            assert (ROOT / path).read_bytes() == published_bytes(BASE, path), path
+            assert published_bytes(PUBLISHED, path) == published_bytes(BASE, path), path
 
 
 def test_original_evidence_and_quantitative_protocols_are_preserved():
@@ -185,7 +189,7 @@ def test_pending_accounting_is_action_based_and_distinct_papers_recompute():
 
 
 def test_corpus_relationships_and_taxonomy_totals_recompute_without_drift():
-    before, current = published_context(BASE), load_context()
+    before, current = published_context(BASE), published_context(PUBLISHED)
     assert current["papers"] == before["papers"]
     assert current["pairs"] == before["pairs"]
     assert current["counts"] == packet()["corpus_counts"] == {
@@ -196,6 +200,13 @@ def test_corpus_relationships_and_taxonomy_totals_recompute_without_drift():
     assert totals == packet()["taxonomy_counts"] == {
         "detection": 621, "source_attribution": 84, "localization": 45,
         "method": 579, "dataset": 134, "benchmark": 90, "survey": 21, "analysis_study": 81}
+    # Current integrity is independent of the immutable B1F no-change snapshot.
+    live = load_context()
+    assert live["counts"] == CURRENT_CORPUS_COUNTS
+    assert Counter(label for paper in live["papers"].values()
+                   for dimension in ("tasks", "research_types") for label in paper[dimension]) == CURRENT_TAXONOMY_TOTALS
+    assert live["pairs"] == current["pairs"]
+    assert live["papers"][TARGET] == current["papers"][TARGET]
 
 
 def test_previous_batch_receipts_and_separate_import_and_C13_remain_frozen():

@@ -15,10 +15,13 @@ from scripts.curated_schema import ALLOWED_REVIEW_ACTIONS, ALLOWED_REVIEW_QUEUES
 from scripts.literature51_reproducibility import preserved_bytes
 from scripts.review_decisions import read_review_decisions, upsert_review_decision
 from scripts.validate_corpus_quality_audit import decision_rows, load_context, load_queues
+from tests.baseline_expectations import CURRENT_CORPUS_COUNTS, CURRENT_TAXONOMY_TOTALS
 from tests.corpus_quality_test_helpers import csv_records, published_bytes, published_context
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "3feff7d6b609183cb8dda4949d2c087e77639003"
+# B1G's exact transaction and source hashes belong to its published endpoint.
+PUBLISHED = "445b4f8cc7257b3c87868a666bce43d8c20bda0d"
 DECISIONS = "data/curated/review_decisions.csv"
 MANIFEST = "data/raw/corpus_quality_batch_b_wave_b1g_2026_10_19/evidence_manifest.json"
 REPORT = "docs/corpus_quality_batch_b_wave_b1g_2026_10_19.md"
@@ -112,7 +115,7 @@ def accounting(decisions):
     ledger = [row for row in decision_rows(load_queues()) if row["batch"] == "B"]
     done = terminal(decisions)
     pending = [row for row in ledger if row["review_id"] not in done]
-    public = load_context()["papers"]
+    public = published_context(PUBLISHED)["papers"]
     active = [row for row in pending if row["paper_id"] in public]
     return {
         "historical_actions": len(ledger),
@@ -133,9 +136,13 @@ def test_complete_original_packet_is_losslessly_archived_with_fixed_hashes(kind)
 
 def test_exactly_one_T631_terminal_append_preserves_every_prior_byte_and_decision():
     before = published_bytes(BASE, DECISIONS)
-    after = (ROOT / DECISIONS).read_bytes()
+    after = published_bytes(PUBLISHED, DECISIONS)
     assert after.startswith(before)
-    old, rows = csv_records(before), read_review_decisions(ROOT / DECISIONS)
+    old, rows = csv_records(before), csv_records(after)
+    # Later terminal actions append; the complete accepted B1G bytes survive.
+    assert (ROOT / DECISIONS).read_bytes().startswith(after)
+    live = read_review_decisions(ROOT / DECISIONS)
+    assert sum(row["decision_id"] == DECISION_ID for row in live) == 1
     assert len(old) == 85 and len(rows) == 86
     assert rows[:-1] == old
     assert len({row["decision_id"] for row in rows}) == len(rows)
@@ -189,17 +196,25 @@ def test_every_other_authoritative_table_and_public_output_preserves_complete_by
     assert len(paths) > 30
     for path in paths:
         if path != DECISIONS:
-            assert (ROOT / path).read_bytes() == published_bytes(BASE, path), path
+            assert published_bytes(PUBLISHED, path) == published_bytes(BASE, path), path
 
 
 def test_public_papers_relationships_and_taxonomy_totals_recompute_without_drift():
-    before, current = published_context(BASE), load_context()
+    before, current = published_context(BASE), published_context(PUBLISHED)
     assert current["papers"] == before["papers"]
     assert current["pairs"] == before["pairs"]
     assert current["counts"] == packet()["corpus_counts"] == CORPUS
     totals = Counter(label for paper in current["papers"].values()
                      for dimension in ("tasks", "research_types") for label in paper[dimension])
     assert totals == packet()["taxonomy_counts"] == TAXONOMY
+    # Keep original579/81 evidence while validating the reviewed live corpus.
+    live = load_context()
+    assert live["counts"] == CURRENT_CORPUS_COUNTS
+    assert Counter(label for paper in live["papers"].values()
+                   for dimension in ("tasks", "research_types") for label in paper[dimension]) == CURRENT_TAXONOMY_TOTALS
+    assert live["pairs"] == current["pairs"]
+    for paper_id in (T631, T046):
+        assert live["papers"][paper_id] == current["papers"][paper_id]
 
 
 def test_original_scientific_evidence_and_provenance_are_retained_in_full():
@@ -333,7 +348,7 @@ def test_original_review_questions_and_locked_policies_remain_immutable():
 
 def test_accounting_recomputes_only_T631_closure_and_keeps_independent_questions_open():
     before = accounting(csv_records(published_bytes(BASE, DECISIONS)))
-    rows = read_review_decisions(ROOT / DECISIONS)
+    rows = csv_records(published_bytes(PUBLISHED, DECISIONS))
     after = accounting(rows)
     assert before == original()["batch_b_accounting"] == packet()["evidence_only_batch_b_accounting"]
     assert after == packet()["batch_b_accounting"]
@@ -350,6 +365,9 @@ def test_accounting_recomputes_only_T631_closure_and_keeps_independent_questions
     ledger = [row for row in decision_rows(load_queues()) if row["batch"] == "B"]
     still_pending = [row for row in ledger if row["review_id"] not in terminal(rows)]
     assert not [row for row in still_pending if row["paper_id"] == T631]
+    live_done = terminal(read_review_decisions(ROOT / DECISIONS))
+    assert live_done["T631"] == DECISION_ID
+    assert {"T046", "T093", "T608", "T526", "P526"}.isdisjoint(live_done)
 
 
 def test_historical_source_hashes_and_current_registry_hash_have_separate_meanings():
@@ -362,7 +380,8 @@ def test_historical_source_hashes_and_current_registry_hash_have_separate_meanin
     fixture_entries = {entry["path"]: entry for entry in json.loads(published_bytes(BASE, FIXTURES))["entries"]}
     for path, expected in current.items():
         if path in tracked:
-            raw = (ROOT / path).read_bytes()
+            # Recorded current hashes describe the published B1G endpoint.
+            raw = published_bytes(PUBLISHED, path)
         else:
             # Authenticate ignored responses through declared committed snapshots,
             # without requiring the developer's runtime-cache destination to exist.

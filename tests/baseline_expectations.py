@@ -16,7 +16,8 @@ data change and the identity and relationship invariants in
 # registry without changing historical taxonomy. The approved literature import
 # adds 39 papers; B1D removes only T579 source attribution, retaining detection
 # and method. B1E removes only T056/T345 source attribution, retaining detection
-# and their research types. Prior baselines and literature totals remain frozen.
+# and their research types. B1H changes only R566 from method to analysis_study;
+# task totals, prior baselines and literature additions remain frozen.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 674,
     "public_map_source_papers": 613,
@@ -77,7 +78,7 @@ CURRENT_CORPUS_COUNTS = {
     "unique_paper_institution_pairs": 1410
 }
 
-RESEARCH_TYPE_TOTALS = {'method': 579, 'analysis_study': 81, 'survey': 21, 'dataset': 134, 'benchmark': 90}
+RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 82, 'survey': 21, 'dataset': 134, 'benchmark': 90}
 
 CURRENT_TAXONOMY_TOTALS = {**TASK_TOTALS, **RESEARCH_TYPE_TOTALS}
 
