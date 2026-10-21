@@ -20,9 +20,12 @@ from scripts.literature51_reproducibility import preserved_bytes
 from scripts.review_decisions import read_review_decisions, upsert_review_decision
 from scripts.validate_corpus_quality_audit import decision_rows, load_context, load_queues
 from tests.corpus_quality_test_helpers import csv_records, published_bytes, published_context
+from tests.baseline_expectations import CURRENT_CORPUS_COUNTS, CURRENT_TAXONOMY_TOTALS
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "445b4f8cc7257b3c87868a666bce43d8c20bda0d"
+# Whole-file and transaction receipts describe the immutable published B1H endpoint.
+PUBLISHED = "bb4b60b2ee612331b997d7482edaa1e9e657cff2"
 PAPERS = "data/curated/papers.csv"
 TAXONOMY = "data/curated/paper_taxonomy.csv"
 DECISIONS = "data/curated/review_decisions.csv"
@@ -182,11 +185,11 @@ def replace_csv_tokens(raw, header, updates):
     return raw
 
 
-def accounting(decisions):
+def accounting(decisions, public=None):
     ledger = [row for row in decision_rows(load_queues()) if row["batch"] == "B"]
     done = terminal(decisions)
     pending = [row for row in ledger if row["review_id"] not in done]
-    public = load_context()["papers"]
+    public = load_context()["papers"] if public is None else public
     active = [row for row in pending if row["paper_id"] in public]
     return {
         "historical_actions": len(ledger),
@@ -212,7 +215,7 @@ def test_complete_evidence_only_packet_is_portably_archived_with_fixed_hashes(ki
 
 @pytest.mark.parametrize("path", [PAPERS, TAXONOMY])
 def test_only_R566_changes_and_every_unapproved_CSV_token_retains_original_bytes(path):
-    before_raw, after_raw = published_bytes(BASE, path), (ROOT / path).read_bytes()
+    before_raw, after_raw = published_bytes(BASE, path), published_bytes(PUBLISHED, path)
     before, after = csv_records(before_raw), csv_records(after_raw)
     key = "taxonomy_id" if path == TAXONOMY else "paper_id"
     assert len(before) == len(after)
@@ -235,6 +238,8 @@ def test_only_R566_changes_and_every_unapproved_CSV_token_retains_original_bytes
                         if old["paper_id"] == R566 else old_chunk)
     assert after_raw == b"".join(expected)
     assert digest(after_raw) == CSV_AFTER_HASHES[path]
+    # Later approved records may change; this accepted target must remain exact.
+    assert selected_row((ROOT / path).read_bytes(), R566) == new_target
     changes = packet()["adjudication"]["csv_changes"]
     change = next(row for row in changes if row["path"] == path)
     assert change["row_identity"] == {"paper_id": R566}
@@ -246,9 +251,9 @@ def test_only_R566_changes_and_every_unapproved_CSV_token_retains_original_bytes
 
 
 def test_exactly_one_schema_supported_R566_terminal_append_preserves_prior_bytes():
-    before, after = published_bytes(BASE, DECISIONS), (ROOT / DECISIONS).read_bytes()
+    before, after = published_bytes(BASE, DECISIONS), published_bytes(PUBLISHED, DECISIONS)
     assert after.startswith(before)
-    old, rows = csv_records(before), read_review_decisions(ROOT / DECISIONS)
+    old, rows = csv_records(before), csv_records(after)
     assert len(old) == 86 and len(rows) == 87
     assert rows[:-1] == old
     assert len({row["decision_id"] for row in rows}) == len(rows)
@@ -279,6 +284,11 @@ def test_exactly_one_schema_supported_R566_terminal_append_preserves_prior_bytes
     assert adjudication["before_registry_sha256"] == digest(before)
     assert adjudication["after_registry_sha256"] == digest(after)
     assert len(adjudication["csv_changes"]) == 2
+    live_raw = (ROOT / DECISIONS).read_bytes()
+    live_rows = read_review_decisions(ROOT / DECISIONS)
+    assert live_raw.startswith(after)
+    assert [candidate for candidate in live_rows if candidate["decision_id"] == DECISION_ID] == [row]
+    assert terminal(live_rows)["R566"] == DECISION_ID
 
 
 def test_R566_decision_upsert_is_idempotent_without_timestamp_or_byte_churn(tmp_path):
@@ -304,7 +314,7 @@ def test_R267_canonical_taxonomy_and_public_record_stay_exactly_unchanged():
 
 
 def test_public_delta_is_one_paper_and_two_map_research_type_metadata_changes_only():
-    old_context, current = published_context(BASE), load_context()
+    old_context, current = published_context(BASE), published_context(PUBLISHED)
     assert current["papers"].keys() == old_context["papers"].keys()
     assert {pid for pid in current["papers"]
             if current["papers"][pid] != old_context["papers"][pid]} == {R566}
@@ -317,7 +327,7 @@ def test_public_delta_is_one_paper_and_two_map_research_type_metadata_changes_on
     assert current["pairs"] == old_context["pairs"]
     for path in PUBLIC:
         old_payload = json.loads(published_bytes(BASE, path))
-        payload = json.loads((ROOT / path).read_bytes())
+        payload = json.loads(published_bytes(PUBLISHED, path))
         old_metadata, metadata = deepcopy(old_payload["metadata"]), deepcopy(payload["metadata"])
         old_metadata.pop("public_preview_generated_at", None)
         metadata.pop("public_preview_generated_at", None)
@@ -325,7 +335,7 @@ def test_public_delta_is_one_paper_and_two_map_research_type_metadata_changes_on
         assert {key: value for key, value in payload.items() if key not in {"records", "metadata"}} == {
             key: value for key, value in old_payload.items() if key not in {"records", "metadata"}}
     old_maps = {row["id"]: row for row in json.loads(published_bytes(BASE, PUBLIC[1]))["records"]}
-    new_maps = {row["id"]: row for row in json.loads((ROOT / PUBLIC[1]).read_bytes())["records"]}
+    new_maps = {row["id"]: row for row in json.loads(published_bytes(PUBLISHED, PUBLIC[1]))["records"]}
     assert len(old_maps) == len(new_maps) == 1410 and old_maps.keys() == new_maps.keys()
     assert {key for key in old_maps if old_maps[key] != new_maps[key]} == MAP_IDS
     for key, old in old_maps.items():
@@ -337,10 +347,15 @@ def test_public_delta_is_one_paper_and_two_map_research_type_metadata_changes_on
         assert new_maps[key] == expected, key
         assert (new_maps[key]["id"], new_maps[key]["institution_id"]) == (
             old["id"], old["institution_id"])
+    live = load_context()
+    assert live["papers"][R566] == current["papers"][R566]
+    assert live["pairs"] == current["pairs"]
+    live_maps = {row["id"]: row for row in json.loads((ROOT / PUBLIC[1]).read_bytes())["records"]}
+    assert {key: live_maps[key] for key in MAP_IDS} == {key: new_maps[key] for key in MAP_IDS}
 
 
 def test_corpus_and_taxonomy_totals_recompute_the_exact_single_paper_transfer():
-    old, current = published_context(BASE), load_context()
+    old, current = published_context(BASE), published_context(PUBLISHED)
     assert current["counts"] == old["counts"] == packet()["corpus_counts"] == CORPUS
     def counts(papers):
         return Counter(label for paper in papers.values() for dimension in ("tasks", "research_types")
@@ -352,6 +367,10 @@ def test_corpus_and_taxonomy_totals_recompute_the_exact_single_paper_transfer():
     assert R566 not in {pid for pid, paper in current["papers"].items() if "method" in paper["research_types"]}
     assert R566 in {pid for pid, paper in current["papers"].items() if "analysis_study" in paper["research_types"]}
     assert current["papers"][R566]["tasks"] == ["detection"]
+    live = load_context()
+    assert live["counts"] == CURRENT_CORPUS_COUNTS
+    assert counts(live["papers"]) == CURRENT_TAXONOMY_TOTALS
+    assert live["papers"][R566] == current["papers"][R566]
 
 
 def test_original_whole_scientific_records_and_source_provenance_remain_lossless():
@@ -494,9 +513,9 @@ def test_one_R566_manuscript_is_not_counted_as_two_HTTP_responses_or_R267_succes
 
 
 def test_only_R566_closes_and_distinct_pending_papers_are_derived_from_the_ledger():
-    before = accounting(csv_records(published_bytes(BASE, DECISIONS)))
-    rows = read_review_decisions(ROOT / DECISIONS)
-    after = accounting(rows)
+    before = accounting(csv_records(published_bytes(BASE, DECISIONS)), published_context(BASE)["papers"])
+    rows = csv_records(published_bytes(PUBLISHED, DECISIONS))
+    after = accounting(rows, published_context(PUBLISHED)["papers"])
     assert after == packet()["batch_b_accounting"]
     assert before["historical_actions"] == after["historical_actions"] == 159
     assert before["historical_papers"] == after["historical_papers"] == 148
@@ -514,6 +533,10 @@ def test_only_R566_closes_and_distinct_pending_papers_are_derived_from_the_ledge
     ledger = [row for row in decision_rows(load_queues()) if row["batch"] == "B"]
     assert [row["review_id"] for row in ledger if row["paper_id"] == R566] == ["R566"]
     assert not [row for row in ledger if row["paper_id"] == R566 and row["review_id"] not in terminal(rows)]
+    live = read_review_decisions(ROOT / DECISIONS)
+    assert terminal(live)["R566"] == DECISION_ID
+    assert {"R267", "T046", "T093", "T608", "T526", "P526"} <= set(
+        accounting(live)["active_public_unresolved_review_ids"])
 
 
 def test_original_questions_locked_policy_and_unrelated_authoritative_tables_are_immutable():
@@ -545,7 +568,7 @@ def test_historical_and_current_source_hashes_are_separate_and_portable():
     entries = {row["path"]: row for row in json.loads(published_bytes(BASE, FIXTURES))["entries"]}
     for path, expected in current.items():
         if path in tracked:
-            raw = (ROOT / path).read_bytes()
+            raw = published_bytes(PUBLISHED, path)
         else:
             # Authenticate ignored historical data from its committed snapshot;
             # a developer's populated runtime-cache path is not a test dependency.

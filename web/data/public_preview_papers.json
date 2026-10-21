@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-20T14:40:50Z"
+    "public_preview_generated_at": "2026-10-21T01:06:02Z"
   },
   "records": [
     {
@@ -239353,8 +239353,22 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "R574 accepted under locked R2: the complete official CVF CVPR 2023 Main accepted manuscript and pinned POSE split documentation establish an independently reusable OSMA evaluation framework with five split configurations, controlled seed/architecture/training-dataset scenarios, source labels, protocols, baselines and metrics. Add benchmark; retain method, dataset and source_attribution. Only split1 annotation contents were verified; full image/checkpoint availability, fixed deployment thresholds, numerical reproduction and IEEE-final/alternate-version equivalence remain unverified."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -239390,19 +239404,7 @@
           "location_display": "Zhejiang, China"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "title": "Seeing Is Not Always Believing: Benchmarking Human and Model Perception of AI-Generated Images",
