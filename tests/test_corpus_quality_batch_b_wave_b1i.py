@@ -24,6 +24,11 @@ from tests.corpus_quality_test_helpers import csv_records, published_bytes, publ
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "bb4b60b2ee612331b997d7482edaa1e9e657cff2"
+# Whole-file transaction receipts describe the immutable published B1I endpoint.
+PUBLISHED = "1221cf72f8f77ac3430cad49a49d074d82b36ec2"
+TAXONOMY_TOTALS = {"detection": 621, "source_attribution": 84, "localization": 45,
+                   "method": 578, "dataset": 134, "benchmark": 91, "survey": 21,
+                   "analysis_study": 82}
 PAPERS = "data/curated/papers.csv"
 TAXONOMY = "data/curated/paper_taxonomy.csv"
 DECISIONS = "data/curated/review_decisions.csv"
@@ -190,7 +195,7 @@ def test_original_two_paper_evidence_packet_is_portable_and_hash_exact(kind):
 
 @pytest.mark.parametrize("path", [PAPERS, TAXONOMY])
 def test_only_R574_allowed_research_type_cells_change_and_all_other_bytes_survive(path):
-    before_raw, after_raw = published_bytes(BASE, path), (ROOT / path).read_bytes()
+    before_raw, after_raw = published_bytes(BASE, path), published_bytes(PUBLISHED, path)
     before, after = csv_records(before_raw), csv_records(after_raw)
     key = "taxonomy_id" if path == TAXONOMY else "paper_id"
     assert len(before) == len(after)
@@ -211,6 +216,9 @@ def test_only_R574_allowed_research_type_cells_change_and_all_other_bytes_surviv
         if row["paper_id"] != TARGETS["R574"]:
             assert new_chunk == old_chunk
     assert selected_row(after_raw, TARGETS["R215"]) == selected_row(before_raw, TARGETS["R215"])
+    # Later approved papers may change, but both accepted B1I target rows stay exact.
+    for rid in TARGETS:
+        assert selected_row((ROOT / path).read_bytes(), TARGETS[rid]) == selected_row(after_raw, TARGETS[rid])
 
 
 def test_R215_authoritative_rows_and_every_public_field_are_exactly_unchanged():
@@ -226,8 +234,8 @@ def test_R215_authoritative_rows_and_every_public_field_are_exactly_unchanged():
 
 
 def test_exactly_two_supported_terminal_appends_preserve_all_87_prior_rows_and_bytes():
-    before, after = published_bytes(BASE, DECISIONS), (ROOT / DECISIONS).read_bytes()
-    old, rows = csv_records(before), read_review_decisions(ROOT / DECISIONS)
+    before, after = published_bytes(BASE, DECISIONS), published_bytes(PUBLISHED, DECISIONS)
+    old, rows = csv_records(before), csv_records(after)
     assert after.startswith(before)
     assert len(old) == 87 and len(rows) == 89
     assert rows[:-2] == old
@@ -264,6 +272,12 @@ def test_exactly_two_supported_terminal_appends_preserve_all_87_prior_rows_and_b
         assert change["row_identity"] == {"paper_id": TARGETS["R574"]}
         assert change["after_fields"] == CSV_UPDATES[path]
         assert change["planned_after_sha256"] == CSV_AFTER_HASHES[path]
+    live_raw = (ROOT / DECISIONS).read_bytes()
+    live_rows = read_review_decisions(ROOT / DECISIONS)
+    assert live_raw.startswith(after)
+    for row in rows[-2:]:
+        assert [item for item in live_rows if item["decision_id"] == row["decision_id"]] == [row]
+    assert {rid: terminal(live_rows)[rid] for rid in IDS} == IDS
 
 
 @pytest.mark.parametrize("review_id", ["R215", "R574"])
@@ -279,7 +293,7 @@ def test_each_terminal_upsert_is_idempotent_without_timestamp_or_byte_churn(tmp_
 def test_exactly_two_original_research_type_questions_close_and_no_D_actions_close():
     ledger = [row for row in decision_rows(load_queues()) if row["batch"] == "B"]
     before = accounting(csv_records(published_bytes(BASE, DECISIONS)), published_context(BASE)["papers"])
-    after = accounting(read_review_decisions(ROOT / DECISIONS), load_context()["papers"])
+    after = accounting(csv_records(published_bytes(PUBLISHED, DECISIONS)), published_context(PUBLISHED)["papers"])
     assert after == packet()["batch_b_accounting"]
     assert [before[k] for k in ("historical_actions", "historical_papers", "historical_unresolved_actions",
                                 "active_public_unresolved_actions", "active_public_unresolved_papers")] == [159, 148, 147, 145, 134]
@@ -292,7 +306,10 @@ def test_exactly_two_original_research_type_questions_close_and_no_D_actions_clo
     for review_id, paper_id in TARGETS.items():
         assert [(row["review_id"], row["dimension"]) for row in ledger if row["paper_id"] == paper_id] == [(review_id, "research_types")]
     assert {"R267", "T046", "T093", "T608", "T526", "P526"} <= set(after["active_public_unresolved_review_ids"])
-    assert not {"P215", "P574", "T215", "T574"} & terminal(read_review_decisions(ROOT / DECISIONS)).keys()
+    live_rows = read_review_decisions(ROOT / DECISIONS)
+    assert not {"P215", "P574", "T215", "T574"} & terminal(live_rows).keys()
+    assert {"R267", "T046", "T093", "T608", "T526", "P526"} <= set(
+        accounting(live_rows, load_context()["papers"])["active_public_unresolved_review_ids"])
 
 
 def test_all_original_scientific_findings_policy_ambiguity_and_provenance_remain_lossless():
@@ -460,7 +477,7 @@ def test_two_complete_manuscripts_and_partial_same_source_continuation_remain_ex
 
 
 def test_public_semantic_delta_is_only_R574_and_its_existing_three_map_rows():
-    old, live = published_context(BASE), load_context()
+    old, live = published_context(BASE), published_context(PUBLISHED)
     assert old["papers"].keys() == live["papers"].keys()
     assert {pid for pid in old["papers"] if old["papers"][pid] != live["papers"][pid]} == {TARGETS["R574"]}
     assert sum(old["papers"][pid] == live["papers"][pid] for pid in old["papers"] if pid != TARGETS["R574"]) == 673
@@ -471,7 +488,7 @@ def test_public_semantic_delta_is_only_R574_and_its_existing_three_map_rows():
     assert live["papers"][TARGETS["R574"]] == expected
     assert old["pairs"] == live["pairs"]
     for path in PUBLIC:
-        before, after = json.loads(published_bytes(BASE, path)), json.loads((ROOT / path).read_bytes())
+        before, after = json.loads(published_bytes(BASE, path)), json.loads(published_bytes(PUBLISHED, path))
         oldmeta, newmeta = deepcopy(before["metadata"]), deepcopy(after["metadata"])
         oldmeta.pop("public_preview_generated_at", None)
         newmeta.pop("public_preview_generated_at", None)
@@ -479,7 +496,7 @@ def test_public_semantic_delta_is_only_R574_and_its_existing_three_map_rows():
         assert {k: v for k, v in before.items() if k not in {"metadata", "records"}} == {
             k: v for k, v in after.items() if k not in {"metadata", "records"}}
     before = {r["id"]: r for r in json.loads(published_bytes(BASE, PUBLIC[1]))["records"]}
-    after = {r["id"]: r for r in json.loads((ROOT / PUBLIC[1]).read_bytes())["records"]}
+    after = {r["id"]: r for r in json.loads(published_bytes(PUBLISHED, PUBLIC[1]))["records"]}
     assert before.keys() == after.keys() and len(before) == 1410
     target_ids = {key for key, row in before.items() if row.get("paper_id") == TARGETS["R574"]}
     assert len(target_ids) == 3
@@ -492,18 +509,31 @@ def test_public_semantic_delta_is_only_R574_and_its_existing_three_map_rows():
         assert after[key] == expected, key
 
 
+    current = load_context()
+    assert current["pairs"] == live["pairs"]
+    for rid in TARGETS:
+        assert current["papers"][TARGETS[rid]] == live["papers"][TARGETS[rid]]
+    current_maps = {r["id"]: r for r in json.loads((ROOT / PUBLIC[1]).read_bytes())["records"]}
+    assert {key: current_maps[key] for key in target_ids} == {key: after[key] for key in target_ids}
+
 def test_live_corpus_and_taxonomy_recompute_the_single_benchmark_addition():
-    old, live = published_context(BASE), load_context()
+    old, live = published_context(BASE), published_context(PUBLISHED)
     assert live["counts"] == old["counts"] == packet()["corpus_counts"] == CURRENT_CORPUS_COUNTS
     def totals(context):
         return Counter(label for row in context["papers"].values() for dimension in ("tasks", "research_types") for label in row[dimension])
     before, after = totals(old), totals(live)
-    assert after == packet()["taxonomy_counts"] == CURRENT_TAXONOMY_TOTALS
+    assert after == packet()["taxonomy_counts"] == TAXONOMY_TOTALS
     assert not before - after and after - before == {"benchmark": 1}
     assert before["benchmark"] == 90 and after["benchmark"] == 91
     assert live["papers"][TARGETS["R215"]]["tasks"] == ["detection"]
     assert live["papers"][TARGETS["R574"]]["tasks"] == ["source_attribution"]
 
+
+    current = load_context()
+    assert current["counts"] == CURRENT_CORPUS_COUNTS
+    assert totals(current) == CURRENT_TAXONOMY_TOTALS
+    for rid in TARGETS:
+        assert current["papers"][TARGETS[rid]] == live["papers"][TARGETS[rid]]
 
 def test_accepted_R2_rule_original_questions_and_unrelated_authoritative_tables_are_unchanged():
     queues = load_queues()
@@ -532,7 +562,7 @@ def test_original_and_current_source_hashes_are_independent_of_ignored_runtime_c
     entries = {r["path"]: r for r in json.loads(published_bytes(BASE, FIXTURES))["entries"]}
     for path, expected in current.items():
         if path in tracked:
-            raw = (ROOT / path).read_bytes()
+            raw = published_bytes(PUBLISHED, path)
         else:
             # Verify immutable committed fixture data, not a developer's operational cache.
             entry = entries[path]

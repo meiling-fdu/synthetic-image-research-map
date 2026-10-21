@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-21T01:06:02Z"
+    "public_preview_generated_at": "2026-10-21T12:55:20Z"
   },
   "records": [
     {
@@ -42255,8 +42255,22 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "dataset"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "R100 accepted under locked R1: the complete official ICLR 2026 conference manuscript establishes FakeXplained as a substantive original reusable annotated resource independently of FakeXplainer, with 8,772 images, 23 trained annotators, region-caption pairs, six tags, documented quality control and resource-related experiments. Add dataset; retain method and detection. The text/Table 1 generator count differs (28/27), MLLM annotation assistance is incompletely quantified, annotation has subjective components, and public assets, official partitions, license, download completeness and numerical reproduction are unverified; the author repository was empty at inspection. Public availability is not the sole R1 criterion. The separate artifact-localization observation is preserved for future authorized T2 review only; no task or review-action addition is applied."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -42281,19 +42295,7 @@
           "location_display": "Zhejiang, China"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:c495f498c11dab35ecbc",
@@ -172542,8 +172544,22 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "R400 accepted under locked R2: the complete official CVF CVPR 2025 Main paper defines FakeART as a reusable photo-to-art evaluation task/protocol independently of CoD, with COCO/LSUN sources, SD1.4/ProGAN training, 7,000 WikiArt real test artworks, seven test-model variants, ACC threshold 0.5 and ACC/AP comparisons. Add benchmark; retain method, dataset and detection. This is a medium-confidence contribution-based framework judgment, not numerical reproduction. Synthetic counts, class balance, exact splits, identical baseline retraining, evaluation code, complete release and licensing are unverified; style/content/generator shifts are confounded. Prior training-count, GAN-score and AP-aggregation discrepancies remain documented. No mandatory new-code criterion is introduced."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -172568,19 +172584,7 @@
           "location_display": "Beijing, China"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:bc6c90117b018745ac0c",
