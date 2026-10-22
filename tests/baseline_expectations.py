@@ -19,7 +19,8 @@ data change and the identity and relationship invariants in
 # and their research types. B1H changes only R566 from method to analysis_study;
 # B1I adds only the independently reviewed R574 benchmark contribution;
 # B1J adds the R100 dataset and R400 benchmark roles; task totals, prior
-# baselines and literature additions remain frozen.
+# baselines and literature additions remain frozen. B1K removes only the R542
+# benchmark role, retaining survey and all task/scope assignments.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 674,
     "public_map_source_papers": 613,
@@ -80,7 +81,7 @@ CURRENT_CORPUS_COUNTS = {
     "unique_paper_institution_pairs": 1410
 }
 
-RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 82, 'survey': 21, 'dataset': 135, 'benchmark': 92}
+RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 82, 'survey': 21, 'dataset': 135, 'benchmark': 91}
 
 CURRENT_TAXONOMY_TOTALS = {**TASK_TOTALS, **RESEARCH_TYPE_TOTALS}
 
