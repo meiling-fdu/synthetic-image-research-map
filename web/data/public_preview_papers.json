@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-22T09:04:38Z"
+    "public_preview_generated_at": "2026-10-23T02:03:55Z"
   },
   "records": [
     {
@@ -79892,8 +79892,22 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "dataset"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "R181 accepted under locked R1: complete arXiv 2604.15027v1 establishes AncesTree and ReWIND as substantive reusable image-quality and propagation resources independently of QuAD, with structured degradation construction, web near-duplicate curation and evaluation using six detection methods. Add dataset; retain method, detection and fully_generated. AncesTree has 1,100 roots and 136,400 descendants; ReWIND has 9,646 instances and 162 groups. Mean balanced accuracy 73.2 to 81.6 and 63.0 to 70.3 is not universal improvement. Complete release, licensing, exact source-group partitions, leave-one-out unit, leakage safeguards, publisher-final equivalence and numerical reproduction remain unverified; results apply to reviewed arXiv v1. Actual download availability is not the sole R1 criterion."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -79907,19 +79921,7 @@
           "location_display": "Campania, Italy"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:75b4ab2d95e995615ae2",
@@ -145860,8 +145862,22 @@
         "fully_generated"
       ],
       "research_types": [
+        "dataset",
         "benchmark"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "R335 accepted under locked R1: complete arXiv 2606.18554v1 establishes a substantive curated and generated disaster-image resource independently of the retained benchmark evaluation contribution. Add dataset; retain benchmark, detection and fully_generated; no method. The corpus has 6,000 real and 24,000 synthetic images across four categories and four generators; original construction includes real-image curation, Moondream captions, Llama 3 refinement and diffusion generation. Fine-tuned 18 unseen subsets and zero-shot 20 subsets are distinct. Public assets, rights, license, exact splits, leakage safeguards, publisher-final equivalence and reproduction remain unverified; numeric inconsistencies and 12 repeated CGL values are preserved. Canonical year 2025 and all publication metadata remain unchanged despite 2026 preprint and first-online and 2027 citation chronology."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -145924,19 +145940,7 @@
           "location_display": "Tokyo, Japan"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "title": "ForgeLens: Data-Efficient Forgery Focus for Generalizable Forgery Image Detection",

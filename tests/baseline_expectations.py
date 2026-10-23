@@ -20,7 +20,8 @@ data change and the identity and relationship invariants in
 # B1I adds only the independently reviewed R574 benchmark contribution;
 # B1J adds the R100 dataset and R400 benchmark roles; task totals, prior
 # baselines and literature additions remain frozen. B1K removes only the R542
-# benchmark role, retaining survey and all task/scope assignments.
+# benchmark role, retaining survey and all task/scope assignments. B1L adds only
+# the R181/R335 dataset roles, preserving methods, benchmark, tasks and scopes.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 674,
     "public_map_source_papers": 613,
@@ -81,7 +82,7 @@ CURRENT_CORPUS_COUNTS = {
     "unique_paper_institution_pairs": 1410
 }
 
-RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 82, 'survey': 21, 'dataset': 135, 'benchmark': 91}
+RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 82, 'survey': 21, 'dataset': 137, 'benchmark': 91}
 
 CURRENT_TAXONOMY_TOTALS = {**TASK_TOTALS, **RESEARCH_TYPE_TOTALS}
 
