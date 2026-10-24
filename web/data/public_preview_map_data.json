@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-23T02:03:55Z"
+    "public_preview_generated_at": "2026-10-23T13:33:37Z"
   },
   "records": [
     {
@@ -93630,7 +93630,8 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "benchmark"
       ],
       "venue": "Annual International Conference on Privacy, Security, and Trust",
       "venue_name": "Annual International Conference on Privacy, Security, and Trust",
@@ -93818,7 +93819,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R359 accepted under locked R2: LAID contributes a separately intended model-independent comparative framework with architecture eligibility/resource constraints, reusable training/testing interfaces, spatial/FFT inputs, standardized recipes, GenImage sampling, joint accuracy/resource measures and controlled postprocessing evaluations. This exceeds ordinary model selection and differs from bounded R215; model count alone is insufficient. Add benchmark; retain method, detection and fully_generated; no dataset or analysis_study. Medium contribution confidence. Oracle Fusion Accuracy is label-dependent correctness union, not a deployable predicted class; maximum-probability score metrics are separate. The reported 65.09% spatial versus 90.91% oracle fusion is not an established practical fusion improvement. Pinned test.py confirms the rule, not Table III numerical reproduction. Preserve publisher-final/code-version, checkpoints/splits, OR/AND, training, perturbation, generalization, resource and correlation limitations."
         }
       },
       "metadata_status": {
@@ -367998,7 +368000,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "European Conference on Computer Vision",
       "venue_name": "European Conference on Computer Vision",
@@ -368638,7 +368641,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R034 accepted under locked R2: RealChain is an independently specified reusable detector-evaluation benchmark/protocol/resource, distinct from REM and its retained dataset role. The complete ECCV 2026 publisher chapter defines 7,000 real and 7,000 synthetic sources, seven source/mode strata, 50 degradation chains, ND/CD settings, Balanced Accuracy and nine independent baselines. Add benchmark; retain method, dataset, detection and fully_generated. Contribution confidence high; reproducibility confidence medium. Complete chain definitions, timed-out JSON, archive contents, splits, evaluator and numerical reproduction remain unverified. Preserve nonuniform REM superiority, DRCT table discrepancies, backbone/average ambiguity and CDC ablation inconsistency. OUT_OF_SCOPE_BIBLIOGRAPHIC_VERSION_OBSERVATION remains separate; P034 and all canonical bibliographic fields remain pending and unchanged."
         }
       },
       "metadata_status": {
@@ -368673,7 +368677,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "European Conference on Computer Vision",
       "venue_name": "European Conference on Computer Vision",
@@ -369307,7 +369312,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R034 accepted under locked R2: RealChain is an independently specified reusable detector-evaluation benchmark/protocol/resource, distinct from REM and its retained dataset role. The complete ECCV 2026 publisher chapter defines 7,000 real and 7,000 synthetic sources, seven source/mode strata, 50 degradation chains, ND/CD settings, Balanced Accuracy and nine independent baselines. Add benchmark; retain method, dataset, detection and fully_generated. Contribution confidence high; reproducibility confidence medium. Complete chain definitions, timed-out JSON, archive contents, splits, evaluator and numerical reproduction remain unverified. Preserve nonuniform REM superiority, DRCT table discrepancies, backbone/average ambiguity and CDC ablation inconsistency. OUT_OF_SCOPE_BIBLIOGRAPHIC_VERSION_OBSERVATION remains separate; P034 and all canonical bibliographic fields remain pending and unchanged."
         }
       },
       "metadata_status": {
@@ -369342,7 +369348,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "European Conference on Computer Vision",
       "venue_name": "European Conference on Computer Vision",
@@ -369976,7 +369983,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R034 accepted under locked R2: RealChain is an independently specified reusable detector-evaluation benchmark/protocol/resource, distinct from REM and its retained dataset role. The complete ECCV 2026 publisher chapter defines 7,000 real and 7,000 synthetic sources, seven source/mode strata, 50 degradation chains, ND/CD settings, Balanced Accuracy and nine independent baselines. Add benchmark; retain method, dataset, detection and fully_generated. Contribution confidence high; reproducibility confidence medium. Complete chain definitions, timed-out JSON, archive contents, splits, evaluator and numerical reproduction remain unverified. Preserve nonuniform REM superiority, DRCT table discrepancies, backbone/average ambiguity and CDC ablation inconsistency. OUT_OF_SCOPE_BIBLIOGRAPHIC_VERSION_OBSERVATION remains separate; P034 and all canonical bibliographic fields remain pending and unchanged."
         }
       },
       "metadata_status": {
@@ -370011,7 +370019,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "European Conference on Computer Vision",
       "venue_name": "European Conference on Computer Vision",
@@ -370645,7 +370654,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R034 accepted under locked R2: RealChain is an independently specified reusable detector-evaluation benchmark/protocol/resource, distinct from REM and its retained dataset role. The complete ECCV 2026 publisher chapter defines 7,000 real and 7,000 synthetic sources, seven source/mode strata, 50 degradation chains, ND/CD settings, Balanced Accuracy and nine independent baselines. Add benchmark; retain method, dataset, detection and fully_generated. Contribution confidence high; reproducibility confidence medium. Complete chain definitions, timed-out JSON, archive contents, splits, evaluator and numerical reproduction remain unverified. Preserve nonuniform REM superiority, DRCT table discrepancies, backbone/average ambiguity and CDC ablation inconsistency. OUT_OF_SCOPE_BIBLIOGRAPHIC_VERSION_OBSERVATION remains separate; P034 and all canonical bibliographic fields remain pending and unchanged."
         }
       },
       "metadata_status": {
@@ -370680,7 +370690,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "European Conference on Computer Vision",
       "venue_name": "European Conference on Computer Vision",
@@ -371314,7 +371325,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R034 accepted under locked R2: RealChain is an independently specified reusable detector-evaluation benchmark/protocol/resource, distinct from REM and its retained dataset role. The complete ECCV 2026 publisher chapter defines 7,000 real and 7,000 synthetic sources, seven source/mode strata, 50 degradation chains, ND/CD settings, Balanced Accuracy and nine independent baselines. Add benchmark; retain method, dataset, detection and fully_generated. Contribution confidence high; reproducibility confidence medium. Complete chain definitions, timed-out JSON, archive contents, splits, evaluator and numerical reproduction remain unverified. Preserve nonuniform REM superiority, DRCT table discrepancies, backbone/average ambiguity and CDC ablation inconsistency. OUT_OF_SCOPE_BIBLIOGRAPHIC_VERSION_OBSERVATION remains separate; P034 and all canonical bibliographic fields remain pending and unchanged."
         }
       },
       "metadata_status": {
@@ -371349,7 +371361,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "European Conference on Computer Vision",
       "venue_name": "European Conference on Computer Vision",
@@ -371983,7 +371996,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R034 accepted under locked R2: RealChain is an independently specified reusable detector-evaluation benchmark/protocol/resource, distinct from REM and its retained dataset role. The complete ECCV 2026 publisher chapter defines 7,000 real and 7,000 synthetic sources, seven source/mode strata, 50 degradation chains, ND/CD settings, Balanced Accuracy and nine independent baselines. Add benchmark; retain method, dataset, detection and fully_generated. Contribution confidence high; reproducibility confidence medium. Complete chain definitions, timed-out JSON, archive contents, splits, evaluator and numerical reproduction remain unverified. Preserve nonuniform REM superiority, DRCT table discrepancies, backbone/average ambiguity and CDC ablation inconsistency. OUT_OF_SCOPE_BIBLIOGRAPHIC_VERSION_OBSERVATION remains separate; P034 and all canonical bibliographic fields remain pending and unchanged."
         }
       },
       "metadata_status": {
@@ -372018,7 +372032,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "European Conference on Computer Vision",
       "venue_name": "European Conference on Computer Vision",
@@ -372652,7 +372667,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R034 accepted under locked R2: RealChain is an independently specified reusable detector-evaluation benchmark/protocol/resource, distinct from REM and its retained dataset role. The complete ECCV 2026 publisher chapter defines 7,000 real and 7,000 synthetic sources, seven source/mode strata, 50 degradation chains, ND/CD settings, Balanced Accuracy and nine independent baselines. Add benchmark; retain method, dataset, detection and fully_generated. Contribution confidence high; reproducibility confidence medium. Complete chain definitions, timed-out JSON, archive contents, splits, evaluator and numerical reproduction remain unverified. Preserve nonuniform REM superiority, DRCT table discrepancies, backbone/average ambiguity and CDC ablation inconsistency. OUT_OF_SCOPE_BIBLIOGRAPHIC_VERSION_OBSERVATION remains separate; P034 and all canonical bibliographic fields remain pending and unchanged."
         }
       },
       "metadata_status": {
