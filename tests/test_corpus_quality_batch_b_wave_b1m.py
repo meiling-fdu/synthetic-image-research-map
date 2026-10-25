@@ -24,6 +24,8 @@ from tests.corpus_quality_test_helpers import csv_records, published_bytes, publ
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "53c2a9aa0fa3a36427ea8e71966e29cdfba70153"
+# Anchor the published B1M transaction; live selected-case guards remain below.
+PUBLISHED = "05a89df9e5b3543c1231dc5934f55320aec53fa9"
 PAPERS = "data/curated/papers.csv"
 TAXONOMY = "data/curated/paper_taxonomy.csv"
 DECISIONS = "data/curated/review_decisions.csv"
@@ -441,7 +443,7 @@ def test_original_worker_receipts_and_full_worker_bytes_are_authenticated_withou
 
 @pytest.mark.parametrize("path",[PAPERS,TAXONOMY])
 def test_exact_two_rows_per_CSV_and_fourteen_cells_change_with_all_other_tokens_identical(path):
-    old_raw,new_raw = published_bytes(BASE,path),(ROOT/path).read_bytes()
+    old_raw,new_raw = published_bytes(BASE,path),published_bytes(PUBLISHED,path)
     old,new = csv_records(old_raw),csv_records(new_raw)
     identity = "taxonomy_id" if path == TAXONOMY else "paper_id"
     assert [r[identity] for r in old] == [r[identity] for r in new]
@@ -473,8 +475,8 @@ def test_exact_two_rows_per_CSV_and_fourteen_cells_change_with_all_other_tokens_
 
 
 def test_exact_two_terminal_appends_preserve_all_94_prior_rows_and_their_bytes():
-    before,after = published_bytes(BASE,DECISIONS),(ROOT/DECISIONS).read_bytes()
-    prior,rows = csv_records(before),read_review_decisions(ROOT/DECISIONS)
+    before,after = published_bytes(BASE,DECISIONS),published_bytes(PUBLISHED,DECISIONS)
+    prior,rows = csv_records(before),csv_records(published_bytes(PUBLISHED,DECISIONS))
     assert after.startswith(before) and len(prior) == 94 and len(rows) == 96
     assert rows[:-2] == prior and len({r["decision_id"] for r in rows}) == 96
     assert terminal(rows) == {**terminal(prior),**IDS}
@@ -520,7 +522,7 @@ def test_terminal_upsert_has_no_byte_or_timestamp_churn(tmp_path,rid):
 
 def test_only_two_research_type_actions_close_and_P034_keeps_its_paper_unresolved():
     before = accounting(csv_records(published_bytes(BASE,DECISIONS)),published_context(BASE)["papers"])
-    after = accounting(read_review_decisions(ROOT/DECISIONS),load_context()["papers"])
+    after = accounting(csv_records(published_bytes(PUBLISHED,DECISIONS)),published_context(PUBLISHED)["papers"])
     assert after == packet()["batch_b_accounting"]
     fields = ("historical_actions","historical_papers","historical_unresolved_actions","historical_unresolved_papers","active_public_unresolved_actions","active_public_unresolved_papers")
     assert [before[k] for k in fields] == [159,148,140,129,138,127]
@@ -529,7 +531,7 @@ def test_only_two_research_type_actions_close_and_P034_keeps_its_paper_unresolve
     for name in ("historical_unresolved_review_ids","active_public_unresolved_review_ids"):
         assert after[name] == [r for r in before[name] if r not in TARGETS]
         assert "P034" in after[name]
-    assert "P034" not in terminal(read_review_decisions(ROOT/DECISIONS))
+    assert "P034" not in terminal(csv_records(published_bytes(PUBLISHED,DECISIONS)))
     ledger = [r for r in decision_rows(load_queues()) if r["batch"] == "B"]
     assert {r["review_id"] for r in ledger if r["paper_id"] == TARGETS["R034"]} == {"R034","P034"}
     assert {r["review_id"] for r in ledger if r["paper_id"] == TARGETS["R359"]} == {"R359"}
@@ -675,7 +677,7 @@ def test_original_two_manuscripts_and_no_post_recovery_or_adjudication_downloads
 
 
 def test_exact_two_public_papers_and_eight_existing_map_rows_change_only_types_and_reason():
-    old,live = published_context(BASE),load_context()
+    old,live = published_context(BASE),published_context(PUBLISHED)
     assert old["papers"].keys() == live["papers"].keys() and len(live["papers"]) == 674
     assert {pid for pid in old["papers"] if old["papers"][pid] != live["papers"][pid]} == set(TARGETS.values())
     assert sum(old["papers"][pid] == live["papers"][pid] for pid in old["papers"] if pid not in TARGETS.values()) == 672
@@ -686,13 +688,13 @@ def test_exact_two_public_papers_and_eight_existing_map_rows_change_only_types_a
         assert live["papers"][pid] == expected
     assert old["pairs"] == live["pairs"] and sum(live["pairs"].values()) == len(live["pairs"]) == 1410
     for path in PUBLIC:
-        before,after = json.loads(published_bytes(BASE,path)),json.loads((ROOT/path).read_bytes())
+        before,after = json.loads(published_bytes(BASE,path)),json.loads(published_bytes(PUBLISHED,path))
         oldmeta,newmeta = deepcopy(before["metadata"]),deepcopy(after["metadata"])
         oldmeta.pop("public_preview_generated_at",None); newmeta.pop("public_preview_generated_at",None)
         assert oldmeta == newmeta
         assert {k:v for k,v in before.items() if k not in {"records","metadata"}} == {k:v for k,v in after.items() if k not in {"records","metadata"}}
     before = {r["id"]:r for r in json.loads(published_bytes(BASE,PUBLIC[1]))["records"]}
-    after = {r["id"]:r for r in json.loads((ROOT/PUBLIC[1]).read_bytes())["records"]}
+    after = {r["id"]:r for r in json.loads(published_bytes(PUBLISHED,PUBLIC[1]))["records"]}
     assert before.keys() == after.keys() and len(after) == 1410
     dependents = {rid:{key for key,row in before.items() if row.get("paper_id") == pid} for rid,pid in TARGETS.items()}
     assert {rid:len(ids) for rid,ids in dependents.items()} == {"R034":7,"R359":1}
@@ -710,14 +712,14 @@ def test_exact_two_public_papers_and_eight_existing_map_rows_change_only_types_a
 
 
 def test_recomputed_corpus_task_and_type_counts_change_only_two_benchmarks():
-    old,live = published_context(BASE),load_context()
+    old,live = published_context(BASE),published_context(PUBLISHED)
     assert old["counts"] == live["counts"] == packet()["corpus_counts"] == CURRENT_CORPUS_COUNTS
     def totals(context):
         return Counter(label for row in context["papers"].values() for dimension in ("tasks","research_types") for label in row[dimension])
     before,after = totals(old),totals(live)
     assert not before-after and after-before == {"benchmark":2}
     assert before["benchmark"] == 91 and after["benchmark"] == 93
-    assert after == packet()["taxonomy_counts"] == CURRENT_TAXONOMY_TOTALS
+    assert after == packet()["taxonomy_counts"]
     assert after == {"detection":621,"source_attribution":84,"localization":45,"method":578,"dataset":137,"benchmark":93,"survey":21,"analysis_study":82}
 
 
@@ -748,7 +750,7 @@ def test_portable_source_authorities_bind_exactly_five_changed_dependencies():
     fixtures = {r["path"]:r for r in json.loads(published_bytes(BASE,FIXTURES))["entries"]}
     for path,expected in current.items():
         if path in tracked:
-            raw = (ROOT/path).read_bytes()
+            raw = published_bytes(PUBLISHED,path)
         elif path in fixtures:
             entry = fixtures[path]
             assert entry["compression"] == "none"
@@ -812,3 +814,32 @@ def test_final_report_keeps_original_evidence_and_acceptance_qualifications_prom
     assert packet()["scope"]["authoritative_scientific_changes"] == 2
     for key in ("forensic_task_changes","image_scope_changes","publication_metadata_changes","new_Batch_B_actions_added","Batch_B_denominator_changes"):
         assert packet()["scope"][key] == 0
+
+
+@pytest.mark.parametrize("rid",["R034","R359"])
+def test_live_B1M_selected_rows_public_records_relationships_and_terminal_prefix_remain_exact(rid):
+    """New approved transactions may advance totals without altering either B1M case."""
+    pid = TARGETS[rid]
+    for path in (PAPERS,TAXONOMY):
+        assert selected_row((ROOT/path).read_bytes(),pid) == selected_row(published_bytes(PUBLISHED,path),pid)
+    historical,live = published_context(PUBLISHED),load_context()
+    assert historical["papers"][pid] == live["papers"][pid]
+    assert {key:value for key,value in historical["pairs"].items() if key[0] == pid} == {key:value for key,value in live["pairs"].items() if key[0] == pid}
+    before = {row["id"]:row for row in json.loads(published_bytes(PUBLISHED,PUBLIC[1]))["records"] if row.get("paper_id") == pid}
+    after = {row["id"]:row for row in json.loads((ROOT/PUBLIC[1]).read_bytes())["records"] if row.get("paper_id") == pid}
+    assert before == after and len(before) == {"R034":7,"R359":1}[rid]
+    prefix = published_bytes(PUBLISHED,DECISIONS)
+    assert (ROOT/DECISIONS).read_bytes().startswith(prefix)
+    historical_rows = csv_records(prefix)
+    live_rows = read_review_decisions(ROOT/DECISIONS)
+    assert live_rows[:len(historical_rows)] == historical_rows
+    assert terminal(live_rows)[rid] == IDS[rid]
+    assert sum(row["decision_id"] == IDS[rid] for row in live_rows) == 1
+
+
+def test_current_corpus_and_taxonomy_totals_still_have_independent_live_guards():
+    current = load_context()
+    assert current["counts"] == CURRENT_CORPUS_COUNTS
+    totals = Counter(label for row in current["papers"].values()
+                     for dimension in ("tasks","research_types") for label in row[dimension])
+    assert totals == CURRENT_TAXONOMY_TOTALS

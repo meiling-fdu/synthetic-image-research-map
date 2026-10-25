@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-23T13:33:37Z"
+    "public_preview_generated_at": "2026-10-25T02:02:54Z"
   },
   "records": [
     {
@@ -152840,7 +152840,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "European Conference on Computer Vision",
       "venue_name": "European Conference on Computer Vision",
@@ -153112,7 +153113,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R596 accepted under locked R2: Attribution88 is a separately defined reusable evaluation benchmark/protocol/resource beyond RepMix and the retained dataset role. Eight fixed known source classes (Real plus seven GAN architectures), eleven semantic categories, six seen and five held-out semantics, per-source/semantic base partitions, nineteen corruptions at five severities and four held-out corruption types support independent source-attribution model evaluation. This meets R2 through structured task conditions, metrics and independent baselines, not scale or benchmark wording alone. Add benchmark; retain method, dataset, detection;source_attribution and fully_generated. High contribution confidence; medium operational reproducibility confidence. Labels identify architectures, not individual checkpoints; semantic-specific generator-instance change is coupled with semantic change inside a closed known-architecture label space, not an unknown-architecture open-set test. Detection is raw accuracy with nominal real/fake ratio 1:7, not balanced accuracy. Preserve nonuniform superiority, glass-blur counterexample, conditional generalization loss, adversarial-result rounding and paper/code early-stopping discrepancies. Full archive contents, actual CSV splits, upstream image rights, source-version equivalence and numerical reproduction remain unverified."
         }
       },
       "metadata_status": {
@@ -153148,7 +153150,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "European Conference on Computer Vision",
       "venue_name": "European Conference on Computer Vision",
@@ -153419,7 +153422,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R596 accepted under locked R2: Attribution88 is a separately defined reusable evaluation benchmark/protocol/resource beyond RepMix and the retained dataset role. Eight fixed known source classes (Real plus seven GAN architectures), eleven semantic categories, six seen and five held-out semantics, per-source/semantic base partitions, nineteen corruptions at five severities and four held-out corruption types support independent source-attribution model evaluation. This meets R2 through structured task conditions, metrics and independent baselines, not scale or benchmark wording alone. Add benchmark; retain method, dataset, detection;source_attribution and fully_generated. High contribution confidence; medium operational reproducibility confidence. Labels identify architectures, not individual checkpoints; semantic-specific generator-instance change is coupled with semantic change inside a closed known-architecture label space, not an unknown-architecture open-set test. Detection is raw accuracy with nominal real/fake ratio 1:7, not balanced accuracy. Preserve nonuniform superiority, glass-blur counterexample, conditional generalization loss, adversarial-result rounding and paper/code early-stopping discrepancies. Full archive contents, actual CSV splits, upstream image rights, source-version equivalence and numerical reproduction remain unverified."
         }
       },
       "metadata_status": {
@@ -153455,7 +153459,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "European Conference on Computer Vision",
       "venue_name": "European Conference on Computer Vision",
@@ -153726,7 +153731,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R596 accepted under locked R2: Attribution88 is a separately defined reusable evaluation benchmark/protocol/resource beyond RepMix and the retained dataset role. Eight fixed known source classes (Real plus seven GAN architectures), eleven semantic categories, six seen and five held-out semantics, per-source/semantic base partitions, nineteen corruptions at five severities and four held-out corruption types support independent source-attribution model evaluation. This meets R2 through structured task conditions, metrics and independent baselines, not scale or benchmark wording alone. Add benchmark; retain method, dataset, detection;source_attribution and fully_generated. High contribution confidence; medium operational reproducibility confidence. Labels identify architectures, not individual checkpoints; semantic-specific generator-instance change is coupled with semantic change inside a closed known-architecture label space, not an unknown-architecture open-set test. Detection is raw accuracy with nominal real/fake ratio 1:7, not balanced accuracy. Preserve nonuniform superiority, glass-blur counterexample, conditional generalization loss, adversarial-result rounding and paper/code early-stopping discrepancies. Full archive contents, actual CSV splits, upstream image rights, source-version equivalence and numerical reproduction remain unverified."
         }
       },
       "metadata_status": {

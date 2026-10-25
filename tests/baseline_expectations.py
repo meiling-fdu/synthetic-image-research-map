@@ -24,6 +24,8 @@ data change and the identity and relationship invariants in
 # the R181/R335 dataset roles, preserving methods, benchmark, tasks and scopes.
 # B1M adds only the R034/R359 benchmark roles; identities, publication fields,
 # institutions, task labels and image scopes remain unchanged.
+# B1N adds only R596's independently reusable Attribution88 benchmark role;
+# R234's atomic dataset/benchmark review and bibliographic observation stay open.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 674,
     "public_map_source_papers": 613,
@@ -84,7 +86,7 @@ CURRENT_CORPUS_COUNTS = {
     "unique_paper_institution_pairs": 1410
 }
 
-RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 82, 'survey': 21, 'dataset': 137, 'benchmark': 93}
+RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 82, 'survey': 21, 'dataset': 137, 'benchmark': 94}
 
 CURRENT_TAXONOMY_TOTALS = {**TASK_TOTALS, **RESEARCH_TYPE_TOTALS}
 
