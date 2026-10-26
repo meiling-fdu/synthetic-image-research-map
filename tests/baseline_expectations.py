@@ -26,6 +26,8 @@ data change and the identity and relationship invariants in
 # institutions, task labels and image scopes remain unchanged.
 # B1N adds only R596's independently reusable Attribution88 benchmark role;
 # R234's atomic dataset/benchmark review and bibliographic observation stay open.
+# B1O adds R267 analysis_study and R236 dataset/benchmark/analysis_study;
+# both method roles and every task, scope, identity and map pair are preserved.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 674,
     "public_map_source_papers": 613,
@@ -86,7 +88,7 @@ CURRENT_CORPUS_COUNTS = {
     "unique_paper_institution_pairs": 1410
 }
 
-RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 82, 'survey': 21, 'dataset': 137, 'benchmark': 94}
+RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 84, 'survey': 21, 'dataset': 138, 'benchmark': 95}
 
 CURRENT_TAXONOMY_TOTALS = {**TASK_TOTALS, **RESEARCH_TYPE_TOTALS}
 

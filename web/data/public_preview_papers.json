@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-25T02:02:54Z"
+    "public_preview_generated_at": "2026-10-26T02:51:28Z"
   },
   "records": [
     {
@@ -104810,7 +104810,10 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "dataset",
+        "benchmark",
+        "analysis_study"
       ],
       "taxonomy_status": "reviewed",
       "taxonomy_review": {
@@ -104822,7 +104825,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R236 accepted once as one original research-type action under locked R1, R2 and R3. R1: X-AIGD contributes independently reusable human polygon/category annotations over 4,000 reused real-image sources and thirteen generator sources, with 18,285 artifact instances and structured categories, beyond routine method experiments. R2: separately reusable authenticity, perceptual-artifact and spatial evaluation targets, ground truth, scoring, external baselines, generalization protocols and standalone metrics/viewer code support an independent benchmark, not merely a dataset or large table. R3: systematic detector-artifact alignment, fidelity and detector/category analysis in sections 4-5 remains informative without the section 6 alignment method. Add dataset, benchmark and analysis_study; retain method, detection;localization and fully_generated. Main section 3.2 reports 3,035 annotated fake images while Table 8 and release metadata report 3,337 labeled rows; unresolved populations must not be collapsed or confused with instances. Joint segmentation IoU 27.3/PixF1 42.8 and classifier-heatmap IoU 4.8/PixF1 9.2 are different outputs. Artifact/attention overlap is not proof of causal detector reliance, necessity or explanation faithfulness; architecture, training data, extra supervision and explanation operators are confounds. Preserve Chameleon accuracy 71.4 to 71.2 and positive generic-mask controls. Manuscript weak-instance threshold >= versus inspected implementation > remains unresolved. Metrics/viewer code and metadata are available but training/experiment code remains TODO; complete assets, splits, upstream rights and numerical reproduction unverified. High contribution-role confidence; medium empirical/mechanistic confidence. T236 historical author-v1 task evidence is preserved, with no whole-version equivalence claim or new T236 terminal row."
         }
       },
       "affiliations": [
@@ -117953,8 +117957,22 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "analysis_study"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "R267 accepted under locked R3: sections 3-4 independently investigate learned preference-score versus detection-correctness associations, generator and prompt/content differences, perceptual properties, feature clustering, regression, detector-specific behavior and counterexamples before section 5 applies regression-guided patch selection. This primary systematic empirical contribution remains informative without the patch method. Add analysis_study; retain method, detection and fully_generated. Preference-model predictions are not direct human quality judgments; human preference is not photorealism; correctness is not confidence; within-generator association and in-sample regression do not establish causality or independent predictive generalization. Preserve four principal generators versus the six-generator expanded inventory, prompt/content/source confounding and detector-specific exceptions. RINE AP 90.2 to 91.9 accompanies accuracy 75.0 to 74.2; improvements are not uniform across metrics. High contribution confidence, medium empirical interpretation confidence and low operational reproducibility confidence. Inspected repository contains README/license metadata without verified implementation; checkpoint identities, source overlap, complete reproduction, seed and confidence-interval evidence remain limited or unverified."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -118001,19 +118019,7 @@
           "location_display": "Guangdong, China"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "title": "Art or Artifact? Segmenting AI-Generated Images for Deeper Detection",

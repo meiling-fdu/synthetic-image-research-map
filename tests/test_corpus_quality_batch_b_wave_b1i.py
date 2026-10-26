@@ -308,8 +308,11 @@ def test_exactly_two_original_research_type_questions_close_and_no_D_actions_clo
     assert {"R267", "T046", "T093", "T608", "T526", "P526"} <= set(after["active_public_unresolved_review_ids"])
     live_rows = read_review_decisions(ROOT / DECISIONS)
     assert not {"P215", "P574", "T215", "T574"} & terminal(live_rows).keys()
-    assert {"R267", "T046", "T093", "T608", "T526", "P526"} <= set(
+    assert {"T046", "T093", "T608", "T526", "P526"} <= set(
         accounting(live_rows, load_context()["papers"])["active_public_unresolved_review_ids"])
+    # R267 was pending at B1I; its later B1O closure does not change this receipt.
+    assert "R267" in accounting(csv_records(published_bytes(PUBLISHED, DECISIONS)),
+                                published_context(PUBLISHED)["papers"])["active_public_unresolved_review_ids"]
 
 
 def test_all_original_scientific_findings_policy_ambiguity_and_provenance_remain_lossless():

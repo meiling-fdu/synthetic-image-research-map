@@ -300,17 +300,27 @@ def test_R566_decision_upsert_is_idempotent_without_timestamp_or_byte_churn(tmp_
     assert path.read_bytes() == before
 
 
-def test_R267_canonical_taxonomy_and_public_record_stay_exactly_unchanged():
+def test_R267_is_unchanged_at_the_immutable_B1H_endpoint_and_live_task_metadata_is_preserved():
     for path in (PAPERS, TAXONOMY):
         old = selected_row(published_bytes(BASE, path), R267)
-        current = selected_row((ROOT / path).read_bytes(), R267)
+        current = selected_row(published_bytes(PUBLISHED, path), R267)
         assert current == old
         assert current["research_types"] == "method" and current["tasks"] == "detection"
-    public = load_context()["papers"][R267]
+    public = published_context(PUBLISHED)["papers"][R267]
     assert public == published_context(BASE)["papers"][R267]
     assert public["research_types"] == ["method"] and public["tasks"] == ["detection"]
-    assert "Yao_Xiao" in selected_row((ROOT / PAPERS).read_bytes(), R267)["authors"]
-    assert "R267" not in terminal(read_review_decisions(ROOT / DECISIONS))
+    assert "Yao_Xiao" in selected_row(published_bytes(PUBLISHED, PAPERS), R267)["authors"]
+    assert "R267" not in terminal(csv_records(published_bytes(PUBLISHED, DECISIONS)))
+
+    # R267's later accepted B1O role addition must not rewrite B1H history or tasks.
+    for path in (PAPERS, TAXONOMY):
+        old = selected_row(published_bytes(PUBLISHED, path), R267)
+        live = selected_row((ROOT / path).read_bytes(), R267)
+        mutable = {"research_types"} if path == PAPERS else {
+            "research_types", "research_types_review_reason", "research_types_evidence_tier",
+            "research_types_evidence_source", "research_types_evidence_excerpt", "audited_at"}
+        assert {key: value for key, value in old.items() if key not in mutable} == {
+            key: value for key, value in live.items() if key not in mutable}
 
 
 def test_public_delta_is_one_paper_and_two_map_research_type_metadata_changes_only():
@@ -535,8 +545,9 @@ def test_only_R566_closes_and_distinct_pending_papers_are_derived_from_the_ledge
     assert not [row for row in ledger if row["paper_id"] == R566 and row["review_id"] not in terminal(rows)]
     live = read_review_decisions(ROOT / DECISIONS)
     assert terminal(live)["R566"] == DECISION_ID
-    assert {"R267", "T046", "T093", "T608", "T526", "P526"} <= set(
+    assert {"T046", "T093", "T608", "T526", "P526"} <= set(
         accounting(live)["active_public_unresolved_review_ids"])
+    assert "R267" in accounting(rows, published_context(PUBLISHED)["papers"])["active_public_unresolved_review_ids"]
 
 
 def test_original_questions_locked_policy_and_unrelated_authoritative_tables_are_immutable():
