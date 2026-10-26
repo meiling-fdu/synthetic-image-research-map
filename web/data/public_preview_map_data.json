@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-26T02:51:28Z"
+    "public_preview_generated_at": "2026-10-26T08:10:54Z"
   },
   "records": [
     {
@@ -101632,7 +101632,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
       "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
@@ -101912,7 +101913,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R482 accepted under locked R2: SynRIS independently contributes a reusable binary-authenticity evaluation protocol and real-image population construction through reverse image search, stated visual/thematic matching, pre-2021 page-date restriction, controlled real-pool sensitivity experiments, common scoring and independent detector comparisons. Its intended reuse by future detectors qualifies independently of FakeInversion and beyond extra images or large tables. Add benchmark; retain method, dataset, detection and fully_generated without reopening the accepted dataset role. Reduced semantic/style mismatch is not perfect matching, deployment representativeness or causal validity; balanced samples do not establish deployment prevalence. Search ranking/index changes, page-date reliability, matching-score distributions, duplicates, source overlap and exact split membership remain unverified. Preserve 18-row AUROC averaging, nonuniform baseline comparisons and unresolved Table 3/4 differences. Contribution confidence high; bounded empirical validity medium; operational reproducibility low. Release announcement is not verified executable code, complete archive, license or reproduction. Original ZIP viewer probe rejected unsupported MIME and transfer bytes are unknown; no archive saved/extracted/read. Main CVF version only; appendices and IEEE-final/arXiv equivalence unverified. Unseen-generator detection is not generator identity attribution."
         }
       },
       "metadata_status": {
@@ -101947,7 +101949,8 @@
       ],
       "research_types": [
         "method",
-        "dataset"
+        "dataset",
+        "benchmark"
       ],
       "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
       "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
@@ -102229,7 +102232,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R482 accepted under locked R2: SynRIS independently contributes a reusable binary-authenticity evaluation protocol and real-image population construction through reverse image search, stated visual/thematic matching, pre-2021 page-date restriction, controlled real-pool sensitivity experiments, common scoring and independent detector comparisons. Its intended reuse by future detectors qualifies independently of FakeInversion and beyond extra images or large tables. Add benchmark; retain method, dataset, detection and fully_generated without reopening the accepted dataset role. Reduced semantic/style mismatch is not perfect matching, deployment representativeness or causal validity; balanced samples do not establish deployment prevalence. Search ranking/index changes, page-date reliability, matching-score distributions, duplicates, source overlap and exact split membership remain unverified. Preserve 18-row AUROC averaging, nonuniform baseline comparisons and unresolved Table 3/4 differences. Contribution confidence high; bounded empirical validity medium; operational reproducibility low. Release announcement is not verified executable code, complete archive, license or reproduction. Original ZIP viewer probe rejected unsupported MIME and transfer bytes are unknown; no archive saved/extracted/read. Main CVF version only; appendices and IEEE-final/arXiv equivalence unverified. Unseen-generator detection is not generator identity attribution."
         }
       },
       "metadata_status": {
@@ -306126,7 +306130,8 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "analysis_study"
       ],
       "venue": "International Conference on Knowledge Science, Engineering and Management",
       "venue_name": "International Conference on Knowledge Science, Engineering and Management",
@@ -306491,7 +306496,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R024 accepted under locked R3: formal architecture-level source-homology definitions and a primary systematic investigation of embedding interaction strategies, transfer from detection and attribution representations, nominal GAN/diffusion source generalization, pairwise protocols and perturbation/augmentation behavior remain informative independently of one particular Siamese model. This is not classified from routine ablations or first-study wording alone. Add analysis_study; retain method, source_attribution and fully_generated. Pairwise same-source verification is not single-image authenticity detection; preserve the completed T024 resolution without another task decision. Architecture-level labels do not establish exact checkpoint, trained-instance, lineage, content/prompt or operator identity. Exact source/image separation, semantic independence and shared-image leakage remain unverified. Interaction comparisons change loss/head as well as operation; average fine-tuning/augmentation gains have subset counterexamples. Contribution confidence medium-high; generalization interpretation medium-low; operational reproducibility low. Pinned repository contains only README with a placeholder paper link; no verified implementation, splits, weights, training scripts, reproduction instructions or license. Preserve KSEM 2026 versus printed 2027 copyright/citation observation without bibliographic edits."
         }
       },
       "metadata_status": {
@@ -306520,7 +306526,8 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "analysis_study"
       ],
       "venue": "International Conference on Knowledge Science, Engineering and Management",
       "venue_name": "International Conference on Knowledge Science, Engineering and Management",
@@ -306885,7 +306892,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R024 accepted under locked R3: formal architecture-level source-homology definitions and a primary systematic investigation of embedding interaction strategies, transfer from detection and attribution representations, nominal GAN/diffusion source generalization, pairwise protocols and perturbation/augmentation behavior remain informative independently of one particular Siamese model. This is not classified from routine ablations or first-study wording alone. Add analysis_study; retain method, source_attribution and fully_generated. Pairwise same-source verification is not single-image authenticity detection; preserve the completed T024 resolution without another task decision. Architecture-level labels do not establish exact checkpoint, trained-instance, lineage, content/prompt or operator identity. Exact source/image separation, semantic independence and shared-image leakage remain unverified. Interaction comparisons change loss/head as well as operation; average fine-tuning/augmentation gains have subset counterexamples. Contribution confidence medium-high; generalization interpretation medium-low; operational reproducibility low. Pinned repository contains only README with a placeholder paper link; no verified implementation, splits, weights, training scripts, reproduction instructions or license. Preserve KSEM 2026 versus printed 2027 copyright/citation observation without bibliographic edits."
         }
       },
       "metadata_status": {
@@ -306914,7 +306922,8 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "analysis_study"
       ],
       "venue": "International Conference on Knowledge Science, Engineering and Management",
       "venue_name": "International Conference on Knowledge Science, Engineering and Management",
@@ -307279,7 +307288,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R024 accepted under locked R3: formal architecture-level source-homology definitions and a primary systematic investigation of embedding interaction strategies, transfer from detection and attribution representations, nominal GAN/diffusion source generalization, pairwise protocols and perturbation/augmentation behavior remain informative independently of one particular Siamese model. This is not classified from routine ablations or first-study wording alone. Add analysis_study; retain method, source_attribution and fully_generated. Pairwise same-source verification is not single-image authenticity detection; preserve the completed T024 resolution without another task decision. Architecture-level labels do not establish exact checkpoint, trained-instance, lineage, content/prompt or operator identity. Exact source/image separation, semantic independence and shared-image leakage remain unverified. Interaction comparisons change loss/head as well as operation; average fine-tuning/augmentation gains have subset counterexamples. Contribution confidence medium-high; generalization interpretation medium-low; operational reproducibility low. Pinned repository contains only README with a placeholder paper link; no verified implementation, splits, weights, training scripts, reproduction instructions or license. Preserve KSEM 2026 versus printed 2027 copyright/citation observation without bibliographic edits."
         }
       },
       "metadata_status": {
@@ -307308,7 +307318,8 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "analysis_study"
       ],
       "venue": "International Conference on Knowledge Science, Engineering and Management",
       "venue_name": "International Conference on Knowledge Science, Engineering and Management",
@@ -307673,7 +307684,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R024 accepted under locked R3: formal architecture-level source-homology definitions and a primary systematic investigation of embedding interaction strategies, transfer from detection and attribution representations, nominal GAN/diffusion source generalization, pairwise protocols and perturbation/augmentation behavior remain informative independently of one particular Siamese model. This is not classified from routine ablations or first-study wording alone. Add analysis_study; retain method, source_attribution and fully_generated. Pairwise same-source verification is not single-image authenticity detection; preserve the completed T024 resolution without another task decision. Architecture-level labels do not establish exact checkpoint, trained-instance, lineage, content/prompt or operator identity. Exact source/image separation, semantic independence and shared-image leakage remain unverified. Interaction comparisons change loss/head as well as operation; average fine-tuning/augmentation gains have subset counterexamples. Contribution confidence medium-high; generalization interpretation medium-low; operational reproducibility low. Pinned repository contains only README with a placeholder paper link; no verified implementation, splits, weights, training scripts, reproduction instructions or license. Preserve KSEM 2026 versus printed 2027 copyright/citation observation without bibliographic edits."
         }
       },
       "metadata_status": {
@@ -307702,7 +307714,8 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "analysis_study"
       ],
       "venue": "International Conference on Knowledge Science, Engineering and Management",
       "venue_name": "International Conference on Knowledge Science, Engineering and Management",
@@ -308067,7 +308080,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "R024 accepted under locked R3: formal architecture-level source-homology definitions and a primary systematic investigation of embedding interaction strategies, transfer from detection and attribution representations, nominal GAN/diffusion source generalization, pairwise protocols and perturbation/augmentation behavior remain informative independently of one particular Siamese model. This is not classified from routine ablations or first-study wording alone. Add analysis_study; retain method, source_attribution and fully_generated. Pairwise same-source verification is not single-image authenticity detection; preserve the completed T024 resolution without another task decision. Architecture-level labels do not establish exact checkpoint, trained-instance, lineage, content/prompt or operator identity. Exact source/image separation, semantic independence and shared-image leakage remain unverified. Interaction comparisons change loss/head as well as operation; average fine-tuning/augmentation gains have subset counterexamples. Contribution confidence medium-high; generalization interpretation medium-low; operational reproducibility low. Pinned repository contains only README with a placeholder paper link; no verified implementation, splits, weights, training scripts, reproduction instructions or license. Preserve KSEM 2026 versus printed 2027 copyright/citation observation without bibliographic edits."
         }
       },
       "metadata_status": {

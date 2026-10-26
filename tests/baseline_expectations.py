@@ -28,6 +28,8 @@ data change and the identity and relationship invariants in
 # R234's atomic dataset/benchmark review and bibliographic observation stay open.
 # B1O adds R267 analysis_study and R236 dataset/benchmark/analysis_study;
 # both method roles and every task, scope, identity and map pair are preserved.
+# B1P adds only R024 analysis_study and R482 benchmark under locked R3/R2;
+# both methods, R482 dataset and every task/scope/bibliographic/map identity remain unchanged.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 674,
     "public_map_source_papers": 613,
@@ -88,7 +90,7 @@ CURRENT_CORPUS_COUNTS = {
     "unique_paper_institution_pairs": 1410
 }
 
-RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 84, 'survey': 21, 'dataset': 138, 'benchmark': 95}
+RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 85, 'survey': 21, 'dataset': 138, 'benchmark': 96}
 
 CURRENT_TAXONOMY_TOTALS = {**TASK_TOTALS, **RESEARCH_TYPE_TOTALS}
 
