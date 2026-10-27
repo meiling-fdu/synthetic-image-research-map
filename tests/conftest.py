@@ -7,6 +7,7 @@ import pytest
 from tests.admin_http_fixtures import (
     institution_public_inputs,
     isolated_metadata_server,
+    mapping_registration_inputs,
 )
 
 
@@ -33,6 +34,12 @@ def isolated_admin_http_inputs(request, monkeypatch):
                 cls, "metadata_server", isolated_metadata_server(cls.metadata_server),
             )
     if (
+        module == "test_mapping_institution_registration"
+        and request.node.name == "test_create_endpoint_reports_provisional_registration"
+    ):
+        with mapping_registration_inputs(request.getfixturevalue("tmp_path"), request.module):
+            yield
+    elif (
         module == "test_institution_cleanup_queue"
         and request.node.name == "test_visible_open_confirmed_change_resolves_through_admin_http"
     ):

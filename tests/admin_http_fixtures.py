@@ -12,6 +12,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+from http.server import ThreadingHTTPServer
 from unittest.mock import patch
 
 from scripts import admin_review_queues, serve_admin
@@ -91,3 +92,81 @@ def isolated_metadata_server(original):
                 yield result
 
     return server
+
+
+class JoinedFixtureHTTPServer(ThreadingHTTPServer):
+    """Join active request workers before the test removes its CSV files."""
+
+    daemon_threads = False
+    block_on_close = True
+
+
+@contextlib.contextmanager
+def mapping_registration_inputs(root, endpoint_module):
+    """Copy only the existing endpoint identity; preserve all its source fields."""
+    root = Path(root)
+    root.mkdir(parents=True, exist_ok=True)
+    seed = {"paper_id": "openalex:W4416604008"}
+    keys = set(serve_admin.identity_keys(seed))
+
+    def matches(row):
+        return bool(keys.intersection(serve_admin.identity_keys(row)))
+
+    # Preparation happens before the HTTP client starts. The selected identity
+    # is an excluded curated record; retain its actual exclusion and taxonomy.
+    with serve_admin.CURATED_PAPERS_PATH.open(encoding="utf-8-sig", newline="") as handle:
+        reader = csv.DictReader(handle)
+        columns = reader.fieldnames
+        selected = [row for row in reader if matches(row)]
+    assert len(selected) == 1, "Endpoint fixture identity must be unique"
+    keys.update(serve_admin.identity_keys(selected[0]))
+    papers = root / "papers.csv"
+    with papers.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=columns)
+        writer.writeheader()
+        writer.writerows(selected)
+    exclusions = root / "exclusions.csv"
+    with serve_admin.CURATED_EXCLUSIONS_PATH.open(encoding="utf-8-sig", newline="") as handle:
+        reader = csv.DictReader(handle)
+        exclusion_columns = reader.fieldnames
+        selected_exclusions = [row for row in reader if matches(row)]
+    with exclusions.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=exclusion_columns)
+        writer.writeheader()
+        writer.writerows(selected_exclusions)
+
+    public_paths = {}
+    for source, name in (
+        (serve_admin.PUBLIC_PAPERS_PATH, "public.json"),
+        (serve_admin.PUBLIC_MAP_PATH, "markers.json"),
+        (serve_admin.CANONICAL_CANDIDATE_MAP_PATH, "candidates.json"),
+    ):
+        records = [row for row in serve_admin.read_json_records(source) if matches(row)]
+        target = root / name
+        target.write_text(json.dumps(records), encoding="utf-8")
+        public_paths[name] = target
+
+    original_handler = endpoint_module.make_handler
+    original_loader = serve_admin.load_admin_data
+    with contextlib.ExitStack() as stack:
+        stack.enter_context(patch.object(serve_admin, "PUBLIC_PAPERS_PATH", public_paths["public.json"]))
+        stack.enter_context(patch.object(serve_admin, "PUBLIC_MAP_PATH", public_paths["markers.json"]))
+        stack.enter_context(patch.object(endpoint_module, "ThreadingHTTPServer", JoinedFixtureHTTPServer))
+
+        def fixture_handler(*args, **kwargs):
+            kwargs["curated_papers_path"] = papers
+            kwargs["exclusions_path"] = exclusions
+            stack.enter_context(patch.object(serve_admin, "load_admin_data", functools.partial(
+                original_loader, curated_mappings_path=kwargs["mappings_path"],
+                canonical_candidate_map_path=public_paths["candidates.json"],
+            )))
+            # Establish the fixture's real admin identity and initialize the
+            # shared read-only venue catalog before starting a timed request.
+            # The HTTP route still executes this loader and all actual writes.
+            _, initial = serve_admin.load_admin_data(exclusions, papers)
+            assert seed["paper_id"] in initial["papers_by_id"]
+            assert initial["papers_by_id"][seed["paper_id"]]["has_active_exclusion"]
+            return original_handler(*args, **kwargs)
+
+        stack.enter_context(patch.object(endpoint_module, "make_handler", fixture_handler))
+        yield {"paper": selected[0], "exclusions": selected_exclusions}

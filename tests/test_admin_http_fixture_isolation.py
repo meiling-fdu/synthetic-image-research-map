@@ -17,6 +17,8 @@ LIVE_CORPUS_PATHS = frozenset({
         serve_admin.PUBLIC_MAP_PATH,
         serve_admin.CANONICAL_CANDIDATE_MAP_PATH,
         serve_admin.CURATED_MAPPINGS_PATH,
+        serve_admin.CURATED_PAPERS_PATH,
+        serve_admin.CURATED_EXCLUSIONS_PATH,
         serve_admin.INSTITUTION_HIERARCHY_PATH,
         *admin_review_queues.QUEUE_PATHS.values(),
         admin_review_queues.DEFAULT_PUBLIC_PAPERS_PATH,
@@ -119,3 +121,47 @@ def test_metadata_dashboard_uses_fixture_records_mappings_and_real_git(monkeypat
                 assert next(csv.DictReader(handle))["venue_id"] == "venue:chi"
 
         assert len(git_calls) == 2
+
+
+def test_mapping_registration_uses_scoped_identity_and_real_persisted_state(
+    monkeypatch, tmp_path,
+):
+    from scripts.curated_institutions import load_institutions
+    from scripts.curated_mappings import load_location_reviews, load_mappings
+    from tests import test_mapping_institution_registration as registration
+    from tests.admin_http_fixtures import mapping_registration_inputs
+
+    captured = []
+    original_create = serve_admin.create_mapping
+
+    def record_actual_creation(*args, **kwargs):
+        result = original_create(*args, **kwargs)
+        captured.append({
+            "result": result,
+            "mappings": load_mappings(kwargs["mappings_path"]),
+            "locations": load_location_reviews(kwargs["location_review_path"]),
+            "institutions": load_institutions(kwargs["institutions_path"]),
+        })
+        return result
+
+    monkeypatch.setattr(serve_admin, "create_mapping", record_actual_creation)
+    with mapping_registration_inputs(tmp_path, registration) as inputs:
+        assert inputs["paper"]["paper_id"] == "curated:75cbd31c9946c7eb7977"
+        assert inputs["exclusions"]
+        block_live_corpus(monkeypatch)
+        case = registration.MappingInstitutionRegistrationEndpointTests(
+            "test_create_endpoint_reports_provisional_registration"
+        )
+        result = unittest.TestResult()
+        case.run(result)
+    assert not result.errors, result.errors
+    assert not result.failures, result.failures
+    assert result.testsRun == 1
+    assert len(captured) == 1
+    saved = captured[0]
+    assert saved["result"]["institution_resolution"] == "provisional"
+    assert len(saved["mappings"]) == 1
+    identifier = saved["mappings"][0]["institution_id"]
+    assert identifier != "institution:stale-preview-id"
+    assert any(row["institution_id"] == identifier for row in saved["institutions"])
+    assert any(row["institution_id"] == identifier for row in saved["locations"])
