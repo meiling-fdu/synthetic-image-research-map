@@ -474,4 +474,11 @@ def test_live_approved_literature_csv_additions_survive_the_separate_t579_adjudi
         assert expected.keys() == live.keys() == imported_ids
         assert live == expected
     path = "data/curated/venue_aliases.csv"
-    assert (ROOT / path).read_bytes() == expected_csv(ROOT, Path(path).name)
+    # The import's full alias receipt is checked at published B1D above.
+    # Keep that entire byte prefix and every imported alias row live, while
+    # B5 separately validates exactly its three authorized journal appends.
+    imported_alias_bytes = expected_csv(ROOT, Path(path).name)
+    live_alias_bytes = (ROOT / path).read_bytes()
+    assert live_alias_bytes.startswith(imported_alias_bytes)
+    imported_aliases = csvrows(imported_alias_bytes)
+    assert csvrows(live_alias_bytes)[:len(imported_aliases)] == imported_aliases

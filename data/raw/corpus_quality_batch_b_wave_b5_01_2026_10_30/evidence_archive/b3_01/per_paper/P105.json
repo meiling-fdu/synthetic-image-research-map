@@ -1,0 +1,352 @@
+{
+  "schema_version": "batch-b-b3-per-paper-1",
+  "wave": "Batch B Wave B3",
+  "planned_batch_id": "B2-01",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "review_id": "P105",
+  "paper_id": "curated:be2900947b322f9eb905",
+  "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+  "assigned_original_review": {
+    "review_id": "P105",
+    "paper_id": "curated:be2900947b322f9eb905",
+    "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+    "current": {
+      "year": 2026,
+      "publication_type": "conference",
+      "venue": "European Conference on Computer Vision",
+      "venue_id": "venue:eccv",
+      "venue_acronym": "ECCV",
+      "venue_track": "Main",
+      "doi": "10.48550/arxiv.2509.25682",
+      "paper_url": "",
+      "formal_url": "",
+      "arxiv_id": "2509.25682",
+      "arxiv_url": "https://arxiv.org/abs/2509.25682",
+      "authors": [
+        "Shiyu Wu",
+        "Shuyan Li",
+        "Jing Li",
+        "Jing Liu",
+        "Yequan Wang"
+      ]
+    },
+    "evidence_urls": [
+      "https://arxiv.org/abs/2509.25682",
+      "https://openalex.org/W4415338199"
+    ],
+    "batch": "B",
+    "confidence": "bounded_to_available_evidence",
+    "evidence_required": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+    "proposed_changes": {},
+    "status": "REVIEW_REQUIRED",
+    "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+    "field_checks": {
+      "venue": "present",
+      "year": "present",
+      "publication_type": "formal_in_current_corpus",
+      "canonical_url": "missing_formal_url",
+      "doi": "repository_identifier_not_formal_DOI",
+      "arxiv": "present",
+      "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+      "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+    }
+  },
+  "current_identity": {
+    "paper_id": "curated:be2900947b322f9eb905",
+    "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+    "authors": [
+      {
+        "name": "Shiyu Wu",
+        "affiliation_indices": [
+          1,
+          2,
+          3
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Shuyan Li",
+        "affiliation_indices": [
+          4
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Jing Li",
+        "affiliation_indices": [
+          5
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Jing Liu",
+        "affiliation_indices": [
+          1,
+          3
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Yequan Wang",
+        "affiliation_indices": [
+          2,
+          6
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      }
+    ],
+    "year": 2026,
+    "doi": "10.48550/arxiv.2509.25682",
+    "arxiv_id": "2509.25682",
+    "arxiv_url": "https://arxiv.org/abs/2509.25682",
+    "openalex_url": "https://openalex.org/W4415338199",
+    "venue": "European Conference on Computer Vision",
+    "venue_name": "European Conference on Computer Vision",
+    "venue_id": "venue:eccv",
+    "venue_track": "Main",
+    "publication_type": "conference",
+    "formal_url": "",
+    "paper_url": "",
+    "tasks": [
+      "detection",
+      "source_attribution"
+    ],
+    "research_types": [
+      "method",
+      "dataset"
+    ],
+    "canonical_audit_paper_id": "curated:be2900947b322f9eb905"
+  },
+  "current_link_resolution": {
+    "formal_doi": "",
+    "formal_url": "",
+    "openalex_url": "https://openalex.org/W4415338199",
+    "arxiv_id": "2509.25682",
+    "arxiv_url": "https://arxiv.org/abs/2509.25682",
+    "primary_url": "https://openalex.org/W4415338199"
+  },
+  "review_scope": "Original missing canonical formal-URL publication question only; no taxonomy action is assigned.",
+  "provisional_outcome": "SUPPORTED_ADDITION",
+  "proposed_publication_change": {
+    "target": "canonical formal URL",
+    "before": "",
+    "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18",
+    "scientific_or_taxonomy_change": false,
+    "source_implementation": "B4 must reconcile supported authoritative URL field/precedence, stable identity and derived DOI behavior before any change."
+  },
+  "proposed_taxonomy_changes": [],
+  "formal_action_status": "UNRESOLVED — NO B3 ACCEPTANCE OR CLOSURE",
+  "maintainer_acceptance_required": true,
+  "source_packet": {
+    "artifact_path": "evidence_archive/publication-group-a-reviews.json",
+    "sha256": "a5f03dec49b5a2c1674e84de5ce79dddb0eb94de28fe9221ee0525242f33ccdb",
+    "record_index": 2
+  },
+  "reviewer_evidence_record": {
+    "review_id": "P105",
+    "canonical_identity": {
+      "paper_id": "curated:be2900947b322f9eb905",
+      "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+      "year": 2026,
+      "publication_type": "conference",
+      "venue": "European Conference on Computer Vision",
+      "venue_id": "venue:eccv",
+      "venue_acronym": "ECCV",
+      "venue_track": "Main",
+      "doi": "10.48550/arxiv.2509.25682",
+      "paper_url": "",
+      "formal_url": "",
+      "arxiv_id": "2509.25682",
+      "arxiv_url": "https://arxiv.org/abs/2509.25682",
+      "authors": [
+        "Shiyu Wu",
+        "Shuyan Li",
+        "Jing Li",
+        "Jing Liu",
+        "Yequan Wang"
+      ],
+      "stored_author_string": "Shiyu Wu, Shuyan Li, Jing Li, Jing Liu, Yequan Wang",
+      "stored_doi_literal": "10.48550/arxiv.2509.25682",
+      "stored_paper_url_literal": "http://arxiv.org/abs/2509.25682",
+      "formal_url_schema_boundary": "The formal_url value is derived public context; authoritative papers.csv has paper_url, not a literal formal_url column."
+    },
+    "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+    "current_tasks_preserved": "detection;source_attribution",
+    "current_research_types_preserved": "method;dataset",
+    "proposed_taxonomy_changes": {},
+    "formal_acceptance_record_created": false,
+    "authoritative_review_closed": false,
+    "evidence_only": true,
+    "B4_gate": "A later separately authorized maintainer decision must verify exact work/version identity, bounded fields, source provenance and current acceptance/fingerprint rules. No automatic author/DOI/date/inclusion/task/type edits; unresolved discrepancies require explicit reconciliation.",
+    "scientific_review": {
+      "new_scientific_review_performed": false,
+      "full_manuscript_retrieved": false,
+      "historical_context": {
+        "tasks": "detection;source_attribution",
+        "research_types": "method;dataset",
+        "tasks_evidence_tier": "reused_audit+abstract",
+        "research_types_evidence_tier": "reused_audit+abstract",
+        "task_source": "openalex",
+        "research_type_source": "openalex"
+      },
+      "context_limit": "Historical registry values and their existing evidence tiers are preserved, not independently re-certified scientific support. No methods/experiments/numbers reassessed; no taxonomy conclusion drawn from title/abstract."
+    },
+    "local_evidence": [
+      {
+        "path": "data/curated/papers.csv",
+        "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+        "locator": "curated:be2900947b322f9eb905",
+        "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+        "locator": "curated:be2900947b322f9eb905",
+        "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+      },
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+        "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+        "locator": "P105",
+        "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+      },
+      {
+        "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+        "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+        "locator": "#b-P105",
+        "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+      },
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+        "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+        "locator": "V1 / publication conventions",
+        "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+      },
+      {
+        "path": "docs/publication_venue_normalization.md",
+        "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af",
+        "locator": "V1 / publication conventions",
+        "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+      }
+    ],
+    "retrieval_accounting": {
+      "new_complete_manuscripts": 0,
+      "supplements": 0,
+      "scientific_source_retrievals": 0,
+      "paid_API_calls": 0,
+      "purchases": 0,
+      "http_status": null,
+      "network_transfer_bytes": null,
+      "targeted_search_queries": 1,
+      "official_metadata_open_or_click_operations": 2,
+      "additional_same_document_section_views": 0,
+      "unique_official_metadata_documents": 2
+    },
+    "provisional_outcome": "SUPPORTED_ADDITION",
+    "evidence_sufficient_for_original_question": true,
+    "proposed_formal_url": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18",
+    "proposed_formal_doi": "10.1007/978-3-032-37550-6_18",
+    "confidence": {
+      "canonical_identity": "high",
+      "bounded_formal_url": "high"
+    },
+    "finding": "Direct official Springer chapter and exact linked proceedings TOC establish normalized-title/full ordered-author match and archival ECCV2026 chapter DOI/URL. Propose a bounded formal-URL addition. The verified formal DOI is recorded as evidence, not automatically applied or substituted for the existing arXiv DOI.",
+    "publisher_metadata": {
+      "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+      "authors": [
+        "Shiyu Wu",
+        "Shuyan Li",
+        "Jing Li",
+        "Jing Liu",
+        "Yequan Wang"
+      ],
+      "doi": "10.1007/978-3-032-37550-6_18",
+      "formal_url": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18",
+      "type": "Conference paper",
+      "conference": "ECCV2026",
+      "container": "Computer Vision – ECCV2026",
+      "book_doi": "10.1007/978-3-032-37550-6",
+      "lncs_volume": 17019,
+      "chapter_first_online_and_published": "2026-09-13",
+      "pages": "319–338",
+      "volume_ebook_publication_date": "2026-09-12"
+    },
+    "version_limitations": [
+      "Only public publisher landing-page/proceedings metadata inspected; no full manuscript, supplement or byte equivalence comparison obtained.",
+      "Exact normalized title and complete ordered author sequence match the canonical record; this does not certify all arXiv scientific text, methods, tables or numerical claims as publisher-final equivalent.",
+      "Preserve canonical arXiv ID/repository DOI distinctly from the verified formal chapter DOI; no unrelated year/date/task/type/institution change."
+    ],
+    "contradictory_evidence": [
+      "Chapter First Online/Published date is one day later than the volume eBook date. These are separately recorded source events; no date correction is proposed in the URL review."
+    ],
+    "primary_metadata_evidence": [
+      {
+        "url": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18",
+        "role": "Direct official chapter metadata",
+        "locators": [
+          "Header exact title, Conference paper, complete ordered authors",
+          "About this paper → Cite this paper, DOI, Published"
+        ],
+        "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+        "finding": "Exact work identity, chapter DOI/formalURL and archival ECCV container verified."
+      },
+      {
+        "url": "https://link.springer.com/book/10.1007/978-3-032-37550-6",
+        "role": "Official proceedings TOC and bibliographic metadata",
+        "locators": [
+          "Exact paper title/authors/page span in TOC",
+          "ECCV2026 refereed proceedings and LNCS volume"
+        ],
+        "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/books-open.json",
+        "finding": "Chapter belongs to ECCV2026 conference proceedings, not an inferred generic book/preprint."
+      }
+    ],
+    "request_history": [
+      {
+        "operation": "search_query",
+        "query": "site:link.springer.com \"Few-Shot Synthetic Image Attribution\"",
+        "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/search1.json",
+        "result": "Exact official volume found.",
+        "http_status": null,
+        "network_bytes": null
+      },
+      {
+        "operation": "open",
+        "url": "https://link.springer.com/book/10.1007/978-3-032-37550-6",
+        "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/books-open.json",
+        "result": "Exact TOC identity inspected.",
+        "http_status": null,
+        "network_bytes": null
+      },
+      {
+        "operation": "click_exact_chapter",
+        "url": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18",
+        "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+        "result": "Official chapter metadata inspected.",
+        "http_status": null,
+        "network_bytes": null
+      }
+    ]
+  },
+  "independent_qc": {
+    "artifact_path": "evidence_archive/qc-external-six.v2.json",
+    "status": "PASS",
+    "scope": "Evidence-to-original-publication-claim mapping; not formal maintainer acceptance."
+  },
+  "evidence_provenance_inventory": "source_inventory.json"
+}

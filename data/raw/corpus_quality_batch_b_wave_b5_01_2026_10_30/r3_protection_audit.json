@@ -1,0 +1,178 @@
+{
+  "task": "R3 full dependency/protection classification",
+  "verdict": "ADDITIVE_TEST_ONLY_ISOLATION_FEASIBLE; NO_NEW_SUCCESSOR_EXCEPTION_NEEDED",
+  "created_utc": "2026-10-31T03:01:03.441029+00:00",
+  "reviewer": "/root/r3_protection_audit",
+  "original_four_files": [
+    {
+      "path": "tests/test_admin_publish_workflow_reliability.py",
+      "published_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+      "published_sha256": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63",
+      "current_sha256": "34420cb25c55df54ecb65ff9d7e4dcd2e9e258cc85101fe9806f790203e6b60f",
+      "published_bytes": 7860,
+      "current_bytes": 9882
+    },
+    {
+      "path": "tests/public_refinement_snapshot.py",
+      "published_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+      "published_sha256": "7d654ae6a8e606172749a4aadea082ed28a8146bd787168873d71a9258719d26",
+      "current_sha256": "13c66fe9e9887ae9b7520d3dc65b563fde46a037c2a30e3f4fc63d44a9afbb42",
+      "published_bytes": 9307,
+      "current_bytes": 12175
+    },
+    {
+      "path": "tests/conftest.py",
+      "published_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+      "published_sha256": "7925e6fa1578ec903abea4e28535965cf9a55feb2effd7cdc350027fb4c3ee38",
+      "current_sha256": "7925e6fa1578ec903abea4e28535965cf9a55feb2effd7cdc350027fb4c3ee38",
+      "published_bytes": 1819,
+      "current_bytes": 1819
+    },
+    {
+      "path": "tests/admin_http_fixtures.py",
+      "published_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+      "published_sha256": "c0ff5367a8fc45531605267988f65319d96468bf2a385053c83d41c1a79dd840",
+      "current_sha256": "c0ff5367a8fc45531605267988f65319d96468bf2a385053c83d41c1a79dd840",
+      "published_bytes": 7847,
+      "current_bytes": 7847
+    }
+  ],
+  "all_live_direct_source_byte_guards": [
+    {
+      "test": "tests/test_systematic_tier2_policy.py::test_pre_task_repository_files_are_byte_identical",
+      "protected_file": "tests/test_admin_publish_workflow_reliability.py",
+      "consumer_chain": [
+        "scripts/report_systematic_tier2_policy.py::integrity",
+        "scripts/gap_migration_history.py::historical_bytes",
+        "scripts/corpus_quality_history.py::historical_bytes",
+        "tests/public_refinement_snapshot.py::assert_historical_integrity_with_public_refinement"
+      ],
+      "receipt": "data/processed/systematic_tier2_policy_2026_09/baseline_sha256.json",
+      "baseline_sha256": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63",
+      "behavior": "The fixture is not in archived migration-changed inputs; current-byte drift reaches exact changed_paths/count/protected-file comparison. Restoring bf725 removes the need for R2 fixture successor."
+    },
+    {
+      "test": "tests/test_systematic_tier2_application.py::test_pre_application_baseline_includes_and_preserves_previous_policy_pass",
+      "protected_file": "tests/test_admin_publish_workflow_reliability.py",
+      "consumer_chain": [
+        "scripts/report_systematic_tier2_application.py::integrity",
+        "scripts/gap_migration_history.py::historical_bytes",
+        "scripts/corpus_quality_history.py::historical_bytes",
+        "tests/public_refinement_snapshot.py::assert_historical_integrity_with_public_refinement"
+      ],
+      "receipt": "data/processed/systematic_tier2_application_2026_09/baseline_sha256.json",
+      "baseline_sha256": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63",
+      "behavior": "Same strict original-byte fixture protection; no exception is necessary after restoration."
+    },
+    {
+      "test": "tests/test_corpus_quality_batch_b_wave_b1g.py::test_previous_twelve_batch_receipts_and_predecessor_repair_files_keep_original_bytes",
+      "protected_file": "tests/public_refinement_snapshot.py",
+      "consumer_chain": [
+        "REPAIR_FILES",
+        "packet().adjudication_baseline.predecessor_repair_sha256",
+        "published_bytes(BASE,path)"
+      ],
+      "receipt": "data/raw/corpus_quality_batch_b_wave_b1g_2026_10_19/evidence_manifest.json",
+      "baseline_commit": "3feff7d6b609183cb8dda4949d2c087e77639003",
+      "published_commit": "445b4f8cc7257b3c87868a666bce43d8c20bda0d",
+      "baseline_sha256": "7d654ae6a8e606172749a4aadea082ed28a8146bd787168873d71a9258719d26",
+      "line": 407,
+      "behavior": "All12 predecessor repair receipts must match their original baseline AND current bytes. Restore exact7fc helper (same hash) rather than authorizing another helper successor."
+    }
+  ],
+  "historical_snapshot_and_API_consumers": [
+    {
+      "tests": [
+        "tests/test_public_refinement_successors.py::test_exact_published_sri_transition_and_snapshot_are_accepted",
+        "tests/test_public_refinement_successors.py::test_unrelated_current_frontend_edits_are_rejected",
+        "tests/test_public_refinement_successors.py::test_extra_frontend_file_is_rejected_without_mutating_the_checkout",
+        "tests/test_systematic_tier2_normal_priority_evidence.py::test_authoritative_append_is_exact_and_preserves_existing_rows",
+        "tests/test_systematic_tier2_normal_priority_evidence.py::test_report_reproduces_byte_for_byte"
+      ],
+      "mechanism": "assert_public_refinement_snapshot / historical_normal_priority_diff",
+      "protected_subject": "The original 40-file public refinement snapshot includes helper8f15..., authenticated at fixed REFINEMENT_COMMIT and read through checksum-verified historical_bytes. It is not a rule requiring current helper bytes equal8f15; B1G separately protects current7d654 helper."
+    },
+    {
+      "tests": [
+        "tests/test_historical_integrity_successors.py::test_exact_reviewed_successor_is_accepted",
+        "tests/test_historical_integrity_successors.py::test_historical_boundary_rejects_unreviewed_changes"
+      ],
+      "mechanism": "Original B1A successor positive and tamper tests",
+      "protected_subject": "B1A test_institution_type_audit successor and unrelated-file/count guard; preserve these tests unchanged. They do not pin conftest/admin_http_fixtures."
+    },
+    {
+      "tests": [
+        "tests/test_b5_publish_fixture_successor.py (20 R2 cases)"
+      ],
+      "mechanism": "R2 verifier APIs in modified helper",
+      "protected_subject": "Current untracked R2 tests require PUBLISH_FIXTURE_* APIs. Restoration removes these APIs, so archive/version their historical R2 subject or replace current-runtime coverage after preserving authenticated original sources; do not leave20tests pointed at removed APIs."
+    },
+    {
+      "tests": [
+        "tests/test_systematic_gap_migration_2026_10_03.py::ApprovedGapMigrationTests",
+        "tests/test_corpus_quality_batch_a.py",
+        "tests/test_legacy_scope_exclusion_migration.py::test_phase_a_predecessor_snapshot_freezes_protected_sets",
+        "tests/test_legacy_scope_exclusion_migration.py::test_curated_and_historical_files_are_preserved",
+        "tests/test_legacy_scope_exclusion_migration.py::test_predecessor_666_state_reconstructs_byte_for_byte",
+        "tests/test_legacy_scope_exclusion_migration.py::test_historical_receipts_reproduce_with_explicit_partial_scope",
+        "tests/test_literature51_followup.py",
+        "tests/test_literature51_main_integration.py"
+      ],
+      "mechanism": "Frozen precursor manifests, historical-root materialization, predecessor_bytes and published Git endpoint verification",
+      "protected_subject": "Receipt inventories retain fixturebf725/helperera hashes. These are historical input-byte/snapshot checks, not permission to update their maps. Preserve all17 keyed receipt entries enumerated in the inventory and restore current protected bytes; new configuration files have no entries."
+    }
+  ],
+  "all_receipt_key_entries_count": 17,
+  "receipt_inventory": "protection-receipt-inventory.json",
+  "safe_extension_absence_proofs": [
+    {
+      "path": "tests/conftest.py",
+      "receipt_path_key_entries": 0,
+      "exists_at_B1G_repair_predecessor": false,
+      "current_exists": true,
+      "is_existing_supported_extension": true
+    },
+    {
+      "path": "tests/admin_http_fixtures.py",
+      "receipt_path_key_entries": 0,
+      "exists_at_B1G_repair_predecessor": false,
+      "current_exists": true,
+      "is_existing_supported_extension": true
+    },
+    {
+      "path": "tests/publish_workflow_test_fixture.py",
+      "receipt_path_key_entries": 0,
+      "exists_at_B1G_repair_predecessor": false,
+      "current_exists": false,
+      "is_existing_supported_extension": false
+    },
+    {
+      "path": "tests/admin_publish_fixture.py",
+      "receipt_path_key_entries": 0,
+      "exists_at_B1G_repair_predecessor": false,
+      "current_exists": false,
+      "is_existing_supported_extension": false
+    }
+  ],
+  "existing_scope_pattern": {
+    "configuration": "tests/conftest.py::isolated_admin_http_inputs",
+    "identification": "request.module.__name__.rsplit(\".\",1)[-1] distinguishes exact known module names and supports pytest namespace aliases",
+    "existing_module_wrapper": "tests/admin_http_fixtures.py uses original module-specific factories and explicit temporary inputs; monkeypatch/context stacks restore changes after each test",
+    "recommended_single_target_module": "test_admin_publish_workflow_reliability",
+    "avoid": "Do not patch production DEFAULT_STATE_PATH or serve_admin.make_handler globally; do not change production flock lifecycle, HTTPtimeouts, response/assertion semantics, old snapshots or baseline maps."
+  },
+  "behavioral_equivalence_conditions": [
+    "The same original RunningServer, HTTP handler, real request path, workflow stub and client timeout execute.",
+    "Inject only a fixture-owned temporary coordinator state path for this exact module.",
+    "Ensure close/cleanup after real HTTP workers/server teardown, also on constructor/test failure. Own state per server instance if matching the approved original immediate-with-context cleanup guarantee.",
+    "No global production state, state-path default, synchronization/locking semantics or test execution order dependency changes.",
+    "Exercise independent real HTTP isolation, teardown and default-state byte/inode noninterference checks plus scope-restoration/order-independence tests.",
+    "Archive and authenticate both reviewed R2 source diffs, helper/fixture successor sources and exact approval receipt before restoring protected files.",
+    "Keep existing historical guards and negative tests unchanged.",
+    "Run required progressive gates and full suite; static absence proof is not acceptance of a future implementation."
+  ],
+  "no_repository_writes": true,
+  "tests_executed": 0,
+  "network_requests": 0,
+  "source_archives_modified": false
+}

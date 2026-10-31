@@ -1,0 +1,863 @@
+{
+  "schema_version": "batch-b-b3-per-paper-1",
+  "wave": "Batch B Wave B3",
+  "planned_batch_id": "B2-01",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "review_id": "P034",
+  "paper_id": "curated:aa7dceb70828cdd6ad39",
+  "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+  "assigned_original_review": {
+    "review_id": "P034",
+    "paper_id": "curated:aa7dceb70828cdd6ad39",
+    "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+    "current": {
+      "year": 2026,
+      "publication_type": "conference",
+      "venue": "European Conference on Computer Vision",
+      "venue_id": "venue:eccv",
+      "venue_acronym": "ECCV",
+      "venue_track": "Main",
+      "doi": "",
+      "paper_url": "",
+      "formal_url": "",
+      "arxiv_id": "2512.20937",
+      "arxiv_url": "https://arxiv.org/abs/2512.20937",
+      "authors": [
+        "Ruiqi Liu",
+        "Yi Han",
+        "Zhengbo Zhang",
+        "Liwei Yao",
+        "Zhiyuan Yan",
+        "Jialiang Shen",
+        "Zhijin Chen",
+        "Boyi Sun",
+        "Lubin Weng",
+        "Jing Dong",
+        "Yan Wang",
+        "Shu Wu"
+      ]
+    },
+    "evidence_urls": [
+      "https://arxiv.org/abs/2512.20937",
+      "https://openalex.org/W7117340004"
+    ],
+    "batch": "B",
+    "confidence": "bounded_to_available_evidence",
+    "evidence_required": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+    "proposed_changes": {},
+    "status": "REVIEW_REQUIRED",
+    "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+    "field_checks": {
+      "venue": "present",
+      "year": "present",
+      "publication_type": "formal_in_current_corpus",
+      "canonical_url": "missing_formal_url",
+      "doi": "not_required_without_authoritative_applicability",
+      "arxiv": "present",
+      "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+      "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+    }
+  },
+  "current_identity": {
+    "paper_id": "curated:aa7dceb70828cdd6ad39",
+    "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+    "authors": [
+      {
+        "name": "Ruiqi Liu",
+        "affiliation_indices": [
+          1,
+          2
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Yi Han",
+        "affiliation_indices": [
+          3
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Zhengbo Zhang",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Liwei Yao",
+        "affiliation_indices": [
+          4
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Zhiyuan Yan",
+        "affiliation_indices": [
+          5
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Jialiang Shen",
+        "affiliation_indices": [
+          6
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Zhijin Chen",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Boyi Sun",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Lubin Weng",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Jing Dong",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Yan Wang",
+        "affiliation_indices": [
+          7
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Shu Wu",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      }
+    ],
+    "year": 2026,
+    "doi": "",
+    "arxiv_id": "2512.20937",
+    "arxiv_url": "https://arxiv.org/abs/2512.20937",
+    "openalex_url": "https://openalex.org/W7117340004",
+    "venue": "European Conference on Computer Vision",
+    "venue_name": "European Conference on Computer Vision",
+    "venue_id": "venue:eccv",
+    "venue_track": "Main",
+    "publication_type": "conference",
+    "formal_url": "",
+    "paper_url": "",
+    "tasks": [
+      "detection"
+    ],
+    "research_types": [
+      "method",
+      "dataset",
+      "benchmark"
+    ],
+    "canonical_audit_paper_id": "curated:aa7dceb70828cdd6ad39"
+  },
+  "current_link_resolution": {
+    "formal_doi": "",
+    "formal_url": "",
+    "openalex_url": "https://openalex.org/W7117340004",
+    "arxiv_id": "2512.20937",
+    "arxiv_url": "https://arxiv.org/abs/2512.20937",
+    "primary_url": "https://openalex.org/W7117340004"
+  },
+  "review_scope": "Original missing canonical formal-URL publication question only; no taxonomy action is assigned.",
+  "provisional_outcome": "SUPPORTED_ADDITION",
+  "proposed_publication_change": {
+    "target": "canonical formal URL",
+    "before": "",
+    "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14",
+    "scientific_or_taxonomy_change": false,
+    "source_implementation": "B4 must reconcile supported authoritative URL field/precedence, stable identity and derived DOI behavior before any change."
+  },
+  "proposed_taxonomy_changes": [],
+  "formal_action_status": "UNRESOLVED — NO B3 ACCEPTANCE OR CLOSURE",
+  "maintainer_acceptance_required": true,
+  "source_packet": {
+    "artifact_path": "evidence_archive/local-fastlane-reviews.json",
+    "sha256": "cd8291f722fef8387e036c3ec39e0e0cd3224ff8d141143c3b42780d9d6ae7de",
+    "record_index": 0
+  },
+  "reviewer_evidence_record": {
+    "review_id": "P034",
+    "paper_id": "curated:aa7dceb70828cdd6ad39",
+    "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+    "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+    "scope": "PUBLICATION_FORMAL_URL_ONLY_EVIDENCE",
+    "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+    "original_review_record": {
+      "review_id": "P034",
+      "paper_id": "curated:aa7dceb70828cdd6ad39",
+      "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+      "current": {
+        "year": 2026,
+        "publication_type": "conference",
+        "venue": "European Conference on Computer Vision",
+        "venue_id": "venue:eccv",
+        "venue_acronym": "ECCV",
+        "venue_track": "Main",
+        "doi": "",
+        "paper_url": "",
+        "formal_url": "",
+        "arxiv_id": "2512.20937",
+        "arxiv_url": "https://arxiv.org/abs/2512.20937",
+        "authors": [
+          "Ruiqi Liu",
+          "Yi Han",
+          "Zhengbo Zhang",
+          "Liwei Yao",
+          "Zhiyuan Yan",
+          "Jialiang Shen",
+          "Zhijin Chen",
+          "Boyi Sun",
+          "Lubin Weng",
+          "Jing Dong",
+          "Yan Wang",
+          "Shu Wu"
+        ]
+      },
+      "evidence_urls": [
+        "https://arxiv.org/abs/2512.20937",
+        "https://openalex.org/W7117340004"
+      ],
+      "batch": "B",
+      "confidence": "bounded_to_available_evidence",
+      "evidence_required": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "proposed_changes": {},
+      "status": "REVIEW_REQUIRED",
+      "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+      "field_checks": {
+        "venue": "present",
+        "year": "present",
+        "publication_type": "formal_in_current_corpus",
+        "canonical_url": "missing_formal_url",
+        "doi": "not_required_without_authoritative_applicability",
+        "arxiv": "present",
+        "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+        "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+      }
+    },
+    "current_canonical_and_public_state": {
+      "paper_id": "curated:aa7dceb70828cdd6ad39",
+      "public_storage_identity": "curated:aa7dceb70828cdd6ad39",
+      "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+      "authors": [
+        "Ruiqi Liu",
+        "Yi Han",
+        "Zhengbo Zhang",
+        "Liwei Yao",
+        "Zhiyuan Yan",
+        "Jialiang Shen",
+        "Zhijin Chen",
+        "Boyi Sun",
+        "Lubin Weng",
+        "Jing Dong",
+        "Yan Wang",
+        "Shu Wu"
+      ],
+      "doi": "",
+      "arxiv_id": "2512.20937",
+      "year": 2026,
+      "venue": "European Conference on Computer Vision",
+      "publication_type": "conference",
+      "tasks": [
+        "detection"
+      ],
+      "research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "public_formal_url": "",
+      "public_paper_url": "",
+      "resolved_links": {
+        "formal_doi": "",
+        "formal_url": "",
+        "openalex_url": "https://openalex.org/W7117340004",
+        "arxiv_id": "2512.20937",
+        "arxiv_url": "https://arxiv.org/abs/2512.20937",
+        "primary_url": "https://openalex.org/W7117340004"
+      }
+    },
+    "provisional_outcome": "SUPPORTED_ADDITION",
+    "outcome_scope": "Adding only the missing formal URL; this is not a taxonomy addition, formal decision or scientific reclassification.",
+    "scientific_review_restarted": false,
+    "proposed_taxonomy_changes": [],
+    "authoritative_changes_applied": false,
+    "formal_review_action_closed": false,
+    "maintainer_acceptance_pending": true,
+    "retrieval_accounting": {
+      "new_network_requests": 0,
+      "new_full_manuscripts": 0,
+      "manuscript_downloads": 0,
+      "datasets_or_code_downloads": 0,
+      "source_refresh_attempts": 0,
+      "paid_source_api_cost_usd": 0,
+      "currency": "USD",
+      "cost_scope": "External source/API spend only. Model-compute billing is not known and is not asserted to be zero."
+    },
+    "proposed_publication_change": {
+      "field": "formal_url",
+      "before": "",
+      "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14",
+      "scope": "A formal-version link addition only; no canonical DOI/ID/author/year/venue/task/type replacement is proposed.",
+      "implementation_boundary": "Derived public formal_url may require a supported authoritative/manual URL field; B4 must reconcile the exact schema and fingerprint before applying anything. No direct public-export JSON edit."
+    },
+    "proposed_formal_doi_change": null,
+    "identity_evidence": {
+      "canonical_title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+      "publisher_title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+      "exact_title_match": true,
+      "canonical_author_count": 12,
+      "publisher_author_count": 13,
+      "canonical_author_sequence": [
+        "Ruiqi Liu",
+        "Yi Han",
+        "Zhengbo Zhang",
+        "Liwei Yao",
+        "Zhiyuan Yan",
+        "Jialiang Shen",
+        "Zhijin Chen",
+        "Boyi Sun",
+        "Lubin Weng",
+        "Jing Dong",
+        "Yan Wang",
+        "Shu Wu"
+      ],
+      "publisher_author_sequence": [
+        "Ruiqi Liu",
+        "Yi Han",
+        "Zhengbo Zhang",
+        "Liwei Yao",
+        "Zhiyuan Yan",
+        "Jialiang Shen",
+        "ZhiJin Chen",
+        "Manni Cui",
+        "Boyi Sun",
+        "Lubin Weng",
+        "Jing Dong",
+        "Yan Wang",
+        "Shu Wu"
+      ],
+      "ordered_shared_authors_match_after_insertion_and_case_normalization": true,
+      "author_difference": "Publisher inserts Manni Cui between ZhiJin Chen and Boyi Sun; canonical/early list has12 authors; Chen capitalization is also version-specific. No author edit is proposed.",
+      "canonical_arxiv_id": "2512.20937",
+      "verified_publisher_doi": "10.1007/978-3-032-37429-5_14",
+      "formal_url": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14",
+      "official_pdf_url": "https://link.springer.com/content/pdf/10.1007/978-3-032-37429-5_14.pdf",
+      "version": "Official ECCV 2026 Springer published chapter, LNCS 17041; complete main chapter, not the early arXiv v1.",
+      "first_online": "2026-09-12",
+      "printed_pages": "225–243",
+      "work_identity_confidence": "high for same work; exact full bibliographic/scientific version equivalence is not established",
+      "identity_basis": "Existing complete Springer19-page source receipt, exact title,12 shared ordered authors and explicit earlier-arXiv/version observation from accepted B1M review.",
+      "manuscript_receipt_sha256": "ee8012fd5021f6ac40f9fc336f81d94e2d734630bface9c333d37cc975e49fe9",
+      "manuscript_receipt_bytes": 3126434
+    },
+    "scientific_evidence_scope": {
+      "status": "REUSED_VALIDATED_B1M_EVIDENCE_NOT_REASSESSED",
+      "prior_review_id": "R034",
+      "prior_accepted_decision_id": "review:f58480d5cff48573783e",
+      "prior_scientific_outcome": "PROPOSE_CORRECTION_ACCEPTED",
+      "current_classification_retained": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "source_version": "Official ECCV 2026 Springer published chapter, LNCS 17041; complete main chapter, not the early arXiv v1.",
+      "contributions_exact_reuse": {
+        "method": "Real-centric Envelope Modeling (REM): Manifold Boundary Reconstruction (MBR) uses feature/latent perturbations of VAE real-image reconstructions to make near-real examples; Envelope Estimation (EE) uses a binary/tangency boundary; Cross-Domain Consistency (CDC) aligns a frozen DINO anchor and adapted learner across clean/degraded views (§3, printed pp.229–232).",
+        "dataset": "RealChain’s existing dataset role comprises 14,000 source images from real pools and six text-to-image generator families plus a Seedream image-to-image stratum. No removal or reassessment of the recognized dataset role is authorized.",
+        "benchmark": "Separate ND/CD evaluation of real/fake detection across 50 intended operation chains and seven source/mode strata, with nine independent baselines, balanced accuracy and reported robustness comparisons (§4, Table 5)."
+      },
+      "exact_existing_locators": [
+        "§3 printedpp229–232 (REM/MBR/EE/CDC)",
+        "§4 and Table5 PDFp11/printedp235 (RealChain)",
+        "§5.1 PDFp12/printedp236 (Balanced Accuracy)",
+        "Tables1–2 PDFp10/printedp234",
+        "Table7 PDFp14/printedp238;Table8 PDFp14/printedp238"
+      ],
+      "reported_numerical_results_exact_reuse": {
+        "overall_balanced_accuracy": {
+          "REM": 94.9,
+          "DDA": 88.0,
+          "difference_percentage_points": 6.9,
+          "locator": "Table 1, PDF p.10 / printed p.234"
+        },
+        "RealChain": {
+          "REM_ND": 92.4,
+          "REM_CD": 84.2,
+          "DDA_ND": 88.8,
+          "DDA_CD": 65.8,
+          "CD_difference_percentage_points": 18.4,
+          "ND_difference_percentage_points": 3.6,
+          "REM_ND_to_CD_drop_percentage_points": 8.2,
+          "DDA_ND_to_CD_drop_percentage_points": 23.0,
+          "locator": "Table 5, PDF p.11 / printed p.235"
+        },
+        "RealChain_REM_source_pairs": {
+          "Flux.1_ND": "96.5",
+          "Flux.1_CD": "86.7",
+          "Hunyuan3_ND": "93.8",
+          "Hunyuan3_CD": "85.3",
+          "NanoBanana_ND": "91.9",
+          "NanoBanana_CD": "84.8",
+          "QwenImage_ND": "94.1",
+          "QwenImage_CD": "87.3",
+          "SDv3.5_ND": "92.9",
+          "SDv3.5_CD": "84.5",
+          "Seedream4_ND": "94.2",
+          "Seedream4_CD": "81.9",
+          "i2i_ND": "83.7",
+          "i2i_CD": "78.8",
+          "Avg_ND": "92.4",
+          "Avg_CD": "84.2"
+        },
+        "cost_Fig7_GPU_hours_per_1000_generated_samples": {
+          "SDXL": 1.33,
+          "SD3.5": 3.61,
+          "Flux": 6.94,
+          "Qwen": 6.67,
+          "MBR": 0.1,
+          "locator": "Fig.7(b), PDF p.15 / printed p.239",
+          "limitation": "These are reported generation costs, not necessarily matched generation settings/hardware or a complete detector inference-cost benchmark."
+        },
+        "Fig6_robustness": "JPEG, blur, noise and color distortion curves are reported. No unprinted curve-point values have been invented; these perturbations alone do not verify actual platform effects.",
+        "arithmetic_receipt": {
+          "recorded_at_utc": "2026-10-23T07:16:14.191470+00:00",
+          "source_sha256": "ee8012fd5021f6ac40f9fc336f81d94e2d734630bface9c333d37cc975e49fe9",
+          "scope": "Arithmetic from already-read printed tables, not numerical experiment reproduction. Original source/root notes are unchanged.",
+          "Table1_columns_for13_setting_mean": [
+            "AIGCDetect",
+            "Synthbuster",
+            "EvalGEN",
+            "ForenSynths",
+            "GenImage",
+            "DRCT-2M",
+            "Chameleon",
+            "SynthWildx",
+            "WildRF",
+            "AIGIBench",
+            "Bfree-Online",
+            "RealChain_ND",
+            "RealChain_CD"
+          ],
+          "calculations": [
+            {
+              "method": "NPR",
+              "reported_Overall_Avg": "50.0",
+              "unweighted13_setting_mean": 49.96923076923077,
+              "rounded13_setting_mean": 50.0,
+              "12_dataset_mean_using_CD_only": 47.94166666666666,
+              "12_dataset_mean_with_RealChain_ND_CD_averaged_first": 48.71666666666667
+            },
+            {
+              "method": "UnivFD",
+              "reported_Overall_Avg": "55.8",
+              "unweighted13_setting_mean": 55.776923076923076,
+              "rounded13_setting_mean": 55.8,
+              "12_dataset_mean_using_CD_only": 55.90833333333333,
+              "12_dataset_mean_with_RealChain_ND_CD_averaged_first": 56.02916666666667
+            },
+            {
+              "method": "FatFormer",
+              "reported_Overall_Avg": "58.8",
+              "unweighted13_setting_mean": 58.8,
+              "rounded13_setting_mean": 58.8,
+              "12_dataset_mean_using_CD_only": 59.125,
+              "12_dataset_mean_with_RealChain_ND_CD_averaged_first": 59.27916666666666
+            },
+            {
+              "method": "SAFE",
+              "reported_Overall_Avg": "49.3",
+              "unweighted13_setting_mean": 49.3,
+              "rounded13_setting_mean": 49.3,
+              "12_dataset_mean_using_CD_only": 48.291666666666664,
+              "12_dataset_mean_with_RealChain_ND_CD_averaged_first": 48.775000000000006
+            },
+            {
+              "method": "C2P-CLIP",
+              "reported_Overall_Avg": "60.7",
+              "unweighted13_setting_mean": 60.65384615384615,
+              "rounded13_setting_mean": 60.7,
+              "12_dataset_mean_using_CD_only": 61.43333333333334,
+              "12_dataset_mean_with_RealChain_ND_CD_averaged_first": 61.43333333333333
+            },
+            {
+              "method": "AIDE",
+              "reported_Overall_Avg": "54.7",
+              "unweighted13_setting_mean": 54.7,
+              "rounded13_setting_mean": 54.7,
+              "12_dataset_mean_using_CD_only": 54.225,
+              "12_dataset_mean_with_RealChain_ND_CD_averaged_first": 54.65833333333334
+            },
+            {
+              "method": "DRCT",
+              "reported_Overall_Avg": "69.8",
+              "unweighted13_setting_mean": 69.82307692307693,
+              "rounded13_setting_mean": 69.8,
+              "12_dataset_mean_using_CD_only": 69.88333333333334,
+              "12_dataset_mean_with_RealChain_ND_CD_averaged_first": 70.45416666666667
+            },
+            {
+              "method": "Aligned",
+              "reported_Overall_Avg": "72.2",
+              "unweighted13_setting_mean": 72.16923076923078,
+              "rounded13_setting_mean": 72.2,
+              "12_dataset_mean_using_CD_only": 72.45833333333333,
+              "12_dataset_mean_with_RealChain_ND_CD_averaged_first": 72.90416666666667
+            },
+            {
+              "method": "DDA",
+              "reported_Overall_Avg": "88.0",
+              "unweighted13_setting_mean": 87.97692307692309,
+              "rounded13_setting_mean": 88.0,
+              "12_dataset_mean_using_CD_only": 87.90833333333335,
+              "12_dataset_mean_with_RealChain_ND_CD_averaged_first": 88.86666666666667
+            },
+            {
+              "method": "REM",
+              "reported_Overall_Avg": "94.9",
+              "unweighted13_setting_mean": 94.93846153846154,
+              "rounded13_setting_mean": 94.9,
+              "12_dataset_mean_using_CD_only": 95.14999999999999,
+              "12_dataset_mean_with_RealChain_ND_CD_averaged_first": 95.49166666666666
+            }
+          ],
+          "interpretation": "REM94.9 and DDA88.0 are consistent with rounding an equal-weight mean across13 displayed ND/CD settings, although the manuscript calls these12 distinct benchmarks. This reconstructs a possible aggregation, not proof of intended weights or statistical replication. Other rows/rounding are retained without repair.",
+          "CDC_published_claim_percent": 16.4,
+          "Table7_full_minus_no_CDC_RealChain_percentage_points": 8.9,
+          "Table7_RealChain_setting_ambiguity": "Column not explicitly labeled ND/CD; main ND/CD arithmetic mean is88.3. The16.4 prose drop cannot be derived directly from these displayed values.",
+          "original_root_notes_overwritten": false
+        },
+        "reported_percent_vs_percentage_points": "The paper uses % for gains. Subtracting the printed balanced-accuracy percentages yields 6.9 and 18.4 percentage points; no relative-percent reinterpretation is made."
+      },
+      "all_existing_counterevidence_and_inconsistencies_exact_reuse": [
+        {
+          "finding": "Nonuniform detector superiority",
+          "locators": [
+            "Table 1, PDF p.10",
+            "Table 2, PDF p.10"
+          ],
+          "details": "REM ForenSynths 91.5 is below C2P-CLIP 92.0. REM ProGAN 97.4 is below UnivFD 99.4, FatFormer 98.5 and C2P-CLIP 99.3; REM StarGAN 90.2 is below C2P-CLIP 99.6. The overall headline is not uniform per-subset dominance."
+        },
+        {
+          "finding": "Printed DRCT RealChain ND mismatch",
+          "locators": [
+            "Table 1, PDF p.10",
+            "Table 5, PDF p.11"
+          ],
+          "details": "Table 1 prints 69.1; Table 5 prints 68.6. Both are preserved without correction."
+        },
+        {
+          "finding": "Backbone and average association unresolved",
+          "locators": [
+            "§5.1, PDF p.12",
+            "Table 1, PDF p.10",
+            "Table 8, PDF p.14"
+          ],
+          "details": "Section 5.1 specifies DINOv3 ViT-H+/16 for comparisons and ablations. Table 8 H+/16 Avg is 93.6, whereas 7B/16 Avg is 94.9; Table 1 headline Avg is 94.9 across a different inventory of settings. The repeated number does not prove Table 1 used 7B. Table 1 REM WildRF is 97.8, whereas Table 8 H+ WildRF is 97.9."
+        },
+        {
+          "finding": "Ablation setting and claimed CDC drop unresolved",
+          "locators": [
+            "§5.3, PDF p.13",
+            "Table 7, PDF p.14"
+          ],
+          "details": "Table 7 RealChain column is not labeled ND/CD. Full MBR+EE+CDC is 88.3 and MBR+EE without CDC is 79.4: 8.9 percentage points. The prose claims a 16.4% drop. Full 88.3 happens to equal (92.4+84.2)/2; that is arithmetic consistency, not verified setting identification."
+        },
+        {
+          "finding": "Twelve benchmarks versus thirteen displayed settings",
+          "locators": [
+            "§5.2",
+            "Table 1, PDF p.10",
+            "arithmetic-receipt.json"
+          ],
+          "details": "There are 12 distinct benchmarks but 13 ND/CD setting columns. A simple mean of those 13 printed settings reproduces REM 94.9 and DDA 88.0 after rounding. This is a possible reconstruction, not proof of intended weighting. Alternative 12-benchmark averages differ."
+        },
+        {
+          "finding": "Paper versus README chain bounds and platform list",
+          "locators": [
+            "§4.2 and Fig.5",
+            "README at c1e8aacf68f041d3abe6509dc01425c5e42ab01e"
+          ],
+          "details": "The paper permits 1–3 propagation plus 0–2 post-process steps (possible total 1–5); README says 2–5. Fig.5 includes Facebook among six platforms; README lists five without Facebook. The unavailable full JSON prevents reconciliation."
+        }
+      ],
+      "all_existing_release_review_exact_reuse": {
+        "repository_URL": "https://github.com/handsome-rich/REM",
+        "repository_commit": "c1e8aacf68f041d3abe6509dc01425c5e42ab01e",
+        "README_blob_sha1": "adbd88f800e765de97e779614cc0e9a39229014d",
+        "README_raw_sha256": "4d58fc49c5fd8eb3fa7be74f5782b0d9c7ff067e0f726b051dadb2fceff09178",
+        "repository_root_entries": [
+          "README.md",
+          "fig"
+        ],
+        "training_inference_code_verified_available": false,
+        "code_status": "The fetched pinned root lists README.md and fig only; README says training and inference code will be released soon. No code, checkpoints or evaluator was obtained or executed.",
+        "code_license": "README declares MIT, but this is separate from dataset licensing; no LICENSE file was listed in the fetched root.",
+        "dataset_license": "README explicitly declares CC BY-NC 4.0 for RealChain. This is an author declaration, not inferred from code or independently read from an HF card/asset license.",
+        "Hugging_Face_repository": "handsomerich/RealChain",
+        "Hugging_Face_revision": "0f0007d05cbd5ab6213783ad9ec3c2d38ab457c0",
+        "Hugging_Face_created_at": "2026-03-18T13:20:02+00:00",
+        "Hugging_Face_last_modified": "2026-03-18T13:49:39+00:00",
+        "Hugging_Face_private": false,
+        "Hugging_Face_gated": false,
+        "Hugging_Face_sibling_names": [
+          ".gitattributes",
+          "Flux1.zip",
+          "Hunyuan3.zip",
+          "NanoBanana.zip",
+          "QwenImage.zip",
+          "Real.tar",
+          "SDv3.5.zip",
+          "Seedream4.zip",
+          "degradation_chains.json",
+          "i2i.zip"
+        ],
+        "Hugging_Face_card_or_license_verified": false,
+        "metadata_boundary": "The info response omitted cardData/license and the sibling list has no README. Public/non-gated metadata and named archives establish a published repository listing, not verified full archive contents, integrity, sample counts or a complete benchmark installation.",
+        "chain_configuration_access": {
+          "kind": "bounded official metadata only",
+          "requested_url": "https://huggingface.co/datasets/handsomerich/RealChain/resolve/0f0007d05cbd5ab6213783ad9ec3c2d38ab457c0/degradation_chains.json",
+          "effective_url": "https://huggingface.co/datasets/handsomerich/RealChain/resolve/0f0007d05cbd5ab6213783ad9ec3c2d38ab457c0/degradation_chains.json",
+          "started_at_utc": "2026-10-23T07:12:05.940077+00:00",
+          "completed_at_utc": "2026-10-23T07:12:20.964751+00:00",
+          "HTTP": 0,
+          "curl_exit_code": 28,
+          "content_type": null,
+          "body_bytes": 0,
+          "body_sha256": null,
+          "headers_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "transport_sha256": "0b49095afd9e6c0ebd4a21280d6ce6fc6406a9ffbf8a27963232f3bcbc27759c",
+          "retries": 0
+        },
+        "dataset_or_archive_bytes_downloaded": 0,
+        "complete_release_verified": false,
+        "publisher_final_release_equivalence_verified": false,
+        "limitations": "The one pinned chain-JSON request timed out after about 15 seconds, HTTP 0/curl 28, zero bytes, without retry. Full chain definitions, per-image assignments, fixed splits, released evaluator, asset checksums and final-publication equivalence remain unverified."
+      },
+      "all_existing_bibliographic_version_observation_exact_reuse": {
+        "marker": "OUT_OF_SCOPE_BIBLIOGRAPHIC_VERSION_OBSERVATION",
+        "independent_pending_review_id": "P034",
+        "P034_remains_pending": true,
+        "canonical_metadata_changed": false,
+        "new_review_action_created": false,
+        "early_arxiv": {
+          "url": "https://arxiv.org/abs/2512.20937",
+          "version": "v1",
+          "submitted_at_utc": "2025-12-24T04:41:04Z",
+          "authors": [
+            "Ruiqi Liu",
+            "Yi Han",
+            "Zhengbo Zhang",
+            "Liwei Yao",
+            "Zhiyuan Yan",
+            "Jialiang Shen",
+            "Zhijin Chen",
+            "Boyi Sun",
+            "Lubin Weng",
+            "Jing Dong",
+            "Yan Wang",
+            "Shu Wu"
+          ],
+          "author_count": 12,
+          "abstract_benchmark_evaluations": 8,
+          "abstract_average_improvement_percent": 7.5,
+          "full_manuscript_obtained_or_read": false,
+          "scientific_version_boundary": "Only official abstract/identity metadata was inspected, not the early full paper or its tables."
+        },
+        "publisher": {
+          "doi": "10.1007/978-3-032-37429-5_14",
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14",
+          "first_online": "2026-09-12",
+          "authors": [
+            "Ruiqi Liu",
+            "Yi Han",
+            "Zhengbo Zhang",
+            "Liwei Yao",
+            "Zhiyuan Yan",
+            "Jialiang Shen",
+            "ZhiJin Chen",
+            "Manni Cui",
+            "Boyi Sun",
+            "Lubin Weng",
+            "Jing Dong",
+            "Yan Wang",
+            "Shu Wu"
+          ],
+          "author_count": 13,
+          "abstract_benchmark_evaluations": 12,
+          "abstract_average_improvement_percent": 6.9,
+          "abstract_RealChain_improvement_percent": 18.4,
+          "full_manuscript_obtained_and_read": true,
+          "sha256": "ee8012fd5021f6ac40f9fc336f81d94e2d734630bface9c333d37cc975e49fe9"
+        },
+        "verified_author_difference": "Publisher adds Manni Cui between ZhiJin Chen and Boyi Sun; the canonical/early list has 12 authors. Chen’s capitalization differs, but no canonical normalization is applied.",
+        "changed_RealChain_construction_between_versions": "UNVERIFIED: the early abstract does not specify sufficient construction detail and its full manuscript was deliberately not retrieved.",
+        "whether_added_datasets_or_model_variants_explain_changed_claims": "UNVERIFIED: publisher Tables 1–8 are available, but no identity-matched early full tables were read for a scientific comparison. The publisher backbone/aggregation tensions also remain unresolved.",
+        "version_mixing_prevented": "Publisher scientific numbers are used for the benchmark review. Early 8/7.5 claims remain separate metadata observations. The current repository README repeats publisher figures but retains an arXiv 2025 citation; the March HF revision is not certified as byte-equivalent to the publisher-final dataset.",
+        "effect_on_R2": "The complete publisher source independently supports the separate RealChain evaluation contribution. That does not establish that its full protocol or numerical results equal the early arXiv version.",
+        "protected_current_bibliographic_fields": {
+          "authors": "Ruiqi Liu; Yi Han; Zhengbo Zhang; Liwei Yao; Zhiyuan Yan; Jialiang Shen; Zhijin Chen; Boyi Sun; Lubin Weng; Jing Dong; Yan Wang; Shu Wu",
+          "doi": "",
+          "year": "2026",
+          "venue": "European Conference on Computer Vision",
+          "arxiv_id": "2512.20937"
+        },
+        "disposition": "Evidence observation only. It neither closes P034 nor proposes an automatically applied bibliographic correction or a new historical action."
+      },
+      "independent_empirical_reproduction": false,
+      "new_scientific_acceptance": false,
+      "bounded_use": "These existing sections/results are carried forward for traceability only. P034 asks for a formal URL; B3 does not restart or change R034 and does not verify early/full publisher scientific equivalence."
+    },
+    "source_provenance": [
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+        "locator": "formal_records[review_id=P034]",
+        "finding": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+        "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+      },
+      {
+        "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+        "locator": "#b-P034",
+        "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+        "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+      },
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+        "locator": "policies[policy_id=V1]",
+        "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+        "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+      },
+      {
+        "path": "docs/publication_venue_normalization.md",
+        "locator": "Data and precedence; Persistence and live review",
+        "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+        "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+      },
+      {
+        "path": "data/raw/corpus_quality_batch_b_wave_b1m_2026_10_23/evidence_manifest.json",
+        "locator": "records[0].source",
+        "finding": "Official Springer ECCV2026 chapter title matches exactly; DOI10.1007/978-3-032-37429-5_14; archival landing pagehttps://link.springer.com/chapter/10.1007/978-3-032-37429-5_14; checked19-page publisher version SHA256ee8012fd5021f6ac40f9fc336f81d94e2d734630bface9c333d37cc975e49fe9.",
+        "sha256": "2a92011909acf09e4a483fe68bbf8d91d1d1c0b6efc77aea396d551b2a40085b"
+      },
+      {
+        "path": "data/raw/corpus_quality_batch_b_wave_b1m_2026_10_23/evidence_manifest.json",
+        "locator": "records[0].scientific_review.out_of_scope_bibliographic_version_observation",
+        "finding": "Publisher has13authors including Manni Cui; canonical/early version has12. Source identity is reusable for the narrow formalURL, but versions/fullmetadata are not certified equivalent.",
+        "sha256": "2a92011909acf09e4a483fe68bbf8d91d1d1c0b6efc77aea396d551b2a40085b"
+      },
+      {
+        "path": "docs/corpus_quality_batch_b_wave_b1m_2026_10_23.md",
+        "locator": "R034 — OUT_OF_SCOPE_BIBLIOGRAPHIC_VERSION_OBSERVATION",
+        "finding": "P034 intentionally remained open; B2 readiness does not close it or authorize author/DOI edits.",
+        "sha256": "0ec9248a614cde07c21266e7e120439c3cb52eba733112494aa1277468f0c195"
+      },
+      {
+        "path": "web/data/public_preview_papers.json",
+        "locator": "records[arxiv_id=2512.20937]",
+        "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+        "finding": "Current published paper matched by exact arXiv identifier; actual resolver output has no formal URL/DOI."
+      },
+      {
+        "path": "scripts/paper_links.py",
+        "locator": "resolve_public_links; _formal_url",
+        "sha256": "4e474feb440ce3e83f2147457fa965629f07de13a5adadacac7a976a61e44a8d",
+        "finding": "Pure offline current-state link resolution; arXiv DOI and OpenAlex URL are not formal publisher links."
+      },
+      {
+        "path": "data/curated/review_decisions.csv",
+        "locator": "target paper curated:aa7dceb70828cdd6ad39; original action P034",
+        "sha256": "ce616e76f5b41a2df967c9c72451f9cbeb8b1ad05b488d5ca6240d070c4819dc",
+        "finding": "Original publication question remains open. Any prior independent scientific terminal action is preserved and is not reused to close this publication action."
+      }
+    ],
+    "limitations": [
+      "Publisher metadata and source receipt were verified in B1M; no URL was requested again in B3. Current online availability or later publisher amendments were not rechecked.",
+      "Canonical/early12-author record differs from13-author publisher version including Manni Cui. Same-work linking is supported; complete metadata or scientific equivalence is not.",
+      "Early arXiv metadata reports8 evaluations and7.5% average improvement; publisher reports12 benchmarks/13 displayedND-CD settings,6.9 percentage-point headline gap and18.4-point RealChainCD gap. Do not mix versions.",
+      "All original numerical discrepancies, nonuniform superiority, DRCT69.1/68.6 mismatch, backbone/average ambiguity, CDC16.4%-versus8.9-point ambiguity and chain/platform differences are preserved verbatim in scientific_evidence_scope.",
+      "No appendix, full chainJSON, archive content, fixedsplit/evaluator or independent numerical reproduction is certified; prior access/source limitations remain unchanged."
+    ],
+    "disagreement": {
+      "bibliographic_version_difference": "Publisher adds Manni Cui between ZhiJin Chen and Boyi Sun; the canonical/early list has 12 authors. Chen’s capitalization differs, but no canonical normalization is applied.",
+      "scientific_numerical_caveats": "Preserved exact prior counterevidence; not resolved or repaired.",
+      "effect_on_bounded_formal_url": "Does not negate the verified same-work publisher link, but broader metadata replacement is unsupported by this URL-only review. If current formal acceptance rules cannot accommodate this bounded link with explicit differences, keep P034 open pending record-level reconciliation."
+    },
+    "unsupported_claims": [
+      "No newly reproduced scientific experiment or causal claim.",
+      "No blanket full-metadata, author-version or manuscript byte-equivalence certification.",
+      "No operational reproducibility certification, publication-year edit, taxonomy change or formal action closure."
+    ],
+    "confidence": {
+      "bounded_formal_url_identity": "high",
+      "scientific_reassessment": "not performed",
+      "publisher_full_version_equivalence": "not established"
+    },
+    "B4conditions": [
+      "Explicit maintainer acceptance is required for the P034 formal-link question; R034 acceptance is not P034 closure.",
+      "Record the publisher URL as the formal version while preserving canonical12-author history, arXiv2512.20937, current DOI/year/venue/abstract/tasks/types and existing B1M evidence.",
+      "Before changing any persisted field, reconcile supported schema and current bibliographic fingerprint. Do not silently replace the author list or add the publisher DOI as a separate authorized edit.",
+      "If attaching the publisher-version link with the known author/version difference cannot satisfy existing acceptance rules, leave P034 open and report that exact blocker."
+    ]
+  },
+  "independent_qc": {
+    "artifact_path": "evidence_archive/qc-local-three.json",
+    "status": "PASS",
+    "scope": "Evidence-to-original-publication-claim mapping; not formal maintainer acceptance."
+  },
+  "evidence_provenance_inventory": "source_inventory.json"
+}

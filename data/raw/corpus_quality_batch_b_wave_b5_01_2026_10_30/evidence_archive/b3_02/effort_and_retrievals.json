@@ -1,0 +1,133 @@
+{
+  "effort_basis": "Measured agent wall-clock windows including local review, tool waits and writing. Not human analyst labor; not billed model compute. Original interruption is excluded.",
+  "group_recovery_windows": {
+    "romania": {
+      "resume_start_utc": "2026-10-29T07:45:51.599251+00:00",
+      "resume_end_utc": "2026-10-29T07:57:44.071844+00:00",
+      "resume_elapsed_monotonic_seconds": 712.4728451659903,
+      "original_reviewer_start": {
+        "utc": "2026-10-29T04:06:55.807326+00:00",
+        "monotonic": 256418.0906605
+      },
+      "original_active_time_not_reliably_recoverable": true,
+      "interruption_excluded_from_resume_elapsed": true,
+      "not_human_labor_time": true,
+      "new_network_requests_this_resume": 0,
+      "new_manuscript_downloads_this_resume": 0,
+      "original_direct_http_attempts": 14,
+      "original_direct_http_successes": 6,
+      "original_successful_capture_bytes": 2033028,
+      "original_web_tool_capture_files": 5,
+      "original_webtool_backendrequestcount_unknown": true,
+      "original_manuscript_pdf_downloads": 0,
+      "html_article_bodies_were_captured_but_only_metadata_or_affiliation_relevant_content_reviewed": true
+    },
+    "turkey_india_israel": {
+      "recovery_started_utc": "2026-10-29T07:45:50.410804+00:00",
+      "recovery_finished_utc": "2026-10-29T07:50:34.542807+00:00",
+      "instrumented_recovery_tail_seconds": 284.1319223329774,
+      "instrumentation_limit": "First recovery local reads precede this timer; previous attempt has start but no verified session-end. Do not equate interruption interval to analyst effort.",
+      "previous_attempt_start": {
+        "utc": "2026-10-29T04:07:33.241275+00:00",
+        "monotonic": 256455.524643833,
+        "note": "start of group instrumented capture; initial local inspection and 2 web calls precede capture"
+      },
+      "new_recovery_network_requests": 0,
+      "new_recovery_full_manuscripts": 0,
+      "prior_request_receipts": {
+        "attempts": 12,
+        "success200": 4,
+        "total_success_bytes": 785619,
+        "summed_logged_request_seconds": 43.70017891697353
+      },
+      "prior_web_tool_bundles": 4,
+      "prior_tool_request_count_not_claimed": "Bundle count is not a request count; source openings/searches are retained in4webJSONcaptures.",
+      "paid_api_cost": 0,
+      "declined_geocode_command": "Not executed; zero result assumed from declinedqueue3."
+    },
+    "china_uk_algeria": {
+      "resume_started": {
+        "utc": "2026-10-29T07:48:16.601254+00:00",
+        "monotonic": 268332.89560075
+      },
+      "resume_finished": {
+        "utc": "2026-10-29T08:04:05.554859+00:00",
+        "monotonic": 269281.849350916
+      },
+      "resume_elapsed_seconds": 948.9537501659943,
+      "measurement_scope": "Wall-clock reviewer activity window including local reading/tool waits; not human analyst labor. Original interrupted window not added to resume elapsed.",
+      "original_started": {
+        "utc": "2026-10-29T04:06:55.800776+00:00",
+        "monotonic": 256418.084351041
+      },
+      "original_last_checkpoint_utc": "2026-10-29T04:11:09.713174+00:00",
+      "new_manuscripts_retrieved_on_recovery": 0,
+      "new_external_requests_on_recovery": 0,
+      "new_geocoding_requests_on_recovery": 0,
+      "prior_group_browser_capture_calls": 5,
+      "prior_group_web_capture_files": [
+        "web-01.json",
+        "web-02.json",
+        "web-03.json",
+        "web-04.json",
+        "web-05.json"
+      ],
+      "browser_backend_request_count": "Not exposed; five preserved tool result captures are not claimed as five HTTP requests.",
+      "central_geocoding_requests_reused": 2,
+      "declined_queue3_requests_executed": 0,
+      "monetary_cost": "No paid API used; provider/network/compute monetary cost not measured."
+    }
+  },
+  "primary_review_window_seconds_sum": 1945.558517664962,
+  "cross_review_windows": {
+    "romania": {
+      "note": "not independently timed"
+    },
+    "turkey_india_israel": {
+      "note": "not independently timed"
+    },
+    "china_uk_algeria": {
+      "preliminary_qc_started_utc": "2026-10-29T07:57:43.247226+00:00",
+      "elapsed_since_preliminary_seconds_including_wait_for_results": 810.4398642090382,
+      "note": "Waiting for reviewer JSON is not counted as human analyst labor."
+    }
+  },
+  "root_recovery_start": {
+    "utc": "2026-10-29T07:41:59.465314+00:00",
+    "monotonic": 267955.76010075,
+    "note": "Recovery/new work only; exclude historical usage-limit interruption from analyst effort."
+  },
+  "root_packaging_measured_at_utc": "2026-10-29T08:16:03.768284+00:00",
+  "root_elapsed_instrumented_tail_seconds": 2044.302802374994,
+  "limits": [
+    "Initial recovery reads precede root timer.",
+    "Original reviewer active duration cannot be reconstructed reliably; no invented analyst hours.",
+    "Parallel reviewer windows must not be treated as serial wall time.",
+    "Provider backend HTTP counts and model compute costs are not exposed."
+  ],
+  "B2_estimated_minutes_range_preserved": [
+    340,
+    710
+  ],
+  "prior_direct_http_attempts": 26,
+  "prior_successful_http_payloads": 10,
+  "prior_successful_http_bytes": 2818647,
+  "prior_group_webtool_capture_files": 14,
+  "prior_webtool_backend_request_count": null,
+  "prior_geocoding_requests_completed": 4,
+  "prior_geocoding_response_bytes": 1117,
+  "prior_geocoding_request_duration_seconds_sum": 19.42613758301013,
+  "geocoding_attribution": "Data © OpenStreetMap contributors, ODbL. Cached exact-institution queries only, not primary affiliation evidence.",
+  "policy_url": "https://operations.osmfoundation.org/policies/nominatim/",
+  "declined_queue3_requests": {
+    "proposed": 4,
+    "executed": 0
+  },
+  "new_recovery_scientific_source_requests": 0,
+  "new_recovery_manuscript_downloads": 0,
+  "new_recovery_geocoding_requests": 0,
+  "paid_APIs_used": false,
+  "paid_API_charge": 0,
+  "total_financial_cost": null,
+  "calibration": "Keep metadata binding effort separate from institution site recovery. Ten U holds limit extrapolation to remediation throughput; unresolved does not mean unreviewed."
+}

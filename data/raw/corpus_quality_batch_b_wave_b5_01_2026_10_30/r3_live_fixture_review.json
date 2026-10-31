@@ -1,0 +1,130 @@
+{
+  "task": "B5-01R3 independent review of additive live publish fixture and selective conftest",
+  "verdict": "APPROVE",
+  "scope": "Exact prepared live factory, conftest and21-case regression source; archival function preservation also checked statically. Mandatory test execution and complete archive verification remain separate gates.",
+  "inputs_sha256": {
+    "prepared-publish_workflow_fixtures.py": "3d3e4078c2dcd7bfcd341693f5ee0ae8374d7f4d1e6ed11cda10507dc7f658f9",
+    "prepared-conftest.py": "10d322ddb36d4ce81a7540992bf49d9fa370d3e177555939ae649adce4bc5ee6",
+    "prepared-test_publish_workflow_fixture_isolation.py": "3e8ac79c7238fe018942d92ac244aeb8276d5c063f804b6dde4022ef574f39e4",
+    "prepared-archived_publish_fixture_successor.py": "94a0ad43e9326ab22e5db136c3ac00818dbcd0261ab6a803aa9163d12e6cf212",
+    "prepared-test_b5_publish_fixture_successor.py": "d152102298f672685ed5863b76d99087f817e30407e6a392e53359f048bf2743"
+  },
+  "passed": 20,
+  "failed": 0,
+  "checks": [
+    {
+      "check": "All five prepared source files parse without execution",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Module-local RunningServer binding is only monkeypatch mutation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "No production defaults or handler globals patched",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Actual existing handler API receives per-instance temporary state",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Published address real server runner geocoder and daemon behavior preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Original enter and exit delegated, original timeout unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Constructor bind and thread allocation failures close acquired resources before re-raise",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Entry cleanup does not shutdown or join an unstarted thread",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Owned coordinator cleanup always attempts directory removal",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Conftest diff limited to import and exact collected module selector",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Existing autouse function-scope fixture rollback retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "21 new regression cases collected statically with no skips",
+      "pass": true,
+      "detail": 21
+    },
+    {
+      "check": "Required live isolation rollback failure paths and archive separation groups present",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Real HTTP regression checks success response stable inode and unchanged production-state bytes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Nested instances test distinct resources and independent teardown",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Regressions preserve restored protected hashes and reject active successor allowance",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Regressions verify targeted module rollback without altering production make_handler",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "All archival R2 functions fixtures and parameterized assertions preserved AST-exact",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Archival helper is separate private ModuleType and does not replace runtime module",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Review executed no source code or tests",
+      "pass": true,
+      "detail": "AST/hash/source examination only; git or imports of prepared modules not executed."
+    }
+  ],
+  "line_review": {
+    "factory_1_58": "Per-instance temp ownership, real explicit API, native server/thread semantics, base enter/exit delegation and nested cleanup; no new timeout or production-global mutation. Constructor only calls server_close before start; entry uses shutdown only when thread is alive.",
+    "installer_61_65": "Only test-module RunningServer is replaced through function-scoped monkeypatch rollback.",
+    "conftest_7_24": "One additive import and literal module-name branch; all previous fixture branches unchanged.",
+    "regressions": "21 cases cover exact restored bytes, real HTTP+stable lock inode+default-state preservation, nested resources, body/bind/thread failure cleanup, scoped binding, archive isolation/tampering and original live guards."
+  },
+  "nonblocking_limits": [
+    "The fixture is deliberately pytest-scoped; running the restored protected module directly with unittest.main bypasses conftest. The supported mandatory test runner is pytest.",
+    "Exceptional cleanup routines can replace an earlier exception if cleanup itself raises, retaining its Python exception context; this matches normal context-manager cleanup behavior and does not weaken any existing semantic assertion.",
+    "No new joined-request-worker behavior is introduced. Original six tests retain their completion/event assertions before teardown; functional validation must exercise them."
+  ],
+  "repository_mutations": 0,
+  "tests_executed": 0,
+  "approval_condition": "Restore the two protected files exactly, apply only these reviewed prepared live bytes and verified archival files, then run all mandatory gates. Approval is not a passing regression result or publication authorization."
+}

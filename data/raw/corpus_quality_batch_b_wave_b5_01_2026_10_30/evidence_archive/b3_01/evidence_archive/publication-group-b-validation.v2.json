@@ -1,0 +1,85 @@
+{
+  "original_artifact": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b-reviews.json",
+  "original_sha256": "3c4bda15a427841b4ba4f2a418c5043fced990c2f18fc4754c8c44a9533db846",
+  "corrected_artifact": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b-reviews.v2.json",
+  "corrected_sha256": "20ffc1a58738a9a37c018942f4321c9e68074de191777920358ee41f10aef7fb",
+  "checks": [
+    {
+      "check": "P150:correct_toc_section_and_line_numbers",
+      "pass": true
+    },
+    {
+      "check": "P150:observed_click_id_resolves_to_exact_chapter",
+      "pass": true
+    },
+    {
+      "check": "P150:raw_html_complete_author_order",
+      "pass": true
+    },
+    {
+      "check": "P150:raw_html_capture_and_doi_unchanged",
+      "pass": true
+    },
+    {
+      "check": "P177:correct_toc_section_and_line_numbers",
+      "pass": true
+    },
+    {
+      "check": "P177:observed_click_id_resolves_to_exact_chapter",
+      "pass": true
+    },
+    {
+      "check": "P177:raw_html_complete_author_order",
+      "pass": true
+    },
+    {
+      "check": "P177:raw_html_capture_and_doi_unchanged",
+      "pass": true
+    },
+    {
+      "check": "P229:correct_toc_section_and_line_numbers",
+      "pass": true
+    },
+    {
+      "check": "P229:observed_click_id_resolves_to_exact_chapter",
+      "pass": true
+    },
+    {
+      "check": "P229:raw_html_complete_author_order",
+      "pass": true
+    },
+    {
+      "check": "P229:raw_html_capture_and_doi_unchanged",
+      "pass": true
+    },
+    {
+      "check": "v1_original_byte_hash_unchanged",
+      "pass": true
+    },
+    {
+      "check": "only_exact_provenance_fields_changed",
+      "pass": true
+    },
+    {
+      "check": "scientific_outcomes_limitations_and_taxonomy_proposals_unchanged",
+      "pass": true
+    },
+    {
+      "check": "retrieval_history_budget_and_review_timings_unchanged",
+      "pass": true
+    },
+    {
+      "check": "no_new_sources_retrieved",
+      "pass": true
+    }
+  ],
+  "checks_passed": 17,
+  "check_count": 17,
+  "changed_field_count": 33,
+  "source_reference_hashes": {
+    "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-title-locators.json": "b6db0f975ee9ae37ae22be368e17463cafd9bff4f8528362e79c1d7124768b68",
+    "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-chapter-pages-rendered.json": "f92f6b121eda75226e6445c44fceebab6df11002a514e408dec79f9af2ba8915"
+  },
+  "new_retrievals": 0,
+  "repository_changes": 0
+}

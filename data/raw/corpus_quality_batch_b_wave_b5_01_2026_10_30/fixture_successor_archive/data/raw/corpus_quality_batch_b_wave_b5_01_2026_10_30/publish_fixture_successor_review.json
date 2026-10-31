@@ -1,0 +1,243 @@
+{
+  "task": "B5-01R2 independent Tier 2 protected-test successor review",
+  "reviewer": "/root/r2_fixture_review",
+  "reviewer_independence": {
+    "fixture_author": false,
+    "B5_01R_patch_author": false,
+    "prior_fixture_review_author": false,
+    "review_performed_before_successor_boundary_implementation": true
+  },
+  "reviewed_utc": "2026-10-31T02:22:58.009098+00:00",
+  "verdict": "APPROVE",
+  "verdict_scope": "Approve exactly the independently reviewed single-file fixture-isolation diff for an explicit historical successor boundary; not a blanket test exception, taxonomy decision, publication approval or test-result substitute.",
+  "authorization": {
+    "path": "tests/test_admin_publish_workflow_reliability.py",
+    "predecessor_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+    "predecessor_sha256": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63",
+    "reviewed_sha256": "34420cb25c55df54ecb65ff9d7e4dcd2e9e258cc85101fe9806f790203e6b60f",
+    "reviewed_diff_sha256": "02103322daabe9801fcff3520f5b3776d9a7b905c725a82461f7c08a13ee9bcb",
+    "scope": "fixture_state_isolation_only"
+  },
+  "diff_provenance": {
+    "canonical_algorithm": "UTF-8 difflib.unified_diff(before.decode().splitlines(keepends=True), after.decode().splitlines(keepends=True), fromfile=\"a/\"+path, tofile=\"b/\"+path), joined and UTF-8 encoded; default three context lines",
+    "canonical_patch_file": "independent-fixture-reviewed.diff",
+    "canonical_patch_sha256": "02103322daabe9801fcff3520f5b3776d9a7b905c725a82461f7c08a13ee9bcb",
+    "git_diff_sha256": "b7679264466917e3486a126122a085607d43cd696bf2ec58751e9fcb0604e11a",
+    "predecessor_lines": 235,
+    "successor_lines": 280
+  },
+  "line_review": [
+    {
+      "current_lines": [
+        4,
+        4
+      ],
+      "change": "Import tempfile.",
+      "verdict": "APPROVE",
+      "reason": "Standard-library owner for per-fixture state directory; no production dependency or network action."
+    },
+    {
+      "current_lines": [
+        8,
+        8
+      ],
+      "change": "Import pathlib.Path.",
+      "verdict": "APPROVE",
+      "reason": "Construct the explicit existing make_handler state-path argument inside the owned temporary root."
+    },
+    {
+      "current_lines": [
+        12,
+        12
+      ],
+      "change": "Import DEFAULT_STATE_PATH.",
+      "verdict": "APPROVE",
+      "reason": "Read-only negative oracle for the new isolation test; does not replace production state or configure a global path."
+    },
+    {
+      "current_lines": [
+        54,
+        58
+      ],
+      "change": "Create owned TemporaryDirectory and pass sync.json through public_preview_sync_state_path.",
+      "verdict": "APPROVE",
+      "reason": "Previously the real exclusive publish route created a persistent repository-default export lock despite the workflow runner being stubbed. Existing injection point isolates actual coordinator locking without mocking out the route, response or concurrency logic."
+    },
+    {
+      "current_lines": [
+        59,
+        64
+      ],
+      "change": "Bind ThreadingHTTPServer using the constructed handler, close coordinator and temporary root on bind failure, then re-raise.",
+      "verdict": "APPROVE",
+      "reason": "Preserves address, port selection, handler behavior and failure visibility; releases the fixture-owned coordinator and directory on constructor bind failure."
+    },
+    {
+      "current_lines": [
+        74,
+        82
+      ],
+      "change": "Retain shutdown, server_close and unchanged three-second serving-thread join; close coordinator and clean temporary directory in nested finally blocks.",
+      "verdict": "APPROVE",
+      "reason": "HTTP server teardown precedes owned coordinator closure and temporary-directory removal. New cleanup is fixture-scoped and does not unlink production lock paths. Nested finally ensures temporary cleanup after a coordinator-close exception. No sleep or HTTP deadline is added."
+    },
+    {
+      "current_lines": [
+        86,
+        92
+      ],
+      "change": "New test names all four production-default state/lock/intent paths.",
+      "verdict": "APPROVE",
+      "reason": "Paths match the coordinator suffix conventions. Tests observe these paths without writing them."
+    },
+    {
+      "current_lines": [
+        94,
+        98
+      ],
+      "change": "Read exact default-state bytes or absence before fixture use.",
+      "verdict": "APPROVE",
+      "reason": "Preserves pre-existing bytes and distinguishes absence from empty content; does not delete, create or normalize defaults."
+    },
+    {
+      "current_lines": [
+        99,
+        106
+      ],
+      "change": "Start actual HTTP fixture, require a distinct temporary state path and absent initial export lock, then POST confirmed publish.",
+      "verdict": "APPROVE",
+      "reason": "Exercises the real route and exclusive coordinator with a controlled runner. Retains substantive HTTP semantics rather than bypassing locking."
+    },
+    {
+      "current_lines": [
+        107,
+        113
+      ],
+      "change": "Require HTTP 200, success payload, lock created only under temporary root, unchanged default bytes before and after teardown, and temporary-root removal.",
+      "verdict": "APPROVE",
+      "reason": "Positive operation and isolation/teardown are both asserted. Does not disguise failed publishing or merely check file absence."
+    }
+  ],
+  "unchanged_semantic_proofs": {
+    "original_six_test_AST_equalities": {
+      "test_error_summary_prefers_concrete_validator_error": true,
+      "test_long_success_propagates_without_false_timeout": true,
+      "test_nonzero_export_result_preserves_stage_exit_and_summary": true,
+      "test_duplicate_publish_is_rejected_while_first_is_active": true,
+      "test_closed_connection_does_not_change_completed_success_status": true,
+      "test_publish_uses_long_timeout_for_controlled_long_result": true
+    },
+    "original_request_helper_AST_unchanged": true,
+    "http_client_timeout_seconds": 3,
+    "original_timeout_wait_join_assertions_preserved": true,
+    "success_result_helper_AST_unchanged": true,
+    "new_test_count": 1,
+    "production_and_guard_files": [
+      {
+        "path": "scripts/public_preview_sync.py",
+        "sha256": "9b98fd876818add90704c18fab9b0be3b9bc0a0b7986efe85009903b832e4547",
+        "equal_to_published_predecessor": true
+      },
+      {
+        "path": "scripts/serve_admin.py",
+        "sha256": "8f50a5d71cc271de76972e0b36f982a733b5c9545b3a3297a11280b794a8e12f",
+        "equal_to_published_predecessor": true
+      },
+      {
+        "path": "scripts/admin_workflows.py",
+        "sha256": "11aef4741278d5e7b2937e3157c512e8953ff6d0aadf0ec72fc5b2a2b7bb4484",
+        "equal_to_published_predecessor": true
+      },
+      {
+        "path": "tests/public_refinement_snapshot.py",
+        "sha256": "7d654ae6a8e606172749a4aadea082ed28a8146bd787168873d71a9258719d26",
+        "equal_to_published_predecessor": true
+      },
+      {
+        "path": "tests/test_historical_integrity_successors.py",
+        "sha256": "ed40aa491d4068c4eb00b0c1365464cf8c1cfed0a08be69e2f3b43dab3617ddf",
+        "equal_to_published_predecessor": true
+      },
+      {
+        "path": "tests/fixtures/public_website_refinement_2026_10_01.json",
+        "sha256": "1704cee41a57bde08fc100fa747869c22c81ed968a3cb5ec5c845629961e7618",
+        "equal_to_published_predecessor": true
+      }
+    ],
+    "no_production_file_changes": true
+  },
+  "lock_reasoning": {
+    "verified_call_chain": [
+      "make_handler public_preview_sync_state_path defaults to repository state path",
+      "make_handler constructs PublicPreviewSyncCoordinator with autostart=False",
+      "publish_changes is an export-bearing workflow and still calls preview_sync.run_exclusive(run)",
+      "run_exclusive uses process RLock plus open(a+b) and exclusive flock",
+      "unlock and close intentionally release the lock while retaining its path/inode"
+    ],
+    "stable_inode_preserved": "No production unlink-on-release/close is introduced. A stable lock pathname/inode must remain for existing waiters and newcomers to coordinate on the same inode. Only fixture-owned temporary state is removed after fixture teardown.",
+    "prior_orphan_evidence": "The existing exact-path cleanup receipt and prior failure/preservation artifacts are recovered historical evidence, not newly executed cleanup or ownership checks by this reviewer.",
+    "fixture_workflow_boundary": "Controlled runners finish before normal response-consuming test contexts exit; duplicate and closed-connection tests retain their original event synchronization and completion assertions. The new coordinator is lazy, autostart=False. No active production lock is deleted."
+  },
+  "two_guard_review": {
+    "failed_tests": [
+      "tests/test_systematic_tier2_application.py::test_pre_application_baseline_includes_and_preserves_previous_policy_pass",
+      "tests/test_systematic_tier2_policy.py::test_pre_task_repository_files_are_byte_identical"
+    ],
+    "shared_exact_assertions": [
+      "assert sorted(result[\"changed_paths\"]) == changed",
+      "assert result[\"changed_count\"] == len(changed)",
+      "assert result[\"protected_files_checked\"] == len(baseline)"
+    ],
+    "observed_failure_line": "tests/public_refinement_snapshot.py:171",
+    "recovered_diagnostic": "/private/tmp/batch-b-b5-01r-2026-10-30/new-boundary-blocker-details.json",
+    "sole_extra_path": "tests/test_admin_publish_workflow_reliability.py",
+    "no_missing_expected_paths": true,
+    "baseline_hashes_independently_read": [
+      {
+        "path": "data/processed/systematic_tier2_policy_2026_09/baseline_sha256.json",
+        "sha256": "e6634e780c589214bb8050b475a00a057aa01d75690ece6da0c408ea6eafd8fb",
+        "protected_count": 3914,
+        "named_fixture_sha256": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63"
+      },
+      {
+        "path": "data/processed/systematic_tier2_application_2026_09/baseline_sha256.json",
+        "sha256": "ebc92d11a296252f5b6add44e3458e84471aed1dd4fb3d6a8d2440f3bcebca27",
+        "protected_count": 3931,
+        "named_fixture_sha256": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63"
+      }
+    ],
+    "analysis": "The two guards correctly reject an unregistered new test-file transition. Their historical baselines need no editing. Recognize only this exact independently reviewed successor in the explicit shared successor helper and retain all three path/count/protected-count assertions."
+  },
+  "existing_convention_review": {
+    "source": "tests/public_refinement_snapshot.py::B1A_TEST_SUCCESSOR and assert_b1a_test_successor",
+    "predecessor_contract": "B1A uses committed_digest on a fixed published predecessor commit and fixed predecessor SHA-256.",
+    "successor_contract": "B1A hashes the complete local current file and compares it to a previously reviewed fixed literal SHA-256; no successor commit or remote-published check exists.",
+    "negative_tests": "tests/test_historical_integrity_successors.py preserves exact accepted successor and rejection of unrelated paths, successor content changes and predecessor content changes.",
+    "documented_precedent": "docs/corpus_quality_batch_b_wave_b1a_2026_10_12.md:175 records the same two Tier 2 guards, the exact one-file successor and focused/full validation before final publication.",
+    "separate_published_successor_checkpoint_required": false,
+    "policy_conclusion": "The existing protected-test convention allows an independently reviewed uncommitted local successor pinned in the integration commit. Published-frontend successors have a separate fixed-commit convention and do not impose that requirement on the B1A protected-test mechanism. No repository policy read requires a separate prior successor publication.",
+    "required_new_negative_coverage": [
+      "Arbitrary successor bytes rejected",
+      "Wrong predecessor bytes rejected",
+      "Unrelated changed paths rejected",
+      "Modified path/commit/hash/scope/diff or other authorization metadata rejected"
+    ],
+    "immutable_requirements": [
+      "Original Tier 2 baseline SHA files untouched",
+      "Original public refinement fixture untouched",
+      "Original B1A successor checks and negative tests retained",
+      "Complete protected-file count and exact changed-path equality retained",
+      "No wildcards, current-derived authorization hashes, general test exemption or blanket allowlist"
+    ]
+  },
+  "review_basis": "Line-by-line code and call-chain inspection plus AST/byte comparisons. Matching the proposed hash to current bytes establishes identity only; approval is independently justified by each reviewed semantic change above.",
+  "limitations": [
+    "Static read-only review only: no test modules were imported or invoked and no regression suite, validator, export or HTTP request was run by this reviewer.",
+    "This receipt approves only the exact fixture diff. The new successor verifier and tamper tests require their own review and execution.",
+    "The mandatory targeted/full regression, preservation, deterministic export, remote ancestry and hosted publication gates remain separate root responsibilities.",
+    "The frozen historical test-file baseline is not a scientific or production result; this approval does not alter accepted data, original review decisions or any manuscript evidence."
+  ],
+  "repository_mutations": 0,
+  "tests_run": 0,
+  "network_requests": 0
+}

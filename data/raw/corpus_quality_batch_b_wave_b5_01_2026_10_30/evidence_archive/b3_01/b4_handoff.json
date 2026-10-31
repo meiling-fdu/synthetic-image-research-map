@@ -1,0 +1,128 @@
+{
+  "schema_version": "batch-b-b3-to-b4-1",
+  "status": "EVIDENCE READY — AWAITING EXPLICIT B4 AUTHORIZATION AND MAINTAINER ADJUDICATION",
+  "execution_authorized": false,
+  "source_batch_id": "B2-01",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "action_ids_in_assigned_order": [
+    "P034",
+    "P254",
+    "P305",
+    "P028",
+    "P097",
+    "P105",
+    "P150",
+    "P177",
+    "P229"
+  ],
+  "provisional_link_additions": [
+    {
+      "review_id": "P034",
+      "paper_id": "curated:aa7dceb70828cdd6ad39",
+      "proposed_formal_url": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14",
+      "evidence_record": "per_paper/P034.json",
+      "evidence_record_sha256": "b9f957ea39079294e3c1b85ac64f7ed40f918e1da17507d0fbdb99f8119d67c0"
+    },
+    {
+      "review_id": "P254",
+      "paper_id": "doi:10.48550/arxiv.2407.10575",
+      "proposed_formal_url": "https://doi.org/10.1145/3770916",
+      "evidence_record": "per_paper/P254.json",
+      "evidence_record_sha256": "5e5049f3b0a2c5cc0de285a4f15bc3c623e2ff1945fd4b85cfd20400eb9b7131"
+    },
+    {
+      "review_id": "P305",
+      "paper_id": "doi:10.48550/arxiv.2312.02625",
+      "proposed_formal_url": "https://doi.org/10.3233/faia250925",
+      "evidence_record": "per_paper/P305.json",
+      "evidence_record_sha256": "4f6beb63c2a15e6555980b7b3d85ef19c7ea86880e2fb7d6f1d05434847ffa6c"
+    },
+    {
+      "review_id": "P097",
+      "paper_id": "curated:8503e319e1f4890c2e28",
+      "proposed_formal_url": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32",
+      "evidence_record": "per_paper/P097.json",
+      "evidence_record_sha256": "4cf166ed6789504f36e52eb9772308bff06e96b0be5bc25acda40d41c7aef6e0"
+    },
+    {
+      "review_id": "P105",
+      "paper_id": "curated:be2900947b322f9eb905",
+      "proposed_formal_url": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18",
+      "evidence_record": "per_paper/P105.json",
+      "evidence_record_sha256": "55ead57006fbce38585bbee4ef9bf845004080c846e16a28d9dc3958f4f45b2a"
+    },
+    {
+      "review_id": "P150",
+      "paper_id": "curated:7a5ce57b121b69752867",
+      "proposed_formal_url": "https://doi.org/10.1007/978-3-032-37464-6_12",
+      "evidence_record": "per_paper/P150.json",
+      "evidence_record_sha256": "f0767c41a471fd6defe27cac4657bac55bf189a4120d396ade72fd91f63c0e81"
+    },
+    {
+      "review_id": "P177",
+      "paper_id": "curated:b460935b64c35e1d074a",
+      "proposed_formal_url": "https://doi.org/10.1007/978-3-032-37350-2_34",
+      "evidence_record": "per_paper/P177.json",
+      "evidence_record_sha256": "a9d787185421b261b300697402d77b629c4b26ffeebf7c668bca99017e1b3e37"
+    },
+    {
+      "review_id": "P229",
+      "paper_id": "curated:55bc4360e3d312e696b7",
+      "proposed_formal_url": "https://doi.org/10.1007/978-3-032-37023-5_10",
+      "evidence_record": "per_paper/P229.json",
+      "evidence_record_sha256": "9595d6c3961a5d4bc68e3705800818524fff70d146055825bfcab989cc4ea769"
+    }
+  ],
+  "must_remain_open": [
+    "P028"
+  ],
+  "proposed_taxonomy_changes": [],
+  "required_preconditions": [
+    "Fetch/check the latest remote and reconcile overlapping records with concurrent work; never overwrite primary/CLIP/BCP changes.",
+    "Obtain explicit maintainer acceptance per original action; no B3 recommendation or venue confirmation alone closes an action.",
+    "Use current schema and stable canonical identity. Source paper_url can currently contain an arXiv URL while public formal_url is empty. Do not directly edit generated JSON.",
+    "A DOI-bearing URL can cause resolve_public_links to derive a formal DOI even if the stored DOI is unchanged. Review the complete minimum field/identity delta; preserve arXiv fields and aliases. Any stored DOI replacement requires explicit acceptance.",
+    "Venue fingerprints do not cover every URL field; separately bind the exact target formal URL, original review action and current work/version identity.",
+    "P034 requires an explicit same-work/version decision preserving 12-versus-13 authors, Manni Cui insertion, Chen casing and all numerical/release/source caveats. If a narrow link cannot satisfy current identity rules, leave P034 open.",
+    "Preserve P254 online/print-date distinction and survey roles; preserve P305 ECAI proceedings context despite publisher book-chapter deposit type. No date/type/taxonomy correction is approved here.",
+    "Preserve P097/P105 chapter-versus-volume online date differences; P150/P177/P229 no direct publisher arXiv crosslink/full-text equivalence is claimed.",
+    "Retain original group-B provenance mismatch and corrected v2/QC trail; source evidence is unchanged and no scientific disagreement was forced away.",
+    "P028 needs new exact archival identity evidence before acceptance. Existing conference status is preserved, neither confirmed nor revoked by missing search results.",
+    "Only sequential authorized integration, valid formal decisions, necessary exports and required validation may alter counts. B3 does none of them."
+  ],
+  "preserve": [
+    "all B1Q/B1R/B1S evidence and CI-STABILITY-01 acceptance",
+    "128 protected files",
+    "49 frozen NeurIPS artifacts and blocked7+1 inventory",
+    "Batch C13 debts",
+    "separate39-paper inventory",
+    "all unrelated source metadata, taxonomy, institutions, relationships and concurrent work"
+  ],
+  "do_not_begin_automatically": [
+    "B4",
+    "Next B2 batch",
+    "Manuscript reviews",
+    "Adjudication",
+    "Authoritative writes",
+    "Export",
+    "Commit/push/deployment"
+  ],
+  "baseline_counts": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "unchanged_task_and_type_counts": {
+    "detection": 621,
+    "source_attribution": 84,
+    "localization": 45,
+    "method": 578,
+    "dataset": 138,
+    "benchmark": 97,
+    "survey": 21,
+    "analysis_study": 86
+  }
+}

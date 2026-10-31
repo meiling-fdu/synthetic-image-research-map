@@ -1,0 +1,124 @@
+{
+  "recorded_at_utc": "2026-10-28T13:10:07.227629+00:00",
+  "root_instrumented_start": {
+    "utc": "2026-10-28T01:37:27.633769+00:00",
+    "monotonic": 165663.900265833,
+    "scope": "Instrumented B3 review/validation portion; initial plan verification excluded; not measured human analyst hours"
+  },
+  "elapsed_root_instrumented_seconds_through_bundle_build": 36945.61515279199,
+  "initial_plan_verification_excluded": true,
+  "primary_review_workers": [
+    {
+      "group": "local-ready P034/P254/P305",
+      "elapsed_seconds": 368.937001333,
+      "timing": {
+        "start_utc": "2026-10-28T01:39:38.256108+00:00",
+        "end_utc": "2026-10-28T01:45:47.197431+00:00",
+        "start_monotonic_ns": 165794522459458,
+        "end_monotonic_ns": 166163459460791,
+        "elapsed_wall_seconds": 368.937001333,
+        "basis": "Actual instrumented reviewer walltime from first assigned source inspection to completed local records; includes model/tool waiting and is not human analyst hours."
+      }
+    },
+    {
+      "group": "P028/P097/P105",
+      "elapsed_seconds": 327.296274292,
+      "timing": {
+        "reviewer_start_utc": "2026-10-28T01:40:49.859107+00:00",
+        "monotonic_start_ns": 165866125457041,
+        "timing_boundary": "Explicit timing begins after initial assigned-input read; earlier local input inspection is not included.",
+        "reviewer_end_utc": "2026-10-28T01:46:17.159736+00:00",
+        "monotonic_end_ns": 166193421731333,
+        "measured_wall_seconds": 327.296274292,
+        "human_effort": "Not measured; elapsed reviewer wall time is not human labor hours."
+      }
+    },
+    {
+      "group": "P150/P177/P229",
+      "elapsed_seconds": 536.253181209,
+      "timing": {
+        "instrumented_review_start_utc": "2026-10-28T01:41:34.399524+00:00",
+        "monotonic_start_ns": 165910663523291,
+        "preinstrumentation_activity": "Read assigned input and original review questions; no external requests or manuscripts.",
+        "instrumented_review_end_utc": "2026-10-28T01:50:30.655009+00:00",
+        "monotonic_end_ns": 166446916704500,
+        "elapsed_seconds": 536.253181209,
+        "interpretation": "Measured elapsed analyst-agent wall time, including waiting and tool overhead. Not an estimate of human labor hours."
+      }
+    }
+  ],
+  "aggregate_primary_review_worker_wall_seconds": 1232.486456834,
+  "human_analyst_hours": null,
+  "root_elapsed_includes_interruption_or_idle": true,
+  "root_elapsed_is_not_active_review_effort": true,
+  "human_effort_limitation": "AI-assisted wall time includes waiting/tool overhead and overlapping reviewers; human labor was not timed. Do not equate summed worker or elapsed minutes with human analyst hours.",
+  "B2_estimate_minutes": [
+    125,
+    245
+  ],
+  "calibration": "This is a bounded metadata batch with three local-ready cases, not calibration for method/evaluation-heavy scientific batches. Actual parallel elapsed is recorded; no unsupported human-hour conversion.",
+  "full_manuscripts_retrieved": 0,
+  "supplements_or_code_or_datasets_downloaded": 0,
+  "paid_publisher_or_API_fees_usd": 0,
+  "model_and_tool_billing": null,
+  "new_source_request_accounting": {
+    "local_fastlane": {
+      "new_network_requests": 0,
+      "new_full_manuscripts": 0,
+      "manuscript_downloads": 0,
+      "paid_source_api_cost_usd": 0,
+      "currency": "USD",
+      "cost_scope": "External source/API spend; model cost not measured"
+    },
+    "group_a": {
+      "web_tool_calls": 5,
+      "targeted_search_queries": 8,
+      "official_metadata_open_or_click_operations": 4,
+      "same_document_section_views": 2,
+      "new_unique_official_metadata_documents": 4,
+      "new_complete_manuscripts": 0,
+      "supplements": 0,
+      "code_or_dataset_downloads": 0,
+      "purchases": 0,
+      "paid_api_calls": 0,
+      "external_cost": "No purchase/paidAPI used; tool billing not exposed. Monetary total unknown, not invented.",
+      "network_transfer_bytes": null,
+      "HTTP_statuses": "Not supplied by web tool; serialized capture sizes are not network transfer sizes."
+    },
+    "group_b": {
+      "full_manuscripts_retrieved": 0,
+      "manuscript_bytes": 0,
+      "paid_api_cost_usd": 0,
+      "new_official_chapter_html_captures": 3,
+      "successful_instrumented_http_requests": 3,
+      "successful_instrumented_http_response_body_bytes": 1054876,
+      "sandbox_dns_failures_before_connection": 3,
+      "publisher_http_failures": 0,
+      "blocked_publisher_retries": 0,
+      "web_tool_operations": {
+        "search_queries": 3,
+        "initial_book_page_opens": 3,
+        "chapter_link_clicks": 3,
+        "book_title_find_operations": 3,
+        "focused_chapter_opens": 2,
+        "focused_doi_find_operations": 2
+      },
+      "web_tool_transport_request_count_duration_bytes": "Not exposed by web tool; do not combine opaque tool operations with measured direct HTTP requests as an exact wire-request total.",
+      "raw_html_captures": "Metadata-only public landing pages, not PDF/full manuscripts. No supplements retrieved."
+    }
+  },
+  "direct_http_successful_requests": 3,
+  "direct_http_successful_body_bytes": 1054876,
+  "direct_http_durations_seconds": [
+    5.623190792,
+    5.941250042,
+    5.999071334
+  ],
+  "direct_http_sandbox_dns_failures": 3,
+  "request_total_limitation": "Web-tool search/open/find operations are recorded separately; exact transport request count/bytes/duration is unavailable. Serialized capture sizes are storage costs, not network transfer sizes. No paid source was used.",
+  "completed_after_final_validation_utc": "2026-10-28T13:17:57.719897+00:00",
+  "raw_monotonic_seconds_through_final_validation": 37416.10756562499,
+  "raw_utc_wall_seconds_through_final_validation": 42030.086128,
+  "raw_elapsed_interpretation": "Includes prolonged interruption/idle interval and possible host sleep; monotonic and UTC wall durations are not active analyst effort. Primary reviewer timings remain the separately measured 20.54 aggregate worker-minutes. Human hours unknown.",
+  "direct_http_count_unit": "Three successful logical urllib metadata capture operations; redirects/hops were not separately counted. Exact total wire-request count remains unknown."
+}

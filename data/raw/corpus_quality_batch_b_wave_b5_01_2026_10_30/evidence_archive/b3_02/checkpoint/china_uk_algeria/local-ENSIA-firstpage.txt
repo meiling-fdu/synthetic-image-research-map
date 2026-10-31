@@ -1,0 +1,41 @@
+SPECTRA-Net: Scalable Pipeline for Explainable Cross-domain
+Tensor Representations for AI-generated Images Detection
+Sarra Arab1, Anfal Achouri1, and Seif Eddine Bouziane 1,*
+1The National School of Artificial Intelligence, Algiers, Algeria
+*Corresponding author:seifeddine.bouziane@ensia.edu.dz
+Abstract
+The rapid proliferation of AI-generated images (AIGI) presents a significant challenge to
+digital information integrity. While human observers and existing detection models struggle
+to keep pace with the increasing sophistication of generative models, the need for robust,
+real-time detection systems has become critical. This paper introduces SPECTRA-Net, a
+scalable pipeline for explainable, cross-domain tensor representations for AIGI detection.
+Our approach leverages a multi-view representation of images, combining global semantic
+features from a Vision Foundation Model (VFM), spectral analysis, local patch-based
+anomaly detection, and statistical descriptors. By fusing these complementary data streams,
+SPECTRA-Net achieves state-of-the-art performance in both in-domain and cross-domain
+settings, demonstrating high accuracy and generalization capabilities across a wide range
+of challenging datasets, including WildFake, Chameleon, and RRDataset. The proposed
+pipeline not only provides a robust solution for AIGI detection but also offers explainability
+through artifact localization, paving the way for more trustworthy and reliable content
+verification in real-world applications.
+Keywords:AI-generated image detection; multi-view representations; diffusion models; social
+media forensics; cross-domain generalization
+Main contributions.
+•Multi-view framework integrating semantic, frequency-domain, statistical, and patch-level
+representations.
+•Robust detection pipeline resilient to real-world degradations, including JPEG compression
+and Gaussian blur.
+•Patch-wise explainability enabling localized artifact detection and spatial interpretability.
+1 Introduction
+Recent advances in generative models have led to an incredible growth in highly realistic AI-
+generated images. Modern diffusion models [ 13] and large-scale generative frameworks are
+now capable of producing visual content that is often indistinguishable from real photographs,
+accelerating their adoption across industries and social media platforms; however, this rapid
+progress also raises serious concerns regarding image authenticity and misinformation, motivating
+the need for reliable AI-generated image detection systems.
+Early detection approaches primarily focused on identifying low-level artifacts introduced
+by GAN-based generators, such as color inconsistencies, checkerboard patterns, or spectral
+irregularities [7]. These artifact-driven methods are mainly effective against early-generation
+models but struggle with diffusion-based synthesis, which relies on iterative denoising processes
+1
+arXiv:2605.08226v1  [cs.CV]  6 May 2026

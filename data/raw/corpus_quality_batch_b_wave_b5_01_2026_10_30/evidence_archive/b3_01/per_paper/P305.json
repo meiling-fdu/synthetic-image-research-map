@@ -1,0 +1,430 @@
+{
+  "schema_version": "batch-b-b3-per-paper-1",
+  "wave": "Batch B Wave B3",
+  "planned_batch_id": "B2-01",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "review_id": "P305",
+  "paper_id": "doi:10.48550/arxiv.2312.02625",
+  "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+  "assigned_original_review": {
+    "review_id": "P305",
+    "paper_id": "doi:10.48550/arxiv.2312.02625",
+    "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+    "current": {
+      "year": 2025,
+      "publication_type": "conference",
+      "venue": "European Conference on Artificial Intelligence",
+      "venue_id": "venue:european-conference-on-artificial-intelligence",
+      "venue_acronym": "ECAI",
+      "venue_track": "Main",
+      "doi": "10.48550/arxiv.2312.02625",
+      "paper_url": "",
+      "formal_url": "",
+      "arxiv_id": "2312.02625",
+      "arxiv_url": "https://arxiv.org/abs/2312.02625",
+      "authors": [
+        "Yichi Zhang",
+        "Xiaogang Xu"
+      ]
+    },
+    "evidence_urls": [
+      "https://arxiv.org/abs/2312.02625",
+      "https://openalex.org/W4389421609"
+    ],
+    "batch": "B",
+    "confidence": "bounded_to_available_evidence",
+    "evidence_required": "Obtain the official European Conference on Artificial Intelligence paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+    "proposed_changes": {},
+    "status": "REVIEW_REQUIRED",
+    "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+    "field_checks": {
+      "venue": "present",
+      "year": "present",
+      "publication_type": "formal_in_current_corpus",
+      "canonical_url": "missing_formal_url",
+      "doi": "repository_identifier_not_formal_DOI",
+      "arxiv": "present",
+      "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+      "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+    }
+  },
+  "current_identity": {
+    "paper_id": null,
+    "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+    "authors": [
+      {
+        "name": "Yichi Zhang",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Xiaogang Xu",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      }
+    ],
+    "year": 2025,
+    "doi": "10.48550/arxiv.2312.02625",
+    "arxiv_id": "2312.02625",
+    "arxiv_url": "https://arxiv.org/abs/2312.02625",
+    "openalex_url": "https://openalex.org/W4389421609",
+    "venue": "European Conference on Artificial Intelligence",
+    "venue_name": "European Conference on Artificial Intelligence",
+    "venue_id": "venue:european-conference-on-artificial-intelligence",
+    "venue_track": "Main",
+    "publication_type": "conference",
+    "formal_url": "",
+    "paper_url": "",
+    "tasks": [
+      "detection"
+    ],
+    "research_types": [
+      "method"
+    ],
+    "canonical_audit_paper_id": "doi:10.48550/arxiv.2312.02625"
+  },
+  "current_link_resolution": {
+    "formal_doi": "",
+    "formal_url": "",
+    "openalex_url": "https://openalex.org/W4389421609",
+    "arxiv_id": "2312.02625",
+    "arxiv_url": "https://arxiv.org/abs/2312.02625",
+    "primary_url": "https://openalex.org/W4389421609"
+  },
+  "review_scope": "Original missing canonical formal-URL publication question only; no taxonomy action is assigned.",
+  "provisional_outcome": "SUPPORTED_ADDITION",
+  "proposed_publication_change": {
+    "target": "canonical formal URL",
+    "before": "",
+    "after": "https://doi.org/10.3233/faia250925",
+    "scientific_or_taxonomy_change": false,
+    "source_implementation": "B4 must reconcile supported authoritative URL field/precedence, stable identity and derived DOI behavior before any change."
+  },
+  "proposed_taxonomy_changes": [],
+  "formal_action_status": "UNRESOLVED — NO B3 ACCEPTANCE OR CLOSURE",
+  "maintainer_acceptance_required": true,
+  "source_packet": {
+    "artifact_path": "evidence_archive/local-fastlane-reviews.json",
+    "sha256": "cd8291f722fef8387e036c3ec39e0e0cd3224ff8d141143c3b42780d9d6ae7de",
+    "record_index": 2
+  },
+  "reviewer_evidence_record": {
+    "review_id": "P305",
+    "paper_id": "doi:10.48550/arxiv.2312.02625",
+    "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+    "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+    "scope": "PUBLICATION_FORMAL_URL_ONLY_EVIDENCE",
+    "original_review_question": "Obtain the official European Conference on Artificial Intelligence paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+    "original_review_record": {
+      "review_id": "P305",
+      "paper_id": "doi:10.48550/arxiv.2312.02625",
+      "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+      "current": {
+        "year": 2025,
+        "publication_type": "conference",
+        "venue": "European Conference on Artificial Intelligence",
+        "venue_id": "venue:european-conference-on-artificial-intelligence",
+        "venue_acronym": "ECAI",
+        "venue_track": "Main",
+        "doi": "10.48550/arxiv.2312.02625",
+        "paper_url": "",
+        "formal_url": "",
+        "arxiv_id": "2312.02625",
+        "arxiv_url": "https://arxiv.org/abs/2312.02625",
+        "authors": [
+          "Yichi Zhang",
+          "Xiaogang Xu"
+        ]
+      },
+      "evidence_urls": [
+        "https://arxiv.org/abs/2312.02625",
+        "https://openalex.org/W4389421609"
+      ],
+      "batch": "B",
+      "confidence": "bounded_to_available_evidence",
+      "evidence_required": "Obtain the official European Conference on Artificial Intelligence paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "proposed_changes": {},
+      "status": "REVIEW_REQUIRED",
+      "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+      "field_checks": {
+        "venue": "present",
+        "year": "present",
+        "publication_type": "formal_in_current_corpus",
+        "canonical_url": "missing_formal_url",
+        "doi": "repository_identifier_not_formal_DOI",
+        "arxiv": "present",
+        "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+        "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+      }
+    },
+    "current_canonical_and_public_state": {
+      "paper_id": "doi:10.48550/arxiv.2312.02625",
+      "public_storage_identity": "https://openalex.org/W4389421609",
+      "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+      "authors": [
+        "Yichi Zhang",
+        "Xiaogang Xu"
+      ],
+      "doi": "10.48550/arxiv.2312.02625",
+      "arxiv_id": "2312.02625",
+      "year": 2025,
+      "venue": "European Conference on Artificial Intelligence",
+      "publication_type": "conference",
+      "tasks": [
+        "detection"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "public_formal_url": "",
+      "public_paper_url": "",
+      "resolved_links": {
+        "formal_doi": "",
+        "formal_url": "",
+        "openalex_url": "https://openalex.org/W4389421609",
+        "arxiv_id": "2312.02625",
+        "arxiv_url": "https://arxiv.org/abs/2312.02625",
+        "primary_url": "https://openalex.org/W4389421609"
+      }
+    },
+    "provisional_outcome": "SUPPORTED_ADDITION",
+    "outcome_scope": "Adding only the missing formal URL; this is not a taxonomy addition, formal decision or scientific reclassification.",
+    "scientific_review_restarted": false,
+    "proposed_taxonomy_changes": [],
+    "authoritative_changes_applied": false,
+    "formal_review_action_closed": false,
+    "maintainer_acceptance_pending": true,
+    "retrieval_accounting": {
+      "new_network_requests": 0,
+      "new_full_manuscripts": 0,
+      "manuscript_downloads": 0,
+      "datasets_or_code_downloads": 0,
+      "source_refresh_attempts": 0,
+      "paid_source_api_cost_usd": 0,
+      "currency": "USD",
+      "cost_scope": "External source/API spend only. Model-compute billing is not known and is not asserted to be zero."
+    },
+    "proposed_publication_change": {
+      "field": "formal_url",
+      "before": "",
+      "after": "https://doi.org/10.3233/faia250925",
+      "scope": "A formal-version link addition only; no canonical DOI/ID/author/year/venue/task/type replacement is proposed.",
+      "implementation_boundary": "Derived public formal_url may require a supported authoritative/manual URL field; B4 must reconcile the exact schema and fingerprint before applying anything. No direct public-export JSON edit."
+    },
+    "proposed_formal_doi_change": null,
+    "identity_evidence": {
+      "canonical_title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+      "publisher_deposit_title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+      "title_exact_match": true,
+      "title_match_after_whitespace_normalization": true,
+      "normalization_only_note": "Exact title match.",
+      "canonical_author_sequence": [
+        "Yichi Zhang",
+        "Xiaogang Xu"
+      ],
+      "publisher_deposit_author_sequence": [
+        "Yichi Zhang",
+        "Xiaogang Xu"
+      ],
+      "arxiv_author_sequence": [
+        "Yichi Zhang",
+        "Xiaogang Xu"
+      ],
+      "full_ordered_author_match": true,
+      "verified_publisher_doi": "10.3233/faia250925",
+      "canonical_stored_doi": "10.48550/arxiv.2312.02625",
+      "arxiv_id": "2312.02625",
+      "arxiv_metadata": {
+        "id": "http://arxiv.org/abs/2312.02625v3",
+        "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+        "authors": [
+          "Yichi Zhang",
+          "Xiaogang Xu"
+        ],
+        "published": "2023-12-05T10:01:11Z",
+        "updated": "2025-08-19T02:29:31Z",
+        "doi": "10.3233/FAIA250925",
+        "journal_ref": "ECAI 2025",
+        "comment": "Accepted by ECAI 2025",
+        "links": [
+          {
+            "href": "https://arxiv.org/abs/2312.02625v3",
+            "rel": "alternate",
+            "type": "text/html"
+          },
+          {
+            "href": "https://arxiv.org/pdf/2312.02625v3",
+            "rel": "related",
+            "type": "application/pdf",
+            "title": "pdf"
+          },
+          {
+            "rel": "related",
+            "href": "https://doi.org/10.3233/FAIA250925",
+            "title": "doi"
+          }
+        ]
+      },
+      "processed_doi_arxiv_linkage": {
+        "doi": "10.3233/faia250925",
+        "arxiv_id": "2312.02625",
+        "name": "European Conference on Artificial Intelligence",
+        "type": "conference",
+        "acronym": "ECAI",
+        "year": 2025,
+        "track": "Main",
+        "source": "https://api.crossref.org/works/10.3233%2Ffaia250925",
+        "volume_source": "https://arxiv.org/abs/2312.02625",
+        "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+        "aliases": [
+          "ECAI 2025"
+        ]
+      },
+      "formal_doi_url": "https://doi.org/10.3233/faia250925",
+      "publisher_resource_url": "https://ebooks.iospress.nl/doi/10.3233/FAIA250925",
+      "publisher": "IOS Press",
+      "deposited_publication_type": "book-chapter",
+      "container_title": [
+        "Frontiers in Artificial Intelligence and Applications",
+        "ECAI 2025"
+      ],
+      "published_online": null,
+      "published_print": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            21
+          ]
+        ]
+      },
+      "deposit_retrieved_on": "2026-08-28",
+      "deposit_source_url": "https://api.crossref.org/works/10.3233%2Ffaia250925",
+      "deposit_sha256": "a8848ea3494b1d66c3c6299e86b8e2eb99bb3d8d3a19c3df95f2ade0227b172e",
+      "work_identity_confidence": "high for bounded same-work formalURL; no manuscript byte-equivalence or independent science claim",
+      "identity_basis": "Canonical and official arXiv metadata title/full-author sequence match saved publisher-deposited Crossref metadata; existing processed evidence links the canonical arXiv identity to the formal DOI. P305 arXiv metadata explicitly supplies the same formal DOI; P254 arXiv metadata supplies title/authors and CSUR acceptance, not a DOI."
+    },
+    "scientific_evidence_scope": {
+      "status": "NOT_ASSESSED_IN_THIS_PUBLICATION_WAVE",
+      "prior_validated_full_scientific_extract_available_for_this_review": false,
+      "manuscript_methods_evaluation_examined": false,
+      "current_classification_retained": {
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method"
+        ]
+      },
+      "abstracts_not_promoted_to_scientific_findings": true,
+      "existing_abstract_or_survey_descriptors_are_identity_context_only": true,
+      "independent_empirical_reproduction": false,
+      "new_scientific_acceptance": false,
+      "scope_note": "This bounded publication evidence establishes archival URL identity. No validated methods/evaluation extract is substituted by abstract or title, no taxonomy support is re-certified, and no manuscript review was restarted."
+    },
+    "source_provenance": [
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+        "locator": "formal_records[review_id=P305]",
+        "finding": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+        "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+      },
+      {
+        "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+        "locator": "#b-P305",
+        "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+        "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+      },
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+        "locator": "policies[policy_id=V1]",
+        "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+        "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+      },
+      {
+        "path": "docs/publication_venue_normalization.md",
+        "locator": "Data and precedence; Persistence and live review",
+        "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+        "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+      },
+      {
+        "path": "data/processed/venue_paper_evidence.json",
+        "locator": "papers[2]",
+        "finding": "Exact title plus canonical arXiv linkage identifies formal DOI10.3233/faia250925 and canonical archival venue.",
+        "sha256": "08bc5efea3d201fae15a70435108a77b0e67b2e586c02e0226f1705cd4fa77fb"
+      },
+      {
+        "path": "data/raw/venue_audit_crossref/ff2f99328559d41a9b09.json",
+        "locator": "response.message",
+        "finding": "Saved formal deposit title/full2-author sequence matches canonical paper; URLhttps://doi.org/10.3233/faia250925; typebook-chapter; identity independently compared locally.",
+        "sha256": "a8848ea3494b1d66c3c6299e86b8e2eb99bb3d8d3a19c3df95f2ade0227b172e"
+      },
+      {
+        "path": "web/data/public_preview_papers.json",
+        "locator": "records[arxiv_id=2312.02625]",
+        "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+        "finding": "Current published paper matched by exact arXiv identifier; actual resolver output has no formal URL/DOI."
+      },
+      {
+        "path": "scripts/paper_links.py",
+        "locator": "resolve_public_links; _formal_url",
+        "sha256": "4e474feb440ce3e83f2147457fa965629f07de13a5adadacac7a976a61e44a8d",
+        "finding": "Pure offline current-state link resolution; arXiv DOI and OpenAlex URL are not formal publisher links."
+      },
+      {
+        "path": "data/curated/review_decisions.csv",
+        "locator": "target paper doi:10.48550/arxiv.2312.02625; original action P305",
+        "sha256": "ce616e76f5b41a2df967c9c72451f9cbeb8b1ad05b488d5ca6240d070c4819dc",
+        "finding": "Original publication question remains open. Any prior independent scientific terminal action is preserved and is not reused to close this publication action."
+      },
+      {
+        "path": "data/raw/venue_audit_crossref/arxiv-full-048f53e8e62bbcb5.xml",
+        "locator": "atom:entry[arxiv_id=2312.02625]",
+        "sha256": "153484ddb11e3ea621ad92e801985c2b5e9adc34cd01092bfde46c88aa8fdf8e",
+        "finding": "Official stored arXiv identity metadata: title, ordered author sequence, version/date/comment and any explicit DOI/journal_ref; no manuscript content inspected."
+      }
+    ],
+    "limitations": [
+      "Saved publisher-deposited Crossref and official arXiv metadata are used offline; current URL accessibility and subsequent metadata changes were not requested.",
+      "No full formal or preprint manuscript was obtained/read in B3; byte-level or complete scientific-version equivalence remains unverified.",
+      "The canonical arXiv DOI is preserved as repository identity. The observed formal DOI supports a formal-version link; replacing canonical DOI, ID, authors or year is outside the proposed URL-only change.",
+      "Crossref typebook-chapter is its deposit type for the named ECAI2025 proceedings container. It does not imply a generic book or authorize reclassifying the conference paper.",
+      "arXivv3 metadata explicitly identifies DOI10.3233/FAIA250925 and ECAI2025; no complete preprint-versus-proceedings comparison is claimed."
+    ],
+    "disagreement": {
+      "container_type_boundary": "Publisher deposit is book-chapter in Frontiers in Artificial Intelligence and Applications/ECAI2025; canonical conference/ECAI is preserved."
+    },
+    "unsupported_claims": [
+      "No newly reproduced scientific experiment or causal claim.",
+      "No blanket full-metadata, author-version or manuscript byte-equivalence certification.",
+      "No operational reproducibility certification, publication-year edit, taxonomy change or formal action closure."
+    ],
+    "confidence": {
+      "bounded_formal_url_identity": "high",
+      "scientific_reassessment": "not performed",
+      "publisher_full_version_equivalence": "not established"
+    },
+    "B4conditions": [
+      "Explicit maintainer acceptance is required for P305; keep original action open until a valid formal decision is recorded.",
+      "Persist only the accepted formal URL via the supported manual/canonical mechanism after current-schema and bibliographic-fingerprint reconciliation; do not edit generated JSON directly.",
+      "Preserve arXiv identifier/DOI provenance, existing paper identity, authors, dates, venue/type/track, task/type/scope and relationships. The observed formal DOI is source evidence, not a separately proposed canonical DOI edit.",
+      "Require narrow export/link consistency and review-accounting verification only during a later explicitly authorized integration. This evidence phase writes no data and creates no terminal decision."
+    ]
+  },
+  "independent_qc": {
+    "artifact_path": "evidence_archive/qc-local-three.json",
+    "status": "PASS",
+    "scope": "Evidence-to-original-publication-claim mapping; not formal maintainer acceptance."
+  },
+  "evidence_provenance_inventory": "source_inventory.json"
+}

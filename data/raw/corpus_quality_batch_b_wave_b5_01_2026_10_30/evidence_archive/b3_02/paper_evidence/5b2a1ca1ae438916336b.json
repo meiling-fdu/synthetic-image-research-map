@@ -1,0 +1,279 @@
+{
+  "paper_id": "curated:5b2a1ca1ae438916336b",
+  "title": "Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "action_ids": [
+    "U007"
+  ],
+  "records": [
+    {
+      "review_id": "U007",
+      "paper_id": "curated:5b2a1ca1ae438916336b",
+      "title": "Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification",
+      "action_scope": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "original_blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "original_acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for Wuhan University of Technology paper-relevant campus; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "canonical_institution_id": "institution:bbb055c97c3e3d2f",
+      "canonical_institution_name": "Wuhan University of Technology",
+      "paper_identity": {
+        "authors": [
+          "Jiangling Zhang",
+          "Shuxuan Gao",
+          "Bofan Liu",
+          "Siqiang Feng",
+          "Jirui Huang",
+          "Yaxiong Chen",
+          "Ziyu Chen"
+        ],
+        "arxiv_id": "2602.18842",
+        "doi": "",
+        "year": 2026,
+        "publication_type": "conference",
+        "identity_verified_from": "Existing identity-matched paper-time source mappings and published record; no manuscript rediscovery."
+      },
+      "paper_time_affiliation": {
+        "raw": "Wuhan University of Technology",
+        "primary_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_Detecting_AI-Generated_Forgeries_via_Iterative_Manifold_Deviation_Amplification_CVPR_2026_paper.html",
+        "known_institution_affiliation": true,
+        "site_explicit_in_preserved_affiliation": false
+      },
+      "local_evidence": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U007]",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U007",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:5b2a1ca1ae438916336b]",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+          "finding": "Current public paper retained; tasks=['detection', 'localization']; research_types=['method']; map_record_count=0."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:7d926423b354f72de21b",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+          "locator": "institution_id in institution:bbb055c97c3e3d2f",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:bbb055c97c3e3d2f",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc",
+          "finding": "0 current reviewed location rows found for the mapped institutions."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:5b2a1ca1ae438916336b",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Seven authors are assigned to the university through primary-source provenance; the stored raw affiliation names no department/campus and there is no reviewed point."
+        }
+      ],
+      "current_tasks": [
+        "detection",
+        "localization"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "is_formal_decision": false,
+      "formal_resolution_applied": false,
+      "authoritative_changes": [],
+      "taxonomy_changes_proposed": [],
+      "official_evidence_ids": [
+        "wut-campuses",
+        "wut-2026contacts"
+      ],
+      "evidence_to_claim": [
+        {
+          "claim": "The university has multiple campuses and named subareas, including Nanhu, Mafangshan and Yujiatou.",
+          "sources": [
+            "wut-campuses"
+          ]
+        },
+        {
+          "claim": "Official2026 recruitment material distinguishes campus contacts; it does not assign this paper’s authors.",
+          "sources": [
+            "wut-2026contacts"
+          ]
+        }
+      ],
+      "site_assessment": {
+        "institution_identity": "VERIFIED_EXISTING_CANONICAL_ID",
+        "institution_address": "MULTIPLE_OFFICIAL_CAMPUS_CANDIDATES",
+        "address_candidate": null,
+        "paper_time_site": "UNRESOLVED_MULTICAMPUS",
+        "paper_time_site_basis": "Preserved paper-time affiliation names only Wuhan University of Technology; no school, department, campus or address. Seven author identities retained.",
+        "site_confidence": "high institution; low site specificity",
+        "coordinates": "NOT_PROPOSED_BEFORE_SITE_RESOLUTION",
+        "coordinate_candidate": null
+      },
+      "contradictions_and_limitations": [
+        "Nanhu IT-specialty planning is not a paper-author campus assignment.",
+        "Wuhan University, Wuhan Institute of Technology and Wuhan University of Technology are distinct; existing nearby institution coordinates cannot be borrowed.",
+        "No city centroid or arbitrary main-campus point is proposed."
+      ],
+      "unsupported_assumptions_rejected": [
+        "Infer computer-vision authors belong to Nanhu because officialplanningmentionsIT",
+        "Pick generaladministration/recruitmentofficeaddress as paper site",
+        "Borrow Wuhan University or Wuhan Institute of Technology coordinates"
+      ],
+      "recommended_B4_02_action": "Retain unresolved; request exact campus evidence from preserved paper first-page/contact block or dated author-affiliation record. Do not select a campus or geocode until site identity is established.",
+      "missing_evidence": [
+        "Identity-matched paper-time campus, department or institutional site assignment"
+      ],
+      "confidence": "high that current record cannot select among official campuses",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "The university has multiple campuses and named subareas, including Nanhu, Mafangshan and Yujiatou.; Official2026 recruitment material distinguishes campus contacts; it does not assign this paper’s authors.",
+      "proposed_disposition": "Retain unresolved; request exact campus evidence from preserved paper first-page/contact block or dated author-affiliation record. Do not select a campus or geocode until site identity is established.",
+      "limitations": [
+        "Nanhu IT-specialty planning is not a paper-author campus assignment.",
+        "Wuhan University, Wuhan Institute of Technology and Wuhan University of Technology are distinct; existing nearby institution coordinates cannot be borrowed.",
+        "No city centroid or arbitrary main-campus point is proposed."
+      ],
+      "evidence_claims": [
+        {
+          "claim": "The university has multiple campuses and named subareas, including Nanhu, Mafangshan and Yujiatou.",
+          "source_ids": [
+            "wut-campuses"
+          ],
+          "local_evidence": []
+        },
+        {
+          "claim": "Official2026 recruitment material distinguishes campus contacts; it does not assign this paper’s authors.",
+          "source_ids": [
+            "wut-2026contacts"
+          ],
+          "local_evidence": []
+        }
+      ],
+      "action_id": "U007",
+      "review_group": "china_uk_algeria",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "original_review": {
+        "review_id": "U007",
+        "paper_id": "curated:5b2a1ca1ae438916336b",
+        "title": "Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification",
+        "year": 2026,
+        "publication_status": "conference",
+        "authors": [
+          "Jiangling Zhang",
+          "Shuxuan Gao",
+          "Bofan Liu",
+          "Siqiang Feng",
+          "Jirui Huang",
+          "Yaxiong Chen",
+          "Ziyu Chen"
+        ],
+        "institutions": [
+          {
+            "institution_id": "institution:bbb055c97c3e3d2f",
+            "canonical_name": "Wuhan University of Technology",
+            "raw_affiliation": "Wuhan University of Technology",
+            "authors": [
+              "Jiangling Zhang",
+              "Shuxuan Gao",
+              "Bofan Liu",
+              "Siqiang Feng",
+              "Jirui Huang",
+              "Yaxiong Chen",
+              "Ziyu Chen"
+            ],
+            "paper_time_affiliation_known": true,
+            "institution_identity_known": true,
+            "exists_in_registry": true,
+            "location_known": false,
+            "location_records": [],
+            "mapping_status": "active",
+            "mapping_id": "mapping:7d926423b354f72de21b",
+            "evidence_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_Detecting_AI-Generated_Forgeries_via_Iterative_Manifold_Deviation_Amplification_CVPR_2026_paper.html",
+            "evidence_basis": "https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_Detecting_AI-Generated_Forgeries_via_Iterative_Manifold_Deviation_Amplification_CVPR_2026_paper.html",
+            "hierarchy": [],
+            "allowed_to_map_as_node": true,
+            "relationship_currently_possible": false
+          }
+        ],
+        "author_affiliation_known": true,
+        "canonical_institution_identity_known": true,
+        "institution_registry_complete": true,
+        "any_reviewed_location_known": false,
+        "relationship_currently_possible": false,
+        "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+        "remediation_category": "EVIDENCE_CAN_RESOLVE",
+        "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+        "confidence": "high",
+        "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+        "authoritative_evidence_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_Detecting_AI-Generated_Forgeries_via_Iterative_Manifold_Deviation_Amplification_CVPR_2026_paper.html",
+        "project_evidence": [
+          "data/curated/author_institution_mappings.csv",
+          "data/curated/institutions.csv",
+          "data/curated/institution_locations.csv",
+          "data/curated/institution_hierarchy.csv"
+        ],
+        "batch": "B"
+      },
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:5b2a1ca1ae438916336b",
+        "title": "Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification",
+        "doi": "",
+        "arxiv_id": "2602.18842",
+        "year": 2026,
+        "publication_type": "conference",
+        "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "tasks": [
+          "detection",
+          "localization"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:5b2a1ca1ae438916336b"
+      },
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "authoritative_changes_applied": false,
+      "acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for Wuhan University of Technology paper-relevant campus; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "china_uk_algeria:wut-2026contacts",
+        "china_uk_algeria:wut-campuses"
+      ],
+      "separate_site_evidence_gates": {
+        "institution_identity": "VERIFIED",
+        "address": "OFFICIAL_MULTICAMPUS_ADDRESSES_VERIFIED; NO_SINGLE_PAPER_SITE_SELECTED",
+        "paper_time_site": "UNIVERSITY_ONLY_AFFILIATION_CAMPUS_UNRESOLVED",
+        "coordinates": "NO_PAPER_SITE_POINT_SELECTED",
+        "unsupported_assumption": "Do not choose Mafangshan, Nanhu, or Yujiatou from university identity alone; Wuhan University and Wuhan Institute of Technology are distinct."
+      }
+    }
+  ],
+  "note": "Evidence recommendations only; no formal decisions or source mutations."
+}

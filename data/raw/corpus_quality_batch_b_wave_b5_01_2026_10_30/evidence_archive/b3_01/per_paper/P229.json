@@ -1,0 +1,347 @@
+{
+  "schema_version": "batch-b-b3-per-paper-1",
+  "wave": "Batch B Wave B3",
+  "planned_batch_id": "B2-01",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "review_id": "P229",
+  "paper_id": "curated:55bc4360e3d312e696b7",
+  "title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+  "assigned_original_review": {
+    "review_id": "P229",
+    "paper_id": "curated:55bc4360e3d312e696b7",
+    "title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+    "current": {
+      "year": 2026,
+      "publication_type": "conference",
+      "venue": "European Conference on Computer Vision",
+      "venue_id": "venue:eccv",
+      "venue_acronym": "ECCV",
+      "venue_track": "Main",
+      "doi": "10.48550/arxiv.2608.15238",
+      "paper_url": "",
+      "formal_url": "",
+      "arxiv_id": "2608.15238",
+      "arxiv_url": "https://arxiv.org/abs/2608.15238",
+      "authors": [
+        "Lei Tan",
+        "Shuwei Li",
+        "Mohan Kankanhalli",
+        "Robby T. Tan"
+      ]
+    },
+    "evidence_urls": [
+      "https://arxiv.org/abs/2608.15238"
+    ],
+    "batch": "B",
+    "confidence": "bounded_to_available_evidence",
+    "evidence_required": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+    "proposed_changes": {},
+    "status": "REVIEW_REQUIRED",
+    "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+    "field_checks": {
+      "venue": "present",
+      "year": "present",
+      "publication_type": "formal_in_current_corpus",
+      "canonical_url": "missing_formal_url",
+      "doi": "repository_identifier_not_formal_DOI",
+      "arxiv": "present",
+      "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+      "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+    }
+  },
+  "current_identity": {
+    "paper_id": "curated:55bc4360e3d312e696b7",
+    "title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+    "authors": [
+      {
+        "name": "Lei Tan",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Shuwei Li",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Mohan Kankanhalli",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Robby T. Tan",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      }
+    ],
+    "year": 2026,
+    "doi": "10.48550/arxiv.2608.15238",
+    "arxiv_id": "2608.15238",
+    "arxiv_url": "https://arxiv.org/abs/2608.15238",
+    "openalex_url": "",
+    "venue": "European Conference on Computer Vision",
+    "venue_name": "European Conference on Computer Vision",
+    "venue_id": "venue:eccv",
+    "venue_track": "Main",
+    "publication_type": "conference",
+    "formal_url": "",
+    "paper_url": "",
+    "tasks": [
+      "detection"
+    ],
+    "research_types": [
+      "method"
+    ],
+    "canonical_audit_paper_id": "curated:55bc4360e3d312e696b7"
+  },
+  "current_link_resolution": {
+    "formal_doi": "",
+    "formal_url": "",
+    "openalex_url": "",
+    "arxiv_id": "2608.15238",
+    "arxiv_url": "https://arxiv.org/abs/2608.15238",
+    "primary_url": "https://arxiv.org/abs/2608.15238"
+  },
+  "review_scope": "Original missing canonical formal-URL publication question only; no taxonomy action is assigned.",
+  "provisional_outcome": "SUPPORTED_ADDITION",
+  "proposed_publication_change": {
+    "target": "canonical formal URL",
+    "before": "",
+    "after": "https://doi.org/10.1007/978-3-032-37023-5_10",
+    "scientific_or_taxonomy_change": false,
+    "source_implementation": "B4 must reconcile supported authoritative URL field/precedence, stable identity and derived DOI behavior before any change."
+  },
+  "proposed_taxonomy_changes": [],
+  "formal_action_status": "UNRESOLVED — NO B3 ACCEPTANCE OR CLOSURE",
+  "maintainer_acceptance_required": true,
+  "source_packet": {
+    "artifact_path": "evidence_archive/publication-group-b-reviews.v2.json",
+    "sha256": "20ffc1a58738a9a37c018942f4321c9e68074de191777920358ee41f10aef7fb",
+    "record_index": 2
+  },
+  "reviewer_evidence_record": {
+    "review_id": "P229",
+    "action_ids": [
+      "P229"
+    ],
+    "paper_id": "curated:55bc4360e3d312e696b7",
+    "canonical_title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+    "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+    "current_authors": [
+      "Lei Tan",
+      "Shuwei Li",
+      "Mohan Kankanhalli",
+      "Robby T. Tan"
+    ],
+    "current_doi": "10.48550/arXiv.2608.15238",
+    "current_arxiv_id": "2608.15238",
+    "current_arxiv_url": "https://arxiv.org/abs/2608.15238",
+    "current_venue": "European Conference on Computer Vision",
+    "current_year": "2026",
+    "current_tasks": [
+      "detection"
+    ],
+    "current_research_types": [
+      "method"
+    ],
+    "current_formal_url": "",
+    "current_authoritative_paper_url": "https://arxiv.org/abs/2608.15238",
+    "provisional_outcome": "SUPPORTED_ADDITION",
+    "proposed_formal_url": "https://doi.org/10.1007/978-3-032-37023-5_10",
+    "verified_official_landing_url": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+    "verified_formal_doi": "10.1007/978-3-032-37023-5_10",
+    "formal_doi_change_authorized_or_applied": false,
+    "evidence_sufficient_for_original_publication_question": true,
+    "maintainer_acceptance": "PENDING_B4_NOT_APPLIED",
+    "authoritative_remediation_required": true,
+    "decision_rationale": "The exact official archival chapter has the same title after whitespace/case normalization and the complete identical author sequence as both current canonical metadata and preserved arXiv metadata. It supplies a publisher DOI and archival chapter URL absent from the current source record.",
+    "identity_and_version_evidence": {
+      "official_title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+      "official_authors": [
+        "Lei Tan",
+        "Shuwei Li",
+        "Mohan Kankanhalli",
+        "Robby T. Tan"
+      ],
+      "title_match": "NFKC whitespace/case-normalized exact match",
+      "complete_author_sequence_match": true,
+      "official_venue": "Computer Vision – ECCV 2026",
+      "official_conference": "European Conference on Computer Vision",
+      "first_online": "2026-09-11",
+      "pages": "164–183",
+      "lncs_volume": "17069",
+      "book_part": "LXIX",
+      "arxiv_formal_relation": "Bibliographic same-work identity is supported by exact title plus complete author order and retained conference acceptance metadata; the publisher page does not expose an explicit arXiv crosslink.",
+      "full_text_equivalence_verified": false,
+      "publisher_final_manuscript_inspected": false,
+      "preprint_pdf_receipt_version": "v1 (historical receipt only)",
+      "historical_pdf_sha256": "63ef068afa9fe99b47a5846243573f53de98bdc3fec87e60250f98531aef4096",
+      "retained_spotlight_is_not_a_different_canonical_venue": false,
+      "complete_author_sequence_provenance": {
+        "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P229-official-chapter.html",
+        "capture_sha256": "9a200260c90b7197d7e561a2a3141bd6378af3933c810c95abdd757094047b90",
+        "locator": "Raw HTML all 4 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names.",
+        "independently_checked_author_count": 4,
+        "toc_supports_complete_sequence": true,
+        "author_order_assertion_source": "Raw official chapter HTML citation_author values; contents truncation is not treated as complete-author evidence."
+      }
+    },
+    "sources": [
+      {
+        "url": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+        "type": "official_publisher_archival_chapter_metadata",
+        "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P229-official-chapter.html",
+        "capture_sha256": "9a200260c90b7197d7e561a2a3141bd6378af3933c810c95abdd757094047b90",
+        "capture_representation": "Unmodified direct HTTP response body, text/html",
+        "locators": {
+          "title": "Raw HTML <meta name=\"citation_title\">; normalized exact canonical-title match.",
+          "complete_author_sequence": "Raw HTML all 4 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names.",
+          "formal_identity": "Raw HTML <meta name=\"citation_doi\">, <meta name=\"citation_conference_title\">, <meta name=\"citation_fulltext_html_url\">, <meta name=\"citation_publication_date\">, <meta name=\"citation_firstpage\"> and <meta name=\"citation_lastpage\">."
+        },
+        "metadata_extraction_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/P229-extracted-metadata.json",
+        "metadata_extraction_sha256": "0241c0515a9a4fefc35fb2044b0a65ae7f5aa4db5898db3e4e19e933a401599b"
+      },
+      {
+        "url": "https://link.springer.com/book/10.1007/978-3-032-37023-5",
+        "type": "official_publisher_proceedings_contents",
+        "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-title-locators.json",
+        "capture_sha256": "b6db0f975ee9ae37ae22be368e17463cafd9bff4f8528362e79c1d7124768b68",
+        "capture_representation": "Serialized web-tool rendered response, not raw HTTP",
+        "locator": "https://link.springer.com/book/10.1007/978-3-032-37023-5; Source: find({\"ref_id\":\"turn204view2\",\"pattern\":\"UC-VLM\"}); rendered document lines 207, 208, 210; link ID 67.",
+        "scope_of_support": "The contents entry establishes the title, page range, publisher chapter-link ID and visible 4-author byline. The complete author-order assertion is independently checked against all citation_author elements in the identity-matched raw chapter HTML."
+      },
+      {
+        "url": "https://arxiv.org/abs/2608.15238",
+        "type": "existing_author_preprint_metadata",
+        "capture_path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/ucvlm.html",
+        "capture_sha256": "300efe6eae57aa0ffa8a356f66caa6da1a2952dc1d37777b62a35582977c0088",
+        "capture_representation": "Existing repository HTML receipt; not retrieved again in B3",
+        "locator": "meta citation_title/citation_author/citation_arxiv_id; td.comments"
+      },
+      {
+        "url": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+        "type": "official_publisher_book_to_chapter_link_trace",
+        "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-chapter-pages-rendered.json",
+        "capture_sha256": "f92f6b121eda75226e6445c44fceebab6df11002a514e408dec79f9af2ba8915",
+        "capture_representation": "Serialized web-tool click response, not raw HTTP",
+        "locator": "Source: click({\"ref_id\":\"turn204view2\",\"id\":67}); resulting chapter URL https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+        "scope_of_support": "Existing response records the observed click from proceedings turn204view2 link ID 67 to this exact chapter URL. It is link-chain provenance, not a substitute for the full author metadata in raw HTML."
+      }
+    ],
+    "local_evidence_refs": [
+      {
+        "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/papers.csv",
+        "locator": "paper_id=curated:55bc4360e3d312e696b7",
+        "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+        "finding": "Current canonical author order and arXiv DOI/ID/URL retained; authoritative paper_url contains only the arXiv landing page, and the public formal_url is blank. Formal conference status/venue are already stored."
+      },
+      {
+        "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+        "locator": "paper_id=curated:55bc4360e3d312e696b7",
+        "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+        "finding": "Existing detection/method labels retained; existing evidence tier reused_audit+abstract is not promoted to a newly verified manuscript review."
+      },
+      {
+        "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+        "locator": "formal_records[review_id=P229]",
+        "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+        "finding": "Original independent question is missing canonical formal URL. No task/research-type correction belongs to this action."
+      },
+      {
+        "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/ucvlm.html",
+        "locator": "meta citation_title; citation_author[*]; citation_arxiv_id; td.comments",
+        "sha256": "300efe6eae57aa0ffa8a356f66caa6da1a2952dc1d37777b62a35582977c0088",
+        "finding": "Preserved 2026-08-29 arXiv metadata establishes exact preprint identity/author sequence and records Accepted by ECCV 2026."
+      },
+      {
+        "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/README.md",
+        "locator": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+        "sha256": "b5825b651ea37cb7859b1cc9ae6709f2e57c59c101eccbe30480529ef1fce92d",
+        "finding": "Historical primary PDF v1 receipt retained with SHA-256 63ef068afa9fe99b47a5846243573f53de98bdc3fec87e60250f98531aef4096; this wave did not retrieve the PDF or certify version equivalence."
+      },
+      {
+        "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/docs/requested_eccv_ijcai_2026-08-29.md",
+        "locator": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+        "sha256": "a4c802539a8013c3f9317e43fef04e05aa800edfa99f568035c57cd5dbd43c81",
+        "finding": "Earlier bibliography/byline and affiliation import review retained; no scientific methods/quantitative findings are independently reassessed now."
+      }
+    ],
+    "contradictions": [],
+    "limitations": [
+      "This bounded metadata review does not verify any method, experiment, causal claim, benchmark or numerical result.",
+      "ArXiv v1 and publisher-final manuscript contents were not compared; no publisher-final equivalence is claimed.",
+      "The existing 10.48550/arxiv identifier is a repository DOI, distinct from the newly verified formal chapter DOI. No identifier was changed.",
+      "Publisher dates/pages/volume are identity corroboration; unsupported schema fields must not be added merely to store them."
+    ],
+    "retrieval_failures": [
+      {
+        "review_id": "P229",
+        "url": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+        "started_utc": "2026-10-28T01:44:39.440594+00:00",
+        "monotonic_start_ns": 166095702568791,
+        "purpose": "Preserve exact official metadata HTML, not a scientific manuscript",
+        "attempt": 1,
+        "retry": false,
+        "full_manuscript": false,
+        "status": null,
+        "error": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+        "ended_utc": "2026-10-28T01:44:39.466717+00:00",
+        "monotonic_end_ns": 166095728490166,
+        "duration_seconds": 0.025921375,
+        "body_bytes": 0,
+        "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/P229-official-chapter.html"
+      }
+    ],
+    "retrieval_failure_interpretation": "Initial sandbox DNS denial prevented connection. A single authorized-network raw metadata capture then returned HTTP 200; no blocked publisher endpoint was retried.",
+    "known_prior_science_vs_not_assessed": {
+      "existing_labels": {
+        "tasks": "detection",
+        "research_types": "method"
+      },
+      "existing_taxonomy_evidence_tiers": {
+        "tasks_evidence_tier": "reused_audit+abstract",
+        "research_types_evidence_tier": "reused_audit+abstract"
+      },
+      "prior_primary_receipt_scope": "Byline/affiliation identity check, as documented in the 2026-08-29 import report.",
+      "new_scientific_assessment": "NOT_REASSESSED_NOT_INFERRED_FROM_TITLE_OR_ABSTRACT",
+      "scientific_claims_independently_reproduced": false
+    },
+    "proposed_taxonomy_changes": [],
+    "full_manuscripts_retrieved": 0,
+    "B4_conditions": [
+      "Reconfirm the exact baseline record fingerprint and original P229 question; do not close a companion action implicitly.",
+      "Obtain explicit maintainer acceptance of the bounded formal-URL addition before authoritative integration.",
+      "Preserve stable canonical paper ID, author order, tasks, research types, institutions, relationships, arXiv ID/URL and all prior evidence.",
+      "Use the established schema/export precedence for canonical formal URLs; any replacement of the arXiv DOI with the verified formal DOI requires an explicitly accepted independent metadata change, preserving arXiv identity.",
+      "Retain historical scope/version and empirical limitations; no scientific contribution or result is newly certified by adding a publisher URL.",
+      "Only a valid formal source-linked decision satisfying current acceptance/fingerprint rules may decrement the original unresolved action; B3 itself changes no counts."
+    ]
+  },
+  "independent_qc": {
+    "artifact_path": "evidence_archive/qc-external-six.v2.json",
+    "status": "PASS",
+    "scope": "Evidence-to-original-publication-claim mapping; not formal maintainer acceptance."
+  },
+  "evidence_provenance_inventory": "source_inventory.json"
+}

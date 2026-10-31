@@ -375,7 +375,12 @@ def test_current_taxonomy_totals_and_exact_two_label_delta_are_recomputed():
     "data/curated/institution_hierarchy.csv",
 ])
 def test_unrelated_authoritative_metadata_identity_and_relationship_files_are_byte_exact(path):
-    assert (ROOT / path).read_bytes() == previous(path)
+    # These two files now have separately authorized B4 publication additions.
+    # Preserve the original B1E transaction assertion at its published endpoint;
+    # all other identity/institution/relationship guards remain live.
+    publication_paths = {'data/curated/publication_overrides.csv', 'data/curated/venue_aliases.csv'}
+    observed = endpoint_bytes(path) if path in publication_paths else (ROOT / path).read_bytes()
+    assert observed == previous(path)
 
 
 def test_original_evidence_archives_retrievals_and_scientific_findings_survive_adjudication():

@@ -1,0 +1,260 @@
+{
+  "paper_id": "curated:f7adf12bdae80860a18f",
+  "title": "DeCLIP: Decoding CLIP Representations for Deepfake Localization",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "action_ids": [
+    "U018"
+  ],
+  "records": [
+    {
+      "review_id": "U018",
+      "paper_id": "curated:f7adf12bdae80860a18f",
+      "title": "DeCLIP: Decoding CLIP Representations for Deepfake Localization",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "assigned_scope": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "current_context": {
+        "public": true,
+        "paper_id": "curated:f7adf12bdae80860a18f",
+        "title": "DeCLIP: Decoding CLIP Representations for Deepfake Localization",
+        "doi": "10.1109/wacv61041.2025.00025",
+        "arxiv_id": "2409.08849",
+        "year": 2025,
+        "publication_type": "conference",
+        "venue": "IEEE/CVF Winter Conference on Applications of Computer Vision",
+        "tasks": [
+          "localization"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:f7adf12bdae80860a18f"
+      },
+      "original_review": {
+        "review_id": "U018",
+        "paper_id": "curated:f7adf12bdae80860a18f",
+        "title": "DeCLIP: Decoding CLIP Representations for Deepfake Localization",
+        "year": 2025,
+        "publication_status": "conference",
+        "authors": [
+          "Stefan Smeu",
+          "Elisabeta Oneata",
+          "Dan Oneata"
+        ],
+        "institutions": [
+          {
+            "institution_id": "institution:5099f96889f598c5",
+            "canonical_name": "Bitdefender",
+            "raw_affiliation": "Bitdefender",
+            "authors": [
+              "Stefan Smeu",
+              "Elisabeta Oneata"
+            ],
+            "paper_time_affiliation_known": true,
+            "institution_identity_known": true,
+            "exists_in_registry": true,
+            "location_known": false,
+            "location_records": [],
+            "mapping_status": "active",
+            "mapping_id": "mapping:84d44f13545e90dc1b25",
+            "evidence_url": "https://openaccess.thecvf.com/content/WACV2025/papers/Smeu_DeCLIP_Decoding_CLIP_Representations_for_Deepfake_Localization_WACV_2025_paper.pdf",
+            "evidence_basis": "https://openaccess.thecvf.com/content/WACV2025/papers/Smeu_DeCLIP_Decoding_CLIP_Representations_for_Deepfake_Localization_WACV_2025_paper.pdf",
+            "hierarchy": [],
+            "allowed_to_map_as_node": true,
+            "relationship_currently_possible": false
+          },
+          {
+            "institution_id": "institution:a6c16c22f070d803",
+            "canonical_name": "University Politehnica of Bucharest",
+            "raw_affiliation": "POLITEHNICA Bucharest",
+            "authors": [
+              "Dan Oneata"
+            ],
+            "paper_time_affiliation_known": true,
+            "institution_identity_known": true,
+            "exists_in_registry": true,
+            "location_known": false,
+            "location_records": [],
+            "mapping_status": "active",
+            "mapping_id": "mapping:64bac9d32589855f9a26",
+            "evidence_url": "https://openaccess.thecvf.com/content/WACV2025/papers/Smeu_DeCLIP_Decoding_CLIP_Representations_for_Deepfake_Localization_WACV_2025_paper.pdf",
+            "evidence_basis": "https://openaccess.thecvf.com/content/WACV2025/papers/Smeu_DeCLIP_Decoding_CLIP_Representations_for_Deepfake_Localization_WACV_2025_paper.pdf",
+            "hierarchy": [],
+            "allowed_to_map_as_node": true,
+            "relationship_currently_possible": false
+          }
+        ],
+        "author_affiliation_known": true,
+        "canonical_institution_identity_known": true,
+        "institution_registry_complete": true,
+        "any_reviewed_location_known": false,
+        "relationship_currently_possible": false,
+        "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+        "remediation_category": "EVIDENCE_CAN_RESOLVE",
+        "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+        "confidence": "high",
+        "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+        "authoritative_evidence_url": "https://doi.org/10.1109/wacv61041.2025.00025",
+        "project_evidence": [
+          "data/curated/author_institution_mappings.csv",
+          "data/curated/institutions.csv",
+          "data/curated/institution_locations.csv",
+          "data/curated/institution_hierarchy.csv"
+        ],
+        "batch": "B"
+      },
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "provisional_only": true,
+      "formal_acceptance": false,
+      "finding": "Both institution identities and author-affiliation assignments are verified. The paper does not establish a particular Bitdefender office or university campus, and the current corporate contact and university map viewport do not supply that historical link.",
+      "evidence_to_claim": [
+        "ReusedfinalWACVprimaryreview identifiesorderedauthors Stefan Smeu, Elisabeta Oneata, Dan Oneata; authors1–2areBitdefender,author3university.",
+        "Final2025DOI10.1109/wacv61041.2025.00025 and arXiv2409.08849 identifythiswork; olderarXivandfinalproceedingsversionsremainseparateprovenance.",
+        "OfficialcurrentuniversitycontactverifiesSplaiulIndependenței313,RO060042,Bucharest, andincludesanembeddedmapviewport; originalpaperdoesnotstatecampus/street.",
+        "OfficialBitdefenderconsumerEULAcitesOrhideelor15Acorporatecontact; no evidenceconnectsthepaperauthorstothatofficeatpublicationtime.",
+        "Currentauthor/teamresearchpagesarecontextonlyandnotretroactiveofficeproof."
+      ],
+      "source_ids": [
+        "local:wacv-primary-review",
+        "politehnica-contact",
+        "bitdefender-legal-address"
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U018]",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained.",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U018",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:f7adf12bdae80860a18f]",
+          "finding": "Current public paper retained; tasks=['localization']; research_types=['method']; map_record_count=0.",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:84d44f13545e90dc1b25, mapping:64bac9d32589855f9a26",
+          "finding": "Current curated mapping statuses: {'active': 2}; author strings, raw affiliation, provenance and blank location fields inspected without edits.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        },
+        {
+          "path": "data/curated/institutions.csv",
+          "locator": "institution_id in institution:5099f96889f598c5, institution:a6c16c22f070d803",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized.",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326"
+        },
+        {
+          "path": "data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:5099f96889f598c5, institution:a6c16c22f070d803",
+          "finding": "0 current reviewed location rows found for the mapped institutions.",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc"
+        },
+        {
+          "path": "data/manual/systematic_tier1_primary_review_2026_09.json",
+          "locator": "papers.d2f5890b11ab48bf.affiliations",
+          "finding": "Existing primary-reviewed author markers should be reused without repeating scientific review.",
+          "sha256": "16ee1b8454d21d097b067b91f1412aa8ce1a4aa88d453a6240b42c63026ebe9d"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:f7adf12bdae80860a18f",
+          "finding": "Stefan Smeu/Elisabeta Oneata and Dan Oneata have primary-reviewed WACV affiliations. Neither Bitdefender nor the university has a reviewed location; brand/city identity alone is insufficient.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        }
+      ],
+      "proposed_b4_action": "Keep U018 open. Reuse the verified author-affiliation evidence; obtain paper-time office/campus correspondence and traceable institution-specific points before accepting locations. Shared institutional sources do not merge this action with the other WACV paper.",
+      "limitations": [
+        "Do notinferBitdefenderBucharestHQasresearchsite oraddnewcurrentaffiliationsfromlaterteamprofiles.",
+        "OfficialPOLITEHNICAviewportcenter44.43943097458864,26.040437042159006 ismapdisplayparameterwith19kmspan, not anexplicitresearchcampusmarker; notproposedaslocation.",
+        "Preserveallauthor diacriticsandfinalpaperidentity; no scientific/taxonomyaudit."
+      ],
+      "confidence": {
+        "work_identity": "high",
+        "bounded_finding": "high_confidence_in_hold",
+        "site": "institutionhigh; currentcorporate/universityaddressknown; paper-timeoffice/campusunverified; coordinateunsuitable"
+      },
+      "tasks_preserved": true,
+      "research_types_preserved": true,
+      "authoritative_changes_applied": false,
+      "version_boundary": {
+        "final_year": 2025,
+        "final_doi": "10.1109/wacv61041.2025.00025",
+        "arxiv_id": "2409.08849",
+        "arxiv_year": 2024,
+        "do_not_merge_with_other_paper": true
+      },
+      "institution_evidence": [
+        {
+          "institution_id": "institution:5099f96889f598c5",
+          "identity_verified": true,
+          "paper_time_affiliation_verified": true,
+          "address_verified": "currentcorporatecontactonly",
+          "verified_address": "Șoseaua Orhideelor15A,OrhideeaTowers,floors9–12,Bucharest,Romania",
+          "paper_time_specific_site_verified": false,
+          "coordinates": null
+        },
+        {
+          "institution_id": "institution:a6c16c22f070d803",
+          "identity_verified": true,
+          "paper_time_affiliation_verified": true,
+          "address_verified": true,
+          "verified_address": "Splaiul Independenței313,Sector6,BucharestRO060042,Romania",
+          "address_temporal_basis": "currentofficialinstitutioncontactnotpaperexplicitcampus",
+          "paper_time_specific_site_verified": false,
+          "coordinates": null
+        }
+      ],
+      "action_id": "U018",
+      "review_group": "romania",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:f7adf12bdae80860a18f",
+        "title": "DeCLIP: Decoding CLIP Representations for Deepfake Localization",
+        "doi": "10.1109/wacv61041.2025.00025",
+        "arxiv_id": "2409.08849",
+        "year": 2025,
+        "publication_type": "conference",
+        "venue": "IEEE/CVF Winter Conference on Applications of Computer Vision",
+        "tasks": [
+          "localization"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:f7adf12bdae80860a18f"
+      },
+      "formal_decision_applied": false,
+      "acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for DeCLIP shared Bitdefender and POLITEHNICA Bucharest site dependencies; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "romania:bitdefender-legal-address",
+        "romania:local:wacv-primary-review",
+        "romania:politehnica-contact"
+      ],
+      "separate_site_evidence_gates": {
+        "institution_identity": "BOTH_VERIFIED",
+        "address": "CORPORATE_REGISTERED_ADDRESS_AND_CURRENT_UNIVERSITY_CONTACT_AVAILABLE",
+        "paper_time_site": "BITDEFENDER_OFFICE_UNSPECIFIED; UNIVERSITY_EXACT_CAMPUS_UNPROVEN",
+        "coordinates": "NO_QUALIFYING_PAPER_SITE_POINTS; BROAD_UNIVERSITY_MAP_VIEWPORT_NOT_MARKER",
+        "unsupported_assumption": "Do not equate company legal headquarters with paper research office or use19km map viewport as research-campus point."
+      }
+    }
+  ],
+  "note": "Evidence recommendations only; no formal decisions or source mutations."
+}

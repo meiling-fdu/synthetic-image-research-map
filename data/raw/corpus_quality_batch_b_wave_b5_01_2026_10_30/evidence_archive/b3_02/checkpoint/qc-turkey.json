@@ -1,0 +1,264 @@
+{
+  "reviewer": "independent Romania-group reviewer /root/b302_recover_romania",
+  "reviewed_group": "turkey_india_israel",
+  "reviewed_results_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/results.json",
+  "reviewed_results_sha256": "c65ee533ac6748dd959acb0254e6d1d551ad2340451f8fba8adfec289316d355",
+  "created_utc": "2026-10-29T08:13:38.602387+00:00",
+  "method": "Offline direct inspection of preserved raw publisher HTML metadata and affiliation sections, source checksums, official-site captures and provisional recommendation boundaries. No new requests; no changes to review results.",
+  "status": "PASS",
+  "passed": 49,
+  "failed": 0,
+  "checks": [
+    {
+      "check": "exact five assigned actions in planned order",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "source hash TI-P058",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "source hash TI-P068",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "source hash TI-BTU-DEPT2020",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "source hash TI-BTU-CURRENT",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "source hash TI-ARMY",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "source hash TI-IITP-CURRENT",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "source hash TI-IITP-COORD-A",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "source hash TI-IITP-COORD-B",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "source hash TI-TAU-CONTACT",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "source hash TI-TAU-ADDRESS",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "source hash TI-TAU-HTML",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "source hash TI-TAU-PAPER",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P058 exact DOI",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P058 ordered authors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P058 exact journal identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P058 title case-insensitive identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P058 bounded publisher short form",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P058 no invented acronym",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P058 venuebinding only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "publisher author-affiliation association supports Army Balikesir and BTU EEE16310",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P068 exact DOI",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P068 ordered authors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P068 exact journal identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P068 title case-insensitive identity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P068 bounded publisher short form",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P068 no invented acronym",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P068 venuebinding only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "publisher IITP exact postcode supports originalsitequestion",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "U006 remains evidence hold, coordinates not inserted",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "U008 remains evidence hold, coordinates not inserted",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "U014 remains evidence hold, coordinates not inserted",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "BTU 2020 does not become 2026 site proof",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Army Balikesir distinguished from IstanbulHQ",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "IITP conflicting claims retained without averaging",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "IITP date and CRS limits retained",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "TAU university affiliation not promoted to specificcampus",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "TAU point not inferred from geocoder or filename",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "identity context preserved P058",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "provisional not accepted P058",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "identity context preserved U006",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "provisional not accepted U006",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "identity context preserved P068",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "provisional not accepted P068",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "identity context preserved U008",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "provisional not accepted U008",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "identity context preserved U014",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "provisional not accepted U014",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "no taxonomy reviews added",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "reviewer_disagreement": [],
+  "nonblocking_notes": [
+    "TI-TAU-ADDRESS locator contains a question mark, but the exact captured source header and L167 verify gc-map-test contact address. Prefer replacing the tentative locator with web-04-sites.json source header and L167 in final aggregated source inventory.",
+    "Two IITP coordinate values could represent distinct reference points or source error; their separation alone is not a proven coordinate defect. Retaining the coordinate hold is supported.",
+    "No full manuscript inspection was required for publication or institution metadata questions. Existing author affiliations are reused, and geocoding cannot determine paper-time campus."
+  ]
+}

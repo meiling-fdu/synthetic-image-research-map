@@ -743,10 +743,19 @@ def test_original_questions_policy_and_all_unrelated_authoritative_files_are_unc
     r1 = next(r for r in policy["policies"] if r["policy_id"] == "R1")
     assert packet()["locked_policy_ledger"]["policies"] == [r1]
     assert "Data generated or collected solely" in r1["final_rule"]
+    # These three publication-dependent tables now have an approved B5 successor.
+    # Check their original transaction at its immutable endpoint; every other
+    # path, original question and locked policy remains a live byte guard.
+    publication_successor_paths = {
+        "data/curated/publication_overrides.csv",
+        "data/curated/venue_aliases.csv",
+        "data/manual/missing_author_mappings_report.csv",
+    }
     allowed = {PAPERS,TAXONOMY,DECISIONS,*PUBLIC}
     for path in baseline_paths("data/curated","data/manual","web/data"):
         if path not in allowed:
-            assert (ROOT/path).read_bytes() == published_bytes(BASE,path),path
+            observed = published_bytes(PUBLISHED, path) if path in publication_successor_paths else (ROOT / path).read_bytes()
+            assert observed == published_bytes(BASE, path), path
     for name in ("taxonomy_review","publication_metadata_review","relationship_review","unmapped_papers","batch_c_policy_decisions"):
         path = AUDIT+name+".json"
         assert (ROOT/path).read_bytes() == published_bytes(BASE,path),path

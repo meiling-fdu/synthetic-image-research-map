@@ -1,0 +1,69 @@
+--- a/tests/public_refinement_snapshot.py
++++ b/tests/public_refinement_snapshot.py
+@@ -4,6 +4,7 @@
+ bytes separately before replaying an audit against its archived frontend.
+ """
+ 
++import difflib
+ import hashlib
+ import json
+ from pathlib import Path
+@@ -155,8 +156,58 @@
+     return {relative: actual}
+ 
+ 
++# One independently reviewed fixture successor. The immutable receipt authorizes
++# this exact complete diff; metadata cannot authorize its own replacement bytes.
++PUBLISH_FIXTURE_TEST_SUCCESSOR = {
++    "path": "tests/test_admin_publish_workflow_reliability.py",
++    "predecessor_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
++    "predecessor_sha256": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63",
++    "reviewed_sha256": "34420cb25c55df54ecb65ff9d7e4dcd2e9e258cc85101fe9806f790203e6b60f",
++    "reviewed_diff_sha256": "02103322daabe9801fcff3520f5b3776d9a7b905c725a82461f7c08a13ee9bcb",
++    "scope": "fixture_state_isolation_only",
++}
++PUBLISH_FIXTURE_REVIEW = (
++    "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/"
++    "publish_fixture_successor_review.json"
++)
++PUBLISH_FIXTURE_REVIEW_SHA256 = "380bee496892c58b4cb0784f84ed7a78e07c435ce76471ed41c877e7bb3c2298"
++PUBLISH_FIXTURE_DIFF = (
++    "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/"
++    "publish_fixture_reviewed.diff"
++)
++
++
++def assert_publish_fixture_test_successor():
++    review_bytes = (ROOT / PUBLISH_FIXTURE_REVIEW).read_bytes()
++    assert hashlib.sha256(review_bytes).hexdigest() == PUBLISH_FIXTURE_REVIEW_SHA256, "Unreviewed fixture authorization receipt"
++    review = json.loads(review_bytes)
++    entry = PUBLISH_FIXTURE_TEST_SUCCESSOR
++    assert review["verdict"] == "APPROVE"
++    assert entry == review["authorization"], "Unreviewed fixture authorization metadata"
++    relative = entry["path"]
++    before = committed_bytes(entry["predecessor_commit"], relative)
++    assert hashlib.sha256(before).hexdigest() == entry["predecessor_sha256"], "Unreviewed fixture predecessor"
++    after = (ROOT / relative).read_bytes()
++    assert hashlib.sha256(after).hexdigest() == entry["reviewed_sha256"], "Unreviewed fixture successor"
++    reviewed_diff = (ROOT / PUBLISH_FIXTURE_DIFF).read_bytes()
++    assert hashlib.sha256(reviewed_diff).hexdigest() == entry["reviewed_diff_sha256"], "Unreviewed fixture diff receipt"
++    actual_diff = "".join(difflib.unified_diff(
++        before.decode("utf-8").splitlines(keepends=True),
++        after.decode("utf-8").splitlines(keepends=True),
++        fromfile="a/" + relative, tofile="b/" + relative,
++    )).encode("utf-8")
++    assert actual_diff == reviewed_diff, "Fixture differs from independently reviewed change"
++    return {relative: entry["reviewed_sha256"]}
++
++
+ def assert_historical_integrity_with_public_refinement(integrity, baseline):
+     expected = {**assert_public_refinement_snapshot(), **assert_b1a_test_successor()}
++    # Older synthetic/transaction baselines need no new exception. When this
++    # literal file is protected, its original baseline and exact receipt are mandatory.
++    relative = "tests/test_admin_publish_workflow_reliability.py"
++    if relative in baseline:
++        assert baseline[relative] == PUBLISH_FIXTURE_TEST_SUCCESSOR["predecessor_sha256"], "Unexpected historical fixture baseline"
++        expected.update(assert_publish_fixture_test_successor())
+     result = integrity()
+     # The original audit still verifies every protected path and its prior
+     # data-migration receipts. Only these byte-checked UI/test changes are new.

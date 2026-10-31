@@ -26,6 +26,11 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = "53c2a9aa0fa3a36427ea8e71966e29cdfba70153"
 # Anchor the published B1M transaction; live selected-case guards remain below.
 PUBLISHED = "05a89df9e5b3543c1231dc5934f55320aec53fa9"
+# Separately approved B4-01 changes only P034's publication URL. This exact
+# successor does not normalize the 12/13-author or DOI/version discrepancy.
+P034_URL = "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+P034_URL_DECISION = "review:905c181f62686fdd1d46"
+P034_ADJUDICATION = "data/raw/corpus_quality_batch_b_wave_b4_01_2026_10_29/adjudication_manifest.json"
 PAPERS = "data/curated/papers.csv"
 TAXONOMY = "data/curated/paper_taxonomy.csv"
 DECISIONS = "data/curated/review_decisions.csv"
@@ -589,6 +594,7 @@ def test_RealChain_numeric_counterexamples_and_unverified_release_do_not_disappe
 
 
 def test_R034_version_observation_stays_separate_from_pending_P034_and_live_bibliographic_identity():
+    # Pending P034 is an immutable B1M observation, before its B4-01 URL decision.
     observation = science("R034")["out_of_scope_bibliographic_version_observation"]
     assert observation["marker"] == "OUT_OF_SCOPE_BIBLIOGRAPHIC_VERSION_OBSERVATION"
     early,publisher = observation["early_arxiv"],observation["publisher"]
@@ -597,9 +603,13 @@ def test_R034_version_observation_stays_separate_from_pending_P034_and_live_bibl
     assert publisher["authors"][7] == "Manni Cui" and early["full_manuscript_obtained_or_read"] is False
     assert observation["P034_remains_pending"] is True and observation["canonical_metadata_changed"] is observation["new_review_action_created"] is False
     before = selected_row(published_bytes(BASE,PAPERS),TARGETS["R034"])
-    after = selected_row((ROOT/PAPERS).read_bytes(),TARGETS["R034"])
+    after = selected_row(published_bytes(PUBLISHED,PAPERS),TARGETS["R034"])
     assert after == {**before,"research_types":"method;dataset;benchmark"}
     assert after["doi"] == "" and len(after["authors"].split(";")) == 12
+    # Keep every live canonical field, author token, DOI and task/type value exact.
+    live = selected_row((ROOT/PAPERS).read_bytes(),TARGETS["R034"])
+    assert live == {**after,"paper_url":P034_URL}
+    assert live["doi"] == "" and len(live["authors"].split(";")) == 12
     queues = load_queues()
     assert (ROOT/(AUDIT+"publication_metadata_review.json")).read_bytes() == published_bytes(BASE,AUDIT+"publication_metadata_review.json")
     assert record(packet(),"R034")["independent_pending_original_B_actions"] == record(original(),"R034")["independent_pending_original_B_actions"]
@@ -734,7 +744,14 @@ def test_original_questions_locked_R2_and_all_unrelated_authoritative_files_rema
     allowed = {PAPERS,TAXONOMY,DECISIONS,*PUBLIC}
     for path in baseline_paths("data/curated","data/manual","web/data"):
         if path not in allowed:
-            assert (ROOT/path).read_bytes() == published_bytes(BASE,path),path
+            # Preserve the B1M no-publication-edit receipt at its immutable endpoint.
+            # These tables and their generated URL report have accepted B4 changes;
+            # B5 live tests enforce exact source appends and eight report URL cells.
+            publication_tables = {"data/curated/publication_overrides.csv",
+                                  "data/curated/venue_aliases.csv",
+                                  "data/manual/missing_author_mappings_report.csv"}
+            observed = published_bytes(PUBLISHED,path) if path in publication_tables else (ROOT/path).read_bytes()
+            assert observed == published_bytes(BASE,path),path
     for name in ("taxonomy_review","publication_metadata_review","relationship_review","unmapped_papers","batch_c_policy_decisions"):
         path = AUDIT+name+".json"
         assert (ROOT/path).read_bytes() == published_bytes(BASE,path),path
@@ -816,17 +833,31 @@ def test_final_report_keeps_original_evidence_and_acceptance_qualifications_prom
         assert packet()["scope"][key] == 0
 
 
+def P034_public_url_successor(record):
+    """Allow only four derived URL fields and their existing link-status flag."""
+    return {**record, "paper_url":P034_URL, "formal_url":P034_URL,
+            "primary_url":P034_URL, "url":P034_URL, "is_arxiv_preprint":False}
+
+
 @pytest.mark.parametrize("rid",["R034","R359"])
 def test_live_B1M_selected_rows_public_records_relationships_and_terminal_prefix_remain_exact(rid):
-    """New approved transactions may advance totals without altering either B1M case."""
+    """Retain both B1M cases, allowing only the independently accepted P034 URL."""
     pid = TARGETS[rid]
     for path in (PAPERS,TAXONOMY):
-        assert selected_row((ROOT/path).read_bytes(),pid) == selected_row(published_bytes(PUBLISHED,path),pid)
+        expected = selected_row(published_bytes(PUBLISHED,path),pid)
+        if rid == "R034" and path == PAPERS:
+            expected = {**expected,"paper_url":P034_URL}
+        assert selected_row((ROOT/path).read_bytes(),pid) == expected
     historical,live = published_context(PUBLISHED),load_context()
-    assert historical["papers"][pid] == live["papers"][pid]
+    expected_paper = historical["papers"][pid]
+    if rid == "R034":
+        expected_paper = P034_public_url_successor(expected_paper)
+    assert expected_paper == live["papers"][pid]
     assert {key:value for key,value in historical["pairs"].items() if key[0] == pid} == {key:value for key,value in live["pairs"].items() if key[0] == pid}
     before = {row["id"]:row for row in json.loads(published_bytes(PUBLISHED,PUBLIC[1]))["records"] if row.get("paper_id") == pid}
     after = {row["id"]:row for row in json.loads((ROOT/PUBLIC[1]).read_bytes())["records"] if row.get("paper_id") == pid}
+    if rid == "R034":
+        before = {key:P034_public_url_successor(value) for key,value in before.items()}
     assert before == after and len(before) == {"R034":7,"R359":1}[rid]
     prefix = published_bytes(PUBLISHED,DECISIONS)
     assert (ROOT/DECISIONS).read_bytes().startswith(prefix)
@@ -835,6 +866,19 @@ def test_live_B1M_selected_rows_public_records_relationships_and_terminal_prefix
     assert live_rows[:len(historical_rows)] == historical_rows
     assert terminal(live_rows)[rid] == IDS[rid]
     assert sum(row["decision_id"] == IDS[rid] for row in live_rows) == 1
+    if rid == "R034":
+        # The URL exception must remain backed by its exact formal, evidence-linked acceptance.
+        adjudication = json.loads((ROOT/P034_ADJUDICATION).read_bytes())
+        accepted = next(r for r in adjudication["records"] if r["review_id"] == "P034")
+        assert accepted["paper_id"] == pid and accepted["accepted"] is True
+        assert accepted["native_id"] == P034_URL_DECISION
+        assert accepted["binding"]["target_path"] == PAPERS
+        assert accepted["binding"]["target_field"] == "paper_url"
+        assert accepted["binding"]["accepted_url"] == accepted["accepted_stored_url"] == P034_URL
+        decisions = [row for row in live_rows if row["decision_id"] == P034_URL_DECISION]
+        assert decisions == [accepted["formal_decision"]]
+        assert decisions[0]["action"] == "no_action_after_review"
+        assert terminal(live_rows)["P034"] == P034_URL_DECISION
 
 
 def test_current_corpus_and_taxonomy_totals_still_have_independent_live_guards():

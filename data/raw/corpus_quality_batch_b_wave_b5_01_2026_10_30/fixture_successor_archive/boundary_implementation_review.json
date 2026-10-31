@@ -1,0 +1,118 @@
+{
+  "task": "B5-01R2 independent static review of prepared successor boundary",
+  "verdict": "PASS",
+  "checks": [
+    {
+      "check": "Existing B1A entry AST unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Existing B1A helper AST unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Other preexisting helper functions unchanged except exact wrapper extension",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "All three terminal exact assertions byte-equivalent AST",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "One literal authorized path, no new generic path registry",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Full independent receipt exact SHA anchored outside metadata",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Independent APPROVE receipt binds full exact authorization dict",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Predecessor commit SHA and current complete reviewed successor exact",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Canonical diff exact endpoint derivation and pinned digest",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Byte anchor checked before parsed authorization used",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Final canonical diff equality asserted",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Only protected literal baseline scope invokes verifier and checks original digest",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Existing B1A positive/negative test source remains unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Positive and all required negative groups present",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "20 independently scoped cases without disabled tests",
+      "pass": true,
+      "detail": {
+        "test_real_reviewed_published_predecessor_and_current_successor_are_accepted": 1,
+        "test_exact_reviewed_successor_boundary_is_accepted": 1,
+        "test_arbitrary_successor_edit_is_rejected": 1,
+        "test_changed_predecessor_git_bytes_are_rejected": 1,
+        "test_authorization_metadata_changes_are_rejected": 7,
+        "test_mutable_hash_cannot_authorize_arbitrary_successor": 1,
+        "test_changed_receipt_bytes_are_rejected": 2,
+        "test_missing_receipts_are_rejected": 2,
+        "test_changed_historical_baseline_hash_is_rejected": 1,
+        "test_unrelated_file_edit_is_rejected": 1,
+        "test_reduced_count_coverage_is_rejected": 2
+      }
+    },
+    {
+      "check": "Metadata mutations include path/predecessor/successor/diff/scope/extra-field",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "No repository changes by review",
+      "pass": true,
+      "detail": "Reads, AST inspection, literal hash/diff computation and git-show only. No helper/test execution or source mutation."
+    }
+  ],
+  "passed": 17,
+  "failed": 0,
+  "inputs_sha256": {
+    "prepared-public_refinement_snapshot.py": "13c66fe9e9887ae9b7520d3dc65b563fde46a037c2a30e3f4fc63d44a9afbb42",
+    "prepared-test_b5_publish_fixture_successor.py": "89dbe8a056c7e65aee7ef563992f582cd624c204e6f271187254bcc8da5380da",
+    "independent-fixture-successor-review.json": "380bee496892c58b4cb0784f84ed7a78e07c435ce76471ed41c877e7bb3c2298",
+    "independent-fixture-reviewed.diff": "02103322daabe9801fcff3520f5b3776d9a7b905c725a82461f7c08a13ee9bcb"
+  },
+  "coverage_note": "Metadata-dictionary mutation and raw receipt mutation independently test the fixed receipt anchor. Every receipt field edit also changes its pinned byte digest. Existing B1A tests remain unchanged because their synthetic baseline does not protect this fixture path.",
+  "limits": {
+    "tests_executed": 0,
+    "repository_mutations": 0,
+    "source_writes": 0,
+    "approval_scope": "Apply these exact prepared helper/test bytes and copy the already pinned receipt and canonical diff to their literal destinations, then run mandatory gates. This review does not constitute test or publication acceptance."
+  }
+}

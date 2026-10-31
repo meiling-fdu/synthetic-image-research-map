@@ -1,0 +1,325 @@
+{
+  "schema_version": "batch-b-b4-02-b5-handoff-1",
+  "status": "LOCAL_VALIDATED_ADJUDICATION_PENDING_B5; NOT_PUBLISHED",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "checkpoint_started": "2026-10-29",
+  "adjudication_date": "2026-10-30",
+  "B5_started": false,
+  "execution_authorized": false,
+  "current_transaction": {
+    "worktree": "/Users/meilinger/.codex/worktrees/batch-b-b4-02/synthetic-image-research-map",
+    "branch": "codex/batch-b-b4-02",
+    "accepted_actions": [
+      "P049",
+      "P058",
+      "P068"
+    ],
+    "held_actions": [
+      "P001",
+      "U001",
+      "U002",
+      "U003",
+      "U005",
+      "U006",
+      "U007",
+      "U008",
+      "U014",
+      "U016",
+      "U018",
+      "U023"
+    ],
+    "nine_venue_cells": [
+      {
+        "paper_id": "curated:64195610a6d2c2448275",
+        "field": "venue_id",
+        "before": "",
+        "after": "venue:journal-of-high-school-science"
+      },
+      {
+        "paper_id": "curated:64195610a6d2c2448275",
+        "field": "venue_name",
+        "before": "",
+        "after": "Journal of High School Science"
+      },
+      {
+        "paper_id": "curated:64195610a6d2c2448275",
+        "field": "venue_type",
+        "before": "",
+        "after": "journal"
+      },
+      {
+        "paper_id": "curated:e5a9ed970200c293678e",
+        "field": "venue_id",
+        "before": "",
+        "after": "venue:machine-vision-and-applications"
+      },
+      {
+        "paper_id": "curated:e5a9ed970200c293678e",
+        "field": "venue_name",
+        "before": "",
+        "after": "Machine Vision and Applications"
+      },
+      {
+        "paper_id": "curated:e5a9ed970200c293678e",
+        "field": "venue_type",
+        "before": "",
+        "after": "journal"
+      },
+      {
+        "paper_id": "curated:d129c9180d4a0cff91ad",
+        "field": "venue_id",
+        "before": "",
+        "after": "venue:international-journal-of-data-science-and-analytics"
+      },
+      {
+        "paper_id": "curated:d129c9180d4a0cff91ad",
+        "field": "venue_name",
+        "before": "",
+        "after": "International Journal of Data Science and Analytics"
+      },
+      {
+        "paper_id": "curated:d129c9180d4a0cff91ad",
+        "field": "venue_type",
+        "before": "",
+        "after": "journal"
+      }
+    ],
+    "three_appended_venue_aliases": [
+      {
+        "alias": "Journal of High School Science",
+        "venue_id": "venue:journal-of-high-school-science",
+        "venue_name": "Journal of High School Science",
+        "venue_acronym": "",
+        "venue_type": "journal",
+        "venue_track": "",
+        "review_status": "confirmed",
+        "notes": "Maintainer-approved B4-02 P049; exact DOI 10.64336/001c.156299; https://jhss.scholasticahq.com/article/156299-conditional-uncertainty-aware-political-deepfake-detection-with-stochastic-convolutional-neural-networks; B3-02 publisher SHA256 7590b14b85fa0fed3d9ba94355e88a97b3eabb2bba63b69df9b9453f59826f47; preserve empty optional acronym. Names sharing words are distinct, not aliases of IJACSA."
+      },
+      {
+        "alias": "International Journal of Data Science and Analytics",
+        "venue_id": "venue:international-journal-of-data-science-and-analytics",
+        "venue_name": "International Journal of Data Science and Analytics",
+        "venue_acronym": "",
+        "venue_type": "journal",
+        "venue_track": "",
+        "review_status": "confirmed",
+        "notes": "Maintainer-approved B4-02 P058; exact DOI 10.1007/s41060-026-01192-9; https://link.springer.com/article/10.1007/s41060-026-01192-9; B3-02 publisher SHA256 dde07d46a66d614b4782ef7606219d00f0e92a8e35d1243b62e8d0f4ce7a94bb; preserve empty optional acronym. Names sharing words are distinct, not aliases of IJACSA."
+      },
+      {
+        "alias": "Machine Vision and Applications",
+        "venue_id": "venue:machine-vision-and-applications",
+        "venue_name": "Machine Vision and Applications",
+        "venue_acronym": "",
+        "venue_type": "journal",
+        "venue_track": "",
+        "review_status": "confirmed",
+        "notes": "Maintainer-approved B4-02 P068; exact DOI 10.1007/s00138-026-01836-7; https://link.springer.com/article/10.1007/s00138-026-01836-7; B3-02 publisher SHA256 ecf2a69e9fb2bb1d795834679116e2254b2e32648e0ce0180138c6622e1ff791; preserve empty optional acronym. Names sharing words are distinct, not aliases of IJACSA."
+      }
+    ],
+    "fifteen_decision_ids": {
+      "P001": "review:e41616335723ac354701",
+      "U001": "review:9281151079124e7d57fa",
+      "U002": "review:2e925c164bf6fbf6dd60",
+      "U003": "review:26e7b23a339bc754ac66",
+      "P049": "review:4de3e0df6b56e525c9e4",
+      "U005": "review:ee78c3dd6283715df714",
+      "P058": "review:72bc57a771b8e020ac74",
+      "U006": "review:0ae8f5224347f78ee667",
+      "U007": "review:0a0550b454c4459c89bd",
+      "P068": "review:833a9064f2071c703dee",
+      "U008": "review:680149cb3c041cd3cef5",
+      "U014": "review:1ff094ea59c1089d2ca7",
+      "U016": "review:2e2a63b48c315830fc77",
+      "U018": "review:184c26a492d039a6ff72",
+      "U023": "review:c62deff5f5dd9af1e68e"
+    },
+    "source_sha256_before": {
+      "data/curated/papers.csv": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+      "data/curated/venue_aliases.csv": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+      "data/curated/review_decisions.csv": "ce616e76f5b41a2df967c9c72451f9cbeb8b1ad05b488d5ca6240d070c4819dc"
+    },
+    "source_sha256_after": {
+      "data/curated/papers.csv": "41f5bee3556ecc8667cc3b6ebc83b82160911ed61b5743b84703621bf24d3dc5",
+      "data/curated/venue_aliases.csv": "8148eb3bece935006d7d88f7f4e0447fdc10ce1a431bafc25cffe479a333c916",
+      "data/curated/review_decisions.csv": "9ee53db8bf8d123ee6529b0d8f6792fd60557d9d0e6a770e1b77220fb4e9af5e"
+    },
+    "explicit_files": [
+      "data/curated/papers.csv",
+      "data/curated/venue_aliases.csv",
+      "data/curated/review_decisions.csv",
+      "docs/key_paper_coverage_report.md",
+      "data/raw/corpus_quality_batch_b_wave_b4_02_2026_10_29/adjudication_manifest.json",
+      "data/raw/corpus_quality_batch_b_wave_b4_02_2026_10_29/b5_handoff.json",
+      "docs/corpus_quality_batch_b_wave_b4_02_2026_10_29.md",
+      "tests/test_corpus_quality_batch_b_wave_b4_02.py"
+    ],
+    "accounting_before": {
+      "original_actions": 159,
+      "original_papers": 148,
+      "terminal_actions": 28,
+      "historical_unresolved_actions": 131,
+      "historical_unresolved_papers": 121,
+      "active_public_unresolved_actions": 129,
+      "active_public_unresolved_papers": 119
+    },
+    "accounting_after": {
+      "original_actions": 159,
+      "original_papers": 148,
+      "terminal_actions": 31,
+      "historical_unresolved_actions": 128,
+      "historical_unresolved_papers": 121,
+      "active_public_unresolved_actions": 126,
+      "active_public_unresolved_papers": 119
+    },
+    "tests": {
+      "generated_utc": "2026-10-30T01:57:37.322126+00:00",
+      "tests_passed": 185,
+      "subtests_passed": 34,
+      "test_failures": 0,
+      "focused_exit_status": 0,
+      "focused_seconds": 12.6,
+      "focused_log_sha256": "879163404d3b3ceb93518f09485ba97cec61b55455ebd22dc662ff658dd303a2",
+      "focused_junit_sha256": "3f1caec35809e98172580a2f5ff837b26c60fc5e81a8c48cc2c1edb68e3b8b66",
+      "validators": {
+        "curated": {
+          "exit_status": 0,
+          "errors": 0,
+          "warning_lines": 294,
+          "sha256": "b7edb84ee8527d1d193df03223a415dea0b7491525bc4d4443a5dc99a42c193c"
+        },
+        "public": {
+          "exit_status": 0,
+          "errors": 0,
+          "warning_lines": 62,
+          "sha256": "84ed5a622291a93a89b16c5407cd03ce7e3a891f84a4cc1d4caa6e7b2171749a"
+        }
+      },
+      "full_suite_run": false,
+      "exports_run": 0,
+      "initial_draft_test_failure_preserved": true,
+      "policy_pure_negative_checks": 12,
+      "independent_application_preflight": "PASS"
+    },
+    "receipt_update": {
+      "mode": "RECEIPT_ONLY_NO_EXPORT",
+      "status": "PASS",
+      "markdown_path": "docs/key_paper_coverage_report.md",
+      "sha256_before": "f5941e3b477b1d92b77531a994156fd29a96df455eb5fa119b2a1e4956a9ee7e",
+      "sha256_after": "7065098e77c7159118c0437d366946d5f214a36c9f60236631295c52b6766c00",
+      "unchanged_coverage_csv": "data/manual/key_paper_coverage_report.csv",
+      "unchanged_coverage_csv_sha256": "dbe1bd75e8d619a3a28354df1bccd79037f0aa281de49a37bbb49d3937d75099",
+      "diff": [
+        "--- ",
+        "+++ ",
+        "@@ -4,7 +4,7 @@",
+        " ",
+        " Bibliography coverage means an exact, unambiguous match in `web/data/public_preview_papers.json`. Marker coverage counts relationships in `web/data/public_preview_map_data.json`. Markerless papers remain covered. Candidate-only records are not public. Exclusions follow the active authoritative exclusion registry. Totals count checklist rows; multiple checklist variants can refer to one public paper.",
+        " ",
+        "-Input SHA-256: `b949b934293a14e398630206a8675914d6fca0140421c435bc72e8455f3f51e5`",
+        "+Input SHA-256: `c02f687294441159131ed8ad64b1c1d282cb6feb9a78eeef9fd03aeaee2691c6`",
+        " ",
+        " ## Inputs",
+        " "
+      ],
+      "summary": {
+        "public_papers": 674,
+        "unique_mapped_papers": 613,
+        "map_records": 1410,
+        "key_papers": 299,
+        "bibliography_covered": 283,
+        "candidate_only": 0,
+        "covered_as_map_marker": 282,
+        "covered_in_public_preview_paper_list": 1,
+        "excluded": 14,
+        "missing_from_candidate_pool": 0,
+        "possible_title_match_failure": 2
+      },
+      "errors": []
+    }
+  },
+  "independent_pending_B4_01": {
+    "worktree": "/Users/meilinger/.codex/worktrees/batch-b-b4-01/synthetic-image-research-map",
+    "status": "VALIDATED_LOCAL_UNPUBLISHED; NOT_MERGED_OR_CHANGED",
+    "eight_file_sha256": {
+      "data/curated/papers.csv": "b560c8a77fe45f38c3d6c5d47f81e2798ef41dcc6bec0fc44769d922104635ef",
+      "data/curated/publication_overrides.csv": "ae6ce79a8f9567402cca7cc7197e28b4c2b2cca7cff2e534fb06af43dc6a2310",
+      "data/curated/review_decisions.csv": "744bbf36df836b00a1d5f5d33669b832765c7f3175390ca6bbef745c07a7b58a",
+      "data/raw/corpus_quality_batch_b_wave_b4_01_2026_10_29/adjudication_manifest.json": "24fddb89476e0abaa74d6c252cbc4f2ec7ec1b62a84b6f851dfd0eb1db277f85",
+      "data/raw/corpus_quality_batch_b_wave_b4_01_2026_10_29/b5_handoff.json": "743f28e96e6c0188afbf96165fd85c23794d9545805d61ca18668701dc04153d",
+      "docs/corpus_quality_batch_b_wave_b4_01_2026_10_29.md": "570e24971e1960c016589106cee4b65d67006024da14987ebaf350ef56f4fb02",
+      "docs/key_paper_coverage_report.md": "4c61a69bf0d40fc4ac97e3b765630d8da0aba565c8f1b46770a7656194b231f0",
+      "tests/test_corpus_quality_batch_b_wave_b4_01.py": "2ac7f1d3bec7cdb07211255ced991ec29282d2df21bac52114cf3ae423e41d14"
+    },
+    "accepted_actions": [
+      "P034",
+      "P254",
+      "P305",
+      "P097",
+      "P105",
+      "P150",
+      "P177",
+      "P229"
+    ],
+    "hold": "P028",
+    "standalone_accounting_historical": 123,
+    "standalone_accounting_active_public": 121
+  },
+  "scope_limits": {
+    "P001": "Venue identity supported, but canonical binding held for explicit track decision. Preserve blank track; no Main inference.",
+    "U005": "Location precision/schema hold. Retain school identity/address and candidate as evidence only; no accepted point or author physical-location claim. Curated-location save workflow also rejects Romania/RO.",
+    "remaining_ten_U_actions": "Retain EVIDENCE_INSUFFICIENT with all source/date/site/CRS/numerical limitations.",
+    "taxonomy_changes": []
+  },
+  "reconciliation_requirements": [
+    "Fetch current origin/main and inspect intervening approved commits. Reconcile in a fresh integration worktree; never overwrite dirty primary/concurrent CLIP/BCP state.",
+    "Preserve both independent pending transaction snapshots and their manifests. No B4-01 row/file is incorporated in B4-02.",
+    "papers.csv overlaps at file level only: B4-01 six URL cells on different papers, B4-02 nine venue cells on three journals. Apply record-and-cell allowlists against the verified base, never choose a whole-file version or concatenate CSV bodies.",
+    "review_decisions.csv shares the immutable first103 rows. Native IDs are disjoint. Preserve the original byte prefix; integrate B4-01 nine appends followed by B4-02 fifteen appends if required by the existing B4-01 transaction tests. Expected union127 rows, with histories and created timestamps retained; no re-upsert or dropped holds.",
+    "venue_aliases.csv has only B4-02 three source-backed journal additions. publication_overrides.csv has only B4-01 two additions. Validate exact identities and no newly overlapping aliases after remote changes.",
+    "Both transactions change the same key-paper report input fingerprint. Recompute only the correct combined receipt after source integration; do not pick either standalone hash or concatenate reports.",
+    "Keep source-bound venue-state and transaction binding fingerprints valid. If a paper DOI, title, year or venue field changes independently, revalidate the affected formal decision rather than copying a stale confirmation.",
+    "B3-01/B3-02 evidence remains in sealed local artifacts. Before publication, package required primary captures/manifests with their verified checksums into durable repository evidence paths or another reproducible supported archive; local absolute paths must not be the only published provenance. Do not repeat scientific discovery.",
+    "Only after separately authorized B5 integration, regenerate necessary deterministic public exports and inspect every generated difference. These B4 checkpoints intentionally leave public JSON at the baseline.",
+    "Run all mandatory B5 validators, focused regression, full suite, export reproducibility and remote/deployment gates. Existing B1S/B1E/B4-01 historical transaction assertions need explicit immutable receipt boundaries only where historically intended, preserving substantive assertions and independent current-state coverage. No historical tests or frozen receipts were changed in B4-02.",
+    "Keep P001, U005 and all ten evidence debts open. No subsequent evidence or schema/country repair is authorized by this handoff."
+  ],
+  "hypothetical_union_if_no_other_changes": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 39,
+    "historical_unresolved_actions": 120,
+    "historical_unresolved_papers": 113,
+    "active_public_unresolved_actions": 118,
+    "active_public_unresolved_papers": 111,
+    "status": "IN_MEMORY_PLANNING_ONLY_NOT_APPLIED",
+    "registry_rows": 127
+  },
+  "preservation_requirements": [
+    "B4-01 validated eight-file fingerprints",
+    "All127 sealed B3-02 files and B3-01/B2 provenance",
+    "128 protected local excluded files,49 frozen NeurIPS artifacts,7+1 metadata blocker",
+    "Batch C13 deferred debts and separate39-paper inventory",
+    "B1Q/B1R/B1S and CI-STABILITY-01 accepted history",
+    "All unrelated curated metadata, authors, tasks/types, institutions and1410 relationships",
+    "Concurrent primary and CLIP/BCP work"
+  ],
+  "corpus": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "taxonomy": {
+    "detection": 621,
+    "method": 578,
+    "analysis_study": 86,
+    "survey": 21,
+    "source_attribution": 84,
+    "dataset": 138,
+    "benchmark": 97,
+    "localization": 45
+  },
+  "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+}

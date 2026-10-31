@@ -1,0 +1,945 @@
+{
+  "task": "Batch B Wave B3-02",
+  "group": "china_uk_algeria",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "assigned_review_ids": [
+    "U002",
+    "U003",
+    "U007",
+    "U016"
+  ],
+  "records": [
+    {
+      "review_id": "U002",
+      "paper_id": "curated:bd8343f176d4b9e38a7b",
+      "title": "A Multi-View and Confusion-Guided Ensemble Framework for Robust Synthetic Image Attribution",
+      "action_scope": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "original_blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "original_acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for China Southern Power Grid Electric Power Research Institute / State Key Laboratory of HVDC site; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "canonical_institution_id": "institution:e86c10c85c74ba208e3d",
+      "canonical_institution_name": "China Southern Power Grid Electric Power Research Institute",
+      "paper_identity": {
+        "authors": [
+          "Zuomin Qu"
+        ],
+        "arxiv_id": "2609.11188",
+        "doi": "",
+        "year": 2026,
+        "publication_type": "preprint",
+        "identity_verified_from": "Existing identity-matched paper-time source mappings and published record; no manuscript rediscovery."
+      },
+      "paper_time_affiliation": {
+        "raw": "State Key Laboratory of HVDC, China Southern Power Grid Electric Power Research Institute, China",
+        "primary_url": "https://arxiv.org/pdf/2609.11188",
+        "known_institution_affiliation": true,
+        "site_explicit_in_preserved_affiliation": false
+      },
+      "local_evidence": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U002]",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U002",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:bd8343f176d4b9e38a7b]",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+          "finding": "Current public paper retained; tasks=['source_attribution']; research_types=['method']; map_record_count=0."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:fca75dd464bd39f7ef6e",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+          "locator": "institution_id in institution:e86c10c85c74ba208e3d",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:e86c10c85c74ba208e3d",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc",
+          "finding": "0 current reviewed location rows found for the mapped institutions."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:bd8343f176d4b9e38a7b",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Zuomin Qu has a confirmed affiliation; the laboratory/institute corporate site has no reviewed point."
+        }
+      ],
+      "current_tasks": [
+        "source_attribution"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "is_formal_decision": false,
+      "formal_resolution_applied": false,
+      "authoritative_changes": [],
+      "taxonomy_changes_proposed": [],
+      "official_evidence_ids": [
+        "csg-samr",
+        "csg-hvdc2020",
+        "csg-patent2021"
+      ],
+      "evidence_to_claim": [
+        {
+          "claim": "The existing institute identity has an official legal-name/identifier and an institute research-base street address distinct from the utility parent.",
+          "sources": [
+            "csg-samr"
+          ]
+        },
+        {
+          "claim": "A2020 HVDC-related conference contact and2021 institute patent corroborate No11 KexiangRoad; neither assigns this2026 paper’s laboratory to a precise current building.",
+          "sources": [
+            "csg-hvdc2020",
+            "csg-patent2021"
+          ]
+        }
+      ],
+      "site_assessment": {
+        "institution_identity": "VERIFIED_EXISTING_CANONICAL_ID",
+        "institution_address": "VERIFIED_INSTITUTE_RESEARCH_BASE_ADDRESS_WITH_POSTCODE_VARIATION",
+        "address_candidate": "No11 KexiangRoad, CSG research base Gate2, HuangpuDistrict, Guangzhou, Guangdong, China",
+        "paper_time_site": "NOT_VERIFIED_AT_LABORATORY_SITE_LEVEL",
+        "paper_time_site_basis": "Preserved primary affiliation names State Key Laboratory of HVDC and institute, China; no street/campus. Conference2020 contact is not proof of this2026 paper-time laboratory location.",
+        "site_confidence": "medium candidate research-base; low for exact2026 lab site",
+        "coordinates": "NOT_VERIFIED",
+        "coordinate_candidate": null
+      },
+      "contradictions_and_limitations": [
+        "SAMR contact postcode510630 differs from2021 patent postcode510663; historical Luogang and current Huangpu locality spellings are preserved, not silently merged.",
+        "No authenticated institution-specific coordinate source or documented coordinate reference system is available; Chinese GCJ02/BD09 map values must not be treated as WGS84.",
+        "The2020 conference indexed contact remains available but direct follow-up returns404."
+      ],
+      "unsupported_assumptions_rejected": [
+        "Use of parent utility headquarters",
+        "Treating standards secretariat address or2020 contact as proof of precise2026 author/lab building",
+        "Copying a Guangzhou city centroid or undocumented Chinese map coordinate"
+      ],
+      "recommended_B4_02_action": "Retain unresolved; preserve supported legal identity and candidate research-base address as partial evidence. Require publication-time laboratory/site corroboration and a traceable correct-CRS coordinate before a location-row proposal.",
+      "missing_evidence": [
+        "Dated paper-time HVDC laboratory/site link to the candidate research base",
+        "Institution-specific coordinate source and coordinate reference system"
+      ],
+      "confidence": "high that present packet does not satisfy full site+coordinate gate",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "The existing institute identity has an official legal-name/identifier and an institute research-base street address distinct from the utility parent.; A2020 HVDC-related conference contact and2021 institute patent corroborate No11 KexiangRoad; neither assigns this2026 paper’s laboratory to a precise current building.",
+      "proposed_disposition": "Retain unresolved; preserve supported legal identity and candidate research-base address as partial evidence. Require publication-time laboratory/site corroboration and a traceable correct-CRS coordinate before a location-row proposal.",
+      "limitations": [
+        "SAMR contact postcode510630 differs from2021 patent postcode510663; historical Luogang and current Huangpu locality spellings are preserved, not silently merged.",
+        "No authenticated institution-specific coordinate source or documented coordinate reference system is available; Chinese GCJ02/BD09 map values must not be treated as WGS84.",
+        "The2020 conference indexed contact remains available but direct follow-up returns404."
+      ],
+      "evidence_claims": [
+        {
+          "claim": "The existing institute identity has an official legal-name/identifier and an institute research-base street address distinct from the utility parent.",
+          "source_ids": [
+            "csg-samr"
+          ],
+          "local_evidence": []
+        },
+        {
+          "claim": "A2020 HVDC-related conference contact and2021 institute patent corroborate No11 KexiangRoad; neither assigns this2026 paper’s laboratory to a precise current building.",
+          "source_ids": [
+            "csg-hvdc2020",
+            "csg-patent2021"
+          ],
+          "local_evidence": []
+        }
+      ]
+    },
+    {
+      "review_id": "U003",
+      "paper_id": "curated:dc0280c881d08395cfac",
+      "title": "Abductive Corroboration of Probabilistic AI Models for Forensic Synthetic Media Detection",
+      "action_scope": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "original_blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "original_acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for The Alan Turing Institute, Defence and National Security Programme site; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "canonical_institution_id": "institution:904dd0b78e96e555",
+      "canonical_institution_name": "The Alan Turing Institute",
+      "paper_identity": {
+        "authors": [
+          "Junade Ali"
+        ],
+        "arxiv_id": "2607.05434",
+        "doi": "10.48550/arxiv.2607.05434",
+        "year": 2026,
+        "publication_type": "preprint",
+        "identity_verified_from": "Existing identity-matched paper-time source mappings and published record; no manuscript rediscovery."
+      },
+      "paper_time_affiliation": {
+        "raw": "The Alan Turing Institute, Defence and National Security Programme, London, United Kingdom",
+        "primary_url": "https://arxiv.org/abs/2607.05434",
+        "known_institution_affiliation": true,
+        "site_explicit_in_preserved_affiliation": false
+      },
+      "local_evidence": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U003]",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U003",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:dc0280c881d08395cfac]",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+          "finding": "Current public paper retained; tasks=['detection']; research_types=['method', 'analysis_study']; map_record_count=0."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:2a5fe76815f5fff8b970",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+          "locator": "institution_id in institution:904dd0b78e96e555",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:904dd0b78e96e555",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc",
+          "finding": "0 current reviewed location rows found for the mapped institutions."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:dc0280c881d08395cfac",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Junade Ali has a confirmed London institute/programme affiliation; London alone does not establish a reviewed institutional point."
+        }
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method",
+        "analysis_study"
+      ],
+      "provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "is_formal_decision": false,
+      "formal_resolution_applied": false,
+      "authoritative_changes": [],
+      "taxonomy_changes_proposed": [],
+      "official_evidence_ids": [
+        "turing-directions",
+        "turing-map"
+      ],
+      "secondary_geographic_evidence_ids": [
+        "turing-geocode"
+      ],
+      "evidence_to_claim": [
+        {
+          "claim": "Official institute directions identify its first-floor British Library premises at96 EustonRoad, London NW1 2DB.",
+          "sources": [
+            "turing-directions"
+          ]
+        },
+        {
+          "claim": "A cached OSM research-office node is specifically named The Alan Turing Institute and repeats the same house number, road and postcode.",
+          "sources": [
+            "turing-geocode"
+          ]
+        },
+        {
+          "claim": "The preserved paper-time affiliation identifies programme and London but no physical premises; these current sources do not independently prove that2026 programme/paper site.",
+          "sources": [
+            "local paper-time affiliation mapping",
+            "turing-directions"
+          ]
+        }
+      ],
+      "site_assessment": {
+        "institution_identity": "VERIFIED_EXISTING_CANONICAL_ID",
+        "institution_address": "VERIFIED_CURRENT_OFFICIAL_INSTITUTE_ADDRESS",
+        "address_candidate": "First floor, British Library,96 EustonRoad, London NW1 2DB, UnitedKingdom",
+        "paper_time_site": "NOT_EXPLICITLY_VERIFIED",
+        "paper_time_site_basis": "Raw affiliation is The Alan Turing Institute, Defence and National Security Programme, London, United Kingdom. No specificstreet/building or dated programme-premises source is retained.",
+        "site_confidence": "high current institute identity/address; insufficient independent paper-time premises link",
+        "coordinates": "VERIFIED_CACHED_SECONDARY_POINT_FOR_CURRENT_ADDRESS",
+        "coordinate_candidate": {
+          "latitude": 51.5302275,
+          "longitude": -0.1270026,
+          "osm_type": "node",
+          "osm_id": 9641710068,
+          "coordinate_role": "current institution office node; provisional geographic support only",
+          "source_id": "turing-geocode",
+          "not_a_city_centroid": true,
+          "precision_limit": "No survey accuracy claimed; no author room or paper-time presence inferred."
+        }
+      },
+      "contradictions_and_limitations": [
+        "Official Google Maps iframe viewport center differs from OSM office node; these have distinct roles and are not treated as conflicting survey measurements.",
+        "Institution currentaddress+geocoder does not establish a particular programme’s paper-time site."
+      ],
+      "unsupported_assumptions_rejected": [
+        "Assume all programme authors worked at current institute contact headquarters",
+        "Treat geocoder result as proof of author/paper-time campus",
+        "Use official map viewport center as exact marker"
+      ],
+      "recommended_B4_02_action": "Retain unresolved pending independent paper-time programme/site confirmation; retain the verified official current address and cached institution office point as reusable partial evidence. Do not add a reviewed location solely on current HQ/geocoder inference.",
+      "missing_evidence": [
+        "An official dated programme/site record or identity-matched paper affiliation specifying the British Library premises at the relevant publication time"
+      ],
+      "confidence": "high current address and secondary coordinate; insufficient paper-time site proof",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "Official institute directions identify its first-floor British Library premises at96 EustonRoad, London NW1 2DB.; A cached OSM research-office node is specifically named The Alan Turing Institute and repeats the same house number, road and postcode.; The preserved paper-time affiliation identifies programme and London but no physical premises; these current sources do not independently prove that2026 programme/paper site.",
+      "proposed_disposition": "Retain unresolved pending independent paper-time programme/site confirmation; retain the verified official current address and cached institution office point as reusable partial evidence. Do not add a reviewed location solely on current HQ/geocoder inference.",
+      "limitations": [
+        "Official Google Maps iframe viewport center differs from OSM office node; these have distinct roles and are not treated as conflicting survey measurements.",
+        "Institution currentaddress+geocoder does not establish a particular programme’s paper-time site."
+      ],
+      "evidence_claims": [
+        {
+          "claim": "Official institute directions identify its first-floor British Library premises at96 EustonRoad, London NW1 2DB.",
+          "source_ids": [
+            "turing-directions"
+          ],
+          "local_evidence": []
+        },
+        {
+          "claim": "A cached OSM research-office node is specifically named The Alan Turing Institute and repeats the same house number, road and postcode.",
+          "source_ids": [
+            "turing-geocode"
+          ],
+          "local_evidence": []
+        },
+        {
+          "claim": "The preserved paper-time affiliation identifies programme and London but no physical premises; these current sources do not independently prove that2026 programme/paper site.",
+          "source_ids": [
+            "turing-directions"
+          ],
+          "local_evidence": [
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+              "locator": "records[review_id=U003]",
+              "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf",
+              "finding": "Original independent review question remains open; original institution IDs and observations retained."
+            },
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+              "locator": "#b-U003",
+              "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+              "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately."
+            },
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+              "locator": "records[paper_id=curated:dc0280c881d08395cfac]",
+              "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+              "finding": "Current public paper retained; tasks=['detection']; research_types=['method', 'analysis_study']; map_record_count=0."
+            },
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+              "locator": "mapping_id in mapping:2a5fe76815f5fff8b970",
+              "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+              "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits."
+            },
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+              "locator": "institution_id in institution:904dd0b78e96e555",
+              "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
+              "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized."
+            },
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+              "locator": "institution_id in institution:904dd0b78e96e555",
+              "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc",
+              "finding": "0 current reviewed location rows found for the mapped institutions."
+            },
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+              "locator": "paper_id=curated:dc0280c881d08395cfac",
+              "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+              "finding": "Junade Ali has a confirmed London institute/programme affiliation; London alone does not establish a reviewed institutional point."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "review_id": "U007",
+      "paper_id": "curated:5b2a1ca1ae438916336b",
+      "title": "Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification",
+      "action_scope": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "original_blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "original_acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for Wuhan University of Technology paper-relevant campus; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "canonical_institution_id": "institution:bbb055c97c3e3d2f",
+      "canonical_institution_name": "Wuhan University of Technology",
+      "paper_identity": {
+        "authors": [
+          "Jiangling Zhang",
+          "Shuxuan Gao",
+          "Bofan Liu",
+          "Siqiang Feng",
+          "Jirui Huang",
+          "Yaxiong Chen",
+          "Ziyu Chen"
+        ],
+        "arxiv_id": "2602.18842",
+        "doi": "",
+        "year": 2026,
+        "publication_type": "conference",
+        "identity_verified_from": "Existing identity-matched paper-time source mappings and published record; no manuscript rediscovery."
+      },
+      "paper_time_affiliation": {
+        "raw": "Wuhan University of Technology",
+        "primary_url": "https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_Detecting_AI-Generated_Forgeries_via_Iterative_Manifold_Deviation_Amplification_CVPR_2026_paper.html",
+        "known_institution_affiliation": true,
+        "site_explicit_in_preserved_affiliation": false
+      },
+      "local_evidence": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U007]",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U007",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:5b2a1ca1ae438916336b]",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+          "finding": "Current public paper retained; tasks=['detection', 'localization']; research_types=['method']; map_record_count=0."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:7d926423b354f72de21b",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+          "locator": "institution_id in institution:bbb055c97c3e3d2f",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:bbb055c97c3e3d2f",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc",
+          "finding": "0 current reviewed location rows found for the mapped institutions."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:5b2a1ca1ae438916336b",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Seven authors are assigned to the university through primary-source provenance; the stored raw affiliation names no department/campus and there is no reviewed point."
+        }
+      ],
+      "current_tasks": [
+        "detection",
+        "localization"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "is_formal_decision": false,
+      "formal_resolution_applied": false,
+      "authoritative_changes": [],
+      "taxonomy_changes_proposed": [],
+      "official_evidence_ids": [
+        "wut-campuses",
+        "wut-2026contacts"
+      ],
+      "evidence_to_claim": [
+        {
+          "claim": "The university has multiple campuses and named subareas, including Nanhu, Mafangshan and Yujiatou.",
+          "sources": [
+            "wut-campuses"
+          ]
+        },
+        {
+          "claim": "Official2026 recruitment material distinguishes campus contacts; it does not assign this paper’s authors.",
+          "sources": [
+            "wut-2026contacts"
+          ]
+        }
+      ],
+      "site_assessment": {
+        "institution_identity": "VERIFIED_EXISTING_CANONICAL_ID",
+        "institution_address": "MULTIPLE_OFFICIAL_CAMPUS_CANDIDATES",
+        "address_candidate": null,
+        "paper_time_site": "UNRESOLVED_MULTICAMPUS",
+        "paper_time_site_basis": "Preserved paper-time affiliation names only Wuhan University of Technology; no school, department, campus or address. Seven author identities retained.",
+        "site_confidence": "high institution; low site specificity",
+        "coordinates": "NOT_PROPOSED_BEFORE_SITE_RESOLUTION",
+        "coordinate_candidate": null
+      },
+      "contradictions_and_limitations": [
+        "Nanhu IT-specialty planning is not a paper-author campus assignment.",
+        "Wuhan University, Wuhan Institute of Technology and Wuhan University of Technology are distinct; existing nearby institution coordinates cannot be borrowed.",
+        "No city centroid or arbitrary main-campus point is proposed."
+      ],
+      "unsupported_assumptions_rejected": [
+        "Infer computer-vision authors belong to Nanhu because officialplanningmentionsIT",
+        "Pick generaladministration/recruitmentofficeaddress as paper site",
+        "Borrow Wuhan University or Wuhan Institute of Technology coordinates"
+      ],
+      "recommended_B4_02_action": "Retain unresolved; request exact campus evidence from preserved paper first-page/contact block or dated author-affiliation record. Do not select a campus or geocode until site identity is established.",
+      "missing_evidence": [
+        "Identity-matched paper-time campus, department or institutional site assignment"
+      ],
+      "confidence": "high that current record cannot select among official campuses",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "The university has multiple campuses and named subareas, including Nanhu, Mafangshan and Yujiatou.; Official2026 recruitment material distinguishes campus contacts; it does not assign this paper’s authors.",
+      "proposed_disposition": "Retain unresolved; request exact campus evidence from preserved paper first-page/contact block or dated author-affiliation record. Do not select a campus or geocode until site identity is established.",
+      "limitations": [
+        "Nanhu IT-specialty planning is not a paper-author campus assignment.",
+        "Wuhan University, Wuhan Institute of Technology and Wuhan University of Technology are distinct; existing nearby institution coordinates cannot be borrowed.",
+        "No city centroid or arbitrary main-campus point is proposed."
+      ],
+      "evidence_claims": [
+        {
+          "claim": "The university has multiple campuses and named subareas, including Nanhu, Mafangshan and Yujiatou.",
+          "source_ids": [
+            "wut-campuses"
+          ],
+          "local_evidence": []
+        },
+        {
+          "claim": "Official2026 recruitment material distinguishes campus contacts; it does not assign this paper’s authors.",
+          "source_ids": [
+            "wut-2026contacts"
+          ],
+          "local_evidence": []
+        }
+      ]
+    },
+    {
+      "review_id": "U016",
+      "paper_id": "curated:26e3335c0d625676a231",
+      "title": "SPECTRA-Net: Scalable Pipeline for Explainable Cross-Domain Tensor Representations for AI-Generated Images Detection",
+      "action_scope": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "original_blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "original_acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for National School of Artificial Intelligence in Algeria; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "canonical_institution_id": "institution:b5047d79e959e40b",
+      "canonical_institution_name": "National School of Artificial Intelligence",
+      "paper_identity": {
+        "authors": [
+          "Sarra Arab",
+          "Anfal Achouri",
+          "Seif Eddine Bouziane"
+        ],
+        "arxiv_id": "2605.08226",
+        "doi": "",
+        "year": 2026,
+        "publication_type": "preprint",
+        "identity_verified_from": "Existing identity-matched paper-time source mappings and published record; no manuscript rediscovery."
+      },
+      "paper_time_affiliation": {
+        "raw": "The National School of Artificial Intelligence, Algiers, Algeria",
+        "primary_url": "https://arxiv.org/pdf/2605.08226",
+        "known_institution_affiliation": true,
+        "site_explicit_in_preserved_affiliation": false
+      },
+      "local_evidence": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U016]",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U016",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:26e3335c0d625676a231]",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+          "finding": "Current public paper retained; tasks=['detection']; research_types=['method']; map_record_count=0."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:2c5dd1ce9a91a9ca482f",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+          "locator": "institution_id in institution:b5047d79e959e40b",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:b5047d79e959e40b",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc",
+          "finding": "0 current reviewed location rows found for the mapped institutions."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:26e3335c0d625676a231",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Three authors are actively mapped to the school using paper-time primary provenance; the raw string only identifies Algiers/Algeria, not a reviewed site point."
+        }
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "is_formal_decision": false,
+      "formal_resolution_applied": false,
+      "authoritative_changes": [],
+      "taxonomy_changes_proposed": [],
+      "official_evidence_ids": [
+        "ensia-en",
+        "ensia-fr",
+        "ensia-campus",
+        "ensia-wipo"
+      ],
+      "secondary_geographic_evidence_ids": [
+        "ensia-geocode-empty"
+      ],
+      "evidence_to_claim": [
+        {
+          "claim": "The paper’s English school identity and ensia.edu.dz correspondence match the official English school name; French identity is linked on the same official domain.",
+          "sources": [
+            "ensia-en",
+            "ensia-fr",
+            "local-ENSIA-firstpage.txt"
+          ]
+        },
+        {
+          "claim": "Official school campus description places ENSIA in Sidi Abdellah Technology Park, and WIPO links the same institution/domain to a Mahelma address.",
+          "sources": [
+            "ensia-campus",
+            "ensia-wipo"
+          ]
+        },
+        {
+          "claim": "The exact raw paper first page names only Algiers; no specific campus or current point is established by it.",
+          "sources": [
+            "local-ENSIA-firstpage.txt"
+          ]
+        }
+      ],
+      "site_assessment": {
+        "institution_identity": "VERIFIED_OFFICIAL_ENGLISH_AND_FRENCH_IDENTITY_SAME_DOMAIN",
+        "institution_address": "VERIFIED_CURRENT_CAMPUS_DISTRICT_AND_WIPO_SHORT_PLUSCODE",
+        "address_candidate": "ENSIA, Sidi Abdellah Technology Park, Mahelma, Algiers, Algeria; WIPO lists MVQ8+9GP, Mahelma, Alger16086",
+        "paper_time_site": "NOT_EXPLICITLY_VERIFIED_IN_FIRST_PAGE_AFFILIATION",
+        "paper_time_site_basis": "Preserved arXiv2605.08226v1 firstpage dated6May2026 gives The National School of Artificial Intelligence, Algiers, Algeria; corresponding email@ensia.edu.dz. Current campuspage does not independently date that premises assignment to the paper.",
+        "site_confidence": "high institution and current campus; incomplete temporal-site and precisepoint evidence",
+        "coordinates": "NO_VERIFIED_DECIMAL_POINT",
+        "coordinate_candidate": null
+      },
+      "contradictions_and_limitations": [
+        "WIPO short pluscode preserved as MVQ8+9GP; do not expand it using a guessed city/referencepoint.",
+        "Official campus structure is shared with National School of Mathematics; no merge of the two institutions is supported.",
+        "Cached official-domain-corresponding school query returned HTTP200 empty list; this says nothing about school existence.",
+        "Only firstpage affiliation/identity was inspected; no taxonomy or scientific-contribution review was performed."
+      ],
+      "unsupported_assumptions_rejected": [
+        "Invent a translated institution alias",
+        "Use central Algiers coordinates",
+        "Equate a current shared school structure with proven paper-time author campus",
+        "Infer coordinates or identity from emptygeocoderresponse"
+      ],
+      "recommended_B4_02_action": "Retain unresolved for precise site/coordinate gate. Preserve verified English/French school/domain correspondence, current Sidi Abdellah campus and WIPO address. Require paper-time site corroboration and independently traceable exact point without guessed plus-code expansion.",
+      "missing_evidence": [
+        "Publication-time campus corroboration beyond generic Algiers affiliation",
+        "Verified decimal coordinate or independently authenticated full institutional pluscode with documented decoding"
+      ],
+      "confidence": "high identity/current campus; insufficient complete mapping evidence",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "The paper’s English school identity and ensia.edu.dz correspondence match the official English school name; French identity is linked on the same official domain.; Official school campus description places ENSIA in Sidi Abdellah Technology Park, and WIPO links the same institution/domain to a Mahelma address.; The exact raw paper first page names only Algiers; no specific campus or current point is established by it.",
+      "proposed_disposition": "Retain unresolved for precise site/coordinate gate. Preserve verified English/French school/domain correspondence, current Sidi Abdellah campus and WIPO address. Require paper-time site corroboration and independently traceable exact point without guessed plus-code expansion.",
+      "limitations": [
+        "WIPO short pluscode preserved as MVQ8+9GP; do not expand it using a guessed city/referencepoint.",
+        "Official campus structure is shared with National School of Mathematics; no merge of the two institutions is supported.",
+        "Cached official-domain-corresponding school query returned HTTP200 empty list; this says nothing about school existence.",
+        "Only firstpage affiliation/identity was inspected; no taxonomy or scientific-contribution review was performed."
+      ],
+      "evidence_claims": [
+        {
+          "claim": "The paper’s English school identity and ensia.edu.dz correspondence match the official English school name; French identity is linked on the same official domain.",
+          "source_ids": [
+            "ensia-en",
+            "ensia-fr",
+            "ensia-local-firstpage"
+          ],
+          "local_evidence": []
+        },
+        {
+          "claim": "Official school campus description places ENSIA in Sidi Abdellah Technology Park, and WIPO links the same institution/domain to a Mahelma address.",
+          "source_ids": [
+            "ensia-campus",
+            "ensia-wipo"
+          ],
+          "local_evidence": []
+        },
+        {
+          "claim": "The exact raw paper first page names only Algiers; no specific campus or current point is established by it.",
+          "source_ids": [
+            "ensia-local-firstpage"
+          ],
+          "local_evidence": []
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "csg-samr",
+      "url": "https://std.samr.gov.cn/search/orgDetailViewCNF?data_id=09CEBB11CDCE440DE06397BE0A0A1F8A",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-05.json",
+      "sha256": "bc6431cbe58550a0d526e92070f15ef370b5bcbb050ae2e4a1add1729f5081c8",
+      "locator": "SAMR section lines33–49: secretariat organization, legal identifier, postal address",
+      "authority_basis": "Chinese State Administration for Market Regulation national standardization platform",
+      "version_limitations": "Registry lists a standards-committee secretariat at the institute, not a room-level assignment of this paper’s HVDC laboratory; current capture is not proof of 2026 author presence.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-05.json",
+      "capture_sha256": "bc6431cbe58550a0d526e92070f15ef370b5bcbb050ae2e4a1add1729f5081c8",
+      "authority": "Chinese State Administration for Market Regulation national standardization platform"
+    },
+    {
+      "source_id": "csg-hvdc2020",
+      "url": "https://dcpe2020.scimeeting.cn/",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-04.json",
+      "sha256": "66a196c5572742a21b91aefa21c0a8e4c37421f00c9258963048f3fe7ef179cf",
+      "locator": "official CSEE conference search capture, co-organizers and secretariat contact address",
+      "authority_basis": "CSEE conference organizer record as indexed",
+      "version_limitations": "2020 conference notice includes the HVDC laboratory and institute contact address; direct follow-up web-05 records404, so preserve indexed-versus-direct availability distinction.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-04.json",
+      "capture_sha256": "66a196c5572742a21b91aefa21c0a8e4c37421f00c9258963048f3fe7ef179cf",
+      "authority": "CSEE conference organizer record as indexed"
+    },
+    {
+      "source_id": "csg-patent2021",
+      "url": "https://patentimages.storage.googleapis.com/b4/ab/80/00055c2e26bc7f/CN112990582A.pdf",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-01.json",
+      "sha256": "76a3a430a22a1651dfa63d5b0a7ca83556adddcb7cf72b86c93f6fb7d9991f43",
+      "locator": "CN112990582A bibliographic applicant block (71),2021-06-18",
+      "authority_basis": "Published Chinese patent applicant address as preserved in search capture",
+      "version_limitations": "Address corroborates institute research-base street, not this paper or authors. Old Luogang/510663 differs from registry Huangpu/510630; no silent address reconciliation.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-01.json",
+      "capture_sha256": "76a3a430a22a1651dfa63d5b0a7ca83556adddcb7cf72b86c93f6fb7d9991f43",
+      "authority": "Published Chinese patent applicant address as preserved in search capture"
+    },
+    {
+      "source_id": "turing-directions",
+      "url": "https://www.turing.ac.uk/contact-us/how-get-alan-turing-institute",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-02.json",
+      "sha256": "487dfdf788de2294a80fee455bdd8d6c2cdc8b774b979d32d35109781c5a1c51",
+      "locator": "official directions lines270–314; first-floor British Library address and access instructions",
+      "authority_basis": "official institutional or public authority record",
+      "version_limitations": "Existing capture reused on recovery; live page can change. No manuscript-final equivalence claimed.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-02.json",
+      "capture_sha256": "487dfdf788de2294a80fee455bdd8d6c2cdc8b774b979d32d35109781c5a1c51",
+      "authority": "official institutional or public authority record"
+    },
+    {
+      "source_id": "turing-map",
+      "url": "https://www.turing.ac.uk/contact-us/how-get-alan-turing-institute",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-03.json",
+      "sha256": "9ab0f375ea76d6cabd0a35dd8abc8085d8593e57955b8464907b3536bbc8f0d9",
+      "locator": "official iframe link; Google embed viewport !2d−0.12884258432651213 !3d51.52977527963879, label Alan Turing Institute",
+      "authority_basis": "Institute-selected Google Maps embed",
+      "version_limitations": "Coordinates encode viewport center, not certified marker. Direct map fetch reported Cache miss in preserved capture; not reused as precise location.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-03.json",
+      "capture_sha256": "9ab0f375ea76d6cabd0a35dd8abc8085d8593e57955b8464907b3536bbc8f0d9",
+      "authority": "Institute-selected Google Maps embed"
+    },
+    {
+      "source_id": "wut-campuses",
+      "url": "https://alumni.whut.edu.cn/article/10177",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-05.json",
+      "sha256": "bc6431cbe58550a0d526e92070f15ef370b5bcbb050ae2e4a1add1729f5081c8",
+      "locator": "official campus planning/naming notice lines136–141",
+      "authority_basis": "University official alumni site reproducing university planning notice",
+      "version_limitations": "Defines Nanhu, Mafangshan and Yujiatou with subareas. Does not assign the paper’s seven authors to any campus.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-05.json",
+      "capture_sha256": "bc6431cbe58550a0d526e92070f15ef370b5bcbb050ae2e4a1add1729f5081c8",
+      "authority": "University official alumni site reproducing university planning notice"
+    },
+    {
+      "source_id": "wut-2026contacts",
+      "url": "https://scca.whut.edu.cn/public/upload/2025/09/23/1758616587-52.pdf",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-03.json",
+      "sha256": "9ab0f375ea76d6cabd0a35dd8abc8085d8593e57955b8464907b3536bbc8f0d9",
+      "locator": "2026 graduate recruitment contacts, institution cover and campus-specific table",
+      "authority_basis": "University official student employment office",
+      "version_limitations": "Administrative recruitment contacts are not author affiliation/site evidence; no scientific manuscript downloaded.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-03.json",
+      "capture_sha256": "9ab0f375ea76d6cabd0a35dd8abc8085d8593e57955b8464907b3536bbc8f0d9",
+      "authority": "University official student employment office"
+    },
+    {
+      "source_id": "ensia-en",
+      "url": "https://www.ensia.edu.dz/",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-02.json",
+      "sha256": "487dfdf788de2294a80fee455bdd8d6c2cdc8b774b979d32d35109781c5a1c51",
+      "locator": "English homepage lines4–14; school name and institutional description",
+      "authority_basis": "official institutional or public authority record",
+      "version_limitations": "Existing capture reused on recovery; live page can change. No manuscript-final equivalence claimed.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-02.json",
+      "capture_sha256": "487dfdf788de2294a80fee455bdd8d6c2cdc8b774b979d32d35109781c5a1c51",
+      "authority": "official institutional or public authority record"
+    },
+    {
+      "source_id": "ensia-fr",
+      "url": "https://www.ensia.edu.dz/fr/",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-03.json",
+      "sha256": "9ab0f375ea76d6cabd0a35dd8abc8085d8593e57955b8464907b3536bbc8f0d9",
+      "locator": "French homepage heading, École Nationale Supérieure d’Intelligence Artificielle",
+      "authority_basis": "Official school French-language homepage",
+      "version_limitations": "French/English relation through same official domain; no new institution alias applied.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-03.json",
+      "capture_sha256": "9ab0f375ea76d6cabd0a35dd8abc8085d8593e57955b8464907b3536bbc8f0d9",
+      "authority": "Official school French-language homepage"
+    },
+    {
+      "source_id": "ensia-campus",
+      "url": "https://www.ensia.edu.dz/campus-life/",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-05.json",
+      "sha256": "bc6431cbe58550a0d526e92070f15ef370b5bcbb050ae2e4a1add1729f5081c8",
+      "locator": "lines10 and32–35; Sidi Abdellah technology park, shared school structure and transit",
+      "authority_basis": "Official school campus description",
+      "version_limitations": "Current official description gives campus but not a dated2026 first-page author campus/address or building coordinate.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-05.json",
+      "capture_sha256": "bc6431cbe58550a0d526e92070f15ef370b5bcbb050ae2e4a1add1729f5081c8",
+      "authority": "Official school campus description"
+    },
+    {
+      "source_id": "ensia-wipo",
+      "url": "https://www.wipo.int/tisc/en/search/details.jsp?id=14132",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-02.json",
+      "sha256": "487dfdf788de2294a80fee455bdd8d6c2cdc8b774b979d32d35109781c5a1c51",
+      "locator": "TISC institution heading and contact/address table",
+      "authority_basis": "WIPO official TISC directory",
+      "version_limitations": "Short plus-code MVQ8+9GP with Mahelma/Alger16086 is preserved exactly; no unverified expansion or decimal coordinate is asserted.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-02.json",
+      "capture_sha256": "487dfdf788de2294a80fee455bdd8d6c2cdc8b774b979d32d35109781c5a1c51",
+      "authority": "WIPO official TISC directory"
+    },
+    {
+      "source_id": "turing-geocode",
+      "url": "https://nominatim.openstreetmap.org/search?q=The+Alan+Turing+Institute%2C+London&format=jsonv2&limit=3&addressdetails=1&namedetails=1&extratags=1&countrycodes=gb",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/geocoding/222025db1235c045a63e.response",
+      "sha256": "774b7df6e1399f9d961576e32f8baa6eada291bbd7ceb5c159be8f31cb258c41",
+      "locator": "result[0], osm_type=node, osm_id=9641710068",
+      "authority_basis": "Secondary OpenStreetMap geographic support via cached Nominatim; official institute directions remain primary address evidence",
+      "retrieved_utc": "2026-10-29T04:09:59.601833+00:00",
+      "version_limitations": "Current map node corroborates geographic address only; it is not paper-time author, programme or campus affiliation evidence. Data © OpenStreetMap contributors, ODbL.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/geocoding/222025db1235c045a63e.response",
+      "capture_sha256": "774b7df6e1399f9d961576e32f8baa6eada291bbd7ceb5c159be8f31cb258c41",
+      "authority": "Secondary OpenStreetMap geographic support via cached Nominatim; official institute directions remain primary address evidence"
+    },
+    {
+      "source_id": "ensia-geocode-empty",
+      "url": "https://nominatim.openstreetmap.org/search?q=%C3%89cole+Nationale+Sup%C3%A9rieure+d%27Intelligence+Artificielle%2C+Mahelma&format=jsonv2&limit=3&addressdetails=1&namedetails=1&extratags=1&countrycodes=dz",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/geocoding/f4343bab0fcee028658a.response",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "locator": "HTTP200 response []",
+      "authority_basis": "Secondary cached Nominatim query, no matching point returned",
+      "retrieved_utc": "2026-10-29T04:10:01.186062+00:00",
+      "version_limitations": "No match is not proof of nonexistence, wrong identity or unmappability.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/geocoding/f4343bab0fcee028658a.response",
+      "capture_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "authority": "Secondary cached Nominatim query, no matching point returned"
+    },
+    {
+      "source_id": "ensia-local-firstpage",
+      "url": "https://arxiv.org/pdf/2605.08226",
+      "captured_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/local-ENSIA-firstpage.txt",
+      "sha256": "4f3622a194e12720f2610d366cd45089201a8aeda83a6b7c267409f579fb005a",
+      "locator": "firstpage title,authors,affiliation,correspondingemail,arXivversionfooter",
+      "authority_basis": "Previously preserved identity-matched manuscript firstpage extract reused; no new manuscript requested",
+      "version_limitations": "arXiv2605.08226v1,6May2026; no publisher-final equivalence or campus specificity claimed.",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/local-ENSIA-firstpage.txt",
+      "capture_sha256": "4f3622a194e12720f2610d366cd45089201a8aeda83a6b7c267409f579fb005a",
+      "authority": "Previously preserved identity-matched manuscript firstpage extract reused; no new manuscript requested"
+    }
+  ],
+  "effort": {
+    "resume_started": {
+      "utc": "2026-10-29T07:48:16.601254+00:00",
+      "monotonic": 268332.89560075
+    },
+    "resume_finished": {
+      "utc": "2026-10-29T08:04:05.554859+00:00",
+      "monotonic": 269281.849350916
+    },
+    "resume_elapsed_seconds": 948.9537501659943,
+    "measurement_scope": "Wall-clock reviewer activity window including local reading/tool waits; not human analyst labor. Original interrupted window not added to resume elapsed.",
+    "original_started": {
+      "utc": "2026-10-29T04:06:55.800776+00:00",
+      "monotonic": 256418.084351041
+    },
+    "original_last_checkpoint_utc": "2026-10-29T04:11:09.713174+00:00",
+    "new_manuscripts_retrieved_on_recovery": 0,
+    "new_external_requests_on_recovery": 0,
+    "new_geocoding_requests_on_recovery": 0,
+    "prior_group_browser_capture_calls": 5,
+    "prior_group_web_capture_files": [
+      "web-01.json",
+      "web-02.json",
+      "web-03.json",
+      "web-04.json",
+      "web-05.json"
+    ],
+    "browser_backend_request_count": "Not exposed; five preserved tool result captures are not claimed as five HTTP requests.",
+    "central_geocoding_requests_reused": 2,
+    "declined_queue3_requests_executed": 0,
+    "monetary_cost": "No paid API used; provider/network/compute monetary cost not measured."
+  },
+  "new_source_retrievals_on_recovery": [],
+  "repository_modified": false,
+  "status": "EVIDENCE_RECOMMENDATIONS_COMPLETE_PENDING_INDEPENDENT_QC"
+}

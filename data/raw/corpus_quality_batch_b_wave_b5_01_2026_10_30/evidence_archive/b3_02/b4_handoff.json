@@ -1,0 +1,581 @@
+{
+  "wave": "B3-02",
+  "planning_batch": "B2-02",
+  "status": "EVIDENCE_REVIEW_COMPLETE_PROVISIONAL_ONLY",
+  "generated_utc": "2026-10-29T08:18:09.817848+00:00",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "worktree": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map",
+  "planning_sha256": {
+    "batch_plan.md": "14af2a8bac007d21f7aef4fb70ee6f75d81bc1424a7eaf6f8b3654cfb6736c0e",
+    "backlog_matrix.json": "fead93a11f96adb4b6de008ec2085da7559a83109a4f6e2b79f7a5e0d4cd59eb",
+    "validation.json": "19d4b74904bce8735a3f99e812934c1930f30a4e722cf17674a3264272d472ad"
+  },
+  "scope": {
+    "paper_count": 11,
+    "action_count": 15,
+    "publication_metadata_actions": 4,
+    "institution_site_actions": 11,
+    "action_ids": [
+      "P001",
+      "U001",
+      "U002",
+      "U003",
+      "P049",
+      "U005",
+      "P058",
+      "U006",
+      "U007",
+      "P068",
+      "U008",
+      "U014",
+      "U016",
+      "U018",
+      "U023"
+    ],
+    "members": [
+      {
+        "paper_id": "curated:f43871cdbcf21546aa91",
+        "title": "ImageTrust: Multi-Backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty",
+        "action_ids": [
+          "P001",
+          "U001"
+        ],
+        "actionable_ids": [
+          "P001",
+          "U001"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:bd8343f176d4b9e38a7b",
+        "title": "A Multi-View and Confusion-Guided Ensemble Framework for Robust Synthetic Image Attribution",
+        "action_ids": [
+          "U002"
+        ],
+        "actionable_ids": [
+          "U002"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:dc0280c881d08395cfac",
+        "title": "Abductive Corroboration of Probabilistic AI Models for Forensic Synthetic Media Detection",
+        "action_ids": [
+          "U003"
+        ],
+        "actionable_ids": [
+          "U003"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:64195610a6d2c2448275",
+        "title": "Conditional Uncertainty-Aware Political Deepfake Detection with Stochastic Convolutional Neural Networks",
+        "action_ids": [
+          "P049",
+          "U005"
+        ],
+        "actionable_ids": [
+          "P049",
+          "U005"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:d129c9180d4a0cff91ad",
+        "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+        "action_ids": [
+          "P058",
+          "U006"
+        ],
+        "actionable_ids": [
+          "P058",
+          "U006"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:5b2a1ca1ae438916336b",
+        "title": "Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification",
+        "action_ids": [
+          "U007"
+        ],
+        "actionable_ids": [
+          "U007"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:e5a9ed970200c293678e",
+        "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+        "action_ids": [
+          "P068",
+          "U008"
+        ],
+        "actionable_ids": [
+          "P068",
+          "U008"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:b14247b031eff3671d2b",
+        "title": "Scalable Black-Box Model Attribution for Images",
+        "action_ids": [
+          "U014"
+        ],
+        "actionable_ids": [
+          "U014"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:26e3335c0d625676a231",
+        "title": "SPECTRA-Net: Scalable Pipeline for Explainable Cross-Domain Tensor Representations for AI-Generated Images Detection",
+        "action_ids": [
+          "U016"
+        ],
+        "actionable_ids": [
+          "U016"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:f7adf12bdae80860a18f",
+        "title": "DeCLIP: Decoding CLIP Representations for Deepfake Localization",
+        "action_ids": [
+          "U018"
+        ],
+        "actionable_ids": [
+          "U018"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:9e6bc47bc75cd7b9b637",
+        "title": "Weakly-Supervised Deepfake Localization in Diffusion-Generated Images",
+        "action_ids": [
+          "U023"
+        ],
+        "actionable_ids": [
+          "U023"
+        ],
+        "blocked_companion_ids": []
+      }
+    ],
+    "priority": 1,
+    "depends_on": []
+  },
+  "outcome_counts": {
+    "SUPPORTED_ADDITION": 5,
+    "EVIDENCE_INSUFFICIENT": 10
+  },
+  "corpus": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "taxonomy": {
+    "detection": 621,
+    "method": 578,
+    "analysis_study": 86,
+    "survey": 21,
+    "source_attribution": 84,
+    "dataset": 138,
+    "benchmark": 97,
+    "localization": 45
+  },
+  "accounting_unchanged": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 28,
+    "historical_unresolved": 131,
+    "active_public_unresolved": 129,
+    "historical_papers": 121,
+    "active_public_papers": 119
+  },
+  "taxonomy_changes_proposed": [],
+  "out_of_scope_anomalies": [],
+  "formal_actions_resolved_by_this_wave": 0,
+  "authoritative_changes": 0,
+  "B4_01_boundary": "Pending validated local transaction remains unpublished. Its eight files are immutable inputs to preservation only, not published source. Remote131/129 counts are retained, independent of pending local123/121.",
+  "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA",
+  "handoff_target": "B4-02_MAINTAINER_ADJUDICATION_ONLY_AFTER_SEPARATE_AUTHORIZATION",
+  "execution_authorized": false,
+  "proposed_supported_action_ids": [
+    "P001",
+    "P049",
+    "U005",
+    "P058",
+    "P068"
+  ],
+  "held_action_ids": [
+    "U001",
+    "U002",
+    "U003",
+    "U006",
+    "U007",
+    "U008",
+    "U014",
+    "U016",
+    "U018",
+    "U023"
+  ],
+  "required_before_any_acceptance": [
+    "Read original B3 evidence and independent QC; preserve dates, source limitations and corrected locators.",
+    "Re-fetch remote and independently reconcile any advancing source state without altering B4-01 pending transaction.",
+    "Follow current acceptance rules and source fingerprints for formal decision records; B3 does not resolve an action.",
+    "Canonical venue bindings preserve existing name/type/year/DOI/arXiv/authors/tasks/research types. Verify any optional acronym; never construct one.",
+    "U005 is an approximate official selected viewport; accept only with explicit precision/CRS/uncertainty limitations. If that precision is unacceptable, retain its coordinate hold.",
+    "No action authorizes taxonomy changes, institution merges, new affiliations, publication-date corrections or automatic site selection.",
+    "Preserve all14 existing paper–institution affiliation instances represented by11 U actions, including shared institutions across U018/U023."
+  ],
+  "pending_B4_01_file_fingerprints": {
+    "data/curated/papers.csv": "b560c8a77fe45f38c3d6c5d47f81e2798ef41dcc6bec0fc44769d922104635ef",
+    "data/curated/publication_overrides.csv": "ae6ce79a8f9567402cca7cc7197e28b4c2b2cca7cff2e534fb06af43dc6a2310",
+    "data/curated/review_decisions.csv": "744bbf36df836b00a1d5f5d33669b832765c7f3175390ca6bbef745c07a7b58a",
+    "docs/key_paper_coverage_report.md": "4c61a69bf0d40fc4ac97e3b765630d8da0aba565c8f1b46770a7656194b231f0",
+    "data/raw/corpus_quality_batch_b_wave_b4_01_2026_10_29/adjudication_manifest.json": "24fddb89476e0abaa74d6c252cbc4f2ec7ec1b62a84b6f851dfd0eb1db277f85",
+    "data/raw/corpus_quality_batch_b_wave_b4_01_2026_10_29/b5_handoff.json": "743f28e96e6c0188afbf96165fd85c23794d9545805d61ca18668701dc04153d",
+    "docs/corpus_quality_batch_b_wave_b4_01_2026_10_29.md": "570e24971e1960c016589106cee4b65d67006024da14987ebaf350ef56f4fb02",
+    "tests/test_corpus_quality_batch_b_wave_b4_01.py": "2ac7f1d3bec7cdb07211255ced991ec29282d2df21bac52114cf3ae423e41d14"
+  },
+  "records": [
+    {
+      "review_id": "P001",
+      "paper_id": "curated:f43871cdbcf21546aa91",
+      "outcome": "SUPPORTED_ADDITION",
+      "finding": "The DOI-matched publisher record explicitly supports the existing conference name and type and the CISIS abbreviation. Propose a canonical venue binding, preserving the 2027 citation year.",
+      "recommended_B4_action": "Select or create the source-backed CISIS conference venue binding using the existing schema. Preserve year 2027, DOI, author sequence, tasks, research types and all other metadata. The 2026 event and first-online date remain separate from the 2027 citation year.",
+      "proposed_disposition": {
+        "canonical_venue_name": "International Conference on Complex, Intelligent, and Software Intensive Systems",
+        "publication_type": "conference",
+        "venue_acronym": "CISIS",
+        "year_preserve": 2027,
+        "venue_id": "TO_BE_SELECTED_OR_CREATED_BY_B4_USING_EXISTING_SCHEMA",
+        "venue_track": "PRESERVE"
+      },
+      "limitations": [
+        "Canonicalstoredtitle capitalization differs frompublisherdisplay only; preserve canonicaltitle.",
+        "No publicationstatus/date correction is authorized; onlineyear and citationyear are differentfields.",
+        "This is venuebinding evidence, not validation of reported scientificresults."
+      ],
+      "evidence_record": "paper_evidence/f43871cdbcf21546aa91.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "U001",
+      "paper_id": "curated:f43871cdbcf21546aa91",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "The institution and current faculty-specific address are verified. The paper names the faculty, university and city, but not a street or campus. A verified coordinate and direct paper-time site correspondence remain missing.",
+      "recommended_B4_action": "Keep U001 open. Retain the verified current faculty address as partial evidence, then establish its paper-time site correspondence and a traceable institution-specific coordinate before accepting a location.",
+      "proposed_disposition": null,
+      "limitations": [
+        "Currentofficialfacultyaddressverified2026-10-29,chapterfirstonline2026-08-02/citation2027; currentfacultycontact mustnot bepromotedtohistoricalresearchsiteproof.",
+        "No latitude/longitudeproposal; no citycentroidsubstitution."
+      ],
+      "evidence_record": "paper_evidence/f43871cdbcf21546aa91.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "U002",
+      "paper_id": "curated:bd8343f176d4b9e38a7b",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "The existing institute identity has an official legal-name/identifier and an institute research-base street address distinct from the utility parent.; A2020 HVDC-related conference contact and2021 institute patent corroborate No11 KexiangRoad; neither assigns this2026 paper’s laboratory to a precise current building.",
+      "recommended_B4_action": "Retain unresolved; preserve supported legal identity and candidate research-base address as partial evidence. Require publication-time laboratory/site corroboration and a traceable correct-CRS coordinate before a location-row proposal.",
+      "proposed_disposition": "Retain unresolved; preserve supported legal identity and candidate research-base address as partial evidence. Require publication-time laboratory/site corroboration and a traceable correct-CRS coordinate before a location-row proposal.",
+      "limitations": [
+        "SAMR contact postcode510630 differs from2021 patent postcode510663; historical Luogang and current Huangpu locality spellings are preserved, not silently merged.",
+        "No authenticated institution-specific coordinate source or documented coordinate reference system is available; Chinese GCJ02/BD09 map values must not be treated as WGS84.",
+        "The2020 conference indexed contact remains available but direct follow-up returns404."
+      ],
+      "evidence_record": "paper_evidence/bd8343f176d4b9e38a7b.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "U003",
+      "paper_id": "curated:dc0280c881d08395cfac",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "Official institute directions identify its first-floor British Library premises at96 EustonRoad, London NW1 2DB.; A cached OSM research-office node is specifically named The Alan Turing Institute and repeats the same house number, road and postcode.; The preserved paper-time affiliation identifies programme and London but no physical premises; these current sources do not independently prove that2026 programme/paper site.",
+      "recommended_B4_action": "Retain unresolved pending independent paper-time programme/site confirmation; retain the verified official current address and cached institution office point as reusable partial evidence. Do not add a reviewed location solely on current HQ/geocoder inference.",
+      "proposed_disposition": "Retain unresolved pending independent paper-time programme/site confirmation; retain the verified official current address and cached institution office point as reusable partial evidence. Do not add a reviewed location solely on current HQ/geocoder inference.",
+      "limitations": [
+        "Official Google Maps iframe viewport center differs from OSM office node; these have distinct roles and are not treated as conflicting survey measurements.",
+        "Institution currentaddress+geocoder does not establish a particular programme’s paper-time site."
+      ],
+      "evidence_record": "paper_evidence/dc0280c881d08395cfac.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "P049",
+      "paper_id": "curated:64195610a6d2c2448275",
+      "outcome": "SUPPORTED_ADDITION",
+      "finding": "The DOI-matched publisher record supports Journal of High School Science as the archival journal. Propose a canonical venue binding; leave the optional acronym empty.",
+      "recommended_B4_action": "Select or create the canonical Journal of High School Science venue binding under the existing acceptance and fingerprint rules. Preserve name, journal type, year 2026, authors, DOI and arXiv identifiers. Do not generate an acronym or alter the observed publication dates.",
+      "proposed_disposition": {
+        "canonical_venue_name": "Journal of High School Science",
+        "publication_type": "journal",
+        "venue_acronym": "",
+        "year_preserve": 2026,
+        "venue_id": "TO_BE_SELECTED_OR_CREATED_BY_B4_USING_EXISTING_SCHEMA",
+        "venue_track": "PRESERVE"
+      },
+      "limitations": [
+        "ExistingarXiv2602.10343 association isreusedfromcurrentcanonicalrecord; no fresharXivretrievalorversionequivalenceresearch performed inthisboundedvenuequestion.",
+        "SourceauthorASCII spelling andcanonicalRafael-PetruţGardoş aretraceablevariants; noauthornormalizationauthorized.",
+        "Do notchangevolume/pages/dates merelybecausetheywereobserved."
+      ],
+      "evidence_record": "paper_evidence/64195610a6d2c2448275.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "U005",
+      "paper_id": "curated:64195610a6d2c2448275",
+      "outcome": "SUPPORTED_ADDITION",
+      "finding": "The primary paper explicitly names the exact school street address, matching the official school contact. The school embeds an approximate institution-selected map viewport point; it is neither an independently verified geocode nor a surveyed marker.",
+      "recommended_B4_action": "B4 may accept an approximate institution-selected representative point only if it explicitly accepts the viewport-derived precision and documented limitations. Preserve the exact paper-time address and source provenance. Do not claim an independent geocode, explicit map marker or survey accuracy.",
+      "proposed_disposition": null,
+      "limitations": [
+        "Officialmapviewportcenter isnot explicitmarkercoordinate; sourceCRSundeclared (Googlelat/lon), no conversionorsurveyvalidation.",
+        "Noindependentgeocoderpoint; precisionacceptance is aB4maintainercondition, notautomaticallyresolvedbyB3.",
+        "Noauthor/institutionmerge, mappingorpublicexport applied."
+      ],
+      "evidence_record": "paper_evidence/64195610a6d2c2448275.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "P058",
+      "paper_id": "curated:d129c9180d4a0cff91ad",
+      "outcome": "SUPPORTED_ADDITION",
+      "finding": "Exact DOI-matched publisher record confirms title, ordered authors and canonical archival journal, and supports a journal venue binding.",
+      "recommended_B4_action": "Consider canonical venue binding/registry addition only after formal source/fingerprint acceptance; preserve all other fields.",
+      "proposed_disposition": {
+        "kind": "canonical_venue_binding",
+        "canonical_venue_name": "International Journal of Data Science and Analytics",
+        "publication_type": "journal",
+        "current_name_type_change_required": false,
+        "publisher_bibliographic_short_form": "Int J Data Sci Anal",
+        "optional_acronym_proposed": null,
+        "registry_id_to_invent": null,
+        "tasks_change": null,
+        "research_types_change": null
+      },
+      "limitations": [
+        "The publisher landing page is adequate for the bounded venue identity/type question; no scientific-contribution or taxonomy review was performed.",
+        "The canonical name and journal type are already correct in the public record; missing registry binding/confirmation is separate from a factual name/type correction.",
+        "No unverified initialism is proposed. Existing paper DOI, authors, year, task/type labels, affiliations and publication URL are preserved.",
+        "Publisher online date29 June 2026 differs from December 2026 issue citation; both remain documented, without a date correction.",
+        "Int J Data Sci Anal is explicitly the publisher bibliographic short form; do not silently equate it to an invented letter acronym."
+      ],
+      "evidence_record": "paper_evidence/d129c9180d4a0cff91ad.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "U006",
+      "paper_id": "curated:d129c9180d4a0cff91ad",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "Both paper-time author–institution links are identity-matched, but complete paper-time campus and coordinate evidence is not yet sufficient for a reviewed location proposal.",
+      "recommended_B4_action": "Retain unresolved institution-location action; accept no location/mapping correction until the named missing gates are satisfied.",
+      "proposed_disposition": {
+        "kind": "retain_location_hold",
+        "preserve_both_institutions": true,
+        "coordinates_proposed": null,
+        "missing_gates": [
+          "Army NCO exact institution-specific point, backed by accessible official site/address evidence.",
+          "BTU electrical/electronics department campus at paper publication in2026, not inferred solely from2020 bulletin or parent-university contact.",
+          "Independent traceable point for the confirmed BTU site."
+        ]
+      },
+      "limitations": [
+        "Do not replace school by National Defense University headquarters.",
+        "A department location in2020 cannot be assumed unchanged for2026.",
+        "Neither direct Army page nor current EEE contact page was accessible in completed attempts; original failure receipts retained.",
+        "The declined geocoding command did not execute; no result from that command is evidence."
+      ],
+      "evidence_record": "paper_evidence/d129c9180d4a0cff91ad.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "U007",
+      "paper_id": "curated:5b2a1ca1ae438916336b",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "The university has multiple campuses and named subareas, including Nanhu, Mafangshan and Yujiatou.; Official2026 recruitment material distinguishes campus contacts; it does not assign this paper’s authors.",
+      "recommended_B4_action": "Retain unresolved; request exact campus evidence from preserved paper first-page/contact block or dated author-affiliation record. Do not select a campus or geocode until site identity is established.",
+      "proposed_disposition": "Retain unresolved; request exact campus evidence from preserved paper first-page/contact block or dated author-affiliation record. Do not select a campus or geocode until site identity is established.",
+      "limitations": [
+        "Nanhu IT-specialty planning is not a paper-author campus assignment.",
+        "Wuhan University, Wuhan Institute of Technology and Wuhan University of Technology are distinct; existing nearby institution coordinates cannot be borrowed.",
+        "No city centroid or arbitrary main-campus point is proposed."
+      ],
+      "evidence_record": "paper_evidence/5b2a1ca1ae438916336b.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "P068",
+      "paper_id": "curated:e5a9ed970200c293678e",
+      "outcome": "SUPPORTED_ADDITION",
+      "finding": "Exact DOI-matched publisher record confirms title, ordered authors and canonical archival journal, and supports a journal venue binding.",
+      "recommended_B4_action": "Consider canonical venue binding/registry addition only after formal source/fingerprint acceptance; preserve all other fields.",
+      "proposed_disposition": {
+        "kind": "canonical_venue_binding",
+        "canonical_venue_name": "Machine Vision and Applications",
+        "publication_type": "journal",
+        "current_name_type_change_required": false,
+        "publisher_bibliographic_short_form": "Machine Vision and Applications",
+        "optional_acronym_proposed": null,
+        "registry_id_to_invent": null,
+        "tasks_change": null,
+        "research_types_change": null
+      },
+      "limitations": [
+        "The publisher landing page is adequate for the bounded venue identity/type question; no scientific-contribution or taxonomy review was performed.",
+        "The canonical name and journal type are already correct in the public record; missing registry binding/confirmation is separate from a factual name/type correction.",
+        "No unverified initialism is proposed. Existing paper DOI, authors, year, task/type labels, affiliations and publication URL are preserved.",
+        "Publisher citation_journal_abbrev repeats the full name. Do not invent MVA from title initials.",
+        "Publisher online date30 May 2026 and July 2026 issue cover date are distinct; no date correction is proposed."
+      ],
+      "evidence_record": "paper_evidence/e5a9ed970200c293678e.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "U008",
+      "paper_id": "curated:e5a9ed970200c293678e",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "Publisher affiliation/postcode801106 and official institutional sources support the Bihta campus identity. Two preserved official coordinate claims differ materially; no reviewed point is selected.",
+      "recommended_B4_action": "Retain unresolved institution-location action; accept no location/mapping correction until the named missing gates are satisfied.",
+      "proposed_disposition": {
+        "kind": "retain_coordinate_hold",
+        "site_candidate": "IIT Patna permanent Bihta campus",
+        "coordinates_proposed": null,
+        "missing_gates": [
+          "Resolve precise representative institution point and coordinate-source/CRS/reference-point discrepancy; do not average conflicting values."
+        ]
+      },
+      "limitations": [
+        "Coordinates are historical official-source claims, not independently validated geocodes.",
+        "A differing latitude could be a source error or a different reference point; evidence does not establish the cause.",
+        "Retain both claims and the campus evidence. Do not use Patna orBihta towncentroid and do not mark institution mapping actionresolved."
+      ],
+      "evidence_record": "paper_evidence/e5a9ed970200c293678e.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "U014",
+      "paper_id": "curated:b14247b031eff3671d2b",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "Exact arXiv identity and existing paper-time university affiliation are preserved; current institutional contact verifies Ramat Aviv address, but this is not direct evidence of the authors' exact_2026_campus and no coordinate-bearing point was verified.",
+      "recommended_B4_action": "Retain unresolved institution-location action; accept no location/mapping correction until the named missing gates are satisfied.",
+      "proposed_disposition": {
+        "kind": "retain_site_hold",
+        "site_candidate_not_accepted": "Ramat Aviv campus,30Haim Levanon,TelAviv6997801",
+        "coordinates_proposed": null,
+        "missing_gates": [
+          "Paper-time institutional/campus correspondence for the authors' genericTelAvivUniversity affiliation.",
+          "Traceable institution-specific point for that verified site, with precision/CRS limits."
+        ]
+      },
+      "limitations": [
+        "University-level affiliation does not by itself establish a specific campus or building at publication.",
+        "Current official campusaddress mustnotbe silently treated aspaper-time author site.",
+        "No university headquarters, city centroid or geocoder result is used to select a site.",
+        "No new manuscript or geocoding request made during recovery."
+      ],
+      "evidence_record": "paper_evidence/b14247b031eff3671d2b.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "U016",
+      "paper_id": "curated:26e3335c0d625676a231",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "The paper’s English school identity and ensia.edu.dz correspondence match the official English school name; French identity is linked on the same official domain.; Official school campus description places ENSIA in Sidi Abdellah Technology Park, and WIPO links the same institution/domain to a Mahelma address.; The exact raw paper first page names only Algiers; no specific campus or current point is established by it.",
+      "recommended_B4_action": "Retain unresolved for precise site/coordinate gate. Preserve verified English/French school/domain correspondence, current Sidi Abdellah campus and WIPO address. Require paper-time site corroboration and independently traceable exact point without guessed plus-code expansion.",
+      "proposed_disposition": "Retain unresolved for precise site/coordinate gate. Preserve verified English/French school/domain correspondence, current Sidi Abdellah campus and WIPO address. Require paper-time site corroboration and independently traceable exact point without guessed plus-code expansion.",
+      "limitations": [
+        "WIPO short pluscode preserved as MVQ8+9GP; do not expand it using a guessed city/referencepoint.",
+        "Official campus structure is shared with National School of Mathematics; no merge of the two institutions is supported.",
+        "Cached official-domain-corresponding school query returned HTTP200 empty list; this says nothing about school existence.",
+        "Only firstpage affiliation/identity was inspected; no taxonomy or scientific-contribution review was performed."
+      ],
+      "evidence_record": "paper_evidence/26e3335c0d625676a231.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "U018",
+      "paper_id": "curated:f7adf12bdae80860a18f",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "Both institution identities and author-affiliation assignments are verified. The paper does not establish a particular Bitdefender office or university campus, and the current corporate contact and university map viewport do not supply that historical link.",
+      "recommended_B4_action": "Keep U018 open. Reuse the verified author-affiliation evidence; obtain paper-time office/campus correspondence and traceable institution-specific points before accepting locations. Shared institutional sources do not merge this action with the other WACV paper.",
+      "proposed_disposition": null,
+      "limitations": [
+        "Do notinferBitdefenderBucharestHQasresearchsite oraddnewcurrentaffiliationsfromlaterteamprofiles.",
+        "OfficialPOLITEHNICAviewportcenter44.43943097458864,26.040437042159006 ismapdisplayparameterwith19kmspan, not anexplicitresearchcampusmarker; notproposedaslocation.",
+        "Preserveallauthor diacriticsandfinalpaperidentity; no scientific/taxonomyaudit."
+      ],
+      "evidence_record": "paper_evidence/f7adf12bdae80860a18f.json",
+      "accepted": false,
+      "changes_applied": false
+    },
+    {
+      "review_id": "U023",
+      "paper_id": "curated:9e6bc47bc75cd7b9b637",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "Both institution identities and author-affiliation assignments are verified. The paper does not establish a particular Bitdefender office or university campus, and the current corporate contact and university map viewport do not supply that historical link.",
+      "recommended_B4_action": "Keep U023 open. Reuse the verified author-affiliation evidence; obtain paper-time office/campus correspondence and traceable institution-specific points before accepting locations. Shared institutional sources do not merge this action with the other WACV paper.",
+      "proposed_disposition": null,
+      "limitations": [
+        "Do notinferBitdefenderBucharestHQasresearchsite oraddnewcurrentaffiliationsfromlaterteamprofiles.",
+        "OfficialPOLITEHNICAviewportcenter44.43943097458864,26.040437042159006 ismapdisplayparameterwith19kmspan, not anexplicitresearchcampusmarker; notproposedaslocation.",
+        "Preserveallauthor diacriticsandfinalpaperidentity; no scientific/taxonomyaudit."
+      ],
+      "evidence_record": "paper_evidence/9e6bc47bc75cd7b9b637.json",
+      "accepted": false,
+      "changes_applied": false
+    }
+  ],
+  "evidence_inputs": [
+    {
+      "path": "batch_review.md",
+      "sha256": "4ea3fc7935e53e77b174edc1765e4a5c7f3a443e5bc29fef7d4ef5651e8f67d4"
+    },
+    {
+      "path": "batch_dispositions.json",
+      "sha256": "16a37d55b117e273dcaab3b602144e15ea92046c07b4f43beea296eaffbb6864"
+    },
+    {
+      "path": "source_inventory.json",
+      "sha256": "d19fba98c6abba4dcbdca2e3d98c287c237cf7a5a1c717850c6f66c3f3ff1abc"
+    },
+    {
+      "path": "independent_qc.json",
+      "sha256": "bc0b621763d9fdaee17288662f040c4057813b6980f434f9251fb47954ff57d0"
+    },
+    {
+      "path": "validation.json",
+      "sha256": "b76f67056f7729e74034ab8c11bddb1f1bded8232bbadd0d94015d0161fb725f"
+    },
+    {
+      "path": "preservation.json",
+      "sha256": "e25be5759297a118ff996c6b87fcea96806277597fa1f9cede4ab6f03bf24ffe"
+    },
+    {
+      "path": "effort_and_retrievals.json",
+      "sha256": "b56f0be0b5e44754f949b24a876d1d2f0d00d18908629c750233e188c45f45fb"
+    }
+  ]
+}

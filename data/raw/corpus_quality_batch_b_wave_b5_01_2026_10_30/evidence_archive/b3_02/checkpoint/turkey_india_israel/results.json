@@ -1,0 +1,837 @@
+{
+  "wave": "B3-02",
+  "group": "turkey_india_israel",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "assigned_review_ids": [
+    "P058",
+    "U006",
+    "P068",
+    "U008",
+    "U014"
+  ],
+  "records": [
+    {
+      "review_id": "P058",
+      "action_id": "P058",
+      "paper_id": "curated:d129c9180d4a0cff91ad",
+      "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+      "issue_category": "canonical_venue_identity_type",
+      "original_review_question": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+      "outcome": "SUPPORTED_ADDITION",
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "finding": "Exact DOI-matched publisher record confirms title, ordered authors and canonical archival journal, and supports a journal venue binding.",
+      "proposed_disposition": {
+        "kind": "canonical_venue_binding",
+        "canonical_venue_name": "International Journal of Data Science and Analytics",
+        "publication_type": "journal",
+        "current_name_type_change_required": false,
+        "publisher_bibliographic_short_form": "Int J Data Sci Anal",
+        "optional_acronym_proposed": null,
+        "registry_id_to_invent": null,
+        "tasks_change": null,
+        "research_types_change": null
+      },
+      "evidence_claims": [
+        {
+          "claim": "Exact work identity and ordered authors match current record, allowing case-only title presentation differences.",
+          "source_ids": [
+            "TI-P058"
+          ],
+          "locator": "citation_title,citation_doi,citation_author"
+        },
+        {
+          "claim": "The archival venue is the stated journal, not a conference/container/track.",
+          "source_ids": [
+            "TI-P058"
+          ],
+          "locator": "citation_journal_title,citation_publisher,citation_issn,#citeas"
+        },
+        {
+          "claim": "Any short-name proposal must remain limited to explicit publisher bibliographic usage.",
+          "source_ids": [
+            "TI-P058"
+          ],
+          "locator": "citation_journal_abbrev"
+        }
+      ],
+      "limitations": [
+        "The publisher landing page is adequate for the bounded venue identity/type question; no scientific-contribution or taxonomy review was performed.",
+        "The canonical name and journal type are already correct in the public record; missing registry binding/confirmation is separate from a factual name/type correction.",
+        "No unverified initialism is proposed. Existing paper DOI, authors, year, task/type labels, affiliations and publication URL are preserved.",
+        "Publisher online date29 June 2026 differs from December 2026 issue citation; both remain documented, without a date correction.",
+        "Int J Data Sci Anal is explicitly the publisher bibliographic short form; do not silently equate it to an invented letter acronym."
+      ],
+      "confidence": {
+        "identity": "high",
+        "venue_name_type": "high",
+        "invented_acronym": "not_proposed"
+      },
+      "current_context_preserved": {
+        "public": true,
+        "paper_id": "curated:d129c9180d4a0cff91ad",
+        "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+        "doi": "10.1007/s41060-026-01192-9",
+        "arxiv_id": "",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "International Journal of Data Science and Analytics",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "survey"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:d129c9180d4a0cff91ad"
+      },
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P058]",
+          "finding": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P058",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        }
+      ],
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P058's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Verify International Journal of Data Science and Analytics's archival identity and publication type; do not use a proceedings series, generic event label or track as the venue. Verify any proposed acronym rather than constructing initials."
+      ],
+      "recommended_b4_action": "Consider canonical venue binding/registry addition only after formal source/fingerprint acceptance; preserve all other fields."
+    },
+    {
+      "review_id": "U006",
+      "action_id": "U006",
+      "paper_id": "curated:d129c9180d4a0cff91ad",
+      "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+      "issue_category": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "finding": "Both paper-time author–institution links are identity-matched, but complete paper-time campus and coordinate evidence is not yet sufficient for a reviewed location proposal.",
+      "proposed_disposition": {
+        "kind": "retain_location_hold",
+        "preserve_both_institutions": true,
+        "coordinates_proposed": null,
+        "missing_gates": [
+          "Army NCO exact institution-specific point, backed by accessible official site/address evidence.",
+          "BTU electrical/electronics department campus at paper publication in2026, not inferred solely from2020 bulletin or parent-university contact.",
+          "Independent traceable point for the confirmed BTU site."
+        ]
+      },
+      "evidence_claims": [
+        {
+          "claim": "Ahmet Korkmaz is affiliated with Army NCO school in Balıkesir; Mustafa Özden with BTU electrical/electronics,16310Yıldırım/Bursa.",
+          "source_ids": [
+            "TI-P058"
+          ],
+          "locator": "#author-information-content Aff1/Aff2"
+        },
+        {
+          "claim": "Official indexed Army contact identifies school in Altıeylül/Balıkesir, not the parent university Istanbul headquarters.",
+          "source_ids": [
+            "TI-ARMY"
+          ],
+          "locator": "turn215search1 contact"
+        },
+        {
+          "claim": "BTU departmental2020 bulletin places EEE at Mimar Sinan campus,177Eflak; current contact shows multiple university sites.",
+          "source_ids": [
+            "TI-BTU-DEPT2020",
+            "TI-BTU-CURRENT"
+          ],
+          "locator": "turn215search12 department contact; turn215search0"
+        }
+      ],
+      "limitations": [
+        "Do not replace school by National Defense University headquarters.",
+        "A department location in2020 cannot be assumed unchanged for2026.",
+        "Neither direct Army page nor current EEE contact page was accessible in completed attempts; original failure receipts retained.",
+        "The declined geocoding command did not execute; no result from that command is evidence."
+      ],
+      "confidence": {
+        "institution_identities": "high",
+        "paper_time_affiliation": "high",
+        "exact2026campus": "not_fully_verified",
+        "coordinates": "not_verified"
+      },
+      "current_context_preserved": {
+        "public": true,
+        "paper_id": "curated:d129c9180d4a0cff91ad",
+        "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+        "doi": "10.1007/s41060-026-01192-9",
+        "arxiv_id": "",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "International Journal of Data Science and Analytics",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "survey"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:d129c9180d4a0cff91ad"
+      },
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U006]",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained.",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U006",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:d129c9180d4a0cff91ad]",
+          "finding": "Current public paper retained; tasks=['detection']; research_types=['survey']; map_record_count=0.",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:9e64ae16b23dbac6c55c, mapping:a44cd5e6667cf97cd40d",
+          "finding": "Current curated mapping statuses: {'active': 2}; author strings, raw affiliation, provenance and blank location fields inspected without edits.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        },
+        {
+          "path": "data/curated/institutions.csv",
+          "locator": "institution_id in institution:18f39ff159f5ad03, institution:5bbd04df727db877",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized.",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326"
+        },
+        {
+          "path": "data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:18f39ff159f5ad03, institution:5bbd04df727db877",
+          "finding": "0 current reviewed location rows found for the mapped institutions.",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:d129c9180d4a0cff91ad",
+          "finding": "Two active mappings retain Ahmet Korkmaz at the Army NCO Vocational HE School in Balıkesir and Mustafa Özden in Yıldırım, Bursa; neither has a reviewed location.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        }
+      ],
+      "acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for Turkish National Defense University Army NCO school and Bursa Technical University; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "recommended_b4_action": "Retain unresolved institution-location action; accept no location/mapping correction until the named missing gates are satisfied.",
+      "site_assessments": [
+        {
+          "institution_id": "institution:18f39ff159f5ad03",
+          "canonical_name": "Turkish National Defense University",
+          "paper_time_identity": "verified by publisher: named Army NCO school and Balıkesir",
+          "address": "Altıeylül/Balıkesir supported by indexed official school contact; street/site footprint not verified",
+          "paper_time_site": "Balıkesir school established; exactsitepoint not established",
+          "coordinate_provenance": null,
+          "coordinates_accepted": null
+        },
+        {
+          "institution_id": "institution:5bbd04df727db877",
+          "canonical_name": "Bursa Technical University",
+          "paper_time_identity": "publisher EEE department,16310Yıldırım/Bursa",
+          "address": "Mimar Sinan/Eflak177 supported for2020 department; current2026 paper doesnotstatecampus",
+          "paper_time_site": "2020→2026continuity not independently established",
+          "coordinate_provenance": null,
+          "coordinates_accepted": null
+        }
+      ]
+    },
+    {
+      "review_id": "P068",
+      "action_id": "P068",
+      "paper_id": "curated:e5a9ed970200c293678e",
+      "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+      "issue_category": "canonical_venue_identity_type",
+      "original_review_question": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+      "outcome": "SUPPORTED_ADDITION",
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "finding": "Exact DOI-matched publisher record confirms title, ordered authors and canonical archival journal, and supports a journal venue binding.",
+      "proposed_disposition": {
+        "kind": "canonical_venue_binding",
+        "canonical_venue_name": "Machine Vision and Applications",
+        "publication_type": "journal",
+        "current_name_type_change_required": false,
+        "publisher_bibliographic_short_form": "Machine Vision and Applications",
+        "optional_acronym_proposed": null,
+        "registry_id_to_invent": null,
+        "tasks_change": null,
+        "research_types_change": null
+      },
+      "evidence_claims": [
+        {
+          "claim": "Exact work identity and ordered authors match current record, allowing case-only title presentation differences.",
+          "source_ids": [
+            "TI-P068"
+          ],
+          "locator": "citation_title,citation_doi,citation_author"
+        },
+        {
+          "claim": "The archival venue is the stated journal, not a conference/container/track.",
+          "source_ids": [
+            "TI-P068"
+          ],
+          "locator": "citation_journal_title,citation_publisher,citation_issn,#citeas"
+        },
+        {
+          "claim": "Any short-name proposal must remain limited to explicit publisher bibliographic usage.",
+          "source_ids": [
+            "TI-P068"
+          ],
+          "locator": "citation_journal_abbrev"
+        }
+      ],
+      "limitations": [
+        "The publisher landing page is adequate for the bounded venue identity/type question; no scientific-contribution or taxonomy review was performed.",
+        "The canonical name and journal type are already correct in the public record; missing registry binding/confirmation is separate from a factual name/type correction.",
+        "No unverified initialism is proposed. Existing paper DOI, authors, year, task/type labels, affiliations and publication URL are preserved.",
+        "Publisher citation_journal_abbrev repeats the full name. Do not invent MVA from title initials.",
+        "Publisher online date30 May 2026 and July 2026 issue cover date are distinct; no date correction is proposed."
+      ],
+      "confidence": {
+        "identity": "high",
+        "venue_name_type": "high",
+        "invented_acronym": "not_proposed"
+      },
+      "current_context_preserved": {
+        "public": true,
+        "paper_id": "curated:e5a9ed970200c293678e",
+        "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+        "doi": "10.1007/s00138-026-01836-7",
+        "arxiv_id": "",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "Machine Vision and Applications",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:e5a9ed970200c293678e"
+      },
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P068]",
+          "finding": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P068",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        }
+      ],
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P068's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Verify Machine Vision and Applications's archival identity and publication type; do not use a proceedings series, generic event label or track as the venue. Verify any proposed acronym rather than constructing initials."
+      ],
+      "recommended_b4_action": "Consider canonical venue binding/registry addition only after formal source/fingerprint acceptance; preserve all other fields."
+    },
+    {
+      "review_id": "U008",
+      "action_id": "U008",
+      "paper_id": "curated:e5a9ed970200c293678e",
+      "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+      "issue_category": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "finding": "Publisher affiliation/postcode801106 and official institutional sources support the Bihta campus identity. Two preserved official coordinate claims differ materially; no reviewed point is selected.",
+      "proposed_disposition": {
+        "kind": "retain_coordinate_hold",
+        "site_candidate": "IIT Patna permanent Bihta campus",
+        "coordinates_proposed": null,
+        "missing_gates": [
+          "Resolve precise representative institution point and coordinate-source/CRS/reference-point discrepancy; do not average conflicting values."
+        ]
+      },
+      "evidence_claims": [
+        {
+          "claim": "The three paper authors share Computer Science and Engineering,IITPatna,Bihar801106 in the exact DOI-matched record.",
+          "source_ids": [
+            "TI-P068"
+          ],
+          "locator": "#author-information-content Aff1"
+        },
+        {
+          "claim": "The official currentFindUs page and historical records identify permanentBihta campus; historical2015move predates2026 paper.",
+          "source_ids": [
+            "TI-IITP-CURRENT",
+            "TI-IITP-COORD-A",
+            "TI-IITP-COORD-B"
+          ],
+          "locator": "FindUsmetaBihta; historicalHOWTOREACH and annualreport passages"
+        },
+        {
+          "claim": "Two official coordinate values differ by approximately1.76km, with unspecified referencepoints/CRS.",
+          "source_ids": [
+            "TI-IITP-COORD-A",
+            "TI-IITP-COORD-B"
+          ],
+          "locator": "brochureDMScoordinates; annualreportDMScoordinates"
+        }
+      ],
+      "limitations": [
+        "Coordinates are historical official-source claims, not independently validated geocodes.",
+        "A differing latitude could be a source error or a different reference point; evidence does not establish the cause.",
+        "Retain both claims and the campus evidence. Do not use Patna orBihta towncentroid and do not mark institution mapping actionresolved."
+      ],
+      "confidence": {
+        "institution_identity": "high",
+        "paper_time_site": "high_at_campus_level",
+        "selected_coordinate": "insufficient"
+      },
+      "current_context_preserved": {
+        "public": true,
+        "paper_id": "curated:e5a9ed970200c293678e",
+        "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+        "doi": "10.1007/s00138-026-01836-7",
+        "arxiv_id": "",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "Machine Vision and Applications",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:e5a9ed970200c293678e"
+      },
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U008]",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained.",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U008",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:e5a9ed970200c293678e]",
+          "finding": "Current public paper retained; tasks=['detection']; research_types=['method', 'dataset', 'benchmark']; map_record_count=0.",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:bfb708d0cec751ba4a9b",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        },
+        {
+          "path": "data/curated/institutions.csv",
+          "locator": "institution_id in institution:a4e0e93fcd90b1c0",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized.",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326"
+        },
+        {
+          "path": "data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:a4e0e93fcd90b1c0",
+          "finding": "0 current reviewed location rows found for the mapped institutions.",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:e5a9ed970200c293678e",
+          "finding": "The current active affiliation is established but no reviewed location row exists for this institution.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        }
+      ],
+      "acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for Indian Institute of Technology Patna; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "recommended_b4_action": "Retain unresolved institution-location action; accept no location/mapping correction until the named missing gates are satisfied.",
+      "site_assessments": [
+        {
+          "institution_id": "institution:a4e0e93fcd90b1c0",
+          "canonical_name": "Indian Institute of Technology Patna",
+          "paper_time_identity": "verified exact DOIthree authors",
+          "address": "Computer Science and Engineering,Patna,Bihar801106 inpaper; officialBihtapermanentcampus established before2026",
+          "paper_time_site": "Bihta supported; exact building notclaimed",
+          "coordinate_candidates": [
+            {
+              "source_id": "TI-IITP-COORD-A",
+              "latitude": 25.533383333333337,
+              "longitude": 84.85446666666667,
+              "original_DMS": "25°32′0.18″N84°51′16.08″E",
+              "accepted": false,
+              "CRS": "not_explicit"
+            },
+            {
+              "source_id": "TI-IITP-COORD-B",
+              "latitude": 25.549155555555558,
+              "longitude": 84.8560111111111,
+              "original_DMS": "25°32′56.96″N84°51′21.64″E",
+              "accepted": false,
+              "CRS": "not_explicit"
+            }
+          ],
+          "candidate_separation_metres": 1760.6229600335441,
+          "coordinates_accepted": null
+        }
+      ]
+    },
+    {
+      "review_id": "U014",
+      "action_id": "U014",
+      "paper_id": "curated:b14247b031eff3671d2b",
+      "title": "Scalable Black-Box Model Attribution for Images",
+      "issue_category": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "finding": "Exact arXiv identity and existing paper-time university affiliation are preserved; current institutional contact verifies Ramat Aviv address, but this is not direct evidence of the authors' exact_2026_campus and no coordinate-bearing point was verified.",
+      "proposed_disposition": {
+        "kind": "retain_site_hold",
+        "site_candidate_not_accepted": "Ramat Aviv campus,30Haim Levanon,TelAviv6997801",
+        "coordinates_proposed": null,
+        "missing_gates": [
+          "Paper-time institutional/campus correspondence for the authors' genericTelAvivUniversity affiliation.",
+          "Traceable institution-specific point for that verified site, with precision/CRS limits."
+        ]
+      },
+      "evidence_claims": [
+        {
+          "claim": "Title, orderedauthors AsafLivne/AmirJevnisek/ShaiAvidan and arXiv2608.15652 match preserved currentidentity.",
+          "source_ids": [
+            "TI-TAU-PAPER"
+          ],
+          "locator": "title,authors,submission16 Aug 2026"
+        },
+        {
+          "claim": "Official universitycontact describes Ramat Aviv and campuspage gives Haim Levanon30,6997801.",
+          "source_ids": [
+            "TI-TAU-CONTACT",
+            "TI-TAU-ADDRESS"
+          ],
+          "locator": "officialcontact address; campuspageL167"
+        },
+        {
+          "claim": "The localTAU-mapHTML contains no verifiednumericcoordinate; filename isnot proof of a geocode.",
+          "source_ids": [
+            "TI-TAU-HTML"
+          ],
+          "locator": "full HTML map coordinate inspection"
+        }
+      ],
+      "limitations": [
+        "University-level affiliation does not by itself establish a specific campus or building at publication.",
+        "Current official campusaddress mustnotbe silently treated aspaper-time author site.",
+        "No university headquarters, city centroid or geocoder result is used to select a site.",
+        "No new manuscript or geocoding request made during recovery."
+      ],
+      "confidence": {
+        "paper_identity": "high",
+        "institution_identity": "high_from_preserved_affiliation",
+        "current_address": "high",
+        "paper_time_campus": "unverified",
+        "coordinates": "not_verified"
+      },
+      "current_context_preserved": {
+        "public": true,
+        "paper_id": "curated:b14247b031eff3671d2b",
+        "title": "Scalable Black-Box Model Attribution for Images",
+        "doi": "10.48550/arxiv.2608.15652",
+        "arxiv_id": "2608.15652",
+        "year": 2026,
+        "publication_type": "preprint",
+        "venue": "arXiv",
+        "tasks": [
+          "source_attribution"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:b14247b031eff3671d2b"
+      },
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U014]",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained.",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U014",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:b14247b031eff3671d2b]",
+          "finding": "Current public paper retained; tasks=['source_attribution']; research_types=['method']; map_record_count=0.",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:236bda41155adb283523",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        },
+        {
+          "path": "data/curated/institutions.csv",
+          "locator": "institution_id in institution:7df4a1601453f806",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized.",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326"
+        },
+        {
+          "path": "data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:7df4a1601453f806",
+          "finding": "0 current reviewed location rows found for the mapped institutions.",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:b14247b031eff3671d2b",
+          "finding": "An active primary-source affiliation exists, but its institution has no reviewed coordinate record.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        }
+      ],
+      "acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for Tel Aviv University; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "recommended_b4_action": "Retain unresolved institution-location action; accept no location/mapping correction until the named missing gates are satisfied.",
+      "site_assessments": [
+        {
+          "institution_id": "institution:7df4a1601453f806",
+          "canonical_name": "Tel Aviv University",
+          "paper_time_identity": "existing verified affiliation university only; raw affiliation preserved",
+          "address": "currentofficialRamat Aviv/30Haim Levanon6997801",
+          "paper_time_site": "not directly verified",
+          "coordinate_provenance": null,
+          "coordinates_accepted": null
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "TI-P058",
+      "url": "https://link.springer.com/article/10.1007/s41060-026-01192-9",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/P058-publisher.html",
+      "capture_sha256": "dde07d46a66d614b4782ef7606219d00f0e92a8e35d1243b62e8d0f4ce7a94bb",
+      "capture_bytes": 345817,
+      "locator": "meta[name=citation_title],citation_doi,citation_author,citation_journal_title,citation_journal_abbrev; #author-information-content; #citeas",
+      "authority": "official_primary",
+      "caveat": null
+    },
+    {
+      "source_id": "TI-P068",
+      "url": "https://link.springer.com/article/10.1007/s00138-026-01836-7",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/P068-publisher.html",
+      "capture_sha256": "ecf2a69e9fb2bb1d795834679116e2254b2e32648e0ce0180138c6622e1ff791",
+      "capture_bytes": 345504,
+      "locator": "meta[name=citation_title],citation_doi,citation_author,citation_journal_title,citation_journal_abbrev; #author-information-content; #citeas",
+      "authority": "official_primary",
+      "caveat": null
+    },
+    {
+      "source_id": "TI-BTU-DEPT2020",
+      "url": "https://depo.btu.edu.tr/dosyalar/elektrik/Dosyalar/E-Bulten_2020_Aralik.pdf",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/web-03-find-journals-search.json",
+      "capture_sha256": "2704d617ed7e842e5d8505f1a37a553f06e96512da3991199328d85a4a853c02",
+      "capture_bytes": 26917,
+      "locator": "turn215search12; departmental bulletin Dec2020 contact section (original indexed text; no new PDF download)",
+      "authority": "official_primary_indexed",
+      "caveat": "2020 departmental address does not alone prove that the same department remained on this campus at the paper publication in2026; no point accepted."
+    },
+    {
+      "source_id": "TI-BTU-CURRENT",
+      "url": "https://www.btu.edu.tr/tr/sayfa/iletisim",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/web-03-find-journals-search.json",
+      "capture_sha256": "2704d617ed7e842e5d8505f1a37a553f06e96512da3991199328d85a4a853c02",
+      "capture_bytes": 26917,
+      "locator": "turn215search0; official contact lists campus-specific units",
+      "authority": "official_primary_indexed",
+      "caveat": "General contact page distinguishes multiple campuses; no inference from university headquarters."
+    },
+    {
+      "source_id": "TI-ARMY",
+      "url": "https://www.kkk.tsk.tr/kkksablonmaster/header/hizmetler/okullar/KKAMYO/index.html",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/web-03-find-journals-search.json",
+      "capture_sha256": "2704d617ed7e842e5d8505f1a37a553f06e96512da3991199328d85a4a853c02",
+      "capture_bytes": 26917,
+      "locator": "turn215search1; İletişim Bilgileri Kara Astsubay Meslek Yüksek Okulu",
+      "authority": "official_primary_indexed",
+      "caveat": "Indexed official page supports Altıeylül/Balıkesir; direct attempts fail502/SSL. No exact boundary/point verified."
+    },
+    {
+      "source_id": "TI-IITP-CURRENT",
+      "url": "https://www.iitp.ac.in/visit/find-us",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/IITP-findus.html",
+      "capture_sha256": "b1c4af99cc384b015dc76cedb1df457bd6f8f96a0c65c863ded3d9d4c09fcfcf",
+      "capture_bytes": 36770,
+      "locator": "head meta description/keywords names Bihta campus; main Getting here section",
+      "authority": "official_primary",
+      "caveat": "Current page corroborates campus identity only; its Google airport link is truncated, not coordinate evidence."
+    },
+    {
+      "source_id": "TI-IITP-COORD-A",
+      "url": "https://www.iitp.ac.in/acad/files/phdadmissionbrochure.pdf",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/web-01-search.json",
+      "capture_sha256": "823c8cdfe5793bb9d7c50a982ce3f89f7b1e30c86811f59335dedd132f969145",
+      "capture_bytes": 28755,
+      "locator": "turn210search12; E – HOW TO REACH INSTITUTE",
+      "authority": "official_primary_indexed",
+      "caveat": "Indexed official brochure, date/version not pinned beyond archived result; coordinate reference point/CRS not explicit."
+    },
+    {
+      "source_id": "TI-IITP-COORD-B",
+      "url": "https://morya.iitp.ac.in/images/pdf/IIT_Patna_Annual_Report%202015_16_English.pdf",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/web-01-search.json",
+      "capture_sha256": "823c8cdfe5793bb9d7c50a982ce3f89f7b1e30c86811f59335dedd132f969145",
+      "capture_bytes": 28755,
+      "locator": "official annual report2015–16 result; passage with25˚32’56.96’’N84˚51’21.64’’E",
+      "authority": "official_primary_indexed",
+      "caveat": "Historical official annual report; campus-wide point and CRS not explicit; differs from admissions brochure."
+    },
+    {
+      "source_id": "TI-TAU-CONTACT",
+      "url": "https://english.tau.ac.il/node/3120",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/web-02-direct.json",
+      "capture_sha256": "a6751374cfbe06b9a605e451e09eba4dd2a3b1f884e51494598d302479eeed2f",
+      "capture_bytes": 28633,
+      "locator": "turn213view3; address section (captured excerpt further located in web03 turn215view4)",
+      "authority": "official_primary",
+      "caveat": "Current contact address is Ramat Aviv; paper affiliation only names university, so current address does not prove the authors' paper-time site."
+    },
+    {
+      "source_id": "TI-TAU-ADDRESS",
+      "url": "https://www.tau.ac.il/gc-map-test",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/web-04-sites.json",
+      "capture_sha256": "cb28ad4e66b513573fa10bcbcb80e551bbb85ca7210dbacf632120146ddf2426",
+      "capture_bytes": 29268,
+      "locator": "turn216view3? exact source header with gc-map-test; L167 Haim Levanon30,6997801",
+      "authority": "official_primary",
+      "caveat": "Campus information page gives street address; it does not establish which building/campus hosted these authors in2026."
+    },
+    {
+      "source_id": "TI-TAU-HTML",
+      "url": "https://www.tau.ac.il/gc-map-test",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/TAU-map.html",
+      "capture_sha256": "0a21cf63367cbc40101b3583a8fd927093dec2d990c64a59247af018625d2b7a",
+      "capture_bytes": 57528,
+      "locator": "HTML campus information page; no numeric32.x/34.x coordinate found",
+      "authority": "official_primary",
+      "caveat": "Despite local filename TAU-map.html this is a general university campus page, not a captured coordinate-bearing map API."
+    },
+    {
+      "source_id": "TI-TAU-PAPER",
+      "url": "https://arxiv.org/abs/2608.15652",
+      "capture_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/U014-reused-capture.html",
+      "capture_sha256": "5f2b0b02741a07de5002f2ed47f4fa607901f37ecd4bf434063695adb3ac74c0",
+      "capture_bytes": 40567,
+      "locator": "title, author sequence and submission16 Aug 2026",
+      "authority": "official_primary_reused",
+      "caveat": "arXiv abstract-page capture has no precise campus/address. Existing curated raw affiliation identifies Tel Aviv University only."
+    }
+  ],
+  "effort": {
+    "recovery_started_utc": "2026-10-29T07:45:50.410804+00:00",
+    "recovery_finished_utc": "2026-10-29T07:50:34.542807+00:00",
+    "instrumented_recovery_tail_seconds": 284.1319223329774,
+    "instrumentation_limit": "First recovery local reads precede this timer; previous attempt has start but no verified session-end. Do not equate interruption interval to analyst effort.",
+    "previous_attempt_start": {
+      "utc": "2026-10-29T04:07:33.241275+00:00",
+      "monotonic": 256455.524643833,
+      "note": "start of group instrumented capture; initial local inspection and 2 web calls precede capture"
+    },
+    "new_recovery_network_requests": 0,
+    "new_recovery_full_manuscripts": 0,
+    "prior_request_receipts": {
+      "attempts": 12,
+      "success200": 4,
+      "total_success_bytes": 785619,
+      "summed_logged_request_seconds": 43.70017891697353
+    },
+    "prior_web_tool_bundles": 4,
+    "prior_tool_request_count_not_claimed": "Bundle count is not a request count; source openings/searches are retained in4webJSONcaptures.",
+    "paid_api_cost": 0,
+    "declined_geocode_command": "Not executed; zero result assumed from declinedqueue3."
+  },
+  "new_taxonomy_proposals": [],
+  "record_count": 5,
+  "outcomes": {
+    "SUPPORTED_ADDITION": 2,
+    "EVIDENCE_INSUFFICIENT": 3
+  },
+  "repository_writes": 0,
+  "authoritative_decisions": 0,
+  "retrievals_preserved": true,
+  "quality_checks": {
+    "exact_scope": true,
+    "all_local_source_hashes_match_B2": true,
+    "successful_capture_hashes_match_receipts": true,
+    "every_claim_has_source_locator": true,
+    "institution_address_site_coordinate_separated": true,
+    "declined_geocoding_not_assumed": true
+  }
+}

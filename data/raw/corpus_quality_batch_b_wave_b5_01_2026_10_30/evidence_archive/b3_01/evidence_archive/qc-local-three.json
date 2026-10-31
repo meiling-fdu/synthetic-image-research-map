@@ -1,0 +1,487 @@
+{
+  "scope": "Independent local-only QC of P034/P254/P305; no network, manuscript/scientific review, repository tests/exports or edits.",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "packet_sha256": "cd8291f722fef8387e036c3ec39e0e0cd3224ff8d141143c3b42780d9d6ae7de",
+  "checks_by_action": {
+    "P034": [
+      {
+        "check": "Original source action/question exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Current title/full authors/DOI/arXiv identity exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Current task/type arrays preserved",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Missing formal URL remains baseline state",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "No formal action has been closed",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Only provisional URL addition proposed",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Scientific review/retrieval not restarted",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "B4 acceptance/schema/fingerprint gate explicit",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum docs/publication_venue_normalization.md",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/raw/corpus_quality_batch_b_wave_b1m_2026_10_23/evidence_manifest.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/raw/corpus_quality_batch_b_wave_b1m_2026_10_23/evidence_manifest.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum docs/corpus_quality_batch_b_wave_b1m_2026_10_23.md",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum web/data/public_preview_papers.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum scripts/paper_links.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/curated/review_decisions.csv",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Publisher DOI/formal URL/title from exact B1M receipt",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Publisher full13-author receipt exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Canonical12 authors and insertion/case boundary preserved",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source version/first online/pages/hash/bytes exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Lossless prior evidence subtree contributions",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Lossless prior evidence subtree key_numerical_results",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Lossless prior evidence subtree counterevidence_and_inconsistencies",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Lossless prior evidence subtree release_review",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Lossless prior evidence subtree out_of_scope_bibliographic_version_observation",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Prior accepted R034 decision exists independently",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "No empirical reproduction/version equivalence implied",
+        "passed": true,
+        "detail": null
+      }
+    ],
+    "P254": [
+      {
+        "check": "Original source action/question exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Current title/full authors/DOI/arXiv identity exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Current task/type arrays preserved",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Missing formal URL remains baseline state",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "No formal action has been closed",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Only provisional URL addition proposed",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Scientific review/retrieval not restarted",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "B4 acceptance/schema/fingerprint gate explicit",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum docs/publication_venue_normalization.md",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/processed/venue_paper_evidence.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/raw/venue_audit_crossref/f46eff9ea9746db9e65a.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum web/data/public_preview_papers.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum scripts/paper_links.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/curated/review_decisions.csv",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/raw/venue_audit_crossref/arxiv-full-048f53e8e62bbcb5.xml",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Full ordered deposited author sequence exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Deposited title explicit formatting boundary",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Formal DOI/canonical DOI remain distinct",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Proposed formalURL/resource/publisher exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Deposited event/container/type exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Deposit provenance exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Stored official arXiv identity/version exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "ArXiv DOI linkage accurately bounded",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Existing processed identity linkage exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "No new scientific support inferred",
+        "passed": true,
+        "detail": null
+      }
+    ],
+    "P305": [
+      {
+        "check": "Original source action/question exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Current title/full authors/DOI/arXiv identity exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Current task/type arrays preserved",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Missing formal URL remains baseline state",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "No formal action has been closed",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Only provisional URL addition proposed",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Scientific review/retrieval not restarted",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "B4 acceptance/schema/fingerprint gate explicit",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum docs/publication_venue_normalization.md",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/processed/venue_paper_evidence.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/raw/venue_audit_crossref/ff2f99328559d41a9b09.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum web/data/public_preview_papers.json",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum scripts/paper_links.py",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/curated/review_decisions.csv",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Source checksum data/raw/venue_audit_crossref/arxiv-full-048f53e8e62bbcb5.xml",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Full ordered deposited author sequence exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Deposited title explicit formatting boundary",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Formal DOI/canonical DOI remain distinct",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Proposed formalURL/resource/publisher exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Deposited event/container/type exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Deposit provenance exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Stored official arXiv identity/version exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "ArXiv DOI linkage accurately bounded",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "Existing processed identity linkage exact",
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "No new scientific support inferred",
+        "passed": true,
+        "detail": null
+      }
+    ]
+  },
+  "global_checks": [
+    {
+      "review_id": null,
+      "check": "Exact three assigned records",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "review_id": null,
+      "check": "Schema caveat matches actual curated/export implementation",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "checks_passed": 87,
+  "checks_total": 87,
+  "all_passed": true,
+  "material_disagreements": [],
+  "explicit_limits_and_B4_conditions": [
+    "All three outcomes are evidence-stage SUPPORTED_ADDITION proposals, not accepted formal decisions or current source edits.",
+    "B4 must choose a supported authoritative/manual URL field because curated papers.csv has paper_url, not literal formal_url. Generated JSON is not edited directly.",
+    "resolve_public_links may derive a formal DOI from a DOI-bearing added URL even when canonical stored DOI is preserved. B4 must audit this derived public-link delta explicitly rather than promise every DOI-facing output is unchanged.",
+    "Venue confirmation fingerprints bind their documented bibliographic/venue state, not every URL field. B4 needs exact current schema/fingerprint plus explicit bounded link identity checks and the original action acceptance/accounting rule.",
+    "P034 same-work publisher link is supported, but13-versus12-author difference, Chen capitalization and all version-specific science/availability limits remain unresolved. If acceptance rules cannot accommodate a link-only change with these distinctions, leave P034 open.",
+    "Original manuscript SHA/bytes were verified against the immutable prior receipt, not by downloading or reopening the full manuscript in this QC. Current remote URL accessibility/subsequent publisher changes are not checked."
+  ],
+  "source_sha256": {
+    "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+    "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+    "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+    "docs/publication_venue_normalization.md": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af",
+    "data/raw/corpus_quality_batch_b_wave_b1m_2026_10_23/evidence_manifest.json": "2a92011909acf09e4a483fe68bbf8d91d1d1c0b6efc77aea396d551b2a40085b",
+    "docs/corpus_quality_batch_b_wave_b1m_2026_10_23.md": "0ec9248a614cde07c21266e7e120439c3cb52eba733112494aa1277468f0c195",
+    "web/data/public_preview_papers.json": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+    "scripts/paper_links.py": "4e474feb440ce3e83f2147457fa965629f07de13a5adadacac7a976a61e44a8d",
+    "data/curated/review_decisions.csv": "ce616e76f5b41a2df967c9c72451f9cbeb8b1ad05b488d5ca6240d070c4819dc",
+    "data/processed/venue_paper_evidence.json": "08bc5efea3d201fae15a70435108a77b0e67b2e586c02e0226f1705cd4fa77fb",
+    "data/raw/venue_audit_crossref/f46eff9ea9746db9e65a.json": "e7837e173c619abbedfc55e86cc543a3e3b9958840927c4ed20ae5c877fa2b18",
+    "data/raw/venue_audit_crossref/arxiv-full-048f53e8e62bbcb5.xml": "153484ddb11e3ea621ad92e801985c2b5e9adc34cd01092bfde46c88aa8fdf8e",
+    "data/raw/venue_audit_crossref/ff2f99328559d41a9b09.json": "a8848ea3494b1d66c3c6299e86b8e2eb99bb3d8d3a19c3df95f2ade0227b172e",
+    "scripts/curated_schema.py": "6a33111655f24c6652248e7a69d05d1f39aa6afa15d9aec6ce96f32abe632d6e",
+    "scripts/venue_audit.py": "2da84219648f69f147e47288c3b1c7f817deca488740e4daa1bdf425a14004eb"
+  },
+  "provisional_outcome_confirmation": {
+    "P034": "SUPPORTED_ADDITION_EVIDENCE_ONLY",
+    "P254": "SUPPORTED_ADDITION_EVIDENCE_ONLY",
+    "P305": "SUPPORTED_ADDITION_EVIDENCE_ONLY"
+  },
+  "formal_acceptance": false
+}

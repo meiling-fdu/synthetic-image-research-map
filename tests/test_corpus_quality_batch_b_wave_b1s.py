@@ -41,6 +41,9 @@ FROZEN = {'baseline_commit': 'dace181c2a9edbb7c467978e9e958e83fdddc143',
                                      'data/curated/papers.csv': '8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f',
                                      'data/curated/review_decisions.csv': 'ce616e76f5b41a2df967c9c72451f9cbeb8b1ad05b488d5ca6240d070c4819dc'}}
 BASE = BASELINE['baseline']
+# Exact B1S transaction receipts end at its immutable publication. Later
+# approved venue/URL changes are checked by B5's live integration guards.
+PUBLISHED = 'df9774b64f717d535d3f299a727545f4b9488adb'
 PAPERS = 'data/curated/papers.csv'
 TAXONOMY = 'data/curated/paper_taxonomy.csv'
 DECISIONS = 'data/curated/review_decisions.csv'
@@ -66,6 +69,11 @@ def sha(raw):
 @lru_cache
 def baseline(path):
     return subprocess.check_output(['git', '--no-optional-locks', 'show', f'{BASE}:{path}'], cwd=ROOT)
+
+
+@lru_cache
+def endpoint_bytes(path):
+    return subprocess.check_output(['git', '--no-optional-locks', 'show', f'{PUBLISHED}:{path}'], cwd=ROOT)
 
 
 def csv_rows(raw):
@@ -162,7 +170,7 @@ def test_actual_csv_headers_keep_existing_schema(path, columns):
 
 @pytest.mark.parametrize('path', [PAPERS, TAXONOMY])
 def test_only_two_existing_records_and_exact_cell_allowlist_change(path):
-    old_raw, new_raw = baseline(path), (ROOT / path).read_bytes()
+    old_raw, new_raw = baseline(path), endpoint_bytes(path)
     old, new = csv_rows(old_raw), csv_rows(new_raw)
     ident = 'taxonomy_id' if path == TAXONOMY else 'paper_id'
     assert [r[ident] for r in old] == [r[ident] for r in new]
@@ -184,8 +192,8 @@ def test_only_two_existing_records_and_exact_cell_allowlist_change(path):
 
 
 def test_101_prior_decision_rows_raw_prefix_preserved_with_only_two_terminal_appends():
-    old_raw, new_raw = baseline(DECISIONS), (ROOT / DECISIONS).read_bytes()
-    old, new = csv_rows(old_raw), read_review_decisions(ROOT / DECISIONS)
+    old_raw, new_raw = baseline(DECISIONS), endpoint_bytes(DECISIONS)
+    old, new = csv_rows(old_raw), csv_rows(endpoint_bytes(DECISIONS))
     assert len(old) == 101
     assert len(new) == len({r['decision_id'] for r in new}) == 103
     assert new_raw.startswith(old_raw) and new[:-2] == old
@@ -237,9 +245,9 @@ def test_acceptance_auditor_rejects_materially_incomplete_or_mismatched_decision
 
 
 def test_only_original_two_actions_close_and_all_other_pending_questions_survive():
-    public = load_context()['papers']
+    public = published_context(PUBLISHED)['papers']
     before = accounting(csv_rows(baseline(DECISIONS)), public)
-    after = accounting(read_review_decisions(ROOT / DECISIONS), public)
+    after = accounting(csv_rows(endpoint_bytes(DECISIONS)), public)
     assert set(after['closed_review_ids']) - set(before['closed_review_ids']) == set(TARGETS)
     for key in ('historical_unresolved_review_ids', 'active_public_unresolved_review_ids'):
         assert after[key] == [r for r in before[key] if r not in TARGETS]
@@ -302,11 +310,14 @@ def context():
 
 @pytest.mark.parametrize('path', FROZEN['pre_export_frozen_source_sha256'])
 def test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export(path):
-    assert sha((ROOT / path).read_bytes()) == FROZEN['pre_export_frozen_source_sha256'][path]
+    # Only two mutable operational files have an accepted historical hash.
+    # B1Q/B1R evidence and the unchanged authoritative taxonomy stay live.
+    observed = endpoint_bytes(path) if path in {PAPERS, DECISIONS} else (ROOT / path).read_bytes()
+    assert sha(observed) == FROZEN['pre_export_frozen_source_sha256'][path]
 
 
 def test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with672_unchanged():
-    before, after = published_context(BASE), context()
+    before, after = published_context(BASE), published_context(PUBLISHED)
     assert before['papers'].keys() == after['papers'].keys()
     assert len(after['papers']) == 674
     changed = {pid for pid in before['papers'] if before['papers'][pid] != after['papers'][pid]}
@@ -325,7 +336,7 @@ def test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with6
 
 def test_public_map_delta_is_exactly_seven_existing_dependents_with_all1410_identities_preserved():
     before = {r['id']: r for r in json.loads(baseline(PUBLIC[1]))['records']}
-    after = {r['id']: r for r in json.loads((ROOT / PUBLIC[1]).read_bytes())['records']}
+    after = {r['id']: r for r in json.loads(endpoint_bytes(PUBLIC[1]))['records']}
     assert len(before) == len(after) == 1410 and before.keys() == after.keys()
     changed = {rid for rid in before if before[rid] != after[rid]}
     dependents = {rid for rid, row in before.items() if row.get('paper_id') in TARGETS.values()}
@@ -337,16 +348,16 @@ def test_public_map_delta_is_exactly_seven_existing_dependents_with_all1410_iden
         if rid in dependents:
             pid = row['paper_id']
             expected['research_types'] = TYPES[inverse[pid]]
-            expected['taxonomy_review']['research_types']['reason'] = context()['taxonomy'][pid]['research_types_review_reason']
+            expected['taxonomy_review']['research_types']['reason'] = published_context(PUBLISHED)['taxonomy'][pid]['research_types_review_reason']
         assert after[rid] == expected
-    assert published_context(BASE)['pairs'] == context()['pairs']
-    assert sum(context()['pairs'].values()) == len(context()['pairs']) == 1410
+    assert published_context(BASE)['pairs'] == published_context(PUBLISHED)['pairs']
+    assert sum(published_context(PUBLISHED)['pairs'].values()) == len(published_context(PUBLISHED)['pairs']) == 1410
 
 
 def test_paired_export_metadata_changes_only_UTC_generation_timestamp():
     timestamps = []
     for path in PUBLIC:
-        before, after = json.loads(baseline(path)), json.loads((ROOT / path).read_bytes())
+        before, after = json.loads(baseline(path)), json.loads(endpoint_bytes(path))
         old_meta, new_meta = deepcopy(before['metadata']), deepcopy(after['metadata'])
         old_time, new_time = old_meta.pop('public_preview_generated_at'), new_meta.pop('public_preview_generated_at')
         assert old_meta == new_meta and new_time >= old_time
@@ -377,8 +388,8 @@ def test_no_authoritative_paper_institution_publication_task_or_scope_data_chang
     allowed = {PAPERS, TAXONOMY, DECISIONS, 'data/manual/key_paper_coverage_report.csv', 'data/manual/missing_author_mappings_report.csv'}
     for path in paths:
         if path not in allowed:
-            assert (ROOT / path).read_bytes() == baseline(path), path
-    before, after = csv_rows(baseline(PAPERS)), csv_rows((ROOT / PAPERS).read_bytes())
+            assert endpoint_bytes(path) == baseline(path), path
+    before, after = csv_rows(baseline(PAPERS)), csv_rows(endpoint_bytes(PAPERS))
     for old, new in zip(before, after):
         assert {k: v for k, v in old.items() if k != 'research_types'} == {k: v for k, v in new.items() if k != 'research_types'}
 

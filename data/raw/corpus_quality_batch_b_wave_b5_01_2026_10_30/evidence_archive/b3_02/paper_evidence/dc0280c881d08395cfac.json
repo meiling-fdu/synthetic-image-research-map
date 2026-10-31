@@ -1,0 +1,329 @@
+{
+  "paper_id": "curated:dc0280c881d08395cfac",
+  "title": "Abductive Corroboration of Probabilistic AI Models for Forensic Synthetic Media Detection",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "action_ids": [
+    "U003"
+  ],
+  "records": [
+    {
+      "review_id": "U003",
+      "paper_id": "curated:dc0280c881d08395cfac",
+      "title": "Abductive Corroboration of Probabilistic AI Models for Forensic Synthetic Media Detection",
+      "action_scope": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "original_blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "original_acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for The Alan Turing Institute, Defence and National Security Programme site; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "canonical_institution_id": "institution:904dd0b78e96e555",
+      "canonical_institution_name": "The Alan Turing Institute",
+      "paper_identity": {
+        "authors": [
+          "Junade Ali"
+        ],
+        "arxiv_id": "2607.05434",
+        "doi": "10.48550/arxiv.2607.05434",
+        "year": 2026,
+        "publication_type": "preprint",
+        "identity_verified_from": "Existing identity-matched paper-time source mappings and published record; no manuscript rediscovery."
+      },
+      "paper_time_affiliation": {
+        "raw": "The Alan Turing Institute, Defence and National Security Programme, London, United Kingdom",
+        "primary_url": "https://arxiv.org/abs/2607.05434",
+        "known_institution_affiliation": true,
+        "site_explicit_in_preserved_affiliation": false
+      },
+      "local_evidence": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U003]",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U003",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:dc0280c881d08395cfac]",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+          "finding": "Current public paper retained; tasks=['detection']; research_types=['method', 'analysis_study']; map_record_count=0."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:2a5fe76815f5fff8b970",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+          "locator": "institution_id in institution:904dd0b78e96e555",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:904dd0b78e96e555",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc",
+          "finding": "0 current reviewed location rows found for the mapped institutions."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:dc0280c881d08395cfac",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Junade Ali has a confirmed London institute/programme affiliation; London alone does not establish a reviewed institutional point."
+        }
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method",
+        "analysis_study"
+      ],
+      "provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "is_formal_decision": false,
+      "formal_resolution_applied": false,
+      "authoritative_changes": [],
+      "taxonomy_changes_proposed": [],
+      "official_evidence_ids": [
+        "turing-directions",
+        "turing-map"
+      ],
+      "secondary_geographic_evidence_ids": [
+        "turing-geocode"
+      ],
+      "evidence_to_claim": [
+        {
+          "claim": "Official institute directions identify its first-floor British Library premises at96 EustonRoad, London NW1 2DB.",
+          "sources": [
+            "turing-directions"
+          ]
+        },
+        {
+          "claim": "A cached OSM research-office node is specifically named The Alan Turing Institute and repeats the same house number, road and postcode.",
+          "sources": [
+            "turing-geocode"
+          ]
+        },
+        {
+          "claim": "The preserved paper-time affiliation identifies programme and London but no physical premises; these current sources do not independently prove that2026 programme/paper site.",
+          "sources": [
+            "local paper-time affiliation mapping",
+            "turing-directions"
+          ]
+        }
+      ],
+      "site_assessment": {
+        "institution_identity": "VERIFIED_EXISTING_CANONICAL_ID",
+        "institution_address": "VERIFIED_CURRENT_OFFICIAL_INSTITUTE_ADDRESS",
+        "address_candidate": "First floor, British Library,96 EustonRoad, London NW1 2DB, UnitedKingdom",
+        "paper_time_site": "NOT_EXPLICITLY_VERIFIED",
+        "paper_time_site_basis": "Raw affiliation is The Alan Turing Institute, Defence and National Security Programme, London, United Kingdom. No specificstreet/building or dated programme-premises source is retained.",
+        "site_confidence": "high current institute identity/address; insufficient independent paper-time premises link",
+        "coordinates": "VERIFIED_CACHED_SECONDARY_POINT_FOR_CURRENT_ADDRESS",
+        "coordinate_candidate": {
+          "latitude": 51.5302275,
+          "longitude": -0.1270026,
+          "osm_type": "node",
+          "osm_id": 9641710068,
+          "coordinate_role": "current institution office node; provisional geographic support only",
+          "source_id": "turing-geocode",
+          "not_a_city_centroid": true,
+          "precision_limit": "No survey accuracy claimed; no author room or paper-time presence inferred."
+        }
+      },
+      "contradictions_and_limitations": [
+        "Official Google Maps iframe viewport center differs from OSM office node; these have distinct roles and are not treated as conflicting survey measurements.",
+        "Institution currentaddress+geocoder does not establish a particular programme’s paper-time site."
+      ],
+      "unsupported_assumptions_rejected": [
+        "Assume all programme authors worked at current institute contact headquarters",
+        "Treat geocoder result as proof of author/paper-time campus",
+        "Use official map viewport center as exact marker"
+      ],
+      "recommended_B4_02_action": "Retain unresolved pending independent paper-time programme/site confirmation; retain the verified official current address and cached institution office point as reusable partial evidence. Do not add a reviewed location solely on current HQ/geocoder inference.",
+      "missing_evidence": [
+        "An official dated programme/site record or identity-matched paper affiliation specifying the British Library premises at the relevant publication time"
+      ],
+      "confidence": "high current address and secondary coordinate; insufficient paper-time site proof",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "Official institute directions identify its first-floor British Library premises at96 EustonRoad, London NW1 2DB.; A cached OSM research-office node is specifically named The Alan Turing Institute and repeats the same house number, road and postcode.; The preserved paper-time affiliation identifies programme and London but no physical premises; these current sources do not independently prove that2026 programme/paper site.",
+      "proposed_disposition": "Retain unresolved pending independent paper-time programme/site confirmation; retain the verified official current address and cached institution office point as reusable partial evidence. Do not add a reviewed location solely on current HQ/geocoder inference.",
+      "limitations": [
+        "Official Google Maps iframe viewport center differs from OSM office node; these have distinct roles and are not treated as conflicting survey measurements.",
+        "Institution currentaddress+geocoder does not establish a particular programme’s paper-time site."
+      ],
+      "evidence_claims": [
+        {
+          "claim": "Official institute directions identify its first-floor British Library premises at96 EustonRoad, London NW1 2DB.",
+          "source_ids": [
+            "turing-directions"
+          ],
+          "local_evidence": []
+        },
+        {
+          "claim": "A cached OSM research-office node is specifically named The Alan Turing Institute and repeats the same house number, road and postcode.",
+          "source_ids": [
+            "turing-geocode"
+          ],
+          "local_evidence": []
+        },
+        {
+          "claim": "The preserved paper-time affiliation identifies programme and London but no physical premises; these current sources do not independently prove that2026 programme/paper site.",
+          "source_ids": [
+            "turing-directions"
+          ],
+          "local_evidence": [
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+              "locator": "records[review_id=U003]",
+              "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf",
+              "finding": "Original independent review question remains open; original institution IDs and observations retained."
+            },
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+              "locator": "#b-U003",
+              "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+              "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately."
+            },
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+              "locator": "records[paper_id=curated:dc0280c881d08395cfac]",
+              "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+              "finding": "Current public paper retained; tasks=['detection']; research_types=['method', 'analysis_study']; map_record_count=0."
+            },
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+              "locator": "mapping_id in mapping:2a5fe76815f5fff8b970",
+              "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+              "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits."
+            },
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+              "locator": "institution_id in institution:904dd0b78e96e555",
+              "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
+              "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized."
+            },
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+              "locator": "institution_id in institution:904dd0b78e96e555",
+              "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc",
+              "finding": "0 current reviewed location rows found for the mapped institutions."
+            },
+            {
+              "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+              "locator": "paper_id=curated:dc0280c881d08395cfac",
+              "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+              "finding": "Junade Ali has a confirmed London institute/programme affiliation; London alone does not establish a reviewed institutional point."
+            }
+          ]
+        }
+      ],
+      "action_id": "U003",
+      "review_group": "china_uk_algeria",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "original_review": {
+        "review_id": "U003",
+        "paper_id": "curated:dc0280c881d08395cfac",
+        "title": "Abductive Corroboration of Probabilistic AI Models for Forensic Synthetic Media Detection",
+        "year": 2026,
+        "publication_status": "preprint",
+        "authors": [
+          "Junade Ali"
+        ],
+        "institutions": [
+          {
+            "institution_id": "institution:904dd0b78e96e555",
+            "canonical_name": "The Alan Turing Institute",
+            "raw_affiliation": "The Alan Turing Institute, Defence and National Security Programme, London, United Kingdom",
+            "authors": [
+              "Junade Ali"
+            ],
+            "paper_time_affiliation_known": true,
+            "institution_identity_known": true,
+            "exists_in_registry": true,
+            "location_known": false,
+            "location_records": [],
+            "mapping_status": "active",
+            "mapping_id": "mapping:2a5fe76815f5fff8b970",
+            "evidence_url": "https://arxiv.org/abs/2607.05434",
+            "evidence_basis": "https://arxiv.org/abs/2607.05434",
+            "hierarchy": [],
+            "allowed_to_map_as_node": true,
+            "relationship_currently_possible": false
+          }
+        ],
+        "author_affiliation_known": true,
+        "canonical_institution_identity_known": true,
+        "institution_registry_complete": true,
+        "any_reviewed_location_known": false,
+        "relationship_currently_possible": false,
+        "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+        "remediation_category": "EVIDENCE_CAN_RESOLVE",
+        "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+        "confidence": "high",
+        "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+        "authoritative_evidence_url": "https://arxiv.org/abs/2607.05434",
+        "project_evidence": [
+          "data/curated/author_institution_mappings.csv",
+          "data/curated/institutions.csv",
+          "data/curated/institution_locations.csv",
+          "data/curated/institution_hierarchy.csv"
+        ],
+        "batch": "B"
+      },
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:dc0280c881d08395cfac",
+        "title": "Abductive Corroboration of Probabilistic AI Models for Forensic Synthetic Media Detection",
+        "doi": "10.48550/arxiv.2607.05434",
+        "arxiv_id": "2607.05434",
+        "year": 2026,
+        "publication_type": "preprint",
+        "venue": "arXiv",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method",
+          "analysis_study"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:dc0280c881d08395cfac"
+      },
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "authoritative_changes_applied": false,
+      "acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for The Alan Turing Institute, Defence and National Security Programme site; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "china_uk_algeria:turing-directions",
+        "china_uk_algeria:turing-geocode",
+        "china_uk_algeria:turing-map"
+      ],
+      "separate_site_evidence_gates": {
+        "institution_identity": "VERIFIED",
+        "address": "CURRENT_INSTITUTE_ADDRESS_VERIFIED; British Library96 Euston Road NW1 2DB",
+        "paper_time_site": "PROGRAMME_LONDON_AFFILIATION_VERIFIED; PAPER_TIME_STREET_SITE_UNVERIFIED",
+        "coordinates": "CACHED_GEOCODE_CURRENT_ADDRESS_ONLY; node9641710068 51.5302275,-0.1270026",
+        "unsupported_assumption": "Geocoder and institute current physical contact cannot independently assign author/programme paper-time site."
+      }
+    }
+  ],
+  "note": "Evidence recommendations only; no formal decisions or source mutations."
+}

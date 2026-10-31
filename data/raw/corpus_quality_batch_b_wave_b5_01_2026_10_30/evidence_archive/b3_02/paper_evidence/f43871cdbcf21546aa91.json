@@ -1,0 +1,383 @@
+{
+  "paper_id": "curated:f43871cdbcf21546aa91",
+  "title": "ImageTrust: Multi-Backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "action_ids": [
+    "P001",
+    "U001"
+  ],
+  "records": [
+    {
+      "review_id": "P001",
+      "paper_id": "curated:f43871cdbcf21546aa91",
+      "title": "ImageTrust: Multi-Backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty",
+      "original_review_question": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+      "assigned_scope": "canonical_venue_identity_type",
+      "current_context": {
+        "public": true,
+        "paper_id": "curated:f43871cdbcf21546aa91",
+        "title": "ImageTrust: Multi-Backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty",
+        "doi": "10.1007/978-3-032-29430-2_19",
+        "arxiv_id": "",
+        "year": 2027,
+        "publication_type": "conference",
+        "venue": "International Conference on Complex, Intelligent, and Software Intensive Systems",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:f43871cdbcf21546aa91"
+      },
+      "original_review": {
+        "review_id": "P001",
+        "paper_id": "curated:f43871cdbcf21546aa91",
+        "title": "ImageTrust: Multi-Backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty",
+        "current": {
+          "year": 2027,
+          "publication_type": "conference",
+          "venue": "International Conference on Complex, Intelligent, and Software Intensive Systems",
+          "venue_id": "",
+          "venue_acronym": "",
+          "venue_track": "",
+          "doi": "10.1007/978-3-032-29430-2_19",
+          "paper_url": "https://doi.org/10.1007/978-3-032-29430-2_19",
+          "formal_url": "https://doi.org/10.1007/978-3-032-29430-2_19",
+          "arxiv_id": "",
+          "arxiv_url": "",
+          "authors": [
+            "Andrei-Alexandru Iancu",
+            "Darius Galiş",
+            "Sebastian-Aurelian Stefaniga"
+          ]
+        },
+        "evidence_urls": [
+          "https://doi.org/10.1007/978-3-032-29430-2_19"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "present",
+          "doi": "present_not_independently_reverified",
+          "arxiv": "optional_not_a_defect",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "outcome": "SUPPORTED_ADDITION",
+      "provisional_only": true,
+      "formal_acceptance": false,
+      "finding": "The DOI-matched publisher record explicitly supports the existing conference name and type and the CISIS abbreviation. Propose a canonical venue binding, preserving the 2027 citation year.",
+      "evidence_to_claim": [
+        "DOI metadata exact10.1007/978-3-032-29430-2_19 and orderedauthors Andrei-AlexandruIancu,DariusGaliş,Sebastian-AurelianStefaniga identifythiswork.",
+        "citation_conference_title isInternationalConferenceonComplex,Intelligent,andSoftwareIntensiveSystems; citation_conference_abbrev=CISIS; visiblepublisherclassificationconferencepaper.",
+        "ProceedingscontainerComplex,IntelligentandSoftwareIntensiveSystems and LNDECT304 are retainedseparately fromconferenceidentity.",
+        "Firstonline2026-08-02 andCISIS2026 event do notrequire changing citationyear/copyright2027."
+      ],
+      "source_ids": [
+        "springer-chapter",
+        "springer-book"
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P001]",
+          "finding": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P001",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        }
+      ],
+      "proposed_b4_action": "Select or create the source-backed CISIS conference venue binding using the existing schema. Preserve year 2027, DOI, author sequence, tasks, research types and all other metadata. The 2026 event and first-online date remain separate from the 2027 citation year.",
+      "limitations": [
+        "Canonicalstoredtitle capitalization differs frompublisherdisplay only; preserve canonicaltitle.",
+        "No publicationstatus/date correction is authorized; onlineyear and citationyear are differentfields.",
+        "This is venuebinding evidence, not validation of reported scientificresults."
+      ],
+      "confidence": {
+        "work_identity": "high",
+        "bounded_finding": "high"
+      },
+      "tasks_preserved": true,
+      "research_types_preserved": true,
+      "authoritative_changes_applied": false,
+      "proposed_fields": {
+        "canonical_venue_name": "International Conference on Complex, Intelligent, and Software Intensive Systems",
+        "publication_type": "conference",
+        "venue_acronym": "CISIS",
+        "year_preserve": 2027,
+        "venue_id": "TO_BE_SELECTED_OR_CREATED_BY_B4_USING_EXISTING_SCHEMA",
+        "venue_track": "PRESERVE"
+      },
+      "action_id": "P001",
+      "review_group": "romania",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:f43871cdbcf21546aa91",
+        "title": "ImageTrust: Multi-Backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty",
+        "doi": "10.1007/978-3-032-29430-2_19",
+        "arxiv_id": "",
+        "year": 2027,
+        "publication_type": "conference",
+        "venue": "International Conference on Complex, Intelligent, and Software Intensive Systems",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:f43871cdbcf21546aa91"
+      },
+      "formal_decision_applied": false,
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P001's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Verify International Conference on Complex, Intelligent, and Software Intensive Systems's archival identity and publication type; do not use a proceedings series, generic event label or track as the venue. Verify any proposed acronym rather than constructing initials."
+      ],
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "romania:springer-book",
+        "romania:springer-chapter"
+      ]
+    },
+    {
+      "review_id": "U001",
+      "paper_id": "curated:f43871cdbcf21546aa91",
+      "title": "ImageTrust: Multi-Backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "assigned_scope": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "current_context": {
+        "public": true,
+        "paper_id": "curated:f43871cdbcf21546aa91",
+        "title": "ImageTrust: Multi-Backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty",
+        "doi": "10.1007/978-3-032-29430-2_19",
+        "arxiv_id": "",
+        "year": 2027,
+        "publication_type": "conference",
+        "venue": "International Conference on Complex, Intelligent, and Software Intensive Systems",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:f43871cdbcf21546aa91"
+      },
+      "original_review": {
+        "review_id": "U001",
+        "paper_id": "curated:f43871cdbcf21546aa91",
+        "title": "ImageTrust: Multi-Backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty",
+        "year": 2027,
+        "publication_status": "conference",
+        "authors": [
+          "Andrei-Alexandru Iancu",
+          "Darius Galiş",
+          "Sebastian-Aurelian Stefaniga"
+        ],
+        "institutions": [
+          {
+            "institution_id": "institution:921138f86bde324d",
+            "canonical_name": "West University of Timișoara",
+            "raw_affiliation": "Faculty of Computer Science, West University of Timişoara, Timişoara, Romania",
+            "authors": [
+              "Andrei-Alexandru Iancu",
+              "Darius Galiş",
+              "Sebastian-Aurelian Stefaniga"
+            ],
+            "paper_time_affiliation_known": true,
+            "institution_identity_known": true,
+            "exists_in_registry": true,
+            "location_known": false,
+            "location_records": [],
+            "mapping_status": "active",
+            "mapping_id": "mapping:f8f070004f61020bde2c",
+            "evidence_url": "https://doi.org/10.1007/978-3-032-29430-2_19",
+            "evidence_basis": "https://doi.org/10.1007/978-3-032-29430-2_19",
+            "hierarchy": [],
+            "allowed_to_map_as_node": true,
+            "relationship_currently_possible": false
+          }
+        ],
+        "author_affiliation_known": true,
+        "canonical_institution_identity_known": true,
+        "institution_registry_complete": true,
+        "any_reviewed_location_known": false,
+        "relationship_currently_possible": false,
+        "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+        "remediation_category": "EVIDENCE_CAN_RESOLVE",
+        "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+        "confidence": "high",
+        "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+        "authoritative_evidence_url": "https://doi.org/10.1007/978-3-032-29430-2_19",
+        "project_evidence": [
+          "data/curated/author_institution_mappings.csv",
+          "data/curated/institutions.csv",
+          "data/curated/institution_locations.csv",
+          "data/curated/institution_hierarchy.csv"
+        ],
+        "batch": "B"
+      },
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "provisional_only": true,
+      "formal_acceptance": false,
+      "finding": "The institution and current faculty-specific address are verified. The paper names the faculty, university and city, but not a street or campus. A verified coordinate and direct paper-time site correspondence remain missing.",
+      "evidence_to_claim": [
+        "Originalpaper rawaffiliation namesFacultyofComputerScience,WestUniversityofTimişoara,Timişoara,Romania.",
+        "Officialfacultycontact andcentralfacultysecretariat independently point to4VasilePârvan,office236.",
+        "This isnot a genericHQinference, but currentsecretariataddress alone doesnot independently establish exact researchsiteatthe onlinepaperpublicationdate.",
+        "Officialfacultyembeddedmapcontains addressquery only, no extractednumericcoordinate. SuccessfulcachedNominatimexactquery returnedemptylist. Declinedsimplifiedquerywasnotexecuted."
+      ],
+      "source_ids": [
+        "springer-chapter",
+        "uvt-faculty",
+        "uvt-administration",
+        "local:unmapped-ledger"
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U001]",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained.",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U001",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:f43871cdbcf21546aa91]",
+          "finding": "Current public paper retained; tasks=['detection']; research_types=['method']; map_record_count=0.",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:f8f070004f61020bde2c",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        },
+        {
+          "path": "data/curated/institutions.csv",
+          "locator": "institution_id in institution:921138f86bde324d",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized.",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326"
+        },
+        {
+          "path": "data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:921138f86bde324d",
+          "finding": "0 current reviewed location rows found for the mapped institutions.",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:f43871cdbcf21546aa91",
+          "finding": "The faculty and city are named in a confirmed three-author mapping; no reviewed institution location row exists.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        }
+      ],
+      "proposed_b4_action": "Keep U001 open. Retain the verified current faculty address as partial evidence, then establish its paper-time site correspondence and a traceable institution-specific coordinate before accepting a location.",
+      "limitations": [
+        "Currentofficialfacultyaddressverified2026-10-29,chapterfirstonline2026-08-02/citation2027; currentfacultycontact mustnot bepromotedtohistoricalresearchsiteproof.",
+        "No latitude/longitudeproposal; no citycentroidsubstitution."
+      ],
+      "confidence": {
+        "work_identity": "high",
+        "bounded_finding": "high_confidence_in_hold",
+        "site": "institutionhigh; currentfacultyaddresshigh; paper-timeexactsiteunconfirmed; coordinateabsent"
+      },
+      "tasks_preserved": true,
+      "research_types_preserved": true,
+      "authoritative_changes_applied": false,
+      "institution_evidence": [
+        {
+          "institution_id": "institution:921138f86bde324d",
+          "identity_verified": true,
+          "address_verified": true,
+          "verified_address": "Bd. Vasile Pârvan4,office236,Timișoara300223,Romania",
+          "address_temporal_basis": "currentofficialfacultycontact; notpaperexplicitstreet",
+          "paper_time_affiliation_verified": true,
+          "paper_time_specific_site_verified": false,
+          "coordinates": null
+        }
+      ],
+      "action_id": "U001",
+      "review_group": "romania",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:f43871cdbcf21546aa91",
+        "title": "ImageTrust: Multi-Backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty",
+        "doi": "10.1007/978-3-032-29430-2_19",
+        "arxiv_id": "",
+        "year": 2027,
+        "publication_type": "conference",
+        "venue": "International Conference on Complex, Intelligent, and Software Intensive Systems",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:f43871cdbcf21546aa91"
+      },
+      "formal_decision_applied": false,
+      "acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for West University of Timișoara Faculty of Computer Science site; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "romania:local:unmapped-ledger",
+        "romania:springer-chapter",
+        "romania:uvt-administration",
+        "romania:uvt-faculty"
+      ],
+      "separate_site_evidence_gates": {
+        "institution_identity": "VERIFIED",
+        "address": "CURRENT_FACULTY_ADDRESS_VERIFIED",
+        "paper_time_site": "FACULTY_AND_CITY_VERIFIED_STREET_CONTINUITY_NOT_ESTABLISHED",
+        "coordinates": "NO_POINT_VERIFIED; completed exact-address geocode returned empty",
+        "unsupported_assumption": "Current faculty contact at Vasile Parvan4 is not automatically historical research-site proof."
+      }
+    }
+  ],
+  "note": "Evidence recommendations only; no formal decisions or source mutations."
+}

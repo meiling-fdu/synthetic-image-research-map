@@ -1,0 +1,261 @@
+{
+  "task": "R3 dependency and historical source-byte protection audit",
+  "created_utc": "2026-10-31T02:58:25.688505+00:00",
+  "scope": "READ_ONLY_NO_TEST_EXECUTION",
+  "published_baseline": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "files": [
+    {
+      "path": "tests/test_admin_publish_workflow_reliability.py",
+      "published_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+      "published_sha256": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63",
+      "current_sha256": "34420cb25c55df54ecb65ff9d7e4dcd2e9e258cc85101fe9806f790203e6b60f",
+      "published_bytes": 7860,
+      "current_bytes": 9882
+    },
+    {
+      "path": "tests/public_refinement_snapshot.py",
+      "published_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+      "published_sha256": "7d654ae6a8e606172749a4aadea082ed28a8146bd787168873d71a9258719d26",
+      "current_sha256": "13c66fe9e9887ae9b7520d3dc65b563fde46a037c2a30e3f4fc63d44a9afbb42",
+      "published_bytes": 9307,
+      "current_bytes": 12175
+    },
+    {
+      "path": "tests/conftest.py",
+      "published_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+      "published_sha256": "7925e6fa1578ec903abea4e28535965cf9a55feb2effd7cdc350027fb4c3ee38",
+      "current_sha256": "7925e6fa1578ec903abea4e28535965cf9a55feb2effd7cdc350027fb4c3ee38",
+      "published_bytes": 1819,
+      "current_bytes": 1819
+    },
+    {
+      "path": "tests/admin_http_fixtures.py",
+      "published_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+      "published_sha256": "c0ff5367a8fc45531605267988f65319d96468bf2a385053c83d41c1a79dd840",
+      "current_sha256": "c0ff5367a8fc45531605267988f65319d96468bf2a385053c83d41c1a79dd840",
+      "published_bytes": 7847,
+      "current_bytes": 7847
+    }
+  ],
+  "search_paths": [
+    "tests",
+    "scripts",
+    "data",
+    "docs"
+  ],
+  "search_includes_ignored": true,
+  "excluded_formats": [
+    "HTML",
+    "XML",
+    "logs",
+    "gzip archives",
+    "pyc"
+  ],
+  "rationale_for_archive_exclusion": "Committed gzip bytes are separately referenced by checksum-locked predecessor manifests; this audit identifies path/hash protection metadata and executable consumers, not unpacks unrelated research payloads. Ignored JSON baseline receipts are included.",
+  "all_matching_json_key_entries": [
+    {
+      "receipt": "data/processed/legacy_scope_cleanup_audit_2026_09/baseline_sha256.json",
+      "json_pointer": "/tracked_baseline_sha256/tests/test_admin_publish_workflow_reliability.py",
+      "protected_path": "tests/test_admin_publish_workflow_reliability.py",
+      "value": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63"
+    },
+    {
+      "receipt": "data/processed/legacy_scope_exclusion_migration_2026_09/predecessor_666_snapshot.json",
+      "json_pointer": "/tracked_pre_migration_sha256/tests/test_admin_publish_workflow_reliability.py",
+      "protected_path": "tests/test_admin_publish_workflow_reliability.py",
+      "value": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63"
+    },
+    {
+      "receipt": "data/processed/literature51_2026_10_16/baseline.json",
+      "json_pointer": "/tracked_sha256/tests/public_refinement_snapshot.py",
+      "protected_path": "tests/public_refinement_snapshot.py",
+      "value": "e4f7f6e2694d9852e33289858c9e3f3f1586d81baa48413da31db516cf1d84e3"
+    },
+    {
+      "receipt": "data/processed/literature51_2026_10_16/baseline.json",
+      "json_pointer": "/tracked_sha256/tests/test_admin_publish_workflow_reliability.py",
+      "protected_path": "tests/test_admin_publish_workflow_reliability.py",
+      "value": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63"
+    },
+    {
+      "receipt": "data/processed/systematic_tier2_application_2026_09/baseline_sha256.json",
+      "json_pointer": "/tests/test_admin_publish_workflow_reliability.py",
+      "protected_path": "tests/test_admin_publish_workflow_reliability.py",
+      "value": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63"
+    },
+    {
+      "receipt": "data/processed/systematic_tier2_policy_2026_09/baseline_sha256.json",
+      "json_pointer": "/tests/test_admin_publish_workflow_reliability.py",
+      "protected_path": "tests/test_admin_publish_workflow_reliability.py",
+      "value": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_audit_2026_10_04/baseline.json",
+      "json_pointer": "/tracked_sha256/tests/public_refinement_snapshot.py",
+      "protected_path": "tests/public_refinement_snapshot.py",
+      "value": "e09291e4824474189e48711628a393bad8913a64f8d8604c6267e0d7d0e12f4e"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_audit_2026_10_04/baseline.json",
+      "json_pointer": "/tracked_sha256/tests/test_admin_publish_workflow_reliability.py",
+      "protected_path": "tests/test_admin_publish_workflow_reliability.py",
+      "value": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_a_2026_10_04/baseline.json",
+      "json_pointer": "/tracked_sha256/tests/public_refinement_snapshot.py",
+      "protected_path": "tests/public_refinement_snapshot.py",
+      "value": "e09291e4824474189e48711628a393bad8913a64f8d8604c6267e0d7d0e12f4e"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_a_2026_10_04/baseline.json",
+      "json_pointer": "/tracked_sha256/tests/test_admin_publish_workflow_reliability.py",
+      "protected_path": "tests/test_admin_publish_workflow_reliability.py",
+      "value": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_b_wave_b1g_2026_10_19/evidence_manifest.json",
+      "json_pointer": "/adjudication_baseline/predecessor_repair_sha256/tests/public_refinement_snapshot.py",
+      "protected_path": "tests/public_refinement_snapshot.py",
+      "value": "7d654ae6a8e606172749a4aadea082ed28a8146bd787168873d71a9258719d26"
+    },
+    {
+      "receipt": "data/raw/systematic_gap_audit_2026_10_02/baseline.json",
+      "json_pointer": "/protected_sha256/tests/public_refinement_snapshot.py",
+      "protected_path": "tests/public_refinement_snapshot.py",
+      "value": "8f15d03d90e123dd583622e665c2af4ca57c5d28f83f12613da258e92199cf5a"
+    },
+    {
+      "receipt": "data/raw/systematic_gap_audit_2026_10_02/baseline.json",
+      "json_pointer": "/protected_sha256/tests/test_admin_publish_workflow_reliability.py",
+      "protected_path": "tests/test_admin_publish_workflow_reliability.py",
+      "value": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63"
+    },
+    {
+      "receipt": "data/raw/systematic_gap_migration_2026_10_03/baseline.json",
+      "json_pointer": "/tracked_sha256/tests/public_refinement_snapshot.py",
+      "protected_path": "tests/public_refinement_snapshot.py",
+      "value": "8f15d03d90e123dd583622e665c2af4ca57c5d28f83f12613da258e92199cf5a"
+    },
+    {
+      "receipt": "data/raw/systematic_gap_migration_2026_10_03/baseline.json",
+      "json_pointer": "/tracked_sha256/tests/test_admin_publish_workflow_reliability.py",
+      "protected_path": "tests/test_admin_publish_workflow_reliability.py",
+      "value": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63"
+    },
+    {
+      "receipt": "data/raw/systematic_gap_migration_2026_10_03/predecessor_623_manifest.json",
+      "json_pointer": "/tests/public_refinement_snapshot.py",
+      "protected_path": "tests/public_refinement_snapshot.py",
+      "value": {
+        "type": "dict"
+      }
+    },
+    {
+      "receipt": "tests/fixtures/public_website_refinement_2026_10_01.json",
+      "json_pointer": "/sha256/tests/public_refinement_snapshot.py",
+      "protected_path": "tests/public_refinement_snapshot.py",
+      "value": "8f15d03d90e123dd583622e665c2af4ca57c5d28f83f12613da258e92199cf5a"
+    }
+  ],
+  "all_matching_json_list_or_diagnostic_references": [
+    {
+      "receipt": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "json_pointer": "/integrity/tracked_modifications/4",
+      "path": "tests/public_refinement_snapshot.py",
+      "value": "tests/public_refinement_snapshot.py"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_b_wave_b1a_2026_10_12/evidence_manifest.json",
+      "json_pointer": "/publication/explicit_allowlist/11",
+      "path": "tests/public_refinement_snapshot.py",
+      "value": "tests/public_refinement_snapshot.py"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_b_wave_b1a_2026_10_12/evidence_manifest.json",
+      "json_pointer": "/final_change_scope/actual_paths/11",
+      "path": "tests/public_refinement_snapshot.py",
+      "value": "tests/public_refinement_snapshot.py"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_b_wave_b1a_2026_10_12/evidence_manifest.json",
+      "json_pointer": "/final_change_scope/unstaged_paths/9",
+      "path": "tests/public_refinement_snapshot.py",
+      "value": "tests/public_refinement_snapshot.py"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_b_wave_b1i_2026_10_20/evidence_manifest.json",
+      "json_pointer": "/locked_policy_ledger/integrity/tracked_modifications/4",
+      "path": "tests/public_refinement_snapshot.py",
+      "value": "tests/public_refinement_snapshot.py"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/evidence_archive/b3_01/validation.json",
+      "json_pointer": "/checks/4498/name",
+      "path": "tests/admin_http_fixtures.py",
+      "value": "trackedunchanged:tests/admin_http_fixtures.py"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/evidence_archive/b3_01/validation.json",
+      "json_pointer": "/checks/4501/name",
+      "path": "tests/conftest.py",
+      "value": "trackedunchanged:tests/conftest.py"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/evidence_archive/b3_01/validation.json",
+      "json_pointer": "/checks/4515/name",
+      "path": "tests/public_refinement_snapshot.py",
+      "value": "trackedunchanged:tests/public_refinement_snapshot.py"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/evidence_archive/b3_01/validation.json",
+      "json_pointer": "/checks/4533/name",
+      "path": "tests/test_admin_publish_workflow_reliability.py",
+      "value": "trackedunchanged:tests/test_admin_publish_workflow_reliability.py"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/publish_fixture_successor_review.json",
+      "json_pointer": "/authorization/path",
+      "path": "tests/test_admin_publish_workflow_reliability.py",
+      "value": "tests/test_admin_publish_workflow_reliability.py"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/publish_fixture_successor_review.json",
+      "json_pointer": "/unchanged_semantic_proofs/production_and_guard_files/3/path",
+      "path": "tests/public_refinement_snapshot.py",
+      "value": "tests/public_refinement_snapshot.py"
+    },
+    {
+      "receipt": "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/publish_fixture_successor_review.json",
+      "json_pointer": "/two_guard_review/sole_extra_path",
+      "path": "tests/test_admin_publish_workflow_reliability.py",
+      "value": "tests/test_admin_publish_workflow_reliability.py"
+    }
+  ],
+  "matching_json_files": [
+    "data/processed/legacy_scope_cleanup_audit_2026_09/baseline_sha256.json",
+    "data/processed/legacy_scope_exclusion_migration_2026_09/predecessor_666_snapshot.json",
+    "data/processed/literature51_2026_10_16/baseline.json",
+    "data/processed/systematic_tier2_application_2026_09/baseline_sha256.json",
+    "data/processed/systematic_tier2_policy_2026_09/baseline_sha256.json",
+    "data/raw/corpus_quality_audit_2026_10_04/baseline.json",
+    "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+    "data/raw/corpus_quality_batch_a_2026_10_04/baseline.json",
+    "data/raw/corpus_quality_batch_b_wave_b1a_2026_10_12/evidence_manifest.json",
+    "data/raw/corpus_quality_batch_b_wave_b1g_2026_10_19/evidence_manifest.json",
+    "data/raw/corpus_quality_batch_b_wave_b1i_2026_10_20/evidence_manifest.json",
+    "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/evidence_archive/b3_01/validation.json",
+    "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/publish_fixture_successor_review.json",
+    "data/raw/systematic_gap_audit_2026_10_02/baseline.json",
+    "data/raw/systematic_gap_migration_2026_10_03/baseline.json",
+    "data/raw/systematic_gap_migration_2026_10_03/predecessor_623_manifest.json",
+    "tests/fixtures/public_website_refinement_2026_10_01.json"
+  ],
+  "safe_existing_extension_files": [
+    "tests/conftest.py",
+    "tests/admin_http_fixtures.py"
+  ],
+  "source_or_test_writes": 0,
+  "tests_run": 0,
+  "new_downloads": 0
+}

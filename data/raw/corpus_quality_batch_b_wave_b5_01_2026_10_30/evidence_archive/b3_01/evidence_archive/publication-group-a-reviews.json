@@ -1,0 +1,668 @@
+{
+  "schema_version": 1,
+  "wave": "Batch B B3 / B2-01 publication-only evidence group A",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "assigned_review_ids": [
+    "P028",
+    "P097",
+    "P105"
+  ],
+  "scope": "Exactly three original missing-formal-URL actions; metadata evidence only; zero acceptance or taxonomy adjudication.",
+  "timing": {
+    "reviewer_start_utc": "2026-10-28T01:40:49.859107+00:00",
+    "monotonic_start_ns": 165866125457041,
+    "timing_boundary": "Explicit timing begins after initial assigned-input read; earlier local input inspection is not included.",
+    "reviewer_end_utc": "2026-10-28T01:46:17.159736+00:00",
+    "monotonic_end_ns": 166193421731333,
+    "measured_wall_seconds": 327.296274292,
+    "human_effort": "Not measured; elapsed reviewer wall time is not human labor hours."
+  },
+  "records": [
+    {
+      "review_id": "P028",
+      "canonical_identity": {
+        "paper_id": "curated:92fe1dfd435209b21ff4",
+        "title": "Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3",
+        "year": 2026,
+        "publication_type": "conference",
+        "venue": "ACM International Conference on Multimedia",
+        "venue_id": "venue:acm-mm",
+        "venue_acronym": "ACM MM",
+        "venue_track": "Main",
+        "doi": "",
+        "paper_url": "",
+        "formal_url": "",
+        "arxiv_id": "2608.15196",
+        "arxiv_url": "https://arxiv.org/abs/2608.15196",
+        "authors": [
+          "Hyeongjun Choi",
+          "Juhun Lee",
+          "Davide Cozzolino",
+          "Luisa Verdoliva",
+          "Simon S. Woo"
+        ],
+        "stored_author_string": "Hyeongjun Choi; Juhun Lee; Davide Cozzolino; Luisa Verdoliva; Simon S. Woo",
+        "stored_doi_literal": "",
+        "stored_paper_url_literal": "https://arxiv.org/abs/2608.15196",
+        "formal_url_schema_boundary": "The formal_url value is derived public context; authoritative papers.csv has paper_url, not a literal formal_url column."
+      },
+      "original_review_question": "Obtain the official ACM International Conference on Multimedia paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "current_tasks_preserved": "detection",
+      "current_research_types_preserved": "method",
+      "proposed_taxonomy_changes": {},
+      "formal_acceptance_record_created": false,
+      "authoritative_review_closed": false,
+      "evidence_only": true,
+      "B4_gate": "A later separately authorized maintainer decision must verify exact work/version identity, bounded fields, source provenance and current acceptance/fingerprint rules. No automatic author/DOI/date/inclusion/task/type edits; unresolved discrepancies require explicit reconciliation.",
+      "scientific_review": {
+        "new_scientific_review_performed": false,
+        "full_manuscript_retrieved": false,
+        "historical_context": {
+          "tasks": "detection",
+          "research_types": "method",
+          "tasks_evidence_tier": "reused_audit+abstract",
+          "research_types_evidence_tier": "reused_audit+abstract",
+          "task_source": "arxiv",
+          "research_type_source": "arxiv"
+        },
+        "context_limit": "Historical registry values and their existing evidence tiers are preserved, not independently re-certified scientific support. No methods/experiments/numbers reassessed; no taxonomy conclusion drawn from title/abstract."
+      },
+      "local_evidence": [
+        {
+          "path": "data/curated/papers.csv",
+          "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+          "locator": "curated:92fe1dfd435209b21ff4",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+          "locator": "curated:92fe1dfd435209b21ff4",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+          "locator": "P028",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "locator": "#b-P028",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+          "locator": "V1 / publication conventions",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af",
+          "locator": "V1 / publication conventions",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "data/raw/requested_seven_papers_2026-08-29/dash_lab_publications_data.js",
+          "sha256": "711c5d614831847a6df6ffd067a007094ff75faed838d21f428c6cf8f5ac06e4",
+          "locator": "title Anchor-Regularized Adaptation / arXiv2608.15196",
+          "finding": "Author-lab exact title/five-author sequence; ACM MM2026/Main Paper and generic https://2026.acmmm.org/ only, no exact formal paper URL/DOI."
+        },
+        {
+          "path": "data/raw/requested_seven_papers_2026-08-29/2608.15196.first2.txt",
+          "sha256": "61fcc986bf97417f5fcbbecc0ef4d2b6e812a7e5665d6cf370d141b8ad57846b",
+          "locator": "title Anchor-Regularized Adaptation / arXiv2608.15196",
+          "finding": "Existing bibliographic extraction confirms five authors and arXiv2608.15196v1. Only identity lines reused, scientific review not reopened."
+        },
+        {
+          "path": "data/raw/requested_seven_papers_2026-08-29/arxiv_api.xml",
+          "sha256": "a9f6c931bdf14736684480d512aa91d841b8196c63d1355a7018df68ef1c2181",
+          "locator": "title Anchor-Regularized Adaptation / arXiv2608.15196",
+          "finding": "Original exact arXiv version/title/author metadata, not formal archival proof."
+        },
+        {
+          "path": "data/raw/requested_seven_papers_2026-08-29/anchor_openalex.json",
+          "sha256": "383fb67adfb0d3bf1114fe8cefb9bbec98e5f047e95f7488c1680da7d1b94143",
+          "locator": "title Anchor-Regularized Adaptation / arXiv2608.15196",
+          "finding": "Historical repository-only OpenAlex locations; not evidence of present nonpublication."
+        }
+      ],
+      "retrieval_accounting": {
+        "new_complete_manuscripts": 0,
+        "supplements": 0,
+        "scientific_source_retrievals": 0,
+        "paid_API_calls": 0,
+        "purchases": 0,
+        "http_status": null,
+        "network_transfer_bytes": null,
+        "targeted_search_queries": 6,
+        "official_metadata_document_requests": 0,
+        "unique_official_metadata_documents": 0
+      },
+      "provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "evidence_sufficient_for_original_question": false,
+      "proposed_formal_url": null,
+      "proposed_formal_doi": null,
+      "confidence": {
+        "canonical_identity": "high",
+        "formal_archival_identity": "insufficient"
+      },
+      "finding": "The exact title/five-author identity and saved author-lab ACM MM 2026 Main Paper claim are available. No exact ACM archival item/DOI was identified by the bounded official searches. Empty results do not prove nonpublication; leave the original missing-formal-URL question open.",
+      "version_limitations": [
+        "Saved arXiv 2608.15196v1 identity is author preprint metadata dated15August2026. ACM formatting and author-lab Main Paper claim do not establish a publisher-final version or DOI.",
+        "No official archival ACM metadata or manuscript equivalence verified. No downgrade or bibliographic/task/type correction proposed."
+      ],
+      "contradictory_evidence": [
+        "Stored ACM MM2026/Main conference identity and author-lab claim coexist with a saved OpenAlex snapshot containing only arXiv repository/submitted locations. The historical snapshot does not determine current publication status."
+      ],
+      "primary_metadata_evidence": [],
+      "request_history": [
+        {
+          "operation": "search_query",
+          "query": "site:dl.acm.org \"Anchor-Regularized Adaptation\" DINOv3",
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/search1.json",
+          "result": "No exact ACM item returned; combined results covered only the two assigned Springer works.",
+          "http_status": null,
+          "network_bytes": null
+        },
+        {
+          "operation": "search_query",
+          "query": "site:dl.acm.org/doi \"Anchor-Regularized\" \"Choi\"",
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+          "result": "Empty search results.",
+          "http_status": null,
+          "network_bytes": null
+        },
+        {
+          "operation": "search_query",
+          "query": "site:acmmm2026.org \"Anchor-Regularized Adaptation\"",
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+          "result": "Empty results. This guessed hostname was not established as official and supplies no negative publication evidence.",
+          "http_status": null,
+          "network_bytes": null
+        },
+        {
+          "operation": "search_query",
+          "query": "site:dl.acm.org \"DINOv3\" \"Hyeongjun Choi\"",
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/acm-final-search.json",
+          "result": "Empty search results.",
+          "http_status": null,
+          "network_bytes": null
+        },
+        {
+          "operation": "search_query",
+          "query": "site:2026.acmmm.org \"Anchor-Regularized\"",
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/acm-final-search.json",
+          "result": "Empty results. Exact conference hostname recovered from saved author-lab source.",
+          "http_status": null,
+          "network_bytes": null
+        },
+        {
+          "operation": "search_query",
+          "query": "site:dl.acm.org \"2608.15196\"",
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/acm-final-search.json",
+          "result": "Empty search results.",
+          "http_status": null,
+          "network_bytes": null
+        }
+      ]
+    },
+    {
+      "review_id": "P097",
+      "canonical_identity": {
+        "paper_id": "curated:8503e319e1f4890c2e28",
+        "title": "FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection",
+        "year": 2026,
+        "publication_type": "conference",
+        "venue": "European Conference on Computer Vision",
+        "venue_id": "venue:eccv",
+        "venue_acronym": "ECCV",
+        "venue_track": "Main",
+        "doi": "10.48550/arxiv.2607.22087",
+        "paper_url": "",
+        "formal_url": "",
+        "arxiv_id": "2607.22087",
+        "arxiv_url": "https://arxiv.org/abs/2607.22087",
+        "authors": [
+          "Md Redwanul Haque",
+          "Manzur Murshed",
+          "Manoranjan Paul",
+          "Tsz-Kwan Lee"
+        ],
+        "stored_author_string": "Md Redwanul Haque; Manzur Murshed; Manoranjan Paul; Tsz-Kwan Lee",
+        "stored_doi_literal": "10.48550/arXiv.2607.22087",
+        "stored_paper_url_literal": "https://arxiv.org/abs/2607.22087",
+        "formal_url_schema_boundary": "The formal_url value is derived public context; authoritative papers.csv has paper_url, not a literal formal_url column."
+      },
+      "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "current_tasks_preserved": "detection",
+      "current_research_types_preserved": "method",
+      "proposed_taxonomy_changes": {},
+      "formal_acceptance_record_created": false,
+      "authoritative_review_closed": false,
+      "evidence_only": true,
+      "B4_gate": "A later separately authorized maintainer decision must verify exact work/version identity, bounded fields, source provenance and current acceptance/fingerprint rules. No automatic author/DOI/date/inclusion/task/type edits; unresolved discrepancies require explicit reconciliation.",
+      "scientific_review": {
+        "new_scientific_review_performed": false,
+        "full_manuscript_retrieved": false,
+        "historical_context": {
+          "tasks": "detection",
+          "research_types": "method",
+          "tasks_evidence_tier": "reused_audit+abstract",
+          "research_types_evidence_tier": "reused_audit+abstract",
+          "task_source": "arxiv",
+          "research_type_source": "arxiv"
+        },
+        "context_limit": "Historical registry values and their existing evidence tiers are preserved, not independently re-certified scientific support. No methods/experiments/numbers reassessed; no taxonomy conclusion drawn from title/abstract."
+      },
+      "local_evidence": [
+        {
+          "path": "data/curated/papers.csv",
+          "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+          "locator": "curated:8503e319e1f4890c2e28",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+          "locator": "curated:8503e319e1f4890c2e28",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+          "locator": "P097",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "locator": "#b-P097",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+          "locator": "V1 / publication conventions",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af",
+          "locator": "V1 / publication conventions",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        }
+      ],
+      "retrieval_accounting": {
+        "new_complete_manuscripts": 0,
+        "supplements": 0,
+        "scientific_source_retrievals": 0,
+        "paid_API_calls": 0,
+        "purchases": 0,
+        "http_status": null,
+        "network_transfer_bytes": null,
+        "targeted_search_queries": 1,
+        "official_metadata_open_or_click_operations": 2,
+        "additional_same_document_section_views": 2,
+        "unique_official_metadata_documents": 2
+      },
+      "provisional_outcome": "SUPPORTED_ADDITION",
+      "evidence_sufficient_for_original_question": true,
+      "proposed_formal_url": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32",
+      "proposed_formal_doi": "10.1007/978-3-032-37321-2_32",
+      "confidence": {
+        "canonical_identity": "high",
+        "bounded_formal_url": "high"
+      },
+      "finding": "Direct official Springer chapter and exact linked proceedings TOC establish normalized-title/full ordered-author match and archival ECCV2026 chapter DOI/URL. Propose a bounded formal-URL addition. The verified formal DOI is recorded as evidence, not automatically applied or substituted for the existing arXiv DOI.",
+      "publisher_metadata": {
+        "title": "FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection",
+        "authors": [
+          "Md Redwanul Haque",
+          "Manzur Murshed",
+          "Manoranjan Paul",
+          "Tsz-Kwan Lee"
+        ],
+        "doi": "10.1007/978-3-032-37321-2_32",
+        "formal_url": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32",
+        "type": "Conference paper",
+        "conference": "ECCV2026",
+        "container": "Computer Vision – ECCV2026",
+        "book_doi": "10.1007/978-3-032-37321-2",
+        "lncs_volume": 17040,
+        "chapter_first_online_and_published": "2026-09-22",
+        "pages": "584–601",
+        "volume_ebook_publication_date": "2026-09-21"
+      },
+      "version_limitations": [
+        "Only public publisher landing-page/proceedings metadata inspected; no full manuscript, supplement or byte equivalence comparison obtained.",
+        "Exact normalized title and complete ordered author sequence match the canonical record; this does not certify all arXiv scientific text, methods, tables or numerical claims as publisher-final equivalent.",
+        "Preserve canonical arXiv ID/repository DOI distinctly from the verified formal chapter DOI; no unrelated year/date/task/type/institution change."
+      ],
+      "contradictory_evidence": [
+        "Chapter First Online/Published date is one day later than the volume eBook date. These are separately recorded source events; no date correction is proposed in the URL review."
+      ],
+      "primary_metadata_evidence": [
+        {
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32",
+          "role": "Direct official chapter metadata",
+          "locators": [
+            "Header exact title, Conference paper, complete ordered authors",
+            "About this paper → Cite this paper, DOI, Published"
+          ],
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/fair-metadata-sections.json",
+          "finding": "Exact work identity, chapter DOI/formalURL and archival ECCV container verified."
+        },
+        {
+          "url": "https://link.springer.com/book/10.1007/978-3-032-37321-2?page=2",
+          "role": "Official proceedings TOC and bibliographic metadata",
+          "locators": [
+            "Exact paper title/authors/page span in TOC",
+            "ECCV2026 refereed proceedings and LNCS volume"
+          ],
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/books-open.json",
+          "finding": "Chapter belongs to ECCV2026 conference proceedings, not an inferred generic book/preprint."
+        }
+      ],
+      "request_history": [
+        {
+          "operation": "search_query",
+          "query": "site:link.springer.com \"FAIR: Feature-Augmented Implicit Regularization\"",
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/search1.json",
+          "result": "Exact official volume found.",
+          "http_status": null,
+          "network_bytes": null
+        },
+        {
+          "operation": "open",
+          "url": "https://link.springer.com/book/10.1007/978-3-032-37321-2?page=2",
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/books-open.json",
+          "result": "Exact TOC identity inspected.",
+          "http_status": null,
+          "network_bytes": null
+        },
+        {
+          "operation": "click_exact_chapter",
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32",
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+          "result": "Official chapter metadata inspected.",
+          "http_status": null,
+          "network_bytes": null
+        },
+        {
+          "operation": "same_document_metadata_section_view",
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32",
+          "line": 11,
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/fair-metadata-sections.json",
+          "result": "Same already-opened tool document, bibliographic header/citation section; no scientific manuscript.",
+          "http_status": null,
+          "network_bytes": null
+        },
+        {
+          "operation": "same_document_metadata_section_view",
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32",
+          "line": 245,
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/fair-metadata-sections.json",
+          "result": "Same already-opened tool document, bibliographic header/citation section; no scientific manuscript.",
+          "http_status": null,
+          "network_bytes": null
+        }
+      ]
+    },
+    {
+      "review_id": "P105",
+      "canonical_identity": {
+        "paper_id": "curated:be2900947b322f9eb905",
+        "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+        "year": 2026,
+        "publication_type": "conference",
+        "venue": "European Conference on Computer Vision",
+        "venue_id": "venue:eccv",
+        "venue_acronym": "ECCV",
+        "venue_track": "Main",
+        "doi": "10.48550/arxiv.2509.25682",
+        "paper_url": "",
+        "formal_url": "",
+        "arxiv_id": "2509.25682",
+        "arxiv_url": "https://arxiv.org/abs/2509.25682",
+        "authors": [
+          "Shiyu Wu",
+          "Shuyan Li",
+          "Jing Li",
+          "Jing Liu",
+          "Yequan Wang"
+        ],
+        "stored_author_string": "Shiyu Wu, Shuyan Li, Jing Li, Jing Liu, Yequan Wang",
+        "stored_doi_literal": "10.48550/arxiv.2509.25682",
+        "stored_paper_url_literal": "http://arxiv.org/abs/2509.25682",
+        "formal_url_schema_boundary": "The formal_url value is derived public context; authoritative papers.csv has paper_url, not a literal formal_url column."
+      },
+      "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "current_tasks_preserved": "detection;source_attribution",
+      "current_research_types_preserved": "method;dataset",
+      "proposed_taxonomy_changes": {},
+      "formal_acceptance_record_created": false,
+      "authoritative_review_closed": false,
+      "evidence_only": true,
+      "B4_gate": "A later separately authorized maintainer decision must verify exact work/version identity, bounded fields, source provenance and current acceptance/fingerprint rules. No automatic author/DOI/date/inclusion/task/type edits; unresolved discrepancies require explicit reconciliation.",
+      "scientific_review": {
+        "new_scientific_review_performed": false,
+        "full_manuscript_retrieved": false,
+        "historical_context": {
+          "tasks": "detection;source_attribution",
+          "research_types": "method;dataset",
+          "tasks_evidence_tier": "reused_audit+abstract",
+          "research_types_evidence_tier": "reused_audit+abstract",
+          "task_source": "openalex",
+          "research_type_source": "openalex"
+        },
+        "context_limit": "Historical registry values and their existing evidence tiers are preserved, not independently re-certified scientific support. No methods/experiments/numbers reassessed; no taxonomy conclusion drawn from title/abstract."
+      },
+      "local_evidence": [
+        {
+          "path": "data/curated/papers.csv",
+          "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+          "locator": "curated:be2900947b322f9eb905",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "data/curated/paper_taxonomy.csv",
+          "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+          "locator": "curated:be2900947b322f9eb905",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+          "locator": "P105",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "locator": "#b-P105",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+          "locator": "V1 / publication conventions",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af",
+          "locator": "V1 / publication conventions",
+          "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+        }
+      ],
+      "retrieval_accounting": {
+        "new_complete_manuscripts": 0,
+        "supplements": 0,
+        "scientific_source_retrievals": 0,
+        "paid_API_calls": 0,
+        "purchases": 0,
+        "http_status": null,
+        "network_transfer_bytes": null,
+        "targeted_search_queries": 1,
+        "official_metadata_open_or_click_operations": 2,
+        "additional_same_document_section_views": 0,
+        "unique_official_metadata_documents": 2
+      },
+      "provisional_outcome": "SUPPORTED_ADDITION",
+      "evidence_sufficient_for_original_question": true,
+      "proposed_formal_url": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18",
+      "proposed_formal_doi": "10.1007/978-3-032-37550-6_18",
+      "confidence": {
+        "canonical_identity": "high",
+        "bounded_formal_url": "high"
+      },
+      "finding": "Direct official Springer chapter and exact linked proceedings TOC establish normalized-title/full ordered-author match and archival ECCV2026 chapter DOI/URL. Propose a bounded formal-URL addition. The verified formal DOI is recorded as evidence, not automatically applied or substituted for the existing arXiv DOI.",
+      "publisher_metadata": {
+        "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+        "authors": [
+          "Shiyu Wu",
+          "Shuyan Li",
+          "Jing Li",
+          "Jing Liu",
+          "Yequan Wang"
+        ],
+        "doi": "10.1007/978-3-032-37550-6_18",
+        "formal_url": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18",
+        "type": "Conference paper",
+        "conference": "ECCV2026",
+        "container": "Computer Vision – ECCV2026",
+        "book_doi": "10.1007/978-3-032-37550-6",
+        "lncs_volume": 17019,
+        "chapter_first_online_and_published": "2026-09-13",
+        "pages": "319–338",
+        "volume_ebook_publication_date": "2026-09-12"
+      },
+      "version_limitations": [
+        "Only public publisher landing-page/proceedings metadata inspected; no full manuscript, supplement or byte equivalence comparison obtained.",
+        "Exact normalized title and complete ordered author sequence match the canonical record; this does not certify all arXiv scientific text, methods, tables or numerical claims as publisher-final equivalent.",
+        "Preserve canonical arXiv ID/repository DOI distinctly from the verified formal chapter DOI; no unrelated year/date/task/type/institution change."
+      ],
+      "contradictory_evidence": [
+        "Chapter First Online/Published date is one day later than the volume eBook date. These are separately recorded source events; no date correction is proposed in the URL review."
+      ],
+      "primary_metadata_evidence": [
+        {
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18",
+          "role": "Direct official chapter metadata",
+          "locators": [
+            "Header exact title, Conference paper, complete ordered authors",
+            "About this paper → Cite this paper, DOI, Published"
+          ],
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+          "finding": "Exact work identity, chapter DOI/formalURL and archival ECCV container verified."
+        },
+        {
+          "url": "https://link.springer.com/book/10.1007/978-3-032-37550-6",
+          "role": "Official proceedings TOC and bibliographic metadata",
+          "locators": [
+            "Exact paper title/authors/page span in TOC",
+            "ECCV2026 refereed proceedings and LNCS volume"
+          ],
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/books-open.json",
+          "finding": "Chapter belongs to ECCV2026 conference proceedings, not an inferred generic book/preprint."
+        }
+      ],
+      "request_history": [
+        {
+          "operation": "search_query",
+          "query": "site:link.springer.com \"Few-Shot Synthetic Image Attribution\"",
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/search1.json",
+          "result": "Exact official volume found.",
+          "http_status": null,
+          "network_bytes": null
+        },
+        {
+          "operation": "open",
+          "url": "https://link.springer.com/book/10.1007/978-3-032-37550-6",
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/books-open.json",
+          "result": "Exact TOC identity inspected.",
+          "http_status": null,
+          "network_bytes": null
+        },
+        {
+          "operation": "click_exact_chapter",
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18",
+          "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+          "result": "Official chapter metadata inspected.",
+          "http_status": null,
+          "network_bytes": null
+        }
+      ]
+    }
+  ],
+  "source_captures": [
+    {
+      "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/search1.json",
+      "sha256": "5c4c270347db0f62bd6d943edad7ba382c141ecaefe39475046a2597a6107428",
+      "capture_bytes": 18210,
+      "capture_kind": "Exact web-tool response serialized as JSON, not original HTTP bytes; transfer size/status not provided."
+    },
+    {
+      "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/books-open.json",
+      "sha256": "2694f303aea599729e8a495a525ade0597459593b01647722b691caa61e12406",
+      "capture_bytes": 25488,
+      "capture_kind": "Exact web-tool response serialized as JSON, not original HTTP bytes; transfer size/status not provided."
+    },
+    {
+      "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+      "sha256": "913eb6ced04f665c7972799dc43cb30fb532c25774410d7b4e8133d0de5d98a9",
+      "capture_bytes": 26307,
+      "capture_kind": "Exact web-tool response serialized as JSON, not original HTTP bytes; transfer size/status not provided."
+    },
+    {
+      "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/fair-metadata-sections.json",
+      "sha256": "791a7f194593741b5b3e0ae6f0a6363b8008119f957455b8ae549b565e87b921",
+      "capture_bytes": 26400,
+      "capture_kind": "Exact web-tool response serialized as JSON, not original HTTP bytes; transfer size/status not provided."
+    },
+    {
+      "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/acm-final-search.json",
+      "sha256": "d97fa94fac4f20e2f16f13a14473bd77e61e332a47b7bc1cb8417436d9d4634b",
+      "capture_bytes": 485,
+      "capture_kind": "Exact web-tool response serialized as JSON, not original HTTP bytes; transfer size/status not provided."
+    }
+  ],
+  "local_source_sha256": {
+    "data/curated/papers.csv": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+    "data/curated/paper_taxonomy.csv": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+    "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+    "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+    "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+    "docs/publication_venue_normalization.md": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af",
+    "data/raw/requested_seven_papers_2026-08-29/dash_lab_publications_data.js": "711c5d614831847a6df6ffd067a007094ff75faed838d21f428c6cf8f5ac06e4",
+    "data/raw/requested_seven_papers_2026-08-29/2608.15196.first2.txt": "61fcc986bf97417f5fcbbecc0ef4d2b6e812a7e5665d6cf370d141b8ad57846b",
+    "data/raw/requested_seven_papers_2026-08-29/arxiv_api.xml": "a9f6c931bdf14736684480d512aa91d841b8196c63d1355a7018df68ef1c2181",
+    "data/raw/requested_seven_papers_2026-08-29/anchor_openalex.json": "383fb67adfb0d3bf1114fe8cefb9bbec98e5f047e95f7488c1680da7d1b94143"
+  },
+  "aggregate_retrieval_accounting": {
+    "web_tool_calls": 5,
+    "targeted_search_queries": 8,
+    "official_metadata_open_or_click_operations": 4,
+    "same_document_section_views": 2,
+    "new_unique_official_metadata_documents": 4,
+    "new_complete_manuscripts": 0,
+    "supplements": 0,
+    "code_or_dataset_downloads": 0,
+    "purchases": 0,
+    "paid_api_calls": 0,
+    "external_cost": "No purchase/paidAPI used; tool billing not exposed. Monetary total unknown, not invented.",
+    "network_transfer_bytes": null,
+    "HTTP_statuses": "Not supplied by web tool; serialized capture sizes are not network transfer sizes."
+  },
+  "provisional_outcome_counts": {
+    "SUPPORTED_ADDITION": 2,
+    "EVIDENCE_INSUFFICIENT": 1
+  },
+  "proposed_taxonomy_changes": 0,
+  "review_actions_closed": 0,
+  "B4_remediation_authorized": false,
+  "preservation": "Only repository reads and /private/tmp operational writes. No repository/export/taxonomy/decision/Git mutation by this reviewer. Root owns final preservation gate."
+}

@@ -1,0 +1,91 @@
+--- a/tests/test_admin_publish_workflow_reliability.py
++++ b/tests/test_admin_publish_workflow_reliability.py
+@@ -1,12 +1,15 @@
+ import http.client
+ import json
+ import socket
++import tempfile
+ import threading
+ import unittest
+ from http.server import ThreadingHTTPServer
++from pathlib import Path
+ from unittest import mock
+ 
+ from scripts import admin_workflows
++from scripts.public_preview_sync import DEFAULT_STATE_PATH
+ from scripts.serve_admin import make_handler
+ 
+ 
+@@ -48,10 +51,17 @@
+ 
+ class RunningServer:
+     def __init__(self, runner):
+-        self.server = ThreadingHTTPServer(
+-            ("127.0.0.1", 0),
+-            make_handler(TOKEN, workflow_runner=runner, geocoder=object()),
+-        )
++        self.temporary = tempfile.TemporaryDirectory()
++        handler = make_handler(
++            TOKEN, workflow_runner=runner, geocoder=object(),
++            public_preview_sync_state_path=Path(self.temporary.name) / "sync.json",
++        )
++        try:
++            self.server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
++        except BaseException:
++            handler.public_preview_sync.close()
++            self.temporary.cleanup()
++            raise
+         self.thread = threading.Thread(
+             target=self.server.serve_forever, daemon=True
+         )
+@@ -61,12 +71,47 @@
+         return self.server
+ 
+     def __exit__(self, *_args):
+-        self.server.shutdown()
+-        self.server.server_close()
+-        self.thread.join(timeout=3)
++        try:
++            self.server.shutdown()
++            self.server.server_close()
++            self.thread.join(timeout=3)
++        finally:
++            try:
++                self.server.RequestHandlerClass.public_preview_sync.close()
++            finally:
++                self.temporary.cleanup()
+ 
+ 
+ class AdminPublishWorkflowReliabilityTests(unittest.TestCase):
++    def test_publish_fixture_isolates_and_removes_its_sync_state(self):
++        default_paths = (
++            DEFAULT_STATE_PATH,
++            DEFAULT_STATE_PATH.with_suffix(".json.lock"),
++            DEFAULT_STATE_PATH.with_suffix(".json.export.lock"),
++            DEFAULT_STATE_PATH.with_suffix(".json.curated-change-intent"),
++        )
++
++        def default_state_bytes():
++            return {path: path.read_bytes() if path.exists() else None
++                    for path in default_paths}
++
++        before = default_state_bytes()
++        with RunningServer(lambda _name, *, progress: success_result()) as server:
++            coordinator = server.RequestHandlerClass.public_preview_sync
++            self.assertNotEqual(coordinator.state_path, DEFAULT_STATE_PATH)
++            temporary_root = coordinator.state_path.parent
++            self.assertFalse(coordinator.export_lock_path.exists())
++            status, result = request(
++                server, "/api/publish-changes", body={"confirmed": True}
++            )
++            self.assertEqual(status, 200)
++            self.assertTrue(result["success"])
++            self.assertTrue(coordinator.export_lock_path.is_file())
++            self.assertEqual(coordinator.export_lock_path.parent, temporary_root)
++            self.assertEqual(default_state_bytes(), before)
++        self.assertFalse(temporary_root.exists())
++        self.assertEqual(default_state_bytes(), before)
++
+     def test_error_summary_prefers_concrete_validator_error(self):
+         summary = admin_workflows._error_summary(
+             "ERROR: Refresh reported validation errors:\n"

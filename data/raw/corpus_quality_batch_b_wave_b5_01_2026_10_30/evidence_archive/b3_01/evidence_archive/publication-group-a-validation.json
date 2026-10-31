@@ -1,0 +1,91 @@
+{
+  "scope": "Lightweight local evidence/identity/provenance checks only; no repository tests/export or scientific re-review.",
+  "checks": [
+    {
+      "check": "Exact assigned review IDs once",
+      "passed": true
+    },
+    {
+      "check": "Pinned baseline exact",
+      "passed": true
+    },
+    {
+      "check": "Original question P028",
+      "passed": true
+    },
+    {
+      "check": "Canonical identity P028",
+      "passed": true
+    },
+    {
+      "check": "No acceptance/taxonomy change P028",
+      "passed": true
+    },
+    {
+      "check": "Scientific non-certification P028",
+      "passed": true
+    },
+    {
+      "check": "Original question P097",
+      "passed": true
+    },
+    {
+      "check": "Canonical identity P097",
+      "passed": true
+    },
+    {
+      "check": "No acceptance/taxonomy change P097",
+      "passed": true
+    },
+    {
+      "check": "Publisher exact metadata available P097",
+      "passed": true
+    },
+    {
+      "check": "Scientific non-certification P097",
+      "passed": true
+    },
+    {
+      "check": "Original question P105",
+      "passed": true
+    },
+    {
+      "check": "Canonical identity P105",
+      "passed": true
+    },
+    {
+      "check": "No acceptance/taxonomy change P105",
+      "passed": true
+    },
+    {
+      "check": "Publisher exact metadata available P105",
+      "passed": true
+    },
+    {
+      "check": "Scientific non-certification P105",
+      "passed": true
+    },
+    {
+      "check": "Source capture checksums",
+      "passed": true
+    },
+    {
+      "check": "All repository source bytes unchanged",
+      "passed": true
+    },
+    {
+      "check": "Zero new manuscripts",
+      "passed": true
+    },
+    {
+      "check": "Provisional outcomes exact",
+      "passed": true
+    },
+    {
+      "check": "No unsupported network statistics",
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "review_packet_sha256": "a5f03dec49b5a2c1674e84de5ce79dddb0eb94de28fe9221ee0525242f33ccdb"
+}

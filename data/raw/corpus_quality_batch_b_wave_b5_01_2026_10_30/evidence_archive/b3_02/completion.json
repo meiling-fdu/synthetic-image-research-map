@@ -1,0 +1,95 @@
+{
+  "task": "Batch B Wave B3-02",
+  "status": "EVIDENCE_ONLY_COMPLETE — STOPPED_BEFORE_B4_02",
+  "completed_utc": "2026-10-29T08:21:06.971365+00:00",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "worktree": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map",
+  "scope": {
+    "batch": "B2-02",
+    "papers": 11,
+    "actions": 15,
+    "publication": 4,
+    "institution_sites": 11
+  },
+  "outcome_counts": {
+    "SUPPORTED_ADDITION": 5,
+    "EVIDENCE_INSUFFICIENT": 10
+  },
+  "supported_actions": [
+    "P001",
+    "P049",
+    "P058",
+    "P068",
+    "U005"
+  ],
+  "qualification": "U005 approximate official map viewport only; explicit B4 precision acceptance required. Otherwise coordinate hold.",
+  "held_actions": [
+    "U001",
+    "U002",
+    "U003",
+    "U006",
+    "U007",
+    "U008",
+    "U014",
+    "U016",
+    "U018",
+    "U023"
+  ],
+  "QC_checks_passed": 224,
+  "lightweight_checks_passed": 412,
+  "preservation_checks_passed": 19202,
+  "failures": 0,
+  "integrity": {
+    "AUTHORITATIVE_CORPUS_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "UNEXPECTED_CHANGED": 0
+  },
+  "B4_01_eight_pending_files_unchanged": true,
+  "public_accounting_unchanged": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 28,
+    "historical_unresolved": 131,
+    "active_public_unresolved": 129,
+    "historical_papers": 121,
+    "active_public_papers": 119
+  },
+  "corpus": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "taxonomy": {
+    "detection": 621,
+    "method": 578,
+    "analysis_study": 86,
+    "survey": 21,
+    "source_attribution": 84,
+    "dataset": 138,
+    "benchmark": 97,
+    "localization": 45
+  },
+  "new_manuscript_retrievals_on_recovery": 0,
+  "new_geocoding_requests_on_recovery": 0,
+  "declined_geocode_command_executed": false,
+  "authoritative_decisions_applied": 0,
+  "repository_files_changed": 0,
+  "staged": 0,
+  "committed": 0,
+  "pushed": false,
+  "exported": false,
+  "full_suite_run": false,
+  "B4_02_started": false,
+  "git_state": {
+    "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map",
+    "HEAD": "7fc8ceae702324628335944cf4b545a3733fdc56",
+    "git_status": "",
+    "index_empty": true,
+    "ahead_behind_vs_origin_main": "0\t0"
+  },
+  "neurips": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+}

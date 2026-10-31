@@ -1,0 +1,513 @@
+{
+  "task": "B3-02 independent Romania-group QC",
+  "reviewer": "b302_recover_china (not original group reviewer)",
+  "reviewed_utc": "2026-10-29T08:14:35.834754+00:00",
+  "reviewed_results_sha256": "c67015e60884a833d4420c410a7518b5f3c19d9503fb00212aae66280c686ddd",
+  "assigned_action_ids": [
+    "P001",
+    "U001",
+    "P049",
+    "U005",
+    "U018",
+    "U023"
+  ],
+  "source_capture_hashes_verified": 12,
+  "new_retrievals": 0,
+  "mandatory_checks_passed": 90,
+  "mandatory_checks_failed": 0,
+  "status": "PASS_WITH_EXPLICIT_U005_PRECISION_CONDITION",
+  "records": [
+    {
+      "review_id": "P001",
+      "qc_outcome": "AGREE",
+      "claim_mapping": "Independently read exact DOI/title/ordered author metadata, canonical conference and CISIS metadata, publisherFirstOnline2026 and citation2027. Venue binding addition is supported; no date/status/taxonomy change.",
+      "uncertainty": "Citation year differs from first-online year; preserve both."
+    },
+    {
+      "review_id": "U001",
+      "qc_outcome": "AGREE_HOLD",
+      "claim_mapping": "Paper names faculty/university/city; current official faculty and secretariat specify4VasileParvan236. This does not establish exactpaper-timesite, and no coordinate is recovered.",
+      "uncertainty": "Current facultysecretariat versus2026online/2027citation temporal boundary is explicit; no genericHQpoint inferred."
+    },
+    {
+      "review_id": "P049",
+      "qc_outcome": "AGREE",
+      "claim_mapping": "DOI/title/author and article-journal publishermetadata support canonical JournalofHighSchoolScience. Source abbreviation is fullname, so optionalacronym may remainempty.",
+      "uncertainty": "arXiv correspondence reused from acceptedcanonicalidentity; no claim newfinalversionequivalence review."
+    },
+    {
+      "review_id": "U005",
+      "qc_outcome": "AGREE_WITH_PRECISION_CONDITION",
+      "claim_mapping": "Publicationfirstpage independently establishes exactnamedschool and5MihaiEminescu440014, matchingofficialschoolcontact. Institutionalmapviewport47.789438,22.876378,z19 is traceable, approximate institutionselected geographic evidence, not marker/survey proof.",
+      "uncertainty": "SUPPORTED_ADDITION can only propose a qualifiedapproximatepoint if B4 explicitly accepts viewportprecision and undeclaredCRS limits. Do not mark geographicaccuracyindependentlyvalidated or automaticallyresolve. A strictermarkerprecisionrequirement retains thisaction open."
+    },
+    {
+      "review_id": "U018",
+      "qc_outcome": "AGREE_HOLD",
+      "claim_mapping": "Previous finalWACV2025 evidence authoraffiliations retained; currentPOLITEHNICAcontact and BitdefenderEULA address do not identify namedauthors2025 office/campus.",
+      "uncertainty": "CurrentcorporateHQ and broad19km mapviewport are not papertimecampus evidence. DistinctarXiv2024/final2025versions retained."
+    },
+    {
+      "review_id": "U023",
+      "qc_outcome": "AGREE_HOLD",
+      "claim_mapping": "Previous finalWACV2024 affiliations retained separately; sharedcorporate/universitycurrentevidence cannot prove commonpapersites.",
+      "uncertainty": "PreserveDragoș-ConstantinTântaru/ElisabetaOneață/DanOneață diacritics and2023arXivversus2024final. No separatecase merged."
+    }
+  ],
+  "conditions": [
+    "U005 evidence supports exactpaper-timeschool address and approximateofficialviewportpoint only; B4 must explicitly acceptaccuracy/CRSlimits, otherwise retainhold. No formaldecision made."
+  ],
+  "reviewer_disagreement": "No substantive claim disagreement; U005 outcome is conditional on future point-precision acceptance, not unconditional mapping readiness.",
+  "checks": [
+    {
+      "name": "exact_six_actions_once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_hash:springer-chapter",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_hash:springer-book",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_hash:uvt-faculty",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_hash:uvt-administration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_hash:jhss-article",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_hash:jhss-acronym-context",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_hash:school-contact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_hash:school-paper-firstpage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_hash:politehnica-contact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_hash:bitdefender-legal-address",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_hash:local:wacv-primary-review",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_hash:local:unmapped-ledger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "identity:P001",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "question:P001",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "provisional_not_formal:P001",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "taxonomy_preserved:P001",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:P001:data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:P001:docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:P001:data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:P001:docs/publication_venue_normalization.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "identity:U001",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "question:U001",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "provisional_not_formal:U001",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "taxonomy_preserved:U001",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U001:data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U001:docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U001:web/data/public_preview_papers.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U001:data/curated/author_institution_mappings.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U001:data/curated/institutions.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U001:data/curated/institution_locations.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U001:data/curated/author_institution_mappings.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "identity:P049",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "question:P049",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "provisional_not_formal:P049",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "taxonomy_preserved:P049",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:P049:data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:P049:docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:P049:data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:P049:docs/publication_venue_normalization.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "identity:U005",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "question:U005",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "provisional_not_formal:U005",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "taxonomy_preserved:U005",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U005:data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U005:docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U005:web/data/public_preview_papers.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U005:data/curated/author_institution_mappings.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U005:data/curated/institutions.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U005:data/curated/institution_locations.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U005:data/curated/author_institution_mappings.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "identity:U018",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "question:U018",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "provisional_not_formal:U018",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "taxonomy_preserved:U018",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U018:data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U018:docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U018:web/data/public_preview_papers.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U018:data/curated/author_institution_mappings.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U018:data/curated/institutions.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U018:data/curated/institution_locations.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U018:data/manual/systematic_tier1_primary_review_2026_09.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U018:data/curated/author_institution_mappings.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "identity:U023",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "question:U023",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "provisional_not_formal:U023",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "taxonomy_preserved:U023",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U023:data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U023:docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U023:web/data/public_preview_papers.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U023:data/curated/author_institution_mappings.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U023:data/curated/institutions.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U023:data/curated/institution_locations.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U023:data/manual/systematic_tier1_primary_review_2026_09.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "local_ref_hash:U023:data/curated/author_institution_mappings.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P001_exact_DOI",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P001_author_order",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P001_venue_CISIS_primary_metadata",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P001_online2026_vs_citation2027_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P049_DOI_venue_type",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P049_no_invented_acronym",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "U001_currentfaculty_specific_address",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "U005_paper_explicit_school_address",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "U005_official_contact_address",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "U005_viewport_provenance",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "U005_no_marker_or_independentgeocode_claim",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "U001_hold_not_HQ_inference",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "U018_hold_not_HQ_inference",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "U023_hold_not_HQ_inference",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "U018_U023_separateidentity",
+      "passed": true,
+      "detail": null
+    }
+  ]
+}

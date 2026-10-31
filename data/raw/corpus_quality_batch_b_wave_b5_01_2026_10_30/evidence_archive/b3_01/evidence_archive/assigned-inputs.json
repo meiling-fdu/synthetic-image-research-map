@@ -1,0 +1,1670 @@
+{
+  "planning_dir": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b2-2026-10-28",
+  "planning_hashes": {
+    "batch_plan.md": "14af2a8bac007d21f7aef4fb70ee6f75d81bc1424a7eaf6f8b3654cfb6736c0e",
+    "backlog_matrix.json": "fead93a11f96adb4b6de008ec2085da7559a83109a4f6e2b79f7a5e0d4cd59eb",
+    "validation.json": "19d4b74904bce8735a3f99e812934c1930f30a4e722cf17674a3264272d472ad"
+  },
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "batch": {
+    "batch_id": "B2-01",
+    "title": "Canonical formal URLs — reuse verified publisher evidence first",
+    "anchor_ids": [
+      "P034",
+      "P254",
+      "P305",
+      "P028",
+      "P097",
+      "P105",
+      "P150",
+      "P177",
+      "P229"
+    ],
+    "priority": 1,
+    "parallel_lane": "publication",
+    "depends_on": [],
+    "purpose": "Resolve bounded missing-formal-URL questions with exact work/version identity; three local-ready candidates lead, remaining official record checks follow.",
+    "status": "PROPOSED_NOT_AUTHORIZED_FOR_EXECUTION",
+    "members": [
+      {
+        "paper_id": "curated:aa7dceb70828cdd6ad39",
+        "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+        "action_ids": [
+          "P034"
+        ],
+        "actionable_ids": [
+          "P034"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "doi:10.48550/arxiv.2407.10575",
+        "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+        "action_ids": [
+          "P254"
+        ],
+        "actionable_ids": [
+          "P254"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "doi:10.48550/arxiv.2312.02625",
+        "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+        "action_ids": [
+          "P305"
+        ],
+        "actionable_ids": [
+          "P305"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:92fe1dfd435209b21ff4",
+        "title": "Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3",
+        "action_ids": [
+          "P028"
+        ],
+        "actionable_ids": [
+          "P028"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:8503e319e1f4890c2e28",
+        "title": "FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection",
+        "action_ids": [
+          "P097"
+        ],
+        "actionable_ids": [
+          "P097"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:be2900947b322f9eb905",
+        "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+        "action_ids": [
+          "P105"
+        ],
+        "actionable_ids": [
+          "P105"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:7a5ce57b121b69752867",
+        "title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+        "action_ids": [
+          "P150"
+        ],
+        "actionable_ids": [
+          "P150"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:b460935b64c35e1d074a",
+        "title": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection",
+        "action_ids": [
+          "P177"
+        ],
+        "actionable_ids": [
+          "P177"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:55bc4360e3d312e696b7",
+        "title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+        "action_ids": [
+          "P229"
+        ],
+        "actionable_ids": [
+          "P229"
+        ],
+        "blocked_companion_ids": []
+      }
+    ],
+    "paper_count": 9,
+    "action_ids": [
+      "P034",
+      "P254",
+      "P305",
+      "P028",
+      "P097",
+      "P105",
+      "P150",
+      "P177",
+      "P229"
+    ],
+    "actionable_action_ids": [
+      "P034",
+      "P254",
+      "P305",
+      "P028",
+      "P097",
+      "P105",
+      "P150",
+      "P177",
+      "P229"
+    ],
+    "conditional_blocked_companion_ids": [],
+    "analyst_minutes_range_before_reuse": [
+      125,
+      245
+    ],
+    "effort_basis": "Sum of row-level analyst estimates; no discount for shared evidence, no access waiting, downloads, adjudication, implementation, exports or integration included.",
+    "required_evidence": {
+      "P034": [
+        "No new retrieval for the bounded formal-URL review. Reuse the validated B1M Springer publisher identity/source receipt; preserve and separately reconcile its13-author publisher version versus12-author canonical/early version before any broader bibliographic edit."
+      ],
+      "P254": [
+        "No new retrieval for the bounded original formal-URL question. Reuse existing exact-title/full-author DOI-matched saved publisher deposit and reviewed DOI/arXiv linkage."
+      ],
+      "P305": [
+        "No new retrieval for the bounded original formal-URL question. Reuse existing exact-title/full-author DOI-matched saved publisher deposit and reviewed DOI/arXiv linkage."
+      ],
+      "P028": [
+        "Official ACM International Conference on Multimedia archival paper landing page or proceedings item for Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "P097": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "P105": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "P150": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "P177": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "P229": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ]
+    },
+    "acceptance_criteria": [
+      "Pin exact baseline and resolve work/version identity before substantive review.",
+      "Reuse existing validated evidence; fetch only the precise missing primary material if separately authorized.",
+      "Every member action must have its own cited bounded finding and sufficiency assessment; unresolved/blocked is valid.",
+      "Do not modify corpus during evidence review. Formal maintainer acceptance and sequential integration are separate future gates.",
+      "Preserve every current companion task/type/metadata field and all documented source/numerical limitations."
+    ],
+    "action_acceptance_criteria": {
+      "P034": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P034's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P254": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P254's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P305": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P305's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P028": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P028's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P097": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P097's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P105": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P105's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P150": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P150's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P177": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P177's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P229": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P229's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ]
+    }
+  },
+  "records": {
+    "P028": {
+      "review_id": "P028",
+      "paper_id": "curated:92fe1dfd435209b21ff4",
+      "title": "Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3",
+      "active_public": true,
+      "issue_category": "canonical_formal_link",
+      "original_review_question": "Obtain the official ACM International Conference on Multimedia paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "evidence_status": "EXTERNAL_METADATA_REQUIRED",
+      "evidence_sufficient_for_bounded_review": false,
+      "prior_review_state": "ORIGINAL_B_ACTION_OPEN_NO_TERMINAL_DECISION",
+      "source_material_required": [
+        "Official ACM International Conference on Multimedia archival paper landing page or proceedings item for Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P028]",
+          "finding": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P028",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        }
+      ],
+      "scientific_complexity": "low",
+      "review_risk": "medium",
+      "priority": 1,
+      "estimated_minutes_range": [
+        15,
+        30
+      ],
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P028's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "next_step": "Inspect local exact-work publisher evidence first; if missing, obtain the exact official archival metadata item only after authorization.",
+      "blockers": [],
+      "ambiguity_flags": [
+        "FORMAL_STATUS_ALREADY_STORED_BUT_FORMAL_URL_MISSING",
+        "ARXIV_DOI_NOT_A_FORMAL_DOI"
+      ],
+      "batch_theme": "P_FORMAL_LINKS",
+      "assessment_rationale": "Current ACM MM2026 formal status and arXiv 2608.15196 do not supply a canonical ACM archival URL; verify exact ACM item, not a different edition.",
+      "historically_unresolved": true,
+      "authoritative_resolution": "UNRESOLVED",
+      "original_review": {
+        "review_id": "P028",
+        "paper_id": "curated:92fe1dfd435209b21ff4",
+        "title": "Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3",
+        "current": {
+          "year": 2026,
+          "publication_type": "conference",
+          "venue": "ACM International Conference on Multimedia",
+          "venue_id": "venue:acm-mm",
+          "venue_acronym": "ACM MM",
+          "venue_track": "Main",
+          "doi": "",
+          "paper_url": "",
+          "formal_url": "",
+          "arxiv_id": "2608.15196",
+          "arxiv_url": "https://arxiv.org/abs/2608.15196",
+          "authors": [
+            "Hyeongjun Choi",
+            "Juhun Lee",
+            "Davide Cozzolino",
+            "Luisa Verdoliva",
+            "Simon S. Woo"
+          ]
+        },
+        "evidence_urls": [
+          "https://arxiv.org/abs/2608.15196",
+          "https://openalex.org/W7203688524"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Obtain the official ACM International Conference on Multimedia paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "missing_formal_url",
+          "doi": "not_required_without_authoritative_applicability",
+          "arxiv": "present",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "current_context": {
+        "public": true,
+        "paper_id": "curated:92fe1dfd435209b21ff4",
+        "title": "Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3",
+        "doi": "",
+        "arxiv_id": "2608.15196",
+        "year": 2026,
+        "publication_type": "conference",
+        "venue": "ACM International Conference on Multimedia",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 3,
+        "taxonomy_id": "paper_id:curated:92fe1dfd435209b21ff4"
+      },
+      "original_snapshot_differences": {},
+      "planned_review_mode": "TARGETED_EVIDENCE_REVIEW",
+      "proposed_batch_id": "B2-01"
+    },
+    "P034": {
+      "review_id": "P034",
+      "paper_id": "curated:aa7dceb70828cdd6ad39",
+      "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+      "active_public": true,
+      "issue_category": "canonical_formal_link",
+      "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "evidence_status": "EXISTING_EVIDENCE_READY",
+      "evidence_sufficient_for_bounded_review": true,
+      "prior_review_state": "B1M_R034_ACCEPTED_P034_FORMAL_LINK_INDEPENDENT_OPEN",
+      "source_material_required": [
+        "No new retrieval for the bounded formal-URL review. Reuse the validated B1M Springer publisher identity/source receipt; preserve and separately reconcile its13-author publisher version versus12-author canonical/early version before any broader bibliographic edit."
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P034]",
+          "finding": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P034",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        },
+        {
+          "path": "data/raw/corpus_quality_batch_b_wave_b1m_2026_10_23/evidence_manifest.json",
+          "locator": "records[0].source",
+          "finding": "Official Springer ECCV2026 chapter title matches exactly; DOI10.1007/978-3-032-37429-5_14; archival landing pagehttps://link.springer.com/chapter/10.1007/978-3-032-37429-5_14; checked19-page publisher version SHA256ee8012fd5021f6ac40f9fc336f81d94e2d734630bface9c333d37cc975e49fe9.",
+          "sha256": "2a92011909acf09e4a483fe68bbf8d91d1d1c0b6efc77aea396d551b2a40085b"
+        },
+        {
+          "path": "data/raw/corpus_quality_batch_b_wave_b1m_2026_10_23/evidence_manifest.json",
+          "locator": "records[0].scientific_review.out_of_scope_bibliographic_version_observation",
+          "finding": "Publisher has13authors including Manni Cui; canonical/early version has12. Source identity is reusable for the narrow formalURL, but versions/fullmetadata are not certified equivalent.",
+          "sha256": "2a92011909acf09e4a483fe68bbf8d91d1d1c0b6efc77aea396d551b2a40085b"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_wave_b1m_2026_10_23.md",
+          "locator": "R034 — OUT_OF_SCOPE_BIBLIOGRAPHIC_VERSION_OBSERVATION",
+          "finding": "P034 intentionally remained open; B2 readiness does not close it or authorize author/DOI edits.",
+          "sha256": "0ec9248a614cde07c21266e7e120439c3cb52eba733112494aa1277468f0c195"
+        }
+      ],
+      "scientific_complexity": "low",
+      "review_risk": "high",
+      "priority": 1,
+      "estimated_minutes_range": [
+        15,
+        25
+      ],
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P034's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "next_step": "Prepare a separately authorized bounded P034 formal-link decision using the preserved Springer receipt. If attaching a publisher-version URL while preserving the historical author version cannot satisfy current decision rules, leave P034 open for explicit record-level reconciliation; do not force acceptance.",
+      "blockers": [],
+      "ambiguity_flags": [
+        "FORMAL_STATUS_ALREADY_STORED_BUT_FORMAL_URL_MISSING",
+        "ARXIV_DOI_NOT_A_FORMAL_DOI",
+        "PUBLISHER13_AUTHORS_VS_CANONICAL12_PRESERVE_MANNI_CUI_DISCREPANCY",
+        "BOUNDED_URL_READINESS_NOT_FULL_METADATA_EQUIVALENCE"
+      ],
+      "batch_theme": "P_FORMAL_LINKS",
+      "assessment_rationale": "Validated B1M primary-source receipt already identifies the exact archival paper and canonical formal landing page needed by the original P034 URL question. No new science/retrieval is necessary. The documented publisher13-author versus canonical12-author version discrepancy remains material; a URL-only proposal must explicitly acknowledge this and must not silently reconcile other metadata or claim complete version equivalence.",
+      "historically_unresolved": true,
+      "authoritative_resolution": "UNRESOLVED",
+      "original_review": {
+        "review_id": "P034",
+        "paper_id": "curated:aa7dceb70828cdd6ad39",
+        "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+        "current": {
+          "year": 2026,
+          "publication_type": "conference",
+          "venue": "European Conference on Computer Vision",
+          "venue_id": "venue:eccv",
+          "venue_acronym": "ECCV",
+          "venue_track": "Main",
+          "doi": "",
+          "paper_url": "",
+          "formal_url": "",
+          "arxiv_id": "2512.20937",
+          "arxiv_url": "https://arxiv.org/abs/2512.20937",
+          "authors": [
+            "Ruiqi Liu",
+            "Yi Han",
+            "Zhengbo Zhang",
+            "Liwei Yao",
+            "Zhiyuan Yan",
+            "Jialiang Shen",
+            "Zhijin Chen",
+            "Boyi Sun",
+            "Lubin Weng",
+            "Jing Dong",
+            "Yan Wang",
+            "Shu Wu"
+          ]
+        },
+        "evidence_urls": [
+          "https://arxiv.org/abs/2512.20937",
+          "https://openalex.org/W7117340004"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "missing_formal_url",
+          "doi": "not_required_without_authoritative_applicability",
+          "arxiv": "present",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "current_context": {
+        "public": true,
+        "paper_id": "curated:aa7dceb70828cdd6ad39",
+        "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+        "doi": "",
+        "arxiv_id": "2512.20937",
+        "year": 2026,
+        "publication_type": "conference",
+        "venue": "European Conference on Computer Vision",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "map_relationships": 7,
+        "taxonomy_id": "paper_id:curated:aa7dceb70828cdd6ad39"
+      },
+      "original_snapshot_differences": {},
+      "planned_review_mode": "EXISTING_EVIDENCE_REVIEW",
+      "proposed_batch_id": "B2-01"
+    },
+    "P097": {
+      "review_id": "P097",
+      "paper_id": "curated:8503e319e1f4890c2e28",
+      "title": "FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection",
+      "active_public": true,
+      "issue_category": "canonical_formal_link",
+      "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "evidence_status": "EXTERNAL_METADATA_REQUIRED",
+      "evidence_sufficient_for_bounded_review": false,
+      "prior_review_state": "ORIGINAL_B_ACTION_OPEN_NO_TERMINAL_DECISION",
+      "source_material_required": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P097]",
+          "finding": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P097",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        }
+      ],
+      "scientific_complexity": "low",
+      "review_risk": "medium",
+      "priority": 1,
+      "estimated_minutes_range": [
+        15,
+        30
+      ],
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P097's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "next_step": "Inspect local exact-work publisher evidence first; if missing, obtain the exact official archival metadata item only after authorization.",
+      "blockers": [],
+      "ambiguity_flags": [
+        "FORMAL_STATUS_ALREADY_STORED_BUT_FORMAL_URL_MISSING",
+        "ARXIV_DOI_NOT_A_FORMAL_DOI"
+      ],
+      "batch_theme": "P_FORMAL_LINKS",
+      "assessment_rationale": "ECCV2026 FAIR has no canonical formal URL. Verify exact publisher chapter and author sequence, keeping current arXiv version separate.",
+      "historically_unresolved": true,
+      "authoritative_resolution": "UNRESOLVED",
+      "original_review": {
+        "review_id": "P097",
+        "paper_id": "curated:8503e319e1f4890c2e28",
+        "title": "FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection",
+        "current": {
+          "year": 2026,
+          "publication_type": "conference",
+          "venue": "European Conference on Computer Vision",
+          "venue_id": "venue:eccv",
+          "venue_acronym": "ECCV",
+          "venue_track": "Main",
+          "doi": "10.48550/arxiv.2607.22087",
+          "paper_url": "",
+          "formal_url": "",
+          "arxiv_id": "2607.22087",
+          "arxiv_url": "https://arxiv.org/abs/2607.22087",
+          "authors": [
+            "Md Redwanul Haque",
+            "Manzur Murshed",
+            "Manoranjan Paul",
+            "Tsz-Kwan Lee"
+          ]
+        },
+        "evidence_urls": [
+          "https://arxiv.org/abs/2607.22087"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "missing_formal_url",
+          "doi": "repository_identifier_not_formal_DOI",
+          "arxiv": "present",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "current_context": {
+        "public": true,
+        "paper_id": "curated:8503e319e1f4890c2e28",
+        "title": "FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection",
+        "doi": "10.48550/arxiv.2607.22087",
+        "arxiv_id": "2607.22087",
+        "year": 2026,
+        "publication_type": "conference",
+        "venue": "European Conference on Computer Vision",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 2,
+        "taxonomy_id": "paper_id:curated:8503e319e1f4890c2e28"
+      },
+      "original_snapshot_differences": {},
+      "planned_review_mode": "TARGETED_EVIDENCE_REVIEW",
+      "proposed_batch_id": "B2-01"
+    },
+    "P105": {
+      "review_id": "P105",
+      "paper_id": "curated:be2900947b322f9eb905",
+      "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+      "active_public": true,
+      "issue_category": "canonical_formal_link",
+      "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "evidence_status": "EXTERNAL_METADATA_REQUIRED",
+      "evidence_sufficient_for_bounded_review": false,
+      "prior_review_state": "ORIGINAL_B_ACTION_OPEN_NO_TERMINAL_DECISION",
+      "source_material_required": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P105]",
+          "finding": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P105",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        }
+      ],
+      "scientific_complexity": "low",
+      "review_risk": "medium",
+      "priority": 1,
+      "estimated_minutes_range": [
+        15,
+        30
+      ],
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P105's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "next_step": "Inspect local exact-work publisher evidence first; if missing, obtain the exact official archival metadata item only after authorization.",
+      "blockers": [],
+      "ambiguity_flags": [
+        "FORMAL_STATUS_ALREADY_STORED_BUT_FORMAL_URL_MISSING",
+        "ARXIV_DOI_NOT_A_FORMAL_DOI"
+      ],
+      "batch_theme": "P_FORMAL_LINKS",
+      "assessment_rationale": "ECCV2026 Few-Shot Synthetic Image Attribution formal-URL question is independent of generator-attribution task support.",
+      "historically_unresolved": true,
+      "authoritative_resolution": "UNRESOLVED",
+      "original_review": {
+        "review_id": "P105",
+        "paper_id": "curated:be2900947b322f9eb905",
+        "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+        "current": {
+          "year": 2026,
+          "publication_type": "conference",
+          "venue": "European Conference on Computer Vision",
+          "venue_id": "venue:eccv",
+          "venue_acronym": "ECCV",
+          "venue_track": "Main",
+          "doi": "10.48550/arxiv.2509.25682",
+          "paper_url": "",
+          "formal_url": "",
+          "arxiv_id": "2509.25682",
+          "arxiv_url": "https://arxiv.org/abs/2509.25682",
+          "authors": [
+            "Shiyu Wu",
+            "Shuyan Li",
+            "Jing Li",
+            "Jing Liu",
+            "Yequan Wang"
+          ]
+        },
+        "evidence_urls": [
+          "https://arxiv.org/abs/2509.25682",
+          "https://openalex.org/W4415338199"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "missing_formal_url",
+          "doi": "repository_identifier_not_formal_DOI",
+          "arxiv": "present",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "current_context": {
+        "public": true,
+        "paper_id": "curated:be2900947b322f9eb905",
+        "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+        "doi": "10.48550/arxiv.2509.25682",
+        "arxiv_id": "2509.25682",
+        "year": 2026,
+        "publication_type": "conference",
+        "venue": "European Conference on Computer Vision",
+        "tasks": [
+          "detection",
+          "source_attribution"
+        ],
+        "research_types": [
+          "method",
+          "dataset"
+        ],
+        "map_relationships": 6,
+        "taxonomy_id": "paper_id:curated:be2900947b322f9eb905"
+      },
+      "original_snapshot_differences": {},
+      "planned_review_mode": "TARGETED_EVIDENCE_REVIEW",
+      "proposed_batch_id": "B2-01"
+    },
+    "P150": {
+      "review_id": "P150",
+      "paper_id": "curated:7a5ce57b121b69752867",
+      "title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+      "active_public": true,
+      "issue_category": "canonical_formal_link",
+      "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "evidence_status": "EXTERNAL_METADATA_REQUIRED",
+      "evidence_sufficient_for_bounded_review": false,
+      "prior_review_state": "ORIGINAL_B_ACTION_OPEN_NO_TERMINAL_DECISION",
+      "source_material_required": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P150]",
+          "finding": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P150",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        }
+      ],
+      "scientific_complexity": "low",
+      "review_risk": "medium",
+      "priority": 1,
+      "estimated_minutes_range": [
+        15,
+        30
+      ],
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P150's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "next_step": "Inspect local exact-work publisher evidence first; if missing, obtain the exact official archival metadata item only after authorization.",
+      "blockers": [],
+      "ambiguity_flags": [
+        "FORMAL_STATUS_ALREADY_STORED_BUT_FORMAL_URL_MISSING",
+        "ARXIV_DOI_NOT_A_FORMAL_DOI"
+      ],
+      "batch_theme": "P_FORMAL_LINKS",
+      "assessment_rationale": "ECCV2026 LoRC needs the exact archival chapter; a conference name and arXiv lead alone are insufficient.",
+      "historically_unresolved": true,
+      "authoritative_resolution": "UNRESOLVED",
+      "original_review": {
+        "review_id": "P150",
+        "paper_id": "curated:7a5ce57b121b69752867",
+        "title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+        "current": {
+          "year": 2026,
+          "publication_type": "conference",
+          "venue": "European Conference on Computer Vision",
+          "venue_id": "venue:eccv",
+          "venue_acronym": "ECCV",
+          "venue_track": "Main",
+          "doi": "10.48550/arxiv.2608.20882",
+          "paper_url": "",
+          "formal_url": "",
+          "arxiv_id": "2608.20882",
+          "arxiv_url": "https://arxiv.org/abs/2608.20882",
+          "authors": [
+            "Haozhen Yan",
+            "Ruoxin Chen",
+            "Jiahui Zhan",
+            "Bo Wang",
+            "Youchang Xiao",
+            "Shouhong Ding",
+            "Liqing Zhang",
+            "Taiping Yao",
+            "Jianfu Zhang"
+          ]
+        },
+        "evidence_urls": [
+          "https://arxiv.org/abs/2608.20882"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "missing_formal_url",
+          "doi": "repository_identifier_not_formal_DOI",
+          "arxiv": "present",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "current_context": {
+        "public": true,
+        "paper_id": "curated:7a5ce57b121b69752867",
+        "title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+        "doi": "10.48550/arxiv.2608.20882",
+        "arxiv_id": "2608.20882",
+        "year": 2026,
+        "publication_type": "conference",
+        "venue": "European Conference on Computer Vision",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 2,
+        "taxonomy_id": "paper_id:curated:7a5ce57b121b69752867"
+      },
+      "original_snapshot_differences": {},
+      "planned_review_mode": "TARGETED_EVIDENCE_REVIEW",
+      "proposed_batch_id": "B2-01"
+    },
+    "P177": {
+      "review_id": "P177",
+      "paper_id": "curated:b460935b64c35e1d074a",
+      "title": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection",
+      "active_public": true,
+      "issue_category": "canonical_formal_link",
+      "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "evidence_status": "EXTERNAL_METADATA_REQUIRED",
+      "evidence_sufficient_for_bounded_review": false,
+      "prior_review_state": "ORIGINAL_B_ACTION_OPEN_NO_TERMINAL_DECISION",
+      "source_material_required": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P177]",
+          "finding": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P177",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        }
+      ],
+      "scientific_complexity": "low",
+      "review_risk": "medium",
+      "priority": 1,
+      "estimated_minutes_range": [
+        15,
+        30
+      ],
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P177's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "next_step": "Inspect local exact-work publisher evidence first; if missing, obtain the exact official archival metadata item only after authorization.",
+      "blockers": [],
+      "ambiguity_flags": [
+        "FORMAL_STATUS_ALREADY_STORED_BUT_FORMAL_URL_MISSING",
+        "ARXIV_DOI_NOT_A_FORMAL_DOI"
+      ],
+      "batch_theme": "P_FORMAL_LINKS",
+      "assessment_rationale": "ECCV2026 Prior-Conditioned Gaussian Discriminants requires identity-matched formal link rather than inferred ECCV formatting.",
+      "historically_unresolved": true,
+      "authoritative_resolution": "UNRESOLVED",
+      "original_review": {
+        "review_id": "P177",
+        "paper_id": "curated:b460935b64c35e1d074a",
+        "title": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection",
+        "current": {
+          "year": 2026,
+          "publication_type": "conference",
+          "venue": "European Conference on Computer Vision",
+          "venue_id": "venue:eccv",
+          "venue_acronym": "ECCV",
+          "venue_track": "Main",
+          "doi": "10.48550/arxiv.2608.18523",
+          "paper_url": "",
+          "formal_url": "",
+          "arxiv_id": "2608.18523",
+          "arxiv_url": "https://arxiv.org/abs/2608.18523",
+          "authors": [
+            "Shashank Kotyan",
+            "Makoto Shing",
+            "Yuki Imajuku",
+            "Rujikorn Charakorn",
+            "Tarin Clanuwat"
+          ]
+        },
+        "evidence_urls": [
+          "https://arxiv.org/abs/2608.18523"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "missing_formal_url",
+          "doi": "repository_identifier_not_formal_DOI",
+          "arxiv": "present",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "current_context": {
+        "public": true,
+        "paper_id": "curated:b460935b64c35e1d074a",
+        "title": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection",
+        "doi": "10.48550/arxiv.2608.18523",
+        "arxiv_id": "2608.18523",
+        "year": 2026,
+        "publication_type": "conference",
+        "venue": "European Conference on Computer Vision",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 1,
+        "taxonomy_id": "paper_id:curated:b460935b64c35e1d074a"
+      },
+      "original_snapshot_differences": {},
+      "planned_review_mode": "TARGETED_EVIDENCE_REVIEW",
+      "proposed_batch_id": "B2-01"
+    },
+    "P229": {
+      "review_id": "P229",
+      "paper_id": "curated:55bc4360e3d312e696b7",
+      "title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+      "active_public": true,
+      "issue_category": "canonical_formal_link",
+      "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "evidence_status": "EXTERNAL_METADATA_REQUIRED",
+      "evidence_sufficient_for_bounded_review": false,
+      "prior_review_state": "ORIGINAL_B_ACTION_OPEN_NO_TERMINAL_DECISION",
+      "source_material_required": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P229]",
+          "finding": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P229",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        }
+      ],
+      "scientific_complexity": "low",
+      "review_risk": "medium",
+      "priority": 1,
+      "estimated_minutes_range": [
+        15,
+        30
+      ],
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P229's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "next_step": "Inspect local exact-work publisher evidence first; if missing, obtain the exact official archival metadata item only after authorization.",
+      "blockers": [],
+      "ambiguity_flags": [
+        "FORMAL_STATUS_ALREADY_STORED_BUT_FORMAL_URL_MISSING",
+        "ARXIV_DOI_NOT_A_FORMAL_DOI"
+      ],
+      "batch_theme": "P_FORMAL_LINKS",
+      "assessment_rationale": "UC-VLM ECCV2026 formal-URL question needs exact chapter and full author match; current task/research labels are outside this action.",
+      "historically_unresolved": true,
+      "authoritative_resolution": "UNRESOLVED",
+      "original_review": {
+        "review_id": "P229",
+        "paper_id": "curated:55bc4360e3d312e696b7",
+        "title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+        "current": {
+          "year": 2026,
+          "publication_type": "conference",
+          "venue": "European Conference on Computer Vision",
+          "venue_id": "venue:eccv",
+          "venue_acronym": "ECCV",
+          "venue_track": "Main",
+          "doi": "10.48550/arxiv.2608.15238",
+          "paper_url": "",
+          "formal_url": "",
+          "arxiv_id": "2608.15238",
+          "arxiv_url": "https://arxiv.org/abs/2608.15238",
+          "authors": [
+            "Lei Tan",
+            "Shuwei Li",
+            "Mohan Kankanhalli",
+            "Robby T. Tan"
+          ]
+        },
+        "evidence_urls": [
+          "https://arxiv.org/abs/2608.15238"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "missing_formal_url",
+          "doi": "repository_identifier_not_formal_DOI",
+          "arxiv": "present",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "current_context": {
+        "public": true,
+        "paper_id": "curated:55bc4360e3d312e696b7",
+        "title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+        "doi": "10.48550/arxiv.2608.15238",
+        "arxiv_id": "2608.15238",
+        "year": 2026,
+        "publication_type": "conference",
+        "venue": "European Conference on Computer Vision",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 1,
+        "taxonomy_id": "paper_id:curated:55bc4360e3d312e696b7"
+      },
+      "original_snapshot_differences": {},
+      "planned_review_mode": "TARGETED_EVIDENCE_REVIEW",
+      "proposed_batch_id": "B2-01"
+    },
+    "P254": {
+      "review_id": "P254",
+      "paper_id": "doi:10.48550/arxiv.2407.10575",
+      "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+      "active_public": true,
+      "issue_category": "canonical_formal_link",
+      "original_review_question": "Obtain the official ACM Computing Surveys paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "evidence_status": "EXISTING_EVIDENCE_READY",
+      "evidence_sufficient_for_bounded_review": true,
+      "prior_review_state": "ORIGINAL_B_ACTION_OPEN_EXACT_LOCAL_FORMAL_DOI_LINK_EVIDENCE_AVAILABLE",
+      "source_material_required": [
+        "No new retrieval for the bounded original formal-URL question. Reuse existing exact-title/full-author DOI-matched saved publisher deposit and reviewed DOI/arXiv linkage."
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P254]",
+          "finding": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P254",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        },
+        {
+          "path": "data/processed/venue_paper_evidence.json",
+          "locator": "papers[1]",
+          "finding": "Exact title plus canonical arXiv linkage identifies formal DOI10.1145/3770916 and canonical archival venue.",
+          "sha256": "08bc5efea3d201fae15a70435108a77b0e67b2e586c02e0226f1705cd4fa77fb"
+        },
+        {
+          "path": "data/raw/venue_audit_crossref/f46eff9ea9746db9e65a.json",
+          "locator": "response.message",
+          "finding": "Saved formal deposit title/full7-author sequence matches canonical paper; URLhttps://doi.org/10.1145/3770916; typejournal-article; identity independently compared locally.",
+          "sha256": "e7837e173c619abbedfc55e86cc543a3e3b9958840927c4ed20ae5c877fa2b18"
+        }
+      ],
+      "scientific_complexity": "low",
+      "review_risk": "medium",
+      "priority": 1,
+      "estimated_minutes_range": [
+        10,
+        20
+      ],
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P254's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "next_step": "Propose the identity-matched formal DOIURL from existing evidence in a separately authorized bounded decision; preserve arXiv source identity and avoid unrelated metadata changes.",
+      "blockers": [],
+      "ambiguity_flags": [
+        "FORMAL_STATUS_ALREADY_STORED_BUT_FORMAL_URL_MISSING",
+        "ARXIV_DOI_NOT_A_FORMAL_DOI",
+        "ONLINE20NOV2025_VS_PRINT30APR2026_KEEP_DATE_TYPES_SEPARATE"
+      ],
+      "batch_theme": "P_FORMAL_LINKS",
+      "assessment_rationale": "The original missing-formalURL question has exact locally cached archival identity support: canonical title/full-author order match the saved deposit, which supplies formalDOI10.1145/3770916 and DOIURL. The processed evidence also links the canonical arXiv ID to this version. This is narrow bibliographic readiness, not certification of science or automatic author/year changes.",
+      "historically_unresolved": true,
+      "authoritative_resolution": "UNRESOLVED",
+      "original_review": {
+        "review_id": "P254",
+        "paper_id": "doi:10.48550/arxiv.2407.10575",
+        "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+        "current": {
+          "year": 2025,
+          "publication_type": "journal",
+          "venue": "ACM Computing Surveys",
+          "venue_id": "venue:acm-computing-surveys",
+          "venue_acronym": "ACM Comput. Surv.",
+          "venue_track": "",
+          "doi": "10.48550/arxiv.2407.10575",
+          "paper_url": "",
+          "formal_url": "",
+          "arxiv_id": "2407.10575",
+          "arxiv_url": "https://arxiv.org/abs/2407.10575",
+          "authors": [
+            "Jingyi Deng",
+            "Chenhao Lin",
+            "Zhengyu Zhao",
+            "Shuai Liu",
+            "Zhe Peng",
+            "Qian Wang",
+            "Chao Shen"
+          ]
+        },
+        "evidence_urls": [
+          "https://arxiv.org/abs/2407.10575",
+          "https://openalex.org/W4400716502"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Obtain the official ACM Computing Surveys paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "missing_formal_url",
+          "doi": "repository_identifier_not_formal_DOI",
+          "arxiv": "present",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "current_context": {
+        "public": true,
+        "paper_id": "doi:10.48550/arxiv.2407.10575",
+        "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+        "doi": "10.48550/arxiv.2407.10575",
+        "arxiv_id": "2407.10575",
+        "year": 2025,
+        "publication_type": "journal",
+        "venue": "ACM Computing Surveys",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "survey"
+        ],
+        "map_relationships": 3,
+        "taxonomy_id": "doi:10.48550/arxiv.2407.10575"
+      },
+      "original_snapshot_differences": {},
+      "planned_review_mode": "EXISTING_EVIDENCE_REVIEW",
+      "proposed_batch_id": "B2-01"
+    },
+    "P305": {
+      "review_id": "P305",
+      "paper_id": "doi:10.48550/arxiv.2312.02625",
+      "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+      "active_public": true,
+      "issue_category": "canonical_formal_link",
+      "original_review_question": "Obtain the official European Conference on Artificial Intelligence paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "evidence_status": "EXISTING_EVIDENCE_READY",
+      "evidence_sufficient_for_bounded_review": true,
+      "prior_review_state": "ORIGINAL_B_ACTION_OPEN_EXACT_LOCAL_FORMAL_DOI_LINK_EVIDENCE_AVAILABLE",
+      "source_material_required": [
+        "No new retrieval for the bounded original formal-URL question. Reuse existing exact-title/full-author DOI-matched saved publisher deposit and reviewed DOI/arXiv linkage."
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P305]",
+          "finding": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P305",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        },
+        {
+          "path": "data/processed/venue_paper_evidence.json",
+          "locator": "papers[2]",
+          "finding": "Exact title plus canonical arXiv linkage identifies formal DOI10.3233/faia250925 and canonical archival venue.",
+          "sha256": "08bc5efea3d201fae15a70435108a77b0e67b2e586c02e0226f1705cd4fa77fb"
+        },
+        {
+          "path": "data/raw/venue_audit_crossref/ff2f99328559d41a9b09.json",
+          "locator": "response.message",
+          "finding": "Saved formal deposit title/full2-author sequence matches canonical paper; URLhttps://doi.org/10.3233/faia250925; typebook-chapter; identity independently compared locally.",
+          "sha256": "a8848ea3494b1d66c3c6299e86b8e2eb99bb3d8d3a19c3df95f2ade0227b172e"
+        }
+      ],
+      "scientific_complexity": "low",
+      "review_risk": "medium",
+      "priority": 1,
+      "estimated_minutes_range": [
+        10,
+        20
+      ],
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P305's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "next_step": "Propose the identity-matched formal DOIURL from existing evidence in a separately authorized bounded decision; preserve arXiv source identity and avoid unrelated metadata changes.",
+      "blockers": [],
+      "ambiguity_flags": [
+        "FORMAL_STATUS_ALREADY_STORED_BUT_FORMAL_URL_MISSING",
+        "ARXIV_DOI_NOT_A_FORMAL_DOI",
+        "BOOK_CHAPTER_DEPOSIT_IS_ECAI2025_PROCEEDINGS_NOT_GENERIC_BOOK"
+      ],
+      "batch_theme": "P_FORMAL_LINKS",
+      "assessment_rationale": "The original missing-formalURL question has exact locally cached archival identity support: canonical title/full-author order match the saved deposit, which supplies formalDOI10.3233/faia250925 and DOIURL. The processed evidence also links the canonical arXiv ID to this version. This is narrow bibliographic readiness, not certification of science or automatic author/year changes.",
+      "historically_unresolved": true,
+      "authoritative_resolution": "UNRESOLVED",
+      "original_review": {
+        "review_id": "P305",
+        "paper_id": "doi:10.48550/arxiv.2312.02625",
+        "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+        "current": {
+          "year": 2025,
+          "publication_type": "conference",
+          "venue": "European Conference on Artificial Intelligence",
+          "venue_id": "venue:european-conference-on-artificial-intelligence",
+          "venue_acronym": "ECAI",
+          "venue_track": "Main",
+          "doi": "10.48550/arxiv.2312.02625",
+          "paper_url": "",
+          "formal_url": "",
+          "arxiv_id": "2312.02625",
+          "arxiv_url": "https://arxiv.org/abs/2312.02625",
+          "authors": [
+            "Yichi Zhang",
+            "Xiaogang Xu"
+          ]
+        },
+        "evidence_urls": [
+          "https://arxiv.org/abs/2312.02625",
+          "https://openalex.org/W4389421609"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Obtain the official European Conference on Artificial Intelligence paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "missing_formal_url",
+          "doi": "repository_identifier_not_formal_DOI",
+          "arxiv": "present",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "current_context": {
+        "public": true,
+        "paper_id": "doi:10.48550/arxiv.2312.02625",
+        "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+        "doi": "10.48550/arxiv.2312.02625",
+        "arxiv_id": "2312.02625",
+        "year": 2025,
+        "publication_type": "conference",
+        "venue": "European Conference on Artificial Intelligence",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 1,
+        "taxonomy_id": "doi:10.48550/arxiv.2312.02625"
+      },
+      "original_snapshot_differences": {},
+      "planned_review_mode": "EXISTING_EVIDENCE_REVIEW",
+      "proposed_batch_id": "B2-01"
+    }
+  },
+  "policies": [
+    {
+      "policy_id": "T1",
+      "decision": "ACCEPT",
+      "final_rule": "source_attribution does not imply detection. Assign detection only when the paper explicitly performs an authenticity / real-versus-generated task. Classification among already-synthetic generators is attribution only.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "T024",
+        "T136",
+        "T137",
+        "T141",
+        "T299",
+        "T446",
+        "T503",
+        "T572",
+        "T576",
+        "T611",
+        "T634"
+      ],
+      "policy_alone_resolves": {
+        "T024": false,
+        "T136": false,
+        "T137": false,
+        "T141": false,
+        "T299": false,
+        "T446": false,
+        "T503": false,
+        "T572": false,
+        "T576": false,
+        "T611": false,
+        "T634": false
+      }
+    },
+    {
+      "policy_id": "T2",
+      "decision": "ACCEPT",
+      "final_rule": "localization requires an evaluated spatial forensic prediction task such as pixel-, mask-, patch-, region-, or equivalent spatial prediction of synthetic/generated/edited content. Artifact segmentation qualifies. Attention maps, saliency maps, explainability heatmaps, or visualization alone do not qualify.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "T236",
+        "T246",
+        "T363"
+      ],
+      "policy_alone_resolves": {
+        "T236": false,
+        "T246": false,
+        "T363": true
+      }
+    },
+    {
+      "policy_id": "T3",
+      "decision": "MODIFY_AND_ACCEPT",
+      "final_rule": "Every public paper must remain connected to at least one core forensic task represented by the map: detection, source_attribution, or localization. If careful review establishes that none applies, the record requires scope review rather than an empty task set.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "T527"
+      ],
+      "policy_alone_resolves": {
+        "T527": false
+      }
+    },
+    {
+      "policy_id": "R1",
+      "decision": "ACCEPT",
+      "final_rule": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "R084",
+        "R099",
+        "R176",
+        "R190",
+        "R455",
+        "R535",
+        "R580"
+      ],
+      "policy_alone_resolves": {
+        "R084": false,
+        "R099": false,
+        "R176": false,
+        "R190": false,
+        "R455": false,
+        "R535": false,
+        "R580": false
+      }
+    },
+    {
+      "policy_id": "R2",
+      "decision": "ACCEPT",
+      "final_rule": "Assign benchmark only when the paper contributes a reusable evaluation benchmark, challenge, protocol, systematic comparative framework, or benchmark resource intended to evaluate methods. Large experimental tables or evaluation across many generators alone are insufficient.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "R548"
+      ],
+      "policy_alone_resolves": {
+        "R548": false
+      }
+    },
+    {
+      "policy_id": "R3",
+      "decision": "ACCEPT",
+      "final_rule": "Assign analysis_study only when systematic empirical or theoretical analysis is a primary scientific contribution. Routine ablations, robustness tables, parameter sweeps, or supporting interpretability figures do not qualify by themselves.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "R121",
+        "R127",
+        "R189",
+        "R460",
+        "R537",
+        "R615"
+      ],
+      "policy_alone_resolves": {
+        "R121": false,
+        "R127": false,
+        "R189": false,
+        "R460": false,
+        "R537": false,
+        "R615": false
+      }
+    },
+    {
+      "policy_id": "R4",
+      "decision": "ACCEPT",
+      "final_rule": "Assign method only when the paper contributes substantive technical novelty: a method, algorithm, model, procedure, or system. Pure surveys, benchmarks, datasets, or analysis studies do not gain method merely because they implement baselines. Multiple legitimate research-type roles remain allowed.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "R117",
+        "R376",
+        "R549"
+      ],
+      "policy_alone_resolves": {
+        "R117": false,
+        "R376": false,
+        "R549": false
+      }
+    },
+    {
+      "policy_id": "I1",
+      "decision": "ACCEPT",
+      "final_rule": "Shanghai University and Shanghai University of Engineering Science are distinct canonical institutions and must never be merged through alias normalization. The affected paper assignment remains evidence-dependent.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "U010"
+      ],
+      "policy_alone_resolves": {
+        "U010": false
+      }
+    },
+    {
+      "policy_id": "I2",
+      "decision": "ACCEPT",
+      "final_rule": "When a paper explicitly names a specific VNU-HCM member institution, map the affiliation to that member institution. Represent VNU-HCM through the reviewed parent-child hierarchy so parent searches include the member. Do not create an additional duplicate parent-level paper relationship unless the paper explicitly lists the parent organization as a separate affiliation. Explicit dual affiliations must be preserved when genuinely present.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "U017"
+      ],
+      "policy_alone_resolves": {
+        "U017": false
+      }
+    },
+    {
+      "policy_id": "P1",
+      "decision": "ACCEPT",
+      "final_rule": "Multiple raw/source provenance records may support the same canonical paper–institution relation. Preserve those provenance records, but expose one normalized public paper–institution relationship when the canonical paper and institution pair are identical.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "L001"
+      ],
+      "policy_alone_resolves": {
+        "L001": true
+      }
+    },
+    {
+      "policy_id": "V1",
+      "decision": "ACCEPT",
+      "final_rule": "Keep the canonical archival venue identity conceptually distinct from source container/event information and paper track. Do not encode track as a different canonical venue. Use only fields supported by the current schema and do not invent metadata when event/container evidence is absent.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "P550",
+        "P586",
+        "P610",
+        "P633"
+      ],
+      "policy_alone_resolves": {
+        "P550": false,
+        "P586": false,
+        "P610": false,
+        "P633": false
+      }
+    },
+    {
+      "policy_id": "V3",
+      "decision": "ACCEPT",
+      "final_rule": "Preserve IEEE MultiMedia as the canonical full venue identity. Do not populate or normalize to an optional acronym when that acronym is ambiguous or unsupported.",
+      "date": "2026-10-05",
+      "affected_review_ids": [
+        "P222"
+      ],
+      "policy_alone_resolves": {
+        "P222": true
+      }
+    }
+  ]
+}

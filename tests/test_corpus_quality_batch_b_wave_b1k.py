@@ -529,12 +529,21 @@ def test_original_questions_policies_and_all_unrelated_authoritative_files_are_u
     for rid in ("R467","R542"):
         assert record(packet(),rid)["original_review"] == original_rows[rid]
     assert packet()["locked_policy_ledger"] == original()["locked_policy_ledger"]
+    # These three publication-dependent tables now have an approved B5 successor.
+    # Check their original transaction at its immutable endpoint; every other
+    # path, original question and locked policy remains a live byte guard.
+    publication_successor_paths = {
+        "data/curated/publication_overrides.csv",
+        "data/curated/venue_aliases.csv",
+        "data/manual/missing_author_mappings_report.csv",
+    }
     allowed = {TAXONOMY,DECISIONS,*PUBLIC}
     for path in baseline_paths("data/curated","data/manual","web/data"):
         if path not in allowed:
             assert published_bytes(PUBLISHED,path) == published_bytes(BASE,path), path
             if path != PAPERS:
-                assert (ROOT/path).read_bytes() == published_bytes(PUBLISHED,path), path
+                observed = published_bytes(BASE, path) if path in publication_successor_paths else (ROOT / path).read_bytes()
+                assert observed == published_bytes(PUBLISHED, path), path
     for name in ("taxonomy_review","publication_metadata_review","relationship_review","unmapped_papers","batch_c_policy_decisions"):
         path = AUDIT+name+".json"
         assert (ROOT/path).read_bytes() == published_bytes(BASE,path), path

@@ -1,0 +1,420 @@
+{
+  "reviewer": "Independent cross-group reviewer /root/b302_recover_turkey",
+  "mode": "OFFLINE_EVIDENCE_TO_CLAIM_QC",
+  "status": "PASS",
+  "created_utc": "2026-10-29T08:11:13.687158+00:00",
+  "reviewed_results": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/results.json",
+  "reviewed_results_sha256": "0609e74faca5160bbd45ab419a03b013c88e7cffdac8d08ef8403b98e8f1c24c",
+  "assigned_scope": [
+    "U002",
+    "U003",
+    "U007",
+    "U016"
+  ],
+  "records": [
+    {
+      "review_id": "U002",
+      "verdict": "PASS_HOLD_SUPPORTED",
+      "claim_mapping_assessment": "SAMR official secretariat/legal-entity data substantiate the institute research-base street address. Indexed CSEE2020 contact and2021 patent corroborate street but do not establish this2026 paper laboratory building/site. Reviewer preserves postcode/date/access distinctions and the missing coordinate/CRS gate.",
+      "accepted_provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "site_confidence_assessment": "Institution identity and candidate research-base address supported; no precise paper-time site or coordinate accepted.",
+      "corrections_required": []
+    },
+    {
+      "review_id": "U003",
+      "verdict": "PASS_HOLD_SUPPORTED",
+      "claim_mapping_assessment": "Official directions substantiate first-floor British Library premises at96EustonRoad. The completed cached OSM node matches named institution and address, but is secondary current geographic support. Neither current contact nor geocoder establishes JunadeAli/DefenceProgramme physical premises at paper time. Reviewer correctly retains hold and distinguishes viewport center from marker/office point.",
+      "accepted_provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "site_confidence_assessment": "Current institution/address high; paper-time programme site insufficient. Candidate coordinates remain unaccepted for authoritative mapping.",
+      "corrections_required": []
+    },
+    {
+      "review_id": "U007",
+      "verdict": "PASS_HOLD_SUPPORTED",
+      "claim_mapping_assessment": "Official university2017 planning notice explicitly enumerates Nanhu, Mafangshan and Yujiatou campuses; official2026 contacts retain campus distinctions. Original affiliation only names WuhanUniversityofTechnology. No author-campus assignment can be inferred from IT planning, nearest institution point or generic headquarters.",
+      "accepted_provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "site_confidence_assessment": "Institution verified; campus unresolved, coordinate search should follow site resolution.",
+      "corrections_required": []
+    },
+    {
+      "review_id": "U016",
+      "verdict": "PASS_HOLD_SUPPORTED",
+      "claim_mapping_assessment": "Preserved arXivv1 firstpage and official English/French school pages establish exact institution/domain correspondence. Current school campus page and WIPO official directory support SidiAbdellah/Mahelma address candidate, not independently a dated paper-time building point. Shortpluscode preserved without guessed expansion; empty geocoder response not treated as nonexistence.",
+      "accepted_provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "site_confidence_assessment": "School identity/current campus strong; temporal-site and precise coordinate evidence incomplete. NationalSchoolofMathematics remains distinct.",
+      "corrections_required": []
+    }
+  ],
+  "checks_passed": 85,
+  "checks_failed": 0,
+  "checks": [
+    {
+      "check": "exact four independent assigned actions",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 csg-samr",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 csg-hvdc2020",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 csg-patent2021",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 turing-directions",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 turing-map",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 wut-campuses",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 wut-2026contacts",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 ensia-en",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 ensia-fr",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 ensia-campus",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 ensia-wipo",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 turing-geocode",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 ensia-geocode-empty",
+      "passed": true
+    },
+    {
+      "check": "captured source SHA-256 ensia-local-firstpage",
+      "passed": true
+    },
+    {
+      "check": "canonical paper identity U002",
+      "passed": true
+    },
+    {
+      "check": "task/type preservation U002",
+      "passed": true
+    },
+    {
+      "check": "no formal closure U002",
+      "passed": true
+    },
+    {
+      "check": "complete four evidence gates U002",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U002:records[review_id=U002]",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U002:#b-U002",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U002:records[paper_id=curated:bd8343f176d4b9e38a7b]",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U002:mapping_id in mapping:fca75dd464bd39f7ef6e",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U002:institution_id in institution:e86c10c85c74ba208e3d",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U002:institution_id in institution:e86c10c85c74ba208e3d",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U002:paper_id=curated:bd8343f176d4b9e38a7b",
+      "passed": true
+    },
+    {
+      "check": "traceable claim U002:0",
+      "passed": true
+    },
+    {
+      "check": "traceable claim U002:1",
+      "passed": true
+    },
+    {
+      "check": "canonical paper identity U003",
+      "passed": true
+    },
+    {
+      "check": "task/type preservation U003",
+      "passed": true
+    },
+    {
+      "check": "no formal closure U003",
+      "passed": true
+    },
+    {
+      "check": "complete four evidence gates U003",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U003:records[review_id=U003]",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U003:#b-U003",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U003:records[paper_id=curated:dc0280c881d08395cfac]",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U003:mapping_id in mapping:2a5fe76815f5fff8b970",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U003:institution_id in institution:904dd0b78e96e555",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U003:institution_id in institution:904dd0b78e96e555",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U003:paper_id=curated:dc0280c881d08395cfac",
+      "passed": true
+    },
+    {
+      "check": "traceable claim U003:0",
+      "passed": true
+    },
+    {
+      "check": "traceable claim U003:1",
+      "passed": true
+    },
+    {
+      "check": "traceable claim U003:2",
+      "passed": true
+    },
+    {
+      "check": "canonical paper identity U007",
+      "passed": true
+    },
+    {
+      "check": "task/type preservation U007",
+      "passed": true
+    },
+    {
+      "check": "no formal closure U007",
+      "passed": true
+    },
+    {
+      "check": "complete four evidence gates U007",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U007:records[review_id=U007]",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U007:#b-U007",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U007:records[paper_id=curated:5b2a1ca1ae438916336b]",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U007:mapping_id in mapping:7d926423b354f72de21b",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U007:institution_id in institution:bbb055c97c3e3d2f",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U007:institution_id in institution:bbb055c97c3e3d2f",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U007:paper_id=curated:5b2a1ca1ae438916336b",
+      "passed": true
+    },
+    {
+      "check": "traceable claim U007:0",
+      "passed": true
+    },
+    {
+      "check": "traceable claim U007:1",
+      "passed": true
+    },
+    {
+      "check": "canonical paper identity U016",
+      "passed": true
+    },
+    {
+      "check": "task/type preservation U016",
+      "passed": true
+    },
+    {
+      "check": "no formal closure U016",
+      "passed": true
+    },
+    {
+      "check": "complete four evidence gates U016",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U016:records[review_id=U016]",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U016:#b-U016",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U016:records[paper_id=curated:26e3335c0d625676a231]",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U016:mapping_id in mapping:2c5dd1ce9a91a9ca482f",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U016:institution_id in institution:b5047d79e959e40b",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U016:institution_id in institution:b5047d79e959e40b",
+      "passed": true
+    },
+    {
+      "check": "local evidence SHA U016:paper_id=curated:26e3335c0d625676a231",
+      "passed": true
+    },
+    {
+      "check": "traceable claim U016:0",
+      "passed": true
+    },
+    {
+      "check": "traceable claim U016:1",
+      "passed": true
+    },
+    {
+      "check": "traceable claim U016:2",
+      "passed": true
+    },
+    {
+      "check": "SAMR official institute address and postcode preserved",
+      "passed": true
+    },
+    {
+      "check": "historical2020 conference address retained distinct from direct404",
+      "passed": true
+    },
+    {
+      "check": "historical patent address and postcode retained",
+      "passed": true
+    },
+    {
+      "check": "Turing official premises address matches bounded claim",
+      "passed": true
+    },
+    {
+      "check": "Turing cache genuinely completed before declined command",
+      "passed": true
+    },
+    {
+      "check": "Turing node exact institution and address observed",
+      "passed": true
+    },
+    {
+      "check": "WUT official multi-campus source",
+      "passed": true
+    },
+    {
+      "check": "WUT 2026 official campus contacts preserved",
+      "passed": true
+    },
+    {
+      "check": "ENSIA official English French identity correspondence",
+      "passed": true
+    },
+    {
+      "check": "ENSIA official campus and WIPO address evidence present",
+      "passed": true
+    },
+    {
+      "check": "ENSIA paper firstpage exact identity and version",
+      "passed": true
+    },
+    {
+      "check": "ENSIA empty cache not taken as nonexistence",
+      "passed": true
+    },
+    {
+      "check": "independent disposition agrees U002",
+      "passed": true
+    },
+    {
+      "check": "independent disposition agrees U003",
+      "passed": true
+    },
+    {
+      "check": "independent disposition agrees U007",
+      "passed": true
+    },
+    {
+      "check": "independent disposition agrees U016",
+      "passed": true
+    }
+  ],
+  "source_catalogue_entries_verified": 14,
+  "unique_source_capture_files_verified": 8,
+  "source_hashes": {
+    "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-05.json": "bc6431cbe58550a0d526e92070f15ef370b5bcbb050ae2e4a1add1729f5081c8",
+    "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-04.json": "66a196c5572742a21b91aefa21c0a8e4c37421f00c9258963048f3fe7ef179cf",
+    "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-01.json": "76a3a430a22a1651dfa63d5b0a7ca83556adddcb7cf72b86c93f6fb7d9991f43",
+    "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-02.json": "487dfdf788de2294a80fee455bdd8d6c2cdc8b774b979d32d35109781c5a1c51",
+    "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-03.json": "9ab0f375ea76d6cabd0a35dd8abc8085d8593e57955b8464907b3536bbc8f0d9",
+    "/private/tmp/batch-b-b3-02-2026-10-29/geocoding/222025db1235c045a63e.response": "774b7df6e1399f9d961576e32f8baa6eada291bbd7ceb5c159be8f31cb258c41",
+    "/private/tmp/batch-b-b3-02-2026-10-29/geocoding/f4343bab0fcee028658a.response": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/local-ENSIA-firstpage.txt": "4f3622a194e12720f2610d366cd45089201a8aeda83a6b7c267409f579fb005a"
+  },
+  "local_reference_entries_verified": 28,
+  "new_network_requests": 0,
+  "new_manuscripts": 0,
+  "geocoder_requests": 0,
+  "original_results_edited": false,
+  "repository_modified": false,
+  "limitations": [
+    "This independently checks preserved primary-source captures and prior validated affiliation records; it does not claim fresh live source authentication or scientific manuscript review.",
+    "The reviewer recommendations remain provisional; no formal maintainer acceptance or authoritative location addition is implied."
+  ],
+  "effort": {
+    "preliminary_qc_started_utc": "2026-10-29T07:57:43.247226+00:00",
+    "elapsed_since_preliminary_seconds_including_wait_for_results": 810.4398642090382,
+    "note": "Waiting for reviewer JSON is not counted as human analyst labor."
+  },
+  "own_group_TAU_locator_correction_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/locator-correction.json"
+}

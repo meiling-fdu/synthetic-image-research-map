@@ -4,6 +4,8 @@ import sys
 
 import pytest
 
+from tests.publish_workflow_fixtures import install_publish_fixture_isolation
+
 from tests.admin_http_fixtures import (
     institution_public_inputs,
     isolated_metadata_server,
@@ -14,6 +16,8 @@ from tests.admin_http_fixtures import (
 @pytest.fixture(autouse=True)
 def isolated_admin_http_inputs(request, monkeypatch):
     module = request.module.__name__.rsplit(".", 1)[-1]
+    if module == "test_admin_publish_workflow_reliability":
+        install_publish_fixture_isolation(request.module, monkeypatch)
     if module in {
         "test_paper_metadata_editing",
         "test_publication_venue_audit",

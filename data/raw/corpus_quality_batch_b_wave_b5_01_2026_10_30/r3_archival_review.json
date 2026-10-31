@@ -1,0 +1,147 @@
+{
+  "task": "B5-01R3 independent archived R2 protocol and restoration implementation review",
+  "reviewer": "/root/r3_protection_audit",
+  "reviewed_utc": "2026-10-31T03:12:29.229932+00:00",
+  "status": "PASS",
+  "passed": 27,
+  "failed": 0,
+  "scope": "Exact archival loader/test adapter,8-file archival package and2source restorations; live additive server adapter is independently reviewed separately. No current historical successor exception is approved.",
+  "prepared_loader_sha256": "13da58b50d44a93cac54e770d2a5829c238ccfa54168d8a9ea9d3fc4b83d0c22",
+  "prepared_tests_sha256": "d152102298f672685ed5863b76d99087f817e30407e6a392e53359f048bf2743",
+  "archive_manifest_sha256": "f8ed721670d485bc96f408031a005ef20fea5d3a15a996ccb72a9e4a5748e47b",
+  "original_successor_tests_sha256": "89dbe8a056c7e65aee7ef563992f582cd624c204e6f271187254bcc8da5380da",
+  "restorations": [
+    {
+      "path": "tests/test_admin_publish_workflow_reliability.py",
+      "final_sha256": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63",
+      "commit": "7fc8ceae702324628335944cf4b545a3733fdc56"
+    },
+    {
+      "path": "tests/public_refinement_snapshot.py",
+      "final_sha256": "7d654ae6a8e606172749a4aadea082ed28a8146bd787168873d71a9258719d26",
+      "commit": "7fc8ceae702324628335944cf4b545a3733fdc56"
+    }
+  ],
+  "all12_function_ASTs_preserved": true,
+  "original20_cases_and18negative_parametrizations_preserved": true,
+  "prior_check_use_issue": "RESOLVED: compile uses hash-authenticated byte buffer, not a later filesystem read",
+  "checks": [
+    {
+      "name": "exact independently reviewed final loader bytes",
+      "passed": true
+    },
+    {
+      "name": "pinned archival manifest bytes",
+      "passed": true
+    },
+    {
+      "name": "manifest explicitly has archival-only nonauthorization status",
+      "passed": true
+    },
+    {
+      "name": "archive closed exact8file set",
+      "passed": true
+    },
+    {
+      "name": "archival full-file authentication boundary_implementation_review.json",
+      "passed": true
+    },
+    {
+      "name": "archival full-file authentication data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/publish_fixture_reviewed.diff",
+      "passed": true
+    },
+    {
+      "name": "archival full-file authentication data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/publish_fixture_successor_review.json",
+      "passed": true
+    },
+    {
+      "name": "archival full-file authentication original_successor_tests.py",
+      "passed": true
+    },
+    {
+      "name": "archival full-file authentication reviewed_helper.diff",
+      "passed": true
+    },
+    {
+      "name": "archival full-file authentication tests/public_refinement_snapshot.py",
+      "passed": true
+    },
+    {
+      "name": "archival full-file authentication tests/test_admin_publish_workflow_reliability.py",
+      "passed": true
+    },
+    {
+      "name": "all7 original archived subjects match independently sealed R2 source",
+      "passed": true
+    },
+    {
+      "name": "all12 original fixture/function ASTs including parametrization unchanged",
+      "passed": true
+    },
+    {
+      "name": "all original assertions and pytest raises bodies preserved",
+      "passed": true
+    },
+    {
+      "name": "new test global history loads only private archival module",
+      "passed": true
+    },
+    {
+      "name": "loader compiles the authenticated byte buffer without reread",
+      "passed": true
+    },
+    {
+      "name": "loader validates all sources before compile",
+      "passed": true
+    },
+    {
+      "name": "loader has no sys modules registration or live module mutation",
+      "passed": true
+    },
+    {
+      "name": "fresh module identity per call",
+      "passed": true
+    },
+    {
+      "name": "archive source computes ROOT as archive not live repository",
+      "passed": true
+    },
+    {
+      "name": "exact published restoration tests/test_admin_publish_workflow_reliability.py",
+      "passed": true
+    },
+    {
+      "name": "exact published restoration tests/public_refinement_snapshot.py",
+      "passed": true
+    },
+    {
+      "name": "both required protected files restored exactly",
+      "passed": true
+    },
+    {
+      "name": "same restoration resolves three original literal guard inputs",
+      "passed": true
+    },
+    {
+      "name": "planned test/helper hashes bind these exact prepared sources",
+      "passed": true
+    },
+    {
+      "name": "planned new paths have no historical source protection references",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "existing safe extension point proof retained",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Static review only; no loader/helper/test execution or imports performed.",
+    "Mandatory progressive guards, real HTTP isolation, tamper tests, full suite and preservation remain root-owned acceptance gates.",
+    "Archival PUBLISH_FIXTURE authorization applies only inside a fresh private R2 module rooted at its archive; live helper is restored and receives no exception."
+  ],
+  "repository_writes": 0,
+  "tests_run": 0,
+  "network_requests": 0
+}

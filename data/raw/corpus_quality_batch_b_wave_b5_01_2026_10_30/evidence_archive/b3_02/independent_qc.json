@@ -1,0 +1,1461 @@
+{
+  "mode": "INDEPENDENT_OFFLINE_CROSS_REVIEW_PLUS_ROOT_QC",
+  "status": "PASS_WITH_EXPLICIT_U005_PRECISION_CONDITION",
+  "review_ids_checked": [
+    "P001",
+    "U001",
+    "U002",
+    "U003",
+    "P049",
+    "U005",
+    "P058",
+    "U006",
+    "U007",
+    "P068",
+    "U008",
+    "U014",
+    "U016",
+    "U018",
+    "U023"
+  ],
+  "coverage_count": 15,
+  "cross_review_checks_passed": 224,
+  "cross_review_checks_failed": 0,
+  "unaddressed_material_blockers": [],
+  "reviewer_disagreement": [],
+  "conditional_recommendations": {
+    "U005": "Approximate official selected viewport only. B4 must explicitly accept precision/CRS/uncertainty limits or retain hold."
+  },
+  "additive_locator_correction": {
+    "type": "non-substantive_locator_correction",
+    "source_results_sha256": "c65ee533ac6748dd959acb0254e6d1d551ad2340451f8fba8adfec289316d355",
+    "created_utc": "2026-10-29T08:04:43.947131+00:00",
+    "corrections": [
+      {
+        "source_id": "TI-TAU-ADDRESS",
+        "field": "locator",
+        "before": "turn216view3? exact source header with gc-map-test; L167 HaimLevanon30,6997801",
+        "after": "turn216view3; decoded web-04-sites.json lines251–252 identify official https://www.tau.ac.il/gc-map-test; normalized publisher-style line L167 (decoded line420) gives Haim Levanon30,6997801.",
+        "reason": "Exact capture header inspected; remove uncertainty marker. This verifies the locator, not paper-time campus or coordinates."
+      }
+    ],
+    "source_capture_sha256": "cb28ad4e66b513573fa10bcbcb80e551bbb85ca7210dbacf632120146ddf2426",
+    "original_results_preserved": true,
+    "outcomes_changed": false
+  },
+  "groups": {
+    "romania": {
+      "task": "B3-02 independent Romania-group QC",
+      "reviewer": "b302_recover_china (not original group reviewer)",
+      "reviewed_utc": "2026-10-29T08:14:35.834754+00:00",
+      "reviewed_results_sha256": "c67015e60884a833d4420c410a7518b5f3c19d9503fb00212aae66280c686ddd",
+      "assigned_action_ids": [
+        "P001",
+        "U001",
+        "P049",
+        "U005",
+        "U018",
+        "U023"
+      ],
+      "source_capture_hashes_verified": 12,
+      "new_retrievals": 0,
+      "mandatory_checks_passed": 90,
+      "mandatory_checks_failed": 0,
+      "status": "PASS_WITH_EXPLICIT_U005_PRECISION_CONDITION",
+      "records": [
+        {
+          "review_id": "P001",
+          "qc_outcome": "AGREE",
+          "claim_mapping": "Independently read exact DOI/title/ordered author metadata, canonical conference and CISIS metadata, publisherFirstOnline2026 and citation2027. Venue binding addition is supported; no date/status/taxonomy change.",
+          "uncertainty": "Citation year differs from first-online year; preserve both."
+        },
+        {
+          "review_id": "U001",
+          "qc_outcome": "AGREE_HOLD",
+          "claim_mapping": "Paper names faculty/university/city; current official faculty and secretariat specify4VasileParvan236. This does not establish exactpaper-timesite, and no coordinate is recovered.",
+          "uncertainty": "Current facultysecretariat versus2026online/2027citation temporal boundary is explicit; no genericHQpoint inferred."
+        },
+        {
+          "review_id": "P049",
+          "qc_outcome": "AGREE",
+          "claim_mapping": "DOI/title/author and article-journal publishermetadata support canonical JournalofHighSchoolScience. Source abbreviation is fullname, so optionalacronym may remainempty.",
+          "uncertainty": "arXiv correspondence reused from acceptedcanonicalidentity; no claim newfinalversionequivalence review."
+        },
+        {
+          "review_id": "U005",
+          "qc_outcome": "AGREE_WITH_PRECISION_CONDITION",
+          "claim_mapping": "Publicationfirstpage independently establishes exactnamedschool and5MihaiEminescu440014, matchingofficialschoolcontact. Institutionalmapviewport47.789438,22.876378,z19 is traceable, approximate institutionselected geographic evidence, not marker/survey proof.",
+          "uncertainty": "SUPPORTED_ADDITION can only propose a qualifiedapproximatepoint if B4 explicitly accepts viewportprecision and undeclaredCRS limits. Do not mark geographicaccuracyindependentlyvalidated or automaticallyresolve. A strictermarkerprecisionrequirement retains thisaction open."
+        },
+        {
+          "review_id": "U018",
+          "qc_outcome": "AGREE_HOLD",
+          "claim_mapping": "Previous finalWACV2025 evidence authoraffiliations retained; currentPOLITEHNICAcontact and BitdefenderEULA address do not identify namedauthors2025 office/campus.",
+          "uncertainty": "CurrentcorporateHQ and broad19km mapviewport are not papertimecampus evidence. DistinctarXiv2024/final2025versions retained."
+        },
+        {
+          "review_id": "U023",
+          "qc_outcome": "AGREE_HOLD",
+          "claim_mapping": "Previous finalWACV2024 affiliations retained separately; sharedcorporate/universitycurrentevidence cannot prove commonpapersites.",
+          "uncertainty": "PreserveDragoș-ConstantinTântaru/ElisabetaOneață/DanOneață diacritics and2023arXivversus2024final. No separatecase merged."
+        }
+      ],
+      "conditions": [
+        "U005 evidence supports exactpaper-timeschool address and approximateofficialviewportpoint only; B4 must explicitly acceptaccuracy/CRSlimits, otherwise retainhold. No formaldecision made."
+      ],
+      "reviewer_disagreement": "No substantive claim disagreement; U005 outcome is conditional on future point-precision acceptance, not unconditional mapping readiness.",
+      "checks": [
+        {
+          "name": "exact_six_actions_once",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "source_hash:springer-chapter",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "source_hash:springer-book",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "source_hash:uvt-faculty",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "source_hash:uvt-administration",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "source_hash:jhss-article",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "source_hash:jhss-acronym-context",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "source_hash:school-contact",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "source_hash:school-paper-firstpage",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "source_hash:politehnica-contact",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "source_hash:bitdefender-legal-address",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "source_hash:local:wacv-primary-review",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "source_hash:local:unmapped-ledger",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "identity:P001",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "question:P001",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "provisional_not_formal:P001",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "taxonomy_preserved:P001",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:P001:data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:P001:docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:P001:data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:P001:docs/publication_venue_normalization.md",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "identity:U001",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "question:U001",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "provisional_not_formal:U001",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "taxonomy_preserved:U001",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U001:data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U001:docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U001:web/data/public_preview_papers.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U001:data/curated/author_institution_mappings.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U001:data/curated/institutions.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U001:data/curated/institution_locations.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U001:data/curated/author_institution_mappings.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "identity:P049",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "question:P049",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "provisional_not_formal:P049",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "taxonomy_preserved:P049",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:P049:data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:P049:docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:P049:data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:P049:docs/publication_venue_normalization.md",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "identity:U005",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "question:U005",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "provisional_not_formal:U005",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "taxonomy_preserved:U005",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U005:data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U005:docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U005:web/data/public_preview_papers.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U005:data/curated/author_institution_mappings.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U005:data/curated/institutions.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U005:data/curated/institution_locations.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U005:data/curated/author_institution_mappings.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "identity:U018",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "question:U018",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "provisional_not_formal:U018",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "taxonomy_preserved:U018",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U018:data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U018:docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U018:web/data/public_preview_papers.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U018:data/curated/author_institution_mappings.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U018:data/curated/institutions.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U018:data/curated/institution_locations.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U018:data/manual/systematic_tier1_primary_review_2026_09.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U018:data/curated/author_institution_mappings.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "identity:U023",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "question:U023",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "provisional_not_formal:U023",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "taxonomy_preserved:U023",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U023:data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U023:docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U023:web/data/public_preview_papers.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U023:data/curated/author_institution_mappings.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U023:data/curated/institutions.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U023:data/curated/institution_locations.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U023:data/manual/systematic_tier1_primary_review_2026_09.json",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "local_ref_hash:U023:data/curated/author_institution_mappings.csv",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "P001_exact_DOI",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "P001_author_order",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "P001_venue_CISIS_primary_metadata",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "P001_online2026_vs_citation2027_preserved",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "P049_DOI_venue_type",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "P049_no_invented_acronym",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "U001_currentfaculty_specific_address",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "U005_paper_explicit_school_address",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "U005_official_contact_address",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "U005_viewport_provenance",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "U005_no_marker_or_independentgeocode_claim",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "U001_hold_not_HQ_inference",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "U018_hold_not_HQ_inference",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "U023_hold_not_HQ_inference",
+          "passed": true,
+          "detail": null
+        },
+        {
+          "name": "U018_U023_separateidentity",
+          "passed": true,
+          "detail": null
+        }
+      ]
+    },
+    "turkey_india_israel": {
+      "reviewer": "independent Romania-group reviewer /root/b302_recover_romania",
+      "reviewed_group": "turkey_india_israel",
+      "reviewed_results_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/results.json",
+      "reviewed_results_sha256": "c65ee533ac6748dd959acb0254e6d1d551ad2340451f8fba8adfec289316d355",
+      "created_utc": "2026-10-29T08:13:38.602387+00:00",
+      "method": "Offline direct inspection of preserved raw publisher HTML metadata and affiliation sections, source checksums, official-site captures and provisional recommendation boundaries. No new requests; no changes to review results.",
+      "status": "PASS",
+      "passed": 49,
+      "failed": 0,
+      "checks": [
+        {
+          "check": "exact five assigned actions in planned order",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "source hash TI-P058",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "source hash TI-P068",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "source hash TI-BTU-DEPT2020",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "source hash TI-BTU-CURRENT",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "source hash TI-ARMY",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "source hash TI-IITP-CURRENT",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "source hash TI-IITP-COORD-A",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "source hash TI-IITP-COORD-B",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "source hash TI-TAU-CONTACT",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "source hash TI-TAU-ADDRESS",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "source hash TI-TAU-HTML",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "source hash TI-TAU-PAPER",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P058 exact DOI",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P058 ordered authors",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P058 exact journal identity",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P058 title case-insensitive identity",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P058 bounded publisher short form",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P058 no invented acronym",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P058 venuebinding only",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "publisher author-affiliation association supports Army Balikesir and BTU EEE16310",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P068 exact DOI",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P068 ordered authors",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P068 exact journal identity",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P068 title case-insensitive identity",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P068 bounded publisher short form",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P068 no invented acronym",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "P068 venuebinding only",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "publisher IITP exact postcode supports originalsitequestion",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "U006 remains evidence hold, coordinates not inserted",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "U008 remains evidence hold, coordinates not inserted",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "U014 remains evidence hold, coordinates not inserted",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "BTU 2020 does not become 2026 site proof",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "Army Balikesir distinguished from IstanbulHQ",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "IITP conflicting claims retained without averaging",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "IITP date and CRS limits retained",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "TAU university affiliation not promoted to specificcampus",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "TAU point not inferred from geocoder or filename",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "identity context preserved P058",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "provisional not accepted P058",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "identity context preserved U006",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "provisional not accepted U006",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "identity context preserved P068",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "provisional not accepted P068",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "identity context preserved U008",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "provisional not accepted U008",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "identity context preserved U014",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "provisional not accepted U014",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "check": "no taxonomy reviews added",
+          "passed": true,
+          "detail": ""
+        }
+      ],
+      "reviewer_disagreement": [],
+      "nonblocking_notes": [
+        "TI-TAU-ADDRESS locator contains a question mark, but the exact captured source header and L167 verify gc-map-test contact address. Prefer replacing the tentative locator with web-04-sites.json source header and L167 in final aggregated source inventory.",
+        "Two IITP coordinate values could represent distinct reference points or source error; their separation alone is not a proven coordinate defect. Retaining the coordinate hold is supported.",
+        "No full manuscript inspection was required for publication or institution metadata questions. Existing author affiliations are reused, and geocoding cannot determine paper-time campus."
+      ]
+    },
+    "china_uk_algeria": {
+      "reviewer": "Independent cross-group reviewer /root/b302_recover_turkey",
+      "mode": "OFFLINE_EVIDENCE_TO_CLAIM_QC",
+      "status": "PASS",
+      "created_utc": "2026-10-29T08:11:13.687158+00:00",
+      "reviewed_results": "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/results.json",
+      "reviewed_results_sha256": "0609e74faca5160bbd45ab419a03b013c88e7cffdac8d08ef8403b98e8f1c24c",
+      "assigned_scope": [
+        "U002",
+        "U003",
+        "U007",
+        "U016"
+      ],
+      "records": [
+        {
+          "review_id": "U002",
+          "verdict": "PASS_HOLD_SUPPORTED",
+          "claim_mapping_assessment": "SAMR official secretariat/legal-entity data substantiate the institute research-base street address. Indexed CSEE2020 contact and2021 patent corroborate street but do not establish this2026 paper laboratory building/site. Reviewer preserves postcode/date/access distinctions and the missing coordinate/CRS gate.",
+          "accepted_provisional_outcome": "EVIDENCE_INSUFFICIENT",
+          "site_confidence_assessment": "Institution identity and candidate research-base address supported; no precise paper-time site or coordinate accepted.",
+          "corrections_required": []
+        },
+        {
+          "review_id": "U003",
+          "verdict": "PASS_HOLD_SUPPORTED",
+          "claim_mapping_assessment": "Official directions substantiate first-floor British Library premises at96EustonRoad. The completed cached OSM node matches named institution and address, but is secondary current geographic support. Neither current contact nor geocoder establishes JunadeAli/DefenceProgramme physical premises at paper time. Reviewer correctly retains hold and distinguishes viewport center from marker/office point.",
+          "accepted_provisional_outcome": "EVIDENCE_INSUFFICIENT",
+          "site_confidence_assessment": "Current institution/address high; paper-time programme site insufficient. Candidate coordinates remain unaccepted for authoritative mapping.",
+          "corrections_required": []
+        },
+        {
+          "review_id": "U007",
+          "verdict": "PASS_HOLD_SUPPORTED",
+          "claim_mapping_assessment": "Official university2017 planning notice explicitly enumerates Nanhu, Mafangshan and Yujiatou campuses; official2026 contacts retain campus distinctions. Original affiliation only names WuhanUniversityofTechnology. No author-campus assignment can be inferred from IT planning, nearest institution point or generic headquarters.",
+          "accepted_provisional_outcome": "EVIDENCE_INSUFFICIENT",
+          "site_confidence_assessment": "Institution verified; campus unresolved, coordinate search should follow site resolution.",
+          "corrections_required": []
+        },
+        {
+          "review_id": "U016",
+          "verdict": "PASS_HOLD_SUPPORTED",
+          "claim_mapping_assessment": "Preserved arXivv1 firstpage and official English/French school pages establish exact institution/domain correspondence. Current school campus page and WIPO official directory support SidiAbdellah/Mahelma address candidate, not independently a dated paper-time building point. Shortpluscode preserved without guessed expansion; empty geocoder response not treated as nonexistence.",
+          "accepted_provisional_outcome": "EVIDENCE_INSUFFICIENT",
+          "site_confidence_assessment": "School identity/current campus strong; temporal-site and precise coordinate evidence incomplete. NationalSchoolofMathematics remains distinct.",
+          "corrections_required": []
+        }
+      ],
+      "checks_passed": 85,
+      "checks_failed": 0,
+      "checks": [
+        {
+          "check": "exact four independent assigned actions",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 csg-samr",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 csg-hvdc2020",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 csg-patent2021",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 turing-directions",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 turing-map",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 wut-campuses",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 wut-2026contacts",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 ensia-en",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 ensia-fr",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 ensia-campus",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 ensia-wipo",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 turing-geocode",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 ensia-geocode-empty",
+          "passed": true
+        },
+        {
+          "check": "captured source SHA-256 ensia-local-firstpage",
+          "passed": true
+        },
+        {
+          "check": "canonical paper identity U002",
+          "passed": true
+        },
+        {
+          "check": "task/type preservation U002",
+          "passed": true
+        },
+        {
+          "check": "no formal closure U002",
+          "passed": true
+        },
+        {
+          "check": "complete four evidence gates U002",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U002:records[review_id=U002]",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U002:#b-U002",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U002:records[paper_id=curated:bd8343f176d4b9e38a7b]",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U002:mapping_id in mapping:fca75dd464bd39f7ef6e",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U002:institution_id in institution:e86c10c85c74ba208e3d",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U002:institution_id in institution:e86c10c85c74ba208e3d",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U002:paper_id=curated:bd8343f176d4b9e38a7b",
+          "passed": true
+        },
+        {
+          "check": "traceable claim U002:0",
+          "passed": true
+        },
+        {
+          "check": "traceable claim U002:1",
+          "passed": true
+        },
+        {
+          "check": "canonical paper identity U003",
+          "passed": true
+        },
+        {
+          "check": "task/type preservation U003",
+          "passed": true
+        },
+        {
+          "check": "no formal closure U003",
+          "passed": true
+        },
+        {
+          "check": "complete four evidence gates U003",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U003:records[review_id=U003]",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U003:#b-U003",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U003:records[paper_id=curated:dc0280c881d08395cfac]",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U003:mapping_id in mapping:2a5fe76815f5fff8b970",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U003:institution_id in institution:904dd0b78e96e555",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U003:institution_id in institution:904dd0b78e96e555",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U003:paper_id=curated:dc0280c881d08395cfac",
+          "passed": true
+        },
+        {
+          "check": "traceable claim U003:0",
+          "passed": true
+        },
+        {
+          "check": "traceable claim U003:1",
+          "passed": true
+        },
+        {
+          "check": "traceable claim U003:2",
+          "passed": true
+        },
+        {
+          "check": "canonical paper identity U007",
+          "passed": true
+        },
+        {
+          "check": "task/type preservation U007",
+          "passed": true
+        },
+        {
+          "check": "no formal closure U007",
+          "passed": true
+        },
+        {
+          "check": "complete four evidence gates U007",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U007:records[review_id=U007]",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U007:#b-U007",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U007:records[paper_id=curated:5b2a1ca1ae438916336b]",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U007:mapping_id in mapping:7d926423b354f72de21b",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U007:institution_id in institution:bbb055c97c3e3d2f",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U007:institution_id in institution:bbb055c97c3e3d2f",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U007:paper_id=curated:5b2a1ca1ae438916336b",
+          "passed": true
+        },
+        {
+          "check": "traceable claim U007:0",
+          "passed": true
+        },
+        {
+          "check": "traceable claim U007:1",
+          "passed": true
+        },
+        {
+          "check": "canonical paper identity U016",
+          "passed": true
+        },
+        {
+          "check": "task/type preservation U016",
+          "passed": true
+        },
+        {
+          "check": "no formal closure U016",
+          "passed": true
+        },
+        {
+          "check": "complete four evidence gates U016",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U016:records[review_id=U016]",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U016:#b-U016",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U016:records[paper_id=curated:26e3335c0d625676a231]",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U016:mapping_id in mapping:2c5dd1ce9a91a9ca482f",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U016:institution_id in institution:b5047d79e959e40b",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U016:institution_id in institution:b5047d79e959e40b",
+          "passed": true
+        },
+        {
+          "check": "local evidence SHA U016:paper_id=curated:26e3335c0d625676a231",
+          "passed": true
+        },
+        {
+          "check": "traceable claim U016:0",
+          "passed": true
+        },
+        {
+          "check": "traceable claim U016:1",
+          "passed": true
+        },
+        {
+          "check": "traceable claim U016:2",
+          "passed": true
+        },
+        {
+          "check": "SAMR official institute address and postcode preserved",
+          "passed": true
+        },
+        {
+          "check": "historical2020 conference address retained distinct from direct404",
+          "passed": true
+        },
+        {
+          "check": "historical patent address and postcode retained",
+          "passed": true
+        },
+        {
+          "check": "Turing official premises address matches bounded claim",
+          "passed": true
+        },
+        {
+          "check": "Turing cache genuinely completed before declined command",
+          "passed": true
+        },
+        {
+          "check": "Turing node exact institution and address observed",
+          "passed": true
+        },
+        {
+          "check": "WUT official multi-campus source",
+          "passed": true
+        },
+        {
+          "check": "WUT 2026 official campus contacts preserved",
+          "passed": true
+        },
+        {
+          "check": "ENSIA official English French identity correspondence",
+          "passed": true
+        },
+        {
+          "check": "ENSIA official campus and WIPO address evidence present",
+          "passed": true
+        },
+        {
+          "check": "ENSIA paper firstpage exact identity and version",
+          "passed": true
+        },
+        {
+          "check": "ENSIA empty cache not taken as nonexistence",
+          "passed": true
+        },
+        {
+          "check": "independent disposition agrees U002",
+          "passed": true
+        },
+        {
+          "check": "independent disposition agrees U003",
+          "passed": true
+        },
+        {
+          "check": "independent disposition agrees U007",
+          "passed": true
+        },
+        {
+          "check": "independent disposition agrees U016",
+          "passed": true
+        }
+      ],
+      "source_catalogue_entries_verified": 14,
+      "unique_source_capture_files_verified": 8,
+      "source_hashes": {
+        "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-05.json": "bc6431cbe58550a0d526e92070f15ef370b5bcbb050ae2e4a1add1729f5081c8",
+        "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-04.json": "66a196c5572742a21b91aefa21c0a8e4c37421f00c9258963048f3fe7ef179cf",
+        "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-01.json": "76a3a430a22a1651dfa63d5b0a7ca83556adddcb7cf72b86c93f6fb7d9991f43",
+        "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-02.json": "487dfdf788de2294a80fee455bdd8d6c2cdc8b774b979d32d35109781c5a1c51",
+        "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/web-03.json": "9ab0f375ea76d6cabd0a35dd8abc8085d8593e57955b8464907b3536bbc8f0d9",
+        "/private/tmp/batch-b-b3-02-2026-10-29/geocoding/222025db1235c045a63e.response": "774b7df6e1399f9d961576e32f8baa6eada291bbd7ceb5c159be8f31cb258c41",
+        "/private/tmp/batch-b-b3-02-2026-10-29/geocoding/f4343bab0fcee028658a.response": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "/private/tmp/batch-b-b3-02-2026-10-29/china_uk_algeria/local-ENSIA-firstpage.txt": "4f3622a194e12720f2610d366cd45089201a8aeda83a6b7c267409f579fb005a"
+      },
+      "local_reference_entries_verified": 28,
+      "new_network_requests": 0,
+      "new_manuscripts": 0,
+      "geocoder_requests": 0,
+      "original_results_edited": false,
+      "repository_modified": false,
+      "limitations": [
+        "This independently checks preserved primary-source captures and prior validated affiliation records; it does not claim fresh live source authentication or scientific manuscript review.",
+        "The reviewer recommendations remain provisional; no formal maintainer acceptance or authoritative location addition is implied."
+      ],
+      "effort": {
+        "preliminary_qc_started_utc": "2026-10-29T07:57:43.247226+00:00",
+        "elapsed_since_preliminary_seconds_including_wait_for_results": 810.4398642090382,
+        "note": "Waiting for reviewer JSON is not counted as human analyst labor."
+      },
+      "own_group_TAU_locator_correction_file": "/private/tmp/batch-b-b3-02-2026-10-29/turkey_india_israel/locator-correction.json"
+    }
+  },
+  "root_publication_qc": [
+    {
+      "review_id": "P001",
+      "source_file": "romania/springer_p001.html",
+      "source_sha256": "526992a353473244386917ac791cc38df6b7ec89416007d8dfc64ccb71cefd8a",
+      "source_type": "existing raw official publisher HTML, no recovery fetch",
+      "meta_extraction": {
+        "citation_doi": [
+          "10.1007/978-3-032-29430-2_19"
+        ],
+        "citation_title": [
+          "ImageTrust: Multi-backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty"
+        ],
+        "citation_author": [
+          "Iancu, Andrei-Alexandru",
+          "Galiş, Darius",
+          "Stefaniga, Sebastian-Aurelian"
+        ],
+        "citation_conference_title": [
+          "International Conference on Complex, Intelligent, and Software Intensive Systems"
+        ],
+        "citation_conference_abbrev": [
+          "CISIS"
+        ],
+        "citation_publication_date": [
+          "2027"
+        ],
+        "citation_inbook_title": [
+          "Complex, Intelligent and Software Intensive Systems"
+        ]
+      },
+      "expected_author_sequence": [
+        "Andrei-Alexandru Iancu",
+        "Darius Galiş",
+        "Sebastian-Aurelian Stefaniga"
+      ],
+      "bounded_qc": {
+        "DOI_exact": true,
+        "title_present": true,
+        "authors_count_matches": true,
+        "official_venue_name_exact": true
+      },
+      "note": "ASCII/diacritic and display capitalization differences preserved; no identity or taxonomy editing authorized."
+    },
+    {
+      "review_id": "P049",
+      "source_file": "romania/jhss_p049.html",
+      "source_sha256": "7590b14b85fa0fed3d9ba94355e88a97b3eabb2bba63b69df9b9453f59826f47",
+      "source_type": "existing raw official publisher HTML, no recovery fetch",
+      "meta_extraction": {
+        "citation_doi": [
+          "10.64336/001c.156299"
+        ],
+        "dc.identifier.doi": [
+          "10.64336/001c.156299"
+        ],
+        "citation_title": [
+          "Conditional uncertainty-aware political deepfake detection with stochastic Convolutional Neural Networks"
+        ],
+        "citation_author": [
+          "Rafael-Petrut Gardos"
+        ],
+        "dc.creator": [
+          "Rafael-Petrut Gardos"
+        ],
+        "citation_journal_title": [
+          "Journal of High School Science"
+        ],
+        "citation_journal_abbrev": [
+          "Journal of High School Science"
+        ],
+        "citation_publication_date": [
+          "2026/2/6"
+        ],
+        "dc.date.issued": [
+          "2026-02-06"
+        ]
+      },
+      "expected_author_sequence": [
+        "Rafael-Petruţ Gardoş"
+      ],
+      "bounded_qc": {
+        "DOI_exact": true,
+        "title_present": true,
+        "authors_count_matches": true,
+        "official_venue_name_exact": true
+      },
+      "note": "ASCII/diacritic and display capitalization differences preserved; no identity or taxonomy editing authorized."
+    },
+    {
+      "review_id": "P058",
+      "source_file": "turkey_india_israel/P058-publisher.html",
+      "source_sha256": "dde07d46a66d614b4782ef7606219d00f0e92a8e35d1243b62e8d0f4ce7a94bb",
+      "source_type": "existing raw official publisher HTML, no recovery fetch",
+      "meta_extraction": {
+        "citation_doi": [
+          "10.1007/s41060-026-01192-9"
+        ],
+        "citation_title": [
+          "Deep learning for CGI and visual forgery detection: a comprehensive survey"
+        ],
+        "citation_author": [
+          "Korkmaz, Ahmet",
+          "Özden, Mustafa"
+        ],
+        "dc.creator": [
+          "Korkmaz, Ahmet",
+          "Özden, Mustafa"
+        ],
+        "citation_journal_title": [
+          "International Journal of Data Science and Analytics"
+        ],
+        "citation_journal_abbrev": [
+          "Int J Data Sci Anal"
+        ],
+        "citation_publication_date": [
+          "2026/12"
+        ],
+        "citation_online_date": [
+          "2026/06/29"
+        ]
+      },
+      "expected_author_sequence": [
+        "Ahmet Korkmaz",
+        "Mustafa Özden"
+      ],
+      "bounded_qc": {
+        "DOI_exact": true,
+        "title_present": true,
+        "authors_count_matches": true,
+        "official_venue_name_exact": true
+      },
+      "note": "ASCII/diacritic and display capitalization differences preserved; no identity or taxonomy editing authorized."
+    },
+    {
+      "review_id": "P068",
+      "source_file": "turkey_india_israel/P068-publisher.html",
+      "source_sha256": "ecf2a69e9fb2bb1d795834679116e2254b2e32648e0ce0180138c6622e1ff791",
+      "source_type": "existing raw official publisher HTML, no recovery fetch",
+      "meta_extraction": {
+        "citation_doi": [
+          "10.1007/s00138-026-01836-7"
+        ],
+        "citation_title": [
+          "Detecting violent deepfakes: dataset and a compact attention network with multi-scale supervision"
+        ],
+        "citation_author": [
+          "Raj, Surbhi",
+          "Mathew, Jimson",
+          "Mondal, Arijit"
+        ],
+        "dc.creator": [
+          "Raj, Surbhi",
+          "Mathew, Jimson",
+          "Mondal, Arijit"
+        ],
+        "citation_journal_title": [
+          "Machine Vision and Applications"
+        ],
+        "citation_journal_abbrev": [
+          "Machine Vision and Applications"
+        ],
+        "citation_publication_date": [
+          "2026/07"
+        ],
+        "citation_online_date": [
+          "2026/05/30"
+        ]
+      },
+      "expected_author_sequence": [
+        "Surbhi Raj",
+        "Jimson Mathew",
+        "Arijit Mondal"
+      ],
+      "bounded_qc": {
+        "DOI_exact": true,
+        "title_present": true,
+        "authors_count_matches": true,
+        "official_venue_name_exact": true
+      },
+      "note": "ASCII/diacritic and display capitalization differences preserved; no identity or taxonomy editing authorized."
+    }
+  ],
+  "root_school_site_qc": {
+    "review_id": "U005",
+    "independent_reviewer": "root; not original Romania reviewer",
+    "primary_paper_time_affiliation": "Colegiul National ”Mihai Eminescu” Satu Mare, Mihai Eminescu 5, 440014, Satu Mare, Romania",
+    "paper_time_source": "https://doi.org/10.64336/001c.156299",
+    "canonical_institution_id": "institution:004b85aa254cbf69",
+    "primary_school_contact": "https://www.eminescusm.ro/contact",
+    "source_path": "romania/school_contact.html",
+    "source_sha256": "038ed231bc2d5fe0085111b330260aea45e947f72442a7aba111679c3c1d0d89",
+    "official_contact_address_matches": true,
+    "embed_URL": "https://maps-api-ssl.google.com/maps?hl=en-US&ll=47.789438,22.876378&output=embed&z=19",
+    "embed_selected_viewport": {
+      "latitude": 47.789438,
+      "longitude": 22.876378,
+      "zoom": 19,
+      "not_surveyed_marker": true,
+      "CRS_not_declared_by_school": true,
+      "uncertainty_metres": null
+    },
+    "claim_supported": "The exact street-level paper affiliation and the school-owned contact page identify the same school site. The school itself selects a very local map viewport. This can support a proposed approximate institution representative point, subject to explicit maintainer precision acceptance.",
+    "claim_not_supported": [
+      "Survey-grade coordinates",
+      "Independently geocoded marker",
+      "Measured positional accuracy",
+      "Campus selection inferred from a geocoder",
+      "Formal action resolution"
+    ],
+    "provisional_outcome": "SUPPORTED_ADDITION",
+    "B4_condition": "Accept only as approximate institution representative point; if exact marker or declared CRS is required, retain coordinate hold rather than upgrading evidence."
+  },
+  "new_external_source_requests": 0,
+  "new_geocoding_requests": 0,
+  "repository_mutations": 0
+}

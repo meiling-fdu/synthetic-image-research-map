@@ -1,0 +1,346 @@
+{
+  "schema_version": "batch-b-b3-per-paper-1",
+  "wave": "Batch B Wave B3",
+  "planned_batch_id": "B2-01",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "review_id": "P028",
+  "paper_id": "curated:92fe1dfd435209b21ff4",
+  "title": "Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3",
+  "assigned_original_review": {
+    "review_id": "P028",
+    "paper_id": "curated:92fe1dfd435209b21ff4",
+    "title": "Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3",
+    "current": {
+      "year": 2026,
+      "publication_type": "conference",
+      "venue": "ACM International Conference on Multimedia",
+      "venue_id": "venue:acm-mm",
+      "venue_acronym": "ACM MM",
+      "venue_track": "Main",
+      "doi": "",
+      "paper_url": "",
+      "formal_url": "",
+      "arxiv_id": "2608.15196",
+      "arxiv_url": "https://arxiv.org/abs/2608.15196",
+      "authors": [
+        "Hyeongjun Choi",
+        "Juhun Lee",
+        "Davide Cozzolino",
+        "Luisa Verdoliva",
+        "Simon S. Woo"
+      ]
+    },
+    "evidence_urls": [
+      "https://arxiv.org/abs/2608.15196",
+      "https://openalex.org/W7203688524"
+    ],
+    "batch": "B",
+    "confidence": "bounded_to_available_evidence",
+    "evidence_required": "Obtain the official ACM International Conference on Multimedia paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+    "proposed_changes": {},
+    "status": "REVIEW_REQUIRED",
+    "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+    "field_checks": {
+      "venue": "present",
+      "year": "present",
+      "publication_type": "formal_in_current_corpus",
+      "canonical_url": "missing_formal_url",
+      "doi": "not_required_without_authoritative_applicability",
+      "arxiv": "present",
+      "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+      "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+    }
+  },
+  "current_identity": {
+    "paper_id": "curated:92fe1dfd435209b21ff4",
+    "title": "Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3",
+    "authors": [
+      {
+        "name": "Hyeongjun Choi",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Juhun Lee",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Davide Cozzolino",
+        "affiliation_indices": [
+          2
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Luisa Verdoliva",
+        "affiliation_indices": [
+          2
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Simon S. Woo",
+        "affiliation_indices": [
+          1,
+          3
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": true,
+        "affiliation_status": "mapped"
+      }
+    ],
+    "year": 2026,
+    "doi": "",
+    "arxiv_id": "2608.15196",
+    "arxiv_url": "https://arxiv.org/abs/2608.15196",
+    "openalex_url": "https://openalex.org/W7203688524",
+    "venue": "ACM International Conference on Multimedia",
+    "venue_name": "ACM International Conference on Multimedia",
+    "venue_id": "venue:acm-mm",
+    "venue_track": "Main",
+    "publication_type": "conference",
+    "formal_url": "",
+    "paper_url": "",
+    "tasks": [
+      "detection"
+    ],
+    "research_types": [
+      "method"
+    ],
+    "canonical_audit_paper_id": "curated:92fe1dfd435209b21ff4"
+  },
+  "current_link_resolution": {
+    "formal_doi": "",
+    "formal_url": "",
+    "openalex_url": "https://openalex.org/W7203688524",
+    "arxiv_id": "2608.15196",
+    "arxiv_url": "https://arxiv.org/abs/2608.15196",
+    "primary_url": "https://openalex.org/W7203688524"
+  },
+  "review_scope": "Original missing canonical formal-URL publication question only; no taxonomy action is assigned.",
+  "provisional_outcome": "EVIDENCE_INSUFFICIENT",
+  "proposed_publication_change": null,
+  "proposed_taxonomy_changes": [],
+  "formal_action_status": "UNRESOLVED — NO B3 ACCEPTANCE OR CLOSURE",
+  "maintainer_acceptance_required": true,
+  "source_packet": {
+    "artifact_path": "evidence_archive/publication-group-a-reviews.json",
+    "sha256": "a5f03dec49b5a2c1674e84de5ce79dddb0eb94de28fe9221ee0525242f33ccdb",
+    "record_index": 0
+  },
+  "reviewer_evidence_record": {
+    "review_id": "P028",
+    "canonical_identity": {
+      "paper_id": "curated:92fe1dfd435209b21ff4",
+      "title": "Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3",
+      "year": 2026,
+      "publication_type": "conference",
+      "venue": "ACM International Conference on Multimedia",
+      "venue_id": "venue:acm-mm",
+      "venue_acronym": "ACM MM",
+      "venue_track": "Main",
+      "doi": "",
+      "paper_url": "",
+      "formal_url": "",
+      "arxiv_id": "2608.15196",
+      "arxiv_url": "https://arxiv.org/abs/2608.15196",
+      "authors": [
+        "Hyeongjun Choi",
+        "Juhun Lee",
+        "Davide Cozzolino",
+        "Luisa Verdoliva",
+        "Simon S. Woo"
+      ],
+      "stored_author_string": "Hyeongjun Choi; Juhun Lee; Davide Cozzolino; Luisa Verdoliva; Simon S. Woo",
+      "stored_doi_literal": "",
+      "stored_paper_url_literal": "https://arxiv.org/abs/2608.15196",
+      "formal_url_schema_boundary": "The formal_url value is derived public context; authoritative papers.csv has paper_url, not a literal formal_url column."
+    },
+    "original_review_question": "Obtain the official ACM International Conference on Multimedia paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+    "current_tasks_preserved": "detection",
+    "current_research_types_preserved": "method",
+    "proposed_taxonomy_changes": {},
+    "formal_acceptance_record_created": false,
+    "authoritative_review_closed": false,
+    "evidence_only": true,
+    "B4_gate": "A later separately authorized maintainer decision must verify exact work/version identity, bounded fields, source provenance and current acceptance/fingerprint rules. No automatic author/DOI/date/inclusion/task/type edits; unresolved discrepancies require explicit reconciliation.",
+    "scientific_review": {
+      "new_scientific_review_performed": false,
+      "full_manuscript_retrieved": false,
+      "historical_context": {
+        "tasks": "detection",
+        "research_types": "method",
+        "tasks_evidence_tier": "reused_audit+abstract",
+        "research_types_evidence_tier": "reused_audit+abstract",
+        "task_source": "arxiv",
+        "research_type_source": "arxiv"
+      },
+      "context_limit": "Historical registry values and their existing evidence tiers are preserved, not independently re-certified scientific support. No methods/experiments/numbers reassessed; no taxonomy conclusion drawn from title/abstract."
+    },
+    "local_evidence": [
+      {
+        "path": "data/curated/papers.csv",
+        "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+        "locator": "curated:92fe1dfd435209b21ff4",
+        "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+        "locator": "curated:92fe1dfd435209b21ff4",
+        "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+      },
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+        "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+        "locator": "P028",
+        "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+      },
+      {
+        "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+        "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+        "locator": "#b-P028",
+        "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+      },
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+        "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+        "locator": "V1 / publication conventions",
+        "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+      },
+      {
+        "path": "docs/publication_venue_normalization.md",
+        "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af",
+        "locator": "V1 / publication conventions",
+        "finding": "Canonical identity/current labels/original question and source-backed publication conventions preserved."
+      },
+      {
+        "path": "data/raw/requested_seven_papers_2026-08-29/dash_lab_publications_data.js",
+        "sha256": "711c5d614831847a6df6ffd067a007094ff75faed838d21f428c6cf8f5ac06e4",
+        "locator": "title Anchor-Regularized Adaptation / arXiv2608.15196",
+        "finding": "Author-lab exact title/five-author sequence; ACM MM2026/Main Paper and generic https://2026.acmmm.org/ only, no exact formal paper URL/DOI."
+      },
+      {
+        "path": "data/raw/requested_seven_papers_2026-08-29/2608.15196.first2.txt",
+        "sha256": "61fcc986bf97417f5fcbbecc0ef4d2b6e812a7e5665d6cf370d141b8ad57846b",
+        "locator": "title Anchor-Regularized Adaptation / arXiv2608.15196",
+        "finding": "Existing bibliographic extraction confirms five authors and arXiv2608.15196v1. Only identity lines reused, scientific review not reopened."
+      },
+      {
+        "path": "data/raw/requested_seven_papers_2026-08-29/arxiv_api.xml",
+        "sha256": "a9f6c931bdf14736684480d512aa91d841b8196c63d1355a7018df68ef1c2181",
+        "locator": "title Anchor-Regularized Adaptation / arXiv2608.15196",
+        "finding": "Original exact arXiv version/title/author metadata, not formal archival proof."
+      },
+      {
+        "path": "data/raw/requested_seven_papers_2026-08-29/anchor_openalex.json",
+        "sha256": "383fb67adfb0d3bf1114fe8cefb9bbec98e5f047e95f7488c1680da7d1b94143",
+        "locator": "title Anchor-Regularized Adaptation / arXiv2608.15196",
+        "finding": "Historical repository-only OpenAlex locations; not evidence of present nonpublication."
+      }
+    ],
+    "retrieval_accounting": {
+      "new_complete_manuscripts": 0,
+      "supplements": 0,
+      "scientific_source_retrievals": 0,
+      "paid_API_calls": 0,
+      "purchases": 0,
+      "http_status": null,
+      "network_transfer_bytes": null,
+      "targeted_search_queries": 6,
+      "official_metadata_document_requests": 0,
+      "unique_official_metadata_documents": 0
+    },
+    "provisional_outcome": "EVIDENCE_INSUFFICIENT",
+    "evidence_sufficient_for_original_question": false,
+    "proposed_formal_url": null,
+    "proposed_formal_doi": null,
+    "confidence": {
+      "canonical_identity": "high",
+      "formal_archival_identity": "insufficient"
+    },
+    "finding": "The exact title/five-author identity and saved author-lab ACM MM 2026 Main Paper claim are available. No exact ACM archival item/DOI was identified by the bounded official searches. Empty results do not prove nonpublication; leave the original missing-formal-URL question open.",
+    "version_limitations": [
+      "Saved arXiv 2608.15196v1 identity is author preprint metadata dated15August2026. ACM formatting and author-lab Main Paper claim do not establish a publisher-final version or DOI.",
+      "No official archival ACM metadata or manuscript equivalence verified. No downgrade or bibliographic/task/type correction proposed."
+    ],
+    "contradictory_evidence": [
+      "Stored ACM MM2026/Main conference identity and author-lab claim coexist with a saved OpenAlex snapshot containing only arXiv repository/submitted locations. The historical snapshot does not determine current publication status."
+    ],
+    "primary_metadata_evidence": [],
+    "request_history": [
+      {
+        "operation": "search_query",
+        "query": "site:dl.acm.org \"Anchor-Regularized Adaptation\" DINOv3",
+        "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/search1.json",
+        "result": "No exact ACM item returned; combined results covered only the two assigned Springer works.",
+        "http_status": null,
+        "network_bytes": null
+      },
+      {
+        "operation": "search_query",
+        "query": "site:dl.acm.org/doi \"Anchor-Regularized\" \"Choi\"",
+        "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+        "result": "Empty search results.",
+        "http_status": null,
+        "network_bytes": null
+      },
+      {
+        "operation": "search_query",
+        "query": "site:acmmm2026.org \"Anchor-Regularized Adaptation\"",
+        "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+        "result": "Empty results. This guessed hostname was not established as official and supplies no negative publication evidence.",
+        "http_status": null,
+        "network_bytes": null
+      },
+      {
+        "operation": "search_query",
+        "query": "site:dl.acm.org \"DINOv3\" \"Hyeongjun Choi\"",
+        "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/acm-final-search.json",
+        "result": "Empty search results.",
+        "http_status": null,
+        "network_bytes": null
+      },
+      {
+        "operation": "search_query",
+        "query": "site:2026.acmmm.org \"Anchor-Regularized\"",
+        "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/acm-final-search.json",
+        "result": "Empty results. Exact conference hostname recovered from saved author-lab source.",
+        "http_status": null,
+        "network_bytes": null
+      },
+      {
+        "operation": "search_query",
+        "query": "site:dl.acm.org \"2608.15196\"",
+        "capture": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/acm-final-search.json",
+        "result": "Empty search results.",
+        "http_status": null,
+        "network_bytes": null
+      }
+    ]
+  },
+  "independent_qc": {
+    "artifact_path": "evidence_archive/qc-external-six.v2.json",
+    "status": "PASS",
+    "scope": "Evidence-to-original-publication-claim mapping; not formal maintainer acceptance."
+  },
+  "evidence_provenance_inventory": "source_inventory.json"
+}

@@ -1,0 +1,36 @@
+{
+  "task": "Authenticated superseded B5-01R2 fixture-successor experiment",
+  "status": "ARCHIVAL_ONLY_NOT_CURRENT_RUNTIME_AUTHORIZATION",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "provenance": "Preserved before R3 restores both historically protected files. Original fixture approval and20cases remain executable against this immutable R2 tree; live isolation is separately tested.",
+  "files": {
+    "boundary_implementation_review.json": {
+      "sha256": "a93dbaa4098b153c5062b5e58c780cea7fbccd9485e0b629c170f9f1190a0793",
+      "bytes": 4245
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/publish_fixture_reviewed.diff": {
+      "sha256": "02103322daabe9801fcff3520f5b3776d9a7b905c725a82461f7c08a13ee9bcb",
+      "bytes": 3493
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/publish_fixture_successor_review.json": {
+      "sha256": "380bee496892c58b4cb0784f84ed7a78e07c435ce76471ed41c877e7bb3c2298",
+      "bytes": 13518
+    },
+    "original_successor_tests.py": {
+      "sha256": "89dbe8a056c7e65aee7ef563992f582cd624c204e6f271187254bcc8da5380da",
+      "bytes": 6281
+    },
+    "reviewed_helper.diff": {
+      "sha256": "b71a96ebab5773a5ce7a41727e361a5f91a257f11b4fcd0ae878ab9547210323",
+      "bytes": 3560
+    },
+    "tests/public_refinement_snapshot.py": {
+      "sha256": "13c66fe9e9887ae9b7520d3dc65b563fde46a037c2a30e3f4fc63d44a9afbb42",
+      "bytes": 12175
+    },
+    "tests/test_admin_publish_workflow_reliability.py": {
+      "sha256": "34420cb25c55df54ecb65ff9d7e4dcd2e9e258cc85101fe9806f790203e6b60f",
+      "bytes": 9882
+    }
+  }
+}

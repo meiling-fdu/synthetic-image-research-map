@@ -1,0 +1,264 @@
+{
+  "paper_id": "curated:bd8343f176d4b9e38a7b",
+  "title": "A Multi-View and Confusion-Guided Ensemble Framework for Robust Synthetic Image Attribution",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "action_ids": [
+    "U002"
+  ],
+  "records": [
+    {
+      "review_id": "U002",
+      "paper_id": "curated:bd8343f176d4b9e38a7b",
+      "title": "A Multi-View and Confusion-Guided Ensemble Framework for Robust Synthetic Image Attribution",
+      "action_scope": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "original_blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "original_acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for China Southern Power Grid Electric Power Research Institute / State Key Laboratory of HVDC site; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "canonical_institution_id": "institution:e86c10c85c74ba208e3d",
+      "canonical_institution_name": "China Southern Power Grid Electric Power Research Institute",
+      "paper_identity": {
+        "authors": [
+          "Zuomin Qu"
+        ],
+        "arxiv_id": "2609.11188",
+        "doi": "",
+        "year": 2026,
+        "publication_type": "preprint",
+        "identity_verified_from": "Existing identity-matched paper-time source mappings and published record; no manuscript rediscovery."
+      },
+      "paper_time_affiliation": {
+        "raw": "State Key Laboratory of HVDC, China Southern Power Grid Electric Power Research Institute, China",
+        "primary_url": "https://arxiv.org/pdf/2609.11188",
+        "known_institution_affiliation": true,
+        "site_explicit_in_preserved_affiliation": false
+      },
+      "local_evidence": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U002]",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U002",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:bd8343f176d4b9e38a7b]",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+          "finding": "Current public paper retained; tasks=['source_attribution']; research_types=['method']; map_record_count=0."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:fca75dd464bd39f7ef6e",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+          "locator": "institution_id in institution:e86c10c85c74ba208e3d",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:e86c10c85c74ba208e3d",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc",
+          "finding": "0 current reviewed location rows found for the mapped institutions."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:bd8343f176d4b9e38a7b",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Zuomin Qu has a confirmed affiliation; the laboratory/institute corporate site has no reviewed point."
+        }
+      ],
+      "current_tasks": [
+        "source_attribution"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "is_formal_decision": false,
+      "formal_resolution_applied": false,
+      "authoritative_changes": [],
+      "taxonomy_changes_proposed": [],
+      "official_evidence_ids": [
+        "csg-samr",
+        "csg-hvdc2020",
+        "csg-patent2021"
+      ],
+      "evidence_to_claim": [
+        {
+          "claim": "The existing institute identity has an official legal-name/identifier and an institute research-base street address distinct from the utility parent.",
+          "sources": [
+            "csg-samr"
+          ]
+        },
+        {
+          "claim": "A2020 HVDC-related conference contact and2021 institute patent corroborate No11 KexiangRoad; neither assigns this2026 paper’s laboratory to a precise current building.",
+          "sources": [
+            "csg-hvdc2020",
+            "csg-patent2021"
+          ]
+        }
+      ],
+      "site_assessment": {
+        "institution_identity": "VERIFIED_EXISTING_CANONICAL_ID",
+        "institution_address": "VERIFIED_INSTITUTE_RESEARCH_BASE_ADDRESS_WITH_POSTCODE_VARIATION",
+        "address_candidate": "No11 KexiangRoad, CSG research base Gate2, HuangpuDistrict, Guangzhou, Guangdong, China",
+        "paper_time_site": "NOT_VERIFIED_AT_LABORATORY_SITE_LEVEL",
+        "paper_time_site_basis": "Preserved primary affiliation names State Key Laboratory of HVDC and institute, China; no street/campus. Conference2020 contact is not proof of this2026 paper-time laboratory location.",
+        "site_confidence": "medium candidate research-base; low for exact2026 lab site",
+        "coordinates": "NOT_VERIFIED",
+        "coordinate_candidate": null
+      },
+      "contradictions_and_limitations": [
+        "SAMR contact postcode510630 differs from2021 patent postcode510663; historical Luogang and current Huangpu locality spellings are preserved, not silently merged.",
+        "No authenticated institution-specific coordinate source or documented coordinate reference system is available; Chinese GCJ02/BD09 map values must not be treated as WGS84.",
+        "The2020 conference indexed contact remains available but direct follow-up returns404."
+      ],
+      "unsupported_assumptions_rejected": [
+        "Use of parent utility headquarters",
+        "Treating standards secretariat address or2020 contact as proof of precise2026 author/lab building",
+        "Copying a Guangzhou city centroid or undocumented Chinese map coordinate"
+      ],
+      "recommended_B4_02_action": "Retain unresolved; preserve supported legal identity and candidate research-base address as partial evidence. Require publication-time laboratory/site corroboration and a traceable correct-CRS coordinate before a location-row proposal.",
+      "missing_evidence": [
+        "Dated paper-time HVDC laboratory/site link to the candidate research base",
+        "Institution-specific coordinate source and coordinate reference system"
+      ],
+      "confidence": "high that present packet does not satisfy full site+coordinate gate",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "The existing institute identity has an official legal-name/identifier and an institute research-base street address distinct from the utility parent.; A2020 HVDC-related conference contact and2021 institute patent corroborate No11 KexiangRoad; neither assigns this2026 paper’s laboratory to a precise current building.",
+      "proposed_disposition": "Retain unresolved; preserve supported legal identity and candidate research-base address as partial evidence. Require publication-time laboratory/site corroboration and a traceable correct-CRS coordinate before a location-row proposal.",
+      "limitations": [
+        "SAMR contact postcode510630 differs from2021 patent postcode510663; historical Luogang and current Huangpu locality spellings are preserved, not silently merged.",
+        "No authenticated institution-specific coordinate source or documented coordinate reference system is available; Chinese GCJ02/BD09 map values must not be treated as WGS84.",
+        "The2020 conference indexed contact remains available but direct follow-up returns404."
+      ],
+      "evidence_claims": [
+        {
+          "claim": "The existing institute identity has an official legal-name/identifier and an institute research-base street address distinct from the utility parent.",
+          "source_ids": [
+            "csg-samr"
+          ],
+          "local_evidence": []
+        },
+        {
+          "claim": "A2020 HVDC-related conference contact and2021 institute patent corroborate No11 KexiangRoad; neither assigns this2026 paper’s laboratory to a precise current building.",
+          "source_ids": [
+            "csg-hvdc2020",
+            "csg-patent2021"
+          ],
+          "local_evidence": []
+        }
+      ],
+      "action_id": "U002",
+      "review_group": "china_uk_algeria",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "original_review": {
+        "review_id": "U002",
+        "paper_id": "curated:bd8343f176d4b9e38a7b",
+        "title": "A Multi-View and Confusion-Guided Ensemble Framework for Robust Synthetic Image Attribution",
+        "year": 2026,
+        "publication_status": "preprint",
+        "authors": [
+          "Zuomin Qu"
+        ],
+        "institutions": [
+          {
+            "institution_id": "institution:e86c10c85c74ba208e3d",
+            "canonical_name": "China Southern Power Grid Electric Power Research Institute",
+            "raw_affiliation": "State Key Laboratory of HVDC, China Southern Power Grid Electric Power Research Institute, China",
+            "authors": [
+              "Zuomin Qu"
+            ],
+            "paper_time_affiliation_known": true,
+            "institution_identity_known": true,
+            "exists_in_registry": true,
+            "location_known": false,
+            "location_records": [],
+            "mapping_status": "active",
+            "mapping_id": "mapping:fca75dd464bd39f7ef6e",
+            "evidence_url": "https://arxiv.org/pdf/2609.11188",
+            "evidence_basis": "https://arxiv.org/pdf/2609.11188",
+            "hierarchy": [],
+            "allowed_to_map_as_node": true,
+            "relationship_currently_possible": false
+          }
+        ],
+        "author_affiliation_known": true,
+        "canonical_institution_identity_known": true,
+        "institution_registry_complete": true,
+        "any_reviewed_location_known": false,
+        "relationship_currently_possible": false,
+        "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+        "remediation_category": "EVIDENCE_CAN_RESOLVE",
+        "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+        "confidence": "high",
+        "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+        "authoritative_evidence_url": "https://arxiv.org/abs/2609.11188",
+        "project_evidence": [
+          "data/curated/author_institution_mappings.csv",
+          "data/curated/institutions.csv",
+          "data/curated/institution_locations.csv",
+          "data/curated/institution_hierarchy.csv"
+        ],
+        "batch": "B"
+      },
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:bd8343f176d4b9e38a7b",
+        "title": "A Multi-View and Confusion-Guided Ensemble Framework for Robust Synthetic Image Attribution",
+        "doi": "",
+        "arxiv_id": "2609.11188",
+        "year": 2026,
+        "publication_type": "preprint",
+        "venue": "arXiv",
+        "tasks": [
+          "source_attribution"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:bd8343f176d4b9e38a7b"
+      },
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "authoritative_changes_applied": false,
+      "acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for China Southern Power Grid Electric Power Research Institute / State Key Laboratory of HVDC site; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "china_uk_algeria:csg-hvdc2020",
+        "china_uk_algeria:csg-patent2021",
+        "china_uk_algeria:csg-samr"
+      ],
+      "separate_site_evidence_gates": {
+        "institution_identity": "VERIFIED",
+        "address": "LEGAL_INSTITUTE_ADDRESS_VERIFIED; HVDC committee address corroborates No11 Kexiang Road research base",
+        "paper_time_site": "EXACT_2026_LAB_SITE_NOT_ESTABLISHED",
+        "coordinates": "NO_AUTHENTICATED_POINT_OR_DECLARED_CRS",
+        "unsupported_assumption": "Do not use parent utility headquarters or infer HVDC laboratory's 2026 site from legal-company contact alone."
+      }
+    }
+  ],
+  "note": "Evidence recommendations only; no formal decisions or source mutations."
+}

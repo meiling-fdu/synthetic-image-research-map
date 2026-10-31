@@ -1,0 +1,393 @@
+{
+  "paper_id": "curated:64195610a6d2c2448275",
+  "title": "Conditional Uncertainty-Aware Political Deepfake Detection with Stochastic Convolutional Neural Networks",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "action_ids": [
+    "P049",
+    "U005"
+  ],
+  "records": [
+    {
+      "review_id": "P049",
+      "paper_id": "curated:64195610a6d2c2448275",
+      "title": "Conditional Uncertainty-Aware Political Deepfake Detection with Stochastic Convolutional Neural Networks",
+      "original_review_question": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+      "assigned_scope": "canonical_venue_identity_type",
+      "current_context": {
+        "public": true,
+        "paper_id": "curated:64195610a6d2c2448275",
+        "title": "Conditional Uncertainty-Aware Political Deepfake Detection with Stochastic Convolutional Neural Networks",
+        "doi": "10.64336/001c.156299",
+        "arxiv_id": "2602.10343",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "Journal of High School Science",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method",
+          "analysis_study"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:64195610a6d2c2448275"
+      },
+      "original_review": {
+        "review_id": "P049",
+        "paper_id": "curated:64195610a6d2c2448275",
+        "title": "Conditional Uncertainty-Aware Political Deepfake Detection with Stochastic Convolutional Neural Networks",
+        "current": {
+          "year": 2026,
+          "publication_type": "journal",
+          "venue": "Journal of High School Science",
+          "venue_id": "",
+          "venue_acronym": "",
+          "venue_track": "",
+          "doi": "10.64336/001c.156299",
+          "paper_url": "https://doi.org/10.64336/001c.156299",
+          "formal_url": "https://doi.org/10.64336/001c.156299",
+          "arxiv_id": "2602.10343",
+          "arxiv_url": "https://arxiv.org/abs/2602.10343",
+          "authors": [
+            "Rafael-Petruţ Gardoş"
+          ]
+        },
+        "evidence_urls": [
+          "https://doi.org/10.64336/001c.156299",
+          "https://arxiv.org/abs/2602.10343"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "present",
+          "doi": "present_not_independently_reverified",
+          "arxiv": "present",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "outcome": "SUPPORTED_ADDITION",
+      "provisional_only": true,
+      "formal_acceptance": false,
+      "finding": "The DOI-matched publisher record supports Journal of High School Science as the archival journal. Propose a canonical venue binding; leave the optional acronym empty.",
+      "evidence_to_claim": [
+        "ExactpublisherDOI10.64336/001c.156299,matchingtitle,andsoleauthorRafael-PetrutGardos identifythework; canonicalauthordiatricsarepreserved.",
+        "citation_article_type=article-journal,citation_journal_title=JournalofHighSchoolScience,ISSN2575-6206,volume10issue1,2026.",
+        "citation_journal_abbrev equals thefulltitle; informalJHSS usage onofficialsite ispreserved ascontext, notclaimedasISO4.",
+        "DisplayeddateFeb5CDT andmachinecitationFeb6 aredocumentedtimestamprepresentationdifference; no dateedit proposed."
+      ],
+      "source_ids": [
+        "jhss-article",
+        "jhss-acronym-context"
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P049]",
+          "finding": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P049",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        }
+      ],
+      "proposed_b4_action": "Select or create the canonical Journal of High School Science venue binding under the existing acceptance and fingerprint rules. Preserve name, journal type, year 2026, authors, DOI and arXiv identifiers. Do not generate an acronym or alter the observed publication dates.",
+      "limitations": [
+        "ExistingarXiv2602.10343 association isreusedfromcurrentcanonicalrecord; no fresharXivretrievalorversionequivalenceresearch performed inthisboundedvenuequestion.",
+        "SourceauthorASCII spelling andcanonicalRafael-PetruţGardoş aretraceablevariants; noauthornormalizationauthorized.",
+        "Do notchangevolume/pages/dates merelybecausetheywereobserved."
+      ],
+      "confidence": {
+        "work_identity": "high",
+        "bounded_finding": "high"
+      },
+      "tasks_preserved": true,
+      "research_types_preserved": true,
+      "authoritative_changes_applied": false,
+      "proposed_fields": {
+        "canonical_venue_name": "Journal of High School Science",
+        "publication_type": "journal",
+        "venue_acronym": "",
+        "year_preserve": 2026,
+        "venue_id": "TO_BE_SELECTED_OR_CREATED_BY_B4_USING_EXISTING_SCHEMA",
+        "venue_track": "PRESERVE"
+      },
+      "action_id": "P049",
+      "review_group": "romania",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:64195610a6d2c2448275",
+        "title": "Conditional Uncertainty-Aware Political Deepfake Detection with Stochastic Convolutional Neural Networks",
+        "doi": "10.64336/001c.156299",
+        "arxiv_id": "2602.10343",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "Journal of High School Science",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method",
+          "analysis_study"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:64195610a6d2c2448275"
+      },
+      "formal_decision_applied": false,
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P049's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Verify Journal of High School Science's archival identity and publication type; do not use a proceedings series, generic event label or track as the venue. Verify any proposed acronym rather than constructing initials."
+      ],
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "romania:jhss-acronym-context",
+        "romania:jhss-article"
+      ]
+    },
+    {
+      "review_id": "U005",
+      "paper_id": "curated:64195610a6d2c2448275",
+      "title": "Conditional Uncertainty-Aware Political Deepfake Detection with Stochastic Convolutional Neural Networks",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "assigned_scope": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "current_context": {
+        "public": true,
+        "paper_id": "curated:64195610a6d2c2448275",
+        "title": "Conditional Uncertainty-Aware Political Deepfake Detection with Stochastic Convolutional Neural Networks",
+        "doi": "10.64336/001c.156299",
+        "arxiv_id": "2602.10343",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "Journal of High School Science",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method",
+          "analysis_study"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:64195610a6d2c2448275"
+      },
+      "original_review": {
+        "review_id": "U005",
+        "paper_id": "curated:64195610a6d2c2448275",
+        "title": "Conditional Uncertainty-Aware Political Deepfake Detection with Stochastic Convolutional Neural Networks",
+        "year": 2026,
+        "publication_status": "journal",
+        "authors": [
+          "Rafael-Petruţ Gardoş"
+        ],
+        "institutions": [
+          {
+            "institution_id": "institution:004b85aa254cbf69",
+            "canonical_name": "Colegiul Național “Mihai Eminescu” Satu Mare",
+            "raw_affiliation": "Colegiul National ”Mihai Eminescu” Satu Mare, Mihai Eminescu 5, 440014, Satu Mare, Romania",
+            "authors": [
+              "Rafael-Petruţ Gardoş"
+            ],
+            "paper_time_affiliation_known": true,
+            "institution_identity_known": true,
+            "exists_in_registry": true,
+            "location_known": false,
+            "location_records": [],
+            "mapping_status": "active",
+            "mapping_id": "mapping:d6bbb1d46b8896b7f584",
+            "evidence_url": "https://doi.org/10.64336/001c.156299",
+            "evidence_basis": "https://doi.org/10.64336/001c.156299",
+            "hierarchy": [],
+            "allowed_to_map_as_node": true,
+            "relationship_currently_possible": false
+          }
+        ],
+        "author_affiliation_known": true,
+        "canonical_institution_identity_known": true,
+        "institution_registry_complete": true,
+        "any_reviewed_location_known": false,
+        "relationship_currently_possible": false,
+        "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+        "remediation_category": "EVIDENCE_CAN_RESOLVE",
+        "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+        "confidence": "high",
+        "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+        "authoritative_evidence_url": "https://doi.org/10.64336/001c.156299",
+        "project_evidence": [
+          "data/curated/author_institution_mappings.csv",
+          "data/curated/institutions.csv",
+          "data/curated/institution_locations.csv",
+          "data/curated/institution_hierarchy.csv"
+        ],
+        "batch": "B"
+      },
+      "outcome": "SUPPORTED_ADDITION",
+      "provisional_only": true,
+      "formal_acceptance": false,
+      "finding": "The primary paper explicitly names the exact school street address, matching the official school contact. The school embeds an approximate institution-selected map viewport point; it is neither an independently verified geocode nor a surveyed marker.",
+      "evidence_to_claim": [
+        "Originalauthoraffiliation explicitlygivesColegiulNationalMihaiEminescuSatuMare,MihaiEminescu5,440014,SatuMare,Romania; thissuppliespaper-timeaddressproofindependentlyofthegeographicpoint.",
+        "Officialschoolcontactgivesidenticalstreetnumber/city/postcode.",
+        "Officialschoolpage embedsGoogleMapviewportll=47.789438,22.876378 atzoom19; thiscanproposeaschoolrepresentativepointwithunmeasuredpositionaluncertainty.",
+        "Nominatimexactsitequery200returnedempty[]; simplifiedquerywasdeclinedandnotexecuted. Noindependentgeocoderagreementclaimed."
+      ],
+      "source_ids": [
+        "school-paper-firstpage",
+        "school-contact",
+        "local:unmapped-ledger"
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U005]",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained.",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U005",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:64195610a6d2c2448275]",
+          "finding": "Current public paper retained; tasks=['detection']; research_types=['method', 'analysis_study']; map_record_count=0.",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:d6bbb1d46b8896b7f584",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        },
+        {
+          "path": "data/curated/institutions.csv",
+          "locator": "institution_id in institution:004b85aa254cbf69",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized.",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326"
+        },
+        {
+          "path": "data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:004b85aa254cbf69",
+          "finding": "0 current reviewed location rows found for the mapped institutions.",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:64195610a6d2c2448275",
+          "finding": "Rafael-Petruţ Gardoş is mapped to a named school with a stored street address, Mihai Eminescu 5, 440014; location is still unreviewed.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        }
+      ],
+      "proposed_b4_action": "B4 may accept an approximate institution-selected representative point only if it explicitly accepts the viewport-derived precision and documented limitations. Preserve the exact paper-time address and source provenance. Do not claim an independent geocode, explicit map marker or survey accuracy.",
+      "limitations": [
+        "Officialmapviewportcenter isnot explicitmarkercoordinate; sourceCRSundeclared (Googlelat/lon), no conversionorsurveyvalidation.",
+        "Noindependentgeocoderpoint; precisionacceptance is aB4maintainercondition, notautomaticallyresolvedbyB3.",
+        "Noauthor/institutionmerge, mappingorpublicexport applied."
+      ],
+      "confidence": {
+        "work_identity": "high",
+        "bounded_finding": "high",
+        "site": "institutionhigh; exactpaper-timeaddresshigh; representativepointmoderate/approximate"
+      },
+      "tasks_preserved": true,
+      "research_types_preserved": true,
+      "authoritative_changes_applied": false,
+      "institution_evidence": [
+        {
+          "institution_id": "institution:004b85aa254cbf69",
+          "identity_verified": true,
+          "address_verified": true,
+          "verified_address": "Str. Mihai Eminescu5,SatuMare440014,Romania",
+          "paper_time_affiliation_verified": true,
+          "paper_time_specific_site_verified": true,
+          "paper_time_site_basis": "paperfirstpageexplicitexactstreetaddress +schoolcurrentcontactcorrespondence",
+          "coordinates": {
+            "latitude": 47.789438,
+            "longitude": 22.876378,
+            "coordinate_kind": "official_embedded_map_viewport",
+            "source_url": "https://www.eminescusm.ro/contact",
+            "map_url": "https://maps-api-ssl.google.com/maps?hl=en-US&ll=47.789438,22.876378&output=embed&z=19",
+            "crs": "undeclared by page; Google latitude/longitude display",
+            "marker_verified": false,
+            "surveyed": false,
+            "independent_geocode_verified": false,
+            "positional_uncertainty": "unmeasured",
+            "eligible_only_as": "approximateinstitutionselectedsitepointwithB4precisionacceptance"
+          }
+        }
+      ],
+      "action_id": "U005",
+      "review_group": "romania",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:64195610a6d2c2448275",
+        "title": "Conditional Uncertainty-Aware Political Deepfake Detection with Stochastic Convolutional Neural Networks",
+        "doi": "10.64336/001c.156299",
+        "arxiv_id": "2602.10343",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "Journal of High School Science",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method",
+          "analysis_study"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:64195610a6d2c2448275"
+      },
+      "formal_decision_applied": false,
+      "acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for Colegiul Național Mihai Eminescu Satu Mare; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "romania:local:unmapped-ledger",
+        "romania:school-contact",
+        "romania:school-paper-firstpage"
+      ],
+      "separate_site_evidence_gates": {
+        "institution_identity": "VERIFIED",
+        "address": "EXACT_STREET_ADDRESS_VERIFIED",
+        "paper_time_site": "EXACT_PAPER_ADDRESS_MATCHES_SCHOOL_CONTACT",
+        "coordinates": "QUALIFIED_APPROXIMATE_OFFICIAL_EMBEDDED_MAP_VIEWPORT; 47.789438,22.876378; not marker, not surveyed, CRS undeclared, uncertainty unmeasured",
+        "unsupported_assumption": "Do not promote selected viewport to independently geocoded or survey-accurate marker; B4 precision acceptance required."
+      }
+    }
+  ],
+  "note": "Evidence recommendations only; no formal decisions or source mutations."
+}

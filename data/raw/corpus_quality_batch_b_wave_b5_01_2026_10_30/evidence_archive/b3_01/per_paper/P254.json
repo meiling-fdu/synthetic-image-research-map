@@ -1,0 +1,514 @@
+{
+  "schema_version": "batch-b-b3-per-paper-1",
+  "wave": "Batch B Wave B3",
+  "planned_batch_id": "B2-01",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "review_id": "P254",
+  "paper_id": "doi:10.48550/arxiv.2407.10575",
+  "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+  "assigned_original_review": {
+    "review_id": "P254",
+    "paper_id": "doi:10.48550/arxiv.2407.10575",
+    "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+    "current": {
+      "year": 2025,
+      "publication_type": "journal",
+      "venue": "ACM Computing Surveys",
+      "venue_id": "venue:acm-computing-surveys",
+      "venue_acronym": "ACM Comput. Surv.",
+      "venue_track": "",
+      "doi": "10.48550/arxiv.2407.10575",
+      "paper_url": "",
+      "formal_url": "",
+      "arxiv_id": "2407.10575",
+      "arxiv_url": "https://arxiv.org/abs/2407.10575",
+      "authors": [
+        "Jingyi Deng",
+        "Chenhao Lin",
+        "Zhengyu Zhao",
+        "Shuai Liu",
+        "Zhe Peng",
+        "Qian Wang",
+        "Chao Shen"
+      ]
+    },
+    "evidence_urls": [
+      "https://arxiv.org/abs/2407.10575",
+      "https://openalex.org/W4400716502"
+    ],
+    "batch": "B",
+    "confidence": "bounded_to_available_evidence",
+    "evidence_required": "Obtain the official ACM Computing Surveys paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+    "proposed_changes": {},
+    "status": "REVIEW_REQUIRED",
+    "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+    "field_checks": {
+      "venue": "present",
+      "year": "present",
+      "publication_type": "formal_in_current_corpus",
+      "canonical_url": "missing_formal_url",
+      "doi": "repository_identifier_not_formal_DOI",
+      "arxiv": "present",
+      "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+      "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+    }
+  },
+  "current_identity": {
+    "paper_id": null,
+    "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+    "authors": [
+      {
+        "name": "Jingyi Deng",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Chenhao Lin",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Zhengyu Zhao",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Shuai Liu",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Zhe Peng",
+        "affiliation_indices": [
+          2
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Qian Wang",
+        "affiliation_indices": [
+          3
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      },
+      {
+        "name": "Chao Shen",
+        "affiliation_indices": [
+          1
+        ],
+        "is_current_marker_author": false,
+        "affiliation_source": "curated_admin",
+        "affiliation_fallback": false,
+        "affiliation_status": "mapped"
+      }
+    ],
+    "year": 2025,
+    "doi": "10.48550/arxiv.2407.10575",
+    "arxiv_id": "2407.10575",
+    "arxiv_url": "https://arxiv.org/abs/2407.10575",
+    "openalex_url": "https://openalex.org/W4400716502",
+    "venue": "ACM Computing Surveys",
+    "venue_name": "ACM Computing Surveys",
+    "venue_id": "venue:acm-computing-surveys",
+    "venue_track": "",
+    "publication_type": "journal",
+    "formal_url": "",
+    "paper_url": "",
+    "tasks": [
+      "detection"
+    ],
+    "research_types": [
+      "survey"
+    ],
+    "canonical_audit_paper_id": "doi:10.48550/arxiv.2407.10575"
+  },
+  "current_link_resolution": {
+    "formal_doi": "",
+    "formal_url": "",
+    "openalex_url": "https://openalex.org/W4400716502",
+    "arxiv_id": "2407.10575",
+    "arxiv_url": "https://arxiv.org/abs/2407.10575",
+    "primary_url": "https://openalex.org/W4400716502"
+  },
+  "review_scope": "Original missing canonical formal-URL publication question only; no taxonomy action is assigned.",
+  "provisional_outcome": "SUPPORTED_ADDITION",
+  "proposed_publication_change": {
+    "target": "canonical formal URL",
+    "before": "",
+    "after": "https://doi.org/10.1145/3770916",
+    "scientific_or_taxonomy_change": false,
+    "source_implementation": "B4 must reconcile supported authoritative URL field/precedence, stable identity and derived DOI behavior before any change."
+  },
+  "proposed_taxonomy_changes": [],
+  "formal_action_status": "UNRESOLVED — NO B3 ACCEPTANCE OR CLOSURE",
+  "maintainer_acceptance_required": true,
+  "source_packet": {
+    "artifact_path": "evidence_archive/local-fastlane-reviews.json",
+    "sha256": "cd8291f722fef8387e036c3ec39e0e0cd3224ff8d141143c3b42780d9d6ae7de",
+    "record_index": 1
+  },
+  "reviewer_evidence_record": {
+    "review_id": "P254",
+    "paper_id": "doi:10.48550/arxiv.2407.10575",
+    "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+    "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+    "scope": "PUBLICATION_FORMAL_URL_ONLY_EVIDENCE",
+    "original_review_question": "Obtain the official ACM Computing Surveys paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+    "original_review_record": {
+      "review_id": "P254",
+      "paper_id": "doi:10.48550/arxiv.2407.10575",
+      "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+      "current": {
+        "year": 2025,
+        "publication_type": "journal",
+        "venue": "ACM Computing Surveys",
+        "venue_id": "venue:acm-computing-surveys",
+        "venue_acronym": "ACM Comput. Surv.",
+        "venue_track": "",
+        "doi": "10.48550/arxiv.2407.10575",
+        "paper_url": "",
+        "formal_url": "",
+        "arxiv_id": "2407.10575",
+        "arxiv_url": "https://arxiv.org/abs/2407.10575",
+        "authors": [
+          "Jingyi Deng",
+          "Chenhao Lin",
+          "Zhengyu Zhao",
+          "Shuai Liu",
+          "Zhe Peng",
+          "Qian Wang",
+          "Chao Shen"
+        ]
+      },
+      "evidence_urls": [
+        "https://arxiv.org/abs/2407.10575",
+        "https://openalex.org/W4400716502"
+      ],
+      "batch": "B",
+      "confidence": "bounded_to_available_evidence",
+      "evidence_required": "Obtain the official ACM Computing Surveys paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "proposed_changes": {},
+      "status": "REVIEW_REQUIRED",
+      "reason": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+      "field_checks": {
+        "venue": "present",
+        "year": "present",
+        "publication_type": "formal_in_current_corpus",
+        "canonical_url": "missing_formal_url",
+        "doi": "repository_identifier_not_formal_DOI",
+        "arxiv": "present",
+        "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+        "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+      }
+    },
+    "current_canonical_and_public_state": {
+      "paper_id": "doi:10.48550/arxiv.2407.10575",
+      "public_storage_identity": "https://openalex.org/W4400716502",
+      "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+      "authors": [
+        "Jingyi Deng",
+        "Chenhao Lin",
+        "Zhengyu Zhao",
+        "Shuai Liu",
+        "Zhe Peng",
+        "Qian Wang",
+        "Chao Shen"
+      ],
+      "doi": "10.48550/arxiv.2407.10575",
+      "arxiv_id": "2407.10575",
+      "year": 2025,
+      "venue": "ACM Computing Surveys",
+      "publication_type": "journal",
+      "tasks": [
+        "detection"
+      ],
+      "research_types": [
+        "survey"
+      ],
+      "public_formal_url": "",
+      "public_paper_url": "",
+      "resolved_links": {
+        "formal_doi": "",
+        "formal_url": "",
+        "openalex_url": "https://openalex.org/W4400716502",
+        "arxiv_id": "2407.10575",
+        "arxiv_url": "https://arxiv.org/abs/2407.10575",
+        "primary_url": "https://openalex.org/W4400716502"
+      }
+    },
+    "provisional_outcome": "SUPPORTED_ADDITION",
+    "outcome_scope": "Adding only the missing formal URL; this is not a taxonomy addition, formal decision or scientific reclassification.",
+    "scientific_review_restarted": false,
+    "proposed_taxonomy_changes": [],
+    "authoritative_changes_applied": false,
+    "formal_review_action_closed": false,
+    "maintainer_acceptance_pending": true,
+    "retrieval_accounting": {
+      "new_network_requests": 0,
+      "new_full_manuscripts": 0,
+      "manuscript_downloads": 0,
+      "datasets_or_code_downloads": 0,
+      "source_refresh_attempts": 0,
+      "paid_source_api_cost_usd": 0,
+      "currency": "USD",
+      "cost_scope": "External source/API spend only. Model-compute billing is not known and is not asserted to be zero."
+    },
+    "proposed_publication_change": {
+      "field": "formal_url",
+      "before": "",
+      "after": "https://doi.org/10.1145/3770916",
+      "scope": "A formal-version link addition only; no canonical DOI/ID/author/year/venue/task/type replacement is proposed.",
+      "implementation_boundary": "Derived public formal_url may require a supported authoritative/manual URL field; B4 must reconcile the exact schema and fingerprint before applying anything. No direct public-export JSON edit."
+    },
+    "proposed_formal_doi_change": null,
+    "identity_evidence": {
+      "canonical_title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+      "publisher_deposit_title": "A Survey of Defenses Against AI-Generated Visual Media: Detection, Disruption, and Authentication",
+      "title_exact_match": false,
+      "title_match_after_whitespace_normalization": true,
+      "normalization_only_note": "P254 canonical comma spacing differs from publisher title; no title edit proposed.",
+      "canonical_author_sequence": [
+        "Jingyi Deng",
+        "Chenhao Lin",
+        "Zhengyu Zhao",
+        "Shuai Liu",
+        "Zhe Peng",
+        "Qian Wang",
+        "Chao Shen"
+      ],
+      "publisher_deposit_author_sequence": [
+        "Jingyi Deng",
+        "Chenhao Lin",
+        "Zhengyu Zhao",
+        "Shuai Liu",
+        "Zhe Peng",
+        "Qian Wang",
+        "Chao Shen"
+      ],
+      "arxiv_author_sequence": [
+        "Jingyi Deng",
+        "Chenhao Lin",
+        "Zhengyu Zhao",
+        "Shuai Liu",
+        "Zhe Peng",
+        "Qian Wang",
+        "Chao Shen"
+      ],
+      "full_ordered_author_match": true,
+      "verified_publisher_doi": "10.1145/3770916",
+      "canonical_stored_doi": "10.48550/arxiv.2407.10575",
+      "arxiv_id": "2407.10575",
+      "arxiv_metadata": {
+        "id": "http://arxiv.org/abs/2407.10575v3",
+        "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+        "authors": [
+          "Jingyi Deng",
+          "Chenhao Lin",
+          "Zhengyu Zhao",
+          "Shuai Liu",
+          "Zhe Peng",
+          "Qian Wang",
+          "Chao Shen"
+        ],
+        "published": "2024-07-15T09:46:02Z",
+        "updated": "2025-10-06T10:42:27Z",
+        "doi": "",
+        "journal_ref": "",
+        "comment": "Accepted by ACM Computing Surveys",
+        "links": [
+          {
+            "href": "https://arxiv.org/abs/2407.10575v3",
+            "rel": "alternate",
+            "type": "text/html"
+          },
+          {
+            "href": "https://arxiv.org/pdf/2407.10575v3",
+            "rel": "related",
+            "type": "application/pdf",
+            "title": "pdf"
+          }
+        ]
+      },
+      "processed_doi_arxiv_linkage": {
+        "doi": "10.1145/3770916",
+        "arxiv_id": "2407.10575",
+        "name": "ACM Computing Surveys",
+        "type": "journal",
+        "acronym": "ACM Comput. Surv.",
+        "year": 2025,
+        "source": "https://api.crossref.org/works/10.1145%2F3770916",
+        "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection, Disruption, and Authentication"
+      },
+      "formal_doi_url": "https://doi.org/10.1145/3770916",
+      "publisher_resource_url": "https://dl.acm.org/doi/10.1145/3770916",
+      "publisher": "Association for Computing Machinery (ACM)",
+      "deposited_publication_type": "journal-article",
+      "container_title": [
+        "ACM Computing Surveys"
+      ],
+      "published_online": {
+        "date-parts": [
+          [
+            2025,
+            11,
+            20
+          ]
+        ]
+      },
+      "published_print": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            30
+          ]
+        ]
+      },
+      "deposit_retrieved_on": "2026-08-28",
+      "deposit_source_url": "https://api.crossref.org/works/10.1145%2F3770916",
+      "deposit_sha256": "e7837e173c619abbedfc55e86cc543a3e3b9958840927c4ed20ae5c877fa2b18",
+      "work_identity_confidence": "high for bounded same-work formalURL; no manuscript byte-equivalence or independent science claim",
+      "identity_basis": "Canonical and official arXiv metadata title/full-author sequence match saved publisher-deposited Crossref metadata; existing processed evidence links the canonical arXiv identity to the formal DOI. P305 arXiv metadata explicitly supplies the same formal DOI; P254 arXiv metadata supplies title/authors and CSUR acceptance, not a DOI."
+    },
+    "scientific_evidence_scope": {
+      "status": "NOT_ASSESSED_IN_THIS_PUBLICATION_WAVE",
+      "prior_validated_full_scientific_extract_available_for_this_review": false,
+      "manuscript_methods_evaluation_examined": false,
+      "current_classification_retained": {
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "survey"
+        ]
+      },
+      "abstracts_not_promoted_to_scientific_findings": true,
+      "existing_abstract_or_survey_descriptors_are_identity_context_only": true,
+      "independent_empirical_reproduction": false,
+      "new_scientific_acceptance": false,
+      "scope_note": "This bounded publication evidence establishes archival URL identity. No validated methods/evaluation extract is substituted by abstract or title, no taxonomy support is re-certified, and no manuscript review was restarted."
+    },
+    "source_provenance": [
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+        "locator": "formal_records[review_id=P254]",
+        "finding": "Current record is formal but lacks a canonical formal URL; arXiv DOI/URL is not a substitute.",
+        "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+      },
+      {
+        "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+        "locator": "#b-P254",
+        "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+        "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+      },
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+        "locator": "policies[policy_id=V1]",
+        "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+        "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+      },
+      {
+        "path": "docs/publication_venue_normalization.md",
+        "locator": "Data and precedence; Persistence and live review",
+        "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+        "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+      },
+      {
+        "path": "data/processed/venue_paper_evidence.json",
+        "locator": "papers[1]",
+        "finding": "Exact title plus canonical arXiv linkage identifies formal DOI10.1145/3770916 and canonical archival venue.",
+        "sha256": "08bc5efea3d201fae15a70435108a77b0e67b2e586c02e0226f1705cd4fa77fb"
+      },
+      {
+        "path": "data/raw/venue_audit_crossref/f46eff9ea9746db9e65a.json",
+        "locator": "response.message",
+        "finding": "Saved formal deposit title/full7-author sequence matches canonical paper; URLhttps://doi.org/10.1145/3770916; typejournal-article; identity independently compared locally.",
+        "sha256": "e7837e173c619abbedfc55e86cc543a3e3b9958840927c4ed20ae5c877fa2b18"
+      },
+      {
+        "path": "web/data/public_preview_papers.json",
+        "locator": "records[arxiv_id=2407.10575]",
+        "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+        "finding": "Current published paper matched by exact arXiv identifier; actual resolver output has no formal URL/DOI."
+      },
+      {
+        "path": "scripts/paper_links.py",
+        "locator": "resolve_public_links; _formal_url",
+        "sha256": "4e474feb440ce3e83f2147457fa965629f07de13a5adadacac7a976a61e44a8d",
+        "finding": "Pure offline current-state link resolution; arXiv DOI and OpenAlex URL are not formal publisher links."
+      },
+      {
+        "path": "data/curated/review_decisions.csv",
+        "locator": "target paper doi:10.48550/arxiv.2407.10575; original action P254",
+        "sha256": "ce616e76f5b41a2df967c9c72451f9cbeb8b1ad05b488d5ca6240d070c4819dc",
+        "finding": "Original publication question remains open. Any prior independent scientific terminal action is preserved and is not reused to close this publication action."
+      },
+      {
+        "path": "data/raw/venue_audit_crossref/arxiv-full-048f53e8e62bbcb5.xml",
+        "locator": "atom:entry[arxiv_id=2407.10575]",
+        "sha256": "153484ddb11e3ea621ad92e801985c2b5e9adc34cd01092bfde46c88aa8fdf8e",
+        "finding": "Official stored arXiv identity metadata: title, ordered author sequence, version/date/comment and any explicit DOI/journal_ref; no manuscript content inspected."
+      }
+    ],
+    "limitations": [
+      "Saved publisher-deposited Crossref and official arXiv metadata are used offline; current URL accessibility and subsequent metadata changes were not requested.",
+      "No full formal or preprint manuscript was obtained/read in B3; byte-level or complete scientific-version equivalence remains unverified.",
+      "The canonical arXiv DOI is preserved as repository identity. The observed formal DOI supports a formal-version link; replacing canonical DOI, ID, authors or year is outside the proposed URL-only change.",
+      "Online publication2025-11-20 and issue/print2026-04-30 are distinct deposited events; no year/date update proposed.",
+      "Canonical title omits whitespace after Detection, relative to deposit title; full ordered7-author sequence matches.",
+      "arXivv3 acceptance comment alone would not establish publication; it is combined with the exact publisher-deposited archival record."
+    ],
+    "disagreement": {
+      "date_events": "Canonical year2025 agrees with online2025; print2026 is not a contradiction that warrants a year edit in this wave.",
+      "title_spacing": "Detection,Disruption versus Detection, Disruption is preserved as a literal version/format difference."
+    },
+    "unsupported_claims": [
+      "No newly reproduced scientific experiment or causal claim.",
+      "No blanket full-metadata, author-version or manuscript byte-equivalence certification.",
+      "No operational reproducibility certification, publication-year edit, taxonomy change or formal action closure."
+    ],
+    "confidence": {
+      "bounded_formal_url_identity": "high",
+      "scientific_reassessment": "not performed",
+      "publisher_full_version_equivalence": "not established"
+    },
+    "B4conditions": [
+      "Explicit maintainer acceptance is required for P254; keep original action open until a valid formal decision is recorded.",
+      "Persist only the accepted formal URL via the supported manual/canonical mechanism after current-schema and bibliographic-fingerprint reconciliation; do not edit generated JSON directly.",
+      "Preserve arXiv identifier/DOI provenance, existing paper identity, authors, dates, venue/type/track, task/type/scope and relationships. The observed formal DOI is source evidence, not a separately proposed canonical DOI edit.",
+      "Require narrow export/link consistency and review-accounting verification only during a later explicitly authorized integration. This evidence phase writes no data and creates no terminal decision."
+    ]
+  },
+  "independent_qc": {
+    "artifact_path": "evidence_archive/qc-local-three.json",
+    "status": "PASS",
+    "scope": "Evidence-to-original-publication-claim mapping; not formal maintainer acceptance."
+  },
+  "evidence_provenance_inventory": "source_inventory.json"
+}

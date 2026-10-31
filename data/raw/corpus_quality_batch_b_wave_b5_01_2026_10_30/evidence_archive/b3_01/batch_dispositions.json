@@ -1,0 +1,407 @@
+{
+  "schema_version": "batch-b-b3-dispositions-1",
+  "date": "2026-10-28",
+  "mode": "EVIDENCE_ONLY_PROVISIONAL",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "authoritative_B2_inputs": {
+    "batch_plan.md": "14af2a8bac007d21f7aef4fb70ee6f75d81bc1424a7eaf6f8b3654cfb6736c0e",
+    "backlog_matrix.json": "fead93a11f96adb4b6de008ec2085da7559a83109a4f6e2b79f7a5e0d4cd59eb",
+    "validation.json": "19d4b74904bce8735a3f99e812934c1930f30a4e722cf17674a3264272d472ad"
+  },
+  "planned_batch": {
+    "batch_id": "B2-01",
+    "title": "Canonical formal URLs — reuse verified publisher evidence first",
+    "anchor_ids": [
+      "P034",
+      "P254",
+      "P305",
+      "P028",
+      "P097",
+      "P105",
+      "P150",
+      "P177",
+      "P229"
+    ],
+    "priority": 1,
+    "parallel_lane": "publication",
+    "depends_on": [],
+    "purpose": "Resolve bounded missing-formal-URL questions with exact work/version identity; three local-ready candidates lead, remaining official record checks follow.",
+    "status": "PROPOSED_NOT_AUTHORIZED_FOR_EXECUTION",
+    "members": [
+      {
+        "paper_id": "curated:aa7dceb70828cdd6ad39",
+        "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+        "action_ids": [
+          "P034"
+        ],
+        "actionable_ids": [
+          "P034"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "doi:10.48550/arxiv.2407.10575",
+        "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+        "action_ids": [
+          "P254"
+        ],
+        "actionable_ids": [
+          "P254"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "doi:10.48550/arxiv.2312.02625",
+        "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+        "action_ids": [
+          "P305"
+        ],
+        "actionable_ids": [
+          "P305"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:92fe1dfd435209b21ff4",
+        "title": "Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3",
+        "action_ids": [
+          "P028"
+        ],
+        "actionable_ids": [
+          "P028"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:8503e319e1f4890c2e28",
+        "title": "FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection",
+        "action_ids": [
+          "P097"
+        ],
+        "actionable_ids": [
+          "P097"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:be2900947b322f9eb905",
+        "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+        "action_ids": [
+          "P105"
+        ],
+        "actionable_ids": [
+          "P105"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:7a5ce57b121b69752867",
+        "title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+        "action_ids": [
+          "P150"
+        ],
+        "actionable_ids": [
+          "P150"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:b460935b64c35e1d074a",
+        "title": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection",
+        "action_ids": [
+          "P177"
+        ],
+        "actionable_ids": [
+          "P177"
+        ],
+        "blocked_companion_ids": []
+      },
+      {
+        "paper_id": "curated:55bc4360e3d312e696b7",
+        "title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+        "action_ids": [
+          "P229"
+        ],
+        "actionable_ids": [
+          "P229"
+        ],
+        "blocked_companion_ids": []
+      }
+    ],
+    "paper_count": 9,
+    "action_ids": [
+      "P034",
+      "P254",
+      "P305",
+      "P028",
+      "P097",
+      "P105",
+      "P150",
+      "P177",
+      "P229"
+    ],
+    "actionable_action_ids": [
+      "P034",
+      "P254",
+      "P305",
+      "P028",
+      "P097",
+      "P105",
+      "P150",
+      "P177",
+      "P229"
+    ],
+    "conditional_blocked_companion_ids": [],
+    "analyst_minutes_range_before_reuse": [
+      125,
+      245
+    ],
+    "effort_basis": "Sum of row-level analyst estimates; no discount for shared evidence, no access waiting, downloads, adjudication, implementation, exports or integration included.",
+    "required_evidence": {
+      "P034": [
+        "No new retrieval for the bounded formal-URL review. Reuse the validated B1M Springer publisher identity/source receipt; preserve and separately reconcile its13-author publisher version versus12-author canonical/early version before any broader bibliographic edit."
+      ],
+      "P254": [
+        "No new retrieval for the bounded original formal-URL question. Reuse existing exact-title/full-author DOI-matched saved publisher deposit and reviewed DOI/arXiv linkage."
+      ],
+      "P305": [
+        "No new retrieval for the bounded original formal-URL question. Reuse existing exact-title/full-author DOI-matched saved publisher deposit and reviewed DOI/arXiv linkage."
+      ],
+      "P028": [
+        "Official ACM International Conference on Multimedia archival paper landing page or proceedings item for Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "P097": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "P105": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "P150": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "P177": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ],
+      "P229": [
+        "Official European Conference on Computer Vision archival paper landing page or proceedings item for UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models, with title/authors, DOI if assigned and canonical formal URL; no full scientific manuscript ordinarily required."
+      ]
+    },
+    "acceptance_criteria": [
+      "Pin exact baseline and resolve work/version identity before substantive review.",
+      "Reuse existing validated evidence; fetch only the precise missing primary material if separately authorized.",
+      "Every member action must have its own cited bounded finding and sufficiency assessment; unresolved/blocked is valid.",
+      "Do not modify corpus during evidence review. Formal maintainer acceptance and sequential integration are separate future gates.",
+      "Preserve every current companion task/type/metadata field and all documented source/numerical limitations."
+    ],
+    "action_acceptance_criteria": {
+      "P034": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P034's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P254": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P254's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P305": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P305's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P028": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P028's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P097": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P097's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P105": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P105's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P150": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P150's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P177": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P177's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ],
+      "P229": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P229's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Demonstrate that the proposed formal URL identifies the canonical paper and is archival, not merely the arXiv DOI/URL; keep arXiv version metadata separate."
+      ]
+    }
+  },
+  "batch_membership_or_priorities_changed": false,
+  "fastlane_candidates_all_in_first_batch": [
+    "P034",
+    "P254",
+    "P305"
+  ],
+  "scope_confirmed_by_user": "Follow B2-01 publication-URL scope strictly; preserve taxonomy; no scientific-contribution audit.",
+  "potential_taxonomy_followup_issues": [],
+  "scope_interpretation": "B2-01 assigns nine publication formal-URL actions and no taxonomy actions. B3 outcomes concern those original bounded questions. Completed scientific reviews are reused; absent method/result evidence is explicitly not reassessed, not inferred from title/abstract.",
+  "records": [
+    {
+      "review_id": "P034",
+      "paper_id": "curated:aa7dceb70828cdd6ad39",
+      "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+      "provisional_outcome": "SUPPORTED_ADDITION",
+      "proposed_formal_url": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14",
+      "taxonomy_changes": [],
+      "action_closed": false,
+      "evidence_record": "per_paper/P034.json",
+      "evidence_record_sha256": "b9f957ea39079294e3c1b85ac64f7ed40f918e1da17507d0fbdb99f8119d67c0",
+      "B4_acceptance_pending": true
+    },
+    {
+      "review_id": "P254",
+      "paper_id": "doi:10.48550/arxiv.2407.10575",
+      "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+      "provisional_outcome": "SUPPORTED_ADDITION",
+      "proposed_formal_url": "https://doi.org/10.1145/3770916",
+      "taxonomy_changes": [],
+      "action_closed": false,
+      "evidence_record": "per_paper/P254.json",
+      "evidence_record_sha256": "5e5049f3b0a2c5cc0de285a4f15bc3c623e2ff1945fd4b85cfd20400eb9b7131",
+      "B4_acceptance_pending": true
+    },
+    {
+      "review_id": "P305",
+      "paper_id": "doi:10.48550/arxiv.2312.02625",
+      "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+      "provisional_outcome": "SUPPORTED_ADDITION",
+      "proposed_formal_url": "https://doi.org/10.3233/faia250925",
+      "taxonomy_changes": [],
+      "action_closed": false,
+      "evidence_record": "per_paper/P305.json",
+      "evidence_record_sha256": "4f6beb63c2a15e6555980b7b3d85ef19c7ea86880e2fb7d6f1d05434847ffa6c",
+      "B4_acceptance_pending": true
+    },
+    {
+      "review_id": "P028",
+      "paper_id": "curated:92fe1dfd435209b21ff4",
+      "title": "Anchor-Regularized Adaptation for Generalizable AI-Generated Image Detection with DINOv3",
+      "provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "proposed_formal_url": null,
+      "taxonomy_changes": [],
+      "action_closed": false,
+      "evidence_record": "per_paper/P028.json",
+      "evidence_record_sha256": "a87db5c777b53df30d1535d76d94d60f06aec6296c07205b1838115f948f9891",
+      "B4_acceptance_pending": true
+    },
+    {
+      "review_id": "P097",
+      "paper_id": "curated:8503e319e1f4890c2e28",
+      "title": "FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection",
+      "provisional_outcome": "SUPPORTED_ADDITION",
+      "proposed_formal_url": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32",
+      "taxonomy_changes": [],
+      "action_closed": false,
+      "evidence_record": "per_paper/P097.json",
+      "evidence_record_sha256": "4cf166ed6789504f36e52eb9772308bff06e96b0be5bc25acda40d41c7aef6e0",
+      "B4_acceptance_pending": true
+    },
+    {
+      "review_id": "P105",
+      "paper_id": "curated:be2900947b322f9eb905",
+      "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+      "provisional_outcome": "SUPPORTED_ADDITION",
+      "proposed_formal_url": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18",
+      "taxonomy_changes": [],
+      "action_closed": false,
+      "evidence_record": "per_paper/P105.json",
+      "evidence_record_sha256": "55ead57006fbce38585bbee4ef9bf845004080c846e16a28d9dc3958f4f45b2a",
+      "B4_acceptance_pending": true
+    },
+    {
+      "review_id": "P150",
+      "paper_id": "curated:7a5ce57b121b69752867",
+      "title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+      "provisional_outcome": "SUPPORTED_ADDITION",
+      "proposed_formal_url": "https://doi.org/10.1007/978-3-032-37464-6_12",
+      "taxonomy_changes": [],
+      "action_closed": false,
+      "evidence_record": "per_paper/P150.json",
+      "evidence_record_sha256": "f0767c41a471fd6defe27cac4657bac55bf189a4120d396ade72fd91f63c0e81",
+      "B4_acceptance_pending": true
+    },
+    {
+      "review_id": "P177",
+      "paper_id": "curated:b460935b64c35e1d074a",
+      "title": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection",
+      "provisional_outcome": "SUPPORTED_ADDITION",
+      "proposed_formal_url": "https://doi.org/10.1007/978-3-032-37350-2_34",
+      "taxonomy_changes": [],
+      "action_closed": false,
+      "evidence_record": "per_paper/P177.json",
+      "evidence_record_sha256": "a9d787185421b261b300697402d77b629c4b26ffeebf7c668bca99017e1b3e37",
+      "B4_acceptance_pending": true
+    },
+    {
+      "review_id": "P229",
+      "paper_id": "curated:55bc4360e3d312e696b7",
+      "title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+      "provisional_outcome": "SUPPORTED_ADDITION",
+      "proposed_formal_url": "https://doi.org/10.1007/978-3-032-37023-5_10",
+      "taxonomy_changes": [],
+      "action_closed": false,
+      "evidence_record": "per_paper/P229.json",
+      "evidence_record_sha256": "9595d6c3961a5d4bc68e3705800818524fff70d146055825bfcab989cc4ea769",
+      "B4_acceptance_pending": true
+    }
+  ],
+  "outcome_counts": {
+    "SUPPORTED_ADDITION": 8,
+    "EVIDENCE_INSUFFICIENT": 1
+  },
+  "proposed_taxonomy_changes": [],
+  "proposed_publication_link_additions": [
+    "P034",
+    "P254",
+    "P305",
+    "P097",
+    "P105",
+    "P150",
+    "P177",
+    "P229"
+  ],
+  "unsupported_actions": [],
+  "unresolved_or_blocked_actions": [
+    {
+      "review_id": "P028",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "missing_evidence": "Exact authoritative ACM archival paper/proceedings item matching the existing title/full authors; no URL or DOI is guessed. Search failure is not evidence of nonpublication."
+    }
+  ],
+  "identity_blocked_actions": [],
+  "all_original_actions_remain_unresolved": true,
+  "unchanged_Batch_B_accounting": {
+    "historical_unresolved_actions": 131,
+    "historical_unresolved_papers": 121,
+    "active_public_unresolved_actions": 129,
+    "active_public_unresolved_papers": 119
+  },
+  "effort_file": "effort_and_retrieval.json",
+  "source_inventory": "source_inventory.json",
+  "validation_file": "validation.json",
+  "B4_handoff": "b4_handoff.json"
+}

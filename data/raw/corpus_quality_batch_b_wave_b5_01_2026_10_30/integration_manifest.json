@@ -1,0 +1,2109 @@
+{
+  "schema_version": "batch-b-b5-01-integration-1",
+  "phase": "INTEGRATED_EXPORTED_PENDING_COMPLETE_VALIDATION",
+  "created_utc": "2026-10-30T07:17:22.535847+00:00",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "transactions": [
+    {
+      "name": "B4-01",
+      "manifest_path": "data/raw/corpus_quality_batch_b_wave_b4_01_2026_10_29/adjudication_manifest.json",
+      "manifest_sha256": "24fddb89476e0abaa74d6c252cbc4f2ec7ec1b62a84b6f851dfd0eb1db277f85",
+      "original_report_path": "docs/corpus_quality_batch_b_wave_b4_01_2026_10_29.md",
+      "original_report_sha256": "570e24971e1960c016589106cee4b65d67006024da14987ebaf350ef56f4fb02",
+      "validated_pending_file_fingerprints": {
+        "data/curated/papers.csv": "b560c8a77fe45f38c3d6c5d47f81e2798ef41dcc6bec0fc44769d922104635ef",
+        "data/curated/publication_overrides.csv": "ae6ce79a8f9567402cca7cc7197e28b4c2b2cca7cff2e534fb06af43dc6a2310",
+        "data/curated/review_decisions.csv": "744bbf36df836b00a1d5f5d33669b832765c7f3175390ca6bbef745c07a7b58a",
+        "data/raw/corpus_quality_batch_b_wave_b4_01_2026_10_29/adjudication_manifest.json": "24fddb89476e0abaa74d6c252cbc4f2ec7ec1b62a84b6f851dfd0eb1db277f85",
+        "data/raw/corpus_quality_batch_b_wave_b4_01_2026_10_29/b5_handoff.json": "743f28e96e6c0188afbf96165fd85c23794d9545805d61ca18668701dc04153d",
+        "docs/corpus_quality_batch_b_wave_b4_01_2026_10_29.md": "570e24971e1960c016589106cee4b65d67006024da14987ebaf350ef56f4fb02",
+        "docs/key_paper_coverage_report.md": "4c61a69bf0d40fc4ac97e3b765630d8da0aba565c8f1b46770a7656194b231f0",
+        "tests/test_corpus_quality_batch_b_wave_b4_01.py": "2ac7f1d3bec7cdb07211255ced991ec29282d2df21bac52114cf3ae423e41d14"
+      }
+    },
+    {
+      "name": "B4-02",
+      "manifest_path": "data/raw/corpus_quality_batch_b_wave_b4_02_2026_10_29/adjudication_manifest.json",
+      "manifest_sha256": "454e865777611de114b1ce52456e2d798111cc8b7d2e1d7efc1358ea17ba3771",
+      "original_report_path": "docs/corpus_quality_batch_b_wave_b4_02_2026_10_29.md",
+      "original_report_sha256": "6a81da7952a30eb1b7583e16b21a7a38547d43553ac0af1d97a4a85c55ed4271",
+      "validated_pending_file_fingerprints": {
+        "data/curated/papers.csv": "41f5bee3556ecc8667cc3b6ebc83b82160911ed61b5743b84703621bf24d3dc5",
+        "data/curated/review_decisions.csv": "9ee53db8bf8d123ee6529b0d8f6792fd60557d9d0e6a770e1b77220fb4e9af5e",
+        "data/curated/venue_aliases.csv": "8148eb3bece935006d7d88f7f4e0447fdc10ce1a431bafc25cffe479a333c916",
+        "data/raw/corpus_quality_batch_b_wave_b4_02_2026_10_29/adjudication_manifest.json": "454e865777611de114b1ce52456e2d798111cc8b7d2e1d7efc1358ea17ba3771",
+        "data/raw/corpus_quality_batch_b_wave_b4_02_2026_10_29/b5_handoff.json": "21e0bd9d4d0676d67baad1778e472add75fff0a8feed5a0ffc58c8fd43383767",
+        "docs/corpus_quality_batch_b_wave_b4_02_2026_10_29.md": "6a81da7952a30eb1b7583e16b21a7a38547d43553ac0af1d97a4a85c55ed4271",
+        "docs/key_paper_coverage_report.md": "7065098e77c7159118c0437d366946d5f214a36c9f60236631295c52b6766c00",
+        "tests/test_corpus_quality_batch_b_wave_b4_02.py": "ede273958436346d7b94e24c4f970a6fca6fc6528f7e87b7f0ce87d71077f3a3"
+      }
+    }
+  ],
+  "source_before_sha256": {
+    "data/curated/papers.csv": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+    "data/curated/publication_overrides.csv": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+    "data/curated/venue_aliases.csv": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+    "data/curated/review_decisions.csv": "ce616e76f5b41a2df967c9c72451f9cbeb8b1ad05b488d5ca6240d070c4819dc"
+  },
+  "source_after_sha256": {
+    "data/curated/papers.csv": "0fd82c4b242d86b6fe4dbf0c8dcd98cccc6a6930c0bd2e93b416a49a1bf0c3e4",
+    "data/curated/publication_overrides.csv": "ae6ce79a8f9567402cca7cc7197e28b4c2b2cca7cff2e534fb06af43dc6a2310",
+    "data/curated/venue_aliases.csv": "8148eb3bece935006d7d88f7f4e0447fdc10ce1a431bafc25cffe479a333c916",
+    "data/curated/review_decisions.csv": "3430814d49d8e73a5836c71fb04b5acb3e95de3dac56bb795ca62dcf734bfda5"
+  },
+  "paper_cell_deltas": [
+    {
+      "paper_id": "curated:be2900947b322f9eb905",
+      "field": "paper_url",
+      "before": "http://arxiv.org/abs/2509.25682",
+      "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+    },
+    {
+      "paper_id": "curated:aa7dceb70828cdd6ad39",
+      "field": "paper_url",
+      "before": "https://arxiv.org/abs/2512.20937",
+      "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+    },
+    {
+      "paper_id": "curated:b460935b64c35e1d074a",
+      "field": "paper_url",
+      "before": "https://arxiv.org/abs/2608.18523",
+      "after": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34"
+    },
+    {
+      "paper_id": "curated:7a5ce57b121b69752867",
+      "field": "paper_url",
+      "before": "https://arxiv.org/abs/2608.20882",
+      "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+    },
+    {
+      "paper_id": "curated:8503e319e1f4890c2e28",
+      "field": "paper_url",
+      "before": "https://arxiv.org/abs/2607.22087",
+      "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+    },
+    {
+      "paper_id": "curated:55bc4360e3d312e696b7",
+      "field": "paper_url",
+      "before": "https://arxiv.org/abs/2608.15238",
+      "after": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10"
+    },
+    {
+      "paper_id": "curated:64195610a6d2c2448275",
+      "field": "venue_id",
+      "before": "",
+      "after": "venue:journal-of-high-school-science"
+    },
+    {
+      "paper_id": "curated:64195610a6d2c2448275",
+      "field": "venue_name",
+      "before": "",
+      "after": "Journal of High School Science"
+    },
+    {
+      "paper_id": "curated:64195610a6d2c2448275",
+      "field": "venue_type",
+      "before": "",
+      "after": "journal"
+    },
+    {
+      "paper_id": "curated:e5a9ed970200c293678e",
+      "field": "venue_id",
+      "before": "",
+      "after": "venue:machine-vision-and-applications"
+    },
+    {
+      "paper_id": "curated:e5a9ed970200c293678e",
+      "field": "venue_name",
+      "before": "",
+      "after": "Machine Vision and Applications"
+    },
+    {
+      "paper_id": "curated:e5a9ed970200c293678e",
+      "field": "venue_type",
+      "before": "",
+      "after": "journal"
+    },
+    {
+      "paper_id": "curated:d129c9180d4a0cff91ad",
+      "field": "venue_id",
+      "before": "",
+      "after": "venue:international-journal-of-data-science-and-analytics"
+    },
+    {
+      "paper_id": "curated:d129c9180d4a0cff91ad",
+      "field": "venue_name",
+      "before": "",
+      "after": "International Journal of Data Science and Analytics"
+    },
+    {
+      "paper_id": "curated:d129c9180d4a0cff91ad",
+      "field": "venue_type",
+      "before": "",
+      "after": "journal"
+    }
+  ],
+  "appended_publication_override_rows": [
+    {
+      "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+      "match_year": 2025,
+      "formal_year": 2025,
+      "formal_venue": "ACM Computing Surveys",
+      "formal_doi": "10.48550/arxiv.2407.10575",
+      "formal_paper_url": "https://dl.acm.org/doi/10.1145/3770916",
+      "publication_type": "journal",
+      "notes": "Approved Batch B review P254; B4-01 URL-only acceptance; [publication-url-state:e34bcb6894e80246bf4af0338ff1693e461cfe3736c9aeba3af6947aab8f7899]. Existing year/venue/type/DOI repeated exactly; source arXiv DOI retained deliberately, not asserted to be the formal publisher DOI. B3 evidence SHA256 5e5049f3b0a2c5cc0de285a4f15bc3c623e2ff1945fd4b85cfd20400eb9b7131."
+    },
+    {
+      "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+      "match_year": 2025,
+      "formal_year": 2025,
+      "formal_venue": "European Conference on Artificial Intelligence",
+      "formal_doi": "10.48550/arxiv.2312.02625",
+      "formal_paper_url": "https://ebooks.iospress.nl/doi/10.3233/FAIA250925",
+      "publication_type": "conference",
+      "notes": "Approved Batch B review P305; B4-01 URL-only acceptance; [publication-url-state:51189217df1be428cd6a954cd67ab9bcb998e27b23070f995bc11da49d460e3e]. Existing year/venue/type/DOI repeated exactly; source arXiv DOI retained deliberately, not asserted to be the formal publisher DOI. B3 evidence SHA256 4f6beb63c2a15e6555980b7b3d85ef19c7ea86880e2fb7d6f1d05434847ffa6c."
+    }
+  ],
+  "appended_venue_alias_rows": [
+    {
+      "alias": "Journal of High School Science",
+      "venue_id": "venue:journal-of-high-school-science",
+      "venue_name": "Journal of High School Science",
+      "venue_acronym": "",
+      "venue_type": "journal",
+      "venue_track": "",
+      "review_status": "confirmed",
+      "notes": "Maintainer-approved B4-02 P049; exact DOI 10.64336/001c.156299; https://jhss.scholasticahq.com/article/156299-conditional-uncertainty-aware-political-deepfake-detection-with-stochastic-convolutional-neural-networks; B3-02 publisher SHA256 7590b14b85fa0fed3d9ba94355e88a97b3eabb2bba63b69df9b9453f59826f47; preserve empty optional acronym. Names sharing words are distinct, not aliases of IJACSA."
+    },
+    {
+      "alias": "International Journal of Data Science and Analytics",
+      "venue_id": "venue:international-journal-of-data-science-and-analytics",
+      "venue_name": "International Journal of Data Science and Analytics",
+      "venue_acronym": "",
+      "venue_type": "journal",
+      "venue_track": "",
+      "review_status": "confirmed",
+      "notes": "Maintainer-approved B4-02 P058; exact DOI 10.1007/s41060-026-01192-9; https://link.springer.com/article/10.1007/s41060-026-01192-9; B3-02 publisher SHA256 dde07d46a66d614b4782ef7606219d00f0e92a8e35d1243b62e8d0f4ce7a94bb; preserve empty optional acronym. Names sharing words are distinct, not aliases of IJACSA."
+    },
+    {
+      "alias": "Machine Vision and Applications",
+      "venue_id": "venue:machine-vision-and-applications",
+      "venue_name": "Machine Vision and Applications",
+      "venue_acronym": "",
+      "venue_type": "journal",
+      "venue_track": "",
+      "review_status": "confirmed",
+      "notes": "Maintainer-approved B4-02 P068; exact DOI 10.1007/s00138-026-01836-7; https://link.springer.com/article/10.1007/s00138-026-01836-7; B3-02 publisher SHA256 ecf2a69e9fb2bb1d795834679116e2254b2e32648e0ce0180138c6622e1ff791; preserve empty optional acronym. Names sharing words are distinct, not aliases of IJACSA."
+    }
+  ],
+  "decision_ids": [
+    "review:905c181f62686fdd1d46",
+    "review:908428d376d858278016",
+    "review:8aa8f164a0591cc84b0c",
+    "review:5464d1c1552b94847682",
+    "review:a1eb8fea1c6f117dbf96",
+    "review:4f3e2bcbf2d0294c6118",
+    "review:d0be82c0d01fb23f6dec",
+    "review:5445762b46f00e76c3c6",
+    "review:c5a66f0b4a9e8c9a1135",
+    "review:e41616335723ac354701",
+    "review:9281151079124e7d57fa",
+    "review:2e925c164bf6fbf6dd60",
+    "review:26e7b23a339bc754ac66",
+    "review:4de3e0df6b56e525c9e4",
+    "review:ee78c3dd6283715df714",
+    "review:72bc57a771b8e020ac74",
+    "review:0ae8f5224347f78ee667",
+    "review:0a0550b454c4459c89bd",
+    "review:833a9064f2071c703dee",
+    "review:680149cb3c041cd3cef5",
+    "review:1ff094ea59c1089d2ca7",
+    "review:2e2a63b48c315830fc77",
+    "review:184c26a492d039a6ff72",
+    "review:c62deff5f5dd9af1e68e"
+  ],
+  "decision_review_ids": [
+    "P034",
+    "P254",
+    "P305",
+    "P028",
+    "P097",
+    "P105",
+    "P150",
+    "P177",
+    "P229",
+    "P001",
+    "U001",
+    "U002",
+    "U003",
+    "P049",
+    "U005",
+    "P058",
+    "U006",
+    "U007",
+    "P068",
+    "U008",
+    "U014",
+    "U016",
+    "U018",
+    "U023"
+  ],
+  "accepted_review_ids": [
+    "P034",
+    "P254",
+    "P305",
+    "P097",
+    "P105",
+    "P150",
+    "P177",
+    "P229",
+    "P049",
+    "P058",
+    "P068"
+  ],
+  "held_review_ids": [
+    "P028",
+    "P001",
+    "U001",
+    "U002",
+    "U003",
+    "U005",
+    "U006",
+    "U007",
+    "U008",
+    "U014",
+    "U016",
+    "U018",
+    "U023"
+  ],
+  "formal_decision_count_before": 103,
+  "formal_decision_count_after": 127,
+  "identifier_reconciliation": {
+    "required": false,
+    "reason": "Native IDs, original action IDs and per-action binding fingerprints are all unique and existing conventions preserved.",
+    "identity_mapping": {
+      "review:905c181f62686fdd1d46": "review:905c181f62686fdd1d46",
+      "review:908428d376d858278016": "review:908428d376d858278016",
+      "review:8aa8f164a0591cc84b0c": "review:8aa8f164a0591cc84b0c",
+      "review:5464d1c1552b94847682": "review:5464d1c1552b94847682",
+      "review:a1eb8fea1c6f117dbf96": "review:a1eb8fea1c6f117dbf96",
+      "review:4f3e2bcbf2d0294c6118": "review:4f3e2bcbf2d0294c6118",
+      "review:d0be82c0d01fb23f6dec": "review:d0be82c0d01fb23f6dec",
+      "review:5445762b46f00e76c3c6": "review:5445762b46f00e76c3c6",
+      "review:c5a66f0b4a9e8c9a1135": "review:c5a66f0b4a9e8c9a1135",
+      "review:e41616335723ac354701": "review:e41616335723ac354701",
+      "review:9281151079124e7d57fa": "review:9281151079124e7d57fa",
+      "review:2e925c164bf6fbf6dd60": "review:2e925c164bf6fbf6dd60",
+      "review:26e7b23a339bc754ac66": "review:26e7b23a339bc754ac66",
+      "review:4de3e0df6b56e525c9e4": "review:4de3e0df6b56e525c9e4",
+      "review:ee78c3dd6283715df714": "review:ee78c3dd6283715df714",
+      "review:72bc57a771b8e020ac74": "review:72bc57a771b8e020ac74",
+      "review:0ae8f5224347f78ee667": "review:0ae8f5224347f78ee667",
+      "review:0a0550b454c4459c89bd": "review:0a0550b454c4459c89bd",
+      "review:833a9064f2071c703dee": "review:833a9064f2071c703dee",
+      "review:680149cb3c041cd3cef5": "review:680149cb3c041cd3cef5",
+      "review:1ff094ea59c1089d2ca7": "review:1ff094ea59c1089d2ca7",
+      "review:2e2a63b48c315830fc77": "review:2e2a63b48c315830fc77",
+      "review:184c26a492d039a6ff72": "review:184c26a492d039a6ff72",
+      "review:c62deff5f5dd9af1e68e": "review:c62deff5f5dd9af1e68e"
+    }
+  },
+  "accounting_before": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 28,
+    "historical_unresolved_actions": 131,
+    "historical_unresolved_papers": 121,
+    "active_public_unresolved_actions": 129,
+    "active_public_unresolved_papers": 119
+  },
+  "accounting_after": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 39,
+    "historical_unresolved_actions": 120,
+    "historical_unresolved_papers": 113,
+    "active_public_unresolved_actions": 118,
+    "active_public_unresolved_papers": 111
+  },
+  "corpus_counts": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "taxonomy": {
+    "detection": 621,
+    "method": 578,
+    "analysis_study": 86,
+    "survey": 21,
+    "source_attribution": 84,
+    "dataset": 138,
+    "benchmark": 97,
+    "localization": 45
+  },
+  "source_evidence_retrievals": 0,
+  "geocoding_requests": 0,
+  "scientific_reviews_repeated": false,
+  "P001_track_preserved": true,
+  "U005_no_location_accepted": true,
+  "U002_additive_correction_preserved": {
+    "review_id": "U002",
+    "SAMR_contact_postcode": "510630",
+    "patent_CN112990582A_publication_2021_06_18_postcode": "510663",
+    "B3_narrative_reversed_source_attribution": true,
+    "B3_matrix_correct": true,
+    "B3_modified": false,
+    "sources": "B3 checkpoint/china_uk_algeria/web-01.json and web-05.json"
+  },
+  "historical_test_boundary_review": {
+    "task": "B5-01 historical-test boundary review",
+    "created_utc": "2026-10-30T02:29:06.155097+00:00",
+    "scope": "Preflight only; no mandatory test run or source checkout edit. Prepared copies are reviewable artifacts outside every repository.",
+    "decision": "Narrow historical receipt boundaries plus independent current B5 integration coverage; no frozen receipt or accepted scientific decision changes.",
+    "immutable_endpoints": {
+      "B1S": "df9774b64f717d535d3f299a727545f4b9488adb",
+      "B1E": "cc1e1b3d10c2a030e8b2cdda19fc9aaa1c7e8a0f"
+    },
+    "endpoint_hash_proof": [
+      {
+        "path": "data/raw/corpus_quality_batch_b_wave_b1q_2026_10_26/evidence_manifest.json",
+        "published_B1S_SHA256": "07deb03f59a03015bb4e8b055b23e1a0f2e9ece66eba750b7354356d37981002",
+        "frozen_hash": "07deb03f59a03015bb4e8b055b23e1a0f2e9ece66eba750b7354356d37981002",
+        "matches": true,
+        "same_as_pre_B5_baseline": true
+      },
+      {
+        "path": "docs/corpus_quality_batch_b_wave_b1q_2026_10_26.md",
+        "published_B1S_SHA256": "bccebf430c6d39b815ae63bed40844fdc92b658bf8078e61a65ccddc174c3686",
+        "frozen_hash": "bccebf430c6d39b815ae63bed40844fdc92b658bf8078e61a65ccddc174c3686",
+        "matches": true,
+        "same_as_pre_B5_baseline": true
+      },
+      {
+        "path": "docs/corpus_quality_batch_b_wave_b1r_2026_10_27.md",
+        "published_B1S_SHA256": "2606eb4933540741e96c733ff8275d104b1c63efb15194abda27f54592e30e25",
+        "frozen_hash": "2606eb4933540741e96c733ff8275d104b1c63efb15194abda27f54592e30e25",
+        "matches": true,
+        "same_as_pre_B5_baseline": true
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "published_B1S_SHA256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+        "frozen_hash": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+        "matches": true,
+        "same_as_pre_B5_baseline": true
+      },
+      {
+        "path": "data/curated/papers.csv",
+        "published_B1S_SHA256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+        "frozen_hash": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+        "matches": true,
+        "same_as_pre_B5_baseline": true
+      },
+      {
+        "path": "data/curated/review_decisions.csv",
+        "published_B1S_SHA256": "ce616e76f5b41a2df967c9c72451f9cbeb8b1ad05b488d5ca6240d070c4819dc",
+        "frozen_hash": "ce616e76f5b41a2df967c9c72451f9cbeb8b1ad05b488d5ca6240d070c4819dc",
+        "matches": true,
+        "same_as_pre_B5_baseline": true
+      },
+      {
+        "path": "data/curated/publication_overrides.csv",
+        "receipt": "B1E unrelated metadata byte-equality",
+        "before_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+        "published_B1E_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+        "matches": true
+      },
+      {
+        "path": "data/curated/venue_aliases.csv",
+        "receipt": "B1E unrelated metadata byte-equality",
+        "before_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+        "published_B1E_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+        "matches": true
+      },
+      {
+        "path": "web/data/public_preview_papers.json",
+        "receipt": "B1S pairedpublicendpoint",
+        "published_B1S_sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+        "same_as_pre_B5_baseline": true
+      },
+      {
+        "path": "web/data/public_preview_map_data.json",
+        "receipt": "B1S pairedpublicendpoint",
+        "published_B1S_sha256": "3d7ebd204c5192cf1fd4df3707a7fa11c7bfdb08f9d832fd7ac8f5c7b194cd10",
+        "same_as_pre_B5_baseline": true
+      }
+    ],
+    "prepared_test_audit": [
+      {
+        "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+        "original_and_prepared_sha256": [
+          "aa4f730111b55d7368e541285d24bbac8449f4b7ab599a1186cbb815c6fa5e2b",
+          "bde78da60eaf4f3660725dade4d11aed2225e13d28f675eabf52790cde65f5ec"
+        ],
+        "original_test_functions": 17,
+        "prepared_test_functions": 17,
+        "all_original_function_names_preserved": true,
+        "no_existing_function_loses_assertions": true,
+        "original_assert_count": 83,
+        "prepared_assert_count": 83,
+        "fixed_frozen_receipt_and_evidence_hash_literals_unchanged": true,
+        "changes": [
+          {
+            "test": "test_only_two_existing_records_and_exact_cell_allowlist_change",
+            "boundary": "B1S exact two-record14-cell raw-token transaction; replace only after-endpoint read, all delta assertions retained."
+          },
+          {
+            "test": "test_101_prior_decision_rows_raw_prefix_preserved_with_only_two_terminal_appends",
+            "boundary": "Immutable101→103exactappend history, not a ban on future decisions; preserve every length/prefix/native-ID/terminal assertion."
+          },
+          {
+            "test": "test_only_original_two_actions_close_and_all_other_pending_questions_survive",
+            "boundary": "HistoricalB1S133→131/131→129accounting and exact original questions; B5must independently test current120/118."
+          },
+          {
+            "test": "test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export",
+            "boundary": "Pin only PAPERS/DECISIONS operational hash receipts. Evidence/reports/taxonomy live hashes and untouched frozen receipt bytes remain enforced."
+          },
+          {
+            "test": "test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with672_unchanged",
+            "boundary": "ExactB1S2paper/672unchangedtype/review-reason export delta at df977; no predicate/field is removed."
+          },
+          {
+            "test": "test_public_map_delta_is_exactly_seven_existing_dependents_with_all1410_identities_preserved",
+            "boundary": "ExactB1S7dependent1410identity mapdelta pinned; B5livepairs+eachauthorizedpublicchange separately checked."
+          },
+          {
+            "test": "test_paired_export_metadata_changes_only_UTC_generation_timestamp",
+            "boundary": "Original pairedB1Sexportmetadata-onlyUTC historical receipt. Retain every metadata andUTC assertion; B5needs same-current-pair UTCcheck."
+          },
+          {
+            "test": "test_no_authoritative_paper_institution_publication_task_or_scope_data_changes_beyond_B1R",
+            "boundary": "OriginalB1R-only source transaction no-otherfields; retain same fullfile/field comparisons against immutable endpoint, with B5live15-cell/3CSVappend exact-whitelist guard replacing globalnow ban."
+          }
+        ]
+      },
+      {
+        "path": "tests/test_corpus_quality_batch_b_wave_b1e.py",
+        "original_and_prepared_sha256": [
+          "5e2c8ad11e96546d091deae372240e67426defa3b3a750406a2fd9710f92dccf",
+          "4e721b8d7602edbd49492f7456e175e7da07daf2924d382ff3097685a024be79"
+        ],
+        "original_test_functions": 14,
+        "prepared_test_functions": 14,
+        "all_original_function_names_preserved": true,
+        "no_existing_function_loses_assertions": true,
+        "original_assert_count": 147,
+        "prepared_assert_count": 147,
+        "fixed_frozen_receipt_and_evidence_hash_literals_unchanged": true,
+        "changes": [
+          {
+            "test": "test_unrelated_authoritative_metadata_identity_and_relationship_files_are_byte_exact",
+            "boundary": "Only2 authorized-publication-file parameters anchoredcc1e; all9otherparameters live; B5must prove exact2URLoverride+3venuealias rows with unchangedpriorprefix."
+          }
+        ]
+      },
+      {
+        "path": "tests/test_corpus_quality_batch_b_wave_b1c.py",
+        "original_and_prepared_sha256": [
+          "3fecefffce3455a2e2a667faece26915d63004c84d84ff55e5fcedfb73ce802b",
+          "a9031b52eeca6bd5e3a17804e663f7f545163b374a5ea36c87e56176df86ad7e"
+        ],
+        "original_test_functions": 19,
+        "prepared_test_functions": 19,
+        "all_original_function_names_preserved": true,
+        "no_existing_function_loses_assertions": true,
+        "original_assert_count": 166,
+        "prepared_assert_count": 167,
+        "fixed_frozen_receipt_and_evidence_hash_literals_unchanged": true,
+        "changes": [
+          {
+            "test": "test_live_approved_literature_csv_additions_survive_the_separate_t579_adjudication",
+            "boundary": "Livehistoricalimportprefix ratherthan permanentban onnewaliases. OriginalpublishedB1Dfull-equality and39livepaper/taxonomy assertions remainunchanged; B5assertsexact3appendrows."
+          }
+        ]
+      }
+    ],
+    "B4_targeted_tests": {
+      "B4_01": {
+        "adaptation_required": false,
+        "reason": "Its prior103prefix, live>=112 uniqueness and explicit [:112] standalone decision endpoint already allow later B4-02 appends. Currentsource URLtargets are disjointfrom3journalbindingpapers. Preserve original test byte hash2ac7f1d3bec7cdb07211255ced991ec29282d2df21bac52114cf3ae423e41d14.",
+        "required_integration_order": "baseline103 + originalB4-01nine + originalB4-02fifteen"
+      },
+      "B4_02": {
+        "adaptation_required": false,
+        "reason": "Live decisions by nativeID, currentselectedjournalrowonlychecks, baseline103+manifest15 standaloneaccounting, currentpublicidentity/tasktype/pairguards alreadyallowB4-01sourceURLchanges. Preserve originaltestede273958436346d7b94e24c4f970a6fca6fc6528f7e87b7f0ce87d71077f3a3."
+      }
+    },
+    "new_current_B5_coverage_required": [
+      "All127 formal rows,24 exactverifiednewdecisions,103rawprefix, noID/action/transactionbindingduplicates, no identifierremapping withoutcollision.",
+      "Exactly11 acceptedoriginalactionclosures,13 preservednewholds, recomputed120historical118active and113/111affectedpapers.",
+      "Six paper_url cells and9venuecells ondisjoint9curatedpapers (twoadditionalURLoverridesaccountfortotal11acceptedrecords),2overrideappends+3aliasappends exact.",
+      "Current acceptedpublicationURLsemantics forall8URLrecords, journalvenueIDs/names/types for3bindings; originalP034authorcountcaveat retained.",
+      "P001blanktracknotdefaultedandU005precisionnotaccepted;10institutionevidencedebts untouched; no location/mapping/taxonomy/author metadata change.",
+      "Current674public557formal613mapped1410relationships/pairs and alltaxonomycounts unchanged, samepublicidentities/relationshipIDs.",
+      "Exact before/after public record andmap field whitelist ononly11acceptedpapers andtheirdependents; no663unrelatedpaperorothermapdrift.",
+      "PairedcurrentexportmetadataUTC anddeterministicreproducibility; exactsource-to-publicsemanticmapping.",
+      "OriginalB4reports/manifests/tests/sourcecaptures andfrozenNeurIPS/B1Q/B1R/B1S/CI/BatchC/separate39/protectedfiles preserved."
+    ],
+    "unnecessary_adaptations_to_avoid": [
+      "Do not expand historical ALLOW sets orremove predicates to permitB5 data. Preserve exactoriginaltransaction assertions at immutableendpoints instead.",
+      "Do not change global context() helpertohistorical, which wouldsilence currenttotals/actualacceptance/pairs/schema checks.",
+      "Do not route all B1E unrelatedfileparameters tohistroicalreceipt; onlytwoauthorizedpublicationfilesneedboundary.",
+      "Do not modify original B4manifestsource hashes to matchcombinedsource oroverwritetheirstandaloneaccounting.",
+      "Do not change originalB4-01tests to expect127 instead112; its112 boundary remainsvalidonlywithagreeddecisionroworder."
+    ],
+    "stop_condition": "If mandatory targeted/full-suite/preservation/export validation fails after reviewed integration, preserve failure and stop withoutpublication; noautomaticweakening/rerunworkaround.",
+    "mandatory_tests_run": false,
+    "repository_files_edited": 0,
+    "frozen_receipts_edited": 0
+  },
+  "export_audit": {
+    "changed_paper_ids": [
+      "curated:f43871cdbcf21546aa91",
+      "curated:aa7dceb70828cdd6ad39",
+      "curated:64195610a6d2c2448275",
+      "curated:d129c9180d4a0cff91ad",
+      "curated:e5a9ed970200c293678e",
+      "curated:8503e319e1f4890c2e28",
+      "curated:be2900947b322f9eb905",
+      "curated:7a5ce57b121b69752867",
+      "curated:b460935b64c35e1d074a",
+      "curated:55bc4360e3d312e696b7",
+      "doi:10.48550/arxiv.2407.10575",
+      "doi:10.48550/arxiv.2312.02625"
+    ],
+    "changed_map_ids": [
+      "curated-map:9dfe91eed53137a6c093",
+      "curated-map:81103833566d51c52b15",
+      "curated-map:e07a8799bf8c1f22b73c",
+      "curated-map:37023e0bef53373444a2",
+      "curated-map:2e49827da3e113e267d3",
+      "curated-map:a5a069381a26af286334",
+      "curated-map:796ce709570eef12d644",
+      "curated-map:e2f89591c1dad0fbd52e",
+      "curated-map:a618876f229faa46df9f",
+      "curated-map:c3c20cf0d253833f1658",
+      "curated-map:774ab1cb75396a327708",
+      "curated-map:6ede75d1ae7d500df29c",
+      "curated-map:f6aa4e015ccf9700314e",
+      "curated-map:00225cd17df91776a03f",
+      "curated-map:dab0da967a53c7c13b0c",
+      "curated-map:ee8339b879d73396c04f",
+      "curated-map:92f4e544a59fd4294f48",
+      "curated-map:3aa2bf0239d30ad5b7aa",
+      "curated-map:f1cdff4c28fe2d1e156b",
+      "curated-map:9275bf939836e5d2f946",
+      "curated-map:2dee44b50ab0ece4b3c3",
+      "curated-map:2f96bd0ed465450d77c1",
+      "curated-map:a6cd6fc2bfb0241345ce"
+    ],
+    "fields_by_paper": {
+      "curated:f43871cdbcf21546aa91": [
+        "venue_review_reason"
+      ],
+      "curated:aa7dceb70828cdd6ad39": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated:64195610a6d2c2448275": [
+        "metadata_status",
+        "venue_acronym",
+        "venue_id",
+        "venue_label",
+        "venue_name",
+        "venue_review_reason",
+        "venue_review_required",
+        "venue_track",
+        "venue_type"
+      ],
+      "curated:d129c9180d4a0cff91ad": [
+        "metadata_status",
+        "venue_acronym",
+        "venue_id",
+        "venue_label",
+        "venue_name",
+        "venue_review_reason",
+        "venue_review_required",
+        "venue_track",
+        "venue_type"
+      ],
+      "curated:e5a9ed970200c293678e": [
+        "metadata_status",
+        "venue_acronym",
+        "venue_id",
+        "venue_label",
+        "venue_name",
+        "venue_review_reason",
+        "venue_review_required",
+        "venue_track",
+        "venue_type"
+      ],
+      "curated:8503e319e1f4890c2e28": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated:be2900947b322f9eb905": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated:7a5ce57b121b69752867": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated:b460935b64c35e1d074a": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated:55bc4360e3d312e696b7": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "doi:10.48550/arxiv.2407.10575": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "landing_page_url",
+        "notes",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "doi:10.48550/arxiv.2312.02625": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "landing_page_url",
+        "notes",
+        "paper_url",
+        "primary_url",
+        "url"
+      ]
+    },
+    "fields_by_map": {
+      "curated-map:9dfe91eed53137a6c093": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "landing_page_url",
+        "notes",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:81103833566d51c52b15": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "landing_page_url",
+        "notes",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:e07a8799bf8c1f22b73c": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "landing_page_url",
+        "notes",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:37023e0bef53373444a2": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "landing_page_url",
+        "notes",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:2e49827da3e113e267d3": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:a5a069381a26af286334": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:796ce709570eef12d644": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:e2f89591c1dad0fbd52e": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:a618876f229faa46df9f": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:c3c20cf0d253833f1658": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:774ab1cb75396a327708": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:6ede75d1ae7d500df29c": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:f6aa4e015ccf9700314e": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:00225cd17df91776a03f": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:dab0da967a53c7c13b0c": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:ee8339b879d73396c04f": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:92f4e544a59fd4294f48": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:3aa2bf0239d30ad5b7aa": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:f1cdff4c28fe2d1e156b": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:9275bf939836e5d2f946": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:2dee44b50ab0ece4b3c3": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:2f96bd0ed465450d77c1": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ],
+      "curated-map:a6cd6fc2bfb0241345ce": [
+        "formal_url",
+        "is_arxiv_preprint",
+        "paper_url",
+        "primary_url",
+        "url"
+      ]
+    },
+    "paper_deltas": {
+      "curated:f43871cdbcf21546aa91": {
+        "title": "ImageTrust: Multi-Backbone Fusion for AI-Generated Image Detection with Calibrated Uncertainty",
+        "deltas": {
+          "venue_review_reason": {
+            "before": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+            "after": "Batch B review P001; VENUE_BINDING_REQUIRES_TRACK_DECISION. Maintainer-authorized B4-02. Conference identity and CISIS acronym are supported, but existing canonical conference schema requires a supported track. Stored track is blank and B3 handoff requires it preserved. No silent Main assignment, no partial registry addition; await separate track policy/evidence decision. Preserve2027 citation year versus2026 first-online distinction. [b4-02-state:3fd03dad70fd915af81056d0bf6c6a821b9c0a5845080e81933474f51d742be4] Evidence data/raw/corpus_quality_batch_b_wave_b4_02_2026_10_29/adjudication_manifest.json#P001; B3-02 matrix SHA256 16a37d55b117e273dcaab3b602144e15ea92046c07b4f43beea296eaffbb6864; per-paper evidence SHA256 0dc786f07f8dd53e2a5c6c73ceefd5d75952dcedc80ece8ed2a3813b0362f0cd. Canonicalstoredtitle capitalization differs frompublisherdisplay only; preserve canonicaltitle. No publicationstatus/date correction is authorized; onlineyear and citationyear are differentfields. This is venuebinding evidence, not validation of reported scientificresults. Preserve canonical identity, publication fields outside authorized venue binding, tasks/types, all institutions/relationships, frozen NeurIPS7+1 and BatchC debts. Unresolved hold is not a terminal resolution. Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue."
+          }
+        }
+      },
+      "curated:aa7dceb70828cdd6ad39": {
+        "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          }
+        }
+      },
+      "curated:64195610a6d2c2448275": {
+        "title": "Conditional Uncertainty-Aware Political Deepfake Detection with Stochastic Convolutional Neural Networks",
+        "deltas": {
+          "venue_review_reason": {
+            "before": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+            "after": null
+          },
+          "venue_review_required": {
+            "before": true,
+            "after": false
+          },
+          "venue_label": {
+            "before": null,
+            "after": "Journal of High School Science"
+          },
+          "venue_name": {
+            "before": null,
+            "after": "Journal of High School Science"
+          },
+          "venue_id": {
+            "before": null,
+            "after": "venue:journal-of-high-school-science"
+          },
+          "venue_type": {
+            "before": null,
+            "after": "journal"
+          },
+          "metadata_status": {
+            "before": {
+              "overall": "Verified",
+              "default_field_status": "Verified",
+              "field_overrides": {
+                "venue": {
+                  "status": "Needs review"
+                },
+                "arxiv": {
+                  "status": "Verified",
+                  "source": "arXiv"
+                },
+                "affiliations": {
+                  "status": "Curated",
+                  "source": "Manual curation"
+                }
+              }
+            },
+            "after": {
+              "overall": "Verified",
+              "default_field_status": "Verified",
+              "field_overrides": {
+                "arxiv": {
+                  "status": "Verified",
+                  "source": "arXiv"
+                },
+                "affiliations": {
+                  "status": "Needs review"
+                }
+              }
+            }
+          },
+          "venue_acronym": {
+            "before": null,
+            "after": ""
+          },
+          "venue_track": {
+            "before": null,
+            "after": ""
+          }
+        }
+      },
+      "curated:d129c9180d4a0cff91ad": {
+        "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+        "deltas": {
+          "venue_review_reason": {
+            "before": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+            "after": null
+          },
+          "venue_review_required": {
+            "before": true,
+            "after": false
+          },
+          "venue_label": {
+            "before": null,
+            "after": "International Journal of Data Science and Analytics"
+          },
+          "venue_name": {
+            "before": null,
+            "after": "International Journal of Data Science and Analytics"
+          },
+          "venue_id": {
+            "before": null,
+            "after": "venue:international-journal-of-data-science-and-analytics"
+          },
+          "venue_type": {
+            "before": null,
+            "after": "journal"
+          },
+          "metadata_status": {
+            "before": {
+              "overall": "Verified",
+              "default_field_status": "Verified",
+              "field_overrides": {
+                "venue": {
+                  "status": "Needs review"
+                },
+                "affiliations": {
+                  "status": "Curated",
+                  "source": "Manual curation"
+                }
+              }
+            },
+            "after": {
+              "overall": "Verified",
+              "default_field_status": "Verified",
+              "field_overrides": {
+                "affiliations": {
+                  "status": "Needs review"
+                }
+              }
+            }
+          },
+          "venue_acronym": {
+            "before": null,
+            "after": ""
+          },
+          "venue_track": {
+            "before": null,
+            "after": ""
+          }
+        }
+      },
+      "curated:e5a9ed970200c293678e": {
+        "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+        "deltas": {
+          "venue_review_reason": {
+            "before": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+            "after": null
+          },
+          "venue_review_required": {
+            "before": true,
+            "after": false
+          },
+          "venue_label": {
+            "before": null,
+            "after": "Machine Vision and Applications"
+          },
+          "venue_name": {
+            "before": null,
+            "after": "Machine Vision and Applications"
+          },
+          "venue_id": {
+            "before": null,
+            "after": "venue:machine-vision-and-applications"
+          },
+          "venue_type": {
+            "before": null,
+            "after": "journal"
+          },
+          "metadata_status": {
+            "before": {
+              "overall": "Verified",
+              "default_field_status": "Verified",
+              "field_overrides": {
+                "venue": {
+                  "status": "Needs review"
+                },
+                "affiliations": {
+                  "status": "Curated",
+                  "source": "Manual curation"
+                }
+              }
+            },
+            "after": {
+              "overall": "Verified",
+              "default_field_status": "Verified",
+              "field_overrides": {
+                "affiliations": {
+                  "status": "Needs review"
+                }
+              }
+            }
+          },
+          "venue_acronym": {
+            "before": null,
+            "after": ""
+          },
+          "venue_track": {
+            "before": null,
+            "after": ""
+          }
+        }
+      },
+      "curated:8503e319e1f4890c2e28": {
+        "title": "FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "primary_url": {
+            "before": "https://arxiv.org/abs/2607.22087",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+          },
+          "url": {
+            "before": "https://arxiv.org/abs/2607.22087",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+          }
+        }
+      },
+      "curated:be2900947b322f9eb905": {
+        "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          }
+        }
+      },
+      "curated:7a5ce57b121b69752867": {
+        "title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "primary_url": {
+            "before": "https://arxiv.org/abs/2608.20882",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+          },
+          "url": {
+            "before": "https://arxiv.org/abs/2608.20882",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+          }
+        }
+      },
+      "curated:b460935b64c35e1d074a": {
+        "title": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "primary_url": {
+            "before": "https://arxiv.org/abs/2608.18523",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34"
+          },
+          "url": {
+            "before": "https://arxiv.org/abs/2608.18523",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34"
+          }
+        }
+      },
+      "curated:55bc4360e3d312e696b7": {
+        "title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "primary_url": {
+            "before": "https://arxiv.org/abs/2608.15238",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10"
+          },
+          "url": {
+            "before": "https://arxiv.org/abs/2608.15238",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10"
+          }
+        }
+      },
+      "doi:10.48550/arxiv.2407.10575": {
+        "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "landing_page_url": {
+            "before": "http://arxiv.org/abs/2407.10575",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "notes": {
+            "before": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
+            "after": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates. | manual publication metadata override applied | Approved Batch B review P254; B4-01 URL-only acceptance; [publication-url-state:e34bcb6894e80246bf4af0338ff1693e461cfe3736c9aeba3af6947aab8f7899]. Existing year/venue/type/DOI repeated exactly; source arXiv DOI retained deliberately, not asserted to be the formal publisher DOI. B3 evidence SHA256 5e5049f3b0a2c5cc0de285a4f15bc3c623e2ff1945fd4b85cfd20400eb9b7131."
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W4400716502",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "url": {
+            "before": "https://openalex.org/W4400716502",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          }
+        }
+      },
+      "doi:10.48550/arxiv.2312.02625": {
+        "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://ebooks.iospress.nl/doi/10.3233/FAIA250925"
+          },
+          "landing_page_url": {
+            "before": "http://arxiv.org/abs/2312.02625",
+            "after": "https://ebooks.iospress.nl/doi/10.3233/FAIA250925"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://ebooks.iospress.nl/doi/10.3233/FAIA250925"
+          },
+          "notes": {
+            "before": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
+            "after": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates. | manual publication metadata override applied | Approved Batch B review P305; B4-01 URL-only acceptance; [publication-url-state:51189217df1be428cd6a954cd67ab9bcb998e27b23070f995bc11da49d460e3e]. Existing year/venue/type/DOI repeated exactly; source arXiv DOI retained deliberately, not asserted to be the formal publisher DOI. B3 evidence SHA256 4f6beb63c2a15e6555980b7b3d85ef19c7ea86880e2fb7d6f1d05434847ffa6c."
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W4389421609",
+            "after": "https://ebooks.iospress.nl/doi/10.3233/FAIA250925"
+          },
+          "url": {
+            "before": "https://openalex.org/W4389421609",
+            "after": "https://ebooks.iospress.nl/doi/10.3233/FAIA250925"
+          }
+        }
+      }
+    },
+    "map_deltas": {
+      "curated-map:9dfe91eed53137a6c093": {
+        "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W4400716502",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "landing_page_url": {
+            "before": null,
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "notes": {
+            "before": "Raw affiliation: School of Cyber Science and Engineering, Xi’an Jiaotong University, Xi’an, China; Research Center of Frontier Science and Technology, Xi’an Jiaotong University, Xi’an, China; School of Software Engineering, Xi’an Jiaotong University, Xi’an, China",
+            "after": "Raw affiliation: School of Cyber Science and Engineering, Xi’an Jiaotong University, Xi’an, China; Research Center of Frontier Science and Technology, Xi’an Jiaotong University, Xi’an, China; School of Software Engineering, Xi’an Jiaotong University, Xi’an, China | manual publication metadata override applied | Approved Batch B review P254; B4-01 URL-only acceptance; [publication-url-state:e34bcb6894e80246bf4af0338ff1693e461cfe3736c9aeba3af6947aab8f7899]. Existing year/venue/type/DOI repeated exactly; source arXiv DOI retained deliberately, not asserted to be the formal publisher DOI. B3 evidence SHA256 5e5049f3b0a2c5cc0de285a4f15bc3c623e2ff1945fd4b85cfd20400eb9b7131."
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W4400716502",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          }
+        }
+      },
+      "curated-map:81103833566d51c52b15": {
+        "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W4400716502",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "landing_page_url": {
+            "before": null,
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "notes": {
+            "before": "Raw affiliation: Department of Industrial and Systems Engineering, The Hong Kong Polytechnic University, Hong Kong, Hong Kong",
+            "after": "Raw affiliation: Department of Industrial and Systems Engineering, The Hong Kong Polytechnic University, Hong Kong, Hong Kong | manual publication metadata override applied | Approved Batch B review P254; B4-01 URL-only acceptance; [publication-url-state:e34bcb6894e80246bf4af0338ff1693e461cfe3736c9aeba3af6947aab8f7899]. Existing year/venue/type/DOI repeated exactly; source arXiv DOI retained deliberately, not asserted to be the formal publisher DOI. B3 evidence SHA256 5e5049f3b0a2c5cc0de285a4f15bc3c623e2ff1945fd4b85cfd20400eb9b7131."
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W4400716502",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          }
+        }
+      },
+      "curated-map:e07a8799bf8c1f22b73c": {
+        "title": "A Survey of Defenses Against AI-Generated Visual Media: Detection,Disruption, and Authentication",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W4400716502",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "landing_page_url": {
+            "before": null,
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          },
+          "notes": {
+            "before": "Raw affiliation: School of Cyber Science and Engineering, Wuhan University, Wuhan, China",
+            "after": "Raw affiliation: School of Cyber Science and Engineering, Wuhan University, Wuhan, China | manual publication metadata override applied | Approved Batch B review P254; B4-01 URL-only acceptance; [publication-url-state:e34bcb6894e80246bf4af0338ff1693e461cfe3736c9aeba3af6947aab8f7899]. Existing year/venue/type/DOI repeated exactly; source arXiv DOI retained deliberately, not asserted to be the formal publisher DOI. B3 evidence SHA256 5e5049f3b0a2c5cc0de285a4f15bc3c623e2ff1945fd4b85cfd20400eb9b7131."
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W4400716502",
+            "after": "https://dl.acm.org/doi/10.1145/3770916"
+          }
+        }
+      },
+      "curated-map:37023e0bef53373444a2": {
+        "title": "Diffusion Noise Feature: Accurate and Fast Generated Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://ebooks.iospress.nl/doi/10.3233/FAIA250925"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W4389421609",
+            "after": "https://ebooks.iospress.nl/doi/10.3233/FAIA250925"
+          },
+          "landing_page_url": {
+            "before": null,
+            "after": "https://ebooks.iospress.nl/doi/10.3233/FAIA250925"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://ebooks.iospress.nl/doi/10.3233/FAIA250925"
+          },
+          "notes": {
+            "before": "",
+            "after": "manual publication metadata override applied | Approved Batch B review P305; B4-01 URL-only acceptance; [publication-url-state:51189217df1be428cd6a954cd67ab9bcb998e27b23070f995bc11da49d460e3e]. Existing year/venue/type/DOI repeated exactly; source arXiv DOI retained deliberately, not asserted to be the formal publisher DOI. B3 evidence SHA256 4f6beb63c2a15e6555980b7b3d85ef19c7ea86880e2fb7d6f1d05434847ffa6c."
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W4389421609",
+            "after": "https://ebooks.iospress.nl/doi/10.3233/FAIA250925"
+          }
+        }
+      },
+      "curated-map:2e49827da3e113e267d3": {
+        "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          }
+        }
+      },
+      "curated-map:a5a069381a26af286334": {
+        "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          }
+        }
+      },
+      "curated-map:796ce709570eef12d644": {
+        "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          }
+        }
+      },
+      "curated-map:e2f89591c1dad0fbd52e": {
+        "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          }
+        }
+      },
+      "curated-map:a618876f229faa46df9f": {
+        "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          }
+        }
+      },
+      "curated-map:c3c20cf0d253833f1658": {
+        "title": "Few-Shot Synthetic Image Attribution: Identifying Unseen Generators with Limited Samples",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W4415338199",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+          }
+        }
+      },
+      "curated-map:774ab1cb75396a327708": {
+        "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          }
+        }
+      },
+      "curated-map:6ede75d1ae7d500df29c": {
+        "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          }
+        }
+      },
+      "curated-map:f6aa4e015ccf9700314e": {
+        "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          }
+        }
+      },
+      "curated-map:00225cd17df91776a03f": {
+        "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          }
+        }
+      },
+      "curated-map:dab0da967a53c7c13b0c": {
+        "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          }
+        }
+      },
+      "curated-map:ee8339b879d73396c04f": {
+        "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          }
+        }
+      },
+      "curated-map:92f4e544a59fd4294f48": {
+        "title": "Beyond Artifacts: Real-Centric Envelope Modeling for Reliable AI-Generated Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "primary_url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://openalex.org/W7117340004",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+          }
+        }
+      },
+      "curated-map:3aa2bf0239d30ad5b7aa": {
+        "title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+          },
+          "primary_url": {
+            "before": "https://arxiv.org/abs/2608.20882",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://arxiv.org/abs/2608.20882",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+          }
+        }
+      },
+      "curated-map:f1cdff4c28fe2d1e156b": {
+        "title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+          },
+          "primary_url": {
+            "before": "https://arxiv.org/abs/2608.20882",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://arxiv.org/abs/2608.20882",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+          }
+        }
+      },
+      "curated-map:9275bf939836e5d2f946": {
+        "title": "FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+          },
+          "primary_url": {
+            "before": "https://arxiv.org/abs/2607.22087",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://arxiv.org/abs/2607.22087",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+          }
+        }
+      },
+      "curated-map:2dee44b50ab0ece4b3c3": {
+        "title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10"
+          },
+          "primary_url": {
+            "before": "https://arxiv.org/abs/2608.15238",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://arxiv.org/abs/2608.15238",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10"
+          }
+        }
+      },
+      "curated-map:2f96bd0ed465450d77c1": {
+        "title": "FAIR: Feature-Augmented Implicit Regularization for AI-Generated Fake Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+          },
+          "primary_url": {
+            "before": "https://arxiv.org/abs/2607.22087",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://arxiv.org/abs/2607.22087",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+          }
+        }
+      },
+      "curated-map:a6cd6fc2bfb0241345ce": {
+        "title": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection",
+        "deltas": {
+          "paper_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34"
+          },
+          "primary_url": {
+            "before": "https://arxiv.org/abs/2608.18523",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34"
+          },
+          "formal_url": {
+            "before": "",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34"
+          },
+          "is_arxiv_preprint": {
+            "before": true,
+            "after": false
+          },
+          "url": {
+            "before": "https://arxiv.org/abs/2608.18523",
+            "after": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34"
+          }
+        }
+      }
+    },
+    "metadata_deltas": {
+      "web/data/public_preview_map_data.json": {
+        "public_preview_generated_at": {
+          "before": "2026-10-27T06:08:15Z",
+          "after": "2026-10-30T07:19:56Z"
+        }
+      },
+      "web/data/public_preview_papers.json": {
+        "public_preview_generated_at": {
+          "before": "2026-10-27T06:08:15Z",
+          "after": "2026-10-30T07:19:56Z"
+        }
+      }
+    },
+    "corpus": {
+      "public": 674,
+      "formal": 557,
+      "mapped": 613,
+      "unmapped": 61,
+      "relationship_rows": 1410,
+      "unique_paper_institution_pairs": 1410
+    },
+    "taxonomy": {
+      "detection": 621,
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "source_attribution": 84,
+      "dataset": 138,
+      "benchmark": 97,
+      "localization": 45
+    },
+    "generated_mapping_report_cells": [
+      {
+        "row": 326,
+        "field": "url",
+        "before": "https://openalex.org/W7117340004",
+        "after": "https://link.springer.com/chapter/10.1007/978-3-032-37429-5_14"
+      },
+      {
+        "row": 383,
+        "field": "url",
+        "before": "https://arxiv.org/abs/2607.22087",
+        "after": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32"
+      },
+      {
+        "row": 390,
+        "field": "url",
+        "before": "https://openalex.org/W4415338199",
+        "after": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18"
+      },
+      {
+        "row": 427,
+        "field": "url",
+        "before": "https://arxiv.org/abs/2608.20882",
+        "after": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12"
+      },
+      {
+        "row": 452,
+        "field": "url",
+        "before": "https://arxiv.org/abs/2608.18523",
+        "after": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34"
+      },
+      {
+        "row": 495,
+        "field": "url",
+        "before": "https://arxiv.org/abs/2608.15238",
+        "after": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10"
+      },
+      {
+        "row": 516,
+        "field": "url",
+        "before": "https://openalex.org/W4400716502",
+        "after": "https://dl.acm.org/doi/10.1145/3770916"
+      },
+      {
+        "row": 535,
+        "field": "url",
+        "before": "https://openalex.org/W4389421609",
+        "after": "https://ebooks.iospress.nl/doi/10.3233/FAIA250925"
+      }
+    ]
+  },
+  "local_validation": null,
+  "publication_status": "NOT_COMMITTED_NOT_PUSHED",
+  "neurips": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA",
+  "unresolved_review_ids_after": [
+    "U001",
+    "U002",
+    "U003",
+    "U005",
+    "U006",
+    "U007",
+    "U008",
+    "U009",
+    "U011",
+    "U012",
+    "U013",
+    "U014",
+    "U015",
+    "U016",
+    "U018",
+    "U019",
+    "U020",
+    "U021",
+    "U022",
+    "U023",
+    "R223",
+    "R234",
+    "R187",
+    "R231",
+    "R363",
+    "R477",
+    "T093",
+    "R156",
+    "R161",
+    "R110",
+    "R275",
+    "R509",
+    "R045",
+    "R138",
+    "R154",
+    "T046",
+    "R171",
+    "R512",
+    "R256",
+    "R284",
+    "R149",
+    "R124",
+    "R625",
+    "T526",
+    "R251",
+    "T608",
+    "R564",
+    "R467",
+    "L003",
+    "L004",
+    "L005",
+    "L006",
+    "L007",
+    "L008",
+    "L009",
+    "L010",
+    "L011",
+    "L012",
+    "L014",
+    "L015",
+    "L016",
+    "L017",
+    "L018",
+    "L019",
+    "L020",
+    "L021",
+    "L022",
+    "L023",
+    "L024",
+    "L025",
+    "L026",
+    "L028",
+    "P001",
+    "P025",
+    "P028",
+    "P032",
+    "P048",
+    "P050",
+    "P160",
+    "P216",
+    "P231",
+    "P242",
+    "P251",
+    "P268",
+    "P269",
+    "P279",
+    "P312",
+    "P351",
+    "P360",
+    "P397",
+    "P418",
+    "P424",
+    "P430",
+    "P435",
+    "P442",
+    "P457",
+    "P464",
+    "P467",
+    "P478",
+    "P497",
+    "P510",
+    "P520",
+    "P526",
+    "P547",
+    "P562",
+    "P565",
+    "P604",
+    "P626",
+    "P632",
+    "P635",
+    "P063",
+    "P099",
+    "P193",
+    "P224",
+    "P257",
+    "P326",
+    "P357",
+    "P369",
+    "P466",
+    "P495"
+  ]
+}

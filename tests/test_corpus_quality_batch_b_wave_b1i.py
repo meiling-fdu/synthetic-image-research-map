@@ -546,10 +546,19 @@ def test_accepted_R2_rule_original_questions_and_unrelated_authoritative_tables_
     assert packet()["locked_policy_ledger"] == json.loads((ROOT / (AUDIT + "batch_c_policy_decisions.json")).read_bytes())
     r2 = next(r for r in packet()["locked_policy_ledger"]["policies"] if r["policy_id"] == "R2")
     assert "systematic comparative framework" in r2["final_rule"]
+    # These three publication-dependent tables now have an approved B5 successor.
+    # Check their original transaction at its immutable endpoint; every other
+    # path, original question and locked policy remains a live byte guard.
+    publication_successor_paths = {
+        "data/curated/publication_overrides.csv",
+        "data/curated/venue_aliases.csv",
+        "data/manual/missing_author_mappings_report.csv",
+    }
     allowed = {PAPERS, TAXONOMY, DECISIONS, *PUBLIC}
     for path in baseline_paths("data/curated", "data/manual", "web/data"):
         if path not in allowed:
-            assert (ROOT / path).read_bytes() == published_bytes(BASE, path), path
+            observed = published_bytes(PUBLISHED, path) if path in publication_successor_paths else (ROOT / path).read_bytes()
+            assert observed == published_bytes(BASE, path), path
     for name in ("taxonomy_review", "publication_metadata_review", "relationship_review", "unmapped_papers", "batch_c_policy_decisions"):
         path = AUDIT + name + ".json"
         assert (ROOT / path).read_bytes() == published_bytes(BASE, path), path

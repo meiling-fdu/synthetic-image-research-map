@@ -1,0 +1,23 @@
+{
+  "task": "Export-lock lifecycle resolution",
+  "production_files_changed": false,
+  "stable_lock_inode_policy": "Persistent production flock inode remains; never unlink on release. Owned fixture temporary trees disappear only after their server/coordinator teardown.",
+  "prior_exact_orphan_cleanup": {
+    "relative_path": ".admin/public_preview_sync.json.export.lock",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "device_inode": [
+      16777233,
+      238198860
+    ],
+    "removed_utc": "2026-10-30T09:26:29.429717+00:00",
+    "receipt_sha256": "c0eaa87ffd9cb8a015164a9ff50ddf33b53ea0a89d23386f420352094cfff342",
+    "no_active_owner_or_waiter_verified": true,
+    "other_files_deleted": 0
+  },
+  "R3_additional_cleanup": false,
+  "current_fixture": "tests/publish_workflow_fixtures.py",
+  "scope": "Only collected test_admin_publish_workflow_reliability module RunningServer, function-scoped pytest rollback",
+  "default_repository_lock_absent": true,
+  "ignored_allowlist_expanded": false,
+  "all117_operational_inputs_remain_local": true
+}

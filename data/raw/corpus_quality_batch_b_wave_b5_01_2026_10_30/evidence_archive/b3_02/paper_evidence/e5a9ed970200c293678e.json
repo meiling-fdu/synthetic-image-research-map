@@ -1,0 +1,443 @@
+{
+  "paper_id": "curated:e5a9ed970200c293678e",
+  "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "action_ids": [
+    "P068",
+    "U008"
+  ],
+  "records": [
+    {
+      "review_id": "P068",
+      "action_id": "P068",
+      "paper_id": "curated:e5a9ed970200c293678e",
+      "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+      "issue_category": "canonical_venue_identity_type",
+      "original_review_question": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+      "outcome": "SUPPORTED_ADDITION",
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "finding": "Exact DOI-matched publisher record confirms title, ordered authors and canonical archival journal, and supports a journal venue binding.",
+      "proposed_disposition": {
+        "kind": "canonical_venue_binding",
+        "canonical_venue_name": "Machine Vision and Applications",
+        "publication_type": "journal",
+        "current_name_type_change_required": false,
+        "publisher_bibliographic_short_form": "Machine Vision and Applications",
+        "optional_acronym_proposed": null,
+        "registry_id_to_invent": null,
+        "tasks_change": null,
+        "research_types_change": null
+      },
+      "evidence_claims": [
+        {
+          "claim": "Exact work identity and ordered authors match current record, allowing case-only title presentation differences.",
+          "source_ids": [
+            "TI-P068"
+          ],
+          "locator": "citation_title,citation_doi,citation_author"
+        },
+        {
+          "claim": "The archival venue is the stated journal, not a conference/container/track.",
+          "source_ids": [
+            "TI-P068"
+          ],
+          "locator": "citation_journal_title,citation_publisher,citation_issn,#citeas"
+        },
+        {
+          "claim": "Any short-name proposal must remain limited to explicit publisher bibliographic usage.",
+          "source_ids": [
+            "TI-P068"
+          ],
+          "locator": "citation_journal_abbrev"
+        }
+      ],
+      "limitations": [
+        "The publisher landing page is adequate for the bounded venue identity/type question; no scientific-contribution or taxonomy review was performed.",
+        "The canonical name and journal type are already correct in the public record; missing registry binding/confirmation is separate from a factual name/type correction.",
+        "No unverified initialism is proposed. Existing paper DOI, authors, year, task/type labels, affiliations and publication URL are preserved.",
+        "Publisher citation_journal_abbrev repeats the full name. Do not invent MVA from title initials.",
+        "Publisher online date30 May 2026 and July 2026 issue cover date are distinct; no date correction is proposed."
+      ],
+      "confidence": {
+        "identity": "high",
+        "venue_name_type": "high",
+        "invented_acronym": "not_proposed"
+      },
+      "current_context_preserved": {
+        "public": true,
+        "paper_id": "curated:e5a9ed970200c293678e",
+        "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+        "doi": "10.1007/s00138-026-01836-7",
+        "arxiv_id": "",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "Machine Vision and Applications",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:e5a9ed970200c293678e"
+      },
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P068]",
+          "finding": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P068",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        }
+      ],
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P068's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Verify Machine Vision and Applications's archival identity and publication type; do not use a proceedings series, generic event label or track as the venue. Verify any proposed acronym rather than constructing initials."
+      ],
+      "recommended_b4_action": "Consider canonical venue binding/registry addition only after formal source/fingerprint acceptance; preserve all other fields.",
+      "review_group": "turkey_india_israel",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "original_review": {
+        "review_id": "P068",
+        "paper_id": "curated:e5a9ed970200c293678e",
+        "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+        "current": {
+          "year": 2026,
+          "publication_type": "journal",
+          "venue": "Machine Vision and Applications",
+          "venue_id": "",
+          "venue_acronym": "",
+          "venue_track": "",
+          "doi": "10.1007/s00138-026-01836-7",
+          "paper_url": "https://doi.org/10.1007/s00138-026-01836-7",
+          "formal_url": "https://doi.org/10.1007/s00138-026-01836-7",
+          "arxiv_id": "",
+          "arxiv_url": "",
+          "authors": [
+            "Surbhi Raj",
+            "Jimson Mathew",
+            "Arijit Mondal"
+          ]
+        },
+        "evidence_urls": [
+          "https://doi.org/10.1007/s00138-026-01836-7"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "present",
+          "doi": "present_not_independently_reverified",
+          "arxiv": "optional_not_a_defect",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:e5a9ed970200c293678e",
+        "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+        "doi": "10.1007/s00138-026-01836-7",
+        "arxiv_id": "",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "Machine Vision and Applications",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:e5a9ed970200c293678e"
+      },
+      "authoritative_changes_applied": false,
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "turkey_india_israel:TI-P068"
+      ]
+    },
+    {
+      "review_id": "U008",
+      "action_id": "U008",
+      "paper_id": "curated:e5a9ed970200c293678e",
+      "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+      "issue_category": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "finding": "Publisher affiliation/postcode801106 and official institutional sources support the Bihta campus identity. Two preserved official coordinate claims differ materially; no reviewed point is selected.",
+      "proposed_disposition": {
+        "kind": "retain_coordinate_hold",
+        "site_candidate": "IIT Patna permanent Bihta campus",
+        "coordinates_proposed": null,
+        "missing_gates": [
+          "Resolve precise representative institution point and coordinate-source/CRS/reference-point discrepancy; do not average conflicting values."
+        ]
+      },
+      "evidence_claims": [
+        {
+          "claim": "The three paper authors share Computer Science and Engineering,IITPatna,Bihar801106 in the exact DOI-matched record.",
+          "source_ids": [
+            "TI-P068"
+          ],
+          "locator": "#author-information-content Aff1"
+        },
+        {
+          "claim": "The official currentFindUs page and historical records identify permanentBihta campus; historical2015move predates2026 paper.",
+          "source_ids": [
+            "TI-IITP-CURRENT",
+            "TI-IITP-COORD-A",
+            "TI-IITP-COORD-B"
+          ],
+          "locator": "FindUsmetaBihta; historicalHOWTOREACH and annualreport passages"
+        },
+        {
+          "claim": "Two official coordinate values differ by approximately1.76km, with unspecified referencepoints/CRS.",
+          "source_ids": [
+            "TI-IITP-COORD-A",
+            "TI-IITP-COORD-B"
+          ],
+          "locator": "brochureDMScoordinates; annualreportDMScoordinates"
+        }
+      ],
+      "limitations": [
+        "Coordinates are historical official-source claims, not independently validated geocodes.",
+        "A differing latitude could be a source error or a different reference point; evidence does not establish the cause.",
+        "Retain both claims and the campus evidence. Do not use Patna orBihta towncentroid and do not mark institution mapping actionresolved."
+      ],
+      "confidence": {
+        "institution_identity": "high",
+        "paper_time_site": "high_at_campus_level",
+        "selected_coordinate": "insufficient"
+      },
+      "current_context_preserved": {
+        "public": true,
+        "paper_id": "curated:e5a9ed970200c293678e",
+        "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+        "doi": "10.1007/s00138-026-01836-7",
+        "arxiv_id": "",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "Machine Vision and Applications",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:e5a9ed970200c293678e"
+      },
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U008]",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained.",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U008",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:e5a9ed970200c293678e]",
+          "finding": "Current public paper retained; tasks=['detection']; research_types=['method', 'dataset', 'benchmark']; map_record_count=0.",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:bfb708d0cec751ba4a9b",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        },
+        {
+          "path": "data/curated/institutions.csv",
+          "locator": "institution_id in institution:a4e0e93fcd90b1c0",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized.",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326"
+        },
+        {
+          "path": "data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:a4e0e93fcd90b1c0",
+          "finding": "0 current reviewed location rows found for the mapped institutions.",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:e5a9ed970200c293678e",
+          "finding": "The current active affiliation is established but no reviewed location row exists for this institution.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        }
+      ],
+      "acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for Indian Institute of Technology Patna; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "recommended_b4_action": "Retain unresolved institution-location action; accept no location/mapping correction until the named missing gates are satisfied.",
+      "site_assessments": [
+        {
+          "institution_id": "institution:a4e0e93fcd90b1c0",
+          "canonical_name": "Indian Institute of Technology Patna",
+          "paper_time_identity": "verified exact DOIthree authors",
+          "address": "Computer Science and Engineering,Patna,Bihar801106 inpaper; officialBihtapermanentcampus established before2026",
+          "paper_time_site": "Bihta supported; exact building notclaimed",
+          "coordinate_candidates": [
+            {
+              "source_id": "TI-IITP-COORD-A",
+              "latitude": 25.533383333333337,
+              "longitude": 84.85446666666667,
+              "original_DMS": "25°32′0.18″N84°51′16.08″E",
+              "accepted": false,
+              "CRS": "not_explicit"
+            },
+            {
+              "source_id": "TI-IITP-COORD-B",
+              "latitude": 25.549155555555558,
+              "longitude": 84.8560111111111,
+              "original_DMS": "25°32′56.96″N84°51′21.64″E",
+              "accepted": false,
+              "CRS": "not_explicit"
+            }
+          ],
+          "candidate_separation_metres": 1760.6229600335441,
+          "coordinates_accepted": null
+        }
+      ],
+      "review_group": "turkey_india_israel",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "original_review": {
+        "review_id": "U008",
+        "paper_id": "curated:e5a9ed970200c293678e",
+        "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+        "year": 2026,
+        "publication_status": "journal",
+        "authors": [
+          "Surbhi Raj",
+          "Jimson Mathew",
+          "Arijit Mondal"
+        ],
+        "institutions": [
+          {
+            "institution_id": "institution:a4e0e93fcd90b1c0",
+            "canonical_name": "Indian Institute of Technology Patna",
+            "raw_affiliation": "Computer Science and Engineering, Indian Institute of Technology Patna, Patna, Bihar 801106, India",
+            "authors": [
+              "Surbhi Raj",
+              "Jimson Mathew",
+              "Arijit Mondal"
+            ],
+            "paper_time_affiliation_known": true,
+            "institution_identity_known": true,
+            "exists_in_registry": true,
+            "location_known": false,
+            "location_records": [],
+            "mapping_status": "active",
+            "mapping_id": "mapping:bfb708d0cec751ba4a9b",
+            "evidence_url": "https://doi.org/10.1007/s00138-026-01836-7",
+            "evidence_basis": "https://doi.org/10.1007/s00138-026-01836-7",
+            "hierarchy": [],
+            "allowed_to_map_as_node": true,
+            "relationship_currently_possible": false
+          }
+        ],
+        "author_affiliation_known": true,
+        "canonical_institution_identity_known": true,
+        "institution_registry_complete": true,
+        "any_reviewed_location_known": false,
+        "relationship_currently_possible": false,
+        "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+        "remediation_category": "EVIDENCE_CAN_RESOLVE",
+        "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+        "confidence": "high",
+        "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+        "authoritative_evidence_url": "https://doi.org/10.1007/s00138-026-01836-7",
+        "project_evidence": [
+          "data/curated/author_institution_mappings.csv",
+          "data/curated/institutions.csv",
+          "data/curated/institution_locations.csv",
+          "data/curated/institution_hierarchy.csv"
+        ],
+        "batch": "B"
+      },
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:e5a9ed970200c293678e",
+        "title": "Detecting Violent Deepfakes: Dataset and a Compact Attention Network with Multi-Scale Supervision",
+        "doi": "10.1007/s00138-026-01836-7",
+        "arxiv_id": "",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "Machine Vision and Applications",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:e5a9ed970200c293678e"
+      },
+      "authoritative_changes_applied": false,
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "turkey_india_israel:TI-IITP-COORD-A",
+        "turkey_india_israel:TI-IITP-COORD-B",
+        "turkey_india_israel:TI-IITP-CURRENT",
+        "turkey_india_israel:TI-P068"
+      ],
+      "separate_site_evidence_gates": {
+        "institution_identity": "VERIFIED",
+        "address": "BIHTA801106_CAMPUS_SUPPORTED",
+        "paper_time_site": "BIHTA_SUPPORTED_AT_CAMPUS_LEVEL; EXACT_BUILDING_NOT_CLAIMED",
+        "coordinates": "CONFLICTING_OFFICIAL_HISTORICAL_POINTS; ~1760.6m separation; neither adopted",
+        "unsupported_assumption": "Do not select a coordinate, infer typo, average points, or substitute Patna/Bihta town centre without resolving source reference points."
+      }
+    }
+  ],
+  "note": "Evidence recommendations only; no formal decisions or source mutations."
+}

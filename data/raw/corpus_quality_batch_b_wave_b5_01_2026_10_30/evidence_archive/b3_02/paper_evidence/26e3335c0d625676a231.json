@@ -1,0 +1,296 @@
+{
+  "paper_id": "curated:26e3335c0d625676a231",
+  "title": "SPECTRA-Net: Scalable Pipeline for Explainable Cross-Domain Tensor Representations for AI-Generated Images Detection",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "action_ids": [
+    "U016"
+  ],
+  "records": [
+    {
+      "review_id": "U016",
+      "paper_id": "curated:26e3335c0d625676a231",
+      "title": "SPECTRA-Net: Scalable Pipeline for Explainable Cross-Domain Tensor Representations for AI-Generated Images Detection",
+      "action_scope": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "original_blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+      "original_acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for National School of Artificial Intelligence in Algeria; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "canonical_institution_id": "institution:b5047d79e959e40b",
+      "canonical_institution_name": "National School of Artificial Intelligence",
+      "paper_identity": {
+        "authors": [
+          "Sarra Arab",
+          "Anfal Achouri",
+          "Seif Eddine Bouziane"
+        ],
+        "arxiv_id": "2605.08226",
+        "doi": "",
+        "year": 2026,
+        "publication_type": "preprint",
+        "identity_verified_from": "Existing identity-matched paper-time source mappings and published record; no manuscript rediscovery."
+      },
+      "paper_time_affiliation": {
+        "raw": "The National School of Artificial Intelligence, Algiers, Algeria",
+        "primary_url": "https://arxiv.org/pdf/2605.08226",
+        "known_institution_affiliation": true,
+        "site_explicit_in_preserved_affiliation": false
+      },
+      "local_evidence": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U016]",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U016",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:26e3335c0d625676a231]",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3",
+          "finding": "Current public paper retained; tasks=['detection']; research_types=['method']; map_record_count=0."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:2c5dd1ce9a91a9ca482f",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+          "locator": "institution_id in institution:b5047d79e959e40b",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:b5047d79e959e40b",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc",
+          "finding": "0 current reviewed location rows found for the mapped institutions."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:26e3335c0d625676a231",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+          "finding": "Three authors are actively mapped to the school using paper-time primary provenance; the raw string only identifies Algiers/Algeria, not a reviewed site point."
+        }
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_outcome": "EVIDENCE_INSUFFICIENT",
+      "is_formal_decision": false,
+      "formal_resolution_applied": false,
+      "authoritative_changes": [],
+      "taxonomy_changes_proposed": [],
+      "official_evidence_ids": [
+        "ensia-en",
+        "ensia-fr",
+        "ensia-campus",
+        "ensia-wipo"
+      ],
+      "secondary_geographic_evidence_ids": [
+        "ensia-geocode-empty"
+      ],
+      "evidence_to_claim": [
+        {
+          "claim": "The paper’s English school identity and ensia.edu.dz correspondence match the official English school name; French identity is linked on the same official domain.",
+          "sources": [
+            "ensia-en",
+            "ensia-fr",
+            "local-ENSIA-firstpage.txt"
+          ]
+        },
+        {
+          "claim": "Official school campus description places ENSIA in Sidi Abdellah Technology Park, and WIPO links the same institution/domain to a Mahelma address.",
+          "sources": [
+            "ensia-campus",
+            "ensia-wipo"
+          ]
+        },
+        {
+          "claim": "The exact raw paper first page names only Algiers; no specific campus or current point is established by it.",
+          "sources": [
+            "local-ENSIA-firstpage.txt"
+          ]
+        }
+      ],
+      "site_assessment": {
+        "institution_identity": "VERIFIED_OFFICIAL_ENGLISH_AND_FRENCH_IDENTITY_SAME_DOMAIN",
+        "institution_address": "VERIFIED_CURRENT_CAMPUS_DISTRICT_AND_WIPO_SHORT_PLUSCODE",
+        "address_candidate": "ENSIA, Sidi Abdellah Technology Park, Mahelma, Algiers, Algeria; WIPO lists MVQ8+9GP, Mahelma, Alger16086",
+        "paper_time_site": "NOT_EXPLICITLY_VERIFIED_IN_FIRST_PAGE_AFFILIATION",
+        "paper_time_site_basis": "Preserved arXiv2605.08226v1 firstpage dated6May2026 gives The National School of Artificial Intelligence, Algiers, Algeria; corresponding email@ensia.edu.dz. Current campuspage does not independently date that premises assignment to the paper.",
+        "site_confidence": "high institution and current campus; incomplete temporal-site and precisepoint evidence",
+        "coordinates": "NO_VERIFIED_DECIMAL_POINT",
+        "coordinate_candidate": null
+      },
+      "contradictions_and_limitations": [
+        "WIPO short pluscode preserved as MVQ8+9GP; do not expand it using a guessed city/referencepoint.",
+        "Official campus structure is shared with National School of Mathematics; no merge of the two institutions is supported.",
+        "Cached official-domain-corresponding school query returned HTTP200 empty list; this says nothing about school existence.",
+        "Only firstpage affiliation/identity was inspected; no taxonomy or scientific-contribution review was performed."
+      ],
+      "unsupported_assumptions_rejected": [
+        "Invent a translated institution alias",
+        "Use central Algiers coordinates",
+        "Equate a current shared school structure with proven paper-time author campus",
+        "Infer coordinates or identity from emptygeocoderresponse"
+      ],
+      "recommended_B4_02_action": "Retain unresolved for precise site/coordinate gate. Preserve verified English/French school/domain correspondence, current Sidi Abdellah campus and WIPO address. Require paper-time site corroboration and independently traceable exact point without guessed plus-code expansion.",
+      "missing_evidence": [
+        "Publication-time campus corroboration beyond generic Algiers affiliation",
+        "Verified decimal coordinate or independently authenticated full institutional pluscode with documented decoding"
+      ],
+      "confidence": "high identity/current campus; insufficient complete mapping evidence",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "finding": "The paper’s English school identity and ensia.edu.dz correspondence match the official English school name; French identity is linked on the same official domain.; Official school campus description places ENSIA in Sidi Abdellah Technology Park, and WIPO links the same institution/domain to a Mahelma address.; The exact raw paper first page names only Algiers; no specific campus or current point is established by it.",
+      "proposed_disposition": "Retain unresolved for precise site/coordinate gate. Preserve verified English/French school/domain correspondence, current Sidi Abdellah campus and WIPO address. Require paper-time site corroboration and independently traceable exact point without guessed plus-code expansion.",
+      "limitations": [
+        "WIPO short pluscode preserved as MVQ8+9GP; do not expand it using a guessed city/referencepoint.",
+        "Official campus structure is shared with National School of Mathematics; no merge of the two institutions is supported.",
+        "Cached official-domain-corresponding school query returned HTTP200 empty list; this says nothing about school existence.",
+        "Only firstpage affiliation/identity was inspected; no taxonomy or scientific-contribution review was performed."
+      ],
+      "evidence_claims": [
+        {
+          "claim": "The paper’s English school identity and ensia.edu.dz correspondence match the official English school name; French identity is linked on the same official domain.",
+          "source_ids": [
+            "ensia-en",
+            "ensia-fr",
+            "ensia-local-firstpage"
+          ],
+          "local_evidence": []
+        },
+        {
+          "claim": "Official school campus description places ENSIA in Sidi Abdellah Technology Park, and WIPO links the same institution/domain to a Mahelma address.",
+          "source_ids": [
+            "ensia-campus",
+            "ensia-wipo"
+          ],
+          "local_evidence": []
+        },
+        {
+          "claim": "The exact raw paper first page names only Algiers; no specific campus or current point is established by it.",
+          "source_ids": [
+            "ensia-local-firstpage"
+          ],
+          "local_evidence": []
+        }
+      ],
+      "action_id": "U016",
+      "review_group": "china_uk_algeria",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "original_review": {
+        "review_id": "U016",
+        "paper_id": "curated:26e3335c0d625676a231",
+        "title": "SPECTRA-Net: Scalable Pipeline for Explainable Cross-Domain Tensor Representations for AI-Generated Images Detection",
+        "year": 2026,
+        "publication_status": "preprint",
+        "authors": [
+          "Sarra Arab",
+          "Anfal Achouri",
+          "Seif Eddine Bouziane"
+        ],
+        "institutions": [
+          {
+            "institution_id": "institution:b5047d79e959e40b",
+            "canonical_name": "National School of Artificial Intelligence",
+            "raw_affiliation": "The National School of Artificial Intelligence, Algiers, Algeria",
+            "authors": [
+              "Sarra Arab",
+              "Anfal Achouri",
+              "Seif Eddine Bouziane"
+            ],
+            "paper_time_affiliation_known": true,
+            "institution_identity_known": true,
+            "exists_in_registry": true,
+            "location_known": false,
+            "location_records": [],
+            "mapping_status": "active",
+            "mapping_id": "mapping:2c5dd1ce9a91a9ca482f",
+            "evidence_url": "https://arxiv.org/pdf/2605.08226",
+            "evidence_basis": "https://arxiv.org/pdf/2605.08226",
+            "hierarchy": [],
+            "allowed_to_map_as_node": true,
+            "relationship_currently_possible": false
+          }
+        ],
+        "author_affiliation_known": true,
+        "canonical_institution_identity_known": true,
+        "institution_registry_complete": true,
+        "any_reviewed_location_known": false,
+        "relationship_currently_possible": false,
+        "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+        "remediation_category": "EVIDENCE_CAN_RESOLVE",
+        "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+        "confidence": "high",
+        "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+        "authoritative_evidence_url": "https://arxiv.org/abs/2605.08226",
+        "project_evidence": [
+          "data/curated/author_institution_mappings.csv",
+          "data/curated/institutions.csv",
+          "data/curated/institution_locations.csv",
+          "data/curated/institution_hierarchy.csv"
+        ],
+        "batch": "B"
+      },
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:26e3335c0d625676a231",
+        "title": "SPECTRA-Net: Scalable Pipeline for Explainable Cross-Domain Tensor Representations for AI-Generated Images Detection",
+        "doi": "",
+        "arxiv_id": "2605.08226",
+        "year": 2026,
+        "publication_type": "preprint",
+        "venue": "arXiv",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:26e3335c0d625676a231"
+      },
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "authoritative_changes_applied": false,
+      "acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for National School of Artificial Intelligence in Algeria; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "china_uk_algeria:ensia-campus",
+        "china_uk_algeria:ensia-en",
+        "china_uk_algeria:ensia-fr",
+        "china_uk_algeria:ensia-local-firstpage",
+        "china_uk_algeria:ensia-wipo"
+      ],
+      "separate_site_evidence_gates": {
+        "institution_identity": "OFFICIAL_ENGLISH_FRENCH_DOMAIN_CORRESPONDENCE_VERIFIED",
+        "address": "CURRENT_SIDI_ABDELLAH_TECHNOLOGY_PARK_AND_WIPO_MAHELMA_ADDRESS_VERIFIED",
+        "paper_time_site": "PAPER_NAMES_SCHOOL_ALGIERS; PUBLICATION_TIME_CAMPUS_LINK_UNVERIFIED",
+        "coordinates": "SHORT_PLUS_CODE_RETAINED_UNDECODED; GEOCODE_EMPTY; NO_DECIMAL_POINT_ACCEPTED",
+        "unsupported_assumption": "Do not infer exact 2026 author site from current campus page or turn short pluscode into guessed Algiers centroid."
+      }
+    }
+  ],
+  "note": "Evidence recommendations only; no formal decisions or source mutations."
+}

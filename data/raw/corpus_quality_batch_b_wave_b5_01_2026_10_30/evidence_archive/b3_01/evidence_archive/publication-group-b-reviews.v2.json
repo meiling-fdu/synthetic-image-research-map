@@ -1,0 +1,1091 @@
+{
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "assigned_action_ids": [
+    "P150",
+    "P177",
+    "P229"
+  ],
+  "scope": "B3 evidence-only exact canonical formal-URL questions; no science/taxonomy reassessment, no authoritative acceptance or accounting decrement.",
+  "instrumented_review_timing": {
+    "instrumented_review_start_utc": "2026-10-28T01:41:34.399524+00:00",
+    "monotonic_start_ns": 165910663523291,
+    "preinstrumentation_activity": "Read assigned input and original review questions; no external requests or manuscripts.",
+    "instrumented_review_end_utc": "2026-10-28T01:50:30.655009+00:00",
+    "monotonic_end_ns": 166446916704500,
+    "elapsed_seconds": 536.253181209,
+    "interpretation": "Measured elapsed analyst-agent wall time, including waiting and tool overhead. Not an estimate of human labor hours."
+  },
+  "evidence_budget": {
+    "full_manuscripts_retrieved": 0,
+    "manuscript_bytes": 0,
+    "paid_api_cost_usd": 0,
+    "new_official_chapter_html_captures": 3,
+    "successful_instrumented_http_requests": 3,
+    "successful_instrumented_http_response_body_bytes": 1054876,
+    "sandbox_dns_failures_before_connection": 3,
+    "publisher_http_failures": 0,
+    "blocked_publisher_retries": 0,
+    "web_tool_operations": {
+      "search_queries": 3,
+      "initial_book_page_opens": 3,
+      "chapter_link_clicks": 3,
+      "book_title_find_operations": 3,
+      "focused_chapter_opens": 2,
+      "focused_doi_find_operations": 2
+    },
+    "web_tool_transport_request_count_duration_bytes": "Not exposed by web tool; do not combine opaque tool operations with measured direct HTTP requests as an exact wire-request total.",
+    "raw_html_captures": "Metadata-only public landing pages, not PDF/full manuscripts. No supplements retrieved."
+  },
+  "http_capture_receipts": [
+    {
+      "review_id": "P150",
+      "url": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12",
+      "started_utc": "2026-10-28T01:45:12.084129+00:00",
+      "monotonic_start_ns": 166128346077958,
+      "purpose": "Preserve exact official metadata HTML, not a scientific manuscript",
+      "attempt": 1,
+      "retry": false,
+      "full_manuscript": false,
+      "status": 200,
+      "final_url": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12?error=cookies_not_supported&code=58a48810-574b-432f-9f4d-d05fe2fe0a37",
+      "headers": {
+        "Connection": "close",
+        "x-b3-spanid": "57313044725e82de",
+        "etag": "W/\"126cb93ec1ecf0a1718b37244d627d17\"",
+        "via": "1.1 google, 1.1 varnish",
+        "traceparent": "00-284940e0ddf34d2d5b245f8049b66ada-0b2f0072ad85e745-01",
+        "set-cookie": "sim-inst-token=\"\"; Domain=.springer.com; Path=/; secure; HttpOnly",
+        "x-b3-traceid": "5e09a0a90fae800b",
+        "accept-ranges": "bytes",
+        "server": "Oscar Platform 0.1819.0",
+        "tracestate": "gorouter=81ec5432e1c01ff6",
+        "age": "0",
+        "x-b3-sampled": "1",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "nocache",
+        "x-frame-options": "DENY",
+        "x-dump-request-bodies": "0",
+        "x-vcap-request-id": "284940e0-ddf3-4d2d-5b24-5f8049b66ada",
+        "content-type": "text/html; charset=utf-8",
+        "Date": "Wed, 28 Oct 2026 01:45:17 GMT",
+        "X-Served-By": "cache-62d1b707-internal, cache-nrt-rjtt7900043-NRT, cache-nrt-rjtt7900045-NRT",
+        "X-Cache": "MISS, MISS, MISS",
+        "X-Cache-Hits": "0, 0",
+        "X-Timer": "S1793151916.407243,VS0,VE653",
+        "Vary": "x-frame-options,X-Oscar-Cache-Mode, Accept-Encoding",
+        "alt-svc": "h3=\":443\";ma=86400,h3-29=\":443\";ma=86400,h3-27=\":443\";ma=86400",
+        "transfer-encoding": "chunked"
+      },
+      "ended_utc": "2026-10-28T01:45:17.709478+00:00",
+      "monotonic_end_ns": 166133969268750,
+      "duration_seconds": 5.623190792,
+      "body_bytes": 349868,
+      "body_sha256": "45829de2acf3cb68a806638078fa64f3278f5b3531d5955c4611d23fba99d7c5",
+      "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P150-official-chapter.html"
+    },
+    {
+      "review_id": "P177",
+      "url": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34",
+      "started_utc": "2026-10-28T01:45:12.084511+00:00",
+      "monotonic_start_ns": 166128346462083,
+      "purpose": "Preserve exact official metadata HTML, not a scientific manuscript",
+      "attempt": 1,
+      "retry": false,
+      "full_manuscript": false,
+      "status": 200,
+      "final_url": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34?error=cookies_not_supported&code=2d074f79-1c59-4dcc-ae2d-690a619ffa1d",
+      "headers": {
+        "Connection": "close",
+        "x-b3-spanid": "636b2e35f7cc9748",
+        "etag": "W/\"573fa27c4d0198817b2311ebb13de0f5\"",
+        "via": "1.1 google, 1.1 varnish",
+        "traceparent": "00-726807e0905e4b3757319e37647971a0-09d978135155b397-01",
+        "set-cookie": "sim-inst-token=\"\"; Domain=.springer.com; Path=/; secure; HttpOnly",
+        "x-b3-traceid": "2f333bb64261ad7a",
+        "accept-ranges": "bytes",
+        "server": "Oscar Platform 0.1819.0",
+        "tracestate": "gorouter=3469a8809c0f47e2",
+        "age": "0",
+        "x-b3-sampled": "1",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "nocache",
+        "x-frame-options": "DENY",
+        "x-dump-request-bodies": "0",
+        "x-vcap-request-id": "726807e0-905e-4b37-5731-9e37647971a0",
+        "content-type": "text/html; charset=utf-8",
+        "Date": "Wed, 28 Oct 2026 01:45:17 GMT",
+        "X-Served-By": "cache-16b4d4a1-internal, cache-nrt-rjtt7900048-NRT, cache-nrt-rjtt7900076-NRT",
+        "X-Cache": "MISS, MISS, MISS",
+        "X-Cache-Hits": "0, 0",
+        "X-Timer": "S1793151917.566791,VS0,VE873",
+        "Vary": "x-frame-options,X-Oscar-Cache-Mode, Accept-Encoding",
+        "alt-svc": "h3=\":443\";ma=86400,h3-29=\":443\";ma=86400,h3-27=\":443\";ma=86400",
+        "transfer-encoding": "chunked"
+      },
+      "ended_utc": "2026-10-28T01:45:18.030237+00:00",
+      "monotonic_end_ns": 166134287712125,
+      "duration_seconds": 5.941250042,
+      "body_bytes": 349700,
+      "body_sha256": "d9d2c29ced9e714516c49db6a3bcb185ce8d4f840be1dfe3473ea78c3ee1b504",
+      "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P177-official-chapter.html"
+    },
+    {
+      "review_id": "P229",
+      "url": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+      "started_utc": "2026-10-28T01:45:12.084619+00:00",
+      "monotonic_start_ns": 166128346570416,
+      "purpose": "Preserve exact official metadata HTML, not a scientific manuscript",
+      "attempt": 1,
+      "retry": false,
+      "full_manuscript": false,
+      "status": 200,
+      "final_url": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10?error=cookies_not_supported&code=027e5367-9212-45a2-9fe6-2af15decf7a8",
+      "headers": {
+        "Connection": "close",
+        "x-b3-spanid": "5426c2cd9961de63",
+        "etag": "W/\"30380a43085c9e521798d8a5913cb914\"",
+        "via": "1.1 google, 1.1 varnish",
+        "traceparent": "00-d5a41afbc0e9479144d31c1dc13c3d0c-91287ad02f386279-01",
+        "set-cookie": "sim-inst-token=\"\"; Domain=.springer.com; Path=/; secure; HttpOnly",
+        "x-b3-traceid": "5a12a6fd82d254c8",
+        "accept-ranges": "bytes",
+        "server": "Oscar Platform 0.1819.0",
+        "tracestate": "gorouter=d57ae3bfe96e50aa",
+        "age": "0",
+        "x-b3-sampled": "1",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "nocache",
+        "x-frame-options": "DENY",
+        "x-dump-request-bodies": "0",
+        "x-vcap-request-id": "d5a41afb-c0e9-4791-44d3-1c1dc13c3d0c",
+        "content-type": "text/html; charset=utf-8",
+        "Date": "Wed, 28 Oct 2026 01:45:17 GMT",
+        "X-Served-By": "cache-e54728ed-internal, cache-nrt-rjtf7700051-NRT, cache-nrt-rjtt7900040-NRT",
+        "X-Cache": "MISS, MISS, MISS",
+        "X-Cache-Hits": "0, 0",
+        "X-Timer": "S1793151916.457909,VS0,VE645",
+        "Vary": "x-frame-options,X-Oscar-Cache-Mode, Accept-Encoding",
+        "alt-svc": "h3=\":443\";ma=86400,h3-29=\":443\";ma=86400,h3-27=\":443\";ma=86400",
+        "transfer-encoding": "chunked"
+      },
+      "ended_utc": "2026-10-28T01:45:18.085603+00:00",
+      "monotonic_end_ns": 166134345641750,
+      "duration_seconds": 5.999071334,
+      "body_bytes": 355308,
+      "body_sha256": "9a200260c90b7197d7e561a2a3141bd6378af3933c810c95abdd757094047b90",
+      "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P229-official-chapter.html"
+    }
+  ],
+  "sandbox_connection_failure_receipts": [
+    {
+      "review_id": "P150",
+      "url": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12",
+      "started_utc": "2026-10-28T01:44:39.440066+00:00",
+      "monotonic_start_ns": 166095702038958,
+      "purpose": "Preserve exact official metadata HTML, not a scientific manuscript",
+      "attempt": 1,
+      "retry": false,
+      "full_manuscript": false,
+      "status": null,
+      "error": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+      "ended_utc": "2026-10-28T01:44:39.466636+00:00",
+      "monotonic_end_ns": 166095728419583,
+      "duration_seconds": 0.026380625,
+      "body_bytes": 0,
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/P150-official-chapter.html"
+    },
+    {
+      "review_id": "P177",
+      "url": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34",
+      "started_utc": "2026-10-28T01:44:39.440453+00:00",
+      "monotonic_start_ns": 166095702428416,
+      "purpose": "Preserve exact official metadata HTML, not a scientific manuscript",
+      "attempt": 1,
+      "retry": false,
+      "full_manuscript": false,
+      "status": null,
+      "error": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+      "ended_utc": "2026-10-28T01:44:39.466739+00:00",
+      "monotonic_end_ns": 166095728537958,
+      "duration_seconds": 0.026109542,
+      "body_bytes": 0,
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/P177-official-chapter.html"
+    },
+    {
+      "review_id": "P229",
+      "url": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+      "started_utc": "2026-10-28T01:44:39.440594+00:00",
+      "monotonic_start_ns": 166095702568791,
+      "purpose": "Preserve exact official metadata HTML, not a scientific manuscript",
+      "attempt": 1,
+      "retry": false,
+      "full_manuscript": false,
+      "status": null,
+      "error": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+      "ended_utc": "2026-10-28T01:44:39.466717+00:00",
+      "monotonic_end_ns": 166095728490166,
+      "duration_seconds": 0.025921375,
+      "body_bytes": 0,
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/P229-official-chapter.html"
+    }
+  ],
+  "records": [
+    {
+      "review_id": "P150",
+      "action_ids": [
+        "P150"
+      ],
+      "paper_id": "curated:7a5ce57b121b69752867",
+      "canonical_title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+      "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "current_authors": [
+        "Haozhen Yan",
+        "Ruoxin Chen",
+        "Jiahui Zhan",
+        "Bo Wang",
+        "Youchang Xiao",
+        "Shouhong Ding",
+        "Liqing Zhang",
+        "Taiping Yao",
+        "Jianfu Zhang"
+      ],
+      "current_doi": "10.48550/arXiv.2608.20882",
+      "current_arxiv_id": "2608.20882",
+      "current_arxiv_url": "https://arxiv.org/abs/2608.20882",
+      "current_venue": "European Conference on Computer Vision",
+      "current_year": "2026",
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "current_formal_url": "",
+      "current_authoritative_paper_url": "https://arxiv.org/abs/2608.20882",
+      "provisional_outcome": "SUPPORTED_ADDITION",
+      "proposed_formal_url": "https://doi.org/10.1007/978-3-032-37464-6_12",
+      "verified_official_landing_url": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12",
+      "verified_formal_doi": "10.1007/978-3-032-37464-6_12",
+      "formal_doi_change_authorized_or_applied": false,
+      "evidence_sufficient_for_original_publication_question": true,
+      "maintainer_acceptance": "PENDING_B4_NOT_APPLIED",
+      "authoritative_remediation_required": true,
+      "decision_rationale": "The exact official archival chapter has the same title after whitespace/case normalization and the complete identical author sequence as both current canonical metadata and preserved arXiv metadata. It supplies a publisher DOI and archival chapter URL absent from the current source record.",
+      "identity_and_version_evidence": {
+        "official_title": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+        "official_authors": [
+          "Haozhen Yan",
+          "Ruoxin Chen",
+          "Jiahui Zhan",
+          "Bo Wang",
+          "Youchang Xiao",
+          "Shouhong Ding",
+          "Liqing Zhang",
+          "Taiping Yao",
+          "Jianfu Zhang"
+        ],
+        "title_match": "NFKC whitespace/case-normalized exact match",
+        "complete_author_sequence_match": true,
+        "official_venue": "Computer Vision – ECCV 2026",
+        "official_conference": "European Conference on Computer Vision",
+        "first_online": "2026-09-11",
+        "pages": "207–224",
+        "lncs_volume": "17035",
+        "book_part": "XXXV",
+        "arxiv_formal_relation": "Bibliographic same-work identity is supported by exact title plus complete author order and retained conference acceptance metadata; the publisher page does not expose an explicit arXiv crosslink.",
+        "full_text_equivalence_verified": false,
+        "publisher_final_manuscript_inspected": false,
+        "preprint_pdf_receipt_version": "v1 (historical receipt only)",
+        "historical_pdf_sha256": "794bbedc7050d2a79dd5820e7de279e7ea894d7c4f55f8c0272f767b3cde57d8",
+        "retained_spotlight_is_not_a_different_canonical_venue": true,
+        "complete_author_sequence_provenance": {
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P150-official-chapter.html",
+          "capture_sha256": "45829de2acf3cb68a806638078fa64f3278f5b3531d5955c4611d23fba99d7c5",
+          "locator": "Raw HTML all 9 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names.",
+          "independently_checked_author_count": 9,
+          "toc_supports_complete_sequence": false,
+          "author_order_assertion_source": "Raw official chapter HTML citation_author values; contents truncation is not treated as complete-author evidence."
+        }
+      },
+      "sources": [
+        {
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12",
+          "type": "official_publisher_archival_chapter_metadata",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P150-official-chapter.html",
+          "capture_sha256": "45829de2acf3cb68a806638078fa64f3278f5b3531d5955c4611d23fba99d7c5",
+          "capture_representation": "Unmodified direct HTTP response body, text/html",
+          "locators": {
+            "title": "Raw HTML <meta name=\"citation_title\">; normalized exact canonical-title match.",
+            "complete_author_sequence": "Raw HTML all 9 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names.",
+            "formal_identity": "Raw HTML <meta name=\"citation_doi\">, <meta name=\"citation_conference_title\">, <meta name=\"citation_fulltext_html_url\">, <meta name=\"citation_publication_date\">, <meta name=\"citation_firstpage\"> and <meta name=\"citation_lastpage\">."
+          },
+          "metadata_extraction_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/P150-extracted-metadata.json",
+          "metadata_extraction_sha256": "69039dfeb4141b76a08cda22b6d98a35b9a5684224cdfc3877f3210bee75c292"
+        },
+        {
+          "url": "https://link.springer.com/book/10.1007/978-3-032-37464-6",
+          "type": "official_publisher_proceedings_contents",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-title-locators.json",
+          "capture_sha256": "b6db0f975ee9ae37ae22be368e17463cafd9bff4f8528362e79c1d7124768b68",
+          "capture_representation": "Serialized web-tool rendered response, not raw HTTP",
+          "locator": "https://link.springer.com/book/10.1007/978-3-032-37464-6; Source: find({\"ref_id\":\"turn204view0\",\"pattern\":\"LoRC\"}); rendered document lines 217, 219, 221; link ID 68.",
+          "scope_of_support": "The contents entry establishes the title, page range and publisher chapter-link ID, with a truncated six-name et al. author list. The complete nine-author sequence is proved only by the identity-matched raw chapter HTML citation_author elements, not by this truncated contents entry."
+        },
+        {
+          "url": "https://arxiv.org/abs/2608.20882",
+          "type": "existing_author_preprint_metadata",
+          "capture_path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/lorc.html",
+          "capture_sha256": "9f0c2c4bde3f86e1c7dc218ef26c6811d27e3852b9334e24352bc39af6a085a9",
+          "capture_representation": "Existing repository HTML receipt; not retrieved again in B3",
+          "locator": "meta citation_title/citation_author/citation_arxiv_id; td.comments"
+        },
+        {
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12",
+          "type": "official_publisher_book_to_chapter_link_trace",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-chapter-pages-rendered.json",
+          "capture_sha256": "f92f6b121eda75226e6445c44fceebab6df11002a514e408dec79f9af2ba8915",
+          "capture_representation": "Serialized web-tool click response, not raw HTTP",
+          "locator": "Source: click({\"ref_id\":\"turn204view0\",\"id\":68}); resulting chapter URL https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12",
+          "scope_of_support": "Existing response records the observed click from proceedings turn204view0 link ID 68 to this exact chapter URL. It is link-chain provenance, not a substitute for the full author metadata in raw HTML."
+        }
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/papers.csv",
+          "locator": "paper_id=curated:7a5ce57b121b69752867",
+          "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+          "finding": "Current canonical author order and arXiv DOI/ID/URL retained; authoritative paper_url contains only the arXiv landing page, and the public formal_url is blank. Formal conference status/venue are already stored."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+          "locator": "paper_id=curated:7a5ce57b121b69752867",
+          "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+          "finding": "Existing detection/method labels retained; existing evidence tier reused_audit+abstract is not promoted to a newly verified manuscript review."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P150]",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+          "finding": "Original independent question is missing canonical formal URL. No task/research-type correction belongs to this action."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/lorc.html",
+          "locator": "meta citation_title; citation_author[*]; citation_arxiv_id; td.comments",
+          "sha256": "9f0c2c4bde3f86e1c7dc218ef26c6811d27e3852b9334e24352bc39af6a085a9",
+          "finding": "Preserved 2026-08-29 arXiv metadata establishes exact preprint identity/author sequence and records ECCV 2026 Spotlight."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/README.md",
+          "locator": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+          "sha256": "b5825b651ea37cb7859b1cc9ae6709f2e57c59c101eccbe30480529ef1fce92d",
+          "finding": "Historical primary PDF v1 receipt retained with SHA-256 794bbedc7050d2a79dd5820e7de279e7ea894d7c4f55f8c0272f767b3cde57d8; this wave did not retrieve the PDF or certify version equivalence."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/docs/requested_eccv_ijcai_2026-08-29.md",
+          "locator": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals",
+          "sha256": "a4c802539a8013c3f9317e43fef04e05aa800edfa99f568035c57cd5dbd43c81",
+          "finding": "Earlier bibliography/byline and affiliation import review retained; no scientific methods/quantitative findings are independently reassessed now."
+        }
+      ],
+      "contradictions": [],
+      "limitations": [
+        "This bounded metadata review does not verify any method, experiment, causal claim, benchmark or numerical result.",
+        "ArXiv v1 and publisher-final manuscript contents were not compared; no publisher-final equivalence is claimed.",
+        "The existing 10.48550/arxiv identifier is a repository DOI, distinct from the newly verified formal chapter DOI. No identifier was changed.",
+        "Publisher dates/pages/volume are identity corroboration; unsupported schema fields must not be added merely to store them."
+      ],
+      "retrieval_failures": [
+        {
+          "review_id": "P150",
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12",
+          "started_utc": "2026-10-28T01:44:39.440066+00:00",
+          "monotonic_start_ns": 166095702038958,
+          "purpose": "Preserve exact official metadata HTML, not a scientific manuscript",
+          "attempt": 1,
+          "retry": false,
+          "full_manuscript": false,
+          "status": null,
+          "error": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+          "ended_utc": "2026-10-28T01:44:39.466636+00:00",
+          "monotonic_end_ns": 166095728419583,
+          "duration_seconds": 0.026380625,
+          "body_bytes": 0,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/P150-official-chapter.html"
+        }
+      ],
+      "retrieval_failure_interpretation": "Initial sandbox DNS denial prevented connection. A single authorized-network raw metadata capture then returned HTTP 200; no blocked publisher endpoint was retried.",
+      "known_prior_science_vs_not_assessed": {
+        "existing_labels": {
+          "tasks": "detection",
+          "research_types": "method"
+        },
+        "existing_taxonomy_evidence_tiers": {
+          "tasks_evidence_tier": "reused_audit+abstract",
+          "research_types_evidence_tier": "reused_audit+abstract"
+        },
+        "prior_primary_receipt_scope": "Byline/affiliation identity check, as documented in the 2026-08-29 import report.",
+        "new_scientific_assessment": "NOT_REASSESSED_NOT_INFERRED_FROM_TITLE_OR_ABSTRACT",
+        "scientific_claims_independently_reproduced": false
+      },
+      "proposed_taxonomy_changes": [],
+      "full_manuscripts_retrieved": 0,
+      "B4_conditions": [
+        "Reconfirm the exact baseline record fingerprint and original P150 question; do not close a companion action implicitly.",
+        "Obtain explicit maintainer acceptance of the bounded formal-URL addition before authoritative integration.",
+        "Preserve stable canonical paper ID, author order, tasks, research types, institutions, relationships, arXiv ID/URL and all prior evidence.",
+        "Use the established schema/export precedence for canonical formal URLs; any replacement of the arXiv DOI with the verified formal DOI requires an explicitly accepted independent metadata change, preserving arXiv identity.",
+        "Retain historical scope/version and empirical limitations; no scientific contribution or result is newly certified by adding a publisher URL.",
+        "Only a valid formal source-linked decision satisfying current acceptance/fingerprint rules may decrement the original unresolved action; B3 itself changes no counts."
+      ]
+    },
+    {
+      "review_id": "P177",
+      "action_ids": [
+        "P177"
+      ],
+      "paper_id": "curated:b460935b64c35e1d074a",
+      "canonical_title": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection",
+      "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "current_authors": [
+        "Shashank Kotyan",
+        "Makoto Shing",
+        "Yuki Imajuku",
+        "Rujikorn Charakorn",
+        "Tarin Clanuwat"
+      ],
+      "current_doi": "10.48550/arXiv.2608.18523",
+      "current_arxiv_id": "2608.18523",
+      "current_arxiv_url": "https://arxiv.org/abs/2608.18523",
+      "current_venue": "European Conference on Computer Vision",
+      "current_year": "2026",
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "current_formal_url": "",
+      "current_authoritative_paper_url": "https://arxiv.org/abs/2608.18523",
+      "provisional_outcome": "SUPPORTED_ADDITION",
+      "proposed_formal_url": "https://doi.org/10.1007/978-3-032-37350-2_34",
+      "verified_official_landing_url": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34",
+      "verified_formal_doi": "10.1007/978-3-032-37350-2_34",
+      "formal_doi_change_authorized_or_applied": false,
+      "evidence_sufficient_for_original_publication_question": true,
+      "maintainer_acceptance": "PENDING_B4_NOT_APPLIED",
+      "authoritative_remediation_required": true,
+      "decision_rationale": "The exact official archival chapter has the same title after whitespace/case normalization and the complete identical author sequence as both current canonical metadata and preserved arXiv metadata. It supplies a publisher DOI and archival chapter URL absent from the current source record.",
+      "identity_and_version_evidence": {
+        "official_title": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection",
+        "official_authors": [
+          "Shashank Kotyan",
+          "Makoto Shing",
+          "Yuki Imajuku",
+          "Rujikorn Charakorn",
+          "Tarin Clanuwat"
+        ],
+        "title_match": "NFKC whitespace/case-normalized exact match",
+        "complete_author_sequence_match": true,
+        "official_venue": "Computer Vision – ECCV 2026",
+        "official_conference": "European Conference on Computer Vision",
+        "first_online": "2026-09-22",
+        "pages": "628–648",
+        "lncs_volume": "17011",
+        "book_part": "XI",
+        "arxiv_formal_relation": "Bibliographic same-work identity is supported by exact title plus complete author order and retained conference acceptance metadata; the publisher page does not expose an explicit arXiv crosslink.",
+        "full_text_equivalence_verified": false,
+        "publisher_final_manuscript_inspected": false,
+        "preprint_pdf_receipt_version": "v1 (historical receipt only)",
+        "historical_pdf_sha256": "7f965b39f97f2e518d4fab892a4c5ba43c7f5dcc56def368e69ecbc6612a350f",
+        "retained_spotlight_is_not_a_different_canonical_venue": false,
+        "complete_author_sequence_provenance": {
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P177-official-chapter.html",
+          "capture_sha256": "d9d2c29ced9e714516c49db6a3bcb185ce8d4f840be1dfe3473ea78c3ee1b504",
+          "locator": "Raw HTML all 5 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names.",
+          "independently_checked_author_count": 5,
+          "toc_supports_complete_sequence": true,
+          "author_order_assertion_source": "Raw official chapter HTML citation_author values; contents truncation is not treated as complete-author evidence."
+        }
+      },
+      "sources": [
+        {
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34",
+          "type": "official_publisher_archival_chapter_metadata",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P177-official-chapter.html",
+          "capture_sha256": "d9d2c29ced9e714516c49db6a3bcb185ce8d4f840be1dfe3473ea78c3ee1b504",
+          "capture_representation": "Unmodified direct HTTP response body, text/html",
+          "locators": {
+            "title": "Raw HTML <meta name=\"citation_title\">; normalized exact canonical-title match.",
+            "complete_author_sequence": "Raw HTML all 5 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names.",
+            "formal_identity": "Raw HTML <meta name=\"citation_doi\">, <meta name=\"citation_conference_title\">, <meta name=\"citation_fulltext_html_url\">, <meta name=\"citation_publication_date\">, <meta name=\"citation_firstpage\"> and <meta name=\"citation_lastpage\">."
+          },
+          "metadata_extraction_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/P177-extracted-metadata.json",
+          "metadata_extraction_sha256": "8d13a91ac3226d072473165b3557d58629f78ff168023a1b0fe7401ad112a5fa"
+        },
+        {
+          "url": "https://link.springer.com/book/10.1007/978-3-032-37350-2?page=2",
+          "type": "official_publisher_proceedings_contents",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-title-locators.json",
+          "capture_sha256": "b6db0f975ee9ae37ae22be368e17463cafd9bff4f8528362e79c1d7124768b68",
+          "capture_representation": "Serialized web-tool rendered response, not raw HTTP",
+          "locator": "https://link.springer.com/book/10.1007/978-3-032-37350-2?page=2; Source: find({\"ref_id\":\"turn204view1\",\"pattern\":\"Prior-Conditioned\"}); rendered document lines 228, 230, 232; link ID 70.",
+          "scope_of_support": "The contents entry establishes the title, page range, publisher chapter-link ID and visible 5-author byline. The complete author-order assertion is independently checked against all citation_author elements in the identity-matched raw chapter HTML."
+        },
+        {
+          "url": "https://arxiv.org/abs/2608.18523",
+          "type": "existing_author_preprint_metadata",
+          "capture_path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/prior.html",
+          "capture_sha256": "ffadaa0f33bd9ad9e188ff8dcf6b8f78e63326d5edfa145b85b46b1676be35ae",
+          "capture_representation": "Existing repository HTML receipt; not retrieved again in B3",
+          "locator": "meta citation_title/citation_author/citation_arxiv_id; td.comments"
+        },
+        {
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34",
+          "type": "official_publisher_book_to_chapter_link_trace",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-chapter-pages-rendered.json",
+          "capture_sha256": "f92f6b121eda75226e6445c44fceebab6df11002a514e408dec79f9af2ba8915",
+          "capture_representation": "Serialized web-tool click response, not raw HTTP",
+          "locator": "Source: click({\"ref_id\":\"turn204view1\",\"id\":70}); resulting chapter URL https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34",
+          "scope_of_support": "Existing response records the observed click from proceedings turn204view1 link ID 70 to this exact chapter URL. It is link-chain provenance, not a substitute for the full author metadata in raw HTML."
+        }
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/papers.csv",
+          "locator": "paper_id=curated:b460935b64c35e1d074a",
+          "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+          "finding": "Current canonical author order and arXiv DOI/ID/URL retained; authoritative paper_url contains only the arXiv landing page, and the public formal_url is blank. Formal conference status/venue are already stored."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+          "locator": "paper_id=curated:b460935b64c35e1d074a",
+          "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+          "finding": "Existing detection/method labels retained; existing evidence tier reused_audit+abstract is not promoted to a newly verified manuscript review."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P177]",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+          "finding": "Original independent question is missing canonical formal URL. No task/research-type correction belongs to this action."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/prior.html",
+          "locator": "meta citation_title; citation_author[*]; citation_arxiv_id; td.comments",
+          "sha256": "ffadaa0f33bd9ad9e188ff8dcf6b8f78e63326d5edfa145b85b46b1676be35ae",
+          "finding": "Preserved 2026-08-29 arXiv metadata establishes exact preprint identity/author sequence and records Accepted in ECCV 2026."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/README.md",
+          "locator": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection",
+          "sha256": "b5825b651ea37cb7859b1cc9ae6709f2e57c59c101eccbe30480529ef1fce92d",
+          "finding": "Historical primary PDF v1 receipt retained with SHA-256 7f965b39f97f2e518d4fab892a4c5ba43c7f5dcc56def368e69ecbc6612a350f; this wave did not retrieve the PDF or certify version equivalence."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/docs/requested_eccv_ijcai_2026-08-29.md",
+          "locator": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection",
+          "sha256": "a4c802539a8013c3f9317e43fef04e05aa800edfa99f568035c57cd5dbd43c81",
+          "finding": "Earlier bibliography/byline and affiliation import review retained; no scientific methods/quantitative findings are independently reassessed now."
+        }
+      ],
+      "contradictions": [],
+      "limitations": [
+        "This bounded metadata review does not verify any method, experiment, causal claim, benchmark or numerical result.",
+        "ArXiv v1 and publisher-final manuscript contents were not compared; no publisher-final equivalence is claimed.",
+        "The existing 10.48550/arxiv identifier is a repository DOI, distinct from the newly verified formal chapter DOI. No identifier was changed.",
+        "Publisher dates/pages/volume are identity corroboration; unsupported schema fields must not be added merely to store them."
+      ],
+      "retrieval_failures": [
+        {
+          "review_id": "P177",
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34",
+          "started_utc": "2026-10-28T01:44:39.440453+00:00",
+          "monotonic_start_ns": 166095702428416,
+          "purpose": "Preserve exact official metadata HTML, not a scientific manuscript",
+          "attempt": 1,
+          "retry": false,
+          "full_manuscript": false,
+          "status": null,
+          "error": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+          "ended_utc": "2026-10-28T01:44:39.466739+00:00",
+          "monotonic_end_ns": 166095728537958,
+          "duration_seconds": 0.026109542,
+          "body_bytes": 0,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/P177-official-chapter.html"
+        }
+      ],
+      "retrieval_failure_interpretation": "Initial sandbox DNS denial prevented connection. A single authorized-network raw metadata capture then returned HTTP 200; no blocked publisher endpoint was retried.",
+      "known_prior_science_vs_not_assessed": {
+        "existing_labels": {
+          "tasks": "detection",
+          "research_types": "method"
+        },
+        "existing_taxonomy_evidence_tiers": {
+          "tasks_evidence_tier": "reused_audit+abstract",
+          "research_types_evidence_tier": "reused_audit+abstract"
+        },
+        "prior_primary_receipt_scope": "Byline/affiliation identity check, as documented in the 2026-08-29 import report.",
+        "new_scientific_assessment": "NOT_REASSESSED_NOT_INFERRED_FROM_TITLE_OR_ABSTRACT",
+        "scientific_claims_independently_reproduced": false
+      },
+      "proposed_taxonomy_changes": [],
+      "full_manuscripts_retrieved": 0,
+      "B4_conditions": [
+        "Reconfirm the exact baseline record fingerprint and original P177 question; do not close a companion action implicitly.",
+        "Obtain explicit maintainer acceptance of the bounded formal-URL addition before authoritative integration.",
+        "Preserve stable canonical paper ID, author order, tasks, research types, institutions, relationships, arXiv ID/URL and all prior evidence.",
+        "Use the established schema/export precedence for canonical formal URLs; any replacement of the arXiv DOI with the verified formal DOI requires an explicitly accepted independent metadata change, preserving arXiv identity.",
+        "Retain historical scope/version and empirical limitations; no scientific contribution or result is newly certified by adding a publisher URL.",
+        "Only a valid formal source-linked decision satisfying current acceptance/fingerprint rules may decrement the original unresolved action; B3 itself changes no counts."
+      ]
+    },
+    {
+      "review_id": "P229",
+      "action_ids": [
+        "P229"
+      ],
+      "paper_id": "curated:55bc4360e3d312e696b7",
+      "canonical_title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+      "original_review_question": "Obtain the official European Conference on Computer Vision paper record, match title/authors and preserve existing identity; record formal URL and DOI only if assigned.",
+      "current_authors": [
+        "Lei Tan",
+        "Shuwei Li",
+        "Mohan Kankanhalli",
+        "Robby T. Tan"
+      ],
+      "current_doi": "10.48550/arXiv.2608.15238",
+      "current_arxiv_id": "2608.15238",
+      "current_arxiv_url": "https://arxiv.org/abs/2608.15238",
+      "current_venue": "European Conference on Computer Vision",
+      "current_year": "2026",
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "current_formal_url": "",
+      "current_authoritative_paper_url": "https://arxiv.org/abs/2608.15238",
+      "provisional_outcome": "SUPPORTED_ADDITION",
+      "proposed_formal_url": "https://doi.org/10.1007/978-3-032-37023-5_10",
+      "verified_official_landing_url": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+      "verified_formal_doi": "10.1007/978-3-032-37023-5_10",
+      "formal_doi_change_authorized_or_applied": false,
+      "evidence_sufficient_for_original_publication_question": true,
+      "maintainer_acceptance": "PENDING_B4_NOT_APPLIED",
+      "authoritative_remediation_required": true,
+      "decision_rationale": "The exact official archival chapter has the same title after whitespace/case normalization and the complete identical author sequence as both current canonical metadata and preserved arXiv metadata. It supplies a publisher DOI and archival chapter URL absent from the current source record.",
+      "identity_and_version_evidence": {
+        "official_title": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+        "official_authors": [
+          "Lei Tan",
+          "Shuwei Li",
+          "Mohan Kankanhalli",
+          "Robby T. Tan"
+        ],
+        "title_match": "NFKC whitespace/case-normalized exact match",
+        "complete_author_sequence_match": true,
+        "official_venue": "Computer Vision – ECCV 2026",
+        "official_conference": "European Conference on Computer Vision",
+        "first_online": "2026-09-11",
+        "pages": "164–183",
+        "lncs_volume": "17069",
+        "book_part": "LXIX",
+        "arxiv_formal_relation": "Bibliographic same-work identity is supported by exact title plus complete author order and retained conference acceptance metadata; the publisher page does not expose an explicit arXiv crosslink.",
+        "full_text_equivalence_verified": false,
+        "publisher_final_manuscript_inspected": false,
+        "preprint_pdf_receipt_version": "v1 (historical receipt only)",
+        "historical_pdf_sha256": "63ef068afa9fe99b47a5846243573f53de98bdc3fec87e60250f98531aef4096",
+        "retained_spotlight_is_not_a_different_canonical_venue": false,
+        "complete_author_sequence_provenance": {
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P229-official-chapter.html",
+          "capture_sha256": "9a200260c90b7197d7e561a2a3141bd6378af3933c810c95abdd757094047b90",
+          "locator": "Raw HTML all 4 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names.",
+          "independently_checked_author_count": 4,
+          "toc_supports_complete_sequence": true,
+          "author_order_assertion_source": "Raw official chapter HTML citation_author values; contents truncation is not treated as complete-author evidence."
+        }
+      },
+      "sources": [
+        {
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+          "type": "official_publisher_archival_chapter_metadata",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P229-official-chapter.html",
+          "capture_sha256": "9a200260c90b7197d7e561a2a3141bd6378af3933c810c95abdd757094047b90",
+          "capture_representation": "Unmodified direct HTTP response body, text/html",
+          "locators": {
+            "title": "Raw HTML <meta name=\"citation_title\">; normalized exact canonical-title match.",
+            "complete_author_sequence": "Raw HTML all 4 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names.",
+            "formal_identity": "Raw HTML <meta name=\"citation_doi\">, <meta name=\"citation_conference_title\">, <meta name=\"citation_fulltext_html_url\">, <meta name=\"citation_publication_date\">, <meta name=\"citation_firstpage\"> and <meta name=\"citation_lastpage\">."
+          },
+          "metadata_extraction_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/P229-extracted-metadata.json",
+          "metadata_extraction_sha256": "0241c0515a9a4fefc35fb2044b0a65ae7f5aa4db5898db3e4e19e933a401599b"
+        },
+        {
+          "url": "https://link.springer.com/book/10.1007/978-3-032-37023-5",
+          "type": "official_publisher_proceedings_contents",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-title-locators.json",
+          "capture_sha256": "b6db0f975ee9ae37ae22be368e17463cafd9bff4f8528362e79c1d7124768b68",
+          "capture_representation": "Serialized web-tool rendered response, not raw HTTP",
+          "locator": "https://link.springer.com/book/10.1007/978-3-032-37023-5; Source: find({\"ref_id\":\"turn204view2\",\"pattern\":\"UC-VLM\"}); rendered document lines 207, 208, 210; link ID 67.",
+          "scope_of_support": "The contents entry establishes the title, page range, publisher chapter-link ID and visible 4-author byline. The complete author-order assertion is independently checked against all citation_author elements in the identity-matched raw chapter HTML."
+        },
+        {
+          "url": "https://arxiv.org/abs/2608.15238",
+          "type": "existing_author_preprint_metadata",
+          "capture_path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/ucvlm.html",
+          "capture_sha256": "300efe6eae57aa0ffa8a356f66caa6da1a2952dc1d37777b62a35582977c0088",
+          "capture_representation": "Existing repository HTML receipt; not retrieved again in B3",
+          "locator": "meta citation_title/citation_author/citation_arxiv_id; td.comments"
+        },
+        {
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+          "type": "official_publisher_book_to_chapter_link_trace",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-chapter-pages-rendered.json",
+          "capture_sha256": "f92f6b121eda75226e6445c44fceebab6df11002a514e408dec79f9af2ba8915",
+          "capture_representation": "Serialized web-tool click response, not raw HTTP",
+          "locator": "Source: click({\"ref_id\":\"turn204view2\",\"id\":67}); resulting chapter URL https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+          "scope_of_support": "Existing response records the observed click from proceedings turn204view2 link ID 67 to this exact chapter URL. It is link-chain provenance, not a substitute for the full author metadata in raw HTML."
+        }
+      ],
+      "local_evidence_refs": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/papers.csv",
+          "locator": "paper_id=curated:55bc4360e3d312e696b7",
+          "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+          "finding": "Current canonical author order and arXiv DOI/ID/URL retained; authoritative paper_url contains only the arXiv landing page, and the public formal_url is blank. Formal conference status/venue are already stored."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+          "locator": "paper_id=curated:55bc4360e3d312e696b7",
+          "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+          "finding": "Existing detection/method labels retained; existing evidence tier reused_audit+abstract is not promoted to a newly verified manuscript review."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P229]",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+          "finding": "Original independent question is missing canonical formal URL. No task/research-type correction belongs to this action."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/ucvlm.html",
+          "locator": "meta citation_title; citation_author[*]; citation_arxiv_id; td.comments",
+          "sha256": "300efe6eae57aa0ffa8a356f66caa6da1a2952dc1d37777b62a35582977c0088",
+          "finding": "Preserved 2026-08-29 arXiv metadata establishes exact preprint identity/author sequence and records Accepted by ECCV 2026."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/README.md",
+          "locator": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+          "sha256": "b5825b651ea37cb7859b1cc9ae6709f2e57c59c101eccbe30480529ef1fce92d",
+          "finding": "Historical primary PDF v1 receipt retained with SHA-256 63ef068afa9fe99b47a5846243573f53de98bdc3fec87e60250f98531aef4096; this wave did not retrieve the PDF or certify version equivalence."
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/docs/requested_eccv_ijcai_2026-08-29.md",
+          "locator": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models",
+          "sha256": "a4c802539a8013c3f9317e43fef04e05aa800edfa99f568035c57cd5dbd43c81",
+          "finding": "Earlier bibliography/byline and affiliation import review retained; no scientific methods/quantitative findings are independently reassessed now."
+        }
+      ],
+      "contradictions": [],
+      "limitations": [
+        "This bounded metadata review does not verify any method, experiment, causal claim, benchmark or numerical result.",
+        "ArXiv v1 and publisher-final manuscript contents were not compared; no publisher-final equivalence is claimed.",
+        "The existing 10.48550/arxiv identifier is a repository DOI, distinct from the newly verified formal chapter DOI. No identifier was changed.",
+        "Publisher dates/pages/volume are identity corroboration; unsupported schema fields must not be added merely to store them."
+      ],
+      "retrieval_failures": [
+        {
+          "review_id": "P229",
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+          "started_utc": "2026-10-28T01:44:39.440594+00:00",
+          "monotonic_start_ns": 166095702568791,
+          "purpose": "Preserve exact official metadata HTML, not a scientific manuscript",
+          "attempt": 1,
+          "retry": false,
+          "full_manuscript": false,
+          "status": null,
+          "error": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+          "ended_utc": "2026-10-28T01:44:39.466717+00:00",
+          "monotonic_end_ns": 166095728490166,
+          "duration_seconds": 0.025921375,
+          "body_bytes": 0,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/P229-official-chapter.html"
+        }
+      ],
+      "retrieval_failure_interpretation": "Initial sandbox DNS denial prevented connection. A single authorized-network raw metadata capture then returned HTTP 200; no blocked publisher endpoint was retried.",
+      "known_prior_science_vs_not_assessed": {
+        "existing_labels": {
+          "tasks": "detection",
+          "research_types": "method"
+        },
+        "existing_taxonomy_evidence_tiers": {
+          "tasks_evidence_tier": "reused_audit+abstract",
+          "research_types_evidence_tier": "reused_audit+abstract"
+        },
+        "prior_primary_receipt_scope": "Byline/affiliation identity check, as documented in the 2026-08-29 import report.",
+        "new_scientific_assessment": "NOT_REASSESSED_NOT_INFERRED_FROM_TITLE_OR_ABSTRACT",
+        "scientific_claims_independently_reproduced": false
+      },
+      "proposed_taxonomy_changes": [],
+      "full_manuscripts_retrieved": 0,
+      "B4_conditions": [
+        "Reconfirm the exact baseline record fingerprint and original P229 question; do not close a companion action implicitly.",
+        "Obtain explicit maintainer acceptance of the bounded formal-URL addition before authoritative integration.",
+        "Preserve stable canonical paper ID, author order, tasks, research types, institutions, relationships, arXiv ID/URL and all prior evidence.",
+        "Use the established schema/export precedence for canonical formal URLs; any replacement of the arXiv DOI with the verified formal DOI requires an explicitly accepted independent metadata change, preserving arXiv identity.",
+        "Retain historical scope/version and empirical limitations; no scientific contribution or result is newly certified by adding a publisher URL.",
+        "Only a valid formal source-linked decision satisfying current acceptance/fingerprint rules may decrement the original unresolved action; B3 itself changes no counts."
+      ]
+    }
+  ],
+  "preservation": {
+    "authoritative_decisions_applied": 0,
+    "taxonomy_changes": 0,
+    "unresolved_action_count_decrement": 0,
+    "repository_files_written": 0,
+    "exports_run": 0,
+    "tests_run": 0,
+    "staged_files": 0,
+    "commits_created": 0,
+    "pushes": 0
+  },
+  "provenance_revision": {
+    "revision": "v2",
+    "revision_utc": "2026-10-28T01:59:58.186885+00:00",
+    "supersedes_artifact_for_provenance_only": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b-reviews.json",
+    "original_artifact_sha256": "3c4bda15a427841b4ba4f2a418c5043fced990c2f18fc4754c8c44a9533db846",
+    "reason": "Independent QC identified contents-line locators attached to an initial rendered capture that did not retain those exact entries/bylines. Correct to the existing find-result capture; record the observed click chain and attribute complete author order to raw official chapter HTML.",
+    "scope": "Provenance locators/reference attribution only; all provisional outcomes, scientific limits, source bytes, retrieval histories, budgets and original review timings retained.",
+    "new_retrievals": 0,
+    "repository_changes": 0,
+    "changed_fields": [
+      {
+        "path": "/records/0/identity_and_version_evidence/complete_author_sequence_provenance",
+        "operation": "add",
+        "after": {
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P150-official-chapter.html",
+          "capture_sha256": "45829de2acf3cb68a806638078fa64f3278f5b3531d5955c4611d23fba99d7c5",
+          "locator": "Raw HTML all 9 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names.",
+          "independently_checked_author_count": 9,
+          "toc_supports_complete_sequence": false,
+          "author_order_assertion_source": "Raw official chapter HTML citation_author values; contents truncation is not treated as complete-author evidence."
+        }
+      },
+      {
+        "path": "/records/0/sources/0/locators/book_contents",
+        "operation": "remove",
+        "before": "Rendered book lines 217–221, chapter link /chapter/10.1007/978-3-032-37464-6_12"
+      },
+      {
+        "path": "/records/0/sources/0/locators/complete_author_sequence",
+        "operation": "add",
+        "after": "Raw HTML all 9 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names."
+      },
+      {
+        "path": "/records/0/sources/0/locators/formal_identity",
+        "operation": "replace",
+        "before": "Rendered chapter lines 327–343; HTML meta citation_doi/citation_conference_title/citation_fulltext_html_url",
+        "after": "Raw HTML <meta name=\"citation_doi\">, <meta name=\"citation_conference_title\">, <meta name=\"citation_fulltext_html_url\">, <meta name=\"citation_publication_date\">, <meta name=\"citation_firstpage\"> and <meta name=\"citation_lastpage\">."
+      },
+      {
+        "path": "/records/0/sources/0/locators/title",
+        "operation": "add",
+        "after": "Raw HTML <meta name=\"citation_title\">; normalized exact canonical-title match."
+      },
+      {
+        "path": "/records/0/sources/0/locators/title_authors",
+        "operation": "remove",
+        "before": "Rendered chapter lines 11–35; HTML meta citation_title and all citation_author values"
+      },
+      {
+        "path": "/records/0/sources/1/capture_path",
+        "operation": "replace",
+        "before": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-pages-rendered.json",
+        "after": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-title-locators.json"
+      },
+      {
+        "path": "/records/0/sources/1/capture_sha256",
+        "operation": "replace",
+        "before": "c9b540b969ab779a68501b4d438f5b7ee0093e82a6ca1bfd66cc44bf4a1aa388",
+        "after": "b6db0f975ee9ae37ae22be368e17463cafd9bff4f8528362e79c1d7124768b68"
+      },
+      {
+        "path": "/records/0/sources/1/locator",
+        "operation": "replace",
+        "before": "Rendered book lines 217–221, chapter link /chapter/10.1007/978-3-032-37464-6_12",
+        "after": "https://link.springer.com/book/10.1007/978-3-032-37464-6; Source: find({\"ref_id\":\"turn204view0\",\"pattern\":\"LoRC\"}); rendered document lines 217, 219, 221; link ID 68."
+      },
+      {
+        "path": "/records/0/sources/1/scope_of_support",
+        "operation": "add",
+        "after": "The contents entry establishes the title, page range and publisher chapter-link ID, with a truncated six-name et al. author list. The complete nine-author sequence is proved only by the identity-matched raw chapter HTML citation_author elements, not by this truncated contents entry."
+      },
+      {
+        "path": "/records/0/sources/3",
+        "operation": "add",
+        "after": {
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12",
+          "type": "official_publisher_book_to_chapter_link_trace",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-chapter-pages-rendered.json",
+          "capture_sha256": "f92f6b121eda75226e6445c44fceebab6df11002a514e408dec79f9af2ba8915",
+          "capture_representation": "Serialized web-tool click response, not raw HTTP",
+          "locator": "Source: click({\"ref_id\":\"turn204view0\",\"id\":68}); resulting chapter URL https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12",
+          "scope_of_support": "Existing response records the observed click from proceedings turn204view0 link ID 68 to this exact chapter URL. It is link-chain provenance, not a substitute for the full author metadata in raw HTML."
+        }
+      },
+      {
+        "path": "/records/1/identity_and_version_evidence/complete_author_sequence_provenance",
+        "operation": "add",
+        "after": {
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P177-official-chapter.html",
+          "capture_sha256": "d9d2c29ced9e714516c49db6a3bcb185ce8d4f840be1dfe3473ea78c3ee1b504",
+          "locator": "Raw HTML all 5 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names.",
+          "independently_checked_author_count": 5,
+          "toc_supports_complete_sequence": true,
+          "author_order_assertion_source": "Raw official chapter HTML citation_author values; contents truncation is not treated as complete-author evidence."
+        }
+      },
+      {
+        "path": "/records/1/sources/0/locators/book_contents",
+        "operation": "remove",
+        "before": "Rendered book lines 228–232, chapter link /chapter/10.1007/978-3-032-37350-2_34"
+      },
+      {
+        "path": "/records/1/sources/0/locators/complete_author_sequence",
+        "operation": "add",
+        "after": "Raw HTML all 5 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names."
+      },
+      {
+        "path": "/records/1/sources/0/locators/formal_identity",
+        "operation": "replace",
+        "before": "Focused rendered chapter lines 281–297; HTML meta citation_doi/citation_conference_title/citation_fulltext_html_url",
+        "after": "Raw HTML <meta name=\"citation_doi\">, <meta name=\"citation_conference_title\">, <meta name=\"citation_fulltext_html_url\">, <meta name=\"citation_publication_date\">, <meta name=\"citation_firstpage\"> and <meta name=\"citation_lastpage\">."
+      },
+      {
+        "path": "/records/1/sources/0/locators/title",
+        "operation": "add",
+        "after": "Raw HTML <meta name=\"citation_title\">; normalized exact canonical-title match."
+      },
+      {
+        "path": "/records/1/sources/0/locators/title_authors",
+        "operation": "remove",
+        "before": "Focused rendered chapter lines 11–31; HTML meta citation_title and all citation_author values"
+      },
+      {
+        "path": "/records/1/sources/1/capture_path",
+        "operation": "replace",
+        "before": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-pages-rendered.json",
+        "after": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-title-locators.json"
+      },
+      {
+        "path": "/records/1/sources/1/capture_sha256",
+        "operation": "replace",
+        "before": "c9b540b969ab779a68501b4d438f5b7ee0093e82a6ca1bfd66cc44bf4a1aa388",
+        "after": "b6db0f975ee9ae37ae22be368e17463cafd9bff4f8528362e79c1d7124768b68"
+      },
+      {
+        "path": "/records/1/sources/1/locator",
+        "operation": "replace",
+        "before": "Rendered book lines 228–232, chapter link /chapter/10.1007/978-3-032-37350-2_34",
+        "after": "https://link.springer.com/book/10.1007/978-3-032-37350-2?page=2; Source: find({\"ref_id\":\"turn204view1\",\"pattern\":\"Prior-Conditioned\"}); rendered document lines 228, 230, 232; link ID 70."
+      },
+      {
+        "path": "/records/1/sources/1/scope_of_support",
+        "operation": "add",
+        "after": "The contents entry establishes the title, page range, publisher chapter-link ID and visible 5-author byline. The complete author-order assertion is independently checked against all citation_author elements in the identity-matched raw chapter HTML."
+      },
+      {
+        "path": "/records/1/sources/3",
+        "operation": "add",
+        "after": {
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34",
+          "type": "official_publisher_book_to_chapter_link_trace",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-chapter-pages-rendered.json",
+          "capture_sha256": "f92f6b121eda75226e6445c44fceebab6df11002a514e408dec79f9af2ba8915",
+          "capture_representation": "Serialized web-tool click response, not raw HTTP",
+          "locator": "Source: click({\"ref_id\":\"turn204view1\",\"id\":70}); resulting chapter URL https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34",
+          "scope_of_support": "Existing response records the observed click from proceedings turn204view1 link ID 70 to this exact chapter URL. It is link-chain provenance, not a substitute for the full author metadata in raw HTML."
+        }
+      },
+      {
+        "path": "/records/2/identity_and_version_evidence/complete_author_sequence_provenance",
+        "operation": "add",
+        "after": {
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P229-official-chapter.html",
+          "capture_sha256": "9a200260c90b7197d7e561a2a3141bd6378af3933c810c95abdd757094047b90",
+          "locator": "Raw HTML all 4 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names.",
+          "independently_checked_author_count": 4,
+          "toc_supports_complete_sequence": true,
+          "author_order_assertion_source": "Raw official chapter HTML citation_author values; contents truncation is not treated as complete-author evidence."
+        }
+      },
+      {
+        "path": "/records/2/sources/0/locators/book_contents",
+        "operation": "remove",
+        "before": "Rendered book lines 207–210, chapter link /chapter/10.1007/978-3-032-37023-5_10"
+      },
+      {
+        "path": "/records/2/sources/0/locators/complete_author_sequence",
+        "operation": "add",
+        "after": "Raw HTML all 4 <meta name=\"citation_author\"> elements in document order; family/given representation is converted for comparison without changing the source names."
+      },
+      {
+        "path": "/records/2/sources/0/locators/formal_identity",
+        "operation": "replace",
+        "before": "Focused rendered chapter lines 286–302; HTML meta citation_doi/citation_conference_title/citation_fulltext_html_url",
+        "after": "Raw HTML <meta name=\"citation_doi\">, <meta name=\"citation_conference_title\">, <meta name=\"citation_fulltext_html_url\">, <meta name=\"citation_publication_date\">, <meta name=\"citation_firstpage\"> and <meta name=\"citation_lastpage\">."
+      },
+      {
+        "path": "/records/2/sources/0/locators/title",
+        "operation": "add",
+        "after": "Raw HTML <meta name=\"citation_title\">; normalized exact canonical-title match."
+      },
+      {
+        "path": "/records/2/sources/0/locators/title_authors",
+        "operation": "remove",
+        "before": "Focused rendered chapter lines 11–31; HTML meta citation_title and all citation_author values"
+      },
+      {
+        "path": "/records/2/sources/1/capture_path",
+        "operation": "replace",
+        "before": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-pages-rendered.json",
+        "after": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-title-locators.json"
+      },
+      {
+        "path": "/records/2/sources/1/capture_sha256",
+        "operation": "replace",
+        "before": "c9b540b969ab779a68501b4d438f5b7ee0093e82a6ca1bfd66cc44bf4a1aa388",
+        "after": "b6db0f975ee9ae37ae22be368e17463cafd9bff4f8528362e79c1d7124768b68"
+      },
+      {
+        "path": "/records/2/sources/1/locator",
+        "operation": "replace",
+        "before": "Rendered book lines 207–210, chapter link /chapter/10.1007/978-3-032-37023-5_10",
+        "after": "https://link.springer.com/book/10.1007/978-3-032-37023-5; Source: find({\"ref_id\":\"turn204view2\",\"pattern\":\"UC-VLM\"}); rendered document lines 207, 208, 210; link ID 67."
+      },
+      {
+        "path": "/records/2/sources/1/scope_of_support",
+        "operation": "add",
+        "after": "The contents entry establishes the title, page range, publisher chapter-link ID and visible 4-author byline. The complete author-order assertion is independently checked against all citation_author elements in the identity-matched raw chapter HTML."
+      },
+      {
+        "path": "/records/2/sources/3",
+        "operation": "add",
+        "after": {
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+          "type": "official_publisher_book_to_chapter_link_trace",
+          "capture_path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-chapter-pages-rendered.json",
+          "capture_sha256": "f92f6b121eda75226e6445c44fceebab6df11002a514e408dec79f9af2ba8915",
+          "capture_representation": "Serialized web-tool click response, not raw HTTP",
+          "locator": "Source: click({\"ref_id\":\"turn204view2\",\"id\":67}); resulting chapter URL https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+          "scope_of_support": "Existing response records the observed click from proceedings turn204view2 link ID 67 to this exact chapter URL. It is link-chain provenance, not a substitute for the full author metadata in raw HTML."
+        }
+      }
+    ]
+  }
+}

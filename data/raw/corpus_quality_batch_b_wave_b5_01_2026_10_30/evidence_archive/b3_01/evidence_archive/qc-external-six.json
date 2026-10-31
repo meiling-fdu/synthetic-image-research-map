@@ -1,0 +1,1115 @@
+{
+  "schema_version": 1,
+  "reviewer": "b3_independent_external_six_qc",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "recorded_utc": "2026-10-28T01:58:09.694895+00:00",
+  "read_only_scope": "Independent evidence-to-claim verification for exactly P028/P097/P105/P150/P177/P229; no network/manuscripts/tests/export/repository writes.",
+  "reviewed_group_artifact_hashes": {
+    "publication-group-a-reviews.json": "a5f03dec49b5a2c1674e84de5ce79dddb0eb94de28fe9221ee0525242f33ccdb",
+    "publication-group-b-reviews.json": "3c4bda15a427841b4ba4f2a418c5043fced990c2f18fc4754c8c44a9533db846"
+  },
+  "records": [
+    {
+      "review_id": "P028",
+      "provisional_outcome_reviewed": "EVIDENCE_INSUFFICIENT",
+      "qc_assessment": "SUPPORTED_EVIDENCE_MAPPING",
+      "checks": [
+        {
+          "check": "original bounded question retained",
+          "pass": true
+        },
+        {
+          "check": "current formal link missing under actual resolver",
+          "pass": true
+        },
+        {
+          "check": "canonical/public identity and full author sequence agree",
+          "pass": true
+        },
+        {
+          "check": "zero proposed taxonomy changes",
+          "pass": true
+        },
+        {
+          "check": "record title/full authors/arxiv/current literals match sources",
+          "pass": true
+        },
+        {
+          "check": "no new science/manuscript/acceptance",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/curated/papers.csv",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/curated/paper_taxonomy.csv",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "pass": true
+        },
+        {
+          "check": "local source checksum docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "pass": true
+        },
+        {
+          "check": "local source checksum docs/publication_venue_normalization.md",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/raw/requested_seven_papers_2026-08-29/dash_lab_publications_data.js",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/raw/requested_seven_papers_2026-08-29/2608.15196.first2.txt",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/raw/requested_seven_papers_2026-08-29/arxiv_api.xml",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/raw/requested_seven_papers_2026-08-29/anchor_openalex.json",
+          "pass": true
+        },
+        {
+          "check": "no guessed formal URL or DOI proposed",
+          "pass": true
+        },
+        {
+          "check": "empty searches explicitly not nonpublication evidence",
+          "pass": true
+        },
+        {
+          "check": "saved authorlab identity and generic conference support only",
+          "pass": true
+        },
+        {
+          "check": "search capture preserved search1.json",
+          "pass": true
+        },
+        {
+          "check": "search capture preserved chapters-and-acm-search.json",
+          "pass": true
+        },
+        {
+          "check": "search capture preserved chapters-and-acm-search.json",
+          "pass": true
+        },
+        {
+          "check": "search capture preserved acm-final-search.json",
+          "pass": true
+        },
+        {
+          "check": "search capture preserved acm-final-search.json",
+          "pass": true
+        },
+        {
+          "check": "search capture preserved acm-final-search.json",
+          "pass": true
+        }
+      ],
+      "evidence_hashes_and_locators": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/papers.csv",
+          "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+          "locator": "curated:92fe1dfd435209b21ff4"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+          "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+          "locator": "curated:92fe1dfd435209b21ff4"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+          "locator": "P028"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "locator": "#b-P028"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+          "locator": "V1 / publication conventions"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/docs/publication_venue_normalization.md",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af",
+          "locator": "V1 / publication conventions"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_seven_papers_2026-08-29/dash_lab_publications_data.js",
+          "sha256": "711c5d614831847a6df6ffd067a007094ff75faed838d21f428c6cf8f5ac06e4",
+          "locator": "title Anchor-Regularized Adaptation / arXiv2608.15196"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_seven_papers_2026-08-29/2608.15196.first2.txt",
+          "sha256": "61fcc986bf97417f5fcbbecc0ef4d2b6e812a7e5665d6cf370d141b8ad57846b",
+          "locator": "title Anchor-Regularized Adaptation / arXiv2608.15196"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_seven_papers_2026-08-29/arxiv_api.xml",
+          "sha256": "a9f6c931bdf14736684480d512aa91d841b8196c63d1355a7018df68ef1c2181",
+          "locator": "title Anchor-Regularized Adaptation / arXiv2608.15196"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_seven_papers_2026-08-29/anchor_openalex.json",
+          "sha256": "383fb67adfb0d3bf1114fe8cefb9bbec98e5f047e95f7488c1680da7d1b94143",
+          "locator": "title Anchor-Regularized Adaptation / arXiv2608.15196"
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/search1.json",
+          "sha256": "5c4c270347db0f62bd6d943edad7ba382c141ecaefe39475046a2597a6107428",
+          "locator": "site:dl.acm.org \"Anchor-Regularized Adaptation\" DINOv3"
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+          "sha256": "913eb6ced04f665c7972799dc43cb30fb532c25774410d7b4e8133d0de5d98a9",
+          "locator": "site:dl.acm.org/doi \"Anchor-Regularized\" \"Choi\""
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+          "sha256": "913eb6ced04f665c7972799dc43cb30fb532c25774410d7b4e8133d0de5d98a9",
+          "locator": "site:acmmm2026.org \"Anchor-Regularized Adaptation\""
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/acm-final-search.json",
+          "sha256": "d97fa94fac4f20e2f16f13a14473bd77e61e332a47b7bc1cb8417436d9d4634b",
+          "locator": "site:dl.acm.org \"DINOv3\" \"Hyeongjun Choi\""
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/acm-final-search.json",
+          "sha256": "d97fa94fac4f20e2f16f13a14473bd77e61e332a47b7bc1cb8417436d9d4634b",
+          "locator": "site:2026.acmmm.org \"Anchor-Regularized\""
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/acm-final-search.json",
+          "sha256": "d97fa94fac4f20e2f16f13a14473bd77e61e332a47b7bc1cb8417436d9d4634b",
+          "locator": "site:dl.acm.org \"2608.15196\""
+        }
+      ],
+      "disagreements": [],
+      "uncertainties": [
+        "No exact official archival paper record was established by the bounded searches. This does not establish present nonpublication, absence of DOI, or an incorrect stored conference classification.",
+        "The guessed acmmm2026.org search domain is explicitly nonauthoritative/negative-result-only; it supports no conclusion.",
+        "Web-tool status/bytes are not exposed; JSON capture size is not a wire byte count."
+      ],
+      "taxonomy_changes_supported_or_proposed": [],
+      "qc_network_requests": 0,
+      "qc_manuscripts": 0,
+      "authoritative_acceptance": false
+    },
+    {
+      "review_id": "P097",
+      "provisional_outcome_reviewed": "SUPPORTED_ADDITION",
+      "qc_assessment": "SUPPORTED_EVIDENCE_MAPPING",
+      "checks": [
+        {
+          "check": "original bounded question retained",
+          "pass": true
+        },
+        {
+          "check": "current formal link missing under actual resolver",
+          "pass": true
+        },
+        {
+          "check": "canonical/public identity and full author sequence agree",
+          "pass": true
+        },
+        {
+          "check": "zero proposed taxonomy changes",
+          "pass": true
+        },
+        {
+          "check": "record title/full authors/arxiv/current literals match sources",
+          "pass": true
+        },
+        {
+          "check": "no new science/manuscript/acceptance",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/curated/papers.csv",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/curated/paper_taxonomy.csv",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "pass": true
+        },
+        {
+          "check": "local source checksum docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "pass": true
+        },
+        {
+          "check": "local source checksum docs/publication_venue_normalization.md",
+          "pass": true
+        },
+        {
+          "check": "captured official title matches canonical",
+          "pass": true
+        },
+        {
+          "check": "complete ordered captured header author list matches canonical",
+          "pass": true
+        },
+        {
+          "check": "proposed DOI/URL present in actual official capture",
+          "pass": true
+        },
+        {
+          "check": "actual page explicitly archival conference metadata",
+          "pass": true
+        },
+        {
+          "check": "official volume has exact chapter link and ordered byline",
+          "pass": true
+        },
+        {
+          "check": "chapter date preserved separately from volume date",
+          "pass": true
+        }
+      ],
+      "evidence_hashes_and_locators": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/papers.csv",
+          "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+          "locator": "curated:8503e319e1f4890c2e28"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+          "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+          "locator": "curated:8503e319e1f4890c2e28"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+          "locator": "P097"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "locator": "#b-P097"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+          "locator": "V1 / publication conventions"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/docs/publication_venue_normalization.md",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af",
+          "locator": "V1 / publication conventions"
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/fair-metadata-sections.json",
+          "sha256": "791a7f194593741b5b3e0ae6f0a6363b8008119f957455b8ae549b565e87b921",
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37321-2_32",
+          "locators": [
+            "Header exact title, Conference paper, complete ordered authors",
+            "About this paper → Cite this paper, DOI, Published"
+          ]
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/books-open.json",
+          "sha256": "2694f303aea599729e8a495a525ade0597459593b01647722b691caa61e12406",
+          "url": "https://link.springer.com/book/10.1007/978-3-032-37321-2?page=2",
+          "locators": [
+            "Exact paper title/authors/page span in TOC",
+            "ECCV2026 refereed proceedings and LNCS volume"
+          ]
+        }
+      ],
+      "disagreements": [],
+      "uncertainties": [
+        "Metadata landing/TOC evidence establishes the bounded formal version link, not full-manuscript or scientific-version equivalence.",
+        "Field proposed_formal_doi denotes verified evidence in these source records; narrative explicitly bars automatically replacing the stored arXiv DOI. Final packet should preserve that distinction.",
+        "Web-tool captures are serialized rendered responses; HTTP status/transfer size remains unexposed."
+      ],
+      "taxonomy_changes_supported_or_proposed": [],
+      "qc_network_requests": 0,
+      "qc_manuscripts": 0,
+      "authoritative_acceptance": false
+    },
+    {
+      "review_id": "P105",
+      "provisional_outcome_reviewed": "SUPPORTED_ADDITION",
+      "qc_assessment": "SUPPORTED_EVIDENCE_MAPPING",
+      "checks": [
+        {
+          "check": "original bounded question retained",
+          "pass": true
+        },
+        {
+          "check": "current formal link missing under actual resolver",
+          "pass": true
+        },
+        {
+          "check": "canonical/public identity and full author sequence agree",
+          "pass": true
+        },
+        {
+          "check": "zero proposed taxonomy changes",
+          "pass": true
+        },
+        {
+          "check": "record title/full authors/arxiv/current literals match sources",
+          "pass": true
+        },
+        {
+          "check": "no new science/manuscript/acceptance",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/curated/papers.csv",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/curated/paper_taxonomy.csv",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "pass": true
+        },
+        {
+          "check": "local source checksum docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "pass": true
+        },
+        {
+          "check": "local source checksum data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "pass": true
+        },
+        {
+          "check": "local source checksum docs/publication_venue_normalization.md",
+          "pass": true
+        },
+        {
+          "check": "captured official title matches canonical",
+          "pass": true
+        },
+        {
+          "check": "complete ordered captured header author list matches canonical",
+          "pass": true
+        },
+        {
+          "check": "proposed DOI/URL present in actual official capture",
+          "pass": true
+        },
+        {
+          "check": "actual page explicitly archival conference metadata",
+          "pass": true
+        },
+        {
+          "check": "official volume has exact chapter link and ordered byline",
+          "pass": true
+        },
+        {
+          "check": "chapter date preserved separately from volume date",
+          "pass": true
+        }
+      ],
+      "evidence_hashes_and_locators": [
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/papers.csv",
+          "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+          "locator": "curated:be2900947b322f9eb905"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+          "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+          "locator": "curated:be2900947b322f9eb905"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+          "locator": "P105"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+          "locator": "#b-P105"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+          "locator": "V1 / publication conventions"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/docs/publication_venue_normalization.md",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af",
+          "locator": "V1 / publication conventions"
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+          "sha256": "913eb6ced04f665c7972799dc43cb30fb532c25774410d7b4e8133d0de5d98a9",
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37550-6_18",
+          "locators": [
+            "Header exact title, Conference paper, complete ordered authors",
+            "About this paper → Cite this paper, DOI, Published"
+          ]
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/books-open.json",
+          "sha256": "2694f303aea599729e8a495a525ade0597459593b01647722b691caa61e12406",
+          "url": "https://link.springer.com/book/10.1007/978-3-032-37550-6",
+          "locators": [
+            "Exact paper title/authors/page span in TOC",
+            "ECCV2026 refereed proceedings and LNCS volume"
+          ]
+        }
+      ],
+      "disagreements": [],
+      "uncertainties": [
+        "Metadata landing/TOC evidence establishes the bounded formal version link, not full-manuscript or scientific-version equivalence.",
+        "Field proposed_formal_doi denotes verified evidence in these source records; narrative explicitly bars automatically replacing the stored arXiv DOI. Final packet should preserve that distinction.",
+        "Web-tool captures are serialized rendered responses; HTTP status/transfer size remains unexposed."
+      ],
+      "taxonomy_changes_supported_or_proposed": [],
+      "qc_network_requests": 0,
+      "qc_manuscripts": 0,
+      "authoritative_acceptance": false
+    },
+    {
+      "review_id": "P150",
+      "provisional_outcome_reviewed": "SUPPORTED_ADDITION",
+      "qc_assessment": "SUPPORTED_URL_WITH_PROVENANCE_CORRECTION_REQUIRED",
+      "checks": [
+        {
+          "check": "original bounded question retained",
+          "pass": true
+        },
+        {
+          "check": "current formal link missing under actual resolver",
+          "pass": true
+        },
+        {
+          "check": "canonical/public identity and full author sequence agree",
+          "pass": true
+        },
+        {
+          "check": "zero proposed taxonomy changes",
+          "pass": true
+        },
+        {
+          "check": "record title/current fullauthors/arxiv/doliteral match baseline",
+          "pass": true
+        },
+        {
+          "check": "no science/manuscript/equivalence claim",
+          "pass": true
+        },
+        {
+          "check": "official raw HTML capture checksum matches",
+          "pass": true
+        },
+        {
+          "check": "raw HTML exact normalized title matches current",
+          "pass": true
+        },
+        {
+          "check": "raw HTML fullordered citation authors match current",
+          "pass": true
+        },
+        {
+          "check": "raw HTML DOI and official canonical URL match proposal",
+          "pass": true
+        },
+        {
+          "check": "raw HTML conference/container establish archival proceedings",
+          "pass": true
+        },
+        {
+          "check": "existing focused official TOC capture has title and displayed ordered author prefix",
+          "pass": true
+        },
+        {
+          "check": "existing official TOC clickchain maps target entry to verified DOI/URL",
+          "pass": true
+        },
+        {
+          "check": "local source checksum papers.csv",
+          "pass": true
+        },
+        {
+          "check": "local source checksum paper_taxonomy.csv",
+          "pass": true
+        },
+        {
+          "check": "local source checksum publication_metadata_review.json",
+          "pass": true
+        },
+        {
+          "check": "local source checksum lorc.html",
+          "pass": true
+        },
+        {
+          "check": "local source checksum README.md",
+          "pass": true
+        },
+        {
+          "check": "local source checksum requested_eccv_ijcai_2026-08-29.md",
+          "pass": true
+        },
+        {
+          "check": "source checksum P150-official-chapter.html",
+          "pass": true
+        },
+        {
+          "check": "source checksum official-book-pages-rendered.json",
+          "pass": true
+        },
+        {
+          "check": "source checksum lorc.html",
+          "pass": true
+        },
+        {
+          "check": "instrumented metadata-only HTTP200receipt binds rawcapture",
+          "pass": true
+        },
+        {
+          "check": "canonical DOI not changed/authorized",
+          "pass": true
+        }
+      ],
+      "evidence_hashes_and_locators": [
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-title-locators.json",
+          "sha256": "b6db0f975ee9ae37ae22be368e17463cafd9bff4f8528362e79c1d7124768b68",
+          "locator": "Focused official book find result, exact title/displayed byline/pages"
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-chapter-pages-rendered.json",
+          "sha256": "f92f6b121eda75226e6445c44fceebab6df11002a514e408dec79f9af2ba8915",
+          "locator": "Official chapter returned by click on TOC item68; final DOI-bound URL"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/papers.csv",
+          "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+          "locator": "paper_id=curated:7a5ce57b121b69752867"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+          "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+          "locator": "paper_id=curated:7a5ce57b121b69752867"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+          "locator": "formal_records[review_id=P150]"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/lorc.html",
+          "sha256": "9f0c2c4bde3f86e1c7dc218ef26c6811d27e3852b9334e24352bc39af6a085a9",
+          "locator": "meta citation_title; citation_author[*]; citation_arxiv_id; td.comments"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/README.md",
+          "sha256": "b5825b651ea37cb7859b1cc9ae6709f2e57c59c101eccbe30480529ef1fce92d",
+          "locator": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/docs/requested_eccv_ijcai_2026-08-29.md",
+          "sha256": "a4c802539a8013c3f9317e43fef04e05aa800edfa99f568035c57cd5dbd43c81",
+          "locator": "LoRC: Detecting AI-Generated Images via Low-Rank Collapse in Semantic Residuals"
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P150-official-chapter.html",
+          "sha256": "45829de2acf3cb68a806638078fa64f3278f5b3531d5955c4611d23fba99d7c5",
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37464-6_12",
+          "locator": {
+            "title_authors": "Rendered chapter lines 11–35; HTML meta citation_title and all citation_author values",
+            "formal_identity": "Rendered chapter lines 327–343; HTML meta citation_doi/citation_conference_title/citation_fulltext_html_url",
+            "book_contents": "Rendered book lines 217–221, chapter link /chapter/10.1007/978-3-032-37464-6_12"
+          }
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-pages-rendered.json",
+          "sha256": "c9b540b969ab779a68501b4d438f5b7ee0093e82a6ca1bfd66cc44bf4a1aa388",
+          "url": "https://link.springer.com/book/10.1007/978-3-032-37464-6",
+          "locator": "Rendered book lines 217–221, chapter link /chapter/10.1007/978-3-032-37464-6_12"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/lorc.html",
+          "sha256": "9f0c2c4bde3f86e1c7dc218ef26c6811d27e3852b9334e24352bc39af6a085a9",
+          "url": "https://arxiv.org/abs/2608.20882",
+          "locator": "meta citation_title/citation_author/citation_arxiv_id; td.comments"
+        }
+      ],
+      "disagreements": [
+        "PROVENANCE_LOCATOR_CORRECTION_REQUIRED: specific TOC lines are attributed to official-book-pages-rendered.json, whose initial-open excerpt omits the claimed target/byline. Existing official-book-title-locators.json preserves the exact target excerpt; official-chapter-pages-rendered.json binds its clickid to the DOI. Correct the final source locator without a new retrieval."
+      ],
+      "uncertainties": [
+        "Metadata-only official landing page and TOC; no preprint/publisher scientific text equivalence or experiment reproduction.",
+        "Sandbox DNS failures preceded connection; successful authorized-network HTML capture is separately recorded. Do not count failed local DNS as publisherHTTP denials or combine opaque web-tool calls into an exact wire-request total."
+      ],
+      "taxonomy_changes_supported_or_proposed": [],
+      "qc_network_requests": 0,
+      "qc_manuscripts": 0,
+      "authoritative_acceptance": false
+    },
+    {
+      "review_id": "P177",
+      "provisional_outcome_reviewed": "SUPPORTED_ADDITION",
+      "qc_assessment": "SUPPORTED_URL_WITH_PROVENANCE_CORRECTION_REQUIRED",
+      "checks": [
+        {
+          "check": "original bounded question retained",
+          "pass": true
+        },
+        {
+          "check": "current formal link missing under actual resolver",
+          "pass": true
+        },
+        {
+          "check": "canonical/public identity and full author sequence agree",
+          "pass": true
+        },
+        {
+          "check": "zero proposed taxonomy changes",
+          "pass": true
+        },
+        {
+          "check": "record title/current fullauthors/arxiv/doliteral match baseline",
+          "pass": true
+        },
+        {
+          "check": "no science/manuscript/equivalence claim",
+          "pass": true
+        },
+        {
+          "check": "official raw HTML capture checksum matches",
+          "pass": true
+        },
+        {
+          "check": "raw HTML exact normalized title matches current",
+          "pass": true
+        },
+        {
+          "check": "raw HTML fullordered citation authors match current",
+          "pass": true
+        },
+        {
+          "check": "raw HTML DOI and official canonical URL match proposal",
+          "pass": true
+        },
+        {
+          "check": "raw HTML conference/container establish archival proceedings",
+          "pass": true
+        },
+        {
+          "check": "existing focused official TOC capture has title and displayed ordered author prefix",
+          "pass": true
+        },
+        {
+          "check": "existing official TOC clickchain maps target entry to verified DOI/URL",
+          "pass": true
+        },
+        {
+          "check": "local source checksum papers.csv",
+          "pass": true
+        },
+        {
+          "check": "local source checksum paper_taxonomy.csv",
+          "pass": true
+        },
+        {
+          "check": "local source checksum publication_metadata_review.json",
+          "pass": true
+        },
+        {
+          "check": "local source checksum prior.html",
+          "pass": true
+        },
+        {
+          "check": "local source checksum README.md",
+          "pass": true
+        },
+        {
+          "check": "local source checksum requested_eccv_ijcai_2026-08-29.md",
+          "pass": true
+        },
+        {
+          "check": "source checksum P177-official-chapter.html",
+          "pass": true
+        },
+        {
+          "check": "source checksum official-book-pages-rendered.json",
+          "pass": true
+        },
+        {
+          "check": "source checksum prior.html",
+          "pass": true
+        },
+        {
+          "check": "instrumented metadata-only HTTP200receipt binds rawcapture",
+          "pass": true
+        },
+        {
+          "check": "canonical DOI not changed/authorized",
+          "pass": true
+        }
+      ],
+      "evidence_hashes_and_locators": [
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-title-locators.json",
+          "sha256": "b6db0f975ee9ae37ae22be368e17463cafd9bff4f8528362e79c1d7124768b68",
+          "locator": "Focused official book find result, exact title/displayed byline/pages"
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-chapter-pages-rendered.json",
+          "sha256": "f92f6b121eda75226e6445c44fceebab6df11002a514e408dec79f9af2ba8915",
+          "locator": "Official chapter returned by click on TOC item70; final DOI-bound URL"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/papers.csv",
+          "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+          "locator": "paper_id=curated:b460935b64c35e1d074a"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+          "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+          "locator": "paper_id=curated:b460935b64c35e1d074a"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+          "locator": "formal_records[review_id=P177]"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/prior.html",
+          "sha256": "ffadaa0f33bd9ad9e188ff8dcf6b8f78e63326d5edfa145b85b46b1676be35ae",
+          "locator": "meta citation_title; citation_author[*]; citation_arxiv_id; td.comments"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/README.md",
+          "sha256": "b5825b651ea37cb7859b1cc9ae6709f2e57c59c101eccbe30480529ef1fce92d",
+          "locator": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/docs/requested_eccv_ijcai_2026-08-29.md",
+          "sha256": "a4c802539a8013c3f9317e43fef04e05aa800edfa99f568035c57cd5dbd43c81",
+          "locator": "Prior-Conditioned Gaussian Discriminants for Generalizable AI-Generated Image Detection"
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P177-official-chapter.html",
+          "sha256": "d9d2c29ced9e714516c49db6a3bcb185ce8d4f840be1dfe3473ea78c3ee1b504",
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37350-2_34",
+          "locator": {
+            "title_authors": "Focused rendered chapter lines 11–31; HTML meta citation_title and all citation_author values",
+            "formal_identity": "Focused rendered chapter lines 281–297; HTML meta citation_doi/citation_conference_title/citation_fulltext_html_url",
+            "book_contents": "Rendered book lines 228–232, chapter link /chapter/10.1007/978-3-032-37350-2_34"
+          }
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-pages-rendered.json",
+          "sha256": "c9b540b969ab779a68501b4d438f5b7ee0093e82a6ca1bfd66cc44bf4a1aa388",
+          "url": "https://link.springer.com/book/10.1007/978-3-032-37350-2?page=2",
+          "locator": "Rendered book lines 228–232, chapter link /chapter/10.1007/978-3-032-37350-2_34"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/prior.html",
+          "sha256": "ffadaa0f33bd9ad9e188ff8dcf6b8f78e63326d5edfa145b85b46b1676be35ae",
+          "url": "https://arxiv.org/abs/2608.18523",
+          "locator": "meta citation_title/citation_author/citation_arxiv_id; td.comments"
+        }
+      ],
+      "disagreements": [
+        "PROVENANCE_LOCATOR_CORRECTION_REQUIRED: specific TOC lines are attributed to official-book-pages-rendered.json, whose initial-open excerpt omits the claimed target/byline. Existing official-book-title-locators.json preserves the exact target excerpt; official-chapter-pages-rendered.json binds its clickid to the DOI. Correct the final source locator without a new retrieval."
+      ],
+      "uncertainties": [
+        "Metadata-only official landing page and TOC; no preprint/publisher scientific text equivalence or experiment reproduction.",
+        "Sandbox DNS failures preceded connection; successful authorized-network HTML capture is separately recorded. Do not count failed local DNS as publisherHTTP denials or combine opaque web-tool calls into an exact wire-request total.",
+        "Boolean retained_spotlight_is_not_a_different_canonical_venue=false is semantically awkward for papers without recorded spotlight. It must not be interpreted as evidence for a different venue; no actual venue correction is proposed."
+      ],
+      "taxonomy_changes_supported_or_proposed": [],
+      "qc_network_requests": 0,
+      "qc_manuscripts": 0,
+      "authoritative_acceptance": false
+    },
+    {
+      "review_id": "P229",
+      "provisional_outcome_reviewed": "SUPPORTED_ADDITION",
+      "qc_assessment": "SUPPORTED_URL_WITH_PROVENANCE_CORRECTION_REQUIRED",
+      "checks": [
+        {
+          "check": "original bounded question retained",
+          "pass": true
+        },
+        {
+          "check": "current formal link missing under actual resolver",
+          "pass": true
+        },
+        {
+          "check": "canonical/public identity and full author sequence agree",
+          "pass": true
+        },
+        {
+          "check": "zero proposed taxonomy changes",
+          "pass": true
+        },
+        {
+          "check": "record title/current fullauthors/arxiv/doliteral match baseline",
+          "pass": true
+        },
+        {
+          "check": "no science/manuscript/equivalence claim",
+          "pass": true
+        },
+        {
+          "check": "official raw HTML capture checksum matches",
+          "pass": true
+        },
+        {
+          "check": "raw HTML exact normalized title matches current",
+          "pass": true
+        },
+        {
+          "check": "raw HTML fullordered citation authors match current",
+          "pass": true
+        },
+        {
+          "check": "raw HTML DOI and official canonical URL match proposal",
+          "pass": true
+        },
+        {
+          "check": "raw HTML conference/container establish archival proceedings",
+          "pass": true
+        },
+        {
+          "check": "existing focused official TOC capture has title and displayed ordered author prefix",
+          "pass": true
+        },
+        {
+          "check": "existing official TOC clickchain maps target entry to verified DOI/URL",
+          "pass": true
+        },
+        {
+          "check": "local source checksum papers.csv",
+          "pass": true
+        },
+        {
+          "check": "local source checksum paper_taxonomy.csv",
+          "pass": true
+        },
+        {
+          "check": "local source checksum publication_metadata_review.json",
+          "pass": true
+        },
+        {
+          "check": "local source checksum ucvlm.html",
+          "pass": true
+        },
+        {
+          "check": "local source checksum README.md",
+          "pass": true
+        },
+        {
+          "check": "local source checksum requested_eccv_ijcai_2026-08-29.md",
+          "pass": true
+        },
+        {
+          "check": "source checksum P229-official-chapter.html",
+          "pass": true
+        },
+        {
+          "check": "source checksum official-book-pages-rendered.json",
+          "pass": true
+        },
+        {
+          "check": "source checksum ucvlm.html",
+          "pass": true
+        },
+        {
+          "check": "instrumented metadata-only HTTP200receipt binds rawcapture",
+          "pass": true
+        },
+        {
+          "check": "canonical DOI not changed/authorized",
+          "pass": true
+        }
+      ],
+      "evidence_hashes_and_locators": [
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-title-locators.json",
+          "sha256": "b6db0f975ee9ae37ae22be368e17463cafd9bff4f8528362e79c1d7124768b68",
+          "locator": "Focused official book find result, exact title/displayed byline/pages"
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-chapter-pages-rendered.json",
+          "sha256": "f92f6b121eda75226e6445c44fceebab6df11002a514e408dec79f9af2ba8915",
+          "locator": "Official chapter returned by click on TOC item67; final DOI-bound URL"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/papers.csv",
+          "sha256": "8ff6f43f054b6da18ef498cc7c0b9d4fcf7bd6cc9a9abd01d67255b1909bc65f",
+          "locator": "paper_id=curated:55bc4360e3d312e696b7"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+          "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+          "locator": "paper_id=curated:55bc4360e3d312e696b7"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+          "locator": "formal_records[review_id=P229]"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/ucvlm.html",
+          "sha256": "300efe6eae57aa0ffa8a356f66caa6da1a2952dc1d37777b62a35582977c0088",
+          "locator": "meta citation_title; citation_author[*]; citation_arxiv_id; td.comments"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/README.md",
+          "sha256": "b5825b651ea37cb7859b1cc9ae6709f2e57c59c101eccbe30480529ef1fce92d",
+          "locator": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/docs/requested_eccv_ijcai_2026-08-29.md",
+          "sha256": "a4c802539a8013c3f9317e43fef04e05aa800edfa99f568035c57cd5dbd43c81",
+          "locator": "UC-VLM: Consistency-Driven Learning for AI-Generated Image Detection with Vision-Language Large Models"
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/authorized-network-capture/P229-official-chapter.html",
+          "sha256": "9a200260c90b7197d7e561a2a3141bd6378af3933c810c95abdd757094047b90",
+          "url": "https://link.springer.com/chapter/10.1007/978-3-032-37023-5_10",
+          "locator": {
+            "title_authors": "Focused rendered chapter lines 11–31; HTML meta citation_title and all citation_author values",
+            "formal_identity": "Focused rendered chapter lines 286–302; HTML meta citation_doi/citation_conference_title/citation_fulltext_html_url",
+            "book_contents": "Rendered book lines 207–210, chapter link /chapter/10.1007/978-3-032-37023-5_10"
+          }
+        },
+        {
+          "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-b/official-book-pages-rendered.json",
+          "sha256": "c9b540b969ab779a68501b4d438f5b7ee0093e82a6ca1bfd66cc44bf4a1aa388",
+          "url": "https://link.springer.com/book/10.1007/978-3-032-37023-5",
+          "locator": "Rendered book lines 207–210, chapter link /chapter/10.1007/978-3-032-37023-5_10"
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/ci-stability-01/synthetic-image-research-map/data/raw/requested_eccv_ijcai_2026-08-29/ucvlm.html",
+          "sha256": "300efe6eae57aa0ffa8a356f66caa6da1a2952dc1d37777b62a35582977c0088",
+          "url": "https://arxiv.org/abs/2608.15238",
+          "locator": "meta citation_title/citation_author/citation_arxiv_id; td.comments"
+        }
+      ],
+      "disagreements": [
+        "PROVENANCE_LOCATOR_CORRECTION_REQUIRED: specific TOC lines are attributed to official-book-pages-rendered.json, whose initial-open excerpt omits the claimed target/byline. Existing official-book-title-locators.json preserves the exact target excerpt; official-chapter-pages-rendered.json binds its clickid to the DOI. Correct the final source locator without a new retrieval."
+      ],
+      "uncertainties": [
+        "Metadata-only official landing page and TOC; no preprint/publisher scientific text equivalence or experiment reproduction.",
+        "Sandbox DNS failures preceded connection; successful authorized-network HTML capture is separately recorded. Do not count failed local DNS as publisherHTTP denials or combine opaque web-tool calls into an exact wire-request total.",
+        "Boolean retained_spotlight_is_not_a_different_canonical_venue=false is semantically awkward for papers without recorded spotlight. It must not be interpreted as evidence for a different venue; no actual venue correction is proposed."
+      ],
+      "taxonomy_changes_supported_or_proposed": [],
+      "qc_network_requests": 0,
+      "qc_manuscripts": 0,
+      "authoritative_acceptance": false
+    }
+  ],
+  "group_a_capture_checksum_audit": [
+    {
+      "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/search1.json",
+      "expected_sha256": "5c4c270347db0f62bd6d943edad7ba382c141ecaefe39475046a2597a6107428",
+      "actual_sha256": "5c4c270347db0f62bd6d943edad7ba382c141ecaefe39475046a2597a6107428",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/books-open.json",
+      "expected_sha256": "2694f303aea599729e8a495a525ade0597459593b01647722b691caa61e12406",
+      "actual_sha256": "2694f303aea599729e8a495a525ade0597459593b01647722b691caa61e12406",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/chapters-and-acm-search.json",
+      "expected_sha256": "913eb6ced04f665c7972799dc43cb30fb532c25774410d7b4e8133d0de5d98a9",
+      "actual_sha256": "913eb6ced04f665c7972799dc43cb30fb532c25774410d7b4e8133d0de5d98a9",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/fair-metadata-sections.json",
+      "expected_sha256": "791a7f194593741b5b3e0ae6f0a6363b8008119f957455b8ae549b565e87b921",
+      "actual_sha256": "791a7f194593741b5b3e0ae6f0a6363b8008119f957455b8ae549b565e87b921",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/batch-b-b3-2026-10-28/publication-group-a/acm-final-search.json",
+      "expected_sha256": "d97fa94fac4f20e2f16f13a14473bd77e61e332a47b7bc1cb8417436d9d4634b",
+      "actual_sha256": "d97fa94fac4f20e2f16f13a14473bd77e61e332a47b7bc1cb8417436d9d4634b",
+      "matches": true
+    }
+  ],
+  "preserved_worker_budget_accounting": {
+    "group_a": {
+      "web_tool_calls": 5,
+      "targeted_search_queries": 8,
+      "official_metadata_open_or_click_operations": 4,
+      "same_document_section_views": 2,
+      "new_unique_official_metadata_documents": 4,
+      "new_complete_manuscripts": 0,
+      "supplements": 0,
+      "code_or_dataset_downloads": 0,
+      "purchases": 0,
+      "paid_api_calls": 0,
+      "external_cost": "No purchase/paidAPI used; tool billing not exposed. Monetary total unknown, not invented.",
+      "network_transfer_bytes": null,
+      "HTTP_statuses": "Not supplied by web tool; serialized capture sizes are not network transfer sizes."
+    },
+    "group_b": {
+      "full_manuscripts_retrieved": 0,
+      "manuscript_bytes": 0,
+      "paid_api_cost_usd": 0,
+      "new_official_chapter_html_captures": 3,
+      "successful_instrumented_http_requests": 3,
+      "successful_instrumented_http_response_body_bytes": 1054876,
+      "sandbox_dns_failures_before_connection": 3,
+      "publisher_http_failures": 0,
+      "blocked_publisher_retries": 0,
+      "web_tool_operations": {
+        "search_queries": 3,
+        "initial_book_page_opens": 3,
+        "chapter_link_clicks": 3,
+        "book_title_find_operations": 3,
+        "focused_chapter_opens": 2,
+        "focused_doi_find_operations": 2
+      },
+      "web_tool_transport_request_count_duration_bytes": "Not exposed by web tool; do not combine opaque tool operations with measured direct HTTP requests as an exact wire-request total.",
+      "raw_html_captures": "Metadata-only public landing pages, not PDF/full manuscripts. No supplements retrieved."
+    }
+  },
+  "qc_retrieval_accounting": {
+    "network_requests": 0,
+    "full_manuscripts": 0,
+    "paid_source_api_cost_usd": 0
+  },
+  "total_checks": 138,
+  "passed_checks": 138,
+  "blocking_disagreements": {
+    "P150": [
+      "PROVENANCE_LOCATOR_CORRECTION_REQUIRED: specific TOC lines are attributed to official-book-pages-rendered.json, whose initial-open excerpt omits the claimed target/byline. Existing official-book-title-locators.json preserves the exact target excerpt; official-chapter-pages-rendered.json binds its clickid to the DOI. Correct the final source locator without a new retrieval."
+    ],
+    "P177": [
+      "PROVENANCE_LOCATOR_CORRECTION_REQUIRED: specific TOC lines are attributed to official-book-pages-rendered.json, whose initial-open excerpt omits the claimed target/byline. Existing official-book-title-locators.json preserves the exact target excerpt; official-chapter-pages-rendered.json binds its clickid to the DOI. Correct the final source locator without a new retrieval."
+    ],
+    "P229": [
+      "PROVENANCE_LOCATOR_CORRECTION_REQUIRED: specific TOC lines are attributed to official-book-pages-rendered.json, whose initial-open excerpt omits the claimed target/byline. Existing official-book-title-locators.json preserves the exact target excerpt; official-chapter-pages-rendered.json binds its clickid to the DOI. Correct the final source locator without a new retrieval."
+    ]
+  },
+  "no_forced_consensus": true
+}

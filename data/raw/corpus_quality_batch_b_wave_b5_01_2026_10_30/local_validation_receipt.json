@@ -1,0 +1,121 @@
+{
+  "status": "PASS",
+  "recorded_utc": "2026-10-31T03:48:48.392018+00:00",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "gates": {
+    "B1G": 1,
+    "historical_fixture_archive": 76,
+    "B4_B5_integration": 130
+  },
+  "full": {
+    "status": "PASS",
+    "passed": 2445,
+    "failures": 0,
+    "subtests_passed": 389,
+    "warnings": 2,
+    "duration_seconds": 513.22,
+    "previous_fourteen_failures_passed": [
+      "tests.test_corpus_quality_batch_b_wave_b1h::test_original_questions_locked_policy_and_unrelated_authoritative_tables_are_immutable",
+      "tests.test_corpus_quality_batch_b_wave_b1i::test_accepted_R2_rule_original_questions_and_unrelated_authoritative_tables_are_unchanged",
+      "tests.test_corpus_quality_batch_b_wave_b1j::test_original_questions_locked_R1_R2_T2_and_unrelated_authoritative_tables_are_unchanged",
+      "tests.test_corpus_quality_batch_b_wave_b1k::test_original_questions_policies_and_all_unrelated_authoritative_files_are_unchanged",
+      "tests.test_corpus_quality_batch_b_wave_b1l::test_original_questions_policy_and_all_unrelated_authoritative_files_are_unchanged",
+      "tests.test_corpus_quality_batch_b_wave_b1m::test_R034_version_observation_stays_separate_from_pending_P034_and_live_bibliographic_identity",
+      "tests.test_corpus_quality_batch_b_wave_b1m::test_original_questions_locked_R2_and_all_unrelated_authoritative_files_remain_unchanged",
+      "tests.test_corpus_quality_batch_b_wave_b1m::test_live_B1M_selected_rows_public_records_relationships_and_terminal_prefix_remain_exact[R034]",
+      "tests.test_corpus_quality_batch_b_wave_b1n::test_original_questions_policies_and_unrelated_authoritative_files_are_unchanged",
+      "tests.test_corpus_quality_batch_b_wave_b1o::test_original_review_questions_locked_policies_and_unrelated_authority_are_immutable",
+      "tests.test_corpus_quality_batch_b_wave_b1p::test_original_questions_locked_policies_and_all_unrelated_authority_are_immutable",
+      "tests.test_systematic_tier2_application::test_pre_application_baseline_includes_and_preserves_previous_policy_pass",
+      "tests.test_systematic_tier2_policy::test_pre_task_repository_files_are_byte_identical",
+      "tests.test_corpus_quality_batch_b_wave_b1g::test_previous_twelve_batch_receipts_and_predecessor_repair_files_keep_original_bytes"
+    ],
+    "archival_R2_cases_passed": 20,
+    "new_live_and_archive_cases_passed": 21,
+    "sha256": {
+      "full.log": "ca5106233addc854a9634cf1ac22b70af9b93d81a4d03c54fda0a9741a6c7d45",
+      "full.xml": "6fec7619ac2068429203c212f82909c70d1e7846915f23463df9fc97afa8c465",
+      "full-result.json": "295b6e7891fc75d77635894ff1a970fb6df2e1453901a45b79429eefa71b0683"
+    }
+  },
+  "validators": {
+    "authoritative_errors": 0,
+    "authoritative_warnings": 294,
+    "public_relationship_errors": 0,
+    "public_relationship_warnings": 0,
+    "public_paper_errors": 0,
+    "public_paper_warnings": 62
+  },
+  "EXPORT_REPRODUCIBLE": 1,
+  "export_output_sha256": {
+    "web/data/public_preview_papers.json": "1323bf1ca068a8a6d6343882204b0e66bbcb9319f6847e1ff68579d942ee9442",
+    "web/data/public_preview_map_data.json": "04e4d239cd31b2a77e7bcf24477f6c9b93e31d4ba627bd9abd6b571765152b65",
+    "docs/public_preview_report.md": "0d1b20c5128d69032fc6fc02cb69c7c3abd1af4c91698a535d24d3360c90d5eb",
+    "docs/missing_author_mappings_report.md": "37d7455e8b0b0ef3d0c46e261a35bbc11f0b862b313e1ec77b5f65acdb01e11d",
+    "data/manual/missing_author_mappings_report.csv": "73bb86046fa81f56d19fbe66e38c547b9ca9c8d18aeec22d86239c6d5e42c593",
+    "docs/key_paper_coverage_report.md": "b1f2b30a0af4f87389f914d4fe3b2460f9f146cb6f3783b0cd17227d5c51b151",
+    "data/manual/key_paper_coverage_report.csv": "dbe1bd75e8d619a3a28354df1bccd79037f0aa281de49a37bbb49d3937d75099"
+  },
+  "corpus": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "taxonomy": {
+    "detection": 621,
+    "method": 578,
+    "analysis_study": 86,
+    "survey": 21,
+    "source_attribution": 84,
+    "dataset": 138,
+    "benchmark": 97,
+    "localization": 45
+  },
+  "action_accounting": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 39,
+    "historical_unresolved_actions": 120,
+    "historical_unresolved_papers": 113,
+    "active_public_unresolved_actions": 118,
+    "active_public_unresolved_papers": 111
+  },
+  "formal_decisions": 127,
+  "accepted_actions": 11,
+  "unresolved_holds": 13,
+  "pre_report_preservation": {
+    "established_passed": 29140,
+    "extension_passed": 986,
+    "failed": 0,
+    "integrity": {
+      "UNEXPECTED_CHANGED": 0,
+      "FROZEN_NEURIPS_CHANGED": 0,
+      "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+      "B4_SOURCE_TRANSACTIONS_CHANGED": 0,
+      "PRIOR_EVIDENCE_ARCHIVES_CHANGED": 0,
+      "CI_ACCEPTANCE_HISTORY_CHANGED": 0,
+      "UNRELATED_CURATED_METADATA_CHANGED": 0,
+      "IGNORED_OPERATIONAL_INPUTS_INCLUDED": 0
+    }
+  },
+  "protected_current_sha256": {
+    "tests/test_admin_publish_workflow_reliability.py": "bf7258d1d23df60eb0cf5a342ac0209d629b72703c901ea13b22f5763d8aac63",
+    "tests/public_refinement_snapshot.py": "7d654ae6a8e606172749a4aadea082ed28a8146bd787168873d71a9258719d26"
+  },
+  "archive_manifest_sha256": "f8ed721670d485bc96f408031a005ef20fea5d3a15a996ccb72a9e4a5748e47b",
+  "publication_status": "LOCAL_GATES_PASSED_PENDING_STAGED_AUDIT_COMMIT_REMOTE_PAGES_LIVE_AND_HOSTED_CI",
+  "gate_receipt_sha256": {
+    "b1g-result.json": "1eca147d0845a2b8d7820294bb094da43c6262a2084ca1052ae45eaa85a4d4a8",
+    "boundary-result.json": "af90fd26fb98d433890898e7655965f821fa67668d61790d912f9be89d3534a4",
+    "integration-result.json": "a1c59e81c7fdf413c237ecf89ae68241fc5da2223de434dd5710f849558a39a7",
+    "full-result.json": "295b6e7891fc75d77635894ff1a970fb6df2e1453901a45b79429eefa71b0683",
+    "full.xml": "6fec7619ac2068429203c212f82909c70d1e7846915f23463df9fc97afa8c465",
+    "curated-validator-result.json": "7e0b9c6aa89e704b7ee6f4b2b74e370a026d597974b346d66248350e48d2233e",
+    "public-validator-result.json": "ddff2c88cac8315b1f38dd92fe05c68809a96aec67ec4085f5ec67b6f1f41a51",
+    "export-second-result.json": "6a1e3a9287be511e04cae0d28962e2a751859e754589748fc13b016dfafab678",
+    "export-reproducibility.json": "a2bee2083a1408512df76e92f2d4ea7d7f8aacd33340fbbcf4bbc88b3d15ce93"
+  }
+}

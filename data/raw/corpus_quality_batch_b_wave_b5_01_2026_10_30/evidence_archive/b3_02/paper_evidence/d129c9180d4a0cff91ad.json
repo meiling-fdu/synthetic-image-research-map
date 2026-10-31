@@ -1,0 +1,444 @@
+{
+  "paper_id": "curated:d129c9180d4a0cff91ad",
+  "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "action_ids": [
+    "P058",
+    "U006"
+  ],
+  "records": [
+    {
+      "review_id": "P058",
+      "action_id": "P058",
+      "paper_id": "curated:d129c9180d4a0cff91ad",
+      "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+      "issue_category": "canonical_venue_identity_type",
+      "original_review_question": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+      "outcome": "SUPPORTED_ADDITION",
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "finding": "Exact DOI-matched publisher record confirms title, ordered authors and canonical archival journal, and supports a journal venue binding.",
+      "proposed_disposition": {
+        "kind": "canonical_venue_binding",
+        "canonical_venue_name": "International Journal of Data Science and Analytics",
+        "publication_type": "journal",
+        "current_name_type_change_required": false,
+        "publisher_bibliographic_short_form": "Int J Data Sci Anal",
+        "optional_acronym_proposed": null,
+        "registry_id_to_invent": null,
+        "tasks_change": null,
+        "research_types_change": null
+      },
+      "evidence_claims": [
+        {
+          "claim": "Exact work identity and ordered authors match current record, allowing case-only title presentation differences.",
+          "source_ids": [
+            "TI-P058"
+          ],
+          "locator": "citation_title,citation_doi,citation_author"
+        },
+        {
+          "claim": "The archival venue is the stated journal, not a conference/container/track.",
+          "source_ids": [
+            "TI-P058"
+          ],
+          "locator": "citation_journal_title,citation_publisher,citation_issn,#citeas"
+        },
+        {
+          "claim": "Any short-name proposal must remain limited to explicit publisher bibliographic usage.",
+          "source_ids": [
+            "TI-P058"
+          ],
+          "locator": "citation_journal_abbrev"
+        }
+      ],
+      "limitations": [
+        "The publisher landing page is adequate for the bounded venue identity/type question; no scientific-contribution or taxonomy review was performed.",
+        "The canonical name and journal type are already correct in the public record; missing registry binding/confirmation is separate from a factual name/type correction.",
+        "No unverified initialism is proposed. Existing paper DOI, authors, year, task/type labels, affiliations and publication URL are preserved.",
+        "Publisher online date29 June 2026 differs from December 2026 issue citation; both remain documented, without a date correction.",
+        "Int J Data Sci Anal is explicitly the publisher bibliographic short form; do not silently equate it to an invented letter acronym."
+      ],
+      "confidence": {
+        "identity": "high",
+        "venue_name_type": "high",
+        "invented_acronym": "not_proposed"
+      },
+      "current_context_preserved": {
+        "public": true,
+        "paper_id": "curated:d129c9180d4a0cff91ad",
+        "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+        "doi": "10.1007/s41060-026-01192-9",
+        "arxiv_id": "",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "International Journal of Data Science and Analytics",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "survey"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:d129c9180d4a0cff91ad"
+      },
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+          "locator": "formal_records[review_id=P058]",
+          "finding": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+          "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-P058",
+          "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+          "locator": "policies[policy_id=V1]",
+          "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+          "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+        },
+        {
+          "path": "docs/publication_venue_normalization.md",
+          "locator": "Data and precedence; Persistence and live review",
+          "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+          "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+        }
+      ],
+      "acceptance_criteria": [
+        "Verify exact work identity using the existing canonical title, author sequence and DOI/arXiv linkage; preserve version-specific differences.",
+        "Answer only P058's original publication question; keep task, research type, institution and scope reviews independent.",
+        "Record cited evidence and a proposed bounded disposition; formal closure requires a separately authorized decision satisfying current acceptance/fingerprint rules. No B2 decision is applied.",
+        "Verify International Journal of Data Science and Analytics's archival identity and publication type; do not use a proceedings series, generic event label or track as the venue. Verify any proposed acronym rather than constructing initials."
+      ],
+      "recommended_b4_action": "Consider canonical venue binding/registry addition only after formal source/fingerprint acceptance; preserve all other fields.",
+      "review_group": "turkey_india_israel",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "original_review": {
+        "review_id": "P058",
+        "paper_id": "curated:d129c9180d4a0cff91ad",
+        "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+        "current": {
+          "year": 2026,
+          "publication_type": "journal",
+          "venue": "International Journal of Data Science and Analytics",
+          "venue_id": "",
+          "venue_acronym": "",
+          "venue_track": "",
+          "doi": "10.1007/s41060-026-01192-9",
+          "paper_url": "https://doi.org/10.1007/s41060-026-01192-9",
+          "formal_url": "https://doi.org/10.1007/s41060-026-01192-9",
+          "arxiv_id": "",
+          "arxiv_url": "",
+          "authors": [
+            "Ahmet Korkmaz",
+            "Mustafa Özden"
+          ]
+        },
+        "evidence_urls": [
+          "https://doi.org/10.1007/s41060-026-01192-9"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "Venue identity/type/standard abbreviation is not verified in the registry; check the publisher or proceedings and select/create a canonical venue.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "present",
+          "doi": "present_not_independently_reverified",
+          "arxiv": "optional_not_a_defect",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:d129c9180d4a0cff91ad",
+        "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+        "doi": "10.1007/s41060-026-01192-9",
+        "arxiv_id": "",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "International Journal of Data Science and Analytics",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "survey"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:d129c9180d4a0cff91ad"
+      },
+      "authoritative_changes_applied": false,
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "turkey_india_israel:TI-P058"
+      ]
+    },
+    {
+      "review_id": "U006",
+      "action_id": "U006",
+      "paper_id": "curated:d129c9180d4a0cff91ad",
+      "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+      "issue_category": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "finding": "Both paper-time author–institution links are identity-matched, but complete paper-time campus and coordinate evidence is not yet sufficient for a reviewed location proposal.",
+      "proposed_disposition": {
+        "kind": "retain_location_hold",
+        "preserve_both_institutions": true,
+        "coordinates_proposed": null,
+        "missing_gates": [
+          "Army NCO exact institution-specific point, backed by accessible official site/address evidence.",
+          "BTU electrical/electronics department campus at paper publication in2026, not inferred solely from2020 bulletin or parent-university contact.",
+          "Independent traceable point for the confirmed BTU site."
+        ]
+      },
+      "evidence_claims": [
+        {
+          "claim": "Ahmet Korkmaz is affiliated with Army NCO school in Balıkesir; Mustafa Özden with BTU electrical/electronics,16310Yıldırım/Bursa.",
+          "source_ids": [
+            "TI-P058"
+          ],
+          "locator": "#author-information-content Aff1/Aff2"
+        },
+        {
+          "claim": "Official indexed Army contact identifies school in Altıeylül/Balıkesir, not the parent university Istanbul headquarters.",
+          "source_ids": [
+            "TI-ARMY"
+          ],
+          "locator": "turn215search1 contact"
+        },
+        {
+          "claim": "BTU departmental2020 bulletin places EEE at Mimar Sinan campus,177Eflak; current contact shows multiple university sites.",
+          "source_ids": [
+            "TI-BTU-DEPT2020",
+            "TI-BTU-CURRENT"
+          ],
+          "locator": "turn215search12 department contact; turn215search0"
+        }
+      ],
+      "limitations": [
+        "Do not replace school by National Defense University headquarters.",
+        "A department location in2020 cannot be assumed unchanged for2026.",
+        "Neither direct Army page nor current EEE contact page was accessible in completed attempts; original failure receipts retained.",
+        "The declined geocoding command did not execute; no result from that command is evidence."
+      ],
+      "confidence": {
+        "institution_identities": "high",
+        "paper_time_affiliation": "high",
+        "exact2026campus": "not_fully_verified",
+        "coordinates": "not_verified"
+      },
+      "current_context_preserved": {
+        "public": true,
+        "paper_id": "curated:d129c9180d4a0cff91ad",
+        "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+        "doi": "10.1007/s41060-026-01192-9",
+        "arxiv_id": "",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "International Journal of Data Science and Analytics",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "survey"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:d129c9180d4a0cff91ad"
+      },
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U006]",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained.",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U006",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:d129c9180d4a0cff91ad]",
+          "finding": "Current public paper retained; tasks=['detection']; research_types=['survey']; map_record_count=0.",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:9e64ae16b23dbac6c55c, mapping:a44cd5e6667cf97cd40d",
+          "finding": "Current curated mapping statuses: {'active': 2}; author strings, raw affiliation, provenance and blank location fields inspected without edits.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        },
+        {
+          "path": "data/curated/institutions.csv",
+          "locator": "institution_id in institution:18f39ff159f5ad03, institution:5bbd04df727db877",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized.",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326"
+        },
+        {
+          "path": "data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:18f39ff159f5ad03, institution:5bbd04df727db877",
+          "finding": "0 current reviewed location rows found for the mapped institutions.",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:d129c9180d4a0cff91ad",
+          "finding": "Two active mappings retain Ahmet Korkmaz at the Army NCO Vocational HE School in Balıkesir and Mustafa Özden in Yıldırım, Bursa; neither has a reviewed location.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        }
+      ],
+      "acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for Turkish National Defense University Army NCO school and Bursa Technical University; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "recommended_b4_action": "Retain unresolved institution-location action; accept no location/mapping correction until the named missing gates are satisfied.",
+      "site_assessments": [
+        {
+          "institution_id": "institution:18f39ff159f5ad03",
+          "canonical_name": "Turkish National Defense University",
+          "paper_time_identity": "verified by publisher: named Army NCO school and Balıkesir",
+          "address": "Altıeylül/Balıkesir supported by indexed official school contact; street/site footprint not verified",
+          "paper_time_site": "Balıkesir school established; exactsitepoint not established",
+          "coordinate_provenance": null,
+          "coordinates_accepted": null
+        },
+        {
+          "institution_id": "institution:5bbd04df727db877",
+          "canonical_name": "Bursa Technical University",
+          "paper_time_identity": "publisher EEE department,16310Yıldırım/Bursa",
+          "address": "Mimar Sinan/Eflak177 supported for2020 department; current2026 paper doesnotstatecampus",
+          "paper_time_site": "2020→2026continuity not independently established",
+          "coordinate_provenance": null,
+          "coordinates_accepted": null
+        }
+      ],
+      "review_group": "turkey_india_israel",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "original_review": {
+        "review_id": "U006",
+        "paper_id": "curated:d129c9180d4a0cff91ad",
+        "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+        "year": 2026,
+        "publication_status": "journal",
+        "authors": [
+          "Ahmet Korkmaz",
+          "Mustafa Özden"
+        ],
+        "institutions": [
+          {
+            "institution_id": "institution:18f39ff159f5ad03",
+            "canonical_name": "Turkish National Defense University",
+            "raw_affiliation": "Army NCO Vocational HE School, Turkish National Defense University, Balıkesir, Turkey",
+            "authors": [
+              "Ahmet Korkmaz"
+            ],
+            "paper_time_affiliation_known": true,
+            "institution_identity_known": true,
+            "exists_in_registry": true,
+            "location_known": false,
+            "location_records": [],
+            "mapping_status": "active",
+            "mapping_id": "mapping:9e64ae16b23dbac6c55c",
+            "evidence_url": "https://doi.org/10.1007/s41060-026-01192-9",
+            "evidence_basis": "https://doi.org/10.1007/s41060-026-01192-9",
+            "hierarchy": [],
+            "allowed_to_map_as_node": true,
+            "relationship_currently_possible": false
+          },
+          {
+            "institution_id": "institution:5bbd04df727db877",
+            "canonical_name": "Bursa Technical University",
+            "raw_affiliation": "Department of Electrical and Electronics Engineering, Bursa Technical University, 16310 Yıldırım, Bursa, Turkey",
+            "authors": [
+              "Mustafa Özden"
+            ],
+            "paper_time_affiliation_known": true,
+            "institution_identity_known": true,
+            "exists_in_registry": true,
+            "location_known": false,
+            "location_records": [],
+            "mapping_status": "active",
+            "mapping_id": "mapping:a44cd5e6667cf97cd40d",
+            "evidence_url": "https://doi.org/10.1007/s41060-026-01192-9",
+            "evidence_basis": "https://doi.org/10.1007/s41060-026-01192-9",
+            "hierarchy": [],
+            "allowed_to_map_as_node": true,
+            "relationship_currently_possible": false
+          }
+        ],
+        "author_affiliation_known": true,
+        "canonical_institution_identity_known": true,
+        "institution_registry_complete": true,
+        "any_reviewed_location_known": false,
+        "relationship_currently_possible": false,
+        "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+        "remediation_category": "EVIDENCE_CAN_RESOLVE",
+        "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+        "confidence": "high",
+        "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+        "authoritative_evidence_url": "https://doi.org/10.1007/s41060-026-01192-9",
+        "project_evidence": [
+          "data/curated/author_institution_mappings.csv",
+          "data/curated/institutions.csv",
+          "data/curated/institution_locations.csv",
+          "data/curated/institution_hierarchy.csv"
+        ],
+        "batch": "B"
+      },
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:d129c9180d4a0cff91ad",
+        "title": "Deep Learning for CGI and Visual Forgery Detection: A Comprehensive Survey",
+        "doi": "10.1007/s41060-026-01192-9",
+        "arxiv_id": "",
+        "year": 2026,
+        "publication_type": "journal",
+        "venue": "International Journal of Data Science and Analytics",
+        "tasks": [
+          "detection"
+        ],
+        "research_types": [
+          "survey"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:d129c9180d4a0cff91ad"
+      },
+      "authoritative_changes_applied": false,
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "turkey_india_israel:TI-ARMY",
+        "turkey_india_israel:TI-BTU-CURRENT",
+        "turkey_india_israel:TI-BTU-DEPT2020",
+        "turkey_india_israel:TI-P058"
+      ],
+      "separate_site_evidence_gates": {
+        "institution_identity": "BOTH_VERIFIED",
+        "address": "ARMY_BALIKESIR_OFFICIAL_INDEXED_CONTACT; BTU_DEPARTMENT_2020_MIMAR_SINAN_ADDRESS",
+        "paper_time_site": "ARMY_SCHOOL_CITY_VERIFIED; BTU_2020_TO_2026_CAMPUS_CONTINUITY_UNVERIFIED",
+        "coordinates": "NO_POINT_VERIFIED_FOR_EITHER_SITE",
+        "unsupported_assumption": "Do not substitute Istanbul headquarters; do not assume2020 department campus persisted in2026."
+      }
+    }
+  ],
+  "note": "Evidence recommendations only; no formal decisions or source mutations."
+}

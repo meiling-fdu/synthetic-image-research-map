@@ -1,0 +1,1708 @@
+{
+  "mode": "LIGHTWEIGHT_EVIDENCE_IDENTITY_PROVENANCE_ACCOUNTING_PRESERVATION_VALIDATION",
+  "generated_utc": "2026-10-29T08:18:10.418793+00:00",
+  "status": "PASS",
+  "passed": 412,
+  "failed": 0,
+  "paper_count": 11,
+  "action_count": 15,
+  "outcome_counts": {
+    "SUPPORTED_ADDITION": 5,
+    "EVIDENCE_INSUFFICIENT": 10
+  },
+  "source_records": 38,
+  "accounting_recomputed": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 28,
+    "historical_unresolved": 131,
+    "active_public_unresolved": 129,
+    "historical_papers": 121,
+    "active_public_papers": 119
+  },
+  "corpus_recomputed": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "taxonomy_recomputed": {
+    "detection": 621,
+    "method": 578,
+    "analysis_study": 86,
+    "survey": 21,
+    "source_attribution": 84,
+    "dataset": 138,
+    "benchmark": 97,
+    "localization": 45
+  },
+  "formal_decisions_applied": 0,
+  "full_suite_run": false,
+  "public_export_run": false,
+  "preservation_checks": 19202,
+  "integrity": {
+    "AUTHORITATIVE_CORPUS_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "UNEXPECTED_CHANGED": 0
+  },
+  "git_state": {
+    "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map",
+    "HEAD": "7fc8ceae702324628335944cf4b545a3733fdc56",
+    "git_status": "",
+    "index_empty": true,
+    "ahead_behind_vs_origin_main": "0\t0"
+  },
+  "checks": [
+    {
+      "check": "pinned planning batch_plan.md",
+      "pass": true
+    },
+    {
+      "check": "pinned planning backlog_matrix.json",
+      "pass": true
+    },
+    {
+      "check": "pinned planning validation.json",
+      "pass": true
+    },
+    {
+      "check": "original batch exact membership order priority dependencies",
+      "pass": true
+    },
+    {
+      "check": "exact11papers",
+      "pass": true
+    },
+    {
+      "check": "exact15actionsonceinassignedorder",
+      "pass": true
+    },
+    {
+      "check": "fourpublicationeleveninstitution",
+      "pass": true
+    },
+    {
+      "check": "no additional action dimensions",
+      "pass": true
+    },
+    {
+      "check": "handoffexactcoverage",
+      "pass": true
+    },
+    {
+      "check": "B4_02notauthorized",
+      "pass": true
+    },
+    {
+      "check": "38uniqueauditable_sources",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes romania:springer-chapter",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator romania:springer-chapter",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes romania:springer-book",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator romania:springer-book",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes romania:uvt-faculty",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator romania:uvt-faculty",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes romania:uvt-administration",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator romania:uvt-administration",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes romania:jhss-article",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator romania:jhss-article",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes romania:jhss-acronym-context",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator romania:jhss-acronym-context",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes romania:school-contact",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator romania:school-contact",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes romania:school-paper-firstpage",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator romania:school-paper-firstpage",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes romania:politehnica-contact",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator romania:politehnica-contact",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes romania:bitdefender-legal-address",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator romania:bitdefender-legal-address",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes romania:local:wacv-primary-review",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator romania:local:wacv-primary-review",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes romania:local:unmapped-ledger",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator romania:local:unmapped-ledger",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes turkey_india_israel:TI-P058",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator turkey_india_israel:TI-P058",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes turkey_india_israel:TI-P068",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator turkey_india_israel:TI-P068",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes turkey_india_israel:TI-BTU-DEPT2020",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator turkey_india_israel:TI-BTU-DEPT2020",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes turkey_india_israel:TI-BTU-CURRENT",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator turkey_india_israel:TI-BTU-CURRENT",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes turkey_india_israel:TI-ARMY",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator turkey_india_israel:TI-ARMY",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes turkey_india_israel:TI-IITP-CURRENT",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator turkey_india_israel:TI-IITP-CURRENT",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes turkey_india_israel:TI-IITP-COORD-A",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator turkey_india_israel:TI-IITP-COORD-A",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes turkey_india_israel:TI-IITP-COORD-B",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator turkey_india_israel:TI-IITP-COORD-B",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes turkey_india_israel:TI-TAU-CONTACT",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator turkey_india_israel:TI-TAU-CONTACT",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes turkey_india_israel:TI-TAU-ADDRESS",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator turkey_india_israel:TI-TAU-ADDRESS",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes turkey_india_israel:TI-TAU-HTML",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator turkey_india_israel:TI-TAU-HTML",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes turkey_india_israel:TI-TAU-PAPER",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator turkey_india_israel:TI-TAU-PAPER",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:csg-samr",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:csg-samr",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:csg-hvdc2020",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:csg-hvdc2020",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:csg-patent2021",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:csg-patent2021",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:turing-directions",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:turing-directions",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:turing-map",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:turing-map",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:wut-campuses",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:wut-campuses",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:wut-2026contacts",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:wut-2026contacts",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:ensia-en",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:ensia-en",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:ensia-fr",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:ensia-fr",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:ensia-campus",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:ensia-campus",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:ensia-wipo",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:ensia-wipo",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:turing-geocode",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:turing-geocode",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:ensia-geocode-empty",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:ensia-geocode-empty",
+      "pass": true
+    },
+    {
+      "check": "sourcebytes china_uk_algeria:ensia-local-firstpage",
+      "pass": true
+    },
+    {
+      "check": "externalURL_or_pinned_local_source_and_locator china_uk_algeria:ensia-local-firstpage",
+      "pass": true
+    },
+    {
+      "check": "identity P001",
+      "pass": true
+    },
+    {
+      "check": "originalreview P001",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria P001",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline P001",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome P001",
+      "pass": true
+    },
+    {
+      "check": "provisional P001",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations P001",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys P001",
+      "pass": true
+    },
+    {
+      "check": "paperrecord P001",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction P001",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P001:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P001:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P001:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P001:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/publication_venue_normalization.md",
+      "pass": true
+    },
+    {
+      "check": "identity U001",
+      "pass": true
+    },
+    {
+      "check": "originalreview U001",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria U001",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline U001",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome U001",
+      "pass": true
+    },
+    {
+      "check": "provisional U001",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations U001",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys U001",
+      "pass": true
+    },
+    {
+      "check": "paperrecord U001",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction U001",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U001:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U001:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U001:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U001:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U001:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U001:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U001:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "fourdistinctinstitutiongates U001",
+      "pass": true
+    },
+    {
+      "check": "unchangedexistinginstitutionIDs U001",
+      "pass": true
+    },
+    {
+      "check": "identity U002",
+      "pass": true
+    },
+    {
+      "check": "originalreview U002",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria U002",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline U002",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome U002",
+      "pass": true
+    },
+    {
+      "check": "provisional U002",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations U002",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys U002",
+      "pass": true
+    },
+    {
+      "check": "paperrecord U002",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction U002",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U002:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U002:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U002:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U002:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U002:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U002:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U002:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "fourdistinctinstitutiongates U002",
+      "pass": true
+    },
+    {
+      "check": "unchangedexistinginstitutionIDs U002",
+      "pass": true
+    },
+    {
+      "check": "identity U003",
+      "pass": true
+    },
+    {
+      "check": "originalreview U003",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria U003",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline U003",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome U003",
+      "pass": true
+    },
+    {
+      "check": "provisional U003",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations U003",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys U003",
+      "pass": true
+    },
+    {
+      "check": "paperrecord U003",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction U003",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U003:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U003:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U003:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U003:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U003:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U003:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U003:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "fourdistinctinstitutiongates U003",
+      "pass": true
+    },
+    {
+      "check": "unchangedexistinginstitutionIDs U003",
+      "pass": true
+    },
+    {
+      "check": "identity P049",
+      "pass": true
+    },
+    {
+      "check": "originalreview P049",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria P049",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline P049",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome P049",
+      "pass": true
+    },
+    {
+      "check": "provisional P049",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations P049",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys P049",
+      "pass": true
+    },
+    {
+      "check": "paperrecord P049",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction P049",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P049:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P049:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P049:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P049:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/publication_venue_normalization.md",
+      "pass": true
+    },
+    {
+      "check": "identity U005",
+      "pass": true
+    },
+    {
+      "check": "originalreview U005",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria U005",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline U005",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome U005",
+      "pass": true
+    },
+    {
+      "check": "provisional U005",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations U005",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys U005",
+      "pass": true
+    },
+    {
+      "check": "paperrecord U005",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction U005",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U005:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U005:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U005:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U005:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U005:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U005:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U005:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "fourdistinctinstitutiongates U005",
+      "pass": true
+    },
+    {
+      "check": "unchangedexistinginstitutionIDs U005",
+      "pass": true
+    },
+    {
+      "check": "identity P058",
+      "pass": true
+    },
+    {
+      "check": "originalreview P058",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria P058",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline P058",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome P058",
+      "pass": true
+    },
+    {
+      "check": "provisional P058",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations P058",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys P058",
+      "pass": true
+    },
+    {
+      "check": "paperrecord P058",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction P058",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P058:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P058:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P058:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P058:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/publication_venue_normalization.md",
+      "pass": true
+    },
+    {
+      "check": "identity U006",
+      "pass": true
+    },
+    {
+      "check": "originalreview U006",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria U006",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline U006",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome U006",
+      "pass": true
+    },
+    {
+      "check": "provisional U006",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations U006",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys U006",
+      "pass": true
+    },
+    {
+      "check": "paperrecord U006",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction U006",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U006:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U006:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U006:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U006:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U006:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U006:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U006:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "fourdistinctinstitutiongates U006",
+      "pass": true
+    },
+    {
+      "check": "unchangedexistinginstitutionIDs U006",
+      "pass": true
+    },
+    {
+      "check": "identity U007",
+      "pass": true
+    },
+    {
+      "check": "originalreview U007",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria U007",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline U007",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome U007",
+      "pass": true
+    },
+    {
+      "check": "provisional U007",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations U007",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys U007",
+      "pass": true
+    },
+    {
+      "check": "paperrecord U007",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction U007",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U007:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U007:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U007:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U007:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U007:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U007:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U007:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "fourdistinctinstitutiongates U007",
+      "pass": true
+    },
+    {
+      "check": "unchangedexistinginstitutionIDs U007",
+      "pass": true
+    },
+    {
+      "check": "identity P068",
+      "pass": true
+    },
+    {
+      "check": "originalreview P068",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria P068",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline P068",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome P068",
+      "pass": true
+    },
+    {
+      "check": "provisional P068",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations P068",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys P068",
+      "pass": true
+    },
+    {
+      "check": "paperrecord P068",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction P068",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P068:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P068:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P068:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash P068:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/publication_venue_normalization.md",
+      "pass": true
+    },
+    {
+      "check": "identity U008",
+      "pass": true
+    },
+    {
+      "check": "originalreview U008",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria U008",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline U008",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome U008",
+      "pass": true
+    },
+    {
+      "check": "provisional U008",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations U008",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys U008",
+      "pass": true
+    },
+    {
+      "check": "paperrecord U008",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction U008",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U008:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U008:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U008:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U008:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U008:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U008:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U008:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "fourdistinctinstitutiongates U008",
+      "pass": true
+    },
+    {
+      "check": "unchangedexistinginstitutionIDs U008",
+      "pass": true
+    },
+    {
+      "check": "identity U014",
+      "pass": true
+    },
+    {
+      "check": "originalreview U014",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria U014",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline U014",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome U014",
+      "pass": true
+    },
+    {
+      "check": "provisional U014",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations U014",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys U014",
+      "pass": true
+    },
+    {
+      "check": "paperrecord U014",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction U014",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U014:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U014:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U014:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U014:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U014:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U014:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U014:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "fourdistinctinstitutiongates U014",
+      "pass": true
+    },
+    {
+      "check": "unchangedexistinginstitutionIDs U014",
+      "pass": true
+    },
+    {
+      "check": "identity U016",
+      "pass": true
+    },
+    {
+      "check": "originalreview U016",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria U016",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline U016",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome U016",
+      "pass": true
+    },
+    {
+      "check": "provisional U016",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations U016",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys U016",
+      "pass": true
+    },
+    {
+      "check": "paperrecord U016",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction U016",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U016:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U016:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U016:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U016:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U016:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U016:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U016:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "fourdistinctinstitutiongates U016",
+      "pass": true
+    },
+    {
+      "check": "unchangedexistinginstitutionIDs U016",
+      "pass": true
+    },
+    {
+      "check": "identity U018",
+      "pass": true
+    },
+    {
+      "check": "originalreview U018",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria U018",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline U018",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome U018",
+      "pass": true
+    },
+    {
+      "check": "provisional U018",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations U018",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys U018",
+      "pass": true
+    },
+    {
+      "check": "paperrecord U018",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction U018",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U018:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U018:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U018:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U018:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U018:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U018:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U018:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/manual/systematic_tier1_primary_review_2026_09.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U018:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "fourdistinctinstitutiongates U018",
+      "pass": true
+    },
+    {
+      "check": "unchangedexistinginstitutionIDs U018",
+      "pass": true
+    },
+    {
+      "check": "identity U023",
+      "pass": true
+    },
+    {
+      "check": "originalreview U023",
+      "pass": true
+    },
+    {
+      "check": "acceptancecriteria U023",
+      "pass": true
+    },
+    {
+      "check": "currentbaseline U023",
+      "pass": true
+    },
+    {
+      "check": "allowedoutcome U023",
+      "pass": true
+    },
+    {
+      "check": "provisional U023",
+      "pass": true
+    },
+    {
+      "check": "findingconfidenceandlimitations U023",
+      "pass": true
+    },
+    {
+      "check": "sourcekeys U023",
+      "pass": true
+    },
+    {
+      "check": "paperrecord U023",
+      "pass": true
+    },
+    {
+      "check": "handoffrecommendedaction U023",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U023:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U023:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U023:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/web/data/public_preview_papers.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U023:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U023:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institutions.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U023:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/institution_locations.csv",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U023:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/manual/systematic_tier1_primary_review_2026_09.json",
+      "pass": true
+    },
+    {
+      "check": "reusedlocalhash U023:/Users/meilinger/.codex/worktrees/batch-b-b3-02/synthetic-image-research-map/data/curated/author_institution_mappings.csv",
+      "pass": true
+    },
+    {
+      "check": "fourdistinctinstitutiongates U023",
+      "pass": true
+    },
+    {
+      "check": "unchangedexistinginstitutionIDs U023",
+      "pass": true
+    },
+    {
+      "check": "outcomecountercomputed",
+      "pass": true
+    },
+    {
+      "check": "no taxonomy proposed",
+      "pass": true
+    },
+    {
+      "check": "no formalaction closure",
+      "pass": true
+    },
+    {
+      "check": "pending B4 eightfiles carried",
+      "pass": true
+    },
+    {
+      "check": "independent DOI/authorcount/canonicalvenue P001",
+      "pass": true
+    },
+    {
+      "check": "independent DOI/authorcount/canonicalvenue P049",
+      "pass": true
+    },
+    {
+      "check": "independent DOI/authorcount/canonicalvenue P058",
+      "pass": true
+    },
+    {
+      "check": "independent DOI/authorcount/canonicalvenue P068",
+      "pass": true
+    },
+    {
+      "check": "U005paperexactaddress schoolpage independent",
+      "pass": true
+    },
+    {
+      "check": "U005notmarker",
+      "pass": true
+    },
+    {
+      "check": "U005qualifiedB4acceptance",
+      "pass": true
+    },
+    {
+      "check": "fourcompletedgeocodereceipts",
+      "pass": true
+    },
+    {
+      "check": "cachedgeocodebytes ensia-mahelma",
+      "pass": true
+    },
+    {
+      "check": "cachedgeocodebytes uvt-faculty-cs",
+      "pass": true
+    },
+    {
+      "check": "cachedgeocodebytes eminescu-satu-mare",
+      "pass": true
+    },
+    {
+      "check": "cachedgeocodebytes alan-turing-institute",
+      "pass": true
+    },
+    {
+      "check": "declinedcommandnotexecuted",
+      "pass": true
+    },
+    {
+      "check": "corpus recomputed unchanged",
+      "pass": true
+    },
+    {
+      "check": "taxonomy recomputed unchanged",
+      "pass": true
+    },
+    {
+      "check": "all11unmapped identitiespreserved",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R137",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R611",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique L013",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique P139",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique P153",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique P490",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique T579",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique T056",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique T345",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique T303",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique T631",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R566",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R215",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R574",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R100",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R400",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R542",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R181",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R335",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R034",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R359",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R596",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R267",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R236",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R024",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R482",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R026",
+      "pass": true
+    },
+    {
+      "check": "terminaldecision unique R253",
+      "pass": true
+    },
+    {
+      "check": "sourceaccounting131129",
+      "pass": true
+    },
+    {
+      "check": "all15stillformalopen",
+      "pass": true
+    },
+    {
+      "check": "B4pendingnotpublished",
+      "pass": true
+    },
+    {
+      "check": "completepreservationaudit",
+      "pass": true
+    },
+    {
+      "check": "cleanrepoemptyindex",
+      "pass": true
+    },
+    {
+      "check": "exactremoteoriginHEAD",
+      "pass": true
+    },
+    {
+      "check": "independentQC15coverage",
+      "pass": true
+    },
+    {
+      "check": "no unaddressedmaterialQCblocker",
+      "pass": true
+    },
+    {
+      "check": "reportall15IDs",
+      "pass": true
+    },
+    {
+      "check": "report exactNeurIPSblock",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,501 @@
+{
+  "task": "Versioned B5 historical/current regression boundaries",
+  "original_eleven_classification": {
+    "status": "CLASSIFIED_AND_REPAIRED_PENDING_FULL_GATE",
+    "original_failure_diagnostics_sha256": "7593d6c9b2d869c6982241d31aea7e55d6dc1fa4275723bd44b50f411d5601f9",
+    "records": [
+      {
+        "wave": "B1H",
+        "test_file": "tests/test_corpus_quality_batch_b_wave_b1h.py",
+        "test_name": "test_original_questions_locked_policy_and_unrelated_authoritative_tables_are_immutable",
+        "original_baseline": "445b4f8cc7257b3c87868a666bce43d8c20bda0d",
+        "original_published_commit": "bb4b60b2ee612331b997d7482edaa1e9e657cff2",
+        "original_test_sha256": "e849a8ce1bab948cc3fe64da1af457845b7cd7e37b777983cf509d2ae062ee13",
+        "original_assertion": "assert (ROOT / path).read_bytes() == published_bytes(BASE, path), path",
+        "intended_invariant": "Original review questions and locked policy remain immutable. This research-type transaction changes only its approved labels/decisions/public dependents and leaves unrelated source tables unchanged. It was not a permanent prohibition on later approved publication changes.",
+        "B5_approved_conflict": [
+          "B4-01 two publication URL override row appends",
+          "B4-02 three canonical journal alias row appends",
+          "Generated missing-author mapping report eight publication URL cells"
+        ],
+        "historical_endpoint_proof": [
+          {
+            "path": "data/curated/publication_overrides.csv",
+            "before_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "published_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/curated/venue_aliases.csv",
+            "before_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "published_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/manual/missing_author_mappings_report.csv",
+            "before_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "published_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "equal_during_original_transaction": true
+          }
+        ],
+        "protected_test_hash_policy": {
+          "requires_preserved_bytes_successor": false,
+          "known_test_sourcehash_guard_consumer": null,
+          "old_hash_literal_found_in_data_or_fixture": false,
+          "O_record_note": "No exact old test hash literal in data or tests/fixtures; no source_files/current_source consumer pins this test path."
+        },
+        "live_coverage_replacing_only_obsolete_current_byte_assumption": [
+          "B5-01 test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+          "B5-01 test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+          "B5-01 test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match"
+        ]
+      },
+      {
+        "wave": "B1I",
+        "test_file": "tests/test_corpus_quality_batch_b_wave_b1i.py",
+        "test_name": "test_accepted_R2_rule_original_questions_and_unrelated_authoritative_tables_are_unchanged",
+        "original_baseline": "bb4b60b2ee612331b997d7482edaa1e9e657cff2",
+        "original_published_commit": "1221cf72f8f77ac3430cad49a49d074d82b36ec2",
+        "original_test_sha256": "854da1f04d65067b3c30aa9687e71a4da36cb08f9cc182ff655f1b0302803510",
+        "original_assertion": "assert (ROOT / path).read_bytes() == published_bytes(BASE, path), path",
+        "intended_invariant": "Original review questions and locked policy remain immutable. This research-type transaction changes only its approved labels/decisions/public dependents and leaves unrelated source tables unchanged. It was not a permanent prohibition on later approved publication changes.",
+        "B5_approved_conflict": [
+          "B4-01 two publication URL override row appends",
+          "B4-02 three canonical journal alias row appends",
+          "Generated missing-author mapping report eight publication URL cells"
+        ],
+        "historical_endpoint_proof": [
+          {
+            "path": "data/curated/publication_overrides.csv",
+            "before_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "published_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/curated/venue_aliases.csv",
+            "before_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "published_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/manual/missing_author_mappings_report.csv",
+            "before_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "published_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "equal_during_original_transaction": true
+          }
+        ],
+        "protected_test_hash_policy": {
+          "requires_preserved_bytes_successor": false,
+          "known_test_sourcehash_guard_consumer": null,
+          "old_hash_literal_found_in_data_or_fixture": false,
+          "O_record_note": "No exact old test hash literal in data or tests/fixtures; no source_files/current_source consumer pins this test path."
+        },
+        "live_coverage_replacing_only_obsolete_current_byte_assumption": [
+          "B5-01 test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+          "B5-01 test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+          "B5-01 test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match"
+        ]
+      },
+      {
+        "wave": "B1J",
+        "test_file": "tests/test_corpus_quality_batch_b_wave_b1j.py",
+        "test_name": "test_original_questions_locked_R1_R2_T2_and_unrelated_authoritative_tables_are_unchanged",
+        "original_baseline": "1221cf72f8f77ac3430cad49a49d074d82b36ec2",
+        "original_published_commit": "b2f17505f2d3a1b65d43fcf3c6582436b4fe44f8",
+        "original_test_sha256": "0fa56afe03d7535ce3aa63bc044aa1e4d73c297227c79eb60fc67848b42c05de",
+        "original_assertion": "assert (ROOT / path).read_bytes() == published_bytes(BASE, path), path",
+        "intended_invariant": "Original review questions and locked policy remain immutable. This research-type transaction changes only its approved labels/decisions/public dependents and leaves unrelated source tables unchanged. It was not a permanent prohibition on later approved publication changes.",
+        "B5_approved_conflict": [
+          "B4-01 two publication URL override row appends",
+          "B4-02 three canonical journal alias row appends",
+          "Generated missing-author mapping report eight publication URL cells"
+        ],
+        "historical_endpoint_proof": [
+          {
+            "path": "data/curated/publication_overrides.csv",
+            "before_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "published_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/curated/venue_aliases.csv",
+            "before_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "published_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/manual/missing_author_mappings_report.csv",
+            "before_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "published_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "equal_during_original_transaction": true
+          }
+        ],
+        "protected_test_hash_policy": {
+          "requires_preserved_bytes_successor": false,
+          "known_test_sourcehash_guard_consumer": null,
+          "old_hash_literal_found_in_data_or_fixture": false,
+          "O_record_note": "No exact old test hash literal in data or tests/fixtures; no source_files/current_source consumer pins this test path."
+        },
+        "live_coverage_replacing_only_obsolete_current_byte_assumption": [
+          "B5-01 test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+          "B5-01 test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+          "B5-01 test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match"
+        ]
+      },
+      {
+        "wave": "B1K",
+        "test_file": "tests/test_corpus_quality_batch_b_wave_b1k.py",
+        "test_name": "test_original_questions_policies_and_all_unrelated_authoritative_files_are_unchanged",
+        "original_baseline": "b2f17505f2d3a1b65d43fcf3c6582436b4fe44f8",
+        "original_published_commit": "78f6ebae879f630eb6e386d92ab90252af09670d",
+        "original_test_sha256": "7983c148a4a4292c4ccb58ceb59daf8b4ae44a1f122a2556a09de5396066c35b",
+        "original_assertion": "assert (ROOT/path).read_bytes() == published_bytes(PUBLISHED,path), path",
+        "intended_invariant": "Original review questions and locked policy remain immutable. This research-type transaction changes only its approved labels/decisions/public dependents and leaves unrelated source tables unchanged. It was not a permanent prohibition on later approved publication changes.",
+        "B5_approved_conflict": [
+          "B4-01 two publication URL override row appends",
+          "B4-02 three canonical journal alias row appends",
+          "Generated missing-author mapping report eight publication URL cells"
+        ],
+        "historical_endpoint_proof": [
+          {
+            "path": "data/curated/publication_overrides.csv",
+            "before_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "published_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/curated/venue_aliases.csv",
+            "before_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "published_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/manual/missing_author_mappings_report.csv",
+            "before_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "published_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "equal_during_original_transaction": true
+          }
+        ],
+        "protected_test_hash_policy": {
+          "requires_preserved_bytes_successor": false,
+          "known_test_sourcehash_guard_consumer": null,
+          "old_hash_literal_found_in_data_or_fixture": false,
+          "O_record_note": "No exact old test hash literal in data or tests/fixtures; no source_files/current_source consumer pins this test path."
+        },
+        "live_coverage_replacing_only_obsolete_current_byte_assumption": [
+          "B5-01 test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+          "B5-01 test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+          "B5-01 test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match"
+        ]
+      },
+      {
+        "wave": "B1L",
+        "test_file": "tests/test_corpus_quality_batch_b_wave_b1l.py",
+        "test_name": "test_original_questions_policy_and_all_unrelated_authoritative_files_are_unchanged",
+        "original_baseline": "78f6ebae879f630eb6e386d92ab90252af09670d",
+        "original_published_commit": "53c2a9aa0fa3a36427ea8e71966e29cdfba70153",
+        "original_test_sha256": "6b94b83099c108c638af04c81b280b12e13a6afa873cd5a8f2e9167cc7dd50a0",
+        "original_assertion": "assert (ROOT/path).read_bytes() == published_bytes(BASE,path),path",
+        "intended_invariant": "Original review questions and locked policy remain immutable. This research-type transaction changes only its approved labels/decisions/public dependents and leaves unrelated source tables unchanged. It was not a permanent prohibition on later approved publication changes.",
+        "B5_approved_conflict": [
+          "B4-01 two publication URL override row appends",
+          "B4-02 three canonical journal alias row appends",
+          "Generated missing-author mapping report eight publication URL cells"
+        ],
+        "historical_endpoint_proof": [
+          {
+            "path": "data/curated/publication_overrides.csv",
+            "before_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "published_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/curated/venue_aliases.csv",
+            "before_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "published_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/manual/missing_author_mappings_report.csv",
+            "before_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "published_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "equal_during_original_transaction": true
+          }
+        ],
+        "protected_test_hash_policy": {
+          "requires_preserved_bytes_successor": false,
+          "known_test_sourcehash_guard_consumer": null,
+          "old_hash_literal_found_in_data_or_fixture": false,
+          "O_record_note": "No exact old test hash literal in data or tests/fixtures; no source_files/current_source consumer pins this test path."
+        },
+        "live_coverage_replacing_only_obsolete_current_byte_assumption": [
+          "B5-01 test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+          "B5-01 test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+          "B5-01 test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match"
+        ]
+      },
+      {
+        "wave": "B1M",
+        "test_file": "tests/test_corpus_quality_batch_b_wave_b1m.py",
+        "test_name": "test_original_questions_locked_R2_and_all_unrelated_authoritative_files_remain_unchanged",
+        "original_baseline": "53c2a9aa0fa3a36427ea8e71966e29cdfba70153",
+        "original_published_commit": "05a89df9e5b3543c1231dc5934f55320aec53fa9",
+        "original_test_sha256": "0421814893c7a6ea976a5f9ab2c37a3ba428dc6735ba70f5fcce941be4e45af2",
+        "original_assertion": "assert (ROOT/path).read_bytes() == published_bytes(BASE,path),path",
+        "intended_invariant": "Original review questions and locked policy remain immutable. This research-type transaction changes only its approved labels/decisions/public dependents and leaves unrelated source tables unchanged. It was not a permanent prohibition on later approved publication changes.",
+        "B5_approved_conflict": [
+          "B4-01 two publication URL override row appends",
+          "B4-02 three canonical journal alias row appends",
+          "Generated missing-author mapping report eight publication URL cells"
+        ],
+        "historical_endpoint_proof": [
+          {
+            "path": "data/curated/publication_overrides.csv",
+            "before_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "published_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/curated/venue_aliases.csv",
+            "before_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "published_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/manual/missing_author_mappings_report.csv",
+            "before_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "published_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "equal_during_original_transaction": true
+          }
+        ],
+        "protected_test_hash_policy": {
+          "requires_preserved_bytes_successor": false,
+          "known_test_sourcehash_guard_consumer": null,
+          "old_hash_literal_found_in_data_or_fixture": false,
+          "O_record_note": "No exact old test hash literal in data or tests/fixtures; no source_files/current_source consumer pins this test path."
+        },
+        "live_coverage_replacing_only_obsolete_current_byte_assumption": [
+          "B5-01 test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+          "B5-01 test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+          "B5-01 test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match"
+        ]
+      },
+      {
+        "wave": "B1N",
+        "test_file": "tests/test_corpus_quality_batch_b_wave_b1n.py",
+        "test_name": "test_original_questions_policies_and_unrelated_authoritative_files_are_unchanged",
+        "original_baseline": "05a89df9e5b3543c1231dc5934f55320aec53fa9",
+        "original_published_commit": "9581e17cc1dd78384966009b7f2d767b1961e3b6",
+        "original_test_sha256": "296eb333639fca6b527f4103396c75d99ec5b8fdc360000ee38691099fe944ea",
+        "original_assertion": "assert (ROOT / path).read_bytes() == published_bytes(BASE, path), path",
+        "intended_invariant": "Original review questions and locked policy remain immutable. This research-type transaction changes only its approved labels/decisions/public dependents and leaves unrelated source tables unchanged. It was not a permanent prohibition on later approved publication changes.",
+        "B5_approved_conflict": [
+          "B4-01 two publication URL override row appends",
+          "B4-02 three canonical journal alias row appends",
+          "Generated missing-author mapping report eight publication URL cells"
+        ],
+        "historical_endpoint_proof": [
+          {
+            "path": "data/curated/publication_overrides.csv",
+            "before_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "published_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/curated/venue_aliases.csv",
+            "before_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "published_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/manual/missing_author_mappings_report.csv",
+            "before_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "published_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "equal_during_original_transaction": true
+          }
+        ],
+        "protected_test_hash_policy": {
+          "requires_preserved_bytes_successor": false,
+          "known_test_sourcehash_guard_consumer": null,
+          "old_hash_literal_found_in_data_or_fixture": false,
+          "O_record_note": "No exact old test hash literal in data or tests/fixtures; no source_files/current_source consumer pins this test path."
+        },
+        "live_coverage_replacing_only_obsolete_current_byte_assumption": [
+          "B5-01 test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+          "B5-01 test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+          "B5-01 test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match"
+        ]
+      },
+      {
+        "wave": "B1O",
+        "test_file": "tests/test_corpus_quality_batch_b_wave_b1o.py",
+        "test_name": "test_original_review_questions_locked_policies_and_unrelated_authority_are_immutable",
+        "original_baseline": "9581e17cc1dd78384966009b7f2d767b1961e3b6",
+        "original_published_commit": "2d204d42174bd975cedfc0a3d3699b1c2070237c",
+        "original_test_sha256": "3d2343c97bcc6d4cf2b5161f98d8be380727f5481e1427fa0828371c35abff9d",
+        "original_assertion": "assert (ROOT / path).read_bytes() == published_bytes(BASE, path), path",
+        "intended_invariant": "Original review questions and locked policy remain immutable. This research-type transaction changes only its approved labels/decisions/public dependents and leaves unrelated source tables unchanged. It was not a permanent prohibition on later approved publication changes.",
+        "B5_approved_conflict": [
+          "B4-01 two publication URL override row appends",
+          "B4-02 three canonical journal alias row appends",
+          "Generated missing-author mapping report eight publication URL cells"
+        ],
+        "historical_endpoint_proof": [
+          {
+            "path": "data/curated/publication_overrides.csv",
+            "before_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "published_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/curated/venue_aliases.csv",
+            "before_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "published_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/manual/missing_author_mappings_report.csv",
+            "before_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "published_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "equal_during_original_transaction": true
+          }
+        ],
+        "protected_test_hash_policy": {
+          "requires_preserved_bytes_successor": false,
+          "known_test_sourcehash_guard_consumer": null,
+          "old_hash_literal_found_in_data_or_fixture": true,
+          "O_record_note": "For O only, old test hash appears in B1P historical validation artifact inventories and source-after snapshot, not in executable current_source/source_files hash dictionaries. Original B1P receipt must remain unchanged; successor test hash is recorded separately."
+        },
+        "live_coverage_replacing_only_obsolete_current_byte_assumption": [
+          "B5-01 test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+          "B5-01 test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+          "B5-01 test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match"
+        ]
+      },
+      {
+        "wave": "B1P",
+        "test_file": "tests/test_corpus_quality_batch_b_wave_b1p.py",
+        "test_name": "test_original_questions_locked_policies_and_all_unrelated_authority_are_immutable",
+        "original_baseline": "2d204d42174bd975cedfc0a3d3699b1c2070237c",
+        "original_published_commit": "dace181c2a9edbb7c467978e9e958e83fdddc143",
+        "original_test_sha256": "0f0080fbe26e119b54a23bb77fda6539b44f86b9c738cbbfe8e28e50f05492e5",
+        "original_assertion": "assert (ROOT / path).read_bytes() == published_bytes(BASE, path), path",
+        "intended_invariant": "Original review questions and locked policy remain immutable. This research-type transaction changes only its approved labels/decisions/public dependents and leaves unrelated source tables unchanged. It was not a permanent prohibition on later approved publication changes.",
+        "B5_approved_conflict": [
+          "B4-01 two publication URL override row appends",
+          "B4-02 three canonical journal alias row appends",
+          "Generated missing-author mapping report eight publication URL cells"
+        ],
+        "historical_endpoint_proof": [
+          {
+            "path": "data/curated/publication_overrides.csv",
+            "before_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "published_sha256": "d1114c24c5017b4a5fd43ab8c3cefcc8b7fa03c4519b44f9e444e62c213f43e2",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/curated/venue_aliases.csv",
+            "before_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "published_sha256": "6fd929c2f60523017b3ef6f1992734d6e97340273dae59cf844158df31a9dab5",
+            "equal_during_original_transaction": true
+          },
+          {
+            "path": "data/manual/missing_author_mappings_report.csv",
+            "before_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "published_sha256": "3d5d447d90bf064346d8ccb2583685c59ce7fc8d8131330155cb9994ec83421d",
+            "equal_during_original_transaction": true
+          }
+        ],
+        "protected_test_hash_policy": {
+          "requires_preserved_bytes_successor": false,
+          "known_test_sourcehash_guard_consumer": null,
+          "old_hash_literal_found_in_data_or_fixture": false,
+          "O_record_note": "No exact old test hash literal in data or tests/fixtures; no source_files/current_source consumer pins this test path."
+        },
+        "live_coverage_replacing_only_obsolete_current_byte_assumption": [
+          "B5-01 test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+          "B5-01 test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+          "B5-01 test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match"
+        ]
+      },
+      {
+        "wave": "B1M",
+        "test_file": "tests/test_corpus_quality_batch_b_wave_b1m.py",
+        "test_name": "test_R034_version_observation_stays_separate_from_pending_P034_and_live_bibliographic_identity",
+        "original_baseline": "53c2a9aa0fa3a36427ea8e71966e29cdfba70153",
+        "original_published_commit": "05a89df9e5b3543c1231dc5934f55320aec53fa9",
+        "test": "test_R034_version_observation_stays_separate_from_pending_P034_and_live_bibliographic_identity",
+        "classification": "HISTORICAL_TRANSACTION_ENDPOINT_READS_MUTABLE_LIVE_ROW",
+        "original_invariant": "At B1M only benchmark was added; P034 stayed pending with unchanged bibliographic identity, canonical12 authors and blank DOI. All recorded12/13authors,8/12evaluations,7.5/6.9percent discrepancies remain unchanged.",
+        "material_delta": "The separately authorized B4-01 changed only paper_url from arXivabs2512.20937 to the exact Springer chapter landing page.",
+        "repair": "Read original B1M after row at PUBLISHED; retain every original observation assertion. Add explicit whole-live-row equality permitting only exact accepted paper_url, plus existing blank DOI/12authors guards.",
+        "historical_truth_preserved": true,
+        "current_state_guard_retained": true
+      },
+      {
+        "wave": "B1M",
+        "test_file": "tests/test_corpus_quality_batch_b_wave_b1m.py",
+        "test_name": "test_live_B1M_selected_rows_public_records_relationships_and_terminal_prefix_remain_exact[R034]",
+        "original_baseline": "53c2a9aa0fa3a36427ea8e71966e29cdfba70153",
+        "original_published_commit": "05a89df9e5b3543c1231dc5934f55320aec53fa9",
+        "test": "test_live_B1M_selected_rows_public_records_relationships_and_terminal_prefix_remain_exact[R034]",
+        "classification": "VALID_LIVE_IDENTITY_GUARD_NEEDS_EXPLICIT_AUTHORIZED_URL_SUCCESSOR",
+        "original_invariant": "Both B1M cases retain exact scientific classification, bibliographic identity, relationships and original decision prefix/terminal IDs.",
+        "repair": "For R034 only, change expected papers.csv paper_url and exactly four public URL fields plus existing is_arxiv_preprint status; compare every other source/public/map field exactly. Keep R359 fully exact. Bind R034 exception to the exact evidence-linked B4-01 formal decision and preserve both B1M terminal IDs.",
+        "public_url_fields": [
+          "paper_url",
+          "formal_url",
+          "primary_url",
+          "url"
+        ],
+        "public_status_field": "is_arxiv_preprint",
+        "R034_map_rows": 7,
+        "pair_and_relationship_identity_checks_unchanged": true,
+        "all_original_decision_prefix_and_R034_R359_terminal_assertions_unchanged": true
+      }
+    ],
+    "historical_receipts_rewritten": false,
+    "B1M_original_evidence_modified": false,
+    "new_current_state_coverage": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+    "reviewed_test_fixes": "test-fixes-application.json"
+  },
+  "R1_full_suite_failure": {
+    "passed": 2403,
+    "failed": 2,
+    "subtests": 389,
+    "log_sha256": "2f3a4a1e1dea93261b852f41e204ef1dc384d433b2e44a37d816865015a8251d",
+    "junit_sha256": "fb8cc195904b909811d4eb1515e3dd48fa9c1438076450f0c2b7dd012bd8b4d8"
+  },
+  "R2_full_suite_failure": {
+    "passed": 2424,
+    "failed": 1,
+    "subtests": 389,
+    "log_sha256": "7866fea3fd1bfe3b4f6c942e8fe60338c511d5ca5c54e3a560f8e033ffc30995",
+    "junit_sha256": "b0d3979602fb0eb6915868411d48719619e7ec757dac2b5b35c9ac1213422c03"
+  },
+  "current_resolution": "Both protected files restored to exact7fc bytes; scoped additive pytest isolation; original R2 experiment authenticated archival only. No new active historical exception.",
+  "current_fourteen_previous_failures_pass": [
+    "tests.test_corpus_quality_batch_b_wave_b1h::test_original_questions_locked_policy_and_unrelated_authoritative_tables_are_immutable",
+    "tests.test_corpus_quality_batch_b_wave_b1i::test_accepted_R2_rule_original_questions_and_unrelated_authoritative_tables_are_unchanged",
+    "tests.test_corpus_quality_batch_b_wave_b1j::test_original_questions_locked_R1_R2_T2_and_unrelated_authoritative_tables_are_unchanged",
+    "tests.test_corpus_quality_batch_b_wave_b1k::test_original_questions_policies_and_all_unrelated_authoritative_files_are_unchanged",
+    "tests.test_corpus_quality_batch_b_wave_b1l::test_original_questions_policy_and_all_unrelated_authoritative_files_are_unchanged",
+    "tests.test_corpus_quality_batch_b_wave_b1m::test_R034_version_observation_stays_separate_from_pending_P034_and_live_bibliographic_identity",
+    "tests.test_corpus_quality_batch_b_wave_b1m::test_original_questions_locked_R2_and_all_unrelated_authoritative_files_remain_unchanged",
+    "tests.test_corpus_quality_batch_b_wave_b1m::test_live_B1M_selected_rows_public_records_relationships_and_terminal_prefix_remain_exact[R034]",
+    "tests.test_corpus_quality_batch_b_wave_b1n::test_original_questions_policies_and_unrelated_authoritative_files_are_unchanged",
+    "tests.test_corpus_quality_batch_b_wave_b1o::test_original_review_questions_locked_policies_and_unrelated_authority_are_immutable",
+    "tests.test_corpus_quality_batch_b_wave_b1p::test_original_questions_locked_policies_and_all_unrelated_authority_are_immutable",
+    "tests.test_systematic_tier2_application::test_pre_application_baseline_includes_and_preserves_previous_policy_pass",
+    "tests.test_systematic_tier2_policy::test_pre_task_repository_files_are_byte_identical",
+    "tests.test_corpus_quality_batch_b_wave_b1g::test_previous_twelve_batch_receipts_and_predecessor_repair_files_keep_original_bytes"
+  ],
+  "current_full_suite": {
+    "passed": 2445,
+    "failed": 0,
+    "subtests": 389,
+    "warnings": 2
+  },
+  "prior_B1M_observations_rewritten": false,
+  "original_historical_receipts_rewritten": false
+}

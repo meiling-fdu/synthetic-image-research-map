@@ -1,0 +1,240 @@
+{
+  "paper_id": "curated:b14247b031eff3671d2b",
+  "title": "Scalable Black-Box Model Attribution for Images",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "action_ids": [
+    "U014"
+  ],
+  "records": [
+    {
+      "review_id": "U014",
+      "action_id": "U014",
+      "paper_id": "curated:b14247b031eff3671d2b",
+      "title": "Scalable Black-Box Model Attribution for Images",
+      "issue_category": "INSTITUTION_SITE_AND_COORDINATE_VERIFICATION",
+      "original_review_question": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "provisional_only": true,
+      "formal_decision_applied": false,
+      "finding": "Exact arXiv identity and existing paper-time university affiliation are preserved; current institutional contact verifies Ramat Aviv address, but this is not direct evidence of the authors' exact_2026_campus and no coordinate-bearing point was verified.",
+      "proposed_disposition": {
+        "kind": "retain_site_hold",
+        "site_candidate_not_accepted": "Ramat Aviv campus,30Haim Levanon,TelAviv6997801",
+        "coordinates_proposed": null,
+        "missing_gates": [
+          "Paper-time institutional/campus correspondence for the authors' genericTelAvivUniversity affiliation.",
+          "Traceable institution-specific point for that verified site, with precision/CRS limits."
+        ]
+      },
+      "evidence_claims": [
+        {
+          "claim": "Title, orderedauthors AsafLivne/AmirJevnisek/ShaiAvidan and arXiv2608.15652 match preserved currentidentity.",
+          "source_ids": [
+            "TI-TAU-PAPER"
+          ],
+          "locator": "title,authors,submission16 Aug 2026"
+        },
+        {
+          "claim": "Official universitycontact describes Ramat Aviv and campuspage gives Haim Levanon30,6997801.",
+          "source_ids": [
+            "TI-TAU-CONTACT",
+            "TI-TAU-ADDRESS"
+          ],
+          "locator": "officialcontact address; campuspageL167"
+        },
+        {
+          "claim": "The localTAU-mapHTML contains no verifiednumericcoordinate; filename isnot proof of a geocode.",
+          "source_ids": [
+            "TI-TAU-HTML"
+          ],
+          "locator": "full HTML map coordinate inspection"
+        }
+      ],
+      "limitations": [
+        "University-level affiliation does not by itself establish a specific campus or building at publication.",
+        "Current official campusaddress mustnotbe silently treated aspaper-time author site.",
+        "No university headquarters, city centroid or geocoder result is used to select a site.",
+        "No new manuscript or geocoding request made during recovery."
+      ],
+      "confidence": {
+        "paper_identity": "high",
+        "institution_identity": "high_from_preserved_affiliation",
+        "current_address": "high",
+        "paper_time_campus": "unverified",
+        "coordinates": "not_verified"
+      },
+      "current_context_preserved": {
+        "public": true,
+        "paper_id": "curated:b14247b031eff3671d2b",
+        "title": "Scalable Black-Box Model Attribution for Images",
+        "doi": "10.48550/arxiv.2608.15652",
+        "arxiv_id": "2608.15652",
+        "year": 2026,
+        "publication_type": "preprint",
+        "venue": "arXiv",
+        "tasks": [
+          "source_attribution"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:b14247b031eff3671d2b"
+      },
+      "local_evidence_refs": [
+        {
+          "path": "data/raw/corpus_quality_audit_2026_10_04/unmapped_papers.json",
+          "locator": "records[review_id=U014]",
+          "finding": "Original independent review question remains open; original institution IDs and observations retained.",
+          "sha256": "5e6c6dacd77959f674414bc94f9302afe96cb30ed23387d5b496b67eb7b63dbf"
+        },
+        {
+          "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+          "locator": "#b-U014",
+          "finding": "Original intake question is used as a routing aid; current authoritative files are checked separately.",
+          "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+        },
+        {
+          "path": "web/data/public_preview_papers.json",
+          "locator": "records[paper_id=curated:b14247b031eff3671d2b]",
+          "finding": "Current public paper retained; tasks=['source_attribution']; research_types=['method']; map_record_count=0.",
+          "sha256": "70cf88511f3adbc1ab0a0a29c67220fc81c5c6c7ec17b4ce5dd1beb71c5769f3"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "mapping_id in mapping:236bda41155adb283523",
+          "finding": "Current curated mapping statuses: {'active': 1}; author strings, raw affiliation, provenance and blank location fields inspected without edits.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        },
+        {
+          "path": "data/curated/institutions.csv",
+          "locator": "institution_id in institution:7df4a1601453f806",
+          "finding": "All currently mapped canonical institution IDs exist; no alias or institution merge is authorized.",
+          "sha256": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326"
+        },
+        {
+          "path": "data/curated/institution_locations.csv",
+          "locator": "institution_id in institution:7df4a1601453f806",
+          "finding": "0 current reviewed location rows found for the mapped institutions.",
+          "sha256": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc"
+        },
+        {
+          "path": "data/curated/author_institution_mappings.csv",
+          "locator": "paper_id=curated:b14247b031eff3671d2b",
+          "finding": "An active primary-source affiliation exists, but its institution has no reviewed coordinate record.",
+          "sha256": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b"
+        }
+      ],
+      "acceptance_criteria": [
+        "Identify the exact institution-specific paper-relevant site for Tel Aviv University; distinguish campus, laboratory, branch and parent organization.",
+        "Cite official address/site evidence plus a traceable institution-specific coordinate source and retain address/coordinate uncertainty.",
+        "Do not use city centroids, unrelated headquarters, current employment or an unverified parent-campus point.",
+        "Preserve each supported author–institution affiliation and raw primary provenance; normalize only identical canonical paper–institution pairs under P1."
+      ],
+      "recommended_b4_action": "Retain unresolved institution-location action; accept no location/mapping correction until the named missing gates are satisfied.",
+      "site_assessments": [
+        {
+          "institution_id": "institution:7df4a1601453f806",
+          "canonical_name": "Tel Aviv University",
+          "paper_time_identity": "existing verified affiliation university only; raw affiliation preserved",
+          "address": "currentofficialRamat Aviv/30Haim Levanon6997801",
+          "paper_time_site": "not directly verified",
+          "coordinate_provenance": null,
+          "coordinates_accepted": null
+        }
+      ],
+      "review_group": "turkey_india_israel",
+      "assigned_batch_id": "B2-02",
+      "priority": 2,
+      "depends_on": [],
+      "original_review": {
+        "review_id": "U014",
+        "paper_id": "curated:b14247b031eff3671d2b",
+        "title": "Scalable Black-Box Model Attribution for Images",
+        "year": 2026,
+        "publication_status": "preprint",
+        "authors": [
+          "Asaf Livne",
+          "Amir Jevnisek",
+          "Shai Avidan"
+        ],
+        "institutions": [
+          {
+            "institution_id": "institution:7df4a1601453f806",
+            "canonical_name": "Tel Aviv University",
+            "raw_affiliation": "Tel Aviv University",
+            "authors": [
+              "Asaf Livne",
+              "Amir Jevnisek",
+              "Shai Avidan"
+            ],
+            "paper_time_affiliation_known": true,
+            "institution_identity_known": true,
+            "exists_in_registry": true,
+            "location_known": false,
+            "location_records": [],
+            "mapping_status": "active",
+            "mapping_id": "mapping:236bda41155adb283523",
+            "evidence_url": "https://arxiv.org/abs/2608.15652",
+            "evidence_basis": "https://arxiv.org/abs/2608.15652",
+            "hierarchy": [],
+            "allowed_to_map_as_node": true,
+            "relationship_currently_possible": false
+          }
+        ],
+        "author_affiliation_known": true,
+        "canonical_institution_identity_known": true,
+        "institution_registry_complete": true,
+        "any_reviewed_location_known": false,
+        "relationship_currently_possible": false,
+        "primary_classification": "INSTITUTION_LOCATION_UNRESOLVED",
+        "remediation_category": "EVIDENCE_CAN_RESOLVE",
+        "blocker": "Paper-time affiliation and canonical institution are verified; no reviewed coordinate record exists for any affiliated institution.",
+        "confidence": "high",
+        "recommended_action": "Verify institution-specific campus/address coordinates from official institution evidence; propose reviewed location rows for the existing institution IDs.",
+        "authoritative_evidence_url": "https://arxiv.org/abs/2608.15652",
+        "project_evidence": [
+          "data/curated/author_institution_mappings.csv",
+          "data/curated/institutions.csv",
+          "data/curated/institution_locations.csv",
+          "data/curated/institution_hierarchy.csv"
+        ],
+        "batch": "B"
+      },
+      "current_context_at_published_baseline": {
+        "public": true,
+        "paper_id": "curated:b14247b031eff3671d2b",
+        "title": "Scalable Black-Box Model Attribution for Images",
+        "doi": "10.48550/arxiv.2608.15652",
+        "arxiv_id": "2608.15652",
+        "year": 2026,
+        "publication_type": "preprint",
+        "venue": "arXiv",
+        "tasks": [
+          "source_attribution"
+        ],
+        "research_types": [
+          "method"
+        ],
+        "map_relationships": 0,
+        "taxonomy_id": "paper_id:curated:b14247b031eff3671d2b"
+      },
+      "authoritative_changes_applied": false,
+      "B4_02_started": false,
+      "record_evidence_source_keys": [
+        "turkey_india_israel:TI-TAU-ADDRESS",
+        "turkey_india_israel:TI-TAU-CONTACT",
+        "turkey_india_israel:TI-TAU-HTML",
+        "turkey_india_israel:TI-TAU-PAPER"
+      ],
+      "separate_site_evidence_gates": {
+        "institution_identity": "VERIFIED",
+        "address": "CURRENT_RAMAT_AVIV_CONTACT_VERIFIED",
+        "paper_time_site": "UNIVERSITY_ONLY_AFFILIATION; AUTHORS_PAPER_TIME_CAMPUS_UNVERIFIED",
+        "coordinates": "NO_POINT_VERIFIED",
+        "unsupported_assumption": "Current university headquarters/contact is not a demonstrated paper-time author campus."
+      }
+    }
+  ],
+  "note": "Evidence recommendations only; no formal decisions or source mutations."
+}

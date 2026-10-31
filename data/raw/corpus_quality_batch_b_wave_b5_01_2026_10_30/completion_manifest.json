@@ -1,0 +1,75 @@
+{
+  "task": "B5-01 combined transaction local acceptance",
+  "baseline_commit": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "integration_checkpoint": {
+    "path": "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/integration_manifest.json",
+    "sha256": "fb0992349fee517d6424f784a4e8e26d2e26d673bda501fc5ec88da19e90b745",
+    "note": "Original integration/prevalidation snapshot retained unchanged; this append records completed local gates."
+  },
+  "local_validation": {
+    "path": "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/local_validation_receipt.json",
+    "sha256": "7a50cb41da96f9018be318000de24825c35b55ad18caf9d743b6d7e30cb2f486"
+  },
+  "decisions": {
+    "rows": 127,
+    "original_prefix": 103,
+    "B4_01_append": 9,
+    "B4_02_append": 15,
+    "accepted": [
+      "P034",
+      "P254",
+      "P305",
+      "P097",
+      "P105",
+      "P150",
+      "P177",
+      "P229",
+      "P049",
+      "P058",
+      "P068"
+    ],
+    "holds": [
+      "P028",
+      "P001",
+      "U001",
+      "U002",
+      "U003",
+      "U005",
+      "U006",
+      "U007",
+      "U008",
+      "U014",
+      "U016",
+      "U018",
+      "U023"
+    ]
+  },
+  "accounting_before": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 28,
+    "historical_unresolved_actions": 131,
+    "historical_unresolved_papers": 121,
+    "active_public_unresolved_actions": 129,
+    "active_public_unresolved_papers": 119
+  },
+  "accounting_after": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 39,
+    "historical_unresolved_actions": 120,
+    "historical_unresolved_papers": 113,
+    "active_public_unresolved_actions": 118,
+    "active_public_unresolved_papers": 111
+  },
+  "source_after_sha256": {
+    "data/curated/papers.csv": "0fd82c4b242d86b6fe4dbf0c8dcd98cccc6a6930c0bd2e93b416a49a1bf0c3e4",
+    "data/curated/publication_overrides.csv": "ae6ce79a8f9567402cca7cc7197e28b4c2b2cca7cff2e534fb06af43dc6a2310",
+    "data/curated/venue_aliases.csv": "8148eb3bece935006d7d88f7f4e0447fdc10ce1a431bafc25cffe479a333c916",
+    "data/curated/review_decisions.csv": "3430814d49d8e73a5836c71fb04b5acb3e95de3dac56bb795ca62dcf734bfda5"
+  },
+  "protected_file_strategy": "Exact published bytes plus additive fixture; superseded experiment is archival only",
+  "file_inventory": "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/file_inventory.json",
+  "publication_status": "LOCAL_VALIDATION_PASSED_REMOTE_PAGES_LIVE_HOSTED_CI_PENDING",
+  "publication_note": "The future commit cannot include its own SHA. Exact commit/deployment/CI acceptance is recorded in the external completion archive and GitHub Actions after publication."
+}

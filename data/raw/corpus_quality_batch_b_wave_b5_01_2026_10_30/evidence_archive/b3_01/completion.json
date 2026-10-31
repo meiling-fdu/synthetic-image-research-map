@@ -1,0 +1,64 @@
+{
+  "task": "Batch B Wave B3 — first batch B2-01",
+  "status": "EVIDENCE REVIEW COMPLETE — READY FOR SUBSEQUENT MAINTAINER ADJUDICATION",
+  "date": "2026-10-28",
+  "completed_at_utc": "2026-10-28T13:17:57.719897+00:00",
+  "scope_confirmed_by_user": "Strict assigned publication-URL scope; preserve taxonomy; no scientific-contribution expansion",
+  "reviewed_actions": [
+    "P034",
+    "P254",
+    "P305",
+    "P028",
+    "P097",
+    "P105",
+    "P150",
+    "P177",
+    "P229"
+  ],
+  "outcomes": {
+    "SUPPORTED_ADDITION": 8,
+    "EVIDENCE_INSUFFICIENT": 1
+  },
+  "taxonomy_proposals": [],
+  "potential_taxonomy_followups": [],
+  "formal_actions_closed": 0,
+  "historical_unresolved": 131,
+  "active_public_unresolved": 129,
+  "head": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "origin_tracking_ref": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "remote_main_last_verified": "7fc8ceae702324628335944cf4b545a3733fdc56",
+  "remote_method": "git ls-remote origin refs/heads/main during finalization; no fetch/push",
+  "branch": "codex/ci-stability-01",
+  "ahead_behind": "0 / 0",
+  "git_status": "",
+  "index_empty": true,
+  "untracked_files": 0,
+  "protected_primary_files": 128,
+  "frozen_artifacts": 49,
+  "all_zero_change_flags": {
+    "AUTHORITATIVE_CORPUS_CHANGED": 0,
+    "PUBLIC_EXPORTS_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "B2_PLANNING_ARTIFACTS_CHANGED": 0,
+    "CI_ACCEPTANCE_RECORDS_CHANGED": 0,
+    "UNEXPECTED_CHANGED": 0
+  },
+  "checks_passed": 4979,
+  "independent_qc_checks": {
+    "local_three": 87,
+    "external_six_final": 141
+  },
+  "provenance_correction_history_preserved": true,
+  "B4_or_next_batch_started": false,
+  "evidence_artifacts_outside_repository": true,
+  "artifact_sha256": {
+    "batch_review.md": "399e00fb0bdc98c24a6938eac87d79c2bbad279f8c27b2b11835df919672f752",
+    "batch_dispositions.json": "a3b85d374e9c647245a58a4f0213f4a39fd9417bbefad3176af6925f3671079f",
+    "b4_handoff.json": "9a593f2ef511b101dea0b6a64fb3ab88c12bf6653ba6be9cf5d73f18d00a47b5",
+    "validation.json": "c9b650fe04b9c6b480d7047961778f1f4d66d10712df12dbc74bc1ea27d03fbb",
+    "effort_and_retrieval.json": "d4074229e13e124290739f80817c3f5e989f2777f190969508f991fda650791e",
+    "source_inventory.json": "895eff6a471d7364d169da0814d6e48d63c5decb30c37d38ba75cdfc90c29e70"
+  },
+  "neurips": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+}
