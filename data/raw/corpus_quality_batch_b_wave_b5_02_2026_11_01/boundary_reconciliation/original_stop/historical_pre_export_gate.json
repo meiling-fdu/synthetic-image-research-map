@@ -1,0 +1,54 @@
+{
+  "schema": "b5-02-pre-export-historical-gate-1",
+  "recorded_utc": "2026-11-01T09:19:32.766717+00:00",
+  "command": [
+    "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--tb=long",
+    "--junitxml=/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02-2026-11-01/historical_pre_export_gate.xml",
+    "tests/test_corpus_quality_batch_b_wave_b1s.py::test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export[data/curated/paper_taxonomy.csv]",
+    "tests/test_corpus_quality_batch_b_wave_b4_02.py::test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+    "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories"
+  ],
+  "returncode": 1,
+  "elapsed_seconds_monotonic": 1.200891166983638,
+  "status": "FAILED_STOP_BEFORE_EXPORT_AND_PUBLICATION",
+  "cases": [
+    {
+      "name": "test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export[data/curated/paper_taxonomy.csv]",
+      "class": "tests.test_corpus_quality_batch_b_wave_b1s",
+      "failure": "path = 'data/curated/paper_taxonomy.csv'\n\n    @pytest.mark.parametrize('path', FROZEN['pre_export_frozen_source_sha256'])\n    def test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export(path):\n        # Only two mutable operational files have an accepted historical hash.\n        # B1Q/B1R evidence and the unchanged authoritative taxonomy stay live.\n        observed = endpoint_bytes(path) if path in {PAPERS, DECISIONS} else (ROOT / path).read_bytes()\n>       assert sha(observed) == FROZEN['pre_export_frozen_source_sha256'][path]\nE       AssertionError: assert '98026dec50ed...9fc5910da05d3' == '2388617d6221...2fa7324fe0fb9'\nE         \nE         - 2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9\nE         + 98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3\n\ntests/test_corpus_quality_batch_b_wave_b1s.py:316: AssertionError",
+      "error": null
+    },
+    {
+      "name": "test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "class": "tests.test_corpus_quality_batch_b_wave_b4_02",
+      "failure": "def test_public_identities_task_types_and_all_relationship_pairs_are_preserved():\n        current, original = load_context(ROOT), published_context(BASE)\n        assert set(current['papers']) == set(original['papers']) == set(packet()['public_ids'])\n        assert current['counts'] == original['counts'] == packet()['corpus_unchanged']\n        assert current['counts']['public'] == 674\n        assert current['counts']['relationship_rows'] == current['counts']['unique_paper_institution_pairs'] == 1410\n        assert current['pairs'] == original['pairs']\n        for pid, paper in current['papers'].items():\n            assert paper['tasks'] == original['papers'][pid]['tasks']\n            assert paper['research_types'] == original['papers'][pid]['research_types']\n        totals = dict(Counter(label for p in current['papers'].values() for label in p['tasks'] + p['research_types']))\n        assert totals == packet()['taxonomy_unchanged']\n        # Authoritative labels themselves, not only stale public JSON, stay fixed.\n>       assert (ROOT / 'data/curated/paper_taxonomy.csv').read_bytes() == published_bytes(BASE, 'data/curated/paper_taxonomy.csv')\nE       AssertionError: assert b'taxonomy_id...6T12:00:00Z\\n' == b'taxonomy_id...6T12:00:00Z\\n'\nE         \nE         At index 102833 diff: b';' != b','\nE         Use -v to get more diff\n\ntests/test_corpus_quality_batch_b_wave_b4_02.py:378: AssertionError",
+      "error": null
+    },
+    {
+      "name": "test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories",
+      "class": "tests.test_corpus_quality_batch_b_wave_b5_01",
+      "failure": "def test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories():\n        baseline = published_bytes(BASE, DECISIONS)\n        current = (ROOT / DECISIONS).read_bytes()\n        before, after = csv_records(baseline), csv_records(current)\n>       assert len(before) == 103 and len(after) == 127\nE       AssertionError: assert (103 == 103 and 138 == 127)\nE        +  where 103 = len([{'decision_id': 'review:8483273ff88913a50c82', 'review_queue': 'high_risk_marker', 'target_type': 'marker', 'title': ...sistency:c6079667cca9087e3a0e', 'title': 'Detecting GAN Generated Fake Images Using Co-Occurrence Matrices', ...}, ...])\nE        +  and   138 = len([{'decision_id': 'review:8483273ff88913a50c82', 'review_queue': 'high_risk_marker', 'target_type': 'marker', 'title': ...sistency:c6079667cca9087e3a0e', 'title': 'Detecting GAN Generated Fake Images Using Co-Occurrence Matrices', ...}, ...])\n\ntests/test_corpus_quality_batch_b_wave_b5_01.py:155: AssertionError",
+      "error": null
+    }
+  ],
+  "test_source_sha256_before_after": {
+    "tests/test_corpus_quality_batch_b_wave_b1s.py": "bde78da60eaf4f3660725dade4d11aed2225e13d28f675eabf52790cde65f5ec",
+    "tests/test_corpus_quality_batch_b_wave_b5_01.py": "87a1766308c46797b2b921e47da2755ea5f4c9144904b4fddd21b34ce0b5fa64",
+    "tests/test_corpus_quality_batch_b_wave_b4_02.py": "ede273958436346d7b94e24c4f970a6fca6fc6528f7e87b7f0ce87d71077f3a3"
+  },
+  "test_sources_unchanged": true,
+  "tests": 3,
+  "failures": 3,
+  "errors": 0,
+  "log_sha256": "72bb0fdcc81d3eb46fb24a629fb6a38006effc2195ad7172241efb529aea3d85",
+  "junit_sha256": "fb1fceb83c6be0d59d69a0deda19a8ed18a9ee2a63fc5a938aedd34319c74a81",
+  "export_independent_assertions": true,
+  "export_or_full_suite_started": false,
+  "policy": "On failure preserve the source/archive checkpoint and stop. No historical source, receipt, hash expectation or central baseline is changed."
+}

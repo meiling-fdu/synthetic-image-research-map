@@ -1,0 +1,1101 @@
+{
+  "schema": "batch-b-b5-integration-2",
+  "batch_id": "B5-02",
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "phase": "SOURCE_AND_EVIDENCE_INTEGRATED_PRE_EXPORT_GATE",
+  "original_adjudication_manifest": "data/raw/corpus_quality_batch_b_wave_b4_03_2026_11_01/adjudication_manifest.json",
+  "original_adjudication_manifest_sha256": "189eabed6bfd3989ceb1abc8300c7b80e12e4453cb13e1fa4397e72b6cd753f0",
+  "source_before_sha256": {
+    "data/curated/papers.csv": "0fd82c4b242d86b6fe4dbf0c8dcd98cccc6a6930c0bd2e93b416a49a1bf0c3e4",
+    "data/curated/paper_taxonomy.csv": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+    "data/curated/review_decisions.csv": "3430814d49d8e73a5836c71fb04b5acb3e95de3dac56bb795ca62dcf734bfda5"
+  },
+  "source_after_sha256": {
+    "data/curated/papers.csv": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+    "data/curated/paper_taxonomy.csv": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+    "data/curated/review_decisions.csv": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea"
+  },
+  "accepted_review_ids": [
+    "R110",
+    "R171",
+    "R256",
+    "R275",
+    "R564",
+    "P231"
+  ],
+  "held_review_ids": [
+    "R138",
+    "R154",
+    "R161",
+    "R187",
+    "R231"
+  ],
+  "decision_ids": [
+    "review:85175ec64aa71e08513d",
+    "review:fa865030dfa55383c974",
+    "review:b7a98d16a24ee222558e",
+    "review:870f03d0288890604003",
+    "review:dcd816756b7d488bf1a0",
+    "review:d12646730c864bfb6e2d",
+    "review:c140d27c2ce24aaab046",
+    "review:94810536cefd9de36972",
+    "review:14ecb31c9d42db4e4821",
+    "review:77cb071840ccde763f90",
+    "review:9f0d774714f7c178eff4"
+  ],
+  "accounting_before": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 39,
+    "historical_unresolved_actions": 120,
+    "historical_unresolved_papers": 113,
+    "active_public_unresolved_actions": 118,
+    "active_public_unresolved_papers": 111
+  },
+  "accounting_after": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 45,
+    "historical_unresolved_actions": 114,
+    "historical_unresolved_papers": 108,
+    "active_public_unresolved_actions": 112,
+    "active_public_unresolved_papers": 106
+  },
+  "taxonomy_before": {
+    "research_types": {
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "dataset": 138,
+      "benchmark": 97
+    },
+    "tasks": {
+      "detection": 621,
+      "source_attribution": 84,
+      "localization": 45
+    }
+  },
+  "taxonomy_after": {
+    "research_types": {
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "dataset": 142,
+      "benchmark": 101
+    },
+    "tasks": {
+      "detection": 621,
+      "source_attribution": 84,
+      "localization": 45
+    }
+  },
+  "corpus_invariants": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "cell_deltas": [
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:6976641cbfe602a7e617",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset;benchmark"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:6976641cbfe602a7e617",
+      "field": "research_types_review_reason",
+      "before": "",
+      "after": "B4-03 R110: R1/R2: MRI-Forensics is independently constructed and documented with reusable generator/split and detector evaluation protocols, beyond an experimental pool. Evidence and limitations retained in B3-03/per_paper/R110.json."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:6976641cbfe602a7e617",
+      "field": "research_types_evidence_tier",
+      "before": "reused_audit+abstract",
+      "after": "primary_paper"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:6976641cbfe602a7e617",
+      "field": "research_types_evidence_source",
+      "before": "manual",
+      "after": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf; B3-03 per_paper/R110.json sha256:247059a94b94b3186670ef50ec38cf9117c4de2867a9ca2bd681c8cfe334f5e8"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:6976641cbfe602a7e617",
+      "field": "research_types_evidence_excerpt",
+      "before": "With this assertion, we develop a new forensic detection framework that combines Autoregressive Image Models and Discrete Wavelet Transform (AIM-DWT) analysis that reliably detects AI-generated manipulations.",
+      "after": "Construction and evaluation: PDF pp3-8, Tables1-3. Prostate Table2 is fake-only; Table3 separately evaluates real brain images. Patient-level independence, clinical validity, release and reported performance are not independently reproduced."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:6976641cbfe602a7e617",
+      "field": "audited_at",
+      "before": "2026-09-04",
+      "after": "2026-11-01"
+    },
+    {
+      "path": "data/curated/papers.csv",
+      "key_field": "paper_id",
+      "key": "curated:6976641cbfe602a7e617",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset;benchmark"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:a570863c3a6ac227b56c",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset;benchmark"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:a570863c3a6ac227b56c",
+      "field": "research_types_review_reason",
+      "before": "",
+      "after": "B4-03 R171: R1/R2: CommGen15 independently collects and standardizes commercial-platform outputs and defines a reusable external-training image-level evaluation resource. Evidence and limitations retained in B3-03/per_paper/R171.json."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:a570863c3a6ac227b56c",
+      "field": "research_types_evidence_tier",
+      "before": "reused_audit+abstract",
+      "after": "primary_paper"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:a570863c3a6ac227b56c",
+      "field": "research_types_evidence_source",
+      "before": "openalex",
+      "after": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/zhou26h/zhou26h.pdf; B3-03 per_paper/R171.json sha256:d4015cec12b8ba98489196535741308e7e0918e6506a0fb171df328fcc06cd6e"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:a570863c3a6ac227b56c",
+      "field": "research_types_evidence_excerpt",
+      "before": "To address this challenge, we propose the Peak-Guided Calibration (PGC) framework.",
+      "after": "Table1, section3, section5.1, AppendixC and Table10: 19,472 native images and 13,922 video-derived frames; 33,394 generated plus 33,394 COCO real. Nine static-image and six frame subsets remain distinct; frame correlation and platform/version limitations remain. Acc/AP evaluation does not establish independently reproduced performance."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:a570863c3a6ac227b56c",
+      "field": "audited_at",
+      "before": "2026-09-04",
+      "after": "2026-11-01"
+    },
+    {
+      "path": "data/curated/papers.csv",
+      "key_field": "paper_id",
+      "key": "curated:a570863c3a6ac227b56c",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset;benchmark"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset;benchmark"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "field": "research_types_review_reason",
+      "before": "",
+      "after": "B4-03 R256: R1/R2: CSAIID is a separately constructed cross-semantic resource with defined categories, real/fake sampling, generators and reusable external-training evaluation protocol. Evidence and limitations retained in B3-03/per_paper/R256.json."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "field": "research_types_evidence_tier",
+      "before": "reused_audit+abstract",
+      "after": "primary_paper"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "field": "research_types_evidence_source",
+      "before": "openalex",
+      "after": "https://openaccess.thecvf.com/content/ICCV2025W/APAI/papers/Cai_Adaptive_Test-Time_Semantic_Debiasing_for_AI-Generated_Image_Detection_ICCVW_2025_paper.pdf; B3-03 per_paper/R256.json sha256:20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "field": "research_types_evidence_excerpt",
+      "before": "We propose Adaptive Test-Time Semantic Debiasing (ATTSD), a zero-shot approach that utilizes the visual-semantic space of large pretrained vision-language models to dynamically align feature representations during testing-without requiring additional training data or annotations.",
+      "after": "Section4 and section5, Table1: six categories with 1,000 real and 1,000 fake each (12,000 total), COCO/PartiPrompts and SDv2/LDM/LCM. A global 1:1:1 balance is arithmetically possible; exact per-category allocation is unspecified, not disproved. Changes in training regimes do not isolate semantic causality; results are not independently reproduced."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "field": "audited_at",
+      "before": "2026-09-04",
+      "after": "2026-11-01"
+    },
+    {
+      "path": "data/curated/papers.csv",
+      "key_field": "paper_id",
+      "key": "curated:c6bfe8f5199d1d8beb29",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset;benchmark"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;benchmark"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "field": "research_types_review_reason",
+      "before": "",
+      "after": "B4-03 R275: R2 only: GenImage++ is an independently specified reusable test benchmark with new generator/prompt strata and evaluation protocol, not merely a large result table. Evidence and limitations retained in B3-03/per_paper/R275.json."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "field": "research_types_evidence_tier",
+      "before": "reused_audit+abstract",
+      "after": "primary_paper"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "field": "research_types_evidence_source",
+      "before": "manual",
+      "after": "https://papers.neurips.cc/paper_files/paper/2025/file/2c2be72635379ec8600eea13df4743e3-Paper-Conference.pdf; B3-03 per_paper/R275.json sha256:e38e0fab7e38252080ae6ab1640bdcc94ddaf846be53ac2799bc311730b02e29"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "field": "research_types_evidence_excerpt",
+      "before": "It also introduces the GenImage++ evaluation benchmark and reports improved cross-generator performance without redesigning the detector network.",
+      "after": "Contributions, section5, section6 and AppendixC.2-C.4 pp19-22 define nine strata (138,900 from rounded counts). Benchmark is generated-only with no matched reals: Table3 measures positive-class recognition, not balanced real/fake accuracy or specificity. R1 dataset label is not added; reported performance is not independently reproduced."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "field": "audited_at",
+      "before": "2026-09-04",
+      "after": "2026-11-01"
+    },
+    {
+      "path": "data/curated/papers.csv",
+      "key_field": "paper_id",
+      "key": "curated:7cfe39b3bc63f5b55f51",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;benchmark"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "doi:10.1109/tmm.2023.3313503",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "doi:10.1109/tmm.2023.3313503",
+      "field": "research_types_review_reason",
+      "before": "",
+      "after": "B4-03 R564: R1 only: DF3 is an independently constructed reusable fake-face resource with documented base generators and post-processing, beyond method-training usage. Evidence and limitations retained in B3-03/per_paper/R564.json."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "doi:10.1109/tmm.2023.3313503",
+      "field": "research_types_evidence_tier",
+      "before": "abstract",
+      "after": "primary_paper"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "doi:10.1109/tmm.2023.3313503",
+      "field": "research_types_evidence_source",
+      "before": "OpenAlex local raw cache",
+      "after": "https://arxiv.org/pdf/2211.08615v7; B3-03 per_paper/R564.json sha256:d891a5362525d23b6f8c2b44bf52263df471fa37f693d763b6338f1126eb3742"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "doi:10.1109/tmm.2023.3313503",
+      "field": "research_types_evidence_excerpt",
+      "before": "To address this issue, we propose a Global and Local Feature Fusion (GLFF) framework to learn rich and discriminative representations by combining multi-scale global features from the whole image with refined local features from informative patches for AI-synthesized image detection.",
+      "after": "Contribution list, sectionIV and TableI pp6-7: 6,160 base fakes; 46,476 tabulated derivatives versus approximately 46,400 in prose; six protocols include unprocessed originals. Fake-only DF3 and 1,000 separate FFHQ real controls remain distinct. arXiv v7 author version is not verified publisher-final equivalence. No benchmark or task label is added; release availability is unverified."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "doi:10.1109/tmm.2023.3313503",
+      "field": "audited_at",
+      "before": "2026-09-04",
+      "after": "2026-11-01"
+    },
+    {
+      "path": "data/curated/papers.csv",
+      "key_field": "paper_id",
+      "key": "curated:0d918782407e05ade5bd",
+      "field": "venue_track",
+      "before": "workshops",
+      "after": "Main"
+    }
+  ],
+  "file_inventory_before_this_manifest": [
+    {
+      "path": "data/curated/papers.csv",
+      "sha256": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+      "bytes": 1001762,
+      "kind": "authoritative_source"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "bytes": 845764,
+      "kind": "authoritative_source"
+    },
+    {
+      "path": "data/curated/review_decisions.csv",
+      "sha256": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea",
+      "bytes": 175179,
+      "kind": "authoritative_source"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b4_03_2026_11_01/adjudication_manifest.json",
+      "sha256": "189eabed6bfd3989ceb1abc8300c7b80e12e4453cb13e1fa4397e72b6cd753f0",
+      "bytes": 241589,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b4_03_2026_11_01/b5_02_handoff.json",
+      "sha256": "7b0ce2efbc5cc003c69df6c54ade9493e95810cfbf1fa1b9b2408d1b500fc8d1",
+      "bytes": 5949,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_wave_b4_03_2026_11_01.md",
+      "sha256": "5f7bd71a30265f0b61455267a58066cdaf128545507033dc306fe54eb3b5682a",
+      "bytes": 9166,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/completion.json",
+      "sha256": "639203d57d9655764f8fb7ed5c05abed03f86e0a92a36422ab998d02aec286a3",
+      "bytes": 1840,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/checksums.json",
+      "sha256": "fce10ceb31e7a807df3431d1de54f39abeeda49cbca9ec1d092c8f9faa79a39f",
+      "bytes": 9287,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/validation.json",
+      "sha256": "50adb7dc2d943e6d04480607e0ec89bb15aee178c28ec53c135c5fedd2f0b120",
+      "bytes": 5740,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/changed_file_inventory.json",
+      "sha256": "22cc50ad6233ff7fe002ae3af780a4aac1d45ab8e86a61b8ea5bd64ac28d1aec",
+      "bytes": 1942,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/investigation/B3_input_verification.json",
+      "sha256": "db2de93e129f8433658dda530254ec7598b27ae033401488065a1e7363af2ada",
+      "bytes": 471,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/investigation/schema_preflight.json",
+      "sha256": "453aa3060ee883d577607701b68ed9b90bfc1aed56a2fb677a9e40f42b05abfa",
+      "bytes": 23422,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/investigation/P231_semantics_review.json",
+      "sha256": "525fd4b7f8b93eb1a2c6eb5ac3e69e4e15c38db19a076cb1633b6697520ba3b0",
+      "bytes": 76202,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/investigation/P231_semantics_review.md",
+      "sha256": "099746373282cdf2ed71ccea8001ca9257819481eb16263046edaddbb5a86119",
+      "bytes": 12237,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/independent_adjudication_review.json",
+      "sha256": "1615d8b14adc45144109edee5608ee8757b7780838826cd4296b09379c6a08b2",
+      "bytes": 56833,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/independent_preapply_review.json",
+      "sha256": "0cd6fe52db94bbec4f98479da84424732117e12c0f15a0e482d93bf41de97f27",
+      "bytes": 27108,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/acceptance_accounting_qc.json",
+      "sha256": "5f61d52e754efee81849808fe9d2ffc243d9e61a29717a3afe81ed339c92e34a",
+      "bytes": 43422,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/independent_acceptance_summary.json",
+      "sha256": "ada566d6d681f07493ef4e875428e49930b190efdd2e3b7c8c026b4efc44b0b2",
+      "bytes": 5320,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/preservation_final.md",
+      "sha256": "98667a59e7fc9f08b07db7c24dfe0f190b454079616db8c182f9ca9f33f0a2ef",
+      "bytes": 2744,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/preservation_receipt_hashes.json",
+      "sha256": "48707d2ca61e4af1bb2c2b5c78adf92d2844ea5bc211709a0884c12c0c41f97b",
+      "bytes": 2773,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/historical_snapshot_tests.json",
+      "sha256": "c3bad460982debe61f0b23619ca00a347c8f3d4cdf4b67a4f9b596404b6be832",
+      "bytes": 3014,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/historical_snapshot_tests.xml",
+      "sha256": "5ee7be0ce063abe34eae501ee9f97f7b96f283fa10d4e33434f3268a6410d06b",
+      "bytes": 31851,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/B403_current_tests.xml",
+      "sha256": "eb211c487fbcdd771da14b6e5cb370e01863304dc5a11692aab0df024bbc83ff",
+      "bytes": 22810,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/B403_track_tests.xml",
+      "sha256": "fd3e8f5406c8933416bf2affc1c739bbbb1941c680d8ead01661c1770f6bd25f",
+      "bytes": 5139,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/B403_track_tests_run.json",
+      "sha256": "17933579915b68aa2ff6168e7344ffda68d6afbff2548413a196bd166cc352a2",
+      "bytes": 2274,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/curated_validator.log",
+      "sha256": "ee04d5a9ebedfb91241ec39e418f969a6c6c0f5b7316df8d294bb39f4829ffe7",
+      "bytes": 31322,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/public_pair_validator.log",
+      "sha256": "ac8e0af99c38d4fee8a1fc1d7b45210537cd5cca35a273b8b547d32c8f869859",
+      "bytes": 12653,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/exclusions_validator.log",
+      "sha256": "1fadfe0741a198eaf009a4c2dc08fc234e7b451238157f8e1709960fe9732513",
+      "bytes": 450,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/b4_handoff.json",
+      "sha256": "6f46c7a2e642aef110ced8919bc05d5b3ecb64728fc398abad0e9cde85b76335",
+      "bytes": 27145,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/batch_dispositions.json",
+      "sha256": "9f3704166c5c0ef9c1e5324995b29a712b756014ca36286169d4870f405e151e",
+      "bytes": 70593,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/batch_review.md",
+      "sha256": "bb9b7af294cd9aee499150d7ca890bae19777c3974480f337ee370e9330ba4ac",
+      "bytes": 18168,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/checksums.json",
+      "sha256": "870f23c2058853a62b8fdaa40d88cab0bbcaded168b9fc2a475218f9bbfc621a",
+      "bytes": 13963,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/completion.json",
+      "sha256": "f9d255d2e283c96da4b670f1893ddf61f19a3911409e48dc4dc0fe3befe77381",
+      "bytes": 3626,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/effort_and_retrievals.json",
+      "sha256": "e4967e6ce90086861d4157ffa793989d682177726743e89885ea3dfdddd52f6b",
+      "bytes": 10178,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R110-canonical.txt",
+      "sha256": "13924d544dc41ecb60b1b908e9b6926cc9379286789a4326487ce60419898bda",
+      "bytes": 44496,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R110-retrieval.json",
+      "sha256": "c6a42eef49ab7e217b7bb1ae927b7665a74576f1fe8f6226d262c41bce5a9db7",
+      "bytes": 1260,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R110-table2-3.png",
+      "sha256": "4b45a75312d2d6c150644c0d7cd3fa8b100db25d3f95a42efd767675fc7cec9d",
+      "bytes": 373237,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-canonical.html",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-doi-registration-retrieval.json",
+      "sha256": "a8cc88e25fa1d4a69501575e016b461290f2f1ba6bde336aa6bdbd9ce8dac21d",
+      "bytes": 683,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-doi-registration.json",
+      "sha256": "1d3e09a3311916a0c7ed1d6cf8a288a24ac4a5425f3496580b1e115a923b9659",
+      "bytes": 9851,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-official-readme-retrieval.json",
+      "sha256": "44f0977190e21c2cae8fe42d86f2d5504131ff244c58bf504e88256059295530",
+      "bytes": 711,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-official-readme.txt",
+      "sha256": "34c9c4e84ec8749c1ca54135c1cea4490099b708fe568c82060fd4add8fb45f0",
+      "bytes": 2404,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-retrieval.json",
+      "sha256": "0c85a37d254efd577d7046fa663a2ddaa82ebe504972593151706db81ea0b884",
+      "bytes": 1383,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-appendix-p17-SFT-details.png",
+      "sha256": "ba2ded6789f8013a74264164e5c7ce4ecfecd3cf0cd1cce92bdd06578519a47a",
+      "bytes": 641132,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-appendix-p17-SFT-details.provenance.json",
+      "sha256": "5ac38784761e3eb429523ae5fc0b3b252721b2356f1afc18fc72b40fa6cdbbc4",
+      "bytes": 547,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-author-v1-retrieval.json",
+      "sha256": "57d8c7fa0c16083abbf438a8fff937b1aaaa110544ecbc1ca4578103a8b515c0",
+      "bytes": 625,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-author-v1.txt",
+      "sha256": "3848e82a3b8e75e6e4a386449d3e1f630e68631ca439811a9c35eae664be0d9a",
+      "bytes": 174194,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-canonical.html",
+      "sha256": "2326a0067974192fd1408f967a997e20bab5b381cb37ba99d738d735c091c818",
+      "bytes": 7018,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-doi-registration-retrieval.json",
+      "sha256": "e00c9bc92679cd31e51aa78a5d941c60875a8fc1aaf6d232a2018ce65f1a5558",
+      "bytes": 683,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-doi-registration.json",
+      "sha256": "8386363c85f56156b8fe9d137cf7abc1cfa87f31729a88cbb1c256551622c4e2",
+      "bytes": 4579,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-retrieval.json",
+      "sha256": "96879a6b4de56090557e09077030f69e8cf3de9f86a94c706ccf99e4592e8b76",
+      "bytes": 1656,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-tables2-4.png",
+      "sha256": "9e015b8428c2325992fe3cafa5e5df875594e1cad113ff54547728079f771cc4",
+      "bytes": 612706,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-canonical.html",
+      "sha256": "547e0bc4f963804ed3eed61ae8b1b5aa95a08fe184e19ee958bcdcbfcd5e8122",
+      "bytes": 7018,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-doi-registration-retrieval.json",
+      "sha256": "6f3ac874ae1f3a44d48ac1b14679c3d124a865472459778f3469c32b2aeb627f",
+      "bytes": 684,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-doi-registration.json",
+      "sha256": "c60a766d7e01db83446378f5daf594c6252b49d8bc837c602ac92f226b009744",
+      "bytes": 4634,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-openreview-version-retrieval.json",
+      "sha256": "beeed135292f3968dde839805dfe78c0124bacd010b5b8529929dfb8c1cb87e1",
+      "bytes": 360,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-publisher-vor-retrieval.json",
+      "sha256": "cd7ba60a921c532c4e0ef8c75f60c38d3bbb2fbc0557e1406a352635205e1ba1",
+      "bytes": 791,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-publisher-vor.html",
+      "sha256": "ad92e7630efa4e61e86f727f5c0317d7e49082c6779b8b4bccf9e4fdad9b1841",
+      "bytes": 7019,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-retrieval.json",
+      "sha256": "9bb27d372a7999b9f7b7bcebbb4a7350059019bbfa281f5600b6a6c3f86f4713",
+      "bytes": 1657,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/record_validation.json",
+      "sha256": "105c09c6b076f637649c8b3dd689c84b1f3b9f010af6d58bcc01b3d60d9af8f4",
+      "bytes": 2205,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R161-alternate-retrieval.json",
+      "sha256": "768b73f6d6e2596c4f16a3ffd2ed168b401f217d1c9fc83c73d9f5a5592edee2",
+      "bytes": 477,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R161-landing-retrieval.json",
+      "sha256": "6d73bfe2bb90c8212519f652c4290c2e6f3b5d62cf0e7acf6a75f9e3019807b9",
+      "bytes": 1113,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R161-official-landing.html",
+      "sha256": "bcded5b02e1b21886dd227b041067ac8e0d4adcf9adc9342aa8f244480a2eb6f",
+      "bytes": 10282,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R171-local-pmlr.html",
+      "sha256": "7fb76f85d1be7cf3009c9bfc9e58465cf870b395772288b8ca5ff1dab42e6b18",
+      "bytes": 16776,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R171-pages.json",
+      "sha256": "739ea39867a9f15fb1ce842f34dc1a225122c1118a6694b24346499206541f5a",
+      "bytes": 110925,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R171-text.txt",
+      "sha256": "34eb2b31ef27afb1a714ac12961608897dc7fa4c2ea31acced46500c4b562002",
+      "bytes": 109888,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R256-pages.json",
+      "sha256": "84d297ba9f5776b1c09d4559d4935a9bd13adf254b2ecb6c3f453e9b2c558477",
+      "bytes": 61169,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R256-text.txt",
+      "sha256": "b10ea0daccfbc55b5909e05e050d25276e681baa57690694e8accc3e5045f2e0",
+      "bytes": 60771,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R564-pages.json",
+      "sha256": "33f3af99893f95adebfbd099f01deda8033982d0297ef180b90cef6ce650330e",
+      "bytes": 107650,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R564-text.txt",
+      "sha256": "f020d8aa780e69448dd7cb5ccc118595ad3357664e6c2c1975efb932375bf1cc",
+      "bytes": 106974,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/official-discovery.json",
+      "sha256": "204915f6b345247b91fd99c3fe9e66b12fa9c1c6bbcf845f706559480020b6c3",
+      "bytes": 3721,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/pdf_extraction.json",
+      "sha256": "617504543677d11199ebc502ee383292f7e2793adb64bc0e1c0f72e3fba23799",
+      "bytes": 1854,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/primary_retrievals.json",
+      "sha256": "91109941e3a69d5db4753b441938d65c9b7f97c1804d39f30c8c46b26eec588a",
+      "bytes": 6739,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R171-p03.png",
+      "sha256": "e8a85234bc8bd9c92e5ed9dcb91f2263bebb4f83c6862dd4da8024863ca98984",
+      "bytes": 755179,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R171-p06.png",
+      "sha256": "8152dd5c5bac9a367cc64fb0612e1066f428c5437f61b03a667184256d71ecbd",
+      "bytes": 554526,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R171-p13.png",
+      "sha256": "76bedd6232133a6cee06a925279edbb890f08707151ef2e6d01a51cd075472e6",
+      "bytes": 798890,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R256-p04.png",
+      "sha256": "917d834baff51a90c965e4ed15fbc00e19bb99ea6cd67fc5c475adbf397c1b26",
+      "bytes": 806514,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R256-p05.png",
+      "sha256": "5fd0fd809c8af28927de6856b8f245a4d452fa848d909412f6600ceaff26293d",
+      "bytes": 791874,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R256-p06.png",
+      "sha256": "320d0daeca5fb21d926d35e5149813d8e06892b6ac6606cd086a3e7cf516a1cf",
+      "bytes": 624307,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R564-p06.png",
+      "sha256": "d9b75aa64ad767fc4c65689b3a440024af6da9cdc563bc477455f7ec58c91973",
+      "bytes": 1246895,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R564-p09.png",
+      "sha256": "e10707ef7b7ba4016c70f8a9bea5d4409c5de339f487f0d3c7c09eedc699e421",
+      "bytes": 863567,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/resource_links_in_primary_pdf.json",
+      "sha256": "9a7ed29345a45fd69048314d3826891e536ac06723155fd1b86ecbcbbbd1a44f",
+      "bytes": 1120,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/P231-official-program.html",
+      "sha256": "53a0015a413baf48e992209de2665b43bd7007e4e23787db40c9f6ee820255b0",
+      "bytes": 10062,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/R231-acm-primary.response",
+      "sha256": "9668a6ae05e8a81dfb1382e62475bf90c35fb9df322f819b755150d4990577c4",
+      "bytes": 5568,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/R275-official-landing.html",
+      "sha256": "1d4427cc3b8e33ce2f7403f7c9016cf835ce262d5d9593c020aba6d91f980b1d",
+      "bytes": 9991,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/R275-pages.json",
+      "sha256": "8a43b81f7b7dbbc4f1da5441636b76c748ea9d45b40f0969cc3874db5076b548",
+      "bytes": 107857,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/R275-table3-08.png",
+      "sha256": "5a73071084d373a4103344a2a50f1c79b36bab692eb31e3fd0d7ca142b88a614",
+      "bytes": 462210,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/R275-table7-20.png",
+      "sha256": "58721e1067c0d963f06242080969234ca872efba6422bcf30395aa2786fa9ea5",
+      "bytes": 461289,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/metadata-retrievals.json",
+      "sha256": "2cea1bde4cbeacf8362beed10f193208ca25f9414e486e445e50459d5c203560",
+      "bytes": 1164,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/retrievals.json",
+      "sha256": "0b3858aac93d47883cbc1b8d94c5c010e0862adab0754bc8faad30a026b56f5a",
+      "bytes": 3968,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/P231.json",
+      "sha256": "d9baf9b30dbf98019c22558f4b8db1b9bb28c050ae981fdecf34b6c6e0795b93",
+      "bytes": 9215,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R110.json",
+      "sha256": "247059a94b94b3186670ef50ec38cf9117c4de2867a9ca2bd681c8cfe334f5e8",
+      "bytes": 12509,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R138.json",
+      "sha256": "e8831986480d2e7008d2953dbf79437f1080a4bdcaf3ce2c0c9cb0b56c83f29f",
+      "bytes": 9392,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R154.json",
+      "sha256": "e364eee5ebcbfc6dfdfa5470b5647e55d7556dc033e356b3ca723aeddbd69533",
+      "bytes": 14294,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R161.json",
+      "sha256": "728f2906344be60ba93f025d7a6ce8390bd134aeec6fb9faac5cc5dd6fedc9ae",
+      "bytes": 8085,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R171.json",
+      "sha256": "d4015cec12b8ba98489196535741308e7e0918e6506a0fb171df328fcc06cd6e",
+      "bytes": 11046,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R187.json",
+      "sha256": "58c020b7e3f933b681fac60285e75f11d5dc074d450478d634b5672b4bc97ae9",
+      "bytes": 8176,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R231.json",
+      "sha256": "68a3d322959f9b6e6f4f2606152dfda6324521d2aad511ee03ef2485bca553b8",
+      "bytes": 8328,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R256.json",
+      "sha256": "20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6",
+      "bytes": 9709,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R275.json",
+      "sha256": "e38e0fab7e38252080ae6ab1640bdcc94ddaf846be53ac2799bc311730b02e29",
+      "bytes": 9428,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R564.json",
+      "sha256": "d891a5362525d23b6f8c2b44bf52263df471fa37f693d763b6338f1126eb3742",
+      "bytes": 9656,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/P231-before-policy-traceability-fix.json",
+      "sha256": "fbc58c162ca608e8254f0bf37c4dc0b6135eb1201c25892c6334476eceff6f84",
+      "bytes": 8826,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/R231-before-source-hash-annotation.json",
+      "sha256": "03981e0235ffd86682b935b689c42999d1d18bd632dd3803c88f0022c5a1a0a1",
+      "bytes": 8096,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/R256-independent-caveat-addendum.json",
+      "sha256": "a24360de94f6a91e0a47917d14cafffbba7b89a78fdf27cd019cf9415fecbfa5",
+      "bytes": 1110,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/before-independent-caveat-refinement/b4_handoff.json",
+      "sha256": "8141d4c12e8aea5fa0407e186938791880a9fc17de084ff7b0067516ddd874ef",
+      "bytes": 24069,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/before-independent-caveat-refinement/batch_dispositions.json",
+      "sha256": "b499ab5a83a7262f469f31cf9505f78fc8240b65230f1979013e07a0f4086edd",
+      "bytes": 66897,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/before-independent-caveat-refinement/batch_review.md",
+      "sha256": "a4cd59d3c563c2b5b4a5fefd90d609fafe33451c3e0584eb6f7e0cdc59764a3b",
+      "bytes": 17485,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/before-independent-caveat-refinement/per_paper__R256.json",
+      "sha256": "20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6",
+      "bytes": 9709,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/final_batch_QC.json",
+      "sha256": "366d30f74cd5b965bd685d86af7f29cb0710e470e4cdb43fc7d84750eeb24b2c",
+      "bytes": 90094,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/groupA-independent-review.json",
+      "sha256": "d7ad6fde0d945189419ef0836a955d214ee983edbf54d0cc5e4d7d9f1ad42712",
+      "bytes": 17018,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/groupA-traceability-amendments.json",
+      "sha256": "9c47c589572c921d453c8f106ab9c7b1785943e9cc2e01cd4eef2bd2eba013c2",
+      "bytes": 1167,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/groupB-independent-review.json",
+      "sha256": "3c5f731f50839b0d85878c98bd35e56fc59375857254a7c19cc8222517ac22e7",
+      "bytes": 12836,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/independent_scientific_QC.json",
+      "sha256": "136a3efe6945c5d64a09a929e384a79fd6462a833daf6f4afab5df70acb5ebc1",
+      "bytes": 19645,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/preservation_final.md",
+      "sha256": "8cd93560f0d212a014c9ac715791c2b39829d64f43d76797cf781379ad435e9e",
+      "bytes": 1689,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/root-group-review.json",
+      "sha256": "bf1e4fe462eb80951eb16b947290f72180efe8cfe2c5b8bb8418ef9f2dc8096b",
+      "bytes": 10302,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/validation.json",
+      "sha256": "484a9df525dd94389fe9ef392f46af2d357a2b89546e8eb428403a3dc2569420",
+      "bytes": 19554,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/b4_03_original.diff",
+      "sha256": "2f916a2b4a1e0179e67b164a9fb8ea0ed0ed851996f1710e1c4c85c6ac85a51f",
+      "bytes": 150678,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/b4_compact_preservation_receipt.json",
+      "sha256": "e0f8bd6e7dbde531a20a2ea5427b3eb1db41695fac0f7bd0884331c0ec219108",
+      "bytes": 8841,
+      "kind": "immutable_evidence_archive"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/portable_evidence_manifest.json",
+      "sha256": "c7ab6a694ca1014c9272aea227c71966866bd64b1c2800e51da2f5c9c76b8336",
+      "bytes": 123085,
+      "kind": "immutable_evidence_archive"
+    }
+  ],
+  "export_run": false,
+  "no_new_adjudication_or_scientific_review": true,
+  "NeurIPS_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+}

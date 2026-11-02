@@ -32,6 +32,8 @@ data change and the identity and relationship invariants in
 # both methods, R482 dataset and every task/scope/bibliographic/map identity remain unchanged.
 # B1R accepts R026 analysis_study and R253 benchmark; B1S synchronizes those
 # two roles only, retaining both detection tasks, methods, R253 dataset and every public/map identity.
+# B5-02 publishes B4-03: four dataset/four benchmark roles and the qualified
+# standalone MAD track; every task and all corpus/map identities remain fixed.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 674,
     "public_map_source_papers": 613,
@@ -92,7 +94,7 @@ CURRENT_CORPUS_COUNTS = {
     "unique_paper_institution_pairs": 1410
 }
 
-RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 86, 'survey': 21, 'dataset': 138, 'benchmark': 97}
+RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 86, 'survey': 21, 'dataset': 142, 'benchmark': 101}
 
 CURRENT_TAXONOMY_TOTALS = {**TASK_TOTALS, **RESEARCH_TYPE_TOTALS}
 

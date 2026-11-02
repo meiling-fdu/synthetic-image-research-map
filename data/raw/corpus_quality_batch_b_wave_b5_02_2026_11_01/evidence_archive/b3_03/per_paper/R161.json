@@ -1,0 +1,150 @@
+{
+  "review_id": "R161",
+  "paper_id": "curated:506d44d3feea2627dd42",
+  "title": "No Pixel Left Behind: A Detail-Preserving Architecture for Robust High-Resolution AI-Generated Image Detection",
+  "doi": "",
+  "arxiv_id": "2508.17346",
+  "authors": [
+    "Lianrui Mu",
+    "Haoji Hu",
+    "Xingze Zou",
+    "Jianhong Bai",
+    "Jiaqi Hu"
+  ],
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "governing_policy_ids": [
+    "R1",
+    "R2"
+  ],
+  "current_status": "UNRESOLVED",
+  "reviewer": "b303_record_recovery",
+  "reviewed_utc": "2026-10-31T15:49:40.647856+00:00",
+  "review_phase": "EVIDENCE_ONLY_PROVISIONAL",
+  "maintainer_acceptance": "PENDING_NOT_FORMAL_DECISION",
+  "formal_action_closed": false,
+  "authoritative_data_changed": false,
+  "local_evidence_refs": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R161",
+      "finding": "HiRes-50K is introduced for future research and evaluated as a high-resolution benchmark. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R161",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "paper_id:curated:506d44d3feea2627dd42",
+      "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R1",
+      "finding": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R2",
+      "finding": "Assign benchmark only when the paper contributes a reusable evaluation benchmark, challenge, protocol, systematic comparative framework, or benchmark resource intended to evaluate methods. Large experimental tables or evaluation across many generators alone are insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+    }
+  ],
+  "retrieval_cost": {
+    "recovery_network_requests": 0,
+    "recovery_manuscripts_downloaded": 0,
+    "existing_capture_reused": true,
+    "new_source_research": false,
+    "inherited_full_manuscript_attempts": 2,
+    "inherited_accepted_manuscripts": 0,
+    "inherited_same_endpoint_retries": 0,
+    "inherited_failure_details": [
+      "Official ICLR PDF: RemoteDisconnected (4.062 s)",
+      "Alternate canonical OpenReview PDF: HTTP 403 (3.864 s)"
+    ],
+    "inherited_identity_landing_downloads": 1,
+    "accounting_source": "primary_retrievals.json and R161-alternate-retrieval.json; landing 1.984 s; recovery added no retrieval."
+  },
+  "reported_performance_independently_reproduced": false,
+  "outcome": "EVIDENCE_INSUFFICIENT",
+  "proposed_research_types": null,
+  "scientifically_sufficient": false,
+  "rationale": "Exact title and author sequence are supported by the official ICLR 2026 landing capture, but no full manuscript was recovered. Its abstract names HiRes-50K and intended future research without exposing construction or a reusable evaluation protocol; R1/R2 remain unresolved.",
+  "identity_verification": {
+    "status": "TITLE_AUTHORS_MATCH_LANDING_FULL_TEXT_VERSION_UNVERIFIED",
+    "title_and_authors": "Official ICLR landing h1 and citation_author metadata match canonical title and all five authors in order.",
+    "doi": "None in assigned canonical record.",
+    "arxiv": "2508.17346 is preserved from canonical input; no arXiv version or cross-version content was inspected.",
+    "version": "ICLR 2026 official abstract landing; neither the linked proceedings PDF nor canonical OpenReview PDF was obtained."
+  },
+  "sources": [
+    {
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/820e42f39773c6cbbd875553db45658f-Abstract-Conference.html",
+      "artifact": "evidence/groupB/R161-official-landing.html",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R161-official-landing.html",
+      "sha256": "bcded5b02e1b21886dd227b041067ac8e0d4adcf9adc9342aa8f244480a2eb6f",
+      "version": "ICLR 2026 official abstract landing, captured 2026-10-31",
+      "kind": "official_identity_landing"
+    },
+    {
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/file/820e42f39773c6cbbd875553db45658f-Paper-Conference.pdf",
+      "artifact": "evidence/groupB/primary_retrievals.json",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/primary_retrievals.json",
+      "sha256": "91109941e3a69d5db4753b441938d65c9b7f97c1804d39f30c8c46b26eec588a",
+      "version": "Capture receipt: first proceedings PDF attempt failed",
+      "kind": "retrieval_receipt"
+    },
+    {
+      "url": "https://openreview.net/pdf?id=9QQ3Kc2hj6",
+      "artifact": "evidence/groupB/R161-alternate-retrieval.json",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R161-alternate-retrieval.json",
+      "sha256": "768b73f6d6e2596c4f16a3ffd2ed168b401f217d1c9fc83c73d9f5a5592edee2",
+      "version": "Capture receipt: single alternate OpenReview attempt returned HTTP 403",
+      "kind": "retrieval_receipt"
+    }
+  ],
+  "scientific_review": {
+    "R1": {
+      "assessment": "EVIDENCE_INSUFFICIENT",
+      "reason": "Abstract-level introduction does not establish substantive construction/curation and reuse under locked R1."
+    },
+    "R2": {
+      "assessment": "EVIDENCE_INSUFFICIENT",
+      "reason": "No splits, metrics, baselines, resolution controls or reusable evaluation instructions available in captured primary text."
+    },
+    "empirical_validity": "Abstract performance assertions not independently assessed.",
+    "causal_interpretation": "Architecture/robustness explanations cannot be evaluated from landing text alone.",
+    "availability": "Two full-PDF attempts failed; no claim that the resource itself is unavailable.",
+    "reproducibility": "Full text and resource/protocol details missing."
+  },
+  "evidence": [
+    {
+      "source": "evidence/groupB/R161-official-landing.html",
+      "locator": "h1; author list; Abstract paragraphs beginning Furthermore and Extensive experiments",
+      "claim": "Landing identifies HiDA-Net and HiRes-50K as a future-research benchmark; this supplies a lead, not full R1/R2 evidence."
+    }
+  ],
+  "quantitative_evidence": [
+    {
+      "locator": "Official ICLR landing, Abstract",
+      "reported": "50,568 images, up to 64 megapixels; accuracy increases over 13% on Chameleon and 8% on HiRes-50K.",
+      "caveat": "Abstract claims only; no resolution distribution, split, denominator, uncertainty or baseline controls inspected."
+    }
+  ],
+  "limitations": [
+    "Full-manuscript construction, intended reuse, partitioning and evaluation evidence are missing.",
+    "Official title/author match does not establish identity or content equivalence across OpenReview, arXiv and final proceedings versions.",
+    "No task, scope or publication metadata changes proposed."
+  ],
+  "confidence": "High for insufficient-evidence disposition; no confidence assigned to resource-label acceptance."
+}

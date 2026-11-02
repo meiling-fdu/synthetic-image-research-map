@@ -1,0 +1,68 @@
+{
+  "phase": "post_tests_final_preservation",
+  "after_apply_completed_utc": "2026-11-01T08:34:11.578326+00:00",
+  "post_tests_completed_utc": "2026-11-01T08:42:10.284155+00:00",
+  "after_apply_to_post_tests_comparison": {
+    "manifest_sha256": true,
+    "native_final_state": true,
+    "protected_groups": true,
+    "B4_pending_transactions": true,
+    "source_states": true,
+    "additional_concurrent_source_states": true,
+    "primary_final_observation": true,
+    "zero_change_flags": true,
+    "raw_counts": true
+  },
+  "status": "PASS_WITH_PRESERVED_PREEXISTING_UNSEALED_B3_EXTRA",
+  "manifest_sha256": "189eabed6bfd3989ceb1abc8300c7b80e12e4453cb13e1fa4397e72b6cd753f0",
+  "all_zero_change_flags_true": true,
+  "zero_change_flags": {
+    "unsupported_native_tracked_changes_zero": true,
+    "staged_changes_zero": true,
+    "new_native_files_zero": true,
+    "manual_data_changes_zero": true,
+    "raw_processed_data_changes_zero": true,
+    "public_site_and_exports_changes_zero": true,
+    "code_test_documentation_changes_zero": true,
+    "B3_sealed123_changes_zero": true,
+    "B3_seals_and_known_unsealed_extra_changes_zero": true,
+    "accepted_B5_sealed281_and_receipt_changes_zero": true,
+    "B4_old_pending8_each_changes_zero": true,
+    "primary_protected128_changes_zero": true,
+    "frozen49_physical_logical_and_presence_changes_zero": true,
+    "C13_receipt_changes_zero": true,
+    "separate39_receipt_changes_zero": true,
+    "B2_planning_changes_zero": true,
+    "immutable_evidence_CI632_changes_zero": true,
+    "all_old_source_worktree_changes_zero": true,
+    "all_additional_live_worktree_changes_zero": true,
+    "primary_concurrent_observation_changes_zero": true
+  },
+  "native_git_status": " M data/curated/paper_taxonomy.csv\n M data/curated/papers.csv\n M data/curated/review_decisions.csv\n",
+  "receipt_hashes": {
+    "qc/preservation_after_apply.json": {
+      "bytes": 10270890,
+      "sha256": "792744c2a43cdad3cf01c6280be64a2e691666a37bf1f9c646352b0c55d71d40"
+    },
+    "qc/preservation_after_apply.md": {
+      "bytes": 2744,
+      "sha256": "25e8c2b3f1b9a101092641b802e0a67730a88bac87b5a622123ea62c9e7d3f7d"
+    },
+    "qc/preservation_after_apply_hashes.json": {
+      "bytes": 547,
+      "sha256": "5421e0e378c074f4ceaa539ffc1a065d689985696b080ae994d6dbed9ed74589"
+    },
+    "qc/preservation_final.json": {
+      "bytes": 10270890,
+      "sha256": "ce71adbd57b95b02d30cc753c993adcd303e7cc8aa1e1553633bdebc0ac01463"
+    },
+    "qc/preservation_final.md": {
+      "bytes": 2744,
+      "sha256": "98667a59e7fc9f08b07db7c24dfe0f190b454079616db8c182f9ca9f33f0a2ef"
+    },
+    "qc/preservation_final_audit.py": {
+      "bytes": 26502,
+      "sha256": "eeed3af2861e92783b79ebc5b73f1cb7b757236830a68b2920e4a6ac83a24b1c"
+    }
+  }
+}

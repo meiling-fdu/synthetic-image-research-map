@@ -1,0 +1,157 @@
+{
+  "schema": "b403-checkpoint-validation-1",
+  "status": "PASS",
+  "validated_utc": "2026-11-01T08:44:28.017256+00:00",
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "manifest_sha256": "189eabed6bfd3989ceb1abc8300c7b80e12e4453cb13e1fa4397e72b6cd753f0",
+  "new_B4_source_tests": {
+    "passed": 183,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "existing_live_track_frontend_idempotence_tests": {
+    "passed": 31,
+    "subtests_passed": 24,
+    "failed": 0,
+    "skipped": 0
+  },
+  "unchanged_immutable_d109_historical_tests": {
+    "passed": 189,
+    "failed": 0,
+    "skipped": 0
+  },
+  "independent_preapply_checks": 65,
+  "independent_applied_source_checks": 132,
+  "validators": {
+    "curated": {
+      "errors": 0,
+      "warnings": 294,
+      "migration_byte_noop": true
+    },
+    "unchanged_public_pair": {
+      "errors": 0,
+      "warnings": 62
+    },
+    "exclusions": {
+      "errors": 0,
+      "warnings": 2
+    }
+  },
+  "baseline_warning_provenance": {
+    "curated-validator.log": {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-01r3-2026-10-31/audit/curated-validator.log",
+      "sha256": "c633106c12a51b8d4d838d3963fcdf2bc1d9e927c18cc4587cf01ca6f667bb72",
+      "warning_summary": [
+        "Errors: 0",
+        "Warnings: 294"
+      ]
+    },
+    "public-validator.log": {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-01r3-2026-10-31/audit/public-validator.log",
+      "sha256": "84ed5a622291a93a89b16c5407cd03ce7e3a891f84a4cc1d4caa6e7b2171749a",
+      "warning_summary": [
+        "Errors: 0",
+        "Warnings: 0",
+        "Errors: 0",
+        "Warnings: 62"
+      ]
+    }
+  },
+  "integrity_flags": {
+    "UNEXPECTED_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0,
+    "PUBLIC_EXPORTS_CHANGED": 0,
+    "TASK_LABELS_CHANGED": 0,
+    "PAPER_IDENTITIES_CHANGED": 0,
+    "INSTITUTION_OR_RELATIONSHIP_CHANGED": 0,
+    "PRIOR_DECISION_BYTES_CHANGED": 0,
+    "STAGED_FILES": 0,
+    "COMMITS_CREATED": 0,
+    "PUSHES": 0,
+    "EXPORTS_RUN": 0
+  },
+  "current_suite_environment_recovery": {
+    "initial_launcher": "bundled Python lacks pytest; no tests collected",
+    "resolved_runtime": "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+    "dependency_installation": false
+  },
+  "full_suite_run": false,
+  "exports_run": false,
+  "source_public_sync_claimed": false,
+  "phase_boundary": "New source classifications and track are accepted locally. Public JSON bytes retain d109; deterministic export and live/hosted acceptance belong to separately authorized B5-02.",
+  "historical_boundary": "Existing historical tests ran unchanged in a byte-authenticated d109 snapshot. New B4 source tests and preservation independently validate the local endpoint. No historical expectation or protection was rewritten.",
+  "evidence": [
+    {
+      "path": "adjudication_manifest.json",
+      "sha256": "189eabed6bfd3989ceb1abc8300c7b80e12e4453cb13e1fa4397e72b6cd753f0",
+      "bytes": 241589
+    },
+    {
+      "path": "qc/independent_preapply_review.json",
+      "sha256": "0cd6fe52db94bbec4f98479da84424732117e12c0f15a0e482d93bf41de97f27",
+      "bytes": 27108
+    },
+    {
+      "path": "qc/acceptance_accounting_qc.json",
+      "sha256": "5f61d52e754efee81849808fe9d2ffc243d9e61a29717a3afe81ed339c92e34a",
+      "bytes": 43422
+    },
+    {
+      "path": "qc/read_only_validators.json",
+      "sha256": "617a817d54912af87678997e178f44f96924afe607d0c5fff86aba65c7e1fe51",
+      "bytes": 1376517
+    },
+    {
+      "path": "qc/historical_snapshot_tests.json",
+      "sha256": "c3bad460982debe61f0b23619ca00a347c8f3d4cdf4b67a4f9b596404b6be832",
+      "bytes": 3014
+    },
+    {
+      "path": "qc/preservation_final.json",
+      "sha256": "ce71adbd57b95b02d30cc753c993adcd303e7cc8aa1e1553633bdebc0ac01463",
+      "bytes": 10270890
+    },
+    {
+      "path": "B403_current_tests.xml",
+      "sha256": "eb211c487fbcdd771da14b6e5cb370e01863304dc5a11692aab0df024bbc83ff",
+      "bytes": 22810
+    },
+    {
+      "path": "B403_track_tests.xml",
+      "sha256": "fd3e8f5406c8933416bf2affc1c739bbbb1941c680d8ead01661c1770f6bd25f",
+      "bytes": 5139
+    },
+    {
+      "path": "test_b4_03_checkpoint.py",
+      "sha256": "8ec625489b21c5d5c52db9cf7a4d3c9e45247d26d20db3ddadfc34c4e2ff86aa",
+      "bytes": 15423
+    },
+    {
+      "path": "qc/independent_adjudication_review.json",
+      "sha256": "1615d8b14adc45144109edee5608ee8757b7780838826cd4296b09379c6a08b2",
+      "bytes": 56833
+    },
+    {
+      "path": "changed_file_inventory.json",
+      "sha256": "22cc50ad6233ff7fe002ae3af780a4aac1d45ab8e86a61b8ea5bd64ac28d1aec",
+      "bytes": 1942
+    }
+  ],
+  "git": {
+    "head": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+    "branch": "DETACHED",
+    "status_short": " M data/curated/paper_taxonomy.csv\n M data/curated/papers.csv\n M data/curated/review_decisions.csv\n",
+    "staged_paths": [],
+    "untracked_files": 0,
+    "ignored_files": 0,
+    "diff_stat": " data/curated/paper_taxonomy.csv   | 10 +++++-----\n data/curated/papers.csv           | 10 +++++-----\n data/curated/review_decisions.csv | 11 +++++++++++\n 3 files changed, 21 insertions(+), 10 deletions(-)\n",
+    "source_after_sha256": {
+      "data/curated/papers.csv": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+      "data/curated/paper_taxonomy.csv": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "data/curated/review_decisions.csv": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea"
+    }
+  },
+  "NeurIPS_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+}

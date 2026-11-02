@@ -1,0 +1,752 @@
+{
+  "schema": "batch-b-b4-independent-adjudication-consistency-1",
+  "reviewer": "b403_track independent cross-check",
+  "reviewed_utc": "2026-11-01T08:19:46.809416+00:00",
+  "status": "PASS_WITH_REQUIRED_CAVEATS",
+  "scope": "Consistency of five already accepted resource-label decisions plus the accepted P231 qualification against sealed final B3 QC. No new scientific, source-version or availability review.",
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "accepted_resource_actions": [
+    {
+      "review_id": "R110",
+      "paper_id": "curated:6976641cbfe602a7e617",
+      "title": "Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis",
+      "adjudication_consistency": "PASS",
+      "decision_scope": "ACCEPT_LABEL_ADDITION_WITH_RECORDED_LIMITS",
+      "research_types_before": [
+        "method"
+      ],
+      "research_types_after": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "added_labels": [
+        "dataset",
+        "benchmark"
+      ],
+      "tasks_preserved": [
+        "detection"
+      ],
+      "policies": [
+        "R1",
+        "R2"
+      ],
+      "basis_for_manifest": "MRI-Forensics is a named curated data contribution with documented construction (R1); reusable cross-generator/cross-domain partitions, baselines and metrics independently support R2.",
+      "mandatory_manifest_caveats": [
+        "Table 2 is generated-only recognition. Its 100% cells establish neither balanced real/fake accuracy nor specificity; Table 3 separately reports brain real/fake results and AUC.",
+        "All 6,306 prostate real images are assigned to training/validation. Patient-level independence, patient count, clinical provenance and validity were not established.",
+        "Retain the RINE prose/Table 2 ordering discrepancy; do not repair the source or invent an undisplayed experiment.",
+        "The source is the official CVF accepted workshop manuscript, not a separately compared publisher-final version. Release integrity/license and reported performance were not reproduced; the 256×256 unconditional prostate/brain experiments do not establish all MRI modalities."
+      ],
+      "exact_sealed_QC_excerpt": {
+        "primary_basis": "Dedicated namedcuratedMRI-Forensics resource and explicit firstcontribution with construction, release intent; reusablecrossgenerator and crossdomain evaluation provisions with partitions,baselines,metrics satisfyR1/R2 independently ofperformance.",
+        "verified_caveats": [
+          "Table2 is generated-only recognition,not balancedaccuracy/specificity.",
+          "Table3 separately reports brain real/fake metrics andAUC.",
+          "RINE prose says slightlybetter ProGAN once,but all comparable Table2ProGANtestcells arelower:2.30vs75.07,1.60vs78.43,0.20vs3.50.",
+          "No patient-levelsplit,clinicalvalidity,releaseintegrity or causal/performance reproduction established."
+        ]
+      },
+      "excerpt_role": "Verbatim sealed B3 reviewer/QC text; it is not represented as a new literal quotation from the manuscript.",
+      "source_locators_for_manifest": [
+        "PDF p2/printed 223 contribution list; p3/printed 224 §3.1 construction",
+        "PDF pp5–8/printed 226–229 §§4.1–4.2 and Tables 1–3; Table 2/3 p8/printed229"
+      ],
+      "existing_evidence_excerpts": [
+        {
+          "policy": "R1",
+          "claim": "Add dataset",
+          "support": "Explicit first contribution, construction/curation and named reusable released resource; Sections1 and3.1.",
+          "scientifically_sufficient": true
+        },
+        {
+          "policy": "R2",
+          "claim": "Add benchmark",
+          "support": "Resource intended for method evaluation with specific partitions, cross-generator/cross-domain protocol, baselines and real/fake/AUC outputs in Section4.2.",
+          "scientifically_sufficient": true
+        }
+      ],
+      "source_provenance": [
+        {
+          "source_id": "R110-canonical.pdf",
+          "kind": "PRIMARY_OFFICIAL_ACCEPTED_MANUSCRIPT",
+          "url": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf",
+          "artifact": "evidence/groupA/R110-canonical.pdf",
+          "sha256": "3280157fb698bfda46e75caf4f39d3cb376f7803cd4bcd24f27c574da94acabe",
+          "bytes": 2606021,
+          "version": "WACV2026W SAFE-2026 accepted open-access version",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R110-canonical.pdf"
+        },
+        {
+          "source_id": "R110-table2-3.png",
+          "kind": "DERIVED_VISUAL_VERIFICATION",
+          "url": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf",
+          "artifact": "evidence/groupA/R110-table2-3.png",
+          "sha256": "4b45a75312d2d6c150644c0d7cd3fa8b100db25d3f95a42efd767675fc7cec9d",
+          "bytes": 373237,
+          "version": "Rendered PDF page8, printed229; viewed by reviewer",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R110-table2-3.png"
+        }
+      ],
+      "evidence_record": {
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R110.json",
+        "sha256": "247059a94b94b3186670ef50ec38cf9117c4de2867a9ca2bd681c8cfe334f5e8"
+      },
+      "independent_QC_provenance": {
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/independent_scientific_QC.json",
+        "sha256": "136a3efe6945c5d64a09a929e384a79fd6462a833daf6f4afab5df70acb5ebc1",
+        "locator": "decisions[review_id=R110]",
+        "line_ranges": [
+          [
+            31,
+            54
+          ]
+        ],
+        "excerpt": "    {\n      \"review_id\": \"R110\",\n      \"original_reviewer_outcome\": \"SUPPORTED_ADDITION\",\n      \"independent_QC_outcome\": \"SUPPORTED_ADDITION\",\n      \"agreement\": true,\n      \"basis\": {\n        \"review_id\": \"R110\",\n        \"qc_agreement\": \"AGREE\",\n        \"outcome\": \"SUPPORTED_ADDITION\",\n        \"provisional_research_types\": [\n          \"method\",\n          \"dataset\",\n          \"benchmark\"\n        ],\n        \"primary_basis\": \"Dedicated namedcuratedMRI-Forensics resource and explicit firstcontribution with construction, release intent; reusablecrossgenerator and crossdomain evaluation provisions with partitions,baselines,metrics satisfyR1/R2 independently ofperformance.\",\n        \"verified_caveats\": [\n          \"Table2 is generated-only recognition,not balancedaccuracy/specificity.\",\n          \"Table3 separately reports brain real/fake metrics andAUC.\",\n          \"RINE prose says slightlybetter ProGAN once,but all comparable Table2ProGANtestcells arelower:2.30vs75.07,1.60vs78.43,0.20vs3.50.\",\n          \"No patient-levelsplit,clinicalvalidity,releaseintegrity or causal/performance reproduction established.\"\n        ]\n      },\n      \"receipt\": \"qc/groupA-independent-review.json\"\n    },"
+      },
+      "contribution_vs_reproducibility": {
+        "contribution": "Named curatedMRIresource plus reusable cross-generator/domain evaluation; separate substantive data and evaluation contributions underR1/R2.",
+        "contribution_confidence": "Supported conditional on normal maintainer identity/evidence acceptance",
+        "reproducibility": "Not independently reproduced; no patient-level independence, clinical validity, release-integrity or performance replication established."
+      },
+      "performance_independently_reproduced": false,
+      "identity_caveats_retained": {
+        "status": "VERIFIED_PRIMARY_PROCEEDINGS_MANUSCRIPT",
+        "basis": "Official CVF WACV2026W SAFE-2026 PDF, exact title and all three canonical authors on PDF page1. Footer states it is the accepted open-access workshop version apart from watermark; printed proceedings pages222-231. No DOI/arXiv identifier was invented.",
+        "version": "CVF accepted open-access workshop paper,10 PDF pages; publisher-final bibliographic equivalence not separately checked."
+      }
+    },
+    {
+      "review_id": "R171",
+      "paper_id": "curated:a570863c3a6ac227b56c",
+      "title": "PGC: Peak-Guided Calibration for Generalizable AI-Generated Image Detection",
+      "adjudication_consistency": "PASS",
+      "decision_scope": "ACCEPT_LABEL_ADDITION_WITH_RECORDED_LIMITS",
+      "research_types_before": [
+        "method"
+      ],
+      "research_types_after": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "added_labels": [
+        "dataset",
+        "benchmark"
+      ],
+      "tasks_preserved": [
+        "detection"
+      ],
+      "policies": [
+        "R1",
+        "R2"
+      ],
+      "basis_for_manifest": "CommGen15 is an explicit acquisition/curation contribution (R1), with native static-image support independent of frames, and a balanced reusable image-level evaluation protocol with common preprocessing and external training (R2).",
+      "mandatory_manifest_caveats": [
+        "CommGen15 combines 19,472 native static images with 13,922 video-derived frames, plus 33,394 real COCO images. Preserve image/frame units and frame dependence; do not treat all 33,394 generated samples as independent still-image generations or infer a video detection task.",
+        "Native static-image resource contribution independently supports scope. No new video, attribution or face-manipulation task or image-scope label is authorized.",
+        "External-training evaluation is documented; no dedicated CommGen15 train/validation/test split is established. Stored 320×320 crop and detector 224×224 crop are distinct.",
+        "Platform/gallery descriptions and dated URLs do not verify every model revision or output provenance. Live availability, license, duplicates, frame independence and performance remain unverified.",
+        "If results are mentioned, 97.9−85.6 is a 12.3 percentage-point Acc difference, not a relative 12.3% gain; cross-platform averages are not independently verified pooled scores."
+      ],
+      "exact_sealed_QC_excerpt": {
+        "R1": "Named independently contributed CommGen15 construction/curation, source/composition details and intended provision. Native static-image contribution is substantive independently of extracted frames; all evaluation units are images, not a temporal video detection task.",
+        "R2": "Reusable balanced image-level evaluation resource with common preprocessing, external-training settings and Acc/AP protocol. Not inferred from platform count or table scale.",
+        "contribution_confidence": "HIGH_WITH_COMPOSITION_AND_PROVENANCE_LIMITS",
+        "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; dynamic galleries/platform versions, frame dependence and actual release/license not independently verified"
+      },
+      "excerpt_role": "Verbatim sealed B3 reviewer/QC text; it is not represented as a new literal quotation from the manuscript.",
+      "source_locators_for_manifest": [
+        "PDF p2 contribution bullet; §3 p3; Appendix C pp13–16, Table 1 p3 and Table 10 p15",
+        "§5.1 p5; Table 3 p6; Appendix D.1/E.1 p16; Table 12 p17; research-only release statement p9"
+      ],
+      "existing_evidence_excerpts": [
+        {
+          "source": "evidence/groupB/R171-primary.pdf",
+          "locator": "PDF p2 contribution bullet; §3 Data Collection/Data Processing p3; Appendix C Dataset Composition/Standardization Pipeline p13",
+          "claim": "Resource construction is a named contribution, collecting platform outputs rather than local inference; COCO 2017 real images balance the binary task. Raw images and extracted frames are center-cropped to 320×320 and saved as PNG; Hunyuan sampled every 30 frames, other video sources every 60."
+        },
+        {
+          "source": "evidence/groupB/R171-primary.pdf",
+          "locator": "Table 1 p3; Appendix C pp13–16, Figure7 p14 and Table 10 p15",
+          "claim": "Nine static-image platform subsets and six video-derived frame subsets must remain distinct. Sora row contains 1,275 community-sourced static outputs despite Sora being primarily a video model. Table 10 provides platform/source URLs; manuscript versions include GPT-4o, FLUX.1/1.1 variants, Imagen4, multiple Ideogram variants, Aperture Max, Nano Banana family, Sora v1, SD1.5, Doubao-Seedance-1.0-pro, Kling1.6 and Veo2/3; not every platform has a uniquely pinned model version."
+        },
+        {
+          "source": "evidence/groupB/R171-primary.pdf",
+          "locator": "§5.1 p5; Table3 p6; Appendix D.1/E.1 p16; Table 12 p17; Impact Statement p9",
+          "claim": "The dataset is supplied for evaluation with specified external-training settings and Acc/AP metrics, alongside a research-only release claim. Detector implementation applies a further 224×224 center crop; do not confuse it with stored dataset crop size."
+        }
+      ],
+      "source_provenance": [
+        {
+          "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/zhou26h/zhou26h.pdf",
+          "artifact": "evidence/groupB/R171-primary.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R171-primary.pdf",
+          "sha256": "79917f3d9fb967aa52007069c89fa920e1dd428ec662900650bea049dc4dc255",
+          "version": "PMLR 306 / ICML 2026, 21-page proceedings PDF",
+          "kind": "primary_manuscript"
+        },
+        {
+          "url": "https://proceedings.mlr.press/v306/zhou26h.html",
+          "artifact": "evidence/groupB/R171-local-pmlr.html",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R171-local-pmlr.html",
+          "sha256": "7fb76f85d1be7cf3009c9bfc9e58465cf870b395772288b8ca5ff1dab42e6b18",
+          "version": "Cached official PMLR bibliographic landing",
+          "kind": "official_identity_landing"
+        }
+      ],
+      "evidence_record": {
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R171.json",
+        "sha256": "d4015cec12b8ba98489196535741308e7e0918e6506a0fb171df328fcc06cd6e"
+      },
+      "independent_QC_provenance": {
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/independent_scientific_QC.json",
+        "sha256": "136a3efe6945c5d64a09a929e384a79fd6462a833daf6f4afab5df70acb5ebc1",
+        "locator": "decisions[review_id=R171]",
+        "line_ranges": [
+          [
+            122,
+            142
+          ]
+        ],
+        "excerpt": "    {\n      \"review_id\": \"R171\",\n      \"original_reviewer_outcome\": \"SUPPORTED_ADDITION\",\n      \"independent_QC_outcome\": \"SUPPORTED_ADDITION\",\n      \"agreement\": true,\n      \"basis\": {\n        \"original_reviewer_outcome\": \"SUPPORTED_ADDITION\",\n        \"independent_QC_outcome\": \"SUPPORTED_ADDITION\",\n        \"agreement\": true,\n        \"proposed_research_types\": [\n          \"method\",\n          \"dataset\",\n          \"benchmark\"\n        ],\n        \"R1\": \"Named independently contributed CommGen15 construction/curation, source/composition details and intended provision. Native static-image contribution is substantive independently of extracted frames; all evaluation units are images, not a temporal video detection task.\",\n        \"R2\": \"Reusable balanced image-level evaluation resource with common preprocessing, external-training settings and Acc/AP protocol. Not inferred from platform count or table scale.\",\n        \"contribution_confidence\": \"HIGH_WITH_COMPOSITION_AND_PROVENANCE_LIMITS\",\n        \"reproducibility_confidence\": \"LIMITED_NOT_REPRODUCED; dynamic galleries/platform versions, frame dependence and actual release/license not independently verified\"\n      },\n      \"receipt\": \"qc/groupB-independent-review.json\"\n    },"
+      },
+      "contribution_vs_reproducibility": {
+        "original_reviewer_outcome": "SUPPORTED_ADDITION",
+        "independent_QC_outcome": "SUPPORTED_ADDITION",
+        "agreement": true,
+        "proposed_research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "R1": "Named independently contributed CommGen15 construction/curation, source/composition details and intended provision. Native static-image contribution is substantive independently of extracted frames; all evaluation units are images, not a temporal video detection task.",
+        "R2": "Reusable balanced image-level evaluation resource with common preprocessing, external-training settings and Acc/AP protocol. Not inferred from platform count or table scale.",
+        "contribution_confidence": "HIGH_WITH_COMPOSITION_AND_PROVENANCE_LIMITS",
+        "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; dynamic galleries/platform versions, frame dependence and actual release/license not independently verified"
+      },
+      "performance_independently_reproduced": false,
+      "identity_caveats_retained": {
+        "status": "TITLE_AUTHORS_MATCH_OFFICIAL_PROCEEDINGS_PDF",
+        "title_and_authors": "PDF p1 and cached PMLR landing match canonical title and six-author sequence.",
+        "doi": "None in assigned canonical record.",
+        "arxiv": "2605.21207 retained from canonical input; no arXiv version or equivalence check performed.",
+        "version": "Official PMLR 306 ICML 2026 PDF, 21 pages including appendix; cached landing cites 164828–164848 and 2026-09-29. PDF metadata creation 2026-05-20 is not the publication date.",
+        "differences": "No competing full-text version inspected; all scientific claims below are bounded to this cached PMLR PDF."
+      }
+    },
+    {
+      "review_id": "R256",
+      "paper_id": "curated:c6bfe8f5199d1d8beb29",
+      "title": "Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection",
+      "adjudication_consistency": "PASS",
+      "decision_scope": "ACCEPT_LABEL_ADDITION_WITH_RECORDED_LIMITS",
+      "research_types_before": [
+        "method"
+      ],
+      "research_types_after": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "added_labels": [
+        "dataset",
+        "benchmark"
+      ],
+      "tasks_preserved": [
+        "detection"
+      ],
+      "policies": [
+        "R1",
+        "R2"
+      ],
+      "basis_for_manifest": "CSAIID is a separately stated semantic curation contribution (R1), and its fixed six-category cross-semantic evaluation with external-training comparisons is a reusable evaluation resource (R2).",
+      "mandatory_manifest_caveats": [
+        "Generator balance may apply globally across subsets; do not claim an established contradiction. Exact per-category allocation is unspecified. The 6,000 total fakes can be 2,000 per generator even though 1,000 per category is not divisible by three.",
+        "Preserve the original per-paper record and carry the sealed independent addendum with it. This caveat refinement does not change the supported dataset/benchmark outcome.",
+        "CSAIID has fixed evaluation subsets, not an established dedicated training/validation/test split. DF3 is used for ATTSD validation.",
+        "Training settings alter source semantics and generators together; the comparison does not isolate pure semantic shift or a causal semantic-diversity effect.",
+        "No dataset files, license, manifest, seed/per-generator integer counts, duplicate audit or experiment reproduction were verified. Paper author/DOI/workshop metadata stays unchanged."
+      ],
+      "exact_sealed_QC_excerpt": {
+        "R1": "Explicit separate CSAIID construction/semantic curation contribution beyond model training data.",
+        "R2": "Named intended cross-semantic evaluation resource with fixed categories and external-training comparisons; not merely extensive experiments.",
+        "contribution_confidence": "HIGH_WITH_SPECIFICATION_LIMITS",
+        "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; exact per-generator category counts/seeds/manifest unverified",
+        "caveat_refinement": "Original record correctly notes1000 is not divisible by3, but the paper says1:1:1 across subsets. Global6000fakes can be2000pergenerator. No proven global ratio contradiction; exact per-category allocation remains unspecified. No classification disagreement."
+      },
+      "excerpt_role": "Verbatim sealed B3 reviewer/QC text; it is not represented as a new literal quotation from the manuscript.",
+      "source_locators_for_manifest": [
+        "Abstract p1; contribution (3) p2; §4 p5",
+        "§5.1/5.2 p5; Table 1 caption/discussion p6; independent ratio refinement: §4 final paragraph p5"
+      ],
+      "existing_evidence_excerpts": [
+        {
+          "source": "evidence/groupB/R256-primary.pdf",
+          "locator": "Abstract p1; contribution (3) p2; §4 p5",
+          "claim": "Named cross-semantic resource is curated from COCO real images and caption-conditioned fakes, with additional PartiPrompts fictional/abstract/world-knowledge content. Real counterparts for unpaired prompts are category-matched COCO training images, not matched scenes."
+        },
+        {
+          "source": "evidence/groupB/R256-primary.pdf",
+          "locator": "§4 p5",
+          "claim": "Six categories: Outdoor Scenes, People, Animals, Vehicles, Food, Complex. Synthetic generators are Stable Diffusion v2, LDM and LCM; paper claims 1:1:1 generator balance. Complex captures difficult multi-concept/uncategorizable scenes."
+        },
+        {
+          "source": "evidence/groupB/R256-primary.pdf",
+          "locator": "§5.1/5.2 p5; Table 1 caption and discussion p6",
+          "claim": "External training comes from UniForen (LSUN/ProGAN) or GenImage (ImageNet/SD1.4); ACC is reported per semantic subset. Official weights are used for previous methods; starred NPR results use reimplemented training with official code. NoDown-S and DIRE are explicit same-training-set exceptions. DF3 is the validation resource for ATTSD settings, not CSAIID."
+        }
+      ],
+      "source_provenance": [
+        {
+          "url": "https://openaccess.thecvf.com/content/ICCV2025W/APAI/papers/Cai_Adaptive_Test-Time_Semantic_Debiasing_for_AI-Generated_Image_Detection_ICCVW_2025_paper.pdf",
+          "artifact": "evidence/groupB/R256-primary.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R256-primary.pdf",
+          "sha256": "3bd336c171cdb0c201d4fa9da63c17c406f46fa65b70436d30c50390d41b49f3",
+          "version": "Official CVF ICCV2025W / APAI 10-page PDF",
+          "kind": "primary_manuscript"
+        }
+      ],
+      "evidence_record": {
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R256.json",
+        "sha256": "20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6"
+      },
+      "independent_QC_provenance": {
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/independent_scientific_QC.json",
+        "sha256": "136a3efe6945c5d64a09a929e384a79fd6462a833daf6f4afab5df70acb5ebc1",
+        "locator": "decisions[review_id=R256]",
+        "line_ranges": [
+          [
+            202,
+            223
+          ]
+        ],
+        "excerpt": "    {\n      \"review_id\": \"R256\",\n      \"original_reviewer_outcome\": \"SUPPORTED_ADDITION\",\n      \"independent_QC_outcome\": \"SUPPORTED_ADDITION\",\n      \"agreement\": true,\n      \"basis\": {\n        \"original_reviewer_outcome\": \"SUPPORTED_ADDITION\",\n        \"independent_QC_outcome\": \"SUPPORTED_ADDITION\",\n        \"agreement\": true,\n        \"proposed_research_types\": [\n          \"method\",\n          \"dataset\",\n          \"benchmark\"\n        ],\n        \"R1\": \"Explicit separate CSAIID construction/semantic curation contribution beyond model training data.\",\n        \"R2\": \"Named intended cross-semantic evaluation resource with fixed categories and external-training comparisons; not merely extensive experiments.\",\n        \"contribution_confidence\": \"HIGH_WITH_SPECIFICATION_LIMITS\",\n        \"reproducibility_confidence\": \"LIMITED_NOT_REPRODUCED; exact per-generator category counts/seeds/manifest unverified\",\n        \"caveat_refinement\": \"Original record correctly notes1000 is not divisible by3, but the paper says1:1:1 across subsets. Global6000fakes can be2000pergenerator. No proven global ratio contradiction; exact per-category allocation remains unspecified. No classification disagreement.\"\n      },\n      \"receipt\": \"qc/groupB-independent-review.json\"\n    },"
+      },
+      "contribution_vs_reproducibility": {
+        "original_reviewer_outcome": "SUPPORTED_ADDITION",
+        "independent_QC_outcome": "SUPPORTED_ADDITION",
+        "agreement": true,
+        "proposed_research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "R1": "Explicit separate CSAIID construction/semantic curation contribution beyond model training data.",
+        "R2": "Named intended cross-semantic evaluation resource with fixed categories and external-training comparisons; not merely extensive experiments.",
+        "contribution_confidence": "HIGH_WITH_SPECIFICATION_LIMITS",
+        "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; exact per-generator category counts/seeds/manifest unverified",
+        "caveat_refinement": "Original record correctly notes1000 is not divisible by3, but the paper says1:1:1 across subsets. Global6000fakes can be2000pergenerator. No proven global ratio contradiction; exact per-category allocation remains unspecified. No classification disagreement."
+      },
+      "performance_independently_reproduced": false,
+      "identity_caveats_retained": {
+        "status": "TITLE_AUTHORS_MATCH_OFFICIAL_CVF_PDF",
+        "title_and_authors": "PDF p1 and PDF metadata match canonical title and all six authors in order.",
+        "doi": "10.1109/iccvw69036.2025.00165 retained from canonical input; not independently printed/verified in this PDF capture.",
+        "arxiv": "None in assigned canonical record.",
+        "version": "10-page official CVF ICCV 2025 Workshops APAI manuscript; source path and PDF Subject identify workshop version. No separate IEEE publisher PDF compared.",
+        "differences": "No unsupported publisher-final equivalence or venue/track correction proposed."
+      }
+    },
+    {
+      "review_id": "R275",
+      "paper_id": "curated:7cfe39b3bc63f5b55f51",
+      "title": "Breaking Latent Prior Bias in Detectors for Generalizable AIGC Image Detection",
+      "adjudication_consistency": "PASS",
+      "decision_scope": "ACCEPT_LABEL_ADDITION_WITH_RECORDED_LIMITS",
+      "research_types_before": [
+        "method"
+      ],
+      "research_types_after": [
+        "method",
+        "benchmark"
+      ],
+      "added_labels": [
+        "benchmark"
+      ],
+      "tasks_preserved": [
+        "detection"
+      ],
+      "policies": [
+        "R2"
+      ],
+      "basis_for_manifest": "GenImage++ is an explicitly constructed, specified test-only resource for future detector evaluation with fixed comparative protocol (R2). No dataset decision is assigned.",
+      "mandatory_manifest_caveats": [
+        "Only R2 benchmark addition is accepted; no R1 dataset or task action is created.",
+        "GenImage++ is test-only and generated-only, with no matched real negatives. Its scores establish neither balanced authenticity accuracy, specificity nor AUC.",
+        "138,900 is arithmetic from rounded Table 7 subset counts, not an independently audited file count. The 96.78 Table 3 average is an unweighted nine-stratum mean, not image-weighted or pooled accuracy.",
+        "Do not endorse latent-prior causality or independently reproduced performance. Runtime, availability and licensing are separate and unverified.",
+        "Preserve PDF/canonical Bin Fan versus official HTML Bing Fan discrepancy. Use the paper method name OMAT; planning shorthand OAT is not a separate method identity."
+      ],
+      "exact_sealed_QC_excerpt": {
+        "primary_finding": "The paper explicitly contributes named test-only GenImage++ for future detector evaluation (§1p2;§5pp5–6), provides generator/settings and prompt/subset construction (C.2–C.3pp19–21), and applies a fixed SDv1.4-training comparative evaluation (Table3p8). These substantive reusable evaluation specifications satisfy R2 beyond benchmark size or bigtables.",
+        "limitations": [
+          "C.4pp21–22 says no corresponding real images; GenImage++ scores do not establish balanced real/fake accuracy,specificity or AUC.",
+          "Table7 totals are derived from rounded counts,not a downloaded-file audit.",
+          "No empirical reproduction or causal endorsement of latent-prior explanation; code/data availability and licensing remain separate.",
+          "Official HTML Bing Fan versus PDF/canonical Bin Fan discrepancy remains explicit.",
+          "Only benchmark action assigned; no R1dataset or task action is created."
+        ]
+      },
+      "excerpt_role": "Verbatim sealed B3 reviewer/QC text; it is not represented as a new literal quotation from the manuscript.",
+      "source_locators_for_manifest": [
+        "§1 p2; §5 pp5–6; §6.1 p6 and Table 3/§6.4 p8",
+        "Appendix C.2–C.3 pp19–21, Table 7 p20; generated-only limit Appendix C.4 pp21–22"
+      ],
+      "existing_evidence_excerpts": [
+        {
+          "locator": "Introduction contributions,p2; §5 pp5–6",
+          "claim": "GenImage++ is explicitly introduced as a new test-only benchmark for future detector evaluation, extending generators and prompt/style conditions."
+        },
+        {
+          "locator": "§6.1 p6; Table3/§6.4 p8",
+          "claim": "Common SDv1.4 training paradigm; nine generator/prompt strata compare13 external detector variants with OMAT CLIP+LoRA R4 using reported per-subset Accuracy%."
+        },
+        {
+          "locator": "AppendixC.2–C.3 pp19–21; Table7 p20",
+          "claim": "Specified generators and prompt engineering; subset sizes6k,18.3k,30k,6k,18.3k,18.3k,6k,30k,6k (138,900 generated images total). Construction and prompts support reuse independently of method performance."
+        },
+        {
+          "locator": "AppendixC.4 pp21–22",
+          "claim": "No matched real images in this test-only resource. Its results do not measure a balanced real/fake test or specificity."
+        }
+      ],
+      "source_provenance": [
+        {
+          "kind": "official_primary_manuscript",
+          "url": "https://papers.neurips.cc/paper_files/paper/2025/file/2c2be72635379ec8600eea13df4743e3-Paper-Conference.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-neurips2025.pdf",
+          "sha256": "ebdcea81b1f588b74669e52261ab903ed70cb1b7f1a30f637d82d843e7071405"
+        },
+        {
+          "kind": "official_identity_landing",
+          "url": "https://papers.neurips.cc/paper_files/paper/2025/hash/2c2be72635379ec8600eea13df4743e3-Abstract-Conference.html",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-official-landing.html",
+          "sha256": "1d4427cc3b8e33ce2f7403f7c9016cf835ce262d5d9593c020aba6d91f980b1d"
+        }
+      ],
+      "evidence_record": {
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R275.json",
+        "sha256": "e38e0fab7e38252080ae6ab1640bdcc94ddaf846be53ac2799bc311730b02e29"
+      },
+      "independent_QC_provenance": {
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/independent_scientific_QC.json",
+        "sha256": "136a3efe6945c5d64a09a929e384a79fd6462a833daf6f4afab5df70acb5ebc1",
+        "locator": "decisions[review_id=R275]",
+        "line_ranges": [
+          [
+            224,
+            282
+          ]
+        ],
+        "excerpt": "    {\n      \"review_id\": \"R275\",\n      \"original_reviewer_outcome\": \"SUPPORTED_ADDITION\",\n      \"independent_QC_outcome\": \"SUPPORTED_ADDITION\",\n      \"agreement\": true,\n      \"qualified_agreement\": \"AGREE\",\n      \"basis\": {\n        \"review_id\": \"R275\",\n        \"qc_agreement\": \"AGREE\",\n        \"outcome\": \"SUPPORTED_ADDITION\",\n        \"exact_proposal\": {\n          \"research_types\": [\n            \"method\",\n            \"benchmark\"\n          ],\n          \"tasks\": [\n            \"detection\"\n          ]\n        },\n        \"primary_finding\": \"The paper explicitly contributes named test-only GenImage++ for future detector evaluation (§1p2;§5pp5–6), provides generator/settings and prompt/subset construction (C.2–C.3pp19–21), and applies a fixed SDv1.4-training comparative evaluation (Table3p8). These substantive reusable evaluation specifications satisfy R2 beyond benchmark size or bigtables.\",\n        \"numerical_check\": {\n          \"Table7_counts_as_reported_in_k\": [\n            6,\n            18.3,\n            30,\n            6,\n            18.3,\n            18.3,\n            6,\n            30,\n            6\n          ],\n          \"derived_total_from_rounded_counts\": 138900,\n          \"Table3_OMAT_nine_values\": [\n            96.53,\n            92.55,\n            97.6,\n            97.67,\n            100.0,\n            99.17,\n            98.27,\n            90.38,\n            98.82\n          ],\n          \"derived_unweighted_mean\": 96.77666666666667,\n          \"reported_rounded_average\": 96.78,\n          \"illustrative_weighted_mean_from_rounded_counts\": 95.93676025917927,\n          \"weighted_value_role\": \"Independent arithmetic contrast only; not reported as an author result or image-level reanalysis.\"\n        },\n        \"limitations\": [\n          \"C.4pp21–22 says no corresponding real images; GenImage++ scores do not establish balanced real/fake accuracy,specificity or AUC.\",\n          \"Table7 totals are derived from rounded counts,not a downloaded-file audit.\",\n          \"No empirical reproduction or causal endorsement of latent-prior explanation; code/data availability and licensing remain separate.\",\n          \"Official HTML Bing Fan versus PDF/canonical Bin Fan discrepancy remains explicit.\",\n          \"Only benchmark action assigned; no R1dataset or task action is created.\"\n        ]\n      },\n      \"receipt\": \"qc/root-group-review.json\"\n    },"
+      },
+      "contribution_vs_reproducibility": {
+        "contribution": "GenImage++ explicitly constructed as a reusable future detector evaluation resource with settings/prompt/subset specification and fixed comparative protocol, satisfyingR2.",
+        "contribution_confidence": "HIGH_WITH_GENERATED_ONLY_PROTOCOL_LIMIT",
+        "reproducibility": "Not reproduced; generated-only tests establish neither balanced authenticity accuracy nor real-class specificity. Rounded source counts are not a file audit. Availability and latent-prior causal interpretation are separate."
+      },
+      "performance_independently_reproduced": false,
+      "identity_caveats_retained": {
+        "title": "Exact title matches",
+        "authors": "PDF matches canonical six authors including Bin Fan. Official HTML/Crossref spelling Bing Fan is a preserved pre-existing discrepancy, not a silent correction.",
+        "doi": "Official landing DOI10.52202/085713-1030 links exact manuscript",
+        "arxiv": "Prior validated2506.00874 linkage retained; no second manuscript retrieved"
+      }
+    },
+    {
+      "review_id": "R564",
+      "paper_id": "doi:10.1109/tmm.2023.3313503",
+      "title": "GLFF: Global and Local Feature Fusion for AI-Synthesized Image Detection",
+      "adjudication_consistency": "PASS",
+      "decision_scope": "ACCEPT_LABEL_ADDITION_WITH_RECORDED_LIMITS",
+      "research_types_before": [
+        "method"
+      ],
+      "research_types_after": [
+        "method",
+        "dataset"
+      ],
+      "added_labels": [
+        "dataset"
+      ],
+      "tasks_preserved": [
+        "detection"
+      ],
+      "policies": [
+        "R1"
+      ],
+      "basis_for_manifest": "DF3 is a separately constructed/curated resource with systematic processing and intended future detector robustness reuse (R1), beyond an experiment-only pool. No benchmark decision is assigned.",
+      "mandatory_manifest_caveats": [
+        "Only R1 dataset addition is accepted; R2 benchmark is unreviewed and outside this action.",
+        "The inspected source is title/author-matched arXiv 2211.08615v7, not an IEEE publisher-final comparison. Do not replace it with preliminary arXiv 2203.13964 or claim publisher-final equivalence.",
+        "DF3 is fake-only. Exact Table I total 46,476 includes processed derivatives of 6,160 base images, not independent generations; 1,000 FFHQ real controls are sampled separately for metrics.",
+        "Face-only construction includes blending/swapping into real scenes. Retain that separate manipulation-category description without changing current tasks/image scopes; H.264 construction does not create a video detection task.",
+        "The release statement is future-tense code/dataset-details intent, not proof of current availability or unrestricted license. No files, manifests, seeds or experiments were executed or audited."
+      ],
+      "exact_sealed_QC_excerpt": {
+        "R1": "Separate DF3 constructed/curated resource and future detector robustness use; not merely a one-off GLFF experiment pool.",
+        "R2": "NOT_REVIEWED; benchmark addition outside assigned action.",
+        "contribution_confidence": "HIGH_WITH_AUTHOR_VERSION_LIMITS",
+        "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; future release claim, processed derivatives and separate negative controls retained; publisher-final equality unverified"
+      },
+      "excerpt_role": "Verbatim sealed B3 reviewer/QC text; it is not represented as a new literal quotation from the manuscript.",
+      "source_locators_for_manifest": [
+        "Contribution list p2; §IV pp6–7, Table I p6",
+        "§V.C/D p8, Table II p8; planned release conclusion p11"
+      ],
+      "existing_evidence_excerpts": [
+        {
+          "source": "evidence/groupB/R564-primary.pdf",
+          "locator": "Contribution list p2; §IV DF3 Dataset p6; Table I p6",
+          "claim": "DF3 constructs fake faces from StyleGAN2, StyleGAN3, 3DGAN, Transformers, LSGM and Latent-diffusion, followed by five post-processing families. Six tabulated protocols include unprocessed originals as protocol 1."
+        },
+        {
+          "source": "evidence/groupB/R564-primary.pdf",
+          "locator": "§IV pp6–7",
+          "claim": "Common processing uses JPEG quality randomly selected in [20,90], Gaussian blur sigma in [1,4] or both; face blending uses SimSwap with FFHQ-unaligned and manual removal of failed outputs. Anti-forensics randomly uses CW or GANPrintR; multi-image compression groups still images as an H.264 sequence in HandBrake at quality 22 then extracts images. Mixed combines two/three processing families."
+        },
+        {
+          "source": "evidence/groupB/R564-primary.pdf",
+          "locator": "§V.C/D p8; Table II p8; Conclusion p11",
+          "claim": "DF3 is fake-only; 1,000 separately sampled FFHQ real controls enable AUC. Resource is intended for future robustness evaluation, with planned code/dataset-details release. Face blending introduces manipulated-face content; H.264 is an image post-processing construction step, not evidence of a video-detection task."
+        }
+      ],
+      "source_provenance": [
+        {
+          "url": "https://arxiv.org/pdf/2211.08615v7",
+          "artifact": "evidence/groupB/R564-primary.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R564-primary.pdf",
+          "sha256": "4e7b0f188213163d718e7294cde361001a1afd750592f8790f555655080cf213",
+          "version": "arXiv:2211.08615v7, 13-page author manuscript",
+          "kind": "primary_manuscript"
+        }
+      ],
+      "evidence_record": {
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R564.json",
+        "sha256": "d891a5362525d23b6f8c2b44bf52263df471fa37f693d763b6338f1126eb3742"
+      },
+      "independent_QC_provenance": {
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/independent_scientific_QC.json",
+        "sha256": "136a3efe6945c5d64a09a929e384a79fd6462a833daf6f4afab5df70acb5ebc1",
+        "locator": "decisions[review_id=R564]",
+        "line_ranges": [
+          [
+            283,
+            302
+          ]
+        ],
+        "excerpt": "    {\n      \"review_id\": \"R564\",\n      \"original_reviewer_outcome\": \"SUPPORTED_ADDITION\",\n      \"independent_QC_outcome\": \"SUPPORTED_ADDITION\",\n      \"agreement\": true,\n      \"basis\": {\n        \"original_reviewer_outcome\": \"SUPPORTED_ADDITION\",\n        \"independent_QC_outcome\": \"SUPPORTED_ADDITION\",\n        \"agreement\": true,\n        \"proposed_research_types\": [\n          \"method\",\n          \"dataset\"\n        ],\n        \"R1\": \"Separate DF3 constructed/curated resource and future detector robustness use; not merely a one-off GLFF experiment pool.\",\n        \"R2\": \"NOT_REVIEWED; benchmark addition outside assigned action.\",\n        \"contribution_confidence\": \"HIGH_WITH_AUTHOR_VERSION_LIMITS\",\n        \"reproducibility_confidence\": \"LIMITED_NOT_REPRODUCED; future release claim, processed derivatives and separate negative controls retained; publisher-final equality unverified\"\n      },\n      \"receipt\": \"qc/groupB-independent-review.json\"\n    }"
+      },
+      "contribution_vs_reproducibility": {
+        "original_reviewer_outcome": "SUPPORTED_ADDITION",
+        "independent_QC_outcome": "SUPPORTED_ADDITION",
+        "agreement": true,
+        "proposed_research_types": [
+          "method",
+          "dataset"
+        ],
+        "R1": "Separate DF3 constructed/curated resource and future detector robustness use; not merely a one-off GLFF experiment pool.",
+        "R2": "NOT_REVIEWED; benchmark addition outside assigned action.",
+        "contribution_confidence": "HIGH_WITH_AUTHOR_VERSION_LIMITS",
+        "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; future release claim, processed derivatives and separate negative controls retained; publisher-final equality unverified"
+      },
+      "performance_independently_reproduced": false,
+      "identity_caveats_retained": {
+        "status": "TITLE_AUTHORS_MATCH_CANONICAL_AUTHOR_VERSION",
+        "title_and_authors": "arXiv v7 PDF p1 matches canonical GLFF title modulo capitalization and all five authors in order.",
+        "doi": "Canonical 10.1109/tmm.2023.3313503 and arXiv 2211.08615 linkage retained from assigned input; PDF itself does not independently print/establish DOI.",
+        "arxiv": "Fixed requested URL 2211.08615v7; 13-page captured PDF, metadata creation 2023-09-06 and response Last-Modified 2023-09-09.",
+        "version": "Verified title/author-matched arXiv v7 author manuscript, not an inspected IEEE publisher-final PDF.",
+        "differences": "p2 describes extension of a preliminary work; p11 reference [11] is Fusing Global and Local Features for Generalized AI-Synthesized Image Detection, arXiv:2203.13964 with a different author list. Do not substitute that preliminary work or assume publisher-final equivalence."
+      }
+    }
+  ],
+  "P231": {
+    "review_id": "P231",
+    "decision": "ACCEPT_QUALIFIED_NORMALIZATION",
+    "field": "venue_track",
+    "before": "Workshop",
+    "after": "Main",
+    "venue_id_preserved": "venue:mad",
+    "venue_name_preserved": "ACM International Workshop on Multimedia AI against Disinformation",
+    "required_manifest_wording": "Main is the repository-normalized regular-paper placement within standalone MAD, inferred from the exact-paper Session 2 item. The official program does not literally label Main. Canonical venue:mad and full workshop identity stay unchanged; no ICMR main-conference publication is asserted.",
+    "R231_independent_unchanged": true,
+    "exact_sealed_QC_excerpt": {
+      "review_id": "P231",
+      "qc_agreement": "AGREE_CONDITIONAL_POLICY_INTERPRETATION",
+      "outcome": "SUPPORTED_ADDITION",
+      "exact_proposal": {
+        "venue_track": "Main"
+      },
+      "primary_finding": "Exact title and four ordered authors occur in final MAD2026 Session2 research-paper list. No literal Main label or DOI printed in program; DOI correspondence uses earlier published U017 identity receipt.",
+      "policy_basis": [
+        "LockedV1 distinguishes canonical venue,event/container and track.",
+        "docs/workshop_venue_audit_report.md:42–44 calls for paper/program verification before explicit Main or nestedWorkshop confirmation."
+      ],
+      "limitation": "Regular-session→Main is an explicit repository normalization requiring maintainer acceptance. It is not publisher-literal metadata and V1 alone never proves every standalone event paper is Main.",
+      "mandatory_change": false
+    },
+    "independent_QC_provenance": {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/independent_scientific_QC.json",
+      "sha256": "136a3efe6945c5d64a09a929e384a79fd6462a833daf6f4afab5df70acb5ebc1",
+      "locator": "decisions[review_id=P231]; P231_precision_boundary",
+      "line_ranges": [
+        [
+          163,
+          185
+        ],
+        [
+          358,
+          373
+        ]
+      ],
+      "excerpt": "    {\n      \"review_id\": \"P231\",\n      \"original_reviewer_outcome\": \"SUPPORTED_ADDITION\",\n      \"independent_QC_outcome\": \"SUPPORTED_ADDITION\",\n      \"agreement\": true,\n      \"qualified_agreement\": \"AGREE_CONDITIONAL_POLICY_INTERPRETATION\",\n      \"basis\": {\n        \"review_id\": \"P231\",\n        \"qc_agreement\": \"AGREE_CONDITIONAL_POLICY_INTERPRETATION\",\n        \"outcome\": \"SUPPORTED_ADDITION\",\n        \"exact_proposal\": {\n          \"venue_track\": \"Main\"\n        },\n        \"primary_finding\": \"Exact title and four ordered authors occur in final MAD2026 Session2 research-paper list. No literal Main label or DOI printed in program; DOI correspondence uses earlier published U017 identity receipt.\",\n        \"policy_basis\": [\n          \"LockedV1 distinguishes canonical venue,event/container and track.\",\n          \"docs/workshop_venue_audit_report.md:42–44 calls for paper/program verification before explicit Main or nestedWorkshop confirmation.\"\n        ],\n        \"limitation\": \"Regular-session→Main is an explicit repository normalization requiring maintainer acceptance. It is not publisher-literal metadata and V1 alone never proves every standalone event paper is Main.\",\n        \"mandatory_change\": false\n      },\n      \"receipt\": \"qc/root-group-review.json\"\n    },\n  \"P231_precision_boundary\": {\n    \"verdict\": \"SUPPORTED_ADDITION_QUALIFIED_NORMALIZATION_ONLY\",\n    \"official_evidence\": \"Exactpaper/title/fourauthors in MADSession2. Program does not literally label Main or regular-paper track.\",\n    \"repository_semantics\": \"docs/workshop_venue_audit_report.md:32,42–44 explicitly requires paper/program review before Main or documented nestedWorkshop confirmation. Existing canonicalvenue:mad retained; normalizing its ordinary paper-session role to Main is faithful only within that venue and requires explicit maintainer acceptance.\",\n    \"prohibited_inferences\": [\n      \"No mainICMRpublication claim\",\n      \"No official quotedMaintrack claim\",\n      \"No automaticMainfromstandalone workshop name\",\n      \"No canonicalvenue substitution\"\n    ],\n    \"source_hashes\": {\n      \"official_program\": \"53a0015a413baf48e992209de2665b43bd7007e4e23787db40c9f6ee820255b0\",\n      \"repository_track_report\": \"171560e3fef7f3e24a4e6c5b497de84b3cc09f4fbe04e2fd2bd932285e358660\"\n    }\n  },\n  \"hold_semantics\": \"R138,R161,R187,R231 hold for insufficient primary scientific evidence; R154 identity-blocked by unbridged first-author/version conflict. No access limitation is a negative scientific conclusion; P231/R231 remain independent.\","
+    },
+    "reuse_review": {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/investigation/P231_semantics_review.json",
+      "sha256": "525fd4b7f8b93eb1a2c6eb5ac3e69e4e15c38db19a076cb1633b6697520ba3b0"
+    },
+    "source_provenance": [
+      {
+        "kind": "official_paper_specific_workshop_program",
+        "url": "https://mad2026.aimultimedialab.ro/program/",
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/P231-official-program.html",
+        "sha256": "53a0015a413baf48e992209de2665b43bd7007e4e23787db40c9f6ee820255b0"
+      },
+      {
+        "kind": "previous_identity_only_primary_receipt",
+        "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+        "sha256": "ab426b7ff76f89677a9aa8656fa4cae19049e07de656c6d45e7fb4a2338d8088",
+        "locator": "U017 official ACM page1 affiliation block"
+      }
+    ]
+  },
+  "label_deltas": {
+    "dataset": 4,
+    "benchmark": 4,
+    "method": 0,
+    "detection": 0,
+    "source_attribution": 0,
+    "localization": 0
+  },
+  "global_manifest_requirements": [
+    "Bind each decision to exact review_id/paper_id, before/after labels, governing R1/R2 or V1 policy and unchanged task/method state.",
+    "Include the sealed per-paper record and independent-QC path/hash plus source URL/path/hash/version and page/section/table locators. Reviewer/QC excerpts must be identified as reviewer text rather than fabricated literal manuscript quotes.",
+    "Resource contribution acceptance is a taxonomy judgment. It does not certify numerical performance, causality, clinical validity, operational reproducibility, current release availability or licensing.",
+    "Keep all recorded source/version/author conflicts explicit; do not use label acceptance to perform publication/author/affiliation/location/task/image-scope changes.",
+    "Retain R256 original record with additive independent refinement; avoid an established global generator-ratio contradiction claim.",
+    "R138/R161/R187/R231 evidence-insufficient and R154 identity-blocked remain independent holds, with no negative scientific conclusion or label change."
+  ],
+  "seal_verification": {
+    "files_checked": 123,
+    "failures": [],
+    "completion_sha256": "f9d255d2e283c96da4b670f1893ddf61f19a3911409e48dc4dc0fe3befe77381",
+    "checksums_sha256": "870f23c2058853a62b8fdaa40d88cab0bbcaded168b9fc2a475218f9bbfc621a",
+    "receipt_matches": true,
+    "final_QC_status": "PASS",
+    "final_QC_failed": 0
+  },
+  "input_pins": [
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/batch_dispositions.json",
+      "sha256": "9f3704166c5c0ef9c1e5324995b29a712b756014ca36286169d4870f405e151e"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/independent_scientific_QC.json",
+      "sha256": "136a3efe6945c5d64a09a929e384a79fd6462a833daf6f4afab5df70acb5ebc1"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/final_batch_QC.json",
+      "sha256": "366d30f74cd5b965bd685d86af7f29cb0710e470e4cdb43fc7d84750eeb24b2c"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/groupA-independent-review.json",
+      "sha256": "d7ad6fde0d945189419ef0836a955d214ee983edbf54d0cc5e4d7d9f1ad42712"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/groupB-independent-review.json",
+      "sha256": "3c5f731f50839b0d85878c98bd35e56fc59375857254a7c19cc8222517ac22e7"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/root-group-review.json",
+      "sha256": "bf1e4fe462eb80951eb16b947290f72180efe8cfe2c5b8bb8418ef9f2dc8096b"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/R256-independent-caveat-addendum.json",
+      "sha256": "a24360de94f6a91e0a47917d14cafffbba7b89a78fdf27cd019cf9415fecbfa5"
+    }
+  ],
+  "R256_addendum": {
+    "review_id": "R256",
+    "type": "INDEPENDENT_CAVEAT_INTERPRETATION_REFINEMENT_NOT_OUTCOME_CHANGE",
+    "original_record_preserved": true,
+    "original_record_sha256": "20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6",
+    "original_observation": "1000synthetic/category not divisible by3; exact per-generator integer category counts are absent.",
+    "independent_refinement": "Original record correctly notes1000 is not divisible by3, but the paper says1:1:1 across subsets. Global6000fakes can be2000pergenerator. No proven global ratio contradiction; exact per-category allocation remains unspecified. No classification disagreement.",
+    "source": {
+      "artifact": "evidence/groupB/R256-primary.pdf",
+      "sha256": "3bd336c171cdb0c201d4fa9da63c17c406f46fa65b70436d30c50390d41b49f3",
+      "locator": "PDFp5,section4 final paragraph"
+    },
+    "required_report_wording": "Generator balance may apply globally across subsets; do not claim an established contradiction. Exact per-category allocation is unspecified.",
+    "authoritative_records_changed": 0,
+    "provisional_disposition_changed": false
+  },
+  "checks": [
+    {
+      "name": "R110 exact labels, task, original record and independent-QC agreement",
+      "passed": true
+    },
+    {
+      "name": "R171 exact labels, task, original record and independent-QC agreement",
+      "passed": true
+    },
+    {
+      "name": "R256 exact labels, task, original record and independent-QC agreement",
+      "passed": true
+    },
+    {
+      "name": "R275 exact labels, task, original record and independent-QC agreement",
+      "passed": true
+    },
+    {
+      "name": "R564 exact labels, task, original record and independent-QC agreement",
+      "passed": true
+    },
+    {
+      "name": "R256 additive refinement controls ratio wording without rewriting original record",
+      "passed": true
+    },
+    {
+      "name": "R275 only R2; R564 only R1; no task/scope/identity changes",
+      "passed": true
+    },
+    {
+      "name": "P231 reuses accepted bounded semantics; R231 independent",
+      "passed": true
+    },
+    {
+      "name": "All B3 sealed content hashes and checksum receipt agree",
+      "passed": true
+    },
+    {
+      "name": "No repository mutation; current B4 checkout clean",
+      "passed": true
+    }
+  ],
+  "passed": 10,
+  "failed": 0,
+  "limits": {
+    "new_retrievals": 0,
+    "new_manuscripts": 0,
+    "new_scientific_review": false,
+    "primary_scientific_sources_reopened": false,
+    "repo_mutations": 0,
+    "formal_decisions_applied": 0,
+    "exports": 0,
+    "experiments_or_dataset_downloads": 0,
+    "current_worktree_status": "clean"
+  },
+  "planned_edits_review": "PENDING_SEPARATE_EXACT_MANIFEST_AND_APPLY_SCRIPT_REVIEW_BEFORE_APPLICATION"
+}

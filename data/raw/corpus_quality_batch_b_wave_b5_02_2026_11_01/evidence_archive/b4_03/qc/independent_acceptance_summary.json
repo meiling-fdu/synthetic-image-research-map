@@ -1,0 +1,150 @@
+{
+  "schema": "b403-independent-source-acceptance-summary-1",
+  "created_utc": "2026-11-01T08:35:54.410991+00:00",
+  "status": "PASS",
+  "manifest_sha256": "189eabed6bfd3989ceb1abc8300c7b80e12e4453cb13e1fa4397e72b6cd753f0",
+  "current_source_acceptance": {
+    "passed": 132,
+    "failed": 0,
+    "source_cell_count": 35,
+    "new_decisions": 11,
+    "preserved_prior_decisions": 127,
+    "decisions_total": 138,
+    "negative_fault_cases": 61,
+    "native_upsert_idempotence_cases": 11,
+    "accounting_after": {
+      "original_actions": 159,
+      "original_papers": 148,
+      "terminal_actions": 45,
+      "historical_unresolved_actions": 114,
+      "historical_unresolved_papers": 108,
+      "active_public_unresolved_actions": 112,
+      "active_public_unresolved_papers": 106
+    },
+    "source_research_type_counts": {
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "dataset": 142,
+      "benchmark": 101
+    },
+    "public_research_type_counts_unchanged": {
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "dataset": 138,
+      "benchmark": 97
+    }
+  },
+  "validators": {
+    "curated_original_main_returncode": 0,
+    "temporary_migration_byte_noop": true,
+    "unchanged_public_pair_errors": 0,
+    "unchanged_public_pair_warnings": 62,
+    "exclusions_original_main_returncode": 0
+  },
+  "immutable_historical_snapshot": {
+    "commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+    "test_totals": {
+      "tests": 189,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "test_modules": [
+      "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "tests/test_corpus_quality_batch_b_wave_b4_01.py",
+      "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "tests/test_historical_test_fixtures.py",
+      "tests/test_historical_integrity_successors.py"
+    ],
+    "verified_fixture_restore": {
+      "legacy_inputs": 14,
+      "historical_inputs": 103,
+      "verified_inputs": 117,
+      "created": 117,
+      "mode": "restore"
+    },
+    "test_sources_modified": false,
+    "snapshot_tracked_files_equal_before_and_after": true
+  },
+  "original_repository_preserved_by_each_audit": {
+    "acceptance": true,
+    "validators_bytes_and_git_state": true,
+    "historical_bytes_status_index": true
+  },
+  "source_only_checkpoint": true,
+  "exports": 0,
+  "interpretation": "Current acceptance and accounting are audited independently; immutable d109 test results validate historical receipts. Unchanged public JSON validation does not establish synchronization with the new source taxonomy. Post-export key-paper report artifact gate remains deferred.",
+  "files": {
+    "adjudication_manifest.json": {
+      "bytes": 241589,
+      "sha256": "189eabed6bfd3989ceb1abc8300c7b80e12e4453cb13e1fa4397e72b6cd753f0"
+    },
+    "qc/acceptance_accounting_qc.py": {
+      "bytes": 26948,
+      "sha256": "29b9645c75377b5e58ee550950cea08c14e8a27c523f5c8cd3660d5cbd638042"
+    },
+    "qc/acceptance_accounting_qc.json": {
+      "bytes": 43422,
+      "sha256": "5f61d52e754efee81849808fe9d2ffc243d9e61a29717a3afe81ed339c92e34a"
+    },
+    "qc/candidate_acceptance_accounting_qc.json": {
+      "bytes": 43088,
+      "sha256": "e6f51442ee64a59338849fcf356742d09d714ef042e66db58f30864a0f6aa887"
+    },
+    "qc/read_only_validators.py": {
+      "bytes": 6859,
+      "sha256": "13ef0e981ede7fcb9a26181ab75852708a47afc1597e316a7f2a269c42ebc496"
+    },
+    "qc/read_only_validators.json": {
+      "bytes": 1376517,
+      "sha256": "617a817d54912af87678997e178f44f96924afe607d0c5fff86aba65c7e1fe51"
+    },
+    "qc/curated_validator.log": {
+      "bytes": 31322,
+      "sha256": "ee04d5a9ebedfb91241ec39e418f969a6c6c0f5b7316df8d294bb39f4829ffe7"
+    },
+    "qc/public_pair_validator.log": {
+      "bytes": 12653,
+      "sha256": "ac8e0af99c38d4fee8a1fc1d7b45210537cd5cca35a273b8b547d32c8f869859"
+    },
+    "qc/exclusions_validator.log": {
+      "bytes": 450,
+      "sha256": "1fadfe0741a198eaf009a4c2dc08fc234e7b451238157f8e1709960fe9732513"
+    },
+    "qc/run_historical_snapshot_tests.py": {
+      "bytes": 7556,
+      "sha256": "235b21110c04de1fc9203914f8cb2d16c8aee3e57eb94ac0ed649d35562896c6"
+    },
+    "qc/historical_snapshot_tests.json": {
+      "bytes": 3014,
+      "sha256": "c3bad460982debe61f0b23619ca00a347c8f3d4cdf4b67a4f9b596404b6be832"
+    },
+    "qc/historical_snapshot_tests.log": {
+      "bytes": 261,
+      "sha256": "545b9cfb58968b1d943bfe9bf8a0bfb8f8e12166fc5c97294a1efd62f184a4a0"
+    },
+    "qc/historical_snapshot_tests.xml": {
+      "bytes": 31851,
+      "sha256": "5ee7be0ce063abe34eae501ee9f97f7b96f283fa10d4e33434f3268a6410d06b"
+    },
+    "qc/historical_snapshot_fixture_restore.log": {
+      "bytes": 17446,
+      "sha256": "29119363105f0e34eb2cfbcbb557c5bb0fe7ff8523425c98fe28d842b920bb8c"
+    },
+    "qc/independent_runtime.json": {
+      "bytes": 723,
+      "sha256": "ff1c5b02faefbd1cbf7054e60bcd4649f75533a445ac758b8f5ce16e66002c41"
+    },
+    "qc/validation_recommendations.json": {
+      "bytes": 3396,
+      "sha256": "281840725a544972c21f1774bed5167d7b4533c013e01cbf64d6e1b7a4734ddc"
+    },
+    "qc/validation_recommendations.md": {
+      "bytes": 2421,
+      "sha256": "e6790e6ec8d3dfeed98cb9fd813e4116117e1e0d4c33a8dcae37f780b0cdf57e"
+    }
+  }
+}

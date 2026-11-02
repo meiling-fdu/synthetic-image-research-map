@@ -1,0 +1,34 @@
+{
+  "mode": "full",
+  "command": [
+    "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--tb=short",
+    "tests",
+    "--junitxml=/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/full.xml"
+  ],
+  "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+  "started_utc": "2026-11-01T12:52:08.425194+00:00",
+  "elapsed_seconds": 740.924,
+  "returncode": 0,
+  "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/full.log",
+  "log_sha256": "e7da8d05237002fb6639ba41b27a568358890757810e670cbcd2779917209dbc",
+  "junit_sha256": "0e1da6a34dd9bfe5c21d78f5d7ec1c01831527377b790bf80aa30cf3f7b7aa18",
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "3077",
+      "time": "731.744",
+      "timestamp": "2026-11-01T20:52:08.968325+08:00",
+      "hostname": "Meilingers-MacBook-Pro.local"
+    }
+  ],
+  "failures": []
+}

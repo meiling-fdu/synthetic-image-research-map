@@ -1,0 +1,173 @@
+{
+  "review_id": "P231",
+  "paper_id": "curated:0d918782407e05ade5bd",
+  "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+  "doi": "10.1145/3810988.3812660",
+  "arxiv_id": "",
+  "authors": [
+    "Thinh-Phat Vo",
+    "Dang-Khoa Mai",
+    "Minh–Triet Tran",
+    "Trong-Le Do"
+  ],
+  "original_review": {
+    "review_id": "P231",
+    "paper_id": "curated:0d918782407e05ade5bd",
+    "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+    "current": {
+      "year": 2026,
+      "publication_type": "conference",
+      "venue": "ACM International Workshop on Multimedia AI against Disinformation",
+      "venue_id": "venue:mad",
+      "venue_acronym": "MAD",
+      "venue_track": "Workshop",
+      "doi": "10.1145/3810988.3812660",
+      "paper_url": "https://doi.org/10.1145/3810988.3812660",
+      "formal_url": "https://doi.org/10.1145/3810988.3812660",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "authors": [
+        "Thinh-Phat Vo",
+        "Daniel Mai",
+        "Minh–Triet Tran",
+        "Trong-Le Do"
+      ]
+    },
+    "evidence_urls": [
+      "https://doi.org/10.1145/3810988.3812660"
+    ],
+    "batch": "B",
+    "confidence": "bounded_to_available_evidence",
+    "evidence_required": "This is a standalone scholarly workshop venue. Its name alone does not establish a Workshop subtrack; confirm Main versus an actual nested workshop track from the paper/program, preserving the venue identity.",
+    "proposed_changes": {},
+    "status": "REVIEW_REQUIRED",
+    "reason": "This is a standalone scholarly workshop venue. Its name alone does not establish a Workshop subtrack; confirm Main versus an actual nested workshop track from the paper/program, preserving the venue identity.",
+    "field_checks": {
+      "venue": "present",
+      "year": "present",
+      "publication_type": "formal_in_current_corpus",
+      "canonical_url": "present",
+      "doi": "present_not_independently_reverified",
+      "arxiv": "optional_not_a_defect",
+      "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+      "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+    }
+  },
+  "governing_policy_ids": [],
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "current_status": "UNRESOLVED",
+  "local_evidence_refs": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+      "locator": "formal_records[review_id=P231]",
+      "finding": "This is a standalone scholarly workshop venue. Its name alone does not establish a Workshop subtrack; confirm Main versus an actual nested workshop track from the paper/program, preserving the venue identity.",
+      "sha256": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c"
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "#b-P231",
+      "finding": "Published intake preserves this exact independent original review question; its PRIMARY/LOCAL/BLOCKED label is a historical readiness assessment, not closure.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policies[policy_id=V1]",
+      "finding": "Canonical archival venue, source container/event and paper track remain distinct; use supported fields only.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+    },
+    {
+      "path": "docs/publication_venue_normalization.md",
+      "locator": "Data and precedence; Persistence and live review",
+      "finding": "Abbreviations require official or bibliographic usage; existing venue decisions must bind a current bibliographic fingerprint. A real paper-specific review is required before closure.",
+      "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af"
+    },
+    {
+      "path": "docs/workshop_venue_audit_report.md",
+      "locator": "Standalone track review; exact title Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+      "finding": "Historical report retains this paper as standalone canonical venue with disputed Workshop→Main proposal; the name Workshop is not proof of a nested track.",
+      "sha256": "171560e3fef7f3e24a4e6c5b497de84b3cc09f4fbe04e2fd2bd932285e358660"
+    },
+    {
+      "path": "data/processed/workshop_venue_evidence.json",
+      "locator": "venues[name=ACM International Workshop on Multimedia AI against Disinformation]; track_observations; identity-matched DOI 10.1145/3810988.3812660",
+      "finding": "Checked venue-level identity evidence is reusable, but a different edition/program alone does not establish this paper’s track.",
+      "sha256": "040d09a5ed5fc349d37598547f8c126ced05f8aa1a50948f631f2a4e303e3f5b"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+      "locator": "actions[review_id=U017]",
+      "finding": "Prior paper-specific affiliation/author correction is retained, and does not establish the standalone-MAD paper track.",
+      "sha256": "ab426b7ff76f89677a9aa8656fa4cae19049e07de656c6d45e7fb4a2338d8088"
+    }
+  ],
+  "reviewer": "root",
+  "reviewed_utc": "2026-10-31T13:00:13.918935+00:00",
+  "maintainer_acceptance": "PENDING_NOT_FORMAL_DECISION",
+  "authoritative_data_changed": false,
+  "sources": [
+    {
+      "kind": "official_paper_specific_workshop_program",
+      "url": "https://mad2026.aimultimedialab.ro/program/",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/P231-official-program.html",
+      "sha256": "53a0015a413baf48e992209de2665b43bd7007e4e23787db40c9f6ee820255b0"
+    },
+    {
+      "kind": "previous_identity_only_primary_receipt",
+      "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+      "sha256": "ab426b7ff76f89677a9aa8656fa4cae19049e07de656c6d45e7fb4a2338d8088",
+      "locator": "U017 official ACM page1 affiliation block"
+    }
+  ],
+  "identity_verification": {
+    "title": "Official2026 program contains exact full title",
+    "authors": "All four authors and their order match canonical/U017:Thinh-Phat Vo,Dang-Khoa Mai,Minh-Triet Tran,Trong-Le Do",
+    "doi": "Existing accepted U017 official ACM PDF receipt binds title/authors to10.1145/3810988.3812660; program itself does not print DOI"
+  },
+  "evidence": [
+    {
+      "locator": "Program header and June16 workshop agenda;14:30–15:30 Session2:Multimodal Trust,Forensics,and Robustness Against Synthetic Media Manipulation",
+      "claim": "The exact paper appears as a regular research-paper item in the standalone MAD2026 workshop program with all four matching authors. It is not listed as a nested workshop inside a separate canonical event."
+    }
+  ],
+  "outcome": "SUPPORTED_ADDITION",
+  "proposed_changes": [
+    {
+      "field": "venue_track",
+      "before": "Workshop",
+      "after": "Main",
+      "policy": "V1",
+      "interpretation": "Main is the repository-normalized regular-paper track at the standalone canonical MAD venue. The program does not literally print the word Main."
+    }
+  ],
+  "proposed_venue_fields": {
+    "venue_id": "venue:mad",
+    "venue_name": "ACM International Workshop on Multimedia AI against Disinformation",
+    "venue_type": "conference",
+    "venue_track": "Main"
+  },
+  "proposed_tasks": [
+    "detection"
+  ],
+  "proposed_research_types": [
+    "method"
+  ],
+  "scientifically_sufficient": null,
+  "publication_evidence_sufficient": true,
+  "confidence": "medium-high; exact-paper program evidence supports normalized regular track, with literal-label caveat",
+  "rationale": "Paper-specific regular Session2 placement establishes the bounded event role. Co-location with ICMR does not change the canonical archival venue to ICMR, and Workshop in the venue name does not establish a nested subtrack.",
+  "limitations": [
+    "Normalized Main is a policy interpretation of the regular-paper session, not an official quoted label. Maintainer must accept this inference.",
+    "Earlier call-for-papers June15 timing and final program June16 differ; the final program is used for role evidence and no publication date is edited.",
+    "Prior U017 evidence covers identity/affiliations only. No full text was obtained in this wave; it does not support R231 scientific protocol."
+  ],
+  "retrieval_cost": {
+    "new_full_manuscripts_obtained": 0,
+    "new_primary_metadata_pages": 1
+  },
+  "analyst_effort_minutes_estimate": 25
+}

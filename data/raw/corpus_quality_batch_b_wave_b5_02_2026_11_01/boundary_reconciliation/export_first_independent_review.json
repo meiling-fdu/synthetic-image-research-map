@@ -1,0 +1,1139 @@
+{
+  "status": "PASS_EXACT_APPROVED_EXPORT_NO_UNRELATED_CHURN",
+  "recorded_utc": "2026-11-01T11:51:58.309439+00:00",
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "checks": 3526,
+  "failures": [],
+  "output_files": {
+    "web/data/public_preview_papers.json": {
+      "baseline_sha256": "1323bf1ca068a8a6d6343882204b0e66bbcb9319f6847e1ff68579d942ee9442",
+      "sha256": "2a61f361996aebf56b53dbb7ba4c27a9f7a78be5c3e257c168674fb12ecbb89e",
+      "baseline_bytes": 9088469,
+      "bytes": 9089588,
+      "changed": true
+    },
+    "web/data/public_preview_map_data.json": {
+      "baseline_sha256": "04e4d239cd31b2a77e7bcf24477f6c9b93e31d4ba627bd9abd6b571765152b65",
+      "sha256": "c0bb42390eb44a1bd746512077ec6dc9a40d2fe579f6a73184a78ecf5a4a1e38",
+      "baseline_bytes": 19794376,
+      "bytes": 19797093,
+      "changed": true
+    },
+    "docs/public_preview_report.md": {
+      "baseline_sha256": "0d1b20c5128d69032fc6fc02cb69c7c3abd1af4c91698a535d24d3360c90d5eb",
+      "sha256": "c89274eadc0e60d11fabe6ab3ba565308f19346911f4491e8c6a2883c5c5d82a",
+      "baseline_bytes": 4246,
+      "bytes": 4246,
+      "changed": true
+    },
+    "docs/missing_author_mappings_report.md": {
+      "baseline_sha256": "37d7455e8b0b0ef3d0c46e261a35bbc11f0b862b313e1ec77b5f65acdb01e11d",
+      "sha256": "37d7455e8b0b0ef3d0c46e261a35bbc11f0b862b313e1ec77b5f65acdb01e11d",
+      "baseline_bytes": 16049,
+      "bytes": 16049,
+      "changed": false
+    },
+    "data/manual/missing_author_mappings_report.csv": {
+      "baseline_sha256": "73bb86046fa81f56d19fbe66e38c547b9ca9c8d18aeec22d86239c6d5e42c593",
+      "sha256": "73bb86046fa81f56d19fbe66e38c547b9ca9c8d18aeec22d86239c6d5e42c593",
+      "baseline_bytes": 389050,
+      "bytes": 389050,
+      "changed": false
+    },
+    "docs/key_paper_coverage_report.md": {
+      "baseline_sha256": "b1f2b30a0af4f87389f914d4fe3b2460f9f146cb6f3783b0cd17227d5c51b151",
+      "sha256": "e3f92feea95ab5464d59060741e7356c419cac71068ab5af2afefaa913fb5f86",
+      "baseline_bytes": 47719,
+      "bytes": 47719,
+      "changed": true
+    },
+    "data/manual/key_paper_coverage_report.csv": {
+      "baseline_sha256": "dbe1bd75e8d619a3a28354df1bccd79037f0aa281de49a37bbb49d3937d75099",
+      "sha256": "dbe1bd75e8d619a3a28354df1bccd79037f0aa281de49a37bbb49d3937d75099",
+      "baseline_bytes": 175297,
+      "bytes": 175297,
+      "changed": false
+    }
+  },
+  "changed_paper_records": {
+    "curated:6976641cbfe602a7e617": {
+      "review_id": "R110",
+      "title": "Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "benchmark"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R110: R1/R2: MRI-Forensics is independently constructed and documented with reusable generator/split and detector evaluation protocols, beyond an experimental pool. Evidence and limitations retained in B3-03/per_paper/R110.json."
+            }
+          }
+        }
+      }
+    },
+    "curated:a570863c3a6ac227b56c": {
+      "review_id": "R171",
+      "title": "PGC: Peak-Guided Calibration for Generalizable AI-Generated Image Detection",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "benchmark"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R171: R1/R2: CommGen15 independently collects and standardizes commercial-platform outputs and defines a reusable external-training image-level evaluation resource. Evidence and limitations retained in B3-03/per_paper/R171.json."
+            }
+          }
+        }
+      }
+    },
+    "curated:0d918782407e05ade5bd": {
+      "review_id": "P231",
+      "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+      "changed_fields": [
+        "metadata_status",
+        "venue_review_reason",
+        "venue_review_required",
+        "venue_track"
+      ],
+      "deltas": {
+        "metadata_status": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "overall": "Verified",
+            "default_field_status": "Verified",
+            "field_overrides": {
+              "venue": {
+                "status": "Needs review",
+                "source": "OpenAlex"
+              },
+              "affiliations": {
+                "status": "Curated",
+                "source": "Manual curation"
+              }
+            },
+            "source": "OpenAlex"
+          },
+          "after": {
+            "overall": "Verified",
+            "default_field_status": "Verified",
+            "field_overrides": {
+              "affiliations": {
+                "status": "Curated",
+                "source": "Manual curation"
+              }
+            },
+            "source": "OpenAlex"
+          }
+        },
+        "venue_review_reason": {
+          "before_present": true,
+          "after_present": false,
+          "before": "This is a standalone scholarly workshop venue. Its name alone does not establish a Workshop subtrack; confirm Main versus an actual nested workshop track from the paper/program, preserving the venue identity.",
+          "after": null
+        },
+        "venue_review_required": {
+          "before_present": true,
+          "after_present": true,
+          "before": true,
+          "after": false
+        },
+        "venue_track": {
+          "before_present": true,
+          "after_present": true,
+          "before": "Workshop",
+          "after": "Main"
+        }
+      }
+    },
+    "curated:c6bfe8f5199d1d8beb29": {
+      "review_id": "R256",
+      "title": "Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "benchmark"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R256: R1/R2: CSAIID is a separately constructed cross-semantic resource with defined categories, real/fake sampling, generators and reusable external-training evaluation protocol. Evidence and limitations retained in B3-03/per_paper/R256.json."
+            }
+          }
+        }
+      }
+    },
+    "curated:7cfe39b3bc63f5b55f51": {
+      "review_id": "R275",
+      "title": "Breaking Latent Prior Bias in Detectors for Generalizable AIGC Image Detection",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "benchmark"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R275: R2 only: GenImage++ is an independently specified reusable test benchmark with new generator/prompt strata and evaluation protocol, not merely a large result table. Evidence and limitations retained in B3-03/per_paper/R275.json."
+            }
+          }
+        }
+      }
+    },
+    "doi:10.1109/tmm.2023.3313503": {
+      "review_id": "R564",
+      "title": "GLFF: Global and Local Feature Fusion for AI-Synthesized Image Detection",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R564: R1 only: DF3 is an independently constructed reusable fake-face resource with documented base generators and post-processing, beyond method-training usage. Evidence and limitations retained in B3-03/per_paper/R564.json."
+            }
+          }
+        }
+      }
+    }
+  },
+  "changed_map_records": {
+    "openalex-candidate-86a7337fd0b4b02a": {
+      "review_id": "R564",
+      "paper_id": "doi:10.1109/tmm.2023.3313503",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R564: R1 only: DF3 is an independently constructed reusable fake-face resource with documented base generators and post-processing, beyond method-training usage. Evidence and limitations retained in B3-03/per_paper/R564.json."
+            }
+          }
+        }
+      }
+    },
+    "openalex-candidate-cfb4081aab34b481": {
+      "review_id": "R564",
+      "paper_id": "doi:10.1109/tmm.2023.3313503",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R564: R1 only: DF3 is an independently constructed reusable fake-face resource with documented base generators and post-processing, beyond method-training usage. Evidence and limitations retained in B3-03/per_paper/R564.json."
+            }
+          }
+        }
+      }
+    },
+    "openalex-candidate-95a18fcdd31b9010": {
+      "review_id": "R564",
+      "paper_id": "doi:10.1109/tmm.2023.3313503",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R564: R1 only: DF3 is an independently constructed reusable fake-face resource with documented base generators and post-processing, beyond method-training usage. Evidence and limitations retained in B3-03/per_paper/R564.json."
+            }
+          }
+        }
+      }
+    },
+    "curated-map:5c099af144a9f6b6b234": {
+      "review_id": "R256",
+      "paper_id": "curated:c6bfe8f5199d1d8beb29",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "benchmark"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R256: R1/R2: CSAIID is a separately constructed cross-semantic resource with defined categories, real/fake sampling, generators and reusable external-training evaluation protocol. Evidence and limitations retained in B3-03/per_paper/R256.json."
+            }
+          }
+        }
+      }
+    },
+    "curated-map:44229f2cf573ad44149f": {
+      "review_id": "R256",
+      "paper_id": "curated:c6bfe8f5199d1d8beb29",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "benchmark"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R256: R1/R2: CSAIID is a separately constructed cross-semantic resource with defined categories, real/fake sampling, generators and reusable external-training evaluation protocol. Evidence and limitations retained in B3-03/per_paper/R256.json."
+            }
+          }
+        }
+      }
+    },
+    "curated-map:77d9ba1680f2d3636f13": {
+      "review_id": "R171",
+      "paper_id": "curated:a570863c3a6ac227b56c",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "benchmark"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R171: R1/R2: CommGen15 independently collects and standardizes commercial-platform outputs and defines a reusable external-training image-level evaluation resource. Evidence and limitations retained in B3-03/per_paper/R171.json."
+            }
+          }
+        }
+      }
+    },
+    "curated-map:3acce8d83033800d429e": {
+      "review_id": "R171",
+      "paper_id": "curated:a570863c3a6ac227b56c",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "benchmark"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R171: R1/R2: CommGen15 independently collects and standardizes commercial-platform outputs and defines a reusable external-training image-level evaluation resource. Evidence and limitations retained in B3-03/per_paper/R171.json."
+            }
+          }
+        }
+      }
+    },
+    "curated-map:15500f092e7922607b10": {
+      "review_id": "R171",
+      "paper_id": "curated:a570863c3a6ac227b56c",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "benchmark"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R171: R1/R2: CommGen15 independently collects and standardizes commercial-platform outputs and defines a reusable external-training image-level evaluation resource. Evidence and limitations retained in B3-03/per_paper/R171.json."
+            }
+          }
+        }
+      }
+    },
+    "curated-map:fdba22716ea74d619844": {
+      "review_id": "R110",
+      "paper_id": "curated:6976641cbfe602a7e617",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "benchmark"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R110: R1/R2: MRI-Forensics is independently constructed and documented with reusable generator/split and detector evaluation protocols, beyond an experimental pool. Evidence and limitations retained in B3-03/per_paper/R110.json."
+            }
+          }
+        }
+      }
+    },
+    "curated-map:60fe19311af0fe89d6f3": {
+      "review_id": "R275",
+      "paper_id": "curated:7cfe39b3bc63f5b55f51",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "benchmark"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R275: R2 only: GenImage++ is an independently specified reusable test benchmark with new generator/prompt strata and evaluation protocol, not merely a large result table. Evidence and limitations retained in B3-03/per_paper/R275.json."
+            }
+          }
+        }
+      }
+    },
+    "curated-map:e124f09af8132412c75f": {
+      "review_id": "R275",
+      "paper_id": "curated:7cfe39b3bc63f5b55f51",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "benchmark"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R275: R2 only: GenImage++ is an independently specified reusable test benchmark with new generator/prompt strata and evaluation protocol, not merely a large result table. Evidence and limitations retained in B3-03/per_paper/R275.json."
+            }
+          }
+        }
+      }
+    },
+    "curated-map:1320cf36275076f10b74": {
+      "review_id": "R275",
+      "paper_id": "curated:7cfe39b3bc63f5b55f51",
+      "changed_fields": [
+        "research_types",
+        "taxonomy_review"
+      ],
+      "deltas": {
+        "research_types": {
+          "before_present": true,
+          "after_present": true,
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "benchmark"
+          ]
+        },
+        "taxonomy_review": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed"
+            }
+          },
+          "after": {
+            "tasks": {
+              "status": "reviewed"
+            },
+            "image_scopes": {
+              "status": "reviewed"
+            },
+            "research_types": {
+              "status": "reviewed",
+              "reason": "B4-03 R275: R2 only: GenImage++ is an independently specified reusable test benchmark with new generator/prompt strata and evaluation protocol, not merely a large result table. Evidence and limitations retained in B3-03/per_paper/R275.json."
+            }
+          }
+        }
+      }
+    },
+    "curated-map:892ef7f2c7b199932aef": {
+      "review_id": "P231",
+      "paper_id": "curated:0d918782407e05ade5bd",
+      "changed_fields": [
+        "ambiguity_status",
+        "metadata_status",
+        "venue_review_reason",
+        "venue_review_required",
+        "venue_track"
+      ],
+      "deltas": {
+        "ambiguity_status": {
+          "before_present": true,
+          "after_present": false,
+          "before": "unresolved",
+          "after": null
+        },
+        "metadata_status": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "overall": "Verified",
+            "default_field_status": "Verified",
+            "field_overrides": {
+              "venue": {
+                "status": "Needs review",
+                "source": "OpenAlex"
+              },
+              "affiliations": {
+                "status": "Curated",
+                "source": "Manual curation"
+              }
+            },
+            "source": "OpenAlex"
+          },
+          "after": {
+            "overall": "Verified",
+            "default_field_status": "Verified",
+            "field_overrides": {
+              "affiliations": {
+                "status": "Curated",
+                "source": "Manual curation"
+              }
+            },
+            "source": "OpenAlex"
+          }
+        },
+        "venue_review_reason": {
+          "before_present": true,
+          "after_present": false,
+          "before": "This is a standalone scholarly workshop venue. Its name alone does not establish a Workshop subtrack; confirm Main versus an actual nested workshop track from the paper/program, preserving the venue identity.",
+          "after": null
+        },
+        "venue_review_required": {
+          "before_present": true,
+          "after_present": true,
+          "before": true,
+          "after": false
+        },
+        "venue_track": {
+          "before_present": true,
+          "after_present": true,
+          "before": "Workshop",
+          "after": "Main"
+        }
+      }
+    },
+    "curated-map:b0b3eabf500ad0a06389": {
+      "review_id": "P231",
+      "paper_id": "curated:0d918782407e05ade5bd",
+      "changed_fields": [
+        "ambiguity_status",
+        "metadata_status",
+        "venue_review_reason",
+        "venue_review_required",
+        "venue_track"
+      ],
+      "deltas": {
+        "ambiguity_status": {
+          "before_present": true,
+          "after_present": false,
+          "before": "unresolved",
+          "after": null
+        },
+        "metadata_status": {
+          "before_present": true,
+          "after_present": true,
+          "before": {
+            "overall": "Verified",
+            "default_field_status": "Verified",
+            "field_overrides": {
+              "venue": {
+                "status": "Needs review",
+                "source": "OpenAlex"
+              },
+              "affiliations": {
+                "status": "Curated",
+                "source": "Manual curation"
+              }
+            },
+            "source": "OpenAlex"
+          },
+          "after": {
+            "overall": "Verified",
+            "default_field_status": "Verified",
+            "field_overrides": {
+              "affiliations": {
+                "status": "Curated",
+                "source": "Manual curation"
+              }
+            },
+            "source": "OpenAlex"
+          }
+        },
+        "venue_review_reason": {
+          "before_present": true,
+          "after_present": false,
+          "before": "This is a standalone scholarly workshop venue. Its name alone does not establish a Workshop subtrack; confirm Main versus an actual nested workshop track from the paper/program, preserving the venue identity.",
+          "after": null
+        },
+        "venue_review_required": {
+          "before_present": true,
+          "after_present": true,
+          "before": true,
+          "after": false
+        },
+        "venue_track": {
+          "before_present": true,
+          "after_present": true,
+          "before": "Workshop",
+          "after": "Main"
+        }
+      }
+    }
+  },
+  "dependent_counts": {
+    "R564": 3,
+    "R256": 2,
+    "R171": 3,
+    "R110": 1,
+    "R275": 3,
+    "P231": 2
+  },
+  "public_source_taxonomy": {
+    "detection": 621,
+    "method": 578,
+    "analysis_study": 86,
+    "survey": 21,
+    "source_attribution": 84,
+    "dataset": 142,
+    "benchmark": 101,
+    "localization": 45
+  },
+  "corpus_counts": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "shared_export_time": "2026-11-01T11:41:11Z",
+  "reports": {
+    "quality_report_change": "generation timestamp only",
+    "coverage_markdown_change": "independently recomputed source fingerprint only",
+    "other_three_report_files": "byte-identical"
+  },
+  "current_source_sha256": {
+    "data/curated/papers.csv": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+    "data/curated/paper_taxonomy.csv": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+    "data/curated/review_decisions.csv": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea"
+  },
+  "P231_marker_schema": {
+    "paper_ambiguity_status": "unresolved preserved",
+    "marker_ambiguity_status": "absent on both freshly derived curated markers",
+    "explanation": "_curated_marker constructs a fresh fixed field dictionary without ambiguity_status; VenueAudit confirmation fast path returns before resolution-status assignment. No exact campus or scientific claim is added.",
+    "changed_marker_fields": [
+      "venue_track",
+      "venue_review_required",
+      "venue_review_reason",
+      "metadata_status",
+      "ambiguity_status"
+    ]
+  },
+  "original_failed_new_test": {
+    "run": "affected",
+    "passed": 407,
+    "failed": 1,
+    "cause": "New projection helper retained baseline marker ambiguity_status; actual freshly derived P231 markers omit it. This was a test projection assumption, not a source or unrelated export change.",
+    "narrow_correction": "Only marker=True for P231 pops ambiguity_status. Keep whole-record equality and add insertion/removal negative cases."
+  },
+  "repository_written": false,
+  "export_or_test_invoked_by_reviewer": false
+}

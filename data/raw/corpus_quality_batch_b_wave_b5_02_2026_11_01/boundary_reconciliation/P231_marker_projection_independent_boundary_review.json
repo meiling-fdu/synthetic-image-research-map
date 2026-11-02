@@ -1,0 +1,287 @@
+{
+  "verdict": "APPROVED_EXACT_NARROW_PROJECTION_SUCCESSOR_WITH_TWO_ADDITIONAL_NEGATIVES",
+  "reviewed_at_utc": "2026-11-01T11:55:28.146245+00:00",
+  "reviewer": "independent historical-boundary auditor",
+  "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+  "predecessor_sha256": "62e0a478eff2051ee629f41e9f0b84ca05772cfddf198ef0b223a8fe7d64ae7b",
+  "successor_sha256": "89f68ce5802df739d867c06d9fdb8dda1b1e4159b9ec1be8b92e67c2e421c855",
+  "diff_sha256": "5672ff08e9294906e175ed40c4d0b0f288e32723d3b02c6c17cfe9e19e539965",
+  "affected_original_failure": {
+    "affected.log": {
+      "sha256": "479b1fc6125dd8abd4bdccf02dd12df6420900bf39c5246f73bd8341afd2f1ea",
+      "bytes": 1575
+    },
+    "affected.json": {
+      "sha256": "933bb1be3d57ffc2f131835d1e187da9971c46d706eb8b3c6d2c7b43c5cbf0f9",
+      "bytes": 2398
+    },
+    "affected.xml": {
+      "sha256": "ff95a1852c3caf3dbf9befe165f6e9f74737c7b66dff8b53a729def5cd6fa698",
+      "bytes": 69908
+    }
+  },
+  "observed_original_result": {
+    "passed": 407,
+    "failed": 1,
+    "failed_test": "test_public_projection_updates_exactly_six_papers_and_fourteen_dependents",
+    "failure": "new expected-public-projection fixture incorrectly copied old P231 marker ambiguity_status; all historical guards passed"
+  },
+  "comprehensive_matrix_binding": {
+    "path": "comprehensive_boundary_matrix.json",
+    "sha256": "7b386c489b296dfde13c81de65248a4e0fb698645bb88d3947c1048130bb8ffe",
+    "existing_inventory_entry": "b5_01::test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations, conditional P231 venue/metadata projection; also exact map/public field-delta checks",
+    "classification": "CURRENT_PROJECTION_TEST_ASSUMPTION_WITHIN_PREVIOUSLY_AUDITED_CONDITIONAL_BOUNDARY",
+    "not_additional_historical_guard_exception": true
+  },
+  "code_derivation": [
+    "scripts/curated_export.py:_curated_marker1063-1162 explicitly rebuilds each curated marker with named schema fields; ambiguity_status is absent. build_curated_map_records1905 emits those rebuilt markers.",
+    "scripts/venue_audit.py:paper212-219 confirmed fingerprint path returns before assigning ambiguity state; effective405-424 only creates ambiguity_status for a finding. New qualified Main decision has no finding.",
+    "scripts/export_public_preview.py:synchronize_publication_types2397 copies venue flags/track/reason from paper to markers, not ambiguity_status. Metadata overlay removes only resolved venue override, retaining affiliations.",
+    "Canonical paper merges preserve old ambiguity_status unresolved; freshly rebuilt two P231 markers omit key. This is representational distinction, not different paper identity/task/institution evidence."
+  ],
+  "exact_scope": [
+    "Add expected.pop(ambiguity_status,None) only under rid==P231 AND marker=True.",
+    "Preserve full equality for all674 papers and1410 maps, exact6changedpaper IDs/14dependents and every other field.",
+    "Add negativecases rejecting the legacy flag inserted into a new P231 marker and rejecting its removal from canonical paper.",
+    "No authoritative data, production exporter, original historical guard or historical receipt changes required."
+  ],
+  "checks": [
+    {
+      "name": "predecessor_hash",
+      "passed": true
+    },
+    {
+      "name": "successor_hash",
+      "passed": true
+    },
+    {
+      "name": "same_all_function_names",
+      "passed": true
+    },
+    {
+      "name": "only_two_expected_functions_change",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:sha",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:canonical",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:csv_rows",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:old",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:current",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:native",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:maps",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:valid_case",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_original_scope_and_exact_portable_evidence_seals",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_each_action_acceptance_or_open_hold",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_raw_prefix_and_every_actual_cell_delta",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_authoritative_public_taxonomy_totals_match_exact_approved_evolution",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_accounting_independent_original_ledger",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_native_helper_double_submission_is_byte_and_timestamp_idempotent",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_acceptance_rejects_wrong_identity_provenance_and_authorization",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_reject_unsupported_resource_state",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_reject_unfaithful_P231_state",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_required_caveats_are_preserved_separately_from_acceptance",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_only_approved_authoritative_files_and_exact_source_bytes_change",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:public_paper_ids_for_maps",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:assert_public_transaction",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_public_projection_updates_exactly_six_papers_and_fourteen_dependents",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_paired_export_metadata_preserves_every_nontimestamp_field",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_preserved_caveats_do_not_claim_independently_reproduced_results",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_generated_mapping_and_coverage_csvs_have_no_unrelated_changes",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_no_website_or_institution_source_changes_outside_paired_exports",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:assert_source_transaction",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_current_source_has_an_independent_exact_transaction_guard",
+      "passed": true
+    },
+    {
+      "name": "unchanged_function:test_current_source_guard_rejects_tampering_independently_of_historical_success",
+      "passed": true
+    },
+    {
+      "name": "exact_existing_boundary:tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "passed": true
+    },
+    {
+      "name": "exact_existing_boundary:tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "passed": true
+    },
+    {
+      "name": "exact_existing_boundary:tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "passed": true
+    },
+    {
+      "name": "exact_existing_boundary:tests/baseline_expectations.py",
+      "passed": true
+    },
+    {
+      "name": "exact_existing_boundary:tests/fixtures/batch_b_b5_01_endpoint.json",
+      "passed": true
+    },
+    {
+      "name": "exact_existing_boundary:tests/batch_b_historical_endpoints.py",
+      "passed": true
+    },
+    {
+      "name": "exact_existing_boundary:tests/test_batch_b_historical_endpoints.py",
+      "passed": true
+    },
+    {
+      "name": "approved_authoritative_bytes:data/curated/papers.csv",
+      "passed": true
+    },
+    {
+      "name": "approved_authoritative_bytes:data/curated/paper_taxonomy.csv",
+      "passed": true
+    },
+    {
+      "name": "approved_authoritative_bytes:data/curated/review_decisions.csv",
+      "passed": true
+    },
+    {
+      "name": "production_and_protected_unchanged:scripts/curated_export.py",
+      "passed": true
+    },
+    {
+      "name": "production_and_protected_unchanged:scripts/export_public_preview.py",
+      "passed": true
+    },
+    {
+      "name": "production_and_protected_unchanged:scripts/venue_audit.py",
+      "passed": true
+    },
+    {
+      "name": "production_and_protected_unchanged:scripts/venues.py",
+      "passed": true
+    },
+    {
+      "name": "production_and_protected_unchanged:tests/public_refinement_snapshot.py",
+      "passed": true
+    },
+    {
+      "name": "exact_two_P231_map_dependents",
+      "passed": true
+    },
+    {
+      "name": "canonical_paper_keeps_legacy_ambiguity",
+      "passed": true
+    },
+    {
+      "name": "old_marker_legacy_flag:curated-map:892ef7f2c7b199932aef",
+      "passed": true
+    },
+    {
+      "name": "new_marker_has_no_flag:curated-map:892ef7f2c7b199932aef",
+      "passed": true
+    },
+    {
+      "name": "map_authorized_fields_only:curated-map:892ef7f2c7b199932aef",
+      "passed": true
+    },
+    {
+      "name": "old_marker_legacy_flag:curated-map:b0b3eabf500ad0a06389",
+      "passed": true
+    },
+    {
+      "name": "new_marker_has_no_flag:curated-map:b0b3eabf500ad0a06389",
+      "passed": true
+    },
+    {
+      "name": "map_authorized_fields_only:curated-map:b0b3eabf500ad0a06389",
+      "passed": true
+    },
+    {
+      "name": "negative_marker_flag_insertion_present",
+      "passed": true
+    },
+    {
+      "name": "negative_paper_flag_removal_present",
+      "passed": true
+    }
+  ],
+  "check_count": 58,
+  "failed_checks": [],
+  "repo_modified_by_reviewer": false,
+  "tests_or_export_executed_by_reviewer": false,
+  "acceptance_limit": "Exact successor review approval only. Apply reviewedbytes then rerun affected gate and all mandatory full validation. Preserve original407/1failure evidence; no claim of pass until actualrun."
+}

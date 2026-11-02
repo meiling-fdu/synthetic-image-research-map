@@ -1,0 +1,200 @@
+{
+  "review_id": "R171",
+  "paper_id": "curated:a570863c3a6ac227b56c",
+  "title": "PGC: Peak-Guided Calibration for Generalizable AI-Generated Image Detection",
+  "doi": "",
+  "arxiv_id": "2605.21207",
+  "authors": [
+    "Xiaoyu Zhou",
+    "Jianwei Fei",
+    "Peipeng Yu",
+    "Jingchang Xie",
+    "Chong Cheng",
+    "Zhihua Xia"
+  ],
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "governing_policy_ids": [
+    "R1",
+    "R2"
+  ],
+  "current_status": "UNRESOLVED",
+  "reviewer": "b303_record_recovery",
+  "reviewed_utc": "2026-10-31T15:49:40.647856+00:00",
+  "review_phase": "EVIDENCE_ONLY_PROVISIONAL",
+  "maintainer_acceptance": "PENDING_NOT_FORMAL_DECISION",
+  "formal_action_closed": false,
+  "authoritative_data_changed": false,
+  "local_evidence_refs": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R171",
+      "finding": "CommGen15 is introduced as a challenging benchmark from 15 commercial generators. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R171",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "paper_id:curated:a570863c3a6ac227b56c",
+      "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R1",
+      "finding": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R2",
+      "finding": "Assign benchmark only when the paper contributes a reusable evaluation benchmark, challenge, protocol, systematic comparative framework, or benchmark resource intended to evaluate methods. Large experimental tables or evaluation across many generators alone are insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+    }
+  ],
+  "retrieval_cost": {
+    "recovery_network_requests": 0,
+    "recovery_manuscripts_downloaded": 0,
+    "existing_capture_reused": true,
+    "new_source_research": false,
+    "inherited_full_manuscript_attempts": 1,
+    "inherited_accepted_manuscripts": 1,
+    "inherited_same_endpoint_retries": 0,
+    "inherited_pdf_bytes": 8506583,
+    "inherited_pdf_transport_seconds": 9.186,
+    "accounting_source": "primary_retrievals.json; cached PMLR landing reused."
+  },
+  "reported_performance_independently_reproduced": false,
+  "outcome": "SUPPORTED_ADDITION",
+  "proposed_research_types": [
+    "method",
+    "dataset",
+    "benchmark"
+  ],
+  "scientifically_sufficient": true,
+  "rationale": "CommGen15 is an explicit paper contribution with documented acquisition, source URLs, composition and standardized image/frame preprocessing (R1). Its balanced binary task, external-training generalization setting, fixed-threshold accuracy/AP and comparative evaluation form a reusable benchmark resource (R2); support does not rest on generator count or result-table size.",
+  "identity_verification": {
+    "status": "TITLE_AUTHORS_MATCH_OFFICIAL_PROCEEDINGS_PDF",
+    "title_and_authors": "PDF p1 and cached PMLR landing match canonical title and six-author sequence.",
+    "doi": "None in assigned canonical record.",
+    "arxiv": "2605.21207 retained from canonical input; no arXiv version or equivalence check performed.",
+    "version": "Official PMLR 306 ICML 2026 PDF, 21 pages including appendix; cached landing cites 164828–164848 and 2026-09-29. PDF metadata creation 2026-05-20 is not the publication date.",
+    "differences": "No competing full-text version inspected; all scientific claims below are bounded to this cached PMLR PDF."
+  },
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/zhou26h/zhou26h.pdf",
+      "artifact": "evidence/groupB/R171-primary.pdf",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R171-primary.pdf",
+      "sha256": "79917f3d9fb967aa52007069c89fa920e1dd428ec662900650bea049dc4dc255",
+      "version": "PMLR 306 / ICML 2026, 21-page proceedings PDF",
+      "kind": "primary_manuscript"
+    },
+    {
+      "url": "https://proceedings.mlr.press/v306/zhou26h.html",
+      "artifact": "evidence/groupB/R171-local-pmlr.html",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R171-local-pmlr.html",
+      "sha256": "7fb76f85d1be7cf3009c9bfc9e58465cf870b395772288b8ca5ff1dab42e6b18",
+      "version": "Cached official PMLR bibliographic landing",
+      "kind": "official_identity_landing"
+    }
+  ],
+  "scientific_review": {
+    "R1": {
+      "assessment": "SUPPORTED",
+      "reason": "p2 contribution list; §3 p3 acquisition from official galleries/community repositories and COCO real controls; Appendix C pp13–16 composition/source/version detail; p9 research-only release statement."
+    },
+    "R2": {
+      "assessment": "SUPPORTED",
+      "reason": "Reusable balanced real/fake image-and-frame evaluation resource; §5.1 p5 training sets, baselines and AP/Acc with threshold 0.5; Tables3/12 pp6/17 specify SDv1.4 external training and per-platform testing. No within-CommGen15 train/validation split is established."
+    },
+    "empirical_validity": "Paper-reported results only; source/semantic confounds, dependence between frames and test-set selection were not independently audited.",
+    "causal_interpretation": "CAM/SHAP and robustness observations do not independently establish the proposed foreground suppression mechanism; preprocessing claims about eliminating biases are author interpretations.",
+    "availability": "p1 code URL and p9 research-only dataset release claim recorded; no code/data link, license text or live download verified during recovery.",
+    "reproducibility": "Source URLs and transformations are documented; dynamic galleries, hidden platform processing and incomplete per-sample version provenance limit reconstruction from the manuscript alone."
+  },
+  "evidence": [
+    {
+      "source": "evidence/groupB/R171-primary.pdf",
+      "locator": "PDF p2 contribution bullet; §3 Data Collection/Data Processing p3; Appendix C Dataset Composition/Standardization Pipeline p13",
+      "claim": "Resource construction is a named contribution, collecting platform outputs rather than local inference; COCO 2017 real images balance the binary task. Raw images and extracted frames are center-cropped to 320×320 and saved as PNG; Hunyuan sampled every 30 frames, other video sources every 60."
+    },
+    {
+      "source": "evidence/groupB/R171-primary.pdf",
+      "locator": "Table 1 p3; Appendix C pp13–16, Figure7 p14 and Table 10 p15",
+      "claim": "Nine static-image platform subsets and six video-derived frame subsets must remain distinct. Sora row contains 1,275 community-sourced static outputs despite Sora being primarily a video model. Table 10 provides platform/source URLs; manuscript versions include GPT-4o, FLUX.1/1.1 variants, Imagen4, multiple Ideogram variants, Aperture Max, Nano Banana family, Sora v1, SD1.5, Doubao-Seedance-1.0-pro, Kling1.6 and Veo2/3; not every platform has a uniquely pinned model version."
+    },
+    {
+      "source": "evidence/groupB/R171-primary.pdf",
+      "locator": "§5.1 p5; Table3 p6; Appendix D.1/E.1 p16; Table 12 p17; Impact Statement p9",
+      "claim": "The dataset is supplied for evaluation with specified external-training settings and Acc/AP metrics, alongside a research-only release claim. Detector implementation applies a further 224×224 center crop; do not confuse it with stored dataset crop size."
+    }
+  ],
+  "quantitative_evidence": [
+    {
+      "locator": "Table 1 p3; Appendix C p13; Table 10 p15",
+      "reported": {
+        "static_generated_images": 19472,
+        "extracted_video_frames": 13922,
+        "generated_samples_total": 33394,
+        "real_COCO_images": 33394,
+        "combined_samples": 66788,
+        "static_platform_subsets": 9,
+        "video_platform_subsets": 6,
+        "source_videos_from_table_counts": 5130
+      },
+      "caveat": "Generated-sample total combines static images with correlated frame derivatives, not 33,394 independent still-image generations. Video count 5,130 is arithmetic sum of Table 1 parentheses, not a separately reported total."
+    },
+    {
+      "locator": "Table 1 p3 / Table 10 p15",
+      "reported_video_frames_and_source_videos": {
+        "Akool": [
+          2615,
+          358
+        ],
+        "Doubao": [
+          2187,
+          729
+        ],
+        "Hailuo": [
+          3776,
+          1390
+        ],
+        "Hunyuan": [
+          240,
+          49
+        ],
+        "Kling": [
+          3932,
+          2184
+        ],
+        "Veo": [
+          1172,
+          420
+        ]
+      },
+      "caveat": "Preserve Frames (Videos) units; source-video counts cannot be used as frame counts."
+    },
+    {
+      "locator": "§5.2 p6; Appendix E.1 p16 / Table 12 p17",
+      "reported": "PGC 97.9% mean Acc and 99.0% mean AP; DDA 85.6% mean Acc and 97.0% mean AP.",
+      "caveat": "12.3 percentage-point Acc difference and 2.0-point AP difference, not a 12.3% relative improvement; tabulated cross-platform means are not independently verified pooled accuracy."
+    }
+  ],
+  "limitations": [
+    "Dataset includes video-derived frames and some platforms with editing/identity-centric functionality; this review adds no video, attribution or face-manipulation task/scope label.",
+    "Gallery acquisition and platform descriptions do not verify every output provenance or exact model revision; Table 10 URLs are manuscript-reported as of May 16, 2026, with a Sora-service discontinuation caveat.",
+    "No independent download/availability, licensing audit, duplicate/near-duplicate audit, frame-level independence check or performance reproduction.",
+    "External-training evaluation is explicit; no unsupported claim of a dedicated CommGen15 train/validation/test split."
+  ],
+  "confidence": "High for bounded R1/R2 contribution support; moderate for practical reproducibility."
+}

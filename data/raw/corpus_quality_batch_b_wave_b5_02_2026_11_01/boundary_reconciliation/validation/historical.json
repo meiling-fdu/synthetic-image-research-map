@@ -1,0 +1,45 @@
+{
+  "mode": "historical",
+  "command": [
+    "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--tb=short",
+    "tests/test_historical_integrity_successors.py",
+    "tests/test_public_refinement_successors.py",
+    "tests/test_b5_publish_fixture_successor.py",
+    "tests/test_historical_test_fixtures.py",
+    "tests/test_admin_publish_workflow_reliability.py",
+    "tests/test_publish_workflow_fixture_isolation.py",
+    "tests/test_systematic_tier1.py",
+    "tests/test_systematic_tier2_policy.py",
+    "tests/test_systematic_tier2_application.py",
+    "tests/test_systematic_tier2_include.py",
+    "tests/test_systematic_tier2_high_priority_evidence.py",
+    "tests/test_systematic_tier2_normal_priority_evidence.py",
+    "--junitxml=/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/historical.xml"
+  ],
+  "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+  "started_utc": "2026-11-01T12:16:36.571862+00:00",
+  "elapsed_seconds": 83.609,
+  "returncode": 0,
+  "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/historical.log",
+  "log_sha256": "860c3898164702dcef44493e4ecdb8cb4e4b5c951c7577c32004428d93d0f7a9",
+  "junit_sha256": "3b542b2e40f95be5f03b927f96e873d36d3d440d109259b07dcb5caeeec4a06b",
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "129",
+      "time": "82.900",
+      "timestamp": "2026-11-01T20:16:37.213982+08:00",
+      "hostname": "Meilingers-MacBook-Pro.local"
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,264 @@
+{
+  "schema": "batch-b-b3-03-per-paper-evidence-1",
+  "batch_id": "B3-03",
+  "planned_batch_id": "B2-03",
+  "reviewer_group": "A",
+  "review_id": "R154",
+  "action_ids": [
+    "R154"
+  ],
+  "paper_id": "curated:8e9658fa727094695be8",
+  "title": "MIRAGE: Towards AI-Generated Image Detection in the Wild",
+  "canonical_identity": {
+    "paper_id": "curated:8e9658fa727094695be8",
+    "title": "MIRAGE: Towards AI-Generated Image Detection in the Wild",
+    "authors": [
+      "OuCheng Huang",
+      "Manxi Lin",
+      "Jiexiang Tan",
+      "Xiaoxiong Du",
+      "Yang Qiu",
+      "Junjun Zheng",
+      "Xiangheng Kong",
+      "Yuning Jiang",
+      "Bo Zheng"
+    ],
+    "doi": "10.1609/aaai.v40i7.37421",
+    "arxiv_id": "",
+    "canonical_url": "https://doi.org/10.1609/aaai.v40i7.37421",
+    "current_taxonomy_id": "paper_id:curated:8e9658fa727094695be8"
+  },
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "original_review_question": "MIRAGE contributes a human-verified in-the-wild benchmark and synthesized image collection, alongside MIRAGE-R1.",
+  "governing_policies": {
+    "R1": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+    "R2": "Assign benchmark only when the paper contributes a reusable evaluation benchmark, challenge, protocol, systematic comparative framework, or benchmark resource intended to evaluate methods. Large experimental tables or evaluation across many generators alone are insufficient."
+  },
+  "local_evidence_reused": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R154",
+      "finding": "MIRAGE contributes a human-verified in-the-wild benchmark and synthesized image collection, alongside MIRAGE-R1. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R154",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "paper_id:curated:8e9658fa727094695be8",
+      "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R1",
+      "finding": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R2",
+      "finding": "Assign benchmark only when the paper contributes a reusable evaluation benchmark, challenge, protocol, systematic comparative framework, or benchmark resource intended to evaluate methods. Large experimental tables or evaluation across many generators alone are insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "local_byte_hash_verified": true
+    }
+  ],
+  "provisional_only": true,
+  "formal_maintainer_decision": false,
+  "authoritative_action_closed": false,
+  "current_tasks_preserved": true,
+  "method_label_preserved": true,
+  "authoritative_changes_by_reviewer": 0,
+  "written_utc": "2026-10-31T13:05:11.887229+00:00",
+  "outcome": "IDENTITY_BLOCKED",
+  "proposed_research_types": [
+    "method"
+  ],
+  "conditional_candidate_research_types": [
+    "method",
+    "dataset",
+    "benchmark"
+  ],
+  "confidence": {
+    "canonical_DOI_identity": "high",
+    "candidate_preprint_R1_R2_support": "high",
+    "preprint_to_canonical_version_equivalence": "unverified due material first-author conflict",
+    "hold": "high"
+  },
+  "identity_verification": {
+    "status": "CANDIDATE_PREPRINT_IDENTITY_CONFLICT_NOT_SILENTLY_MERGED",
+    "canonical_DOI_first_author": "OuCheng Huang",
+    "candidate_arxiv_version": "2508.13223v1, submitted2025-08-17,46 PDF pages",
+    "candidate_pdf_first_author": "Cheng Xia",
+    "matching_evidence": "Exact title, other eight authors in the same order, same affiliation/project and same MIRAGE/MIRAGE-R1 contribution narrative. The corresponding DOI registration independently confirms canonical first author OuCheng Huang.",
+    "unresolved_boundary": "The inspected preprint and the registered2026 proceeding have different first-author identities. No authoritative correction/version bridge was found or inferred. Publisher-final manuscript was not retrieved; the one-full-manuscript budget was used for this explicitly limited candidate preprint. No alias or authorship change is presumed."
+  },
+  "sources": [
+    {
+      "source_id": "R154-author-v1.pdf",
+      "kind": "PRIMARY_AUTHOR_PREPRINT_CANDIDATE",
+      "url": "https://arxiv.org/pdf/2508.13223v1",
+      "artifact": "evidence/groupA/R154-author-v1.pdf",
+      "sha256": "776c1304ebf723ad54e2d5ef2753c03a95b5a26bfa1447d7330aa75de3bbf5a0",
+      "bytes": 25016438,
+      "version": "arXiv2508.13223v1; not asserted equivalent to AAAI DOI final"
+    },
+    {
+      "source_id": "R154-doi-registration.json",
+      "kind": "PRIMARY_DOI_REGISTRATION",
+      "url": "https://api.crossref.org/works/10.1609%2Faaai.v40i7.37421",
+      "artifact": "evidence/groupA/R154-doi-registration.json",
+      "sha256": "8386363c85f56156b8fe9d137cf7abc1cfa87f31729a88cbb1c256551622c4e2",
+      "bytes": 4579,
+      "version": "DOI-matched registration names OuCheng Huang;2026-03-14"
+    },
+    {
+      "source_id": "R154-tables2-4.png",
+      "kind": "DERIVED_VISUAL_VERIFICATION",
+      "url": "https://arxiv.org/pdf/2508.13223v1",
+      "artifact": "evidence/groupA/R154-tables2-4.png",
+      "sha256": "9e015b8428c2325992fe3cafa5e5df875594e1cad113ff54547728079f771cc4",
+      "bytes": 612706,
+      "version": "PDFp6 Tables2-4 viewed"
+    },
+    {
+      "source_id": "R154-canonical.html",
+      "kind": "ACCESS_FAILURE_NOT_MANUSCRIPT",
+      "url": "https://doi.org/10.1609/aaai.v40i7.37421",
+      "artifact": "evidence/groupA/R154-canonical.html",
+      "sha256": "2326a0067974192fd1408f967a997e20bab5b381cb37ba99d738d735c091c818",
+      "bytes": 7018,
+      "version": "AAAI HTML browser challenge, not article text"
+    }
+  ],
+  "scientific_review": {
+    "review_scope": "The following are candidate-preprint findings only. Strong contribution evidence is not automatically transferred to the conflicted canonical proceeding record.",
+    "contribution_locator": "PDFp2 Introduction contributions; pp3-4 MIRAGE Dataset/Construction/Partition; pp6-7 Experiments and Tables2-5; pp12-17 appendix Dataset Details.",
+    "data_resource": {
+      "name": "MIRAGE",
+      "initial_human_pool": 15000,
+      "annotators": 29,
+      "independent_annotations_per_image": 3,
+      "retained_human_curated_images": 11559,
+      "retained_real": 8465,
+      "retained_fake": 3094,
+      "construction": "WebsitesA/B and LAION data; retain unanimous expert real/fake labels agreeing with original platform tags, remove uncertain/disagreeing cases. Add vanilla and composite generator outputs plus VLM reasoning annotations and final expert quality filtering.",
+      "generation_patterns": [
+        "Text-to-Image",
+        "Inpainting/Outpainting",
+        "Instruction Editing",
+        "Face Swapping",
+        "Background Change",
+        "Virtual Try-On",
+        "Realistic Model Generation",
+        "Pose-Consistent Model Generation"
+      ],
+      "reuse_intent": "Named separate first contribution, dedicated construction/partition sections and released-resource intent; abstract says benchmark/code will be made public. Availability, license and actual release were not independently established."
+    },
+    "benchmark_protocol": {
+      "location": "PDFpp4,6-7",
+      "main_reported_train": 20000,
+      "main_reported_ID_test": 1685,
+      "main_reported_ID_total": 21685,
+      "main_reported_OOD_total": 12087,
+      "design": "SourceA/LAION for training/ID; unseen sourceB and generator/pipeline classes for human-curated and eight-pattern OOD sets. Compare five specialized detectors, three closed-source zero-shot VLMs and three fine-tuned foundation VLMs, with accuracy/precision/recall and separate Chameleon transfer testing.",
+      "R1_support_on_candidate": "Explicitly curated and systematically constructed reusable resource, not experiment-only data.",
+      "R2_support_on_candidate": "Explicit source/generator-disjoint evaluation partitions and named categories, metrics, baselines and cross-benchmark comparison; this independent protocol provision, not the number of generators or large tables, supports benchmark."
+    },
+    "quantitative_evidence": [
+      {
+        "location": "PDFp6 Table2, visually checked",
+        "finding": "MIRAGE-R1 ID accuracy97.26,OOD-C78.46, mean72.81. Gemini2.5-Pro mean67.26 but OOD-C82.30. Thus mean advantage is5.55 percentage points, while the proposed method does not lead OOD-C."
+      },
+      {
+        "location": "PDFp6 Table3, visually checked",
+        "finding": "OnChameleon, MIRAGE-R1 ALL78.31,FAKE50.29,REAL98.37. CNNSpot* trained onGenImage hasALL68.89, whileCNNSpot trained onMIRAGE hasALL64.21. Comparisons do not establish blanket superiority of the training dataset on every aggregate metric."
+      },
+      {
+        "location": "PDFp6 Table4, visually checked",
+        "finding": "HA-R adaptive OOD-C78.46 versus final-answer-only78.13 and initial guess-reason-answer75.25. These are reported outcomes, not independent proof of causal reasoning fidelity."
+      }
+    ]
+  },
+  "evidence_to_claim": [
+    {
+      "policy": "R1",
+      "claim": "Candidate preprint supports dataset",
+      "scientifically_sufficient_for_candidate_preprint": true,
+      "transfer_to_canonical_authorized": false
+    },
+    {
+      "policy": "R2",
+      "claim": "Candidate preprint supports benchmark",
+      "scientifically_sufficient_for_candidate_preprint": true,
+      "transfer_to_canonical_authorized": false
+    }
+  ],
+  "limitations_and_conflicts": [
+    {
+      "kind": "material_version_identity_conflict",
+      "finding": "OuCheng Huang in DOI registration/canonical record versus Cheng Xia in arXivmetadata and fullv1 manuscript. Eight coauthors and exact title match; neither equivalence nor nonidentity is forced."
+    },
+    {
+      "kind": "numerical_discrepancy",
+      "finding": "PDFp4 main partition gives20000 training images; PDFp16 appendix Data Distribution says2000. Preserve both, do not select or silently correct a value."
+    },
+    {
+      "kind": "numerical_discrepancy",
+      "finding": "PDFp4 describes64 pipelines integrating53 models; PDFp16 describes64 different models. The distinct-count relationship is not reconciled by the reviewed text."
+    },
+    {
+      "kind": "implementation_discrepancy",
+      "finding": "Mainp6 describes64H20 GPUs forSFT and batch8; appendixp17 describes8H20 GPUs and effective global batch64. This affects reproducibility interpretation, not contribution status."
+    },
+    {
+      "kind": "prose_table_discrepancy",
+      "finding": "Mainp7 broad OOD superiority wording is limited byTable2: Gemini OOD-C82.30 exceeds MIRAGE78.46; the5.55point mean advantage is not an advantage on every subset."
+    },
+    {
+      "kind": "label_provenance_limit",
+      "finding": "Human labels use trained visual judgment plus platform tags, not independently audited creation provenance. Anonymous proprietary sources, uncertainty filtering, release/license uncertainty and temporal skew2022-2025 constrain reuse and validity claims."
+    },
+    {
+      "kind": "corruption_naming_discrepancy",
+      "finding": "PDFp7 Table5 labels Gaussian blur, while adjacent prose refers to Gaussian noise; preserve the mismatch."
+    }
+  ],
+  "potential_followup_issues": [
+    {
+      "status": "VERSION_CONDITIONED_FOLLOWUP_ONLY_NO_NEW_ACTION",
+      "finding": "Candidate preprint resource includes face swaps and local/composite edits whereas canonical image_scopes currently fully_generated. Do not transfer this observation or create a formal taxonomy review without resolving the work/version boundary and receiving separate scope authorization.",
+      "source": "Candidate preprint pp3-4 and appendixpp14-16"
+    }
+  ],
+  "proposed_B4_action": "KeepR154 open pending authoritative work/version/first-author bridge. Conditional R1/R2 recommendation on the inspected candidate is method;dataset;benchmark; preserve canonical tasks/method and all identity fields. Do not claim publisher-final equivalence or use numerical conflicts to deny an otherwise substantive candidate resource contribution.",
+  "retrieval_cost": {
+    "successful_full_manuscripts": 1,
+    "full_manuscript_bytes": 25016438,
+    "version": "arXiv2508.13223v1",
+    "publisher_final_manuscripts_retrieved": 0,
+    "new_dataset_or_weight_downloads": 0
+  },
+  "sources_count": 4,
+  "actual_effort": {
+    "timing_basis": "Shared wave/reviewer wall span, not exclusive analyst hours. Individual focused timers were not instrumented before source recovery; no invented person-minute allocations.",
+    "wave_started_utc": "2026-10-31T12:15:02.337367+00:00",
+    "first_reliably_recorded_agent_retrieval_utc": "2026-10-31T12:22:39.349261+00:00",
+    "record_written_utc": "2026-10-31T13:05:11.887229+00:00",
+    "source_network_durations_available_in_retrieval_records": true,
+    "preparation_before_first_retrieval_not_separately_timed": true
+  }
+}

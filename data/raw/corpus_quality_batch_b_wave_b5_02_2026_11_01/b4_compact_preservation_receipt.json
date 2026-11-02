@@ -1,0 +1,282 @@
+{
+  "schema": "b5-02-additive-compact-b4-preservation-1",
+  "kind": "DERIVED_SUMMARY_NOT_ORIGINAL_RECEIPT",
+  "created_utc": "2026-11-01T09:04:19.122500+00:00",
+  "source": {
+    "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+    "origin_relative_path": "qc/preservation_final.json",
+    "sha256": "ce71adbd57b95b02d30cc753c993adcd303e7cc8aa1e1553633bdebc0ac01463",
+    "bytes": 10270890
+  },
+  "boundary": "This additive summary authenticates and summarizes the original B4 local checkpoint. It neither replaces the 10 MB original inventory nor establishes B5 current-state preservation. The original source remains in the preserved sealed external B4 archive.",
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "manifest_sha256": "189eabed6bfd3989ceb1abc8300c7b80e12e4453cb13e1fa4397e72b6cd753f0",
+  "original_started_utc": "2026-11-01T08:41:45.915784+00:00",
+  "original_completed_utc": "2026-11-01T08:42:10.284155+00:00",
+  "original_status": "PASS_WITH_PRESERVED_PREEXISTING_UNSEALED_B3_EXTRA",
+  "raw_counts": {
+    "native_tracked_before": 4658,
+    "native_tracked_after": 4658,
+    "native_changed_tracked_files": 3,
+    "native_untracked": 0,
+    "native_ignored": 0,
+    "source_cells_changed": 35,
+    "appended_decision_rows": 11,
+    "B3_sealed_files": 123,
+    "B3_full_archive_files": 126,
+    "accepted_B5_sealed_files": 281,
+    "accepted_B5_full_archive_files": 282,
+    "primary_protected_files": 128,
+    "frozen_physical_roots": 6,
+    "frozen_logical_files": 49,
+    "frozen_gzip_unmaterialized_files": 9,
+    "CI_immutable_evidence_files": 632,
+    "old_B4_pending_files_each": {
+      "/Users/meilinger/.codex/worktrees/batch-b-b4-01/synthetic-image-research-map": 8,
+      "/Users/meilinger/.codex/worktrees/batch-b-b4-02/synthetic-image-research-map": 8
+    },
+    "preserved_source_worktrees": 7,
+    "additional_concurrent_worktrees": 5,
+    "external_worktrees_with_observed_differences": 0
+  },
+  "native_checks": {
+    "head_unchanged": true,
+    "branch_unchanged": true,
+    "logical_index_unchanged": true,
+    "physical_index_unchanged": true,
+    "no_staged_changes": true,
+    "only_three_approved_tracked_paths_changed": true,
+    "tracked_inventory_same": true,
+    "every_tracked_byte_matches_exact_expected_delta": true,
+    "untracked_inventory_unchanged": true,
+    "ignored_inventory_unchanged": true,
+    "no_untracked_files": true,
+    "no_ignored_files": true
+  },
+  "zero_change_flags": {
+    "unsupported_native_tracked_changes_zero": true,
+    "staged_changes_zero": true,
+    "new_native_files_zero": true,
+    "manual_data_changes_zero": true,
+    "raw_processed_data_changes_zero": true,
+    "public_site_and_exports_changes_zero": true,
+    "code_test_documentation_changes_zero": true,
+    "B3_sealed123_changes_zero": true,
+    "B3_seals_and_known_unsealed_extra_changes_zero": true,
+    "accepted_B5_sealed281_and_receipt_changes_zero": true,
+    "B4_old_pending8_each_changes_zero": true,
+    "primary_protected128_changes_zero": true,
+    "frozen49_physical_logical_and_presence_changes_zero": true,
+    "C13_receipt_changes_zero": true,
+    "separate39_receipt_changes_zero": true,
+    "B2_planning_changes_zero": true,
+    "immutable_evidence_CI632_changes_zero": true,
+    "all_old_source_worktree_changes_zero": true,
+    "all_additional_live_worktree_changes_zero": true,
+    "primary_concurrent_observation_changes_zero": true
+  },
+  "all_zero_change_flags_true": true,
+  "native_final_metadata": {
+    "head": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+    "branch": "",
+    "status": " M data/curated/paper_taxonomy.csv\n M data/curated/papers.csv\n M data/curated/review_decisions.csv\n",
+    "staged_name_status": "",
+    "index_sha256": "5cd92328c7bf288bd14ad8321190d42fdc4380500ca4a9870a2aca1a0b5518f9",
+    "physical_index_sha256": "794a2a9aff57de868474f5aa04769fbc070efcca525d31453f7a71801e5151ed",
+    "index_hash_definition": "SHA256 of git ls-files --stage -z, without optional Git locks."
+  },
+  "exact_csv_summary": {
+    "source_cell_count": 35,
+    "source_cells_exact_manifest_match": true,
+    "appended_decision_rows": 11,
+    "decision_rows_exact_manifest_match": true,
+    "errors": []
+  },
+  "protected_group_comparisons": {
+    "B3_sealed_123": {
+      "expected_count": 123,
+      "actual_count": 123,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "accepted_B5_sealed_281": {
+      "expected_count": 281,
+      "actual_count": 281,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "protected128_primary": {
+      "expected_count": 128,
+      "actual_count": 128,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "B3_frozen_presence": {
+      "expected_count": 49,
+      "actual_count": 49,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "native_frozen_presence": {
+      "expected_count": 49,
+      "actual_count": 49,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "immutable_evidence_CI_632": {
+      "expected_count": 632,
+      "actual_count": 632,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "B2_planning": {
+      "expected_count": 3,
+      "actual_count": 3,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "C13_source_receipts": {
+      "expected_count": 4,
+      "actual_count": 4,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "separate39_source_receipt": {
+      "expected_count": 1,
+      "actual_count": 1,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "baseline_sources": {
+      "expected_count": 5,
+      "actual_count": 5,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "B3_seals": {
+      "expected_count": 2,
+      "actual_count": 2,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "B3_observed_unsealed_extra": {
+      "expected_count": 1,
+      "actual_count": 1,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "B3_full_archive_inventory": {
+      "expected_count": 126,
+      "actual_count": 126,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "accepted_B5_seal": {
+      "expected_count": 1,
+      "actual_count": 1,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    },
+    "accepted_B5_full_archive_inventory": {
+      "expected_count": 282,
+      "actual_count": 282,
+      "added": [],
+      "missing": [],
+      "changed": [],
+      "unchanged": true
+    }
+  },
+  "C13_preserved_accounting": {
+    "total_actions": 41,
+    "resolved_before": 27,
+    "resolved": 28,
+    "external_unresolved": 13,
+    "maintainer_judgments": 0,
+    "total_unresolved": 13,
+    "remaining_external_ids": [
+      "T141",
+      "U010",
+      "R117",
+      "R176",
+      "R376",
+      "R455",
+      "R460",
+      "R535",
+      "R537",
+      "R548",
+      "R549",
+      "R580",
+      "R615"
+    ],
+    "alternative_primary_source_candidates": [
+      "R117",
+      "R176",
+      "R455",
+      "R460",
+      "R535",
+      "R537",
+      "R548",
+      "R549",
+      "R580",
+      "R615"
+    ],
+    "blocked_pending_authoritative_evidence": [
+      "T141",
+      "R376",
+      "U010"
+    ],
+    "scientific_status_of_external_debts": "EVIDENCE_STILL_INSUFFICIENT"
+  },
+  "separate39_preserved_inventory": {
+    "scope": "Separate successor inventory, never combined with original159 BatchB actions. Different units overlap. Existing imported records only checked for preservation.",
+    "imported_affiliation_debt_papers": 39,
+    "overlapping_taxonomy_review_papers": 14,
+    "held_candidates": 12,
+    "source_receipt": "data/raw/corpus_quality_batch_b_wave_b1e_2026_10_17/evidence_manifest.json#separate_import_review_inventory",
+    "historical_receipt_hashes_preserved": true,
+    "fresh_source_fingerprints": "source_files_sha256 uses current cc1e baseline, not the historical pre-B1E taxonomy hash."
+  },
+  "observed_external_differences": [],
+  "unstable_streaming_reads": [],
+  "failures": [],
+  "known_preexisting_unsealed_B3_extra": [
+    {
+      "relative_path": "evidence/groupA/completion.json",
+      "sha256": "7f2fe45f5868bb2ceb116551954b7c6c2db2d86d5fe55c045f99024f944ed0a5",
+      "bytes": 1638
+    }
+  ],
+  "original_audit_performance": {
+    "streaming_hashes_computed": 65260,
+    "streamed_bytes": 20086722569,
+    "elapsed_seconds": 24.368
+  }
+}

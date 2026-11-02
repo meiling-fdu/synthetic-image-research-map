@@ -1,0 +1,779 @@
+{
+  "status": "PASS",
+  "checks_passed": 154,
+  "failures": [],
+  "checked_utc": "2026-11-01T01:00:07.036089+00:00",
+  "scope": "Lightweight evidence, identity, provenance, accounting and read-only Git checks; no full suite or export",
+  "checks": [
+    {
+      "name": "Exactly11 original actions in original order",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Exactly10 original paper identities",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "All evidence outcomes within vocabulary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Original B2 membership unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 canonical identity unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 evidence record pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 recommendation agrees with record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 remains formally open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 no task change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 change only assigned dimension",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 scoped R1/R2 proposal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 source0 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R110-canonical.pdf"
+    },
+    {
+      "name": "R110 source0 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 source0 PDF magic",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 source1 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R110-table2-3.png"
+    },
+    {
+      "name": "R110 source1 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 canonical identity unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 evidence record pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 recommendation agrees with record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 remains formally open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 no task change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 change only assigned dimension",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 no forced change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 source0 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R138-doi-registration.json"
+    },
+    {
+      "name": "R138 source0 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 source1 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R138-official-readme.txt"
+    },
+    {
+      "name": "R138 source1 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 source2 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R138-canonical.html"
+    },
+    {
+      "name": "R138 source2 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 canonical identity unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 evidence record pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 recommendation agrees with record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 remains formally open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 no task change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 change only assigned dimension",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 no forced change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 source0 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R154-author-v1.pdf"
+    },
+    {
+      "name": "R154 source0 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 source0 PDF magic",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 source1 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R154-doi-registration.json"
+    },
+    {
+      "name": "R154 source1 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 source2 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R154-tables2-4.png"
+    },
+    {
+      "name": "R154 source2 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 source3 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R154-canonical.html"
+    },
+    {
+      "name": "R154 source3 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 canonical identity unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 evidence record pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 recommendation agrees with record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 remains formally open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 no task change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 change only assigned dimension",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 no forced change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 source0 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R161-official-landing.html"
+    },
+    {
+      "name": "R161 source0 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 source1 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/primary_retrievals.json"
+    },
+    {
+      "name": "R161 source1 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 source2 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R161-alternate-retrieval.json"
+    },
+    {
+      "name": "R161 source2 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 canonical identity unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 evidence record pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 recommendation agrees with record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 remains formally open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 no task change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 change only assigned dimension",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 scoped R1/R2 proposal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 source0 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R171-primary.pdf"
+    },
+    {
+      "name": "R171 source0 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 source0 PDF magic",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 source1 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R171-local-pmlr.html"
+    },
+    {
+      "name": "R171 source1 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 canonical identity unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 evidence record pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 recommendation agrees with record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 remains formally open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 no task change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 change only assigned dimension",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 no forced change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 source0 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R187-doi-registration.json"
+    },
+    {
+      "name": "R187 source0 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 source1 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R187-canonical.html"
+    },
+    {
+      "name": "R187 source1 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 source2 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R187-publisher-vor.html"
+    },
+    {
+      "name": "R187 source2 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 canonical identity unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 evidence record pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 recommendation agrees with record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 remains formally open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 no task change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 change only assigned dimension",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 qualified V1 role",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 source0 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/P231-official-program.html"
+    },
+    {
+      "name": "P231 source0 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 source1 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json"
+    },
+    {
+      "name": "P231 source1 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 canonical identity unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 evidence record pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 recommendation agrees with record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 remains formally open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 no task change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 change only assigned dimension",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 no forced change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 source0 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R231-acm-primary.response"
+    },
+    {
+      "name": "R231 source0 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 source1 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json"
+    },
+    {
+      "name": "R231 source1 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 source2 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/P231-official-program.html"
+    },
+    {
+      "name": "R231 source2 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 canonical identity unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 evidence record pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 recommendation agrees with record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 remains formally open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 no task change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 change only assigned dimension",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 scoped R1/R2 proposal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 source0 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R256-primary.pdf"
+    },
+    {
+      "name": "R256 source0 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 source0 PDF magic",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 canonical identity unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 evidence record pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 recommendation agrees with record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 remains formally open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 no task change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 change only assigned dimension",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 scoped R1/R2 proposal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 source0 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-neurips2025.pdf"
+    },
+    {
+      "name": "R275 source0 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 source0 PDF magic",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 source1 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-official-landing.html"
+    },
+    {
+      "name": "R275 source1 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 canonical identity unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 evidence record pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 recommendation agrees with record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 remains formally open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 no task change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 change only assigned dimension",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 scoped R1/R2 proposal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 source0 present",
+      "passed": true,
+      "detail": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R564-primary.pdf"
+    },
+    {
+      "name": "R564 source0 SHA256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 source0 PDF magic",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Handoff matches disposition matrix",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "All11 handoff actions unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No evidence decrement to source accounting",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No automatic B4",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HEAD exactly published baseline",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Repository tracked and untracked status empty",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Index empty",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No repository ignored files",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Receipt present qc/groupA-independent-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Receipt present qc/groupB-independent-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Receipt present qc/root-group-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Receipt present qc/independent_scientific_QC.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Receipt present qc/preservation_baseline.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Receipt present qc/baseline_validation_corrected.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Receipt present qc/preservation_final.json",
+      "passed": true,
+      "detail": null
+    }
+  ]
+}

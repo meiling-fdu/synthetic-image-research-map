@@ -1,0 +1,1766 @@
+{
+  "archive_root": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01",
+  "entries": [
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "adjudication_manifest.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b4_03_2026_11_01/adjudication_manifest.json",
+      "sha256": "189eabed6bfd3989ceb1abc8300c7b80e12e4453cb13e1fa4397e72b6cd753f0",
+      "bytes": 241589,
+      "purpose": "Original accepted/held transaction, 35 exact cell deltas, 11 native row/binding records."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "b5_02_handoff.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b4_03_2026_11_01/b5_02_handoff.json",
+      "sha256": "7b0ce2efbc5cc003c69df6c54ade9493e95810cfbf1fa1b9b2408d1b500fc8d1",
+      "bytes": 5949,
+      "purpose": "Original transfer receipt and bounded P231/R231 semantics."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "adjudication_report.md",
+      "repository_path": "docs/corpus_quality_batch_b_wave_b4_03_2026_11_01.md",
+      "sha256": "5f7bd71a30265f0b61455267a58066cdaf128545507033dc306fe54eb3b5682a",
+      "bytes": 9166,
+      "purpose": "Byte-preserved original local adjudication report; retain its original phase wording."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "completion.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/completion.json",
+      "sha256": "639203d57d9655764f8fb7ed5c05abed03f86e0a92a36422ab998d02aec286a3",
+      "bytes": 1840,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "checksums.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/checksums.json",
+      "sha256": "fce10ceb31e7a807df3431d1de54f39abeeda49cbca9ec1d092c8f9faa79a39f",
+      "bytes": 9287,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "validation.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/validation.json",
+      "sha256": "50adb7dc2d943e6d04480607e0ec89bb15aee178c28ec53c135c5fedd2f0b120",
+      "bytes": 5740,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "changed_file_inventory.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/changed_file_inventory.json",
+      "sha256": "22cc50ad6233ff7fe002ae3af780a4aac1d45ab8e86a61b8ea5bd64ac28d1aec",
+      "bytes": 1942,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "investigation/B3_input_verification.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/investigation/B3_input_verification.json",
+      "sha256": "db2de93e129f8433658dda530254ec7598b27ae033401488065a1e7363af2ada",
+      "bytes": 471,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "investigation/schema_preflight.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/investigation/schema_preflight.json",
+      "sha256": "453aa3060ee883d577607701b68ed9b90bfc1aed56a2fb677a9e40f42b05abfa",
+      "bytes": 23422,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "investigation/P231_semantics_review.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/investigation/P231_semantics_review.json",
+      "sha256": "525fd4b7f8b93eb1a2c6eb5ac3e69e4e15c38db19a076cb1633b6697520ba3b0",
+      "bytes": 76202,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "investigation/P231_semantics_review.md",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/investigation/P231_semantics_review.md",
+      "sha256": "099746373282cdf2ed71ccea8001ca9257819481eb16263046edaddbb5a86119",
+      "bytes": 12237,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/independent_adjudication_review.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/independent_adjudication_review.json",
+      "sha256": "1615d8b14adc45144109edee5608ee8757b7780838826cd4296b09379c6a08b2",
+      "bytes": 56833,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/independent_preapply_review.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/independent_preapply_review.json",
+      "sha256": "0cd6fe52db94bbec4f98479da84424732117e12c0f15a0e482d93bf41de97f27",
+      "bytes": 27108,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/acceptance_accounting_qc.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/acceptance_accounting_qc.json",
+      "sha256": "5f61d52e754efee81849808fe9d2ffc243d9e61a29717a3afe81ed339c92e34a",
+      "bytes": 43422,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/independent_acceptance_summary.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/independent_acceptance_summary.json",
+      "sha256": "ada566d6d681f07493ef4e875428e49930b190efdd2e3b7c8c026b4efc44b0b2",
+      "bytes": 5320,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/preservation_final.md",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/preservation_final.md",
+      "sha256": "98667a59e7fc9f08b07db7c24dfe0f190b454079616db8c182f9ca9f33f0a2ef",
+      "bytes": 2744,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/preservation_receipt_hashes.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/preservation_receipt_hashes.json",
+      "sha256": "48707d2ca61e4af1bb2c2b5c78adf92d2844ea5bc211709a0884c12c0c41f97b",
+      "bytes": 2773,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/historical_snapshot_tests.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/historical_snapshot_tests.json",
+      "sha256": "c3bad460982debe61f0b23619ca00a347c8f3d4cdf4b67a4f9b596404b6be832",
+      "bytes": 3014,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/historical_snapshot_tests.xml",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/historical_snapshot_tests.xml",
+      "sha256": "5ee7be0ce063abe34eae501ee9f97f7b96f283fa10d4e33434f3268a6410d06b",
+      "bytes": 31851,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "B403_current_tests.xml",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/B403_current_tests.xml",
+      "sha256": "eb211c487fbcdd771da14b6e5cb370e01863304dc5a11692aab0df024bbc83ff",
+      "bytes": 22810,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "B403_track_tests.xml",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/B403_track_tests.xml",
+      "sha256": "fd3e8f5406c8933416bf2affc1c739bbbb1941c680d8ead01661c1770f6bd25f",
+      "bytes": 5139,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "B403_track_tests_run.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/B403_track_tests_run.json",
+      "sha256": "17933579915b68aa2ff6168e7344ffda68d6afbff2548413a196bd166cc352a2",
+      "bytes": 2274,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/curated_validator.log",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/curated_validator.log",
+      "sha256": "ee04d5a9ebedfb91241ec39e418f969a6c6c0f5b7316df8d294bb39f4829ffe7",
+      "bytes": 31322,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/public_pair_validator.log",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/public_pair_validator.log",
+      "sha256": "ac8e0af99c38d4fee8a1fc1d7b45210537cd5cca35a273b8b547d32c8f869859",
+      "bytes": 12653,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/exclusions_validator.log",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/exclusions_validator.log",
+      "sha256": "1fadfe0741a198eaf009a4c2dc08fc234e7b451238157f8e1709960fe9732513",
+      "bytes": 450,
+      "purpose": "Original compact validation, independent review, preservation summary or source-seal receipt."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "b4_handoff.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/b4_handoff.json",
+      "sha256": "6f46c7a2e642aef110ced8919bc05d5b3ecb64728fc398abad0e9cde85b76335",
+      "bytes": 27145,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "batch_dispositions.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/batch_dispositions.json",
+      "sha256": "9f3704166c5c0ef9c1e5324995b29a712b756014ca36286169d4870f405e151e",
+      "bytes": 70593,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "batch_review.md",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/batch_review.md",
+      "sha256": "bb9b7af294cd9aee499150d7ca890bae19777c3974480f337ee370e9330ba4ac",
+      "bytes": 18168,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "checksums.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/checksums.json",
+      "sha256": "870f23c2058853a62b8fdaa40d88cab0bbcaded168b9fc2a475218f9bbfc621a",
+      "bytes": 13963,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "completion.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/completion.json",
+      "sha256": "f9d255d2e283c96da4b670f1893ddf61f19a3911409e48dc4dc0fe3befe77381",
+      "bytes": 3626,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "effort_and_retrievals.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/effort_and_retrievals.json",
+      "sha256": "e4967e6ce90086861d4157ffa793989d682177726743e89885ea3dfdddd52f6b",
+      "bytes": 10178,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R110-canonical.txt",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R110-canonical.txt",
+      "sha256": "13924d544dc41ecb60b1b908e9b6926cc9379286789a4326487ce60419898bda",
+      "bytes": 44496,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R110-retrieval.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R110-retrieval.json",
+      "sha256": "c6a42eef49ab7e217b7bb1ae927b7665a74576f1fe8f6226d262c41bce5a9db7",
+      "bytes": 1260,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R110-table2-3.png",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R110-table2-3.png",
+      "sha256": "4b45a75312d2d6c150644c0d7cd3fa8b100db25d3f95a42efd767675fc7cec9d",
+      "bytes": 373237,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R138-canonical.html",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-canonical.html",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R138-doi-registration-retrieval.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-doi-registration-retrieval.json",
+      "sha256": "a8cc88e25fa1d4a69501575e016b461290f2f1ba6bde336aa6bdbd9ce8dac21d",
+      "bytes": 683,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R138-doi-registration.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-doi-registration.json",
+      "sha256": "1d3e09a3311916a0c7ed1d6cf8a288a24ac4a5425f3496580b1e115a923b9659",
+      "bytes": 9851,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R138-official-readme-retrieval.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-official-readme-retrieval.json",
+      "sha256": "44f0977190e21c2cae8fe42d86f2d5504131ff244c58bf504e88256059295530",
+      "bytes": 711,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R138-official-readme.txt",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-official-readme.txt",
+      "sha256": "34c9c4e84ec8749c1ca54135c1cea4490099b708fe568c82060fd4add8fb45f0",
+      "bytes": 2404,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R138-retrieval.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-retrieval.json",
+      "sha256": "0c85a37d254efd577d7046fa663a2ddaa82ebe504972593151706db81ea0b884",
+      "bytes": 1383,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R154-appendix-p17-SFT-details.png",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-appendix-p17-SFT-details.png",
+      "sha256": "ba2ded6789f8013a74264164e5c7ce4ecfecd3cf0cd1cce92bdd06578519a47a",
+      "bytes": 641132,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R154-appendix-p17-SFT-details.provenance.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-appendix-p17-SFT-details.provenance.json",
+      "sha256": "5ac38784761e3eb429523ae5fc0b3b252721b2356f1afc18fc72b40fa6cdbbc4",
+      "bytes": 547,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R154-author-v1-retrieval.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-author-v1-retrieval.json",
+      "sha256": "57d8c7fa0c16083abbf438a8fff937b1aaaa110544ecbc1ca4578103a8b515c0",
+      "bytes": 625,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R154-author-v1.txt",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-author-v1.txt",
+      "sha256": "3848e82a3b8e75e6e4a386449d3e1f630e68631ca439811a9c35eae664be0d9a",
+      "bytes": 174194,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R154-canonical.html",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-canonical.html",
+      "sha256": "2326a0067974192fd1408f967a997e20bab5b381cb37ba99d738d735c091c818",
+      "bytes": 7018,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R154-doi-registration-retrieval.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-doi-registration-retrieval.json",
+      "sha256": "e00c9bc92679cd31e51aa78a5d941c60875a8fc1aaf6d232a2018ce65f1a5558",
+      "bytes": 683,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R154-doi-registration.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-doi-registration.json",
+      "sha256": "8386363c85f56156b8fe9d137cf7abc1cfa87f31729a88cbb1c256551622c4e2",
+      "bytes": 4579,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R154-retrieval.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-retrieval.json",
+      "sha256": "96879a6b4de56090557e09077030f69e8cf3de9f86a94c706ccf99e4592e8b76",
+      "bytes": 1656,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R154-tables2-4.png",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-tables2-4.png",
+      "sha256": "9e015b8428c2325992fe3cafa5e5df875594e1cad113ff54547728079f771cc4",
+      "bytes": 612706,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R187-canonical.html",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-canonical.html",
+      "sha256": "547e0bc4f963804ed3eed61ae8b1b5aa95a08fe184e19ee958bcdcbfcd5e8122",
+      "bytes": 7018,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R187-doi-registration-retrieval.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-doi-registration-retrieval.json",
+      "sha256": "6f3ac874ae1f3a44d48ac1b14679c3d124a865472459778f3469c32b2aeb627f",
+      "bytes": 684,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R187-doi-registration.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-doi-registration.json",
+      "sha256": "c60a766d7e01db83446378f5daf594c6252b49d8bc837c602ac92f226b009744",
+      "bytes": 4634,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R187-openreview-version-retrieval.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-openreview-version-retrieval.json",
+      "sha256": "beeed135292f3968dde839805dfe78c0124bacd010b5b8529929dfb8c1cb87e1",
+      "bytes": 360,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R187-publisher-vor-retrieval.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-publisher-vor-retrieval.json",
+      "sha256": "cd7ba60a921c532c4e0ef8c75f60c38d3bbb2fbc0557e1406a352635205e1ba1",
+      "bytes": 791,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R187-publisher-vor.html",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-publisher-vor.html",
+      "sha256": "ad92e7630efa4e61e86f727f5c0317d7e49082c6779b8b4bccf9e4fdad9b1841",
+      "bytes": 7019,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R187-retrieval.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-retrieval.json",
+      "sha256": "9bb27d372a7999b9f7b7bcebbb4a7350059019bbfa281f5600b6a6c3f86f4713",
+      "bytes": 1657,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/record_validation.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/record_validation.json",
+      "sha256": "105c09c6b076f637649c8b3dd689c84b1f3b9f010af6d58bcc01b3d60d9af8f4",
+      "bytes": 2205,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/R161-alternate-retrieval.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R161-alternate-retrieval.json",
+      "sha256": "768b73f6d6e2596c4f16a3ffd2ed168b401f217d1c9fc83c73d9f5a5592edee2",
+      "bytes": 477,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/R161-landing-retrieval.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R161-landing-retrieval.json",
+      "sha256": "6d73bfe2bb90c8212519f652c4290c2e6f3b5d62cf0e7acf6a75f9e3019807b9",
+      "bytes": 1113,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/R161-official-landing.html",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R161-official-landing.html",
+      "sha256": "bcded5b02e1b21886dd227b041067ac8e0d4adcf9adc9342aa8f244480a2eb6f",
+      "bytes": 10282,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/R171-local-pmlr.html",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R171-local-pmlr.html",
+      "sha256": "7fb76f85d1be7cf3009c9bfc9e58465cf870b395772288b8ca5ff1dab42e6b18",
+      "bytes": 16776,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/R171-pages.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R171-pages.json",
+      "sha256": "739ea39867a9f15fb1ce842f34dc1a225122c1118a6694b24346499206541f5a",
+      "bytes": 110925,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/R171-text.txt",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R171-text.txt",
+      "sha256": "34eb2b31ef27afb1a714ac12961608897dc7fa4c2ea31acced46500c4b562002",
+      "bytes": 109888,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/R256-pages.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R256-pages.json",
+      "sha256": "84d297ba9f5776b1c09d4559d4935a9bd13adf254b2ecb6c3f453e9b2c558477",
+      "bytes": 61169,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/R256-text.txt",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R256-text.txt",
+      "sha256": "b10ea0daccfbc55b5909e05e050d25276e681baa57690694e8accc3e5045f2e0",
+      "bytes": 60771,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/R564-pages.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R564-pages.json",
+      "sha256": "33f3af99893f95adebfbd099f01deda8033982d0297ef180b90cef6ce650330e",
+      "bytes": 107650,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/R564-text.txt",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R564-text.txt",
+      "sha256": "f020d8aa780e69448dd7cb5ccc118595ad3357664e6c2c1975efb932375bf1cc",
+      "bytes": 106974,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/official-discovery.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/official-discovery.json",
+      "sha256": "204915f6b345247b91fd99c3fe9e66b12fa9c1c6bbcf845f706559480020b6c3",
+      "bytes": 3721,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/pdf_extraction.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/pdf_extraction.json",
+      "sha256": "617504543677d11199ebc502ee383292f7e2793adb64bc0e1c0f72e3fba23799",
+      "bytes": 1854,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/primary_retrievals.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/primary_retrievals.json",
+      "sha256": "91109941e3a69d5db4753b441938d65c9b7f97c1804d39f30c8c46b26eec588a",
+      "bytes": 6739,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/rendered/R171-p03.png",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R171-p03.png",
+      "sha256": "e8a85234bc8bd9c92e5ed9dcb91f2263bebb4f83c6862dd4da8024863ca98984",
+      "bytes": 755179,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/rendered/R171-p06.png",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R171-p06.png",
+      "sha256": "8152dd5c5bac9a367cc64fb0612e1066f428c5437f61b03a667184256d71ecbd",
+      "bytes": 554526,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/rendered/R171-p13.png",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R171-p13.png",
+      "sha256": "76bedd6232133a6cee06a925279edbb890f08707151ef2e6d01a51cd075472e6",
+      "bytes": 798890,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/rendered/R256-p04.png",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R256-p04.png",
+      "sha256": "917d834baff51a90c965e4ed15fbc00e19bb99ea6cd67fc5c475adbf397c1b26",
+      "bytes": 806514,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/rendered/R256-p05.png",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R256-p05.png",
+      "sha256": "5fd0fd809c8af28927de6856b8f245a4d452fa848d909412f6600ceaff26293d",
+      "bytes": 791874,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/rendered/R256-p06.png",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R256-p06.png",
+      "sha256": "320d0daeca5fb21d926d35e5149813d8e06892b6ac6606cd086a3e7cf516a1cf",
+      "bytes": 624307,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/rendered/R564-p06.png",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R564-p06.png",
+      "sha256": "d9b75aa64ad767fc4c65689b3a440024af6da9cdc563bc477455f7ec58c91973",
+      "bytes": 1246895,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/rendered/R564-p09.png",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/rendered/R564-p09.png",
+      "sha256": "e10707ef7b7ba4016c70f8a9bea5d4409c5de339f487f0d3c7c09eedc699e421",
+      "bytes": 863567,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/resource_links_in_primary_pdf.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/resource_links_in_primary_pdf.json",
+      "sha256": "9a7ed29345a45fd69048314d3826891e536ac06723155fd1b86ecbcbbbd1a44f",
+      "bytes": 1120,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/root/P231-official-program.html",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/P231-official-program.html",
+      "sha256": "53a0015a413baf48e992209de2665b43bd7007e4e23787db40c9f6ee820255b0",
+      "bytes": 10062,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/root/R231-acm-primary.response",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/R231-acm-primary.response",
+      "sha256": "9668a6ae05e8a81dfb1382e62475bf90c35fb9df322f819b755150d4990577c4",
+      "bytes": 5568,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/root/R275-official-landing.html",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/R275-official-landing.html",
+      "sha256": "1d4427cc3b8e33ce2f7403f7c9016cf835ce262d5d9593c020aba6d91f980b1d",
+      "bytes": 9991,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/root/R275-pages.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/R275-pages.json",
+      "sha256": "8a43b81f7b7dbbc4f1da5441636b76c748ea9d45b40f0969cc3874db5076b548",
+      "bytes": 107857,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/root/R275-table3-08.png",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/R275-table3-08.png",
+      "sha256": "5a73071084d373a4103344a2a50f1c79b36bab692eb31e3fd0d7ca142b88a614",
+      "bytes": 462210,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/root/R275-table7-20.png",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/R275-table7-20.png",
+      "sha256": "58721e1067c0d963f06242080969234ca872efba6422bcf30395aa2786fa9ea5",
+      "bytes": 461289,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/root/metadata-retrievals.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/metadata-retrievals.json",
+      "sha256": "2cea1bde4cbeacf8362beed10f193208ca25f9414e486e445e50459d5c203560",
+      "bytes": 1164,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/root/retrievals.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/retrievals.json",
+      "sha256": "0b3858aac93d47883cbc1b8d94c5c010e0862adab0754bc8faad30a026b56f5a",
+      "bytes": 3968,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "per_paper/P231.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/P231.json",
+      "sha256": "d9baf9b30dbf98019c22558f4b8db1b9bb28c050ae981fdecf34b6c6e0795b93",
+      "bytes": 9215,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "per_paper/R110.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R110.json",
+      "sha256": "247059a94b94b3186670ef50ec38cf9117c4de2867a9ca2bd681c8cfe334f5e8",
+      "bytes": 12509,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "per_paper/R138.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R138.json",
+      "sha256": "e8831986480d2e7008d2953dbf79437f1080a4bdcaf3ce2c0c9cb0b56c83f29f",
+      "bytes": 9392,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "per_paper/R154.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R154.json",
+      "sha256": "e364eee5ebcbfc6dfdfa5470b5647e55d7556dc033e356b3ca723aeddbd69533",
+      "bytes": 14294,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "per_paper/R161.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R161.json",
+      "sha256": "728f2906344be60ba93f025d7a6ce8390bd134aeec6fb9faac5cc5dd6fedc9ae",
+      "bytes": 8085,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "per_paper/R171.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R171.json",
+      "sha256": "d4015cec12b8ba98489196535741308e7e0918e6506a0fb171df328fcc06cd6e",
+      "bytes": 11046,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "per_paper/R187.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R187.json",
+      "sha256": "58c020b7e3f933b681fac60285e75f11d5dc074d450478d634b5672b4bc97ae9",
+      "bytes": 8176,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "per_paper/R231.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R231.json",
+      "sha256": "68a3d322959f9b6e6f4f2606152dfda6324521d2aad511ee03ef2485bca553b8",
+      "bytes": 8328,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "per_paper/R256.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R256.json",
+      "sha256": "20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6",
+      "bytes": 9709,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "per_paper/R275.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R275.json",
+      "sha256": "e38e0fab7e38252080ae6ab1640bdcc94ddaf846be53ac2799bc311730b02e29",
+      "bytes": 9428,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "per_paper/R564.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/per_paper/R564.json",
+      "sha256": "d891a5362525d23b6f8c2b44bf52263df471fa37f693d763b6338f1126eb3742",
+      "bytes": 9656,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/P231-before-policy-traceability-fix.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/P231-before-policy-traceability-fix.json",
+      "sha256": "fbc58c162ca608e8254f0bf37c4dc0b6135eb1201c25892c6334476eceff6f84",
+      "bytes": 8826,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/R231-before-source-hash-annotation.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/R231-before-source-hash-annotation.json",
+      "sha256": "03981e0235ffd86682b935b689c42999d1d18bd632dd3803c88f0022c5a1a0a1",
+      "bytes": 8096,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/R256-independent-caveat-addendum.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/R256-independent-caveat-addendum.json",
+      "sha256": "a24360de94f6a91e0a47917d14cafffbba7b89a78fdf27cd019cf9415fecbfa5",
+      "bytes": 1110,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/before-independent-caveat-refinement/b4_handoff.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/before-independent-caveat-refinement/b4_handoff.json",
+      "sha256": "8141d4c12e8aea5fa0407e186938791880a9fc17de084ff7b0067516ddd874ef",
+      "bytes": 24069,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/before-independent-caveat-refinement/batch_dispositions.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/before-independent-caveat-refinement/batch_dispositions.json",
+      "sha256": "b499ab5a83a7262f469f31cf9505f78fc8240b65230f1979013e07a0f4086edd",
+      "bytes": 66897,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/before-independent-caveat-refinement/batch_review.md",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/before-independent-caveat-refinement/batch_review.md",
+      "sha256": "a4cd59d3c563c2b5b4a5fefd90d609fafe33451c3e0584eb6f7e0cdc59764a3b",
+      "bytes": 17485,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/before-independent-caveat-refinement/per_paper__R256.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/before-independent-caveat-refinement/per_paper__R256.json",
+      "sha256": "20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6",
+      "bytes": 9709,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/final_batch_QC.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/final_batch_QC.json",
+      "sha256": "366d30f74cd5b965bd685d86af7f29cb0710e470e4cdb43fc7d84750eeb24b2c",
+      "bytes": 90094,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/groupA-independent-review.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/groupA-independent-review.json",
+      "sha256": "d7ad6fde0d945189419ef0836a955d214ee983edbf54d0cc5e4d7d9f1ad42712",
+      "bytes": 17018,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/groupA-traceability-amendments.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/groupA-traceability-amendments.json",
+      "sha256": "9c47c589572c921d453c8f106ab9c7b1785943e9cc2e01cd4eef2bd2eba013c2",
+      "bytes": 1167,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/groupB-independent-review.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/groupB-independent-review.json",
+      "sha256": "3c5f731f50839b0d85878c98bd35e56fc59375857254a7c19cc8222517ac22e7",
+      "bytes": 12836,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/independent_scientific_QC.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/independent_scientific_QC.json",
+      "sha256": "136a3efe6945c5d64a09a929e384a79fd6462a833daf6f4afab5df70acb5ebc1",
+      "bytes": 19645,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/preservation_final.md",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/preservation_final.md",
+      "sha256": "8cd93560f0d212a014c9ac715791c2b39829d64f43d76797cf781379ad435e9e",
+      "bytes": 1689,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/root-group-review.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/qc/root-group-review.json",
+      "sha256": "bf1e4fe462eb80951eb16b947290f72180efe8cfe2c5b8bb8418ef9f2dc8096b",
+      "bytes": 10302,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "validation.json",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/validation.json",
+      "sha256": "484a9df525dd94389fe9ef392f46af2d357a2b89546e8eb428403a3dc2569420",
+      "bytes": 19554,
+      "purpose": "Original per-action evidence, extracted text/pages/figures, capture/failed-access receipt, scientific caveat, independent QC or seal; no new review."
+    }
+  ],
+  "existing_repository_references": [
+    {
+      "repository_path": "data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "ab426b7ff76f89677a9aa8656fa4cae19049e07de656c6d45e7fb4a2338d8088",
+      "purpose": "Existing identity/affiliation receipt, not new scientific evidence."
+    },
+    {
+      "repository_path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "scripts/venue_tracks.py",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "6cb1b3f83c1870c73278b9ba6402f60fe5c0600678e005d70dc5f3669860366e",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "scripts/curated_schema.py",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "6a33111655f24c6652248e7a69d05d1f39aa6afa15d9aec6ce96f32abe632d6e",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "scripts/venues.py",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "d521658e91e182cd597750147e7a9ec7ab19f84d9918a40d3922c1c9982c8e19",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "scripts/curated_papers.py",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "f91faaf71389078f52309a84586748bb0573dc8026b244529e7fa3a4e02817a0",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "scripts/venue_audit.py",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "2da84219648f69f147e47288c3b1c7f817deca488740e4daa1bdf425a14004eb",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "web/app.js",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "b55635c7b4935d69629bca1e1ca03ac1892cfcb35bb4d6508f3bc8fc833212dd",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "web/paper_details_helpers.js",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "6a0d5a461baa2b9f1ee2a019ec76a140bf7dc04a751f5975dd31ff0ac7ce5cff",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "scripts/curated_export.py",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "fcd27f8e016499a888dec8fadaa0b8c882a7fb45562ba0588b55c0d51bf141ae",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "docs/publication_venue_normalization.md",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "docs/workshop_venue_audit_report.md",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "171560e3fef7f3e24a4e6c5b497de84b3cc09f4fbe04e2fd2bd932285e358660",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "docs/data_schema.md",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "c94c0adc6b3312e483d0e1b24eb161d947f0b0d58f4e16d1115013c25c1c3b01",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "web/data/public_preview_papers.json",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "1323bf1ca068a8a6d6343882204b0e66bbcb9319f6847e1ff68579d942ee9442",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "tests/test_paper_level_venue_track.py",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "848f0c6c46de38498c788c51732b1895c8c50e2bfa5e96251e073cd081b372f1",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "tests/test_workshop_venue_audit.py",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "2697660281ab383a340669d66f65a147e3aa846e3ae4aaeccfa068fcd19c690e",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    },
+    {
+      "repository_path": "tests/test_frontend_venue_filters.py",
+      "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "sha256": "322009e4797227aaff61b4e0c3ecf54a4d963cdb5e842dbbd47e67e7c7163f04",
+      "purpose": "Original P231 repository semantics/test/policy reference; resolve through immutable baseline Git object."
+    }
+  ],
+  "source_provenance_resolution": [
+    {
+      "review_id": "R110",
+      "origin_relative_path": "evidence/groupA/R110-canonical.pdf",
+      "url": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf",
+      "version": "WACV2026W SAFE-2026 accepted open-access version",
+      "source_sha256": "3280157fb698bfda46e75caf4f39d3cb376f7803cd4bcd24f27c574da94acabe",
+      "repository_path": null,
+      "availability": "original_pdf_receipt_only"
+    },
+    {
+      "review_id": "R110",
+      "origin_relative_path": "evidence/groupA/R110-table2-3.png",
+      "url": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf",
+      "version": "Rendered PDF page8, printed229; viewed by reviewer",
+      "source_sha256": "4b45a75312d2d6c150644c0d7cd3fa8b100db25d3f95a42efd767675fc7cec9d",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R110-table2-3.png",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R138",
+      "origin_relative_path": "evidence/groupA/R138-doi-registration.json",
+      "url": "https://api.crossref.org/works/10.1109%2Ftmm.2026.3716041",
+      "version": "Accessed2026-10-31; bibliographic registration, not scientific full text",
+      "source_sha256": "1d3e09a3311916a0c7ed1d6cf8a288a24ac4a5425f3496580b1e115a923b9659",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-doi-registration.json",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R138",
+      "origin_relative_path": "evidence/groupA/R138-official-readme.txt",
+      "url": "https://raw.githubusercontent.com/ac-miracle/FakeCOCO/main/README.md",
+      "version": "main branch capture2026-10-31; byte-pinned snapshot",
+      "source_sha256": "34c9c4e84ec8749c1ca54135c1cea4490099b708fe568c82060fd4add8fb45f0",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-official-readme.txt",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R138",
+      "origin_relative_path": "evidence/groupA/R138-canonical.html",
+      "url": "https://doi.org/10.1109/tmm.2026.3716041",
+      "version": "HTTP202 empty CloudFront WAF challenge; zero bytes",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R138-canonical.html",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R154",
+      "origin_relative_path": "evidence/groupA/R154-author-v1.pdf",
+      "url": "https://arxiv.org/pdf/2508.13223v1",
+      "version": "arXiv2508.13223v1; not asserted equivalent to AAAI DOI final",
+      "source_sha256": "776c1304ebf723ad54e2d5ef2753c03a95b5a26bfa1447d7330aa75de3bbf5a0",
+      "repository_path": null,
+      "availability": "original_pdf_receipt_only"
+    },
+    {
+      "review_id": "R154",
+      "origin_relative_path": "evidence/groupA/R154-doi-registration.json",
+      "url": "https://api.crossref.org/works/10.1609%2Faaai.v40i7.37421",
+      "version": "DOI-matched registration names OuCheng Huang;2026-03-14",
+      "source_sha256": "8386363c85f56156b8fe9d137cf7abc1cfa87f31729a88cbb1c256551622c4e2",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-doi-registration.json",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R154",
+      "origin_relative_path": "evidence/groupA/R154-tables2-4.png",
+      "url": "https://arxiv.org/pdf/2508.13223v1",
+      "version": "PDFp6 Tables2-4 viewed",
+      "source_sha256": "9e015b8428c2325992fe3cafa5e5df875594e1cad113ff54547728079f771cc4",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-tables2-4.png",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R154",
+      "origin_relative_path": "evidence/groupA/R154-canonical.html",
+      "url": "https://doi.org/10.1609/aaai.v40i7.37421",
+      "version": "AAAI HTML browser challenge, not article text",
+      "source_sha256": "2326a0067974192fd1408f967a997e20bab5b381cb37ba99d738d735c091c818",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R154-canonical.html",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R161",
+      "origin_relative_path": "evidence/groupB/R161-official-landing.html",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/820e42f39773c6cbbd875553db45658f-Abstract-Conference.html",
+      "version": "ICLR 2026 official abstract landing, captured 2026-10-31",
+      "source_sha256": "bcded5b02e1b21886dd227b041067ac8e0d4adcf9adc9342aa8f244480a2eb6f",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R161-official-landing.html",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R161",
+      "origin_relative_path": "evidence/groupB/primary_retrievals.json",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/file/820e42f39773c6cbbd875553db45658f-Paper-Conference.pdf",
+      "version": "Capture receipt: first proceedings PDF attempt failed",
+      "source_sha256": "91109941e3a69d5db4753b441938d65c9b7f97c1804d39f30c8c46b26eec588a",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/primary_retrievals.json",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R161",
+      "origin_relative_path": "evidence/groupB/R161-alternate-retrieval.json",
+      "url": "https://openreview.net/pdf?id=9QQ3Kc2hj6",
+      "version": "Capture receipt: single alternate OpenReview attempt returned HTTP 403",
+      "source_sha256": "768b73f6d6e2596c4f16a3ffd2ed168b401f217d1c9fc83c73d9f5a5592edee2",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R161-alternate-retrieval.json",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R171",
+      "origin_relative_path": "evidence/groupB/R171-primary.pdf",
+      "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/zhou26h/zhou26h.pdf",
+      "version": "PMLR 306 / ICML 2026, 21-page proceedings PDF",
+      "source_sha256": "79917f3d9fb967aa52007069c89fa920e1dd428ec662900650bea049dc4dc255",
+      "repository_path": null,
+      "availability": "original_pdf_receipt_only"
+    },
+    {
+      "review_id": "R171",
+      "origin_relative_path": "evidence/groupB/R171-local-pmlr.html",
+      "url": "https://proceedings.mlr.press/v306/zhou26h.html",
+      "version": "Cached official PMLR bibliographic landing",
+      "source_sha256": "7fb76f85d1be7cf3009c9bfc9e58465cf870b395772288b8ca5ff1dab42e6b18",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupB/R171-local-pmlr.html",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R187",
+      "origin_relative_path": "evidence/groupA/R187-doi-registration.json",
+      "url": "https://api.crossref.org/works/10.1609%2Faaai.v40i45.41234",
+      "version": "DOI registration accessed2026-10-31",
+      "source_sha256": "c60a766d7e01db83446378f5daf594c6252b49d8bc837c602ac92f226b009744",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-doi-registration.json",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R187",
+      "origin_relative_path": "evidence/groupA/R187-canonical.html",
+      "url": "https://doi.org/10.1609/aaai.v40i45.41234",
+      "version": "AAAI browser-challenge HTML",
+      "source_sha256": "547e0bc4f963804ed3eed61ae8b1b5aa95a08fe184e19ee958bcdcbfcd5e8122",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-canonical.html",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R187",
+      "origin_relative_path": "evidence/groupA/R187-publisher-vor.html",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/download/41234/45195",
+      "version": "DOI-registered VOR endpoint also returns browser-challenge HTML",
+      "source_sha256": "ad92e7630efa4e61e86f727f5c0317d7e49082c6779b8b4bccf9e4fdad9b1841",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/groupA/R187-publisher-vor.html",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R231",
+      "origin_relative_path": "evidence/root/R231-acm-primary.response",
+      "url": "https://dl.acm.org/doi/pdf/10.1145/3810988.3812660",
+      "version": null,
+      "source_sha256": "9668a6ae05e8a81dfb1382e62475bf90c35fb9df322f819b755150d4990577c4",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/R231-acm-primary.response",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R231",
+      "origin_relative_path": "evidence/root/P231-official-program.html",
+      "url": "https://mad2026.aimultimedialab.ro/program/",
+      "version": null,
+      "source_sha256": "53a0015a413baf48e992209de2665b43bd7007e4e23787db40c9f6ee820255b0",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/P231-official-program.html",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R256",
+      "origin_relative_path": "evidence/groupB/R256-primary.pdf",
+      "url": "https://openaccess.thecvf.com/content/ICCV2025W/APAI/papers/Cai_Adaptive_Test-Time_Semantic_Debiasing_for_AI-Generated_Image_Detection_ICCVW_2025_paper.pdf",
+      "version": "Official CVF ICCV2025W / APAI 10-page PDF",
+      "source_sha256": "3bd336c171cdb0c201d4fa9da63c17c406f46fa65b70436d30c50390d41b49f3",
+      "repository_path": null,
+      "availability": "original_pdf_receipt_only"
+    },
+    {
+      "review_id": "R275",
+      "origin_relative_path": "evidence/root/R275-neurips2025.pdf",
+      "url": "https://papers.neurips.cc/paper_files/paper/2025/file/2c2be72635379ec8600eea13df4743e3-Paper-Conference.pdf",
+      "version": null,
+      "source_sha256": "ebdcea81b1f588b74669e52261ab903ed70cb1b7f1a30f637d82d843e7071405",
+      "repository_path": null,
+      "availability": "original_pdf_receipt_only"
+    },
+    {
+      "review_id": "R275",
+      "origin_relative_path": "evidence/root/R275-official-landing.html",
+      "url": "https://papers.neurips.cc/paper_files/paper/2025/hash/2c2be72635379ec8600eea13df4743e3-Abstract-Conference.html",
+      "version": null,
+      "source_sha256": "1d4427cc3b8e33ce2f7403f7c9016cf835ce262d5d9593c020aba6d91f980b1d",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/R275-official-landing.html",
+      "availability": "portable_byte_copy"
+    },
+    {
+      "review_id": "R564",
+      "origin_relative_path": "evidence/groupB/R564-primary.pdf",
+      "url": "https://arxiv.org/pdf/2211.08615v7",
+      "version": "arXiv:2211.08615v7, 13-page author manuscript",
+      "source_sha256": "4e7b0f188213163d718e7294cde361001a1afd750592f8790f555655080cf213",
+      "repository_path": null,
+      "availability": "original_pdf_receipt_only"
+    },
+    {
+      "review_id": "P231",
+      "origin_relative_path": "evidence/root/P231-official-program.html",
+      "url": "https://mad2026.aimultimedialab.ro/program/",
+      "version": null,
+      "source_sha256": "53a0015a413baf48e992209de2665b43bd7007e4e23787db40c9f6ee820255b0",
+      "repository_path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b3_03/evidence/root/P231-official-program.html",
+      "availability": "portable_byte_copy"
+    }
+  ],
+  "omitted_sealed_files": [
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "B403_track_tests.log",
+      "sha256": "72a200f4a4ec70163196a7c4c263e0fa51db7221fb66c6bffa457be6a07f27a5",
+      "bytes": 95,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "finalize_checkpoint.py",
+      "sha256": "4857cc8c319399e6406571993c0c3175f23ccafc5ab4c59df264d5d6d81bb97a",
+      "bytes": 20431,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "investigation/P231_semantics_probe.py",
+      "sha256": "8b61ed7b7216a697056492b651581c79f11966a661fdd452c18ab44add782894",
+      "bytes": 6472,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "investigation/P231_semantics_probe_results.json",
+      "sha256": "c6dc92b7d9153d414231244f130a1fabdea29b7c645fe23583027446bf96ad76",
+      "bytes": 4131,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "investigation/P231_tests_initial.log",
+      "sha256": "69bea84c4e010e800db576c861ac623a944565b46b69fd985df271689e9f6d01",
+      "bytes": 5520,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "investigation/P231_tests_node_rerun.log",
+      "sha256": "8892389f4ff4af1a7255f27208825a56debe1988d73642a432c594a008380de6",
+      "bytes": 879,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "investigation/schema_preflight.md",
+      "sha256": "dca402e52b673f793d1adda7df872311b9fcece5014875df6bc877cfb25a28d3",
+      "bytes": 7313,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "preparation_clock.json",
+      "sha256": "98996e94b78ef85fc5077dc5ebb0a8f1b991198a1f180a6403783e569cdc33ab",
+      "bytes": 41,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "prepare_adjudication.py",
+      "sha256": "94047de1e681b4fee38b8c441df6297a8a93d13f8a62b7ef3386b96428481660",
+      "bytes": 18925,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "prepared/data/curated/paper_taxonomy.csv",
+      "sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "bytes": 845764,
+      "reason": "Whole prepared CSV duplicate excluded; exact accepted cell/decision transaction and new integration source carry the data."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "prepared/data/curated/papers.csv",
+      "sha256": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+      "bytes": 1001762,
+      "reason": "Whole prepared CSV duplicate excluded; exact accepted cell/decision transaction and new integration source carry the data."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "prepared/data/curated/review_decisions.csv",
+      "sha256": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea",
+      "bytes": 175179,
+      "reason": "Whole prepared CSV duplicate excluded; exact accepted cell/decision transaction and new integration source carry the data."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/acceptance_accounting_qc.py",
+      "sha256": "29b9645c75377b5e58ee550950cea08c14e8a27c523f5c8cd3660d5cbd638042",
+      "bytes": 26948,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/acceptance_preflight.json",
+      "sha256": "1650b9750367046a1d5161023e810c30e1b79e86aa4868670202efe68ca04b26",
+      "bytes": 12808,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/candidate_acceptance_accounting_qc.json",
+      "sha256": "e6f51442ee64a59338849fcf356742d09d714ef042e66db58f30864a0f6aa887",
+      "bytes": 43088,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/capture_preservation_baseline.py",
+      "sha256": "03ee489d9e94a8c0487ee148c3458c32578ace66f0867bc5a66f2249aff9d9cf",
+      "bytes": 15832,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/historical_snapshot_fixture_restore.log",
+      "sha256": "29119363105f0e34eb2cfbcbb557c5bb0fe7ff8523425c98fe28d842b920bb8c",
+      "bytes": 17446,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/historical_snapshot_tests.log",
+      "sha256": "545b9cfb58968b1d943bfe9bf8a0bfb8f8e12166fc5c97294a1efd62f184a4a0",
+      "bytes": 261,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/independent_acceptance_summary.md",
+      "sha256": "56c9e881b8aedd6209b49ee9902b777617eacdeaf4e0da7a9588dd9ae7fd2f64",
+      "bytes": 1788,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/independent_adjudication_review.md",
+      "sha256": "f24d889ec453e0de8507bae19d730fb7b8a05a906f263029584161737bf23765",
+      "bytes": 4739,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/independent_preapply_review.md",
+      "sha256": "92bb9f529f9434de9a5c5e84986f5aba1feafbd06a52909093cae50b0b8fb660",
+      "bytes": 6522,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/independent_runtime.json",
+      "sha256": "ff1c5b02faefbd1cbf7054e60bcd4649f75533a445ac758b8f5ce16e66002c41",
+      "bytes": 723,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/native_worktree_baseline.json",
+      "sha256": "8d906973321ddcf4ca6d730d032b0e0cb986cde211d8c47563c37c21111a0d5b",
+      "bytes": 676577,
+      "reason": "Full worktree/hash inventory excluded; compact original preservation receipt and full original file digest retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/preservation_after_apply.json",
+      "sha256": "792744c2a43cdad3cf01c6280be64a2e691666a37bf1f9c646352b0c55d71d40",
+      "bytes": 10270890,
+      "reason": "Full worktree/hash inventory excluded; compact original preservation receipt and full original file digest retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/preservation_after_apply.md",
+      "sha256": "25e8c2b3f1b9a101092641b802e0a67730a88bac87b5a622123ea62c9e7d3f7d",
+      "bytes": 2744,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/preservation_after_apply_hashes.json",
+      "sha256": "5421e0e378c074f4ceaa539ffc1a065d689985696b080ae994d6dbed9ed74589",
+      "bytes": 547,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/preservation_baseline.json",
+      "sha256": "374d79eeafaa3d111d6ca593577ecd5480d2f3d7e66f141f6298e69e8052900c",
+      "bytes": 10141717,
+      "reason": "Full worktree/hash inventory excluded; compact original preservation receipt and full original file digest retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/preservation_baseline.md",
+      "sha256": "01af199eedb06f7cec292f2b0a1265541540e7dc29088ef8ce3469e64d7c9e47",
+      "bytes": 2629,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/preservation_final.json",
+      "sha256": "ce71adbd57b95b02d30cc753c993adcd303e7cc8aa1e1553633bdebc0ac01463",
+      "bytes": 10270890,
+      "reason": "Full worktree/hash inventory excluded; compact original preservation receipt and full original file digest retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/preservation_final_audit.py",
+      "sha256": "eeed3af2861e92783b79ebc5b73f1cb7b757236830a68b2920e4a6ac83a24b1c",
+      "bytes": 26502,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/read_only_validators.json",
+      "sha256": "617a817d54912af87678997e178f44f96924afe607d0c5fff86aba65c7e1fe51",
+      "bytes": 1376517,
+      "reason": "Full worktree/hash inventory excluded; compact original preservation receipt and full original file digest retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/read_only_validators.py",
+      "sha256": "13ef0e981ede7fcb9a26181ab75852708a47afc1597e316a7f2a269c42ebc496",
+      "bytes": 6859,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/review_exact_candidate.py",
+      "sha256": "671b019b53e7117cf91a40e2ff31a33e67327ea41359f34c86bfa6c0de86e99b",
+      "bytes": 16578,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/run_historical_snapshot_tests.py",
+      "sha256": "235b21110c04de1fc9203914f8cb2d16c8aee3e57eb94ac0ed649d35562896c6",
+      "bytes": 7556,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/validation_recommendations.json",
+      "sha256": "281840725a544972c21f1774bed5167d7b4533c013e01cbf64d6e1b7a4734ddc",
+      "bytes": 3396,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "qc/validation_recommendations.md",
+      "sha256": "e6790e6ec8d3dfeed98cb9fd813e4116117e1e0d4c33a8dcae37f780b0cdf57e",
+      "bytes": 2421,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+      "origin_relative_path": "test_b4_03_checkpoint.py",
+      "sha256": "8ec625489b21c5d5c52db9cf7a4d3c9e45247d26d20db3ddadfc34c4e2ff86aa",
+      "bytes": 15423,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "assigned_inputs.json",
+      "sha256": "5c6a288317600f852f62943a560380d44b32213d1998a4a86f3ba52b25b82aca",
+      "bytes": 284716,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "build_deliverables.py",
+      "sha256": "8f8cc9e0047e37e4815a66653a294b7172c13ffcd25f11a1014c26d0068992b2",
+      "bytes": 8636,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "collect_effort.py",
+      "sha256": "2a32c3b04b541de9e5137341b8e62fa9c9c5d42a6cc11eada3d36af7e94dd330",
+      "bytes": 3347,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R110-canonical.pdf",
+      "sha256": "3280157fb698bfda46e75caf4f39d3cb376f7803cd4bcd24f27c574da94acabe",
+      "bytes": 2606021,
+      "reason": "Original source PDF excluded from repository; retained offline and authenticated by original seal/source URL/hash; portable text/page extracts and viewed figures retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R154-author-v1.pdf",
+      "sha256": "776c1304ebf723ad54e2d5ef2753c03a95b5a26bfa1447d7330aa75de3bbf5a0",
+      "bytes": 25016438,
+      "reason": "Original source PDF excluded from repository; retained offline and authenticated by original seal/source URL/hash; portable text/page extracts and viewed figures retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/R154-render-page17.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/retrieve_realnet_vor.py",
+      "sha256": "934df94f7bd024f1932d203224cdf0319ae2a0b429834f59da8ba3a7d4f15985",
+      "bytes": 1210,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/retrieve_sources.py",
+      "sha256": "791053784415c77587b7dc64a20a875132a6aaf36697620cfc7977596a6b4f57",
+      "bytes": 1728,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/retrieve_verified_versions.py",
+      "sha256": "0672d86385e0fd2f18d26e20e44f4ab183822b5163f5eb6dc7e11eb58a1fa492",
+      "bytes": 1758,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/sandbox-network-blocker.json",
+      "sha256": "857d791e704d8eb0c3774f2fd11b6bfdf6528ca8d018623724f6037bf5a8f0c5",
+      "bytes": 596,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupA/write_groupA_records.py",
+      "sha256": "fc969fce7a22712058a0efddcb7a39fe4f61a9f17bb167e25081b915831bcfaa",
+      "bytes": 27250,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/R171-primary.pdf",
+      "sha256": "79917f3d9fb967aa52007069c89fa920e1dd428ec662900650bea049dc4dc255",
+      "bytes": 8506583,
+      "reason": "Original source PDF excluded from repository; retained offline and authenticated by original seal/source URL/hash; portable text/page extracts and viewed figures retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/R256-primary.pdf",
+      "sha256": "3bd336c171cdb0c201d4fa9da63c17c406f46fa65b70436d30c50390d41b49f3",
+      "bytes": 1823151,
+      "reason": "Original source PDF excluded from repository; retained offline and authenticated by original seal/source URL/hash; portable text/page extracts and viewed figures retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/R564-primary.pdf",
+      "sha256": "4e7b0f188213163d718e7294cde361001a1afd750592f8790f555655080cf213",
+      "bytes": 18733551,
+      "reason": "Original source PDF excluded from repository; retained offline and authenticated by original seal/source URL/hash; portable text/page extracts and viewed figures retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/assigned_subset.json",
+      "sha256": "d2205fd1a25d168b399375031e2df6a7c0868b22bf7fc5ade3a7ce7825c0cc98",
+      "bytes": 11714,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/capture_primary.py",
+      "sha256": "9a1d7416b835a0215e81c35ecd129b5d1e5d299205f744db4fe4b5f31812ca46",
+      "bytes": 2945,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/groupB/record_recovery_completion.json",
+      "sha256": "230a66e4f6ff82ed00f94f1b53209b54f70b6420bee88c2389c1ae87203a2eb6",
+      "bytes": 2891,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "evidence/root/R275-neurips2025.pdf",
+      "sha256": "ebdcea81b1f588b74669e52261ab903ed70cb1b7f1a30f637d82d843e7071405",
+      "bytes": 8035373,
+      "reason": "Original source PDF excluded from repository; retained offline and authenticated by original seal/source URL/hash; portable text/page extracts and viewed figures retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "final_git_state.json",
+      "sha256": "bc21e34928f1b9392a9ca32dc04309626a86ec2bd7ceb2538813cacc8f23016c",
+      "bytes": 655,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/baseline_validation.json",
+      "sha256": "a7966df5a07040467b3fae65d15e3fda53d7ddd5c39a352393100e5f706663bd",
+      "bytes": 196134,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/baseline_validation_corrected.json",
+      "sha256": "8420c6a1415cc0219a9d84e8856ade2bd5eed7490da1744bd1fa39bdfb34fb24",
+      "bytes": 196840,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/complete_groupB_QC.py",
+      "sha256": "ddff1f3d75cefed05242ea7cf9aa9464df7363baa9d2782bacf3987797691bda",
+      "bytes": 10783,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/final_batch_QC.md",
+      "sha256": "5956becd6914a1f841ad0df33764f87963ecf86718118c9f875af1edfefbf4e6",
+      "bytes": 1429,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/final_batch_QC_preflight.json",
+      "sha256": "003117d6a552f84344ce7d31a93a4c29ca3459df16612677806271596a80a791",
+      "bytes": 84519,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/final_batch_qc_check.py",
+      "sha256": "b9d2b264e17530b6b73c89526e2a6e67e81f489557557a9b7960beb0f4b6ead1",
+      "bytes": 26482,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/groupA-traceability-before/R138.json",
+      "sha256": "6d52960ca4f17303433bfec340e6362e391bd403fbe5eb7785a0c9c24a2e39d5",
+      "bytes": 8924,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/groupA-traceability-before/R154-appendix-Fig7.png",
+      "sha256": "ba2ded6789f8013a74264164e5c7ce4ecfecd3cf0cd1cce92bdd06578519a47a",
+      "bytes": 641132,
+      "reason": "Full worktree/hash inventory excluded; compact original preservation receipt and full original file digest retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/groupA-traceability-before/record_validation.json",
+      "sha256": "c2a99dce52a5ed6c19bdd805979f8fd69a8a5a6d57683fdd3d90a9f789f074cd",
+      "bytes": 2131,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/groupB-independent-review.md",
+      "sha256": "3e3a037313a5d1694f877e4eb3ce31959be033527fcd4f2fe2419ed7d0610108",
+      "bytes": 1260,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/independent_scientific_QC.md",
+      "sha256": "789ac8bcd1983174796a414df1824f8f48f7c896c1cdb285d14f3c2dac0081cf",
+      "bytes": 2925,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/integration_preflight_pending_receipts.json",
+      "sha256": "78688462ae80ca7494f9ec974c9d0aead1c00323695588054b29af5b858f7734",
+      "bytes": 19676,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/preservation_baseline.json",
+      "sha256": "751b06a9d330a50ffdde7342de30b514dac0bbe885c61007b58286e7af812171",
+      "bytes": 5096989,
+      "reason": "Full worktree/hash inventory excluded; compact original preservation receipt and full original file digest retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/preservation_final.json",
+      "sha256": "cb29fa69dc64a3d6c574ab5eb3c0f11731594d168c967366a1362fe4990c1ac9",
+      "bytes": 81875,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/scope_questions.json",
+      "sha256": "2ca3fc5f3d662994c978ff2e227fb897432d55afc164e051e9f21ddb589c488d",
+      "bytes": 42152,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "qc/scope_report.md",
+      "sha256": "4498c5583547232d83f0cdc51f568a507a3957dde8e03b2db35d2b1414627099",
+      "bytes": 3535,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "validate_deliverables.py",
+      "sha256": "4d6172a1076658c939acf3e83a6759524cd8ef7ef15149b7f72d96ecbae46d65",
+      "bytes": 4897,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    },
+    {
+      "origin_archive": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+      "origin_relative_path": "write_report.py",
+      "sha256": "60831b0a4ab43cccfad69a02e55a57cfe2b66dd5bda1bd10034e281d103e211f",
+      "bytes": 13307,
+      "reason": "Operational script/test source or superseded intermediate receipt; original seal retained."
+    }
+  ],
+  "unsealed_extra_policy": "Keep evidence/groupA/completion.json solely in the original external B3 archive, preserve exact hash/bytes in new receipt; never add to the original 123-file seal.",
+  "portability_rules": [
+    "Original B4 report, manifest, handoff, formal rows and B3 evidence/QC bytes are immutable. Preserve local paths in originals; supply additive mapping instead of rewriting evidence notes or action hashes.",
+    "Selection is a portable subset, not a full copy of the 60-file B4 or 123-file B3 sealed archives. The original checksum manifests document excluded files; copied-file inventory must authenticate exactly the new archive subset.",
+    "Excluded source PDFs are not claimed to exist in the repository. Each remains traceable by official URL/version/hash and by included extraction/capture receipts, text/page content and reviewed renderings.",
+    "P231/R231 previous U017 identity-only receipt resolves to existing repository data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json at the pinned baseline; no duplicate file required.",
+    "Archived P231 semantics references to code/tests/policy resolve to baseline Git blobs, not current exported state. New current-source tests remain separate from historical snapshot receipts.",
+    "Do not import operational scripts, full prepared CSVs, full source worktree inventories, caches, downloaded PDF originals or the unsealed B3 extra into the repository."
+  ],
+  "schema": "b5-02-portable-evidence-manifest-1",
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "partial_archive": true,
+  "original_plan_sha256": "58d3210b434a00a6b39f6ec6a0037ead2c89d4bb995d08b63a43e0893bbe8559",
+  "original_external_archives_unchanged": true,
+  "purpose": "Byte-preserved original B4 decisions/reports and B3 supporting captures; additive path mapping only."
+}

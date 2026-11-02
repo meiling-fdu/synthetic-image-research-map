@@ -1,0 +1,553 @@
+===== PDF PAGE 1 =====
+     AdaptiveTest-TimeSemanticDebiasingforAI-GeneratedImageDetection
+
+
+              Yu Cai1          Jiahe Tian2          Xiaomeng Fu2          Jiao Dai2          Jizhong Han2
+                                                                  Siwei Lyu1
+                                        1State University of New York at Buffalo, USA
+                   2Institute of Information Engineering, Chinese Academy of Sciences, China
+
+
+                            Abstract
+
+AI-generated  image  detectors  have  historically  concen-
+trated on generalization across generative models, often
+overlooking the critical challenge of cross-semantic gener-
+alizability. Thislimitationconstrainstheadaptabilityofde-
+tectors to new semantic content in real-world settings. We
+propose Adaptive Test-Time Semantic Debiasing (ATTSD),
+azero-shotapproachthatutilizesthevisual-semanticspace
+of large pretrained vision-language models to dynamically
+align feature representations during testing—without re-
+quiring additional training data or annotations. To further
+enhance adaptability, we introduce Semantic-Suppression
+for hard sample mining, adjusting the degree of seman-
+tic debiasing for each sample based on Fourier transform
+properties.   To assess cross-semantic generalizability, we
+present the Cross-Semantic AI-generated Image Detection
+dataset (CSAIID), a benchmark comprising diverse seman-                       Figure 1.  Comparison of detection accuracy on forgeries across
+tic categories reflective of real-world complexities.  Exten-                 various semantic categories.  Existing detectors demonstrate lim-
+siveexperimentsshowthatATTSDachievesstate-of-the-art                          ited  cross-semantic  generalizability.    In  contrast,  our  method
+performance, particularly excelling in cross-semantic sce-                    achieves superior detection accuracy.   Note, these detectors are
+narios, positioning it as a promising solution for detecting                  trained on 20 single-object categories from the training set [29]
+evolving AI-generated content. The CSAIID dataset is pub-                     (e.g., horse, cat).  The test set, sampled from LCM subset of the
+                                                                              cross-semantic dataset proposed in this work, is organized into
+licly availablehere.                                                          broader categories. For example, “Animals” subset includes a di-
+                                                                              verse range of animals such as bears, cats, and birds, reflecting
+                                                                              morecomplexandvariedsemanticsthanisolatedcategoriesinthe
+1.Introduction                                                                training set.
+
+As  generative  AI  technologies  have  advanced  in  recent
+years, AI-generated visual content is flooding the online                     erated  by  a  particular  model  (e.g.,  ProGAN  [13])  and
+information ecosystem at an unprecedented rate.  This in-                     then evaluate them on images from various unseen gener-
+flux has posed significant challenges to the trustworthi-                     ators [18,28,32].  However, this strategy mainly focuses
+ness of online media, cybersecurity, and copyright protec-                    ongeneralizationrelativetodifferentgenerators,neglecting
+tion [1,37]. Detecting AI-generated images (AGIs) has be-                     another essential factor: the impact of image semantics on
+comeanimportantresearchtopic[18,28]. Fromgenerative                           detector performance.
+adversarial networks (GANs) [2,13] to the recent diffusion
+models (DMs) [6,23], the rapid evolution of image gen-                           Ouranalysisdemonstratesthatimagesemanticsarecru-
+erators poses ongoing challenges for AGI detection.  As a                     cial to a detector’s generalizability.  Prior research has not
+result, mainstream detection paradigms have focused their                     comprehensivelyinvestigatedgeneralizationacrossvarying
+efforts on improving cross-generator generalizability.                        imagesemantics,particularlywhendetectorsencounterim-
+   A common strategy is to train detectors on images gen-                     ages with unseen semantic content absent from the training
+
+===== PDF PAGE 2 =====
+set. Can an AGI detector trained on specific semantic cate-                  AGI detectors.   Existing benchmarks rarely consider the
+gories still identify semantically distinct images?                          semantic dimension.    When they do,  they typically or-
+   As shown in  Fig.1, we evaluate the performance of ex-                    ganize datasets into narrowly defined, single-object cate-
+istingAGIdetectorsonimagesacrossdiversesemanticcon-                          gories, such as “car” or “cat,” overlooking more complex
+tent.  Most detectors show limited effectiveness, achieving                  scenarios and multi-object compositions [29,38].  In con-
+only moderate accuracy on specific semantic subsets (e.g.,                   trast,  our Cross-Semantic AI-generated Image Detection
+VehiclesandAnimals),likelyduetothepresenceofobjects                          dataset (CSAIID) categorizes images under broader con-
+similar to those in the training set.  This highlights a spu-                ceptual groups, capturing diverse objects and scenarios to
+rious correlation in current detection formulations, which                   better reflect real-world semantic diversity.
+tend to overfit specific semantic bias present in the training                  Our main contributions are as follows:  (1) We iden-
+set.  While expanding the diversity of training data could                   tifyandaddresstheoverlookedchallengeofcross-semantic
+potentiallyaddressthisissue,itisimpracticaltoencompass                       generalizability in the current AGI detection field, reveal-
+all possible semantic variations in open-world scenarios.                    ing the impact of semantic diversity on the generalization;
+   In this work, we introduce a new perspective on gener-                    (2) We propose an Adaptive Test-Time Semantic Debias-
+alizable AGI detection:  How can a detector trained on a                     ing (ATTSD) strategy, enabling detectors to dynamically
+closed-set dataset adapt dynamically to emerging, unseen                     adjust feature learning according to evolving semantic dis-
+semantic content?  To mitigate the semantic bias between                     tributions. Our ATTSD retains the zero-shot generalization
+test and training data, we propose performing adaptive se-                   setting as it requires no additional training data or annota-
+mantic debiasing at test time.  This approach must satisfy                   tions; (3) We develop the CSAIID benchmark, specifically
+two key requirements: (i) employ unbiased and reliable se-                   designed to assess cross-semantic generalizability, and or-
+mantic representations for test samples, and (ii) function                   ganize it into multiple high-level semantic categories en-
+in a self-supervised manner, as manually labeling semantic                   compassing diverse and multi-object scenarios to reflect
+annotations for newly encountered samples is both labor-                     real-worldvisualcomplexity;(4)Extensiveexperimentson
+intensive and potentially introduces human bias.                             multiple datasets demonstrate that our approach achieves
+   Tothisend,weproposevisual-semanticalignmentasan                           state-of-the-art generalization performance, particularly in
+auxiliarytask,builtuponthevisualspaceoflarge-scalepre-                       cross-semantic detection scenarios.
+trained vision-language models. As an instantiation of this
+idea, we utilize the visual features of CLIP [22], which ful-                2.Relatedwork
+fills aforementioned requirements through two merits:  (i)                   2.1.AI-generatedimagedetection
+Pretrainedoninternet-scaledatasetsthroughtasksunrelated
+to forgery, CLIP provides a rich and less biased visual-                     ExistingAGIdetectionmethodscanbecategorizedintotwo
+semantic representation, ideal for semantic alignment; (ii)                  types: artifact-basedmethodsandsemantic-basedmethods.
+Eachsamplecanthusbeself-labeledbyitsCLIPvisualem-                            Artifact-based methods capture inherent forgery artifacts
+beddings, eliminating the need for additional annotations.                   left by generative models [4,29,30,33].  CNNSpot [29]
+   Based on this, we propose our Test-Time Semantic De-                      simulates the artifacts of generative models to detect var-
+biasing (TTSD) strategy via a multitask framework where                      ious GAN-generated fakes.  NPR [28] identifies common
+AGI detection serves as the main task and visual-semantic                    up-sampling artifacts present in both GAN and DM forg-
+alignment operates as an auxiliary task.  Inspired by test-                  eries.  DIRE [30] and DRCT [4] use diffusion-based im-
+time training [26], we organize these two tasks in a two-                    age reconstruction to detect DM-generated fakes.  In con-
+brancharchitecturewithasharingacommonfeatureextrac-                          trast, semantic-based methods aim to avoid overfitting to
+tor as their foundation.  Upon encountering new test data,                   low-level artifacts. UniFD [18] uses the fixed CLIP visual
+thevisual-semanticalignmentisconductedbydistillingthe                        spacethroughlinearprobingtolearncommonpropertiesof
+CLIP visual embeddings through the pathway of the auxil-                     fake images. De-fake [24] combines image and caption in-
+iary task.  Thereafter, the semantic features learned by the                 puts into CLIP’s visual and text encoders to detect images
+detectorareadjustedasthesharedfeatureextractordynam-                         created with text-to-image generative models.  AIDE [32]
+ically adapts to the test distribution. Furthermore, we intro-               proposestoimprovedetectiongeneralizationbycombining
+duceaSemantic-Suppressionstrategyforhardsamplemin-                           ConvNeXt-based CLIP semantic features with noise pat-
+ing that operates in conjunction with TTSD. This adaptive                    terns. However, none of the above methods have examined
+componentadjuststhedegreeofsemanticdebiasingapplied                          AGI detection from a cross-semantic perspective.
+to each individual sample, forming our complete Adaptive                     2.2.Test-TimeTraining
+TTSD (ATTSD) method.
+   We also introduce a new benchmark specifically de-                        Test-time  training  (TTT)  is  a  methodology  initially  de-
+signed to evaluate the cross-semantic generalizability of                    signed to enhance a target task by incorporating a self-
+
+===== PDF PAGE 3 =====
+supervised auxiliary task during the testing phase, enabling                   encoder as soft labels.  This manner covers more compre-
+the model to dynamically adapt to distribution shifts be-                      hensive visual content without losing any indescribable vi-
+tween training and test data. TTT is primarily derived from                    sual patterns. We use the original CLIP embeddings with-
+object recognition tasks.Sun et al.designed a rotation pre-                    out any dimensionality reduction or projection, preserving
+diction task as an auxiliary task to update model weights                      the integrity of CLIP’s semantic representation.
+andhelpthemaintaskadapttotestdomains. TTT-MAE[8]
+trains a masked autoencoder to reconstruct test images, im-
+proving object recognition under distribution shifts. Due to
+its flexibility and effectiveness, TTT has been introduced
+to more mainstream tasks.  TPT [25] and DiffTPT [7] en-
+hance vision-language models with test-time prompt tun-
+ing, generating augmented views of test samples via Aug-
+Mix [11] or diffusion-based augmentation tools to ensure
+prediction consistency with the original views.   The pri-
+mary assumption in these works is that applying strong
+augmentations to test samples will not significantly alter
+the predictions from the original, as these are all semantic-                  Figure 2. The training scheme of multitask learning for ATTSD.
+related tasks. Both reconstruction and diffusion-based gen-                    The main task is AGI detection, utilizing the branch composed of
+eration are semantic-invariant augmentations, as the high-                     the Forgery Classifier and Feature Extractor. The Forgery Classi-
+level semantic patterns (i.e., task-specific patterns) remain                  fier predicts the binary real/fake label ydet, optimized using the
+preserved. However,thisstrategymaynotbedirectlyappli-                          BCE loss Lbce.   The auxiliary task, visual-semantic alignment,
+cable to AGI detection tasks, as aggressive augmentations                      is designed for subsequent test-time training.  It operates on the
+could disrupt the low-level artifact patterns that are critical                shared Feature Extractor and aligns output features with CLIP’s
+for classification. Given the inverse nature of task-specific                  visual semantic space via the Semantic Adaptor, optimized using
+patterns, a forgery-invariant augmentation would be more                       the semantic alignment lossLsem.
+ideal for TTT-involved AGI detection tasks.
+                                                                                  The auxiliary task shares the feature extractor with the
+3.Methodology                                                                  main task but requires its task-specific parameters.  To fa-
+3.1.Preliminaries                                                              cilitate this, we embed a semantic adaptor, θsem, between
+                                                                               the feature extractor and the forgery classifier.  Pictorially,
+To establish notation,  consider a standard AGI detector                       thisjointarchitectureformsaY-shapedmodelwithashared
+composed of a feature extractor, θext, and a forgery classi-                   base and two branches. Following typical TTT work [26],
+fier,θcls. The vector of stacked parametersθ = (θext,θcls)                     the auxiliary branch mirrors the architecture of the main
+specifies the entire detection model. Following TTT termi-                     branch, except for the output dimensionality in the final
+nology,werefertothisasthemaintask. Weassumeaccess                              layertoaccountforthedifferinggroundtruthlabelbetween
+to a training dataset: {(x1,y1det),...,(xn,yndet)}. ydet de-                   thetwotasks. GivenCLIPvisualembeddings,ysem,assoft
+notesthebinaryreal/fakelabel. Thetrainingprocesscanbe                          labels for the auxiliary task, the visual-semantic alignment
+formulated via binary cross entropy (BCE) loss as follows:                     performs distillation of the CLIP visual space, thereby up-
+
+                         nX                                                    dating the feature extractor through the semantic adaptor.
+             min     1       Lbce xi,yidet;θext,θcls.          (1)            This process calibrates the detector’s visual features to an
+           θext,θcls n  i=1                                                    unbiased semantic space, as illustrated in Fig.2.
+                                                                                  Training is conducted in a multitask learning fashion on
+3.2.Visual-semanticalignment                                                   the same training data.  The losses for each task are com-
+Following the TTT approach, our ATTSD-based detection                          bined, and the gradients are calculated using all the param-
+employs a self-supervised auxiliary task of visual-semantic                    eters. Thejointtrainingobjectiveisthereforeformulatedas
+alignment, i.e., distilling the CLIP visual features.  CLIP                    follows:
+visual features have proven effective across various visual-                                     1   nX    Lbce xi,yidet;θext,θcls
+language tasks.  Given its training on large-scale datasets,                          min                   +Lsem xi,yisem;θext,θsem               ,
+CLIP’svisualspaceoffersrich semantic representationand                           θext,θsem,θcls  n  i=1
+islessbiasedtowardspecificsemantics. Anotheradvantage                                                                                               (2)
+is that, instead of relying on hard semantic representations                   where Lsem is the semantic alignment loss, aligning the
+such as image captions or numeric class labels, we can di-                     outputofthesemanticadaptor, ˆysem,withthesoftsemantic
+rectlyusethedenserepresentationsoutputbyCLIP’svisual                           label,ysem, by maximizing their cosine similarity.
+
+===== PDF PAGE 4 =====
+Figure3. ComparisonoftestproceduresbetweenClassicAI-generatedimage(AGI)Detection(a)andATTSD-basedAGIDetection(b). In
+theclassicdetectionprocedure,themodelremainsfixedwhenencounteringunseendata. Incontrast,ATTSD-baseddetectiondynamically
+updates the feature extractor, θext, via the semantic adaptor, θsem, for new test samples.  Our detection paradigm allows the model’s
+features to align with evolving semantic distributions in a self-supervised manner, leading to improved detection accuracy.
+
+
+3.3.AdaptiveTest-TimeSemanticDebiasing                                        eachtestsample,preciselyadjustingthedegreeofsemantic
+As shown in  Fig.3, we aim to dynamically update the de-                      debiasing applied to its feature representations.  The inte-
+tector during the test phase to adapt to new test data.  In                   gration of this adaptive component with TTSD yields our
+thefollowing,wefirstdescribethetestphaseofourTTSD-                            complete framework, Adaptive TTSD (ATTSD), which op-
+based detection.                                                              timizes debiasing on a per-sample basis.
+   Benefiting  from  the  self-supervised  visual-semantic
+alignment, the auxiliary task operates independently of the
+main task during testing, enabling a zero-shot generaliza-
+tion setting for the main task.  During the test, the forgery
+classifier keeps frozen. TTSD is achieved by finetuning the
+shared feature extractor towards the objective of the aux-                    Figure 4. Visualization of the Semantic-Suppression effect by re-
+iliary task on test images, thereby adapting the model to                     ducing the phase component.  As the scaling factor α decreases,
+evolving test distributions.:                                                 the semantic structure of the image progressively deteriorates.
+
+                    1   nX                                                        We aim to create a forgery-invariant augmented version
+        θext,θsemmin       Lsem xi,yisem;θext,θsem.       (3)                for each sample to evaluate its hardness.   Inspired by a
+                    n i=1                                                     well-known property of Fourier transformation of an im-
+We keep the semantic adaptor tuning during the test phase,                    age: the phase component,P(x), preserves the high-level
+as empirical evidence shows that freezing it results in de-                   semantics of the original signal, while the amplitude com-
+graded performance (see discussion in  Sec.5.4). Freezing                     ponent,A(x), contains low-level statistics [19,20,31]. We
+the semantic adaptor forces the feature extractor to adjust                   suppress image semantics by applying a modified inverse
+excessivelytomeettheauxiliarytaskobjectives,whichcan                          Fourier transform:
+cause it to forget the knowledge required for the main task.                                  xaug =F−1 A(x)·e−j·α·P(x),               (4)
+Therefore, we maintain the tuning setup throughout all of                     whereF−1 denotes operator of inverse Fourier transform.
+our experiments.                                                              This modified transform generates an augmented version
+   Leteθext denote the (approximate) minimizer of Eq. (3).                    ofx, denoted asxaug, where high-level semantics are sup-
+Inference is then completed by making a prediction using                      pressedbyapplyingascalingfactorα∈{0,1}onthephase
+the updated feature extractor and the original forgery clas- eθext(x)         component while keeping the amplitude component intact.
+sifier, defined asθ(x) =θcls                    .                             Thereby, the image semantics are suppressed while retain-
+Semantic-Suppression  for  hard  sample  mining.    Se-                       inglow-levelstatisticscrucialforforgery-relatedpatternsto
+mantic bias manifests differently across individual sam-                      thegreatestextentpossible(seesamplesinFig.4). Thepre-
+ples,necessitating asample-specificapproachto debiasing.                      diction discrepancyD between the original and augmented
+To address this heterogeneity, we introduce a Semantic-                       imageiscomputedtoinformtheadaptiveweight,withmore
+Suppression strategy that dynamically modulates the inten-                    significant discrepancies indicating a need for more inten-
+sity of TTSD. This mechanism assigns adaptive weights to                      sive semantic debiasing.  This measure underlies our hard
+
+===== PDF PAGE 5 =====
+sample mining strategy, where an adaptive weightw is de-                     Foren [18] and GenImage [38], to evaluate our method.
+fined for each sample as follows:                                            To optimize the test-time setup of ATTSD before practical
+                   D =∥θ(x)−θ(xaug)∥2,                     (5)               evaluationontargettestdata,weintroduceDF3[12]dataset
+                                                                             asavalidationset. Itsmoderatescaleallowsforanefficient
+                            w =σ(D),                                 (6)     assessment of each component’s contribution.
+whereσ represents the sigmoid function for normalization.                    • UniForen [18].         This dataset extends the GAN-based
+ThefinalATTSDobjectivefunction,integratingtheSeman-                          dataset in [29] by incorporating DM-based images.   The
+tic Suppression strategy, is given by:                                       training set consists of fake images generated by ProGAN
+                      nX                                                     andrealimagesfromtheLSUN[34]dataset,witheachim-
+         min      1      wiLsem xi,yisem;θext,θsem.    (7)                  agefeaturingasingleobjectfrom20classes(e.g.,horseand
+      θext,θsem  n  i=1                                                      cat). Thetestsetcomprises19subsetsgeneratedbyvarious
+                                                                             models, including both GAN and DM generators.
+4. Cross-Semantic AI-generated Image Detec-                                  • GenImage [38].       This dataset mainly focuses on DMs-
+     tionDataset                                                             based fake images using ImageNet [5] as the real source. It
+We now describe the construction of our CSAIID dataset.                      includesfakesgeneratedbyeightdifferentmodels. Follow-
+To  maximize  semantic  coverage,  we  utilize  the  COCO                    ing the experimental setup of GenImage, we use SDv1.4 as
+dataset [14] as our real image source due to its complex                     training set and evaluate the test subset of each generator.
+scenes and inclusion of multiple objects. For synthetic im-                  •DF3[12].      This face-centered dataset contains six forgery
+ages, we employ two complementary approaches. First, we                      generators. Itisusedasthevalidationsetduetoitsnonover-
+use the original captions from the COCO validation set to                    lapping image semantics with the training sets of exist-
+generate corresponding fakes. Since current image forgery                    ing benchmarks, satisfying both cross-generator and cross-
+techniques can not only manipulate real scenarios but also                   semantic requirements for evaluating generalizability.
+generate entirely fictional content, we further incorporate                  Implementation  details:   The  detector  is  a  simplified
+thePartiPromptsdataset[35],whichcontainsover1,600di-                         ResNet50 model [10], utilizing only the first two stages of
+verseprompts spanningvariouscategories, suchas abstract                      the network. The blocks from the first stage act as the fea-
+concepts, world knowledge, and fantastical illustrations.                    tureextractor,whilethesecondstage,combinedwithafully
+   Combining the original annotations of COCO and cate-                      connected (FC) layer, serves as the forgery classifier.  The
+gories from PartiPrompts, we summarize five dominant se-                     semantic adaptor shares the same structure as the forgery
+manticcategoriesreflectingreal-worldscenarios:“Outdoor                       classifier.   We employ the visual encoder of CLIP: ViT-
+Scenes”, “People”, “Animals”, “Vehicles”, “Food”  , along                    L/14 to extract semantic embeddings. Following  [27], we
+withanadditional“Complex” category,toorganizeimages                          preprocess input images by extracting NPR-based upsam-
+into corresponding subsets.  The “Complex” category in-                      pling artifacts before feeding them into the detector.  The
+cludes images with intricate scenes that defy clear catego-                  α in Eq. (4) is set to 0.9 to minimize excessive disruption
+rization, as well as fakes generated by prompts from some                    to the image.  We use the Adam optimizer with a learning
+intricatecategories,suchasabstractconcepts,worldknowl-                       rate of 0.0002 and a batch size of 32 for training.  During
+edge, and fantastical illustrations.  Since synthetic images                 the test phase, the learning rate is 0.0001.  Following the
+generated from PartiPrompts lack corresponding real coun-                    standard TTT setup [26], we set batch size as 1 during test.
+terparts,wesamplerealimagesfromtheCOCOtrainingset                            We perform six gradient steps for each sample to adapt the
+within the same category to maintain balance.                                model.  These parameters were selected through empirical
+   To facilitate semantic control, all synthetic images are                  experiments on the DF3 dataset to balance computational
+created using text-to-image models. We synthesize images                     efficiency and adaptation performance.
+using three generators:  Stable Diffusion v2 (SDv2) [23],                    5.2.Cross-semanticgeneralization
+Latent Diffusion Model (LDM) [23], and Latent Consis-
+tency Model (LCM) [16], ensuring a balanced 1:1:1 distri-                    We first evaluate the performance of state-of-the-art open-
+bution of images from each generator across subsets. Each                    source detection models on our proposed CSAIID dataset.
+subsetconsistsof1,000realimagesand1,000syntheticim-                          To  highlight  the  impact  of  training  data  semantics,  we
+ages, resulting in a total dataset size of 12,000 images.                    group the results based on the source data of the training
+                                                                             sets, i.e., LSUN serves as the real source for the UniForen
+5.Experiments                                                                dataset,whileImageNetprovidesthesourcefortheGenIm-
+5.1.Settings                                                                 agedataset. Asthecreationoffakeimagesinherentlysimu-
+                                                                             latesthecontentoftheirsourceimages,thechoiceofsource
+Datasets:    Besides  our  proposed  CSAIID  dataset,  we                    datastronglyshapesthesemanticdistributionofeachdetec-
+also use two other widely-used benchmark datasets, Uni-                      tor learned during training.
+
+===== PDF PAGE 6 =====
+                                Real           Forgery         Outdoor                                                                                         Avg.
+        Method                Source            Model           Scenes     People    Animals    Vehicles    Food    Complex                                 Acc.(%)
+       GLFF [12]          LSUN           PG           63.03        61.68        55.88         63.93       61.58       62.00          61.35
+     NoDown [9]         LSUN           PG           52.53        51.08        50.28         53.18       51.03       53.10          51.87
+    NoDown-S [9]       LSUN           SG           51.78        52.88        51.88         51.63       50.73       51.30          51.70
+      UniFD [18]         LSUN           PG           64.28        64.73        62.38         72.19       61.73       63.35          64.78
+       DIRE [30]          LSUN           SG           50.23        49.87        49.67         50.08       50.03       49.45          49.89
+       AIDE [32]          LSUN           PG           53.83        52.08        53.88         54.88       50.78       52.70          53.03
+      NPR∗  [28]          LSUN           PG           71.64        73.54        66.68         71.09           70.89       74.15          71.33
+           Ours               LSUN           PG           76.59        82.74       87.64         80.94      81.89       84.00         82.30
+       DIRE [30]        ImageNet      ADM         50.03        49.52        48.82         49.57       49.52       49.15          49.44
+       AIDE [32]        ImageNet      SD1.4         71.04        69.93        74.79         72.79       77.34       74.45          73.38
+       NPR∗ [28]        ImageNet      SD1.4             86.19        79.79        80.74         87.09       86.04       84.30          84.02
+       DRCT [4]        ImageNet      SD1.4         63.42        63.78        64.48         63.63       58.68       64.05          62.85
+           Ours            ImageNet      SD1.4         86.14        90.75       92.90         90.70      91.25       90.75         90.42
+
+Table 1. Accuracy (ACC, %) comparison of our method with existing generated image detectors across various semantic subsets on the
+proposed CSAIID dataset. Results are grouped based on different training sources. Except for NoDown-S and DIRE, all methods with
+eachgrouparetrainedonthesametrainingset. i.e.,thetrainingsetsoftheUniForenandGenImagebenchmarks,respectively. Theresults
+of previous detectors are reproduced using official provided weights, while ∗ denotes our re-implemented training with the official codes.
+“Real Source” and “Forgery Model” specify the real data and forgery model used for training, and “PG” and “SG” denote abbreviations
+for ProGAN and StyleGAN, respectively.
+
+
+                         GenerativeAdversarialNetworks         Deep    Lowlevelvision Perceptualloss Guided           LDM                    Glide          DALL-E   Total
+      Method         Pro-   Cycle-  Big-  Style- Gau-    Star-  fakes                                                   200            100    50    100               Avg.
+                    GAN     GAN    GAN    GAN    GAN     GAN           SITD    SAN    CRN   IMLE              200stepsw/CFG   100steps 27     27     10             Acc.(%)
+   CNNSpot[29]     99.99   85.20  70.20  85.70  78.95  91.70  53.47 66.67    48.69    86.31   86.26    60.07  54.03   54.96   54.14 60.78 63.80 65.66   55.58     69.58
+    Patchfor[3]      75.03   68.97  68.47  79.16  64.23  63.94  75.54 75.14    75.28    72.33   55.30    67.41  76.50   76.10   75.77 74.81 73.28 68.52   67.91     71.24
+   NoDown∗[9]    100.00  89.97  93.10  97.08  94.27  50.83  98.77 51.67    70.00    94.11   94.12    91.30  60.80   64.00   61.30 66.35 71.15 67.15   60.50     77.71
+ Co-occurence[17]  97.70   63.15  53.75  92.50  51.10  54.70  57.10 63.06    55.85    65.65   65.80    60.50  70.70   70.55   71.00 70.25 69.60 69.90   67.55     66.86
+     Spec[36]        49.90   99.90  50.50  49.90  50.30  99.70  50.10 50.00    48.00    50.60   50.10    50.90  50.40   50.40   50.30 51.70 51.40 50.40   50.00     55.45
+    AIDE∗[32]      99.99   98.48  83.95  99.64  73.25  99.91  52.21 64.17    50.91    80.05   86.74    53.10  81.35   62.90   82.00 64.20 65.20 64.20   71.30     75.45
+    UniFD[18]      100.0   98.50  94.50  82.00  99.50  97.00  66.60 63.00    57.50    59.50   72.00    70.03  94.19   73.76   94.36 79.07 79.85 78.14   86.78     81.38
+    NPR∗[28]       99.99   86.83  87.70  96.90  84.49  99.52  66.88 64.44    70.09    50.00   50.00    74.65  90.90   93.15   92.20 95.20 95.95 95.90   87.95     83.30
+       Ours          99.80   98.64  93.75  97.86  98.03 100.00 74.26 50.83    53.88    98.12   99.15    89.50  99.20   99.15   99.60 99.45 99.45 99.80   99.60     92.11
+
+Table 2.  Accuracy (ACC, %) comparison of cross-generator generalization on the UniForen dataset.  All methods were trained on the
+ProGAN subset and evaluated on subsets from different generators.   ∗ indicates results obtained using the re-implemented or official
+pretrained model. The results of the remaining methods are cited from UniFD [18].
+
+
+    As shown in Tab.1, our method outperforms existing                                        The overall results highlight the semantic limitations
+approaches under both training settings, demonstrating su-                                commonly associated with closed-set training.  Neverthe-
+perior generalizability in cross-semantic scenarios.   No-                                less, our ATTSD demonstrates substantial improvements
+tably, when the training set transitions from LSUN-based                                  acrossbothtrainingsources,suggestingitscapabilitytobet-
+to ImageNet-based sources, many methods exhibit signifi-                                  ter adapt to diverse semantic content.
+cant improvements. For example, AIDE achieves a notable
+gainof20.27%,NPRimprovesby12.69%,andourmethod                                             5.3.Cross-generatorgeneralization
+achieves an increase of 8.12%.  These improvements arise                                  We examine cross-generator generalization on two bench-
+because ImageNet’s broader semantic coverage mitigates                                    marks: UniForen and GenImage.  According to the gener-
+the overfitting relative to LSUN’s narrow scope. The com-                                 ators of their training sets, generalization can be assessed
+paratively smaller gain of our method suggests it is inher-                               from GAN-based and DM-based generators, respectively.
+ently less sensitive to shifts in the semantic distribution of
+training data.  Although these improvements are partially                                 Generalization from GAN-based generators.  The mod-
+influencedbychangesingenerators(examinedinfollowing                                       els  were  trained  on  UniForen’s  ProGAN-based  training
+subsection), they reaffirm our earlier observations: seman-                               set.  The results across different generators are presented
+tic factors play a crucial role in generalizable detection.                               in Tab.2.  The overall performance of previous methods
+                                                                                          reveals that generalizing across different generative model
+
+===== PDF PAGE 7 =====
+           Method          Midjourney    SDv1.4    SDv1.5    ADM    GLIDE    Wukong    VQDM    BigGAN     Avg.
+       CNNSpot [29]         84.92           99.88       99.76      53.48      53.80        99.68        55.50         49.93       74.62
+         F3Net [21]            77.85           98.99       99.08      51.20      54.87        97.92        58.99         49.21       73.51
+       GramNet [15]          73.68           98.85       98.79      51.52      55.38        95.38        55.15         49.41       72.27
+        De-fake [24]           79.88           98.65       98.62      71.57      78.05        98.42        78.31         74.37       84.73
+         UniFD [18]            91.46           96.41       96.14      58.07      73.40        94.53        67.83         57.72       79.45
+         NPR∗ [28]            79.03           99.52       99.48      62.69      93.18        97.79        55.80         61.97       81.18
+          DIRE [30]            50.40           99.99       99.92      52.32      67.23        99.98        50.10         49.99       71.24
+         AIDE [32]            79.38           99.74       99.76      78.54      91.82        98.65        80.26         66.89       86.88
+          DRCT [4]             91.50           95.01       94.41      79.42      89.18        94.67        90.03         81.67       89.49
+             Ours                 91.77           94.72       93.82      84.98      97.34        91.44        81.22         90.18      90.68
+
+Table 3.  Accuracy (ACC, %) comparison of cross-generator generalization on the GenImage dataset.  All methods were trained on the
+SDv1.4 training set and evaluated on subsets from different generators.  ∗ indicates results obtained using the re-implemented or official
+pretrained model. Results for AIDE [32] are cited from its original paper. The remaining methods are cited from DRCT [4].
+
+                       Components                                            DifferentGenerators                                              Avg.
+  Method            TTSD     SS     3DGAN    LDM    LSGM    StyleGAN2    StyleGAN3    Transformers    Acc.(%)
+  Baseline         /reve     /reve59.85       67.70      70.80           65.60               66.95                 67.11              66.34
+  JointCLIP          N.A      N.A       71.95       79.25      88.04           69.90               73.40                 81.13              77.28
+  JointTrain        /reve     /reve58.10       74.25      75.13           72.10               72.95                 68.28              70.13
+  Ours-TTSD      /     /reve58.40       95.20      96.18           70.95               81.30                 95.41              82.91
+  Ours-ATTSD    /     /         63.70      95.25     96.59          73.50              82.25               94.59             84.31
+
+Table 4. Ablation results on the DF3 dataset. TTSD and SS abbreviate Test-Time Semantic Debiasing and Semantic Suppression strategy,
+respectively. JointCLIP combines features before the last FC layer with CLIP visual embeddings via concatenation. JointTrain refers to
+regular testing of the variant jointly trained with the semantic alignment task, without the test-time debiasing phase.
+
+
+families is significantly more challenging than generaliz-                         generalizability by generating reconstructed images to cap-
+ing within the same family.   For example, methods such                            turegenerativeartifacts. Ratherthangenerativefactors,our
+as NoDown, UniFD, and AIDE achieve nearly 90% accu-                                method places greater emphasis on addressing limitations
+racy on all GAN-based subsets but experience a substantial                         posed by semantic factors, making our generalization less
+dropinperformanceonDM-basedfakes. Thisindicatesthat                                sensitive to generator shifts during testing.
+only when it comes to generalizing across generator fami-                              Overall, the performance on both datasets underscores
+lies does the generator factor become a primary constraint.                        the exceptional generalizability of our method in cross-
+Ourmethod,bydirectlyadaptingfeaturelearningtothetest                               generatordetection. Theseresultsdemonstratethatourgen-
+distribution, consistently outperforms existing approaches                         eralizability is not confined to cross-semantic scenarios but
+for both GAN-based and DM-based fakes. Among existing                              also encompasses generator variations.
+methods,NPRstandsoutbyidentifyingsharedup-sampling                                 5.4.Ablationstudy
+artifacts common to both GAN and DM families, making
+it less sensitive to generator variations.  Nevertheless, our                      Asaforementioned,weusetheDF3dataset—composeden-
+method still outperforms NPR by 8.8% in accuracy.                                  tirelyofface-centeredimages—asthevalidationsettofinal-
+Generalization from DM-based generators.   Following                               izetestsettingsandassessthecontributionsofeachcompo-
+thesettingofGenImage,wetrainthemodelontheSDv1.4-                                   nent. The variants in following experiments are trained on
+based training set and evaluate it on test subsets of various                      UniForen’s training set and evaluated on different genera-
+generative models.  The comparative results with existing                          tors of DF3, enabling a simultaneous examination of cross-
+methods are presented in Tab.3.  The GenImage test set                             generator and cross-semantic generalization.
+contains 7 DM subsets and 1 GAN subset.  Although the                              Effectofeachcomponent. Wedenotethedetectorwiththe
+traininggeneratorshiftstoDM,asimilarlimitationpersists.                            same backbone as “Baseline”, which consists solely of the
+Almostallpreviousmethodssuffersignificantperformance                               main branch of our architecture without the auxiliary task.
+drops on the BigGAN subset, as it originates from a gener-                         Another variant jointly trained with the auxiliary task but
+ator family different from the training set.  DRCT, the lat-                       excluding the test-time optimization process is denoted as
+est state-of-the-art method, demonstrates relatively strong                        “JointTrain”.  To demonstrate that the benefits of our ap-
+
+===== PDF PAGE 8 =====
+proach are not solely derived from the inclusion of CLIP’s                               3D-      L      LS    Style-   Style-               Avg.
+semanticspace,weintroduceavariantreferredtoas“Joint-                           SA       GAN     DM      GM     GAN2     GAN3  Transf-ormersAcc.(%)
+CLIP”.ThisvariantconcatenatesCLIPvisualfeatureswith                            Share    55.05  75.90  79.14   81.25    80.10     78.44      74.98
+the features before the final FC layer for classification.                     Frozen  56.75  74.75  63.30   68.30    63.45     93.01      69.93
+                                                                               Ours     63.70  95.25  96.59  73.50   82.25    94.59      84.31
+   As shown in Tab.4, the “Baseline” detector achieves
+only 66.34% average accuracy.   Concatenating CLIP vi-                        Table 5.  Effect of Semantic Adaptor (SA) design.  “Share” de-
+sual features (“JointCLIP”) into the model yields an im-                      notes a tightly coupled adaptor sharing weights with the forgery
+provement, confirming the effectiveness of CLIP’s seman-                      classifier, “Frozen” refers to a fixed adaptor during the test phase,
+tic representations. However, its performance still lags sig-                 and “Ours” represents the finalized Y-branch architecture with a
+nificantly behind our approach.  The “JointTrain” variant                     loosely coupled and finetuned adaptor.
+also shows performance gains. Nevertheless, without test-
+time optimization, the improvement remains limited.  The                      and detection performance.
+TTSDvariant,withouttheSemantic-Suppression(SS)strat-
+egy, improves baseline performance by 16.57%, highlight-
+ing the impact of test-time semantic debiasing.  Our final
+ATTSD version, which integrates the SS strategy, further
+enhances accuracy to 84.31%.   These results collectively
+emphasize the critical role of each proposed component in
+effective generalization.
+Effect of the Semantic Adaptor.  We present the empiri-
+cal results of finalizing the design of the Semantic Adap-
+tor (SA) through two variants.  The first variant, denoted
+as “Share”, allows the SA to share its entire structure and
+weights with the forgery classifier. It is supplemented only
+by an additional projection layer to map the output fea-                      Figure 5. Effect of gradient steps. We present accuracy trends on
+tures to the CLIP space.  The second variant, denoted as                      theDF3datasetasthenumberofgradientdescentstepsincreases.
+“Frozen”, retains the same architecture as our implementa-
+tion but keeps the SA frozen during the test phase.                           6.Discussion
+   As shown in Tab.5, the “Share” variant exhibits inferior
+performance. We attribute this to the tightly coupled struc-                  Limitation and future work. During testing, our method
+ture between the two tasks, where the forgery classifier is                   takes 2× number        of  steps longer than standard inference,
+updated during testing by the semantics-related task, caus-                   which performs only a single forward pass per sample. As
+ing it to compromise its ability to maintain a robust forgery                 the first work addressing semantic bias for AGI detection,
+classification boundary.  Similarly, keeping the SA frozen                    this paper is not as concerned about computational effi-
+underperforms,asitforcesthefeatureextractortocompen-                          ciency as improving generalizability.   Future work could
+sate excessively for the auxiliary task’s objectives, leading                 explore enhancing computational efficiency by designing
+to suboptimal adjustments.  Our finalized implementation                      models that are explicitly optimized during training for
+adoptsaY-brancharchitecture,wheretheSAislooselycou-                           faster updates during test time.
+pledwiththeforgeryclassifierandremainsfinetunedduring                         Conclusion. This paper introduces Adaptive Test-Time Se-
+the test phase.  This design achieves the best performance                    mantic Debiasing (ATTSD), a new method for AGI de-
+by serving two key merits:  decoupling the tasks to mini-                     tection that dynamically aligns the detector’s feature space
+mize interference and maintaining the flexibility necessary                   with evolving semantic distributions during testing.   By
+for effective adaptation.                                                     leveraging CLIP’s semantic visual space and a semantic-
+Effectofgradientsteps. Inreal-worlddetectionscenarios,                        suppression strategy, our method effectively mitigates se-
+it is impractical to predefine the optimal number of gradi-                   mantic bias and enhances generalization across diverse se-
+entstepsforevolvingunknowndata. Therefore,weanalyze                           mantic and generative model variations.  Extensive evalu-
+the effect of gradient steps on the DF3 dataset to determine                  ations on CSAIID, UniForen, and GenImage benchmarks
+thebestconfigurationandensureconsistencyacrossvarious                         demonstrate that our approach outperforms existing meth-
+test datasets. As shown in Fig.5, detection accuracy across                   ods, achieving superior cross-semantic and cross-generator
+differentsubsetsimprovesasthestepincreases. Theoverall                        generalization. WhileATTSDinvolvesadditionalcomputa-
+detection accuracy reaches a saturation point after 6 steps.                  tional overhead, the significant gains in detection accuracy
+Wethusfinalize6gradientstepsforATTSD-basedAGIde-                              validate its effectiveness, offering a promising direction for
+tection,strikingabalancebetweencomputationalefficiency                        addressing real-world AGI detection challenges.
+
+===== PDF PAGE 9 =====
+References                                                                                Zurich,  Switzerland,  September 6-12,  2014,  Proceedings,
+ [1]Anjuman Ara, Md Sajadul Alam, et al.  A comparative re-                               Part V 13, pages 740–755. Springer, 2014.5
+      view of ai-generated image detection across social media                      [15]Zhengzhe Liu, Xiaojuan Qi, and Philip HS Torr. Global tex-
+      platforms.  Global Mainstream Journal of Innovation, En-                            tureenhancementforfakefacedetectioninthewild. InPro-
+      gineering & Emerging Technology, 3(01):11–22, 2024.1                                ceedings of the IEEE/CVF conference on computer vision
+ [2]Andrew Brock, Jeff Donahue, and Karen Simonyan.  Large                                and pattern recognition, pages 8060–8069, 2020.7
+      scale gan training for high fidelity natural image synthesis.                 [16]Simian Luo, Yiqin Tan, Longbo Huang, Jian Li, and Hang
+      arXiv, 2018.1                                                                       Zhao.     Latent  consistency  models:   Synthesizing  high-
+ [3]Lucy Chai,  David Bau,  Ser-Nam Lim,  and Phillip Isola.                              resolution images with few-step inference.   arXiv preprint
+      What makes fake images detectable?  understanding prop-                             arXiv:2310.04378, 2023.5
+      erties that generalize.  In ECCV, pages 103–120. Springer,                    [17]Lakshmanan Nataraj, Tajuddin Manhar Mohammed, Shiv-
+      2020.6                                                                              kumar Chandrasekaran, Arjuna Flenner, Jawadul H Bappy,
+ [4]Baoying Chen, Jishen Zeng, Jianquan Yang, and Rui Yang.                               Amit K Roy-Chowdhury, and BS Manjunath. Detecting gan
+      Drct:  Diffusion reconstruction contrastive training towards                        generated fake images using co-occurrence matrices.  arXiv
+      universal detection of diffusion generated images. In Forty-                        preprint arXiv:1903.06836, 2019.6
+      first International Conference on Machine Learning. 2,6,                      [18]Utkarsh Ojha, Yuheng Li, and Yong Jae Lee.  Towards uni-
+      7                                                                                   versal fake image detectors that generalize across genera-
+ [5]Jia Deng,  Wei Dong,  Richard Socher,  Li-Jia Li,  Kai Li,                            tive models.  In Proceedings of the IEEE/CVF Conference
+      and Li Fei-Fei.  Imagenet: A large-scale hierarchical image                         on Computer Vision and Pattern Recognition, pages 24480–
+      database. InCVPR, 2009.5                                                            24489, 2023.1,2,5,6,7
+ [6]Prafulla Dhariwal and Alexander Nichol.  Diffusion models                       [19]AlanVOppenheimandJaeSLim. Theimportanceofphase
+      beat gans on image synthesis. Advances in Neural Informa-                           insignals. ProceedingsoftheIEEE,69(5):529–541,1981.4
+      tion Processing Systems, 34:8780–8794, 2021.1                                 [20]Leon N Piotrowski and Fergus W Campbell.   A demon-
+ [7]Chun-Mei  Feng,  Kai  Yu,  Yong  Liu,  Salman  Khan,  and                             stration of the visual importance and flexibility of spatial-
+      Wangmeng Zuo. Diverse data augmentation with diffusions                             frequency amplitude and phase. Perception, 11(3):337–346,
+      for effective test-time prompt tuning. In Proceedings of the                        1982.4
+      IEEE/CVF International Conference on Computer Vision,                         [21]YuyangQian,GuojunYin,LuSheng,ZixuanChen,andJing
+      pages 2704–2714, 2023.3                                                             Shao.   Thinking in frequency:  Face forgery detection by
+ [8]Yossi Gandelsman, Yu Sun, Xinlei Chen, and Alexei Efros.                              mining frequency-aware clues.  In Computer Vision–ECCV
+      Test-time training with masked autoencoders.  Advances in                           2020: 16thEuropeanConference,Glasgow,UK,August23–
+      Neural Information Processing Systems, 35:29374–29385,                              28, 2020, Proceedings, Part XII, pages 86–103. Springer,
+      2022.3                                                                              2020.7
+ [9]Diego Gragnaniello, Davide Cozzolino, Francesco Marra,                          [22]Alec  Radford,  Jong  Wook  Kim,  Chris  Hallacy,  Aditya
+      GiovanniPoggi,andLuisaVerdoliva. Aregangeneratedim-                                 Ramesh,  Gabriel  Goh,  Sandhini  Agarwal,  Girish  Sastry,
+      ageseasytodetect? acriticalanalysisofthestate-of-the-art.                           AmandaAskell,PamelaMishkin,JackClark,etal. Learning
+      In 2021 IEEE international conference on multimedia and                             transferable visual models from natural language supervi-
+      expo (ICME), pages 1–6. IEEE, 2021.6                                                sion. InInternationalconferenceonmachinelearning,pages
+[10]Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.                                8748–8763. PMLR, 2021.2
+      Deep residual learning for image recognition. CVPR, 2016.                     [23]Robin  Rombach,  Andreas  Blattmann,  Dominik  Lorenz,
+      5                                                                                   Patrick Esser, and Bj¨orn Ommer.   High-resolution image
+[11]Dan Hendrycks, Norman Mu, Ekin Dogus Cubuk, Barret                                    synthesis with latent diffusion models.   In Proceedings of
+      Zoph, Justin Gilmer, and Balaji Lakshminarayanan.  Aug-                             the IEEE/CVF Conference on Computer Vision and Pattern
+      mix: Asimplemethodtoimproverobustnessanduncertainty                                 Recognition, pages 10684–10695, 2022.1,5
+      underdatashift. InInternationalconferenceonlearningrep-                       [24]Zeyang Sha, Zheng Li, Ning Yu, and Yang Zhang. De-fake:
+      resentations, page 5, 2020.3                                                        Detection and attribution of fake images generated by text-
+[12]Yan Ju, Shan Jia, Jialing Cai, Haiying Guan, and Siwei Lyu.                           to-image generation models.   In Proceedings of the 2023
+      Glff: Global and local feature fusion for ai-synthesized im-                        ACM SIGSAC Conference on Computer and Communica-
+      age detection.  IEEE Transactions on Multimedia, 2023.5,                            tions Security, pages 3418–3432, 2023.2,7
+      6                                                                             [25]Manli Shu,  Weili Nie,  De-An Huang,  Zhiding Yu,  Tom
+[13]TeroKarras,TimoAila,SamuliLaine,andJaakkoLehtinen.                                    Goldstein, Anima Anandkumar, and Chaowei Xiao.   Test-
+      Progressive growing of gans for improved quality, stability,                        time prompt tuning for zero-shot generalization in vision-
+      andvariation. InInternationalConferenceonLearningRep-                               language models. Advances in Neural Information Process-
+      resentations, 2018.1                                                                ing Systems, 35:14274–14289, 2022.3
+[14]Tsung-Yi Lin, Michael Maire, Serge Belongie, James Hays,                        [26]Yu Sun, Xiaolong Wang, Zhuang Liu, John Miller, Alexei
+      PietroPerona,DevaRamanan,PiotrDoll´ar,andCLawrence                                  Efros,  and  Moritz  Hardt.     Test-time  training  with  self-
+      Zitnick.  Microsoft coco:  Common objects in context.  In                           supervision for generalization under distribution shifts.  In
+      Computer Vision–ECCV 2014: 13th European Conference,                                ICML, pages 9229–9248. PMLR, 2020.2,3,5
+
+===== PDF PAGE 10 =====
+[27]Chuangchuang Tan, Yao Zhao, Shikui Wei, Guanghua Gu,
+      and Yunchao Wei. Learning on gradients: Generalized arti-
+      facts representation for gan-generated images detection.  In
+      Proceedings of the IEEE/CVF Conference on Computer Vi-
+      sion and Pattern Recognition, pages 12105–12114, 2023.5
+[28]Chuangchuang Tan, Yao Zhao, Shikui Wei, Guanghua Gu,
+      PingLiu,andYunchaoWei. Rethinkingtheup-samplingop-
+      erations in cnn-based generative network for generalizable
+      deepfake detection.  In Proceedings of the IEEE/CVF Con-
+      ference on Computer Vision and Pattern Recognition, pages
+      28130–28139, 2024.1,2,6,7
+[29]Sheng-Yu  Wang,  Oliver  Wang,  Richard  Zhang,  Andrew
+      Owens, and Alexei A Efros. Cnn-generated images are sur-
+      prisinglyeasytospot...fornow. InCVPR,pages8695–8704,
+      2020.1,2,5,6,7
+[30]Zhendong  Wang,  Jianmin  Bao,  Wengang  Zhou,  Weilun
+      Wang, Hezhen Hu, Hong Chen, and Houqiang Li.  Dire for
+      diffusion-generated image detection.  In Proceedings of the
+      IEEE/CVF International Conference on Computer Vision,
+      pages 22445–22455, 2023.2,6,7
+[31]Qinwei Xu, Ruipeng Zhang, Ya Zhang, Yanfeng Wang, and
+      Qi Tian. A fourier-based framework for domain generaliza-
+      tion.  In Proceedings of the IEEE/CVF conference on com-
+      puter vision and pattern recognition, pages 14383–14392,
+      2021.4
+[32]Shilin  Yan,  Ouxiang  Li,  Jiayin  Cai,  Yanbin  Hao,  Xi-
+      aolong  Jiang,   Yao  Hu,   and  Weidi  Xie.       A  sanity
+      check  for  ai-generated  image  detection.    arXiv  preprint
+      arXiv:2406.19435, 2024.1,2,6,7
+[33]Cai Yu, Peng Chen, Jiao Dai, Xi Wang, Weibo Zhang, Jin
+      Liu, and Jizhong Han.  Focus by prior: Deepfake detection
+      based on prior-attention.  In 2022 IEEE International Con-
+      ference on Multimedia and Expo (ICME), pages 1–6. IEEE,
+      2022.2
+[34]Fisher Yu, Ari Seff, Yinda Zhang, Shuran Song, Thomas
+      Funkhouser, and Jianxiong Xiao.  Lsun:  Construction of a
+      large-scale image dataset using deep learning with humans
+      in the loop. arXiv preprint arXiv:1506.03365, 2015.5
+[35]JiahuiYu,YuanzhongXu,JingYuKoh,ThangLuong,Gun-
+      janBaid,ZiruiWang,VijayVasudevan,AlexanderKu,etal.
+      Scalingautoregressivemodelsforcontent-richtext-to-image
+      generation. arXiv preprint arXiv:2206.10789, 2(3):5, 2022.
+      5
+[36]Xu Zhang, Svebor Karaman, and Shih-Fu Chang. Detecting
+      andsimulatingartifactsinganfakeimages. In2019IEEEin-
+      ternational workshop on information forensics and security
+      (WIFS), pages 1–6. IEEE, 2019.6
+[37]Haonan  Zhong,   Jiamin  Chang,   Ziyue  Yang,   Tingmin
+      Wu,  Pathum Chamikara Mahawaga Arachchige,  Chehara
+      Pathmabandu, and Minhui Xue.  Copyright protection and
+      accountabilityofgenerativeai: Attack,watermarkingandat-
+      tribution. In Companion Proceedings of the ACM Web Con-
+      ference 2023, pages 94–98, 2023.1
+[38]MingjianZhu,HantingChen,QiangyuYan,XudongHuang,
+      Guanyu Lin, Wei Li, Zhijun Tu, Hailin Hu, Jie Hu, and
+      YunheWang. Genimage: Amillion-scalebenchmarkforde-
+      tecting ai-generated image. Advances in Neural Information
+      Processing Systems, 36, 2024.2,5

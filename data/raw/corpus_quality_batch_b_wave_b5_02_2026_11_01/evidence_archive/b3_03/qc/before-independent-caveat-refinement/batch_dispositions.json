@@ -1,0 +1,1307 @@
+{
+  "schema": "batch-b-evidence-dispositions-1",
+  "batch_id": "B3-03",
+  "planned_batch_id": "B2-03",
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "recorded_utc": "2026-10-31T15:55:33.939410+00:00",
+  "phase": "EVIDENCE_ONLY_NOT_MAINTAINER_ADJUDICATION",
+  "B2_planning_input_sha256": {
+    "batch_plan.md": "14af2a8bac007d21f7aef4fb70ee6f75d81bc1424a7eaf6f8b3654cfb6736c0e",
+    "backlog_matrix.json": "fead93a11f96adb4b6de008ec2085da7559a83109a4f6e2b79f7a5e0d4cd59eb",
+    "validation.json": "19d4b74904bce8735a3f99e812934c1930f30a4e722cf17674a3264272d472ad"
+  },
+  "original_membership_preserved": true,
+  "papers": 10,
+  "actions": 11,
+  "outcome_counts": {
+    "SUPPORTED_ADDITION": 6,
+    "EVIDENCE_INSUFFICIENT": 4,
+    "IDENTITY_BLOCKED": 1
+  },
+  "formal_decisions_before_after": [
+    127,
+    127
+  ],
+  "historical_unresolved_before_after": [
+    120,
+    120
+  ],
+  "active_public_unresolved_before_after": [
+    118,
+    118
+  ],
+  "no_actions_closed_by_evidence_review": true,
+  "records": [
+    {
+      "review_id": "R110",
+      "paper_id": "curated:6976641cbfe602a7e617",
+      "title": "Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis",
+      "original_B2_assignment": "B2-03",
+      "assigned_issue": "DATASET_AND_BENCHMARK_CONTRIBUTIONS_R1_R2",
+      "original_question": {
+        "review_id": "R110",
+        "paper_id": "curated:6976641cbfe602a7e617",
+        "title": "Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "MRI-Forensics is introduced as a curated, released medical forensic benchmark dataset.",
+        "evidence_url": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:6976641cbfe602a7e617",
+        "evidence_excerpt": "Magnetic Resonance Imaging (MRI) is a widely adopted technology for acquiring detailed internal images of the human body for diagnostic purposes. Given its sensitive",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: MRI-Forensics is introduced as a curated, released medical forensic benchmark dataset.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1",
+        "R2"
+      ],
+      "current_authoritative_status": "UNRESOLVED",
+      "baseline_context_changed_since_B2": false,
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_authoritative_changes": [
+        {
+          "field": "research_types",
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "benchmark"
+          ]
+        }
+      ],
+      "conditional_candidate_research_types": null,
+      "evidence_sufficient_for_proposed_addition": true,
+      "maintainer_acceptance": "PENDING; no formal decision made",
+      "formal_action_closed": false,
+      "confidence": {
+        "identity": "high",
+        "R1_dataset_contribution": "high",
+        "R2_benchmark_contribution": "high",
+        "empirical_results_independently_reproduced": false
+      },
+      "rationale": "Accept dataset and benchmark additions only through an independently justified formal R1/R2 decision; preserve detection and method. Contribution support does not validate or independently reproduce reported performance.",
+      "limitations": [
+        {
+          "kind": "evaluation_scope",
+          "finding": "Table2 is fake-only class recognition;100% there does not establish balanced real/fake accuracy, specificity or a low false-positive rate. All6306 prostate real images are allocated to train/validation. Table3 separately supplies real-class results on brain images."
+        },
+        {
+          "kind": "source_or_reproducibility_limit",
+          "finding": "No patient-level split, patient count or independent clinical provenance audit is established by the reviewed construction text. Generator training/source overlaps and actual release/license were not independently reproduced."
+        },
+        {
+          "kind": "prose_table_discrepancy",
+          "finding": "PDFp7/printed228 says RINE slightly outperforms AIM-DWT detecting ProGAN in one setting; Table2's displayed ProGAN test-column comparisons do not show that ordering. Preserve the text/table disagreement; do not repair the source or infer an undisplayed experiment."
+        },
+        {
+          "kind": "scope_limit",
+          "finding": "Unconditional256x256 prostate/brain experiments do not demonstrate conditional generation, higher-resolution images or all MRI modalities; limitations are acknowledged on PDFpp7-8."
+        }
+      ],
+      "source_provenance": [
+        {
+          "source_id": "R110-canonical.pdf",
+          "kind": "PRIMARY_OFFICIAL_ACCEPTED_MANUSCRIPT",
+          "url": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf",
+          "artifact": "evidence/groupA/R110-canonical.pdf",
+          "sha256": "3280157fb698bfda46e75caf4f39d3cb376f7803cd4bcd24f27c574da94acabe",
+          "bytes": 2606021,
+          "version": "WACV2026W SAFE-2026 accepted open-access version"
+        },
+        {
+          "source_id": "R110-table2-3.png",
+          "kind": "DERIVED_VISUAL_VERIFICATION",
+          "url": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf",
+          "artifact": "evidence/groupA/R110-table2-3.png",
+          "sha256": "4b45a75312d2d6c150644c0d7cd3fa8b100db25d3f95a42efd767675fc7cec9d",
+          "bytes": 373237,
+          "version": "Rendered PDF page8, printed229; viewed by reviewer"
+        }
+      ],
+      "identity_verification": {
+        "status": "VERIFIED_PRIMARY_PROCEEDINGS_MANUSCRIPT",
+        "basis": "Official CVF WACV2026W SAFE-2026 PDF, exact title and all three canonical authors on PDF page1. Footer states it is the accepted open-access workshop version apart from watermark; printed proceedings pages222-231. No DOI/arXiv identifier was invented.",
+        "version": "CVF accepted open-access workshop paper,10 PDF pages; publisher-final bibliographic equivalence not separately checked."
+      },
+      "evidence_record": "per_paper/R110.json",
+      "evidence_record_sha256": "247059a94b94b3186670ef50ec38cf9117c4de2867a9ca2bd681c8cfe334f5e8",
+      "reported_performance_independently_reproduced": false,
+      "authoritative_data_changed": false
+    },
+    {
+      "review_id": "R138",
+      "paper_id": "curated:88b63de59a0eabcd1b02",
+      "title": "Incremental Learning for AI-Generated Image Detection",
+      "original_B2_assignment": "B2-03",
+      "assigned_issue": "DATASET_CONTRIBUTION_R1",
+      "original_question": {
+        "review_id": "R138",
+        "paper_id": "curated:88b63de59a0eabcd1b02",
+        "title": "Incremental Learning for AI-Generated Image Detection",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "FakeCOCO is introduced as a 247,954-image contribution for domain-incremental detection.",
+        "evidence_url": "https://doi.org/10.1109/tmm.2026.3716041",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:88b63de59a0eabcd1b02",
+        "evidence_excerpt": "With the rapid advancement of generative techniques, AI-generated images have become increasingly prevalent, posing growing risks of misuse in spreading misinformation. This highlights the",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: FakeCOCO is introduced as a 247,954-image contribution for domain-incremental detection.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1"
+      ],
+      "current_authoritative_status": "UNRESOLVED",
+      "baseline_context_changed_since_B2": false,
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_disposition": "EVIDENCE_INSUFFICIENT",
+      "proposed_authoritative_changes": [],
+      "conditional_candidate_research_types": [
+        "method",
+        "dataset"
+      ],
+      "evidence_sufficient_for_proposed_addition": false,
+      "maintainer_acceptance": "PENDING; no formal decision made",
+      "formal_action_closed": false,
+      "confidence": {
+        "identity": "high for DOI/author-repository correspondence",
+        "dataset_addition_sufficiency": "insufficient under the assigned manuscript-contribution/protocol review",
+        "hold": "high"
+      },
+      "rationale": "KeepR138 unresolved as evidence-insufficient. Do not add dataset solely from the local abstract or assert that missing full text disproves the contribution. No benchmark action is added.",
+      "limitations": [
+        {
+          "kind": "access_blocker",
+          "finding": "Identity-matched scientific methods and evaluation sections unavailable; release/README cannot substitute for required primary method/protocol evidence."
+        },
+        {
+          "kind": "license_scope",
+          "finding": "README explicitly restricts FakeCOCO to academic research and prohibits commercial use. No independent LICENSE-file capture was made; repository-wide or code-license status is unverified. Do not infer an unrestricted dataset license."
+        },
+        {
+          "kind": "identity_typography",
+          "finding": "README Xinhan vs registration/BibTeX Xinghan retained as a source caveat, not proof of a different paper."
+        }
+      ],
+      "source_provenance": [
+        {
+          "source_id": "R138-doi-registration.json",
+          "kind": "PRIMARY_DOI_REGISTRATION",
+          "url": "https://api.crossref.org/works/10.1109%2Ftmm.2026.3716041",
+          "artifact": "evidence/groupA/R138-doi-registration.json",
+          "sha256": "1d3e09a3311916a0c7ed1d6cf8a288a24ac4a5425f3496580b1e115a923b9659",
+          "bytes": 9851,
+          "version": "Accessed2026-10-31; bibliographic registration, not scientific full text"
+        },
+        {
+          "source_id": "R138-official-readme.txt",
+          "kind": "PRIMARY_AUTHOR_PROJECT_STATEMENT",
+          "url": "https://raw.githubusercontent.com/ac-miracle/FakeCOCO/main/README.md",
+          "artifact": "evidence/groupA/R138-official-readme.txt",
+          "sha256": "34c9c4e84ec8749c1ca54135c1cea4490099b708fe568c82060fd4add8fb45f0",
+          "bytes": 2404,
+          "version": "main branch capture2026-10-31; byte-pinned snapshot"
+        },
+        {
+          "source_id": "R138-canonical.html",
+          "kind": "ACCESS_FAILURE_NOT_MANUSCRIPT",
+          "url": "https://doi.org/10.1109/tmm.2026.3716041",
+          "artifact": "evidence/groupA/R138-canonical.html",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "version": "HTTP202 empty CloudFront WAF challenge; zero bytes"
+        }
+      ],
+      "identity_verification": {
+        "status": "DOI_TITLE_AUTHORS_VERIFIED_FULL_MANUSCRIPT_UNAVAILABLE",
+        "basis": "Crossref DOI registration exactly matches title,IEEE TMM and six canonical authors. Author repository cites the same DOI/document11617326 and BibTeX author sequence.",
+        "author_name_caveat": "README heading says Xinhan Li; its own BibTeX, canonical record and Crossref say Xinghan Li. Preserve this spelling conflict; no author correction is proposed."
+      },
+      "evidence_record": "per_paper/R138.json",
+      "evidence_record_sha256": "e8831986480d2e7008d2953dbf79437f1080a4bdcaf3ce2c0c9cb0b56c83f29f",
+      "reported_performance_independently_reproduced": false,
+      "authoritative_data_changed": false
+    },
+    {
+      "review_id": "R154",
+      "paper_id": "curated:8e9658fa727094695be8",
+      "title": "MIRAGE: Towards AI-Generated Image Detection in the Wild",
+      "original_B2_assignment": "B2-03",
+      "assigned_issue": "DATASET_AND_BENCHMARK_CONTRIBUTIONS_R1_R2",
+      "original_question": {
+        "review_id": "R154",
+        "paper_id": "curated:8e9658fa727094695be8",
+        "title": "MIRAGE: Towards AI-Generated Image Detection in the Wild",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "MIRAGE contributes a human-verified in-the-wild benchmark and synthesized image collection, alongside MIRAGE-R1.",
+        "evidence_url": "https://doi.org/10.1609/aaai.v40i7.37421",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:8e9658fa727094695be8",
+        "evidence_excerpt": "The spreading of AI-generated images (AIGI), driven by advances in generative AI, poses a significant threat to in- formation security and public trust. Existing",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: MIRAGE contributes a human-verified in-the-wild benchmark and synthesized image collection, alongside MIRAGE-R1.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1",
+        "R2"
+      ],
+      "current_authoritative_status": "UNRESOLVED",
+      "baseline_context_changed_since_B2": false,
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_disposition": "IDENTITY_BLOCKED",
+      "proposed_authoritative_changes": [],
+      "conditional_candidate_research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "evidence_sufficient_for_proposed_addition": false,
+      "maintainer_acceptance": "PENDING; no formal decision made",
+      "formal_action_closed": false,
+      "confidence": {
+        "canonical_DOI_identity": "high",
+        "candidate_preprint_R1_R2_support": "high",
+        "preprint_to_canonical_version_equivalence": "unverified due material first-author conflict",
+        "hold": "high"
+      },
+      "rationale": "KeepR154 open pending authoritative work/version/first-author bridge. Conditional R1/R2 recommendation on the inspected candidate is method;dataset;benchmark; preserve canonical tasks/method and all identity fields. Do not claim publisher-final equivalence or use numerical conflicts to deny an otherwise substantive candidate resource contribution.",
+      "limitations": [
+        {
+          "kind": "material_version_identity_conflict",
+          "finding": "OuCheng Huang in DOI registration/canonical record versus Cheng Xia in arXivmetadata and fullv1 manuscript. Eight coauthors and exact title match; neither equivalence nor nonidentity is forced."
+        },
+        {
+          "kind": "numerical_discrepancy",
+          "finding": "PDFp4 main partition gives20000 training images; PDFp16 appendix Data Distribution says2000. Preserve both, do not select or silently correct a value."
+        },
+        {
+          "kind": "numerical_discrepancy",
+          "finding": "PDFp4 describes64 pipelines integrating53 models; PDFp16 describes64 different models. The distinct-count relationship is not reconciled by the reviewed text."
+        },
+        {
+          "kind": "implementation_discrepancy",
+          "finding": "Mainp6 describes64H20 GPUs forSFT and batch8; appendixp17 describes8H20 GPUs and effective global batch64. This affects reproducibility interpretation, not contribution status."
+        },
+        {
+          "kind": "prose_table_discrepancy",
+          "finding": "Mainp7 broad OOD superiority wording is limited byTable2: Gemini OOD-C82.30 exceeds MIRAGE78.46; the5.55point mean advantage is not an advantage on every subset."
+        },
+        {
+          "kind": "label_provenance_limit",
+          "finding": "Human labels use trained visual judgment plus platform tags, not independently audited creation provenance. Anonymous proprietary sources, uncertainty filtering, release/license uncertainty and temporal skew2022-2025 constrain reuse and validity claims."
+        },
+        {
+          "kind": "corruption_naming_discrepancy",
+          "finding": "PDFp7 Table5 labels Gaussian blur, while adjacent prose refers to Gaussian noise; preserve the mismatch."
+        }
+      ],
+      "source_provenance": [
+        {
+          "source_id": "R154-author-v1.pdf",
+          "kind": "PRIMARY_AUTHOR_PREPRINT_CANDIDATE",
+          "url": "https://arxiv.org/pdf/2508.13223v1",
+          "artifact": "evidence/groupA/R154-author-v1.pdf",
+          "sha256": "776c1304ebf723ad54e2d5ef2753c03a95b5a26bfa1447d7330aa75de3bbf5a0",
+          "bytes": 25016438,
+          "version": "arXiv2508.13223v1; not asserted equivalent to AAAI DOI final"
+        },
+        {
+          "source_id": "R154-doi-registration.json",
+          "kind": "PRIMARY_DOI_REGISTRATION",
+          "url": "https://api.crossref.org/works/10.1609%2Faaai.v40i7.37421",
+          "artifact": "evidence/groupA/R154-doi-registration.json",
+          "sha256": "8386363c85f56156b8fe9d137cf7abc1cfa87f31729a88cbb1c256551622c4e2",
+          "bytes": 4579,
+          "version": "DOI-matched registration names OuCheng Huang;2026-03-14"
+        },
+        {
+          "source_id": "R154-tables2-4.png",
+          "kind": "DERIVED_VISUAL_VERIFICATION",
+          "url": "https://arxiv.org/pdf/2508.13223v1",
+          "artifact": "evidence/groupA/R154-tables2-4.png",
+          "sha256": "9e015b8428c2325992fe3cafa5e5df875594e1cad113ff54547728079f771cc4",
+          "bytes": 612706,
+          "version": "PDFp6 Tables2-4 viewed"
+        },
+        {
+          "source_id": "R154-canonical.html",
+          "kind": "ACCESS_FAILURE_NOT_MANUSCRIPT",
+          "url": "https://doi.org/10.1609/aaai.v40i7.37421",
+          "artifact": "evidence/groupA/R154-canonical.html",
+          "sha256": "2326a0067974192fd1408f967a997e20bab5b381cb37ba99d738d735c091c818",
+          "bytes": 7018,
+          "version": "AAAI HTML browser challenge, not article text"
+        }
+      ],
+      "identity_verification": {
+        "status": "CANDIDATE_PREPRINT_IDENTITY_CONFLICT_NOT_SILENTLY_MERGED",
+        "canonical_DOI_first_author": "OuCheng Huang",
+        "candidate_arxiv_version": "2508.13223v1, submitted2025-08-17,46 PDF pages",
+        "candidate_pdf_first_author": "Cheng Xia",
+        "matching_evidence": "Exact title, other eight authors in the same order, same affiliation/project and same MIRAGE/MIRAGE-R1 contribution narrative. The corresponding DOI registration independently confirms canonical first author OuCheng Huang.",
+        "unresolved_boundary": "The inspected preprint and the registered2026 proceeding have different first-author identities. No authoritative correction/version bridge was found or inferred. Publisher-final manuscript was not retrieved; the one-full-manuscript budget was used for this explicitly limited candidate preprint. No alias or authorship change is presumed."
+      },
+      "evidence_record": "per_paper/R154.json",
+      "evidence_record_sha256": "e364eee5ebcbfc6dfdfa5470b5647e55d7556dc033e356b3ca723aeddbd69533",
+      "reported_performance_independently_reproduced": false,
+      "authoritative_data_changed": false
+    },
+    {
+      "review_id": "R161",
+      "paper_id": "curated:506d44d3feea2627dd42",
+      "title": "No Pixel Left Behind: A Detail-Preserving Architecture for Robust High-Resolution AI-Generated Image Detection",
+      "original_B2_assignment": "B2-03",
+      "assigned_issue": "DATASET_AND_BENCHMARK_CONTRIBUTIONS_R1_R2",
+      "original_question": {
+        "review_id": "R161",
+        "paper_id": "curated:506d44d3feea2627dd42",
+        "title": "No Pixel Left Behind: A Detail-Preserving Architecture for Robust High-Resolution AI-Generated Image Detection",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "HiRes-50K is introduced for future research and evaluated as a high-resolution benchmark.",
+        "evidence_url": "https://openreview.net/pdf?id=9QQ3Kc2hj6",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:506d44d3feea2627dd42",
+        "evidence_excerpt": "The rapid growth of high-resolution, meticulously crafted AI-generated images poses a significant challenge to existing detection methods, which are often trained and evaluated on",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: HiRes-50K is introduced for future research and evaluated as a high-resolution benchmark.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1",
+        "R2"
+      ],
+      "current_authoritative_status": "UNRESOLVED",
+      "baseline_context_changed_since_B2": false,
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_disposition": "EVIDENCE_INSUFFICIENT",
+      "proposed_authoritative_changes": [],
+      "conditional_candidate_research_types": null,
+      "evidence_sufficient_for_proposed_addition": false,
+      "maintainer_acceptance": "PENDING; no formal decision made",
+      "formal_action_closed": false,
+      "confidence": "High for insufficient-evidence disposition; no confidence assigned to resource-label acceptance.",
+      "rationale": "Exact title and author sequence are supported by the official ICLR 2026 landing capture, but no full manuscript was recovered. Its abstract names HiRes-50K and intended future research without exposing construction or a reusable evaluation protocol; R1/R2 remain unresolved.",
+      "limitations": [
+        "Full-manuscript construction, intended reuse, partitioning and evaluation evidence are missing.",
+        "Official title/author match does not establish identity or content equivalence across OpenReview, arXiv and final proceedings versions.",
+        "No task, scope or publication metadata changes proposed."
+      ],
+      "source_provenance": [
+        {
+          "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/820e42f39773c6cbbd875553db45658f-Abstract-Conference.html",
+          "artifact": "evidence/groupB/R161-official-landing.html",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R161-official-landing.html",
+          "sha256": "bcded5b02e1b21886dd227b041067ac8e0d4adcf9adc9342aa8f244480a2eb6f",
+          "version": "ICLR 2026 official abstract landing, captured 2026-10-31",
+          "kind": "official_identity_landing"
+        },
+        {
+          "url": "https://proceedings.iclr.cc/paper_files/paper/2026/file/820e42f39773c6cbbd875553db45658f-Paper-Conference.pdf",
+          "artifact": "evidence/groupB/primary_retrievals.json",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/primary_retrievals.json",
+          "sha256": "91109941e3a69d5db4753b441938d65c9b7f97c1804d39f30c8c46b26eec588a",
+          "version": "Capture receipt: first proceedings PDF attempt failed",
+          "kind": "retrieval_receipt"
+        },
+        {
+          "url": "https://openreview.net/pdf?id=9QQ3Kc2hj6",
+          "artifact": "evidence/groupB/R161-alternate-retrieval.json",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R161-alternate-retrieval.json",
+          "sha256": "768b73f6d6e2596c4f16a3ffd2ed168b401f217d1c9fc83c73d9f5a5592edee2",
+          "version": "Capture receipt: single alternate OpenReview attempt returned HTTP 403",
+          "kind": "retrieval_receipt"
+        }
+      ],
+      "identity_verification": {
+        "status": "TITLE_AUTHORS_MATCH_LANDING_FULL_TEXT_VERSION_UNVERIFIED",
+        "title_and_authors": "Official ICLR landing h1 and citation_author metadata match canonical title and all five authors in order.",
+        "doi": "None in assigned canonical record.",
+        "arxiv": "2508.17346 is preserved from canonical input; no arXiv version or cross-version content was inspected.",
+        "version": "ICLR 2026 official abstract landing; neither the linked proceedings PDF nor canonical OpenReview PDF was obtained."
+      },
+      "evidence_record": "per_paper/R161.json",
+      "evidence_record_sha256": "728f2906344be60ba93f025d7a6ce8390bd134aeec6fb9faac5cc5dd6fedc9ae",
+      "reported_performance_independently_reproduced": false,
+      "authoritative_data_changed": false
+    },
+    {
+      "review_id": "R171",
+      "paper_id": "curated:a570863c3a6ac227b56c",
+      "title": "PGC: Peak-Guided Calibration for Generalizable AI-Generated Image Detection",
+      "original_B2_assignment": "B2-03",
+      "assigned_issue": "DATASET_AND_BENCHMARK_CONTRIBUTIONS_R1_R2",
+      "original_question": {
+        "review_id": "R171",
+        "paper_id": "curated:a570863c3a6ac227b56c",
+        "title": "PGC: Peak-Guided Calibration for Generalizable AI-Generated Image Detection",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "CommGen15 is introduced as a challenging benchmark from 15 commercial generators.",
+        "evidence_url": "https://proceedings.mlr.press/v306/zhou26h.html",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:a570863c3a6ac227b56c",
+        "evidence_excerpt": "The rapid evolution of generative AI, from GANs to modern diffusion models, has resulted in increasingly subtle discriminative clues. These fine-grained signals are often",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: CommGen15 is introduced as a challenging benchmark from 15 commercial generators.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1",
+        "R2"
+      ],
+      "current_authoritative_status": "UNRESOLVED",
+      "baseline_context_changed_since_B2": false,
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_authoritative_changes": [
+        {
+          "field": "research_types",
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "benchmark"
+          ]
+        }
+      ],
+      "conditional_candidate_research_types": null,
+      "evidence_sufficient_for_proposed_addition": true,
+      "maintainer_acceptance": "PENDING; no formal decision made",
+      "formal_action_closed": false,
+      "confidence": "High for bounded R1/R2 contribution support; moderate for practical reproducibility.",
+      "rationale": "CommGen15 is an explicit paper contribution with documented acquisition, source URLs, composition and standardized image/frame preprocessing (R1). Its balanced binary task, external-training generalization setting, fixed-threshold accuracy/AP and comparative evaluation form a reusable benchmark resource (R2); support does not rest on generator count or result-table size.",
+      "limitations": [
+        "Dataset includes video-derived frames and some platforms with editing/identity-centric functionality; this review adds no video, attribution or face-manipulation task/scope label.",
+        "Gallery acquisition and platform descriptions do not verify every output provenance or exact model revision; Table 10 URLs are manuscript-reported as of May 16, 2026, with a Sora-service discontinuation caveat.",
+        "No independent download/availability, licensing audit, duplicate/near-duplicate audit, frame-level independence check or performance reproduction.",
+        "External-training evaluation is explicit; no unsupported claim of a dedicated CommGen15 train/validation/test split."
+      ],
+      "source_provenance": [
+        {
+          "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/zhou26h/zhou26h.pdf",
+          "artifact": "evidence/groupB/R171-primary.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R171-primary.pdf",
+          "sha256": "79917f3d9fb967aa52007069c89fa920e1dd428ec662900650bea049dc4dc255",
+          "version": "PMLR 306 / ICML 2026, 21-page proceedings PDF",
+          "kind": "primary_manuscript"
+        },
+        {
+          "url": "https://proceedings.mlr.press/v306/zhou26h.html",
+          "artifact": "evidence/groupB/R171-local-pmlr.html",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R171-local-pmlr.html",
+          "sha256": "7fb76f85d1be7cf3009c9bfc9e58465cf870b395772288b8ca5ff1dab42e6b18",
+          "version": "Cached official PMLR bibliographic landing",
+          "kind": "official_identity_landing"
+        }
+      ],
+      "identity_verification": {
+        "status": "TITLE_AUTHORS_MATCH_OFFICIAL_PROCEEDINGS_PDF",
+        "title_and_authors": "PDF p1 and cached PMLR landing match canonical title and six-author sequence.",
+        "doi": "None in assigned canonical record.",
+        "arxiv": "2605.21207 retained from canonical input; no arXiv version or equivalence check performed.",
+        "version": "Official PMLR 306 ICML 2026 PDF, 21 pages including appendix; cached landing cites 164828–164848 and 2026-09-29. PDF metadata creation 2026-05-20 is not the publication date.",
+        "differences": "No competing full-text version inspected; all scientific claims below are bounded to this cached PMLR PDF."
+      },
+      "evidence_record": "per_paper/R171.json",
+      "evidence_record_sha256": "d4015cec12b8ba98489196535741308e7e0918e6506a0fb171df328fcc06cd6e",
+      "reported_performance_independently_reproduced": false,
+      "authoritative_data_changed": false
+    },
+    {
+      "review_id": "R187",
+      "paper_id": "curated:08aa2b51bb36247bdda3",
+      "title": "RealNet: Efficient and Unsupervised Detection of AI-Generated Images via Real-Only Representation Learning",
+      "original_B2_assignment": "B2-03",
+      "assigned_issue": "DATASET_CONTRIBUTION_R1",
+      "original_question": {
+        "review_id": "R187",
+        "paper_id": "curated:08aa2b51bb36247bdda3",
+        "title": "RealNet: Efficient and Unsupervised Detection of AI-Generated Images via Real-Only Representation Learning",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "A medically relevant synthetic-image dataset is introduced; verify release and contribution scope before adding.",
+        "evidence_url": "https://doi.org/10.1609/aaai.v40i45.41234",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:08aa2b51bb36247bdda3",
+        "evidence_excerpt": "Detecting AI-generated images remains a persistent challenge, as existing detectors often struggle to generalize to forgeries produced by previously unseen generative models. This generalization",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: A medically relevant synthetic-image dataset is introduced; verify release and contribution scope before adding.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1"
+      ],
+      "current_authoritative_status": "UNRESOLVED",
+      "baseline_context_changed_since_B2": false,
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_disposition": "EVIDENCE_INSUFFICIENT",
+      "proposed_authoritative_changes": [],
+      "conditional_candidate_research_types": [
+        "method",
+        "dataset"
+      ],
+      "evidence_sufficient_for_proposed_addition": false,
+      "maintainer_acceptance": "PENDING; no formal decision made",
+      "formal_action_closed": false,
+      "confidence": {
+        "DOI_title_author_identity": "high",
+        "R1_dataset_contribution_sufficiency": "insufficient",
+        "hold": "high"
+      },
+      "rationale": "KeepR187 unresolved as evidence-insufficient; preserve detection and method. Do not add dataset from the claimed medical application alone.",
+      "limitations": [
+        {
+          "kind": "access_blocker",
+          "finding": "CanonicalAAAI page and exact DOI-registered VOR download return browser checks; OpenReview immutable PDF URL returnsHTTP403, and canonical PDF route redirects toverification. No challenge was solved or bypassed and no successful full manuscript was retrieved."
+        },
+        {
+          "kind": "source_sufficiency_limit",
+          "finding": "Do not substitute abstract or search-index snippets for unavailable methods/tables. Dataset contribution is neither accepted nor disproved."
+        }
+      ],
+      "source_provenance": [
+        {
+          "source_id": "R187-doi-registration.json",
+          "kind": "PRIMARY_DOI_REGISTRATION_WITH_ABSTRACT",
+          "url": "https://api.crossref.org/works/10.1609%2Faaai.v40i45.41234",
+          "artifact": "evidence/groupA/R187-doi-registration.json",
+          "sha256": "c60a766d7e01db83446378f5daf594c6252b49d8bc837c602ac92f226b009744",
+          "bytes": 4634,
+          "version": "DOI registration accessed2026-10-31"
+        },
+        {
+          "source_id": "R187-canonical.html",
+          "kind": "ACCESS_FAILURE_NOT_MANUSCRIPT",
+          "url": "https://doi.org/10.1609/aaai.v40i45.41234",
+          "artifact": "evidence/groupA/R187-canonical.html",
+          "sha256": "547e0bc4f963804ed3eed61ae8b1b5aa95a08fe184e19ee958bcdcbfcd5e8122",
+          "bytes": 7018,
+          "version": "AAAI browser-challenge HTML"
+        },
+        {
+          "source_id": "R187-publisher-vor.html",
+          "kind": "ACCESS_FAILURE_NOT_MANUSCRIPT",
+          "url": "https://ojs.aaai.org/index.php/AAAI/article/download/41234/45195",
+          "artifact": "evidence/groupA/R187-publisher-vor.html",
+          "sha256": "ad92e7630efa4e61e86f727f5c0317d7e49082c6779b8b4bccf9e4fdad9b1841",
+          "bytes": 7019,
+          "version": "DOI-registered VOR endpoint also returns browser-challenge HTML"
+        }
+      ],
+      "identity_verification": {
+        "status": "EXACT_DOI_TITLE_SEVEN_AUTHORS_VERIFIED_NO_SCIENTIFIC_FULLTEXT",
+        "basis": "Crossref confirms exact title, DOI, seven canonical authors and2026 proceedings. OpenReview search-index record vBHfhdWCsm lists the same seven authors and2026 copyright, but the manuscript itself was not accessible."
+      },
+      "evidence_record": "per_paper/R187.json",
+      "evidence_record_sha256": "58c020b7e3f933b681fac60285e75f11d5dc074d450478d634b5672b4bc97ae9",
+      "reported_performance_independently_reproduced": false,
+      "authoritative_data_changed": false
+    },
+    {
+      "review_id": "P231",
+      "paper_id": "curated:0d918782407e05ade5bd",
+      "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+      "original_B2_assignment": "B2-03",
+      "assigned_issue": "standalone_venue_track",
+      "original_question": {
+        "review_id": "P231",
+        "paper_id": "curated:0d918782407e05ade5bd",
+        "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+        "current": {
+          "year": 2026,
+          "publication_type": "conference",
+          "venue": "ACM International Workshop on Multimedia AI against Disinformation",
+          "venue_id": "venue:mad",
+          "venue_acronym": "MAD",
+          "venue_track": "Workshop",
+          "doi": "10.1145/3810988.3812660",
+          "paper_url": "https://doi.org/10.1145/3810988.3812660",
+          "formal_url": "https://doi.org/10.1145/3810988.3812660",
+          "arxiv_id": "",
+          "arxiv_url": "",
+          "authors": [
+            "Thinh-Phat Vo",
+            "Daniel Mai",
+            "Minh–Triet Tran",
+            "Trong-Le Do"
+          ]
+        },
+        "evidence_urls": [
+          "https://doi.org/10.1145/3810988.3812660"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "This is a standalone scholarly workshop venue. Its name alone does not establish a Workshop subtrack; confirm Main versus an actual nested workshop track from the paper/program, preserving the venue identity.",
+        "proposed_changes": {},
+        "status": "REVIEW_REQUIRED",
+        "reason": "This is a standalone scholarly workshop venue. Its name alone does not establish a Workshop subtrack; confirm Main versus an actual nested workshop track from the paper/program, preserving the venue identity.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "present",
+          "doi": "present_not_independently_reverified",
+          "arxiv": "optional_not_a_defect",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        }
+      },
+      "governing_policy_ids": [
+        "V1"
+      ],
+      "current_authoritative_status": "UNRESOLVED",
+      "baseline_context_changed_since_B2": false,
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_authoritative_changes": [
+        {
+          "field": "venue_track",
+          "before": "Workshop",
+          "after": "Main",
+          "qualification": "Repository-normalized regular-paper role at the existing standalone MAD venue. Official program lists the paper in Session2 but does not literally print Main. Requires explicit maintainer acceptance under V1; no parent-ICMR venue substitution."
+        }
+      ],
+      "conditional_candidate_research_types": null,
+      "evidence_sufficient_for_proposed_addition": true,
+      "maintainer_acceptance": "PENDING; no formal decision made",
+      "formal_action_closed": false,
+      "confidence": "medium-high; exact-paper program evidence supports normalized regular track, with literal-label caveat",
+      "rationale": "Paper-specific regular Session2 placement establishes the bounded event role. Co-location with ICMR does not change the canonical archival venue to ICMR, and Workshop in the venue name does not establish a nested subtrack.",
+      "limitations": [
+        "Normalized Main is a policy interpretation of the regular-paper session, not an official quoted label. Maintainer must accept this inference.",
+        "Earlier call-for-papers June15 timing and final program June16 differ; the final program is used for role evidence and no publication date is edited.",
+        "Prior U017 evidence covers identity/affiliations only. No full text was obtained in this wave; it does not support R231 scientific protocol."
+      ],
+      "source_provenance": [
+        {
+          "kind": "official_paper_specific_workshop_program",
+          "url": "https://mad2026.aimultimedialab.ro/program/",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/P231-official-program.html",
+          "sha256": "53a0015a413baf48e992209de2665b43bd7007e4e23787db40c9f6ee820255b0"
+        },
+        {
+          "kind": "previous_identity_only_primary_receipt",
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+          "sha256": "ab426b7ff76f89677a9aa8656fa4cae19049e07de656c6d45e7fb4a2338d8088",
+          "locator": "U017 official ACM page1 affiliation block"
+        }
+      ],
+      "identity_verification": {
+        "title": "Official2026 program contains exact full title",
+        "authors": "All four authors and their order match canonical/U017:Thinh-Phat Vo,Dang-Khoa Mai,Minh-Triet Tran,Trong-Le Do",
+        "doi": "Existing accepted U017 official ACM PDF receipt binds title/authors to10.1145/3810988.3812660; program itself does not print DOI"
+      },
+      "evidence_record": "per_paper/P231.json",
+      "evidence_record_sha256": "d9baf9b30dbf98019c22558f4b8db1b9bb28c050ae981fdecf34b6c6e0795b93",
+      "reported_performance_independently_reproduced": false,
+      "authoritative_data_changed": false
+    },
+    {
+      "review_id": "R231",
+      "paper_id": "curated:0d918782407e05ade5bd",
+      "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+      "original_B2_assignment": "B2-03",
+      "assigned_issue": "DATASET_AND_BENCHMARK_CONTRIBUTIONS_R1_R2",
+      "original_question": {
+        "review_id": "R231",
+        "paper_id": "curated:0d918782407e05ade5bd",
+        "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "NESS contributes a four-category dataset and balanced evaluation protocol, with promised release.",
+        "evidence_url": "https://doi.org/10.1145/3810988.3812660",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:0d918782407e05ade5bd",
+        "evidence_excerpt": "Generative image models and modern editing tools make it increasingly difficult to verify the authenticity of visual content, especially when images span fully generated,",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: NESS contributes a four-category dataset and balanced evaluation protocol, with promised release.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1",
+        "R2"
+      ],
+      "current_authoritative_status": "UNRESOLVED",
+      "baseline_context_changed_since_B2": false,
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_disposition": "EVIDENCE_INSUFFICIENT",
+      "proposed_authoritative_changes": [],
+      "conditional_candidate_research_types": null,
+      "evidence_sufficient_for_proposed_addition": false,
+      "maintainer_acceptance": "PENDING; no formal decision made",
+      "formal_action_closed": false,
+      "confidence": "high that current accessible evidence is insufficient; no negative finding about dataset/benchmark contribution",
+      "rationale": "R1/R2 need identity-matched contribution/construction and evaluation protocol. Affiliation and program evidence establish identity/track only; the official full manuscript returned403. Abstract-level claims and a workshop editorial overview cannot substitute for the paper methods/results.",
+      "limitations": [
+        "Missing actual source composition, partitions, leakage controls, balanced metric definition, baselines and contribution/reuse sections.",
+        "Promised release is neither verified nor a condition that independently proves/disproves R1/R2.",
+        "P231 venue-track recommendation is independent and does not close this research-type action.",
+        "No repeated ACM endpoint attempt, no secondary synopsis promoted to primary scientific evidence."
+      ],
+      "source_provenance": [
+        {
+          "kind": "unusable_official_manuscript_request",
+          "url": "https://dl.acm.org/doi/pdf/10.1145/3810988.3812660",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R231-acm-primary.response",
+          "sha256": "9668a6ae05e8a81dfb1382e62475bf90c35fb9df322f819b755150d4990577c4",
+          "http_status": 403,
+          "is_manuscript": false
+        },
+        {
+          "kind": "existing_official_affiliation_receipt_identity_only",
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+          "locator": "U017,page1",
+          "sha256": "ab426b7ff76f89677a9aa8656fa4cae19049e07de656c6d45e7fb4a2338d8088"
+        },
+        {
+          "kind": "official_paper_program_identity_only",
+          "url": "https://mad2026.aimultimedialab.ro/program/",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/P231-official-program.html",
+          "sha256": "53a0015a413baf48e992209de2665b43bd7007e4e23787db40c9f6ee820255b0"
+        }
+      ],
+      "identity_verification": {
+        "title_authors": "Exact paper title and all four authors confirmed by official program and preserved U017 DOI-matched page1 receipt",
+        "full_scientific_version": "Not available; previous receipt did not preserve full raw manuscript or scientific sections"
+      },
+      "evidence_record": "per_paper/R231.json",
+      "evidence_record_sha256": "68a3d322959f9b6e6f4f2606152dfda6324521d2aad511ee03ef2485bca553b8",
+      "reported_performance_independently_reproduced": false,
+      "authoritative_data_changed": false
+    },
+    {
+      "review_id": "R256",
+      "paper_id": "curated:c6bfe8f5199d1d8beb29",
+      "title": "Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection",
+      "original_B2_assignment": "B2-03",
+      "assigned_issue": "DATASET_AND_BENCHMARK_CONTRIBUTIONS_R1_R2",
+      "original_question": {
+        "review_id": "R256",
+        "paper_id": "curated:c6bfe8f5199d1d8beb29",
+        "title": "Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "CSAIID is explicitly presented and released as a cross-semantic detection benchmark.",
+        "evidence_url": "https://doi.org/10.1109/iccvw69036.2025.00165",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:c6bfe8f5199d1d8beb29",
+        "evidence_excerpt": "AI-generated image detectors have historically concentrated on generalization across generative models, often overlooking the critical challenge of cross-semantic generalizability. This limitation constrains the adaptability",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: CSAIID is explicitly presented and released as a cross-semantic detection benchmark.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1",
+        "R2"
+      ],
+      "current_authoritative_status": "UNRESOLVED",
+      "baseline_context_changed_since_B2": false,
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_authoritative_changes": [
+        {
+          "field": "research_types",
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "benchmark"
+          ]
+        }
+      ],
+      "conditional_candidate_research_types": null,
+      "evidence_sufficient_for_proposed_addition": true,
+      "maintainer_acceptance": "PENDING; no formal decision made",
+      "formal_action_closed": false,
+      "confidence": "High for bounded R1/R2 contribution support; empirical causal and operational reproducibility limits remain.",
+      "rationale": "CSAIID is a separately stated contribution with COCO/PartiPrompts provenance, three generator models, semantic curation and fixed balanced category subsets (R1). The six-category resource and comparative cross-semantic protocol grouped by external training source substantively evaluate detectors beyond ordinary experiments (R2).",
+      "limitations": [
+        "Source confirms reusable cross-semantic evaluation contribution; category overlap with existing training concepts and multi-generator changes limit claims of controlled pure semantic shift.",
+        "No fetched dataset, license, manifest, duplicate audit or experiment reproduction.",
+        "Fixed evaluation subsets are documented; no dedicated CSAIID training/validation/test partition is claimed.",
+        "Paper author/DOI/workshop identity retained without publication metadata edits."
+      ],
+      "source_provenance": [
+        {
+          "url": "https://openaccess.thecvf.com/content/ICCV2025W/APAI/papers/Cai_Adaptive_Test-Time_Semantic_Debiasing_for_AI-Generated_Image_Detection_ICCVW_2025_paper.pdf",
+          "artifact": "evidence/groupB/R256-primary.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R256-primary.pdf",
+          "sha256": "3bd336c171cdb0c201d4fa9da63c17c406f46fa65b70436d30c50390d41b49f3",
+          "version": "Official CVF ICCV2025W / APAI 10-page PDF",
+          "kind": "primary_manuscript"
+        }
+      ],
+      "identity_verification": {
+        "status": "TITLE_AUTHORS_MATCH_OFFICIAL_CVF_PDF",
+        "title_and_authors": "PDF p1 and PDF metadata match canonical title and all six authors in order.",
+        "doi": "10.1109/iccvw69036.2025.00165 retained from canonical input; not independently printed/verified in this PDF capture.",
+        "arxiv": "None in assigned canonical record.",
+        "version": "10-page official CVF ICCV 2025 Workshops APAI manuscript; source path and PDF Subject identify workshop version. No separate IEEE publisher PDF compared.",
+        "differences": "No unsupported publisher-final equivalence or venue/track correction proposed."
+      },
+      "evidence_record": "per_paper/R256.json",
+      "evidence_record_sha256": "20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6",
+      "reported_performance_independently_reproduced": false,
+      "authoritative_data_changed": false
+    },
+    {
+      "review_id": "R275",
+      "paper_id": "curated:7cfe39b3bc63f5b55f51",
+      "title": "Breaking Latent Prior Bias in Detectors for Generalizable AIGC Image Detection",
+      "original_B2_assignment": "B2-03",
+      "assigned_issue": "BENCHMARK_CONTRIBUTION_R2",
+      "original_question": {
+        "review_id": "R275",
+        "paper_id": "curated:7cfe39b3bc63f5b55f51",
+        "title": "Breaking Latent Prior Bias in Detectors for Generalizable AIGC Image Detection",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "benchmark"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "The prior paper-methodology evidence explicitly identifies the GenImage++ evaluation benchmark.",
+        "evidence_url": "https://doi.org/10.52202/085713-1030",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:7cfe39b3bc63f5b55f51",
+        "evidence_excerpt": "This work identifies latent-prior bias as one reason AIGC detectors fail to generalize: detectors can learn shortcuts tied to patterns stemming from the initial",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The prior paper-methodology evidence explicitly identifies the GenImage++ evaluation benchmark.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "benchmark"
+        ]
+      },
+      "governing_policy_ids": [
+        "R2"
+      ],
+      "current_authoritative_status": "UNRESOLVED",
+      "baseline_context_changed_since_B2": false,
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_authoritative_changes": [
+        {
+          "field": "research_types",
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "benchmark"
+          ]
+        }
+      ],
+      "conditional_candidate_research_types": null,
+      "evidence_sufficient_for_proposed_addition": true,
+      "maintainer_acceptance": "PENDING; no formal decision made",
+      "formal_action_closed": false,
+      "confidence": "high for R2 contribution classification; no empirical reproduction",
+      "rationale": "Named resource, independent construction specification, explicit future-evaluation purpose and fixed comparative protocol satisfy R2; size/performance alone is not the basis. R1 dataset classification is outside this assigned action.",
+      "limitations": [
+        "138,900 is arithmetic from rounded Table7 subset counts; no dataset files downloaded or sample counts independently audited.",
+        "No matched real negatives; reported source performance and latent-prior causal explanation are not independently reproduced or endorsed.",
+        "The paper uses OMAT; earlier planning shorthand OAT is not used as a distinct method identity.",
+        "Bin/Bing Fan bibliographic discrepancy remains unchanged.",
+        "Code/data runtime, licensing and accessibility are separate from taxonomy support; HF dataset not downloaded."
+      ],
+      "source_provenance": [
+        {
+          "kind": "official_primary_manuscript",
+          "url": "https://papers.neurips.cc/paper_files/paper/2025/file/2c2be72635379ec8600eea13df4743e3-Paper-Conference.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-neurips2025.pdf",
+          "sha256": "ebdcea81b1f588b74669e52261ab903ed70cb1b7f1a30f637d82d843e7071405"
+        },
+        {
+          "kind": "official_identity_landing",
+          "url": "https://papers.neurips.cc/paper_files/paper/2025/hash/2c2be72635379ec8600eea13df4743e3-Abstract-Conference.html",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-official-landing.html",
+          "sha256": "1d4427cc3b8e33ce2f7403f7c9016cf835ce262d5d9593c020aba6d91f980b1d"
+        }
+      ],
+      "identity_verification": {
+        "title": "Exact title matches",
+        "authors": "PDF matches canonical six authors including Bin Fan. Official HTML/Crossref spelling Bing Fan is a preserved pre-existing discrepancy, not a silent correction.",
+        "doi": "Official landing DOI10.52202/085713-1030 links exact manuscript",
+        "arxiv": "Prior validated2506.00874 linkage retained; no second manuscript retrieved"
+      },
+      "evidence_record": "per_paper/R275.json",
+      "evidence_record_sha256": "e38e0fab7e38252080ae6ab1640bdcc94ddaf846be53ac2799bc311730b02e29",
+      "reported_performance_independently_reproduced": false,
+      "authoritative_data_changed": false
+    },
+    {
+      "review_id": "R564",
+      "paper_id": "doi:10.1109/tmm.2023.3313503",
+      "title": "GLFF: Global and Local Feature Fusion for AI-Synthesized Image Detection",
+      "original_B2_assignment": "B2-03",
+      "assigned_issue": "DATASET_CONTRIBUTION_R1",
+      "original_question": {
+        "review_id": "R564",
+        "paper_id": "doi:10.1109/tmm.2023.3313503",
+        "title": "GLFF: Global and Local Feature Fusion for AI-Synthesized Image Detection",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "DF3 is introduced as a challenging fake-image dataset with six generators and post-processing.",
+        "evidence_url": "https://doi.org/10.1109/tmm.2023.3313503",
+        "evidence_basis": "abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#doi:10.1109/tmm.2023.3313503",
+        "evidence_excerpt": "With the rapid development of deep generative models (such as Generative Adversarial Networks and Diffusion models), AI-synthesized images are now of such high quality",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: DF3 is introduced as a challenging fake-image dataset with six generators and post-processing.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1"
+      ],
+      "current_authoritative_status": "UNRESOLVED",
+      "baseline_context_changed_since_B2": false,
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_authoritative_changes": [
+        {
+          "field": "research_types",
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset"
+          ]
+        }
+      ],
+      "conditional_candidate_research_types": null,
+      "evidence_sufficient_for_proposed_addition": true,
+      "maintainer_acceptance": "PENDING; no formal decision made",
+      "formal_action_closed": false,
+      "confidence": "High for R1 contribution support in identified arXiv v7; moderate for publisher-version bridge and operational availability.",
+      "rationale": "DF3 is an explicit contribution distinct from GLFF, with defined generative sources, systematic post-processing, manual cleanup, per-model/per-protocol counts and stated reuse to test future detectors. This establishes R1 dataset contribution beyond an experiment-only image pool. R2 is outside the assigned scope.",
+      "limitations": [
+        "Face-only resource includes generated faces blended/swapped into real scenes; preserve this as a separate manipulation category description without changing current tasks or image scopes.",
+        "Author version only; publisher-final content and bibliographic linkage not independently compared.",
+        "Future-tense code/dataset-details release is weaker than verified current dataset availability; no license or files fetched.",
+        "No R2 benchmark label proposed; no attribution or video task inferred."
+      ],
+      "source_provenance": [
+        {
+          "url": "https://arxiv.org/pdf/2211.08615v7",
+          "artifact": "evidence/groupB/R564-primary.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R564-primary.pdf",
+          "sha256": "4e7b0f188213163d718e7294cde361001a1afd750592f8790f555655080cf213",
+          "version": "arXiv:2211.08615v7, 13-page author manuscript",
+          "kind": "primary_manuscript"
+        }
+      ],
+      "identity_verification": {
+        "status": "TITLE_AUTHORS_MATCH_CANONICAL_AUTHOR_VERSION",
+        "title_and_authors": "arXiv v7 PDF p1 matches canonical GLFF title modulo capitalization and all five authors in order.",
+        "doi": "Canonical 10.1109/tmm.2023.3313503 and arXiv 2211.08615 linkage retained from assigned input; PDF itself does not independently print/establish DOI.",
+        "arxiv": "Fixed requested URL 2211.08615v7; 13-page captured PDF, metadata creation 2023-09-06 and response Last-Modified 2023-09-09.",
+        "version": "Verified title/author-matched arXiv v7 author manuscript, not an inspected IEEE publisher-final PDF.",
+        "differences": "p2 describes extension of a preliminary work; p11 reference [11] is Fusing Global and Local Features for Generalized AI-Synthesized Image Detection, arXiv:2203.13964 with a different author list. Do not substitute that preliminary work or assume publisher-final equivalence."
+      },
+      "evidence_record": "per_paper/R564.json",
+      "evidence_record_sha256": "d891a5362525d23b6f8c2b44bf52263df471fa37f693d763b6338f1126eb3742",
+      "reported_performance_independently_reproduced": false,
+      "authoritative_data_changed": false
+    }
+  ],
+  "read_only_boundaries": {
+    "authoritative_files_changed": 0,
+    "formal_decisions_appended": 0,
+    "exports_run": 0,
+    "staged_files": 0,
+    "commits_created": 0,
+    "pushes": 0,
+    "B4_started": false
+  },
+  "scope_note": "Ten research-type actions under R1/R2 and independent publication-track action P231 under V1. No task, author, venue identity, relationship, affiliation, scope or unrelated taxonomy corrections.",
+  "separate_provenance_caveats_not_new_actions": [
+    {
+      "paper_review": "R275",
+      "observation": "Accepted manuscript Bin Fan versus landing/registration Bing Fan spelling; preserve earlier documented caveat. No author edit or new review action."
+    },
+    {
+      "paper_review": "P231",
+      "observation": "Final program date/edition differs from earlier workshop boilerplate. No publication-date or venue-identity correction is authorized."
+    },
+    {
+      "paper_review": "R171",
+      "observation": "CommGen15 includes video-derived image frames as well as static images. Preserve source composition; this is not independent evidence of a video-forensics contribution or a new task review."
+    }
+  ],
+  "performance_note": "Contribution evidence does not validate reported performance, causal interpretation, code/data availability or operational reproducibility.",
+  "NeurIPS_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+}

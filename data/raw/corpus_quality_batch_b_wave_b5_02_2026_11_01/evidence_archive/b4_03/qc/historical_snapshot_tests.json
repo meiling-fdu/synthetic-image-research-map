@@ -1,0 +1,61 @@
+{
+  "schema": "b403-immutable-d109-historical-test-replay-1",
+  "created_utc": "2026-11-01T08:33:38.533488+00:00",
+  "immutable_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "tests": [
+    "tests/test_corpus_quality_batch_b_wave_b1s.py",
+    "tests/test_corpus_quality_batch_b_wave_b4_01.py",
+    "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+    "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+    "tests/test_historical_test_fixtures.py",
+    "tests/test_historical_integrity_successors.py"
+  ],
+  "python": "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+  "worktree_registration": false,
+  "test_sources_modified": false,
+  "exports": 0,
+  "original_repository_writes": false,
+  "interpretation": "These results authenticate unchanged historical receipts at d109. They do not establish acceptance of current B4 source edits or source/public export synchronization.",
+  "fixture_restore_returncode": 0,
+  "command": [
+    "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/private/tmp/b403-d109-historical-9dsx6zmv/pytest-temp",
+    "--junitxml",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/qc/historical_snapshot_tests.xml",
+    "tests/test_corpus_quality_batch_b_wave_b1s.py",
+    "tests/test_corpus_quality_batch_b_wave_b4_01.py",
+    "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+    "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+    "tests/test_historical_test_fixtures.py",
+    "tests/test_historical_integrity_successors.py"
+  ],
+  "pytest_returncode": 0,
+  "snapshot_tracked_inventory_matches_d109_before": true,
+  "snapshot_tracked_inventory_matches_d109_after": true,
+  "immutable_test_source_sha256": {
+    "tests/test_corpus_quality_batch_b_wave_b1s.py": "bde78da60eaf4f3660725dade4d11aed2225e13d28f675eabf52790cde65f5ec",
+    "tests/test_corpus_quality_batch_b_wave_b4_01.py": "2ac7f1d3bec7cdb07211255ced991ec29282d2df21bac52114cf3ae423e41d14",
+    "tests/test_corpus_quality_batch_b_wave_b4_02.py": "ede273958436346d7b94e24c4f970a6fca6fc6528f7e87b7f0ce87d71077f3a3",
+    "tests/test_corpus_quality_batch_b_wave_b5_01.py": "87a1766308c46797b2b921e47da2755ea5f4c9144904b4fddd21b34ce0b5fa64",
+    "tests/test_historical_test_fixtures.py": "14cf0638a4788bd221faed6fcd4f21ff7df5d847389f6c06333a25de3d2161e8",
+    "tests/test_historical_integrity_successors.py": "ed40aa491d4068c4eb00b0c1365464cf8c1cfed0a08be69e2f3b43dab3617ddf"
+  },
+  "snapshot_logical_index_unchanged": true,
+  "junit_totals": {
+    "tests": 189,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "original_tracked_bytes_unchanged": true,
+  "original_git_status_unchanged": true,
+  "original_logical_index_unchanged": true,
+  "status": "PASS",
+  "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/qc/historical_snapshot_tests.log"
+}

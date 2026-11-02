@@ -1,0 +1,537 @@
+{
+  "scope": "Read-only B4-03 schema/convention preflight. No authoritative changes, source retrieval, scientific re-review, export, staging, commit or push.",
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "repository": "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map",
+  "status": "schema_ready_with_P231_semantics_condition_and_test_endpoint_work",
+  "source_files": {
+    "data/curated/papers.csv": {
+      "sha256": "0fd82c4b242d86b6fe4dbf0c8dcd98cccc6a6930c0bd2e93b416a49a1bf0c3e4",
+      "bytes": 1001703,
+      "rows": 535,
+      "columns": [
+        "paper_id",
+        "title",
+        "year",
+        "authors",
+        "venue",
+        "venue_id",
+        "venue_name",
+        "venue_acronym",
+        "venue_type",
+        "venue_track",
+        "raw_venue",
+        "doi",
+        "arxiv_id",
+        "openalex_url",
+        "paper_url",
+        "publication_type",
+        "abstract",
+        "tasks",
+        "image_scopes",
+        "research_types",
+        "scope_status",
+        "source_database",
+        "metadata_source",
+        "curation_status",
+        "review_status",
+        "created_at",
+        "updated_at"
+      ],
+      "crlf_count": 16,
+      "lf_count": 536
+    },
+    "data/curated/paper_taxonomy.csv": {
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "bytes": 842876,
+      "rows": 722,
+      "columns": [
+        "taxonomy_id",
+        "paper_id",
+        "title",
+        "year",
+        "doi",
+        "arxiv_id",
+        "openalex_url",
+        "tasks",
+        "image_scopes",
+        "research_types",
+        "tasks_status",
+        "tasks_review_reason",
+        "tasks_evidence_tier",
+        "tasks_evidence_source",
+        "tasks_evidence_excerpt",
+        "image_scopes_status",
+        "image_scopes_review_reason",
+        "image_scopes_evidence_tier",
+        "image_scopes_evidence_source",
+        "image_scopes_evidence_excerpt",
+        "research_types_status",
+        "research_types_review_reason",
+        "research_types_evidence_tier",
+        "research_types_evidence_source",
+        "research_types_evidence_excerpt",
+        "taxonomy_status",
+        "audited_at"
+      ],
+      "crlf_count": 16,
+      "lf_count": 723
+    },
+    "data/curated/review_decisions.csv": {
+      "sha256": "3430814d49d8e73a5836c71fb04b5acb3e95de3dac56bb795ca62dcf734bfda5",
+      "bytes": 158888,
+      "rows": 127,
+      "columns": [
+        "decision_id",
+        "review_queue",
+        "target_type",
+        "title",
+        "year",
+        "doi",
+        "openalex_url",
+        "institution",
+        "action",
+        "review_note",
+        "created_at",
+        "updated_at",
+        "created_by"
+      ],
+      "crlf_count": 0,
+      "lf_count": 128
+    }
+  },
+  "formal_decision_columns": [
+    "decision_id",
+    "review_queue",
+    "target_type",
+    "title",
+    "year",
+    "doi",
+    "openalex_url",
+    "institution",
+    "action",
+    "review_note",
+    "created_at",
+    "updated_at",
+    "created_by"
+  ],
+  "decision_conventions": {
+    "no_new_columns": true,
+    "decision_status_column_exists": false,
+    "accepted_action": "no_action_after_review",
+    "held_action": "unresolved",
+    "type_review_queue": "other",
+    "venue_review_queue": "publication_venues",
+    "target_type": "paper",
+    "institution": "",
+    "created_by": "maintainer-approved-batch-b-b4-03",
+    "review_note_prefix": "Batch B review <original_review_id>;",
+    "timestamps": "Same explicit UTC timestamp for created_at and updated_at on new rows; exact repeats retain both timestamps.",
+    "terminal_meaning": "Approved bounded correction is complete; no_action_after_review does not mean zero edited data cells. unresolved never closes an original Batch B action."
+  },
+  "records": [
+    {
+      "review_id": "R110",
+      "original_paper_id": "curated:6976641cbfe602a7e617",
+      "taxonomy_id": "paper_id:curated:6976641cbfe602a7e617",
+      "paper_csv_row_exists": true,
+      "native_id": "review:85175ec64aa71e08513d",
+      "existing_id_collision": false,
+      "native_identity_fields": {
+        "review_queue": "other",
+        "target_type": "paper",
+        "title": "Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis",
+        "year": "2026",
+        "doi": "",
+        "openalex_url": "",
+        "institution": ""
+      },
+      "recommended_action": "no_action_after_review",
+      "accepted_research_types": "method;dataset;benchmark",
+      "hold_disposition": null
+    },
+    {
+      "review_id": "R138",
+      "original_paper_id": "curated:88b63de59a0eabcd1b02",
+      "taxonomy_id": "paper_id:curated:88b63de59a0eabcd1b02",
+      "paper_csv_row_exists": true,
+      "native_id": "review:fa865030dfa55383c974",
+      "existing_id_collision": false,
+      "native_identity_fields": {
+        "review_queue": "other",
+        "target_type": "paper",
+        "title": "Incremental Learning for AI-Generated Image Detection",
+        "year": "2026",
+        "doi": "10.1109/tmm.2026.3716041",
+        "openalex_url": "https://openalex.org/W7170070315",
+        "institution": ""
+      },
+      "recommended_action": "unresolved",
+      "accepted_research_types": null,
+      "hold_disposition": "EVIDENCE_INSUFFICIENT"
+    },
+    {
+      "review_id": "R154",
+      "original_paper_id": "curated:8e9658fa727094695be8",
+      "taxonomy_id": "paper_id:curated:8e9658fa727094695be8",
+      "paper_csv_row_exists": true,
+      "native_id": "review:b7a98d16a24ee222558e",
+      "existing_id_collision": false,
+      "native_identity_fields": {
+        "review_queue": "other",
+        "target_type": "paper",
+        "title": "MIRAGE: Towards AI-Generated Image Detection in the Wild",
+        "year": "2026",
+        "doi": "10.1609/aaai.v40i7.37421",
+        "openalex_url": "https://openalex.org/W7137943215",
+        "institution": ""
+      },
+      "recommended_action": "unresolved",
+      "accepted_research_types": null,
+      "hold_disposition": "IDENTITY_BLOCKED"
+    },
+    {
+      "review_id": "R161",
+      "original_paper_id": "curated:506d44d3feea2627dd42",
+      "taxonomy_id": "paper_id:curated:506d44d3feea2627dd42",
+      "paper_csv_row_exists": true,
+      "native_id": "review:870f03d0288890604003",
+      "existing_id_collision": false,
+      "native_identity_fields": {
+        "review_queue": "other",
+        "target_type": "paper",
+        "title": "No Pixel Left Behind: A Detail-Preserving Architecture for Robust High-Resolution AI-Generated Image Detection",
+        "year": "2026",
+        "doi": "",
+        "openalex_url": "",
+        "institution": ""
+      },
+      "recommended_action": "unresolved",
+      "accepted_research_types": null,
+      "hold_disposition": "EVIDENCE_INSUFFICIENT"
+    },
+    {
+      "review_id": "R171",
+      "original_paper_id": "curated:a570863c3a6ac227b56c",
+      "taxonomy_id": "paper_id:curated:a570863c3a6ac227b56c",
+      "paper_csv_row_exists": true,
+      "native_id": "review:dcd816756b7d488bf1a0",
+      "existing_id_collision": false,
+      "native_identity_fields": {
+        "review_queue": "other",
+        "target_type": "paper",
+        "title": "PGC: Peak-Guided Calibration for Generalizable AI-Generated Image Detection",
+        "year": "2026",
+        "doi": "",
+        "openalex_url": "https://openalex.org/W7162011903",
+        "institution": ""
+      },
+      "recommended_action": "no_action_after_review",
+      "accepted_research_types": "method;dataset;benchmark",
+      "hold_disposition": null
+    },
+    {
+      "review_id": "R187",
+      "original_paper_id": "curated:08aa2b51bb36247bdda3",
+      "taxonomy_id": "paper_id:curated:08aa2b51bb36247bdda3",
+      "paper_csv_row_exists": true,
+      "native_id": "review:d12646730c864bfb6e2d",
+      "existing_id_collision": false,
+      "native_identity_fields": {
+        "review_queue": "other",
+        "target_type": "paper",
+        "title": "RealNet: Efficient and Unsupervised Detection of AI-Generated Images via Real-Only Representation Learning",
+        "year": "2026",
+        "doi": "10.1609/aaai.v40i45.41234",
+        "openalex_url": "https://openalex.org/W7139096423",
+        "institution": ""
+      },
+      "recommended_action": "unresolved",
+      "accepted_research_types": null,
+      "hold_disposition": "EVIDENCE_INSUFFICIENT"
+    },
+    {
+      "review_id": "R231",
+      "original_paper_id": "curated:0d918782407e05ade5bd",
+      "taxonomy_id": "paper_id:curated:0d918782407e05ade5bd",
+      "paper_csv_row_exists": true,
+      "native_id": "review:c140d27c2ce24aaab046",
+      "existing_id_collision": false,
+      "native_identity_fields": {
+        "review_queue": "other",
+        "target_type": "paper",
+        "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+        "year": "2026",
+        "doi": "10.1145/3810988.3812660",
+        "openalex_url": "https://openalex.org/W7164758918",
+        "institution": ""
+      },
+      "recommended_action": "unresolved",
+      "accepted_research_types": null,
+      "hold_disposition": "EVIDENCE_INSUFFICIENT"
+    },
+    {
+      "review_id": "R256",
+      "original_paper_id": "curated:c6bfe8f5199d1d8beb29",
+      "taxonomy_id": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "paper_csv_row_exists": true,
+      "native_id": "review:94810536cefd9de36972",
+      "existing_id_collision": false,
+      "native_identity_fields": {
+        "review_queue": "other",
+        "target_type": "paper",
+        "title": "Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection",
+        "year": "2025",
+        "doi": "10.1109/iccvw69036.2025.00165",
+        "openalex_url": "https://openalex.org/W7131078162",
+        "institution": ""
+      },
+      "recommended_action": "no_action_after_review",
+      "accepted_research_types": "method;dataset;benchmark",
+      "hold_disposition": null
+    },
+    {
+      "review_id": "R275",
+      "original_paper_id": "curated:7cfe39b3bc63f5b55f51",
+      "taxonomy_id": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "paper_csv_row_exists": true,
+      "native_id": "review:14ecb31c9d42db4e4821",
+      "existing_id_collision": false,
+      "native_identity_fields": {
+        "review_queue": "other",
+        "target_type": "paper",
+        "title": "Breaking Latent Prior Bias in Detectors for Generalizable AIGC Image Detection",
+        "year": "2025",
+        "doi": "10.52202/085713-1030",
+        "openalex_url": "https://openalex.org/W4414893756",
+        "institution": ""
+      },
+      "recommended_action": "no_action_after_review",
+      "accepted_research_types": "method;benchmark",
+      "hold_disposition": null
+    },
+    {
+      "review_id": "R564",
+      "original_paper_id": "doi:10.1109/tmm.2023.3313503",
+      "taxonomy_id": "doi:10.1109/tmm.2023.3313503",
+      "paper_csv_row_exists": false,
+      "native_id": "review:77cb071840ccde763f90",
+      "existing_id_collision": false,
+      "native_identity_fields": {
+        "review_queue": "other",
+        "target_type": "paper",
+        "title": "GLFF: Global and Local Feature Fusion for AI-Synthesized Image Detection",
+        "year": "2023",
+        "doi": "10.1109/tmm.2023.3313503",
+        "openalex_url": "https://openalex.org/W4386590781",
+        "institution": ""
+      },
+      "recommended_action": "no_action_after_review",
+      "accepted_research_types": "method;dataset",
+      "hold_disposition": null
+    },
+    {
+      "review_id": "P231",
+      "original_paper_id": "curated:0d918782407e05ade5bd",
+      "taxonomy_id": "paper_id:curated:0d918782407e05ade5bd",
+      "paper_csv_row_exists": true,
+      "native_id": "review:9f0d774714f7c178eff4",
+      "existing_id_collision": false,
+      "native_identity_fields": {
+        "review_queue": "publication_venues",
+        "target_type": "paper",
+        "title": "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion",
+        "year": "2026",
+        "doi": "10.1145/3810988.3812660",
+        "openalex_url": "https://openalex.org/W7164758918",
+        "institution": ""
+      },
+      "recommended_action": "conditional_no_action_after_review_else_unresolved",
+      "accepted_research_types": null,
+      "hold_disposition": null
+    }
+  ],
+  "minimal_data_allowlist": {
+    "data/curated/papers.csv": {
+      "R110": [
+        "research_types"
+      ],
+      "R171": [
+        "research_types"
+      ],
+      "R256": [
+        "research_types"
+      ],
+      "R275": [
+        "research_types"
+      ],
+      "P231": [
+        "venue_track (only if Main passes semantics check)"
+      ]
+    },
+    "data/curated/paper_taxonomy.csv": {
+      "review_ids": [
+        "R110",
+        "R171",
+        "R256",
+        "R275",
+        "R564"
+      ],
+      "fields": [
+        "research_types",
+        "research_types_review_reason",
+        "research_types_evidence_tier",
+        "research_types_evidence_source",
+        "research_types_evidence_excerpt",
+        "audited_at"
+      ],
+      "retain_reviewed_statuses_unchanged": true,
+      "recommended_evidence_tier": "primary_paper"
+    },
+    "held_records": "No authoritative paper/taxonomy data changes for R138,R154,R161,R187,R231.",
+    "conditional_cell_count_if_P231_accepted": 35,
+    "without_P231_cell_count": 34,
+    "notes": [
+      "R564 is a taxonomy-only DOI identity; do not create a papers.csv row or fill its blank taxonomy paper_id.",
+      "Do not change updated_at, authors, year, DOI, arXiv, tasks, image_scopes, venue identity/name/acronym/type, aliases, or unrelated review/status fields.",
+      "Use canonical strings method;dataset;benchmark, method;benchmark, method;dataset. Main is the canonical paper-level track spelling."
+    ]
+  },
+  "preservation_and_collision_policy": {
+    "expected_new_rows": 11,
+    "expected_total_rows": 138,
+    "all_proposed_native_ids_distinct": true,
+    "all_proposed_native_ids_absent": true,
+    "native_id_algorithm": "review: + sha256('|'.join(clean(field).casefold() for field in (review_queue,target_type,doi,openalex_url,title,year,institution)).encode()).hexdigest()[:20]; clean collapses all whitespace.",
+    "collision_response": "If any existing native ID collides with a nonidentical proposed row, stop and report it; do not rewrite a prior decision or falsify identity/queue/institution to force a new ID.",
+    "preserve_prefix": "After appending, raw_after.startswith(raw_d109) must be true, parsed first 127 rows identical, exactly 11 new unique native IDs, all 138 IDs unique.",
+    "writer_note": "review_decisions._write rewrites the complete registry on an actual change. Current bytes round-trip identically through its writer, but a controlled byte append plus strict prefix proof is safest. Identical native upsert short-circuits without writing.",
+    "csv_token_preservation": "papers.csv and paper_taxonomy.csv contain 16 embedded CRLF sequences each. Reuse logical_csv_chunks / replace_csv_tokens semantics from tests/test_corpus_quality_batch_b_wave_b1n.py; preserve all unauthorized token bytes, row order, headers and unrelated row bytes."
+  },
+  "action_fingerprints": {
+    "canonical_hash": "sha256(json.dumps(binding,sort_keys=True,separators=(comma,colon),ensure_ascii=False).encode()).hexdigest()",
+    "binding_minimum": [
+      "baseline_commit",
+      "review_id",
+      "original_paper_id",
+      "taxonomy_id",
+      "review_queue",
+      "target_path_and_row_key",
+      "canonical_bibliographic_identity_including_ordered_authors_and_identifiers",
+      "original_question",
+      "original_B3_matrix_sha256",
+      "exact_B3_record_sha256",
+      "disposition_and_accepted_boolean",
+      "before_authoritative_state",
+      "accepted_changes_or_null",
+      "expected_after_state"
+    ],
+    "note_token": "[b4-03-state:<binding_sha256>] plus B3 matrix and per-record hashes and the preserved evidence path.",
+    "uniqueness": "Include original review ID and action scope/queue. R231 and P231 share one paper/evidence packet but need different IDs and binding hashes. A shared evidence hash is never a unique action key.",
+    "venue_token": "For accepted P231 only, [venue-state:<confirmation_fingerprint(post-change source)>] can confirm the bounded current venue state. Do not add venue-state tokens to resource-label decisions. If P231 is held, bind before state and do not mark terminal."
+  },
+  "acceptance_and_idempotence_gates": [
+    "One exact live row per new native ID, matching the manifest formal_decision and the native ID recomputed from existing helper semantics.",
+    "Correct review queue, target type, action, creator, original-review note prefix, timestamp format, canonical identity, B3 hashes, binding hash and note token.",
+    "For resource accepts: both existing paper compatibility field (where present) and authoritative taxonomy contain exactly the accepted types; reviewed statuses remain reviewed; primary_paper evidence tier and nonempty reason/source/excerpt match preserved evidence; exact approved cells only.",
+    "For R564: resolve the DOI taxonomy_id directly or through PaperIdentityIndex; public paper has no paper_id and there is no paper CSV row. Never index by blank paper_id.",
+    "For P231: accept only when Main reproduces the independently checked standalone-event semantics at the public boundary; source venue identity/name/acronym/type and all bibliographic fields remain byte-stable. Otherwise persist unresolved with no track edit.",
+    "For holds: accepted=false, accepted_changes=null, action=unresolved, hold disposition/limitations explicit, no canonical identity or author replacement, and every held data row byte-stable.",
+    "Negative tests must reject wrong native ID, wrong queue/action/creator, identity mismatch, missing/hash-tampered B3 or binding token, wrong resource types or evidence state, and unsupported/changed P231 track semantics.",
+    "Copy the final registry into a temporary file, call real upsert_review_decision twice per proposed formal row, and assert same row, byte-identical file, unchanged timestamps and 138 total unique IDs. Never call actual registry upsert during a read-only preflight."
+  ],
+  "accounting": {
+    "helper_sources": [
+      "scripts.validate_corpus_quality_audit.decision_rows/load_queues/load_context",
+      "tests/test_corpus_quality_batch_b_wave_b1s.py:terminal/accounting",
+      "tests/test_corpus_quality_batch_b_wave_b5_01.py:terminal/accounting",
+      "tests/corpus_quality_test_helpers.py:published_bytes,csv_records,published_context"
+    ],
+    "method": "Keep immutable original Batch B ledger (159 actions/148 papers). Recognize only no_action_after_review with original Batch B review token, plus two explicit B1O legacy native IDs. Reject duplicate terminal review IDs. Count unresolved original rows after removing terminal IDs; independently count distinct paper IDs; active subset uses preferred public IDs resolved through taxonomy identities.",
+    "before": {
+      "original_actions": 159,
+      "original_papers": 148,
+      "terminal_actions": 39,
+      "historical_unresolved_actions": 120,
+      "historical_unresolved_papers": 113,
+      "active_public_unresolved_actions": 118,
+      "active_public_unresolved_papers": 111
+    },
+    "after_if_P231_accepted": {
+      "original_actions": 159,
+      "original_papers": 148,
+      "terminal_actions": 45,
+      "historical_unresolved_actions": 114,
+      "historical_unresolved_papers": 108,
+      "active_public_unresolved_actions": 112,
+      "active_public_unresolved_papers": 106
+    },
+    "after_if_P231_held": {
+      "original_actions": 159,
+      "original_papers": 148,
+      "terminal_actions": 44,
+      "historical_unresolved_actions": 115,
+      "historical_unresolved_papers": 108,
+      "active_public_unresolved_actions": 113,
+      "active_public_unresolved_papers": 106
+    },
+    "shared_paper_warning": "Closing P231 never closes unresolved R231 on the same paper. All 11 assigned actions are active-public at d109.",
+    "public_counts_unchanged": {
+      "public": 674,
+      "formal": 557,
+      "mapped": 613,
+      "unmapped": 61,
+      "relationship_rows": 1410,
+      "unique_paper_institution_pairs": 1410
+    },
+    "taxonomy_total_change_for_later_export": {
+      "dataset": 4,
+      "benchmark": 4
+    }
+  },
+  "verification": {
+    "performed": [
+      "Existing 13/27/27-column CSV schemas checked exactly.",
+      "read_paper_taxonomy_registry validated 722 rows.",
+      "Current review registry validated 127 distinct IDs and lossless canonical CSV round-trip.",
+      "Six standard-library tests passed: python3 -m unittest tests.test_review_decision_idempotence tests.test_paper_level_venue_track -q.",
+      "Git status remained clean."
+    ],
+    "not_run": [
+      "Full pytest suite: shell python3 has no pytest installed.",
+      "No curated/public exporter or pipeline.",
+      "validate_curated_database.py main not invoked: it starts with migrate_obsolete_location_schema and is not purely read-only."
+    ],
+    "recommended_targeted_tests": [
+      "tests/test_review_decision_idempotence.py",
+      "tests/test_paper_level_venue_track.py",
+      "tests/test_publication_venue_audit.py",
+      "tests/test_paper_taxonomy_migration.py",
+      "tests/test_corpus_quality_batch_b_wave_b4_01.py",
+      "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "New B4-03 acceptance, holds, native-ID, fingerprints, byte preservation, allowed cells, accounting and negative/idempotence regressions."
+    ],
+    "recommended_validators": [
+      "Read-only registry reader and direct schema/allowed-value/identity/unique-ID checks.",
+      "validate_public_preview.py checks unchanged current public artifacts; it is not proof of B4-03 source/export synchronization.",
+      "validate_paper_exclusions.py for unchanged exclusion/public integrity.",
+      "validate_curated_database.py only under controlled validation with pre/post byte inventory or a temporary snapshot, because main calls schema migration.",
+      "Do not use validate_corpus_quality_audit.py old fixed corpus EXPECTED as a live scientific acceptance gate; its audit context is historical."
+    ]
+  },
+  "blockers_and_caveats": [
+    {
+      "kind": "conditional_acceptance",
+      "detail": "P231 public semantics is pending the independent assigned checker. No schema blocker found; do not assume its result."
+    },
+    {
+      "kind": "historical_test_endpoint_mismatch",
+      "detail": "B1S current taxonomy hash/source-versus-public totals, B4-02 current taxonomy byte guard, and B5-01 exact live 127 decisions/paper deltas/source hashes/taxonomy totals will fail for legitimate later source-only B4-03 edits. Preserve immutable receipts and baseline numbers; bind historical checks to their published endpoint and add separate B4-03 live guards rather than changing historical scientific expectations."
+    },
+    {
+      "kind": "phase_boundary",
+      "detail": "No export is allowed in this preflight/B4 scope. Source type totals will gain dataset=4/benchmark=4; current public JSON stays at its d109 bytes until a later authorized export phase. Source/public equality tests must acknowledge this phase explicitly."
+    }
+  ]
+}

@@ -1,0 +1,363 @@
+{
+  "schema": "b502-actual-historical-guard-failure-matrix-1",
+  "verdict": "SOURCE_CORRECT_WITHIN_AUTHORIZED_SCOPE_GATE_BLOCKED_STOP_BEFORE_EXPORT",
+  "baseline": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "worktree": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+  "phase": "SOURCE_AND_PORTABLE_EVIDENCE_INTEGRATED_PRE_EXPORT",
+  "actual_gate": {
+    "receipt": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02-2026-11-01/historical_pre_export_gate.json",
+    "receipt_sha256": "997b3e298208d794214aea0dab6187d33624a12e2c361df2f23b4c7ffd4c5606",
+    "log_sha256": "72bb0fdcc81d3eb46fb24a629fb6a38006effc2195ad7172241efb529aea3d85",
+    "junit_sha256": "fb1fceb83c6be0d59d69a0deda19a8ed18a9ee2a63fc5a938aedd34319c74a81",
+    "command": [
+      "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--tb=long",
+      "--junitxml=/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02-2026-11-01/historical_pre_export_gate.xml",
+      "tests/test_corpus_quality_batch_b_wave_b1s.py::test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export[data/curated/paper_taxonomy.csv]",
+      "tests/test_corpus_quality_batch_b_wave_b4_02.py::test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories"
+    ],
+    "returncode": 1,
+    "tests": 3,
+    "failures": 3,
+    "errors": 0,
+    "recorded_utc": "2026-11-01T09:19:32.766717+00:00"
+  },
+  "independent_read_only_checks": {
+    "head_is_d109": true,
+    "actual_changed_paths_exact_three_sources": true,
+    "all_120_allowlisted_bytes_and_sizes_match": true,
+    "source_exact_35_cell_deltas": true,
+    "delta_counts_5_papers_30_taxonomy": true,
+    "source_hashes_match_baseline_and_accepted_B4": true,
+    "prior127_exact_plus11": true,
+    "all_failed_test_sources_match_d109_and_receipt": true,
+    "all_tracked_tests_unchanged": true,
+    "all_portable_archive_entries_match_external_origin": true,
+    "both_public_outputs_unchanged_d109": true,
+    "actual_gate_receipt_log_junit_authenticated": true,
+    "junit_has_3_failures_no_errors": true,
+    "index_unchanged_by_inspection": true,
+    "status_unchanged_by_inspection": true,
+    "physical_new_paths_exact_117_allowlisted": true,
+    "ordinary_git_untracked114_plus_three_authenticated_ignored_logs": true
+  },
+  "source_files": {
+    "data/curated/papers.csv": {
+      "before_sha256": "0fd82c4b242d86b6fe4dbf0c8dcd98cccc6a6930c0bd2e93b416a49a1bf0c3e4",
+      "after_sha256": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+      "expected_before_sha256": "0fd82c4b242d86b6fe4dbf0c8dcd98cccc6a6930c0bd2e93b416a49a1bf0c3e4",
+      "expected_after_sha256": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+      "bytes_match_B4_native": true,
+      "baseline_hash_matches": true,
+      "accepted_hash_matches": true,
+      "before_rows": 535,
+      "after_rows": 535,
+      "row_identity_order_preserved": true
+    },
+    "data/curated/paper_taxonomy.csv": {
+      "before_sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "after_sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "expected_before_sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "expected_after_sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "bytes_match_B4_native": true,
+      "baseline_hash_matches": true,
+      "accepted_hash_matches": true,
+      "before_rows": 722,
+      "after_rows": 722,
+      "row_identity_order_preserved": true
+    },
+    "data/curated/review_decisions.csv": {
+      "before_sha256": "3430814d49d8e73a5836c71fb04b5acb3e95de3dac56bb795ca62dcf734bfda5",
+      "after_sha256": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea",
+      "expected_before_sha256": "3430814d49d8e73a5836c71fb04b5acb3e95de3dac56bb795ca62dcf734bfda5",
+      "expected_after_sha256": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea",
+      "bytes_match_B4_native": true,
+      "baseline_hash_matches": true,
+      "accepted_hash_matches": true,
+      "before_rows": 127,
+      "after_rows": 138,
+      "prior_127_raw_prefix_preserved": true,
+      "first_127_rows_exact": true,
+      "appended_11_exact_formal_rows": true,
+      "appended_ids": [
+        "review:85175ec64aa71e08513d",
+        "review:fa865030dfa55383c974",
+        "review:b7a98d16a24ee222558e",
+        "review:870f03d0288890604003",
+        "review:dcd816756b7d488bf1a0",
+        "review:d12646730c864bfb6e2d",
+        "review:c140d27c2ce24aaab046",
+        "review:94810536cefd9de36972",
+        "review:14ecb31c9d42db4e4821",
+        "review:77cb071840ccde763f90",
+        "review:9f0d774714f7c178eff4"
+      ],
+      "decision_ids_unique": true,
+      "appended_action_counts": {
+        "no_action_after_review": 6,
+        "unresolved": 5
+      }
+    }
+  },
+  "test_source_authentication": {
+    "tests/test_corpus_quality_batch_b_wave_b1s.py": {
+      "d109_sha256": "bde78da60eaf4f3660725dade4d11aed2225e13d28f675eabf52790cde65f5ec",
+      "current_sha256": "bde78da60eaf4f3660725dade4d11aed2225e13d28f675eabf52790cde65f5ec",
+      "receipt_sha256": "bde78da60eaf4f3660725dade4d11aed2225e13d28f675eabf52790cde65f5ec",
+      "byte_identical_d109": true,
+      "matches_recorded_before_after_sha256": true
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_01.py": {
+      "d109_sha256": "87a1766308c46797b2b921e47da2755ea5f4c9144904b4fddd21b34ce0b5fa64",
+      "current_sha256": "87a1766308c46797b2b921e47da2755ea5f4c9144904b4fddd21b34ce0b5fa64",
+      "receipt_sha256": "87a1766308c46797b2b921e47da2755ea5f4c9144904b4fddd21b34ce0b5fa64",
+      "byte_identical_d109": true,
+      "matches_recorded_before_after_sha256": true
+    },
+    "tests/test_corpus_quality_batch_b_wave_b4_02.py": {
+      "d109_sha256": "ede273958436346d7b94e24c4f970a6fca6fc6528f7e87b7f0ce87d71077f3a3",
+      "current_sha256": "ede273958436346d7b94e24c4f970a6fca6fc6528f7e87b7f0ce87d71077f3a3",
+      "receipt_sha256": "ede273958436346d7b94e24c4f970a6fca6fc6528f7e87b7f0ce87d71077f3a3",
+      "byte_identical_d109": true,
+      "matches_recorded_before_after_sha256": true
+    }
+  },
+  "public_pair": {
+    "web/data/public_preview_papers.json": {
+      "current_sha256": "1323bf1ca068a8a6d6343882204b0e66bbcb9319f6847e1ff68579d942ee9442",
+      "d109_sha256": "1323bf1ca068a8a6d6343882204b0e66bbcb9319f6847e1ff68579d942ee9442",
+      "unchanged_d109": true
+    },
+    "web/data/public_preview_map_data.json": {
+      "current_sha256": "04e4d239cd31b2a77e7bcf24477f6c9b93e31d4ba627bd9abd6b571765152b65",
+      "d109_sha256": "04e4d239cd31b2a77e7bcf24477f6c9b93e31d4ba627bd9abd6b571765152b65",
+      "unchanged_d109": true
+    }
+  },
+  "cell_delta_counts": {
+    "data/curated/papers.csv": 5,
+    "data/curated/paper_taxonomy.csv": 30
+  },
+  "portable_entry_count": 113,
+  "new_archive_and_manifest_paths": 117,
+  "allowlisted_path_count": 120,
+  "failures": [
+    {
+      "id": "HG01",
+      "file": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export[data/curated/paper_taxonomy.csv]",
+      "assertion_line": 316,
+      "actual_assertion": "sha(observed) == FROZEN['pre_export_frozen_source_sha256'][path]",
+      "expected_sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "actual_sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "historical_checkpoint": {
+        "FROZEN_origin": "dace181c2a9edbb7c467978e9e958e83fdddc143",
+        "B1S_publication": "df9774b64f717d535d3f299a727545f4b9488adb",
+        "accepted_d109_taxonomy_sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9"
+      },
+      "purpose": "Keep the B1S accepted source bytes intact through its controlled export, with B1Q/B1R evidence still live. Taxonomy remained unchanged at that historical endpoint. The function reads papers/decisions at its immutable publication, but reads taxonomy from current ROOT.",
+      "classification": "Historical checkpoint byte assertion encounters later explicitly authorized current taxonomy. Exact30-cell taxonomy change is the expected B4-03 source delta; no source corruption or evidence alteration is shown. The guard failure remains real and blocking.",
+      "reached_assertions": "Single selected taxonomy parameter executed and failed; other parameters were not selected."
+    },
+    {
+      "id": "HG02",
+      "file": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "assertion_line": 378,
+      "actual_assertion": "(ROOT / 'data/curated/paper_taxonomy.csv').read_bytes() == published_bytes(BASE, 'data/curated/paper_taxonomy.csv')",
+      "expected_sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "actual_sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "historical_checkpoint": {
+        "BASE": "7fc8ceae702324628335944cf4b545a3733fdc56",
+        "original_packet": "data/raw/corpus_quality_batch_b_wave_b4_02_2026_10_29/adjudication_manifest.json",
+        "published_d109_preserved_original_taxonomy": true
+      },
+      "purpose": "B4-02 changes journal venue bindings only; its public identities, tasks/types, relationships and entire authoritative taxonomy must stay fixed to the original checkpoint. The final byte check deliberately prevents unchanged public JSON from hiding a source taxonomy edit.",
+      "classification": "Historical venue-only transaction invariant conflicts with B4-03 authorized research-type additions. The public JSON is still d109, so earlier public counts/pairs/type assertions reached and passed; the final live-source byte check correctly detects the new30-cell authoritative taxonomy delta. This is not current source/public synchronization acceptance.",
+      "first_byte_difference": {
+        "zero_based_offset": 102833,
+        "before_byte": 44,
+        "after_byte": 59,
+        "before_character": ",",
+        "after_character": ";",
+        "independently_verified": true
+      },
+      "reached_assertions": "All earlier statements in this test reached without failure; only line378 failed. These results describe the intentionally unchanged public endpoint, not an exported B5-02 endpoint."
+    },
+    {
+      "id": "HG03",
+      "file": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories",
+      "assertion_line": 155,
+      "actual_assertion": "len(before) == 103 and len(after) == 127",
+      "expected_counts": {
+        "BASE_rows": 103,
+        "completed_B5_01_rows": 127,
+        "B4_01_append": 9,
+        "B4_02_append": 15
+      },
+      "actual_counts": {
+        "BASE_rows": 103,
+        "current_rows": 138,
+        "d109_prior_rows": 127,
+        "authorized_B4_03_appends": 11
+      },
+      "historical_checkpoint": {
+        "BASE": "7fc8ceae702324628335944cf4b545a3733fdc56",
+        "accepted_B5_01_publication": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+        "immutable_manifest": "data/raw/corpus_quality_batch_b_wave_b5_01_2026_10_30/integration_manifest.json"
+      },
+      "purpose": "Authenticate exact original103 + B4-01 nine + B4-02 fifteen formal decisions, immutable raw prefix, exact append rows and native identity uniqueness at B5-01 completion. It assumes its own127-row endpoint remains current ROOT.",
+      "classification": "The B4-03 eleven-row authorized append correctly produces138 current rows; original127 raw bytes and every historical decision remain exact. The count assertion binds historical B5-01 completion to a later current registry. Real blocking failure does not establish decision rewrite, duplicate IDs or an evidence problem.",
+      "reached_assertions": "The compound count at line155 failed first. Prefix, exact24 historical appends, uniqueness and historical boundary assertions below it were not executed by this test; independent read-only inspection establishes preservation separately."
+    }
+  ],
+  "scope_and_evidence_conclusion": "All120 intended source/archive paths match prepared allowlist bytes. The35 source cells and11 formal decisions exactly match accepted B4-03, including the127-row prefix. Portable original evidence copies match their declared external origin; no scientific review was repeated. No code/test/central-baseline or old receipt modifications are present. Source acceptance is bounded; public synchronization, exporter, validators and full regression remain unperformed.",
+  "static_forecasts": {
+    "original_fixed_forecast_categories": 14,
+    "categories_now_observed_in_selected_gate": 3,
+    "remaining_unexecuted_fixed_categories": 11,
+    "shared_current_baseline_consumer_functions": 24,
+    "full_suite_failures_observed": 0,
+    "interpretation": "Original inventory had14 fixed categories total; the three actual cases overlap that inventory, leaving11 unexecuted categories. All24 shared-baseline consumer functions remain unrun as a complete selection. These are not claims of additional observed failures.",
+    "inventory": [
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b1s.py::test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export[data/curated/paper_taxonomy.csv]",
+        "prior_assessment": "direct static conflict",
+        "now_observed_early_failure": true,
+        "executed_in_early_gate": true,
+        "full_suite_failure_observed": false
+      },
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b1s.py::test_recomputed_source_and_export_totals_match_with_only_R3_R2_additions",
+        "prior_assessment": "direct static conflict",
+        "now_observed_early_failure": false,
+        "executed_in_early_gate": false,
+        "full_suite_failure_observed": false
+      },
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b4_02.py::test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+        "prior_assessment": "direct static conflict",
+        "now_observed_early_failure": true,
+        "executed_in_early_gate": true,
+        "full_suite_failure_observed": false
+      },
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories",
+        "prior_assessment": "direct static conflict",
+        "now_observed_early_failure": true,
+        "executed_in_early_gate": true,
+        "full_suite_failure_observed": false
+      },
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_only_eleven_actions_close_and_all_thirteen_new_holds_remain_open",
+        "prior_assessment": "direct static conflict",
+        "now_observed_early_failure": false,
+        "executed_in_early_gate": false,
+        "full_suite_failure_observed": false
+      },
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_unresolved_accounting_is_derived_from_the_live_original_ledger_and_public_identities",
+        "prior_assessment": "direct static conflict",
+        "now_observed_early_failure": false,
+        "executed_in_early_gate": false,
+        "full_suite_failure_observed": false
+      },
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_exact_fifteen_paper_cells_change_without_identity_authors_dates_or_taxonomy_edits",
+        "prior_assessment": "direct static conflict",
+        "now_observed_early_failure": false,
+        "executed_in_early_gate": false,
+        "full_suite_failure_observed": false
+      },
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match",
+        "prior_assessment": "direct static conflict",
+        "now_observed_early_failure": false,
+        "executed_in_early_gate": false,
+        "full_suite_failure_observed": false
+      },
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason",
+        "prior_assessment": "direct static conflict",
+        "now_observed_early_failure": false,
+        "executed_in_early_gate": false,
+        "full_suite_failure_observed": false
+      },
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_all_public_bibliographic_identities_and_task_type_labels_are_unchanged",
+        "prior_assessment": "direct static conflict",
+        "now_observed_early_failure": false,
+        "executed_in_early_gate": false,
+        "full_suite_failure_observed": false
+      },
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_all_relationship_identities_pairs_affiliations_and_coordinates_are_preserved",
+        "prior_assessment": "direct static conflict",
+        "now_observed_early_failure": false,
+        "executed_in_early_gate": false,
+        "full_suite_failure_observed": false
+      },
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_all_changed_map_rows_are_exact_url_dependents_with_correct_semantic_links",
+        "prior_assessment": "direct static conflict",
+        "now_observed_early_failure": false,
+        "executed_in_early_gate": false,
+        "full_suite_failure_observed": false
+      },
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_corpus_and_taxonomy_totals_are_recomputed_and_match_source_and_public_invariants",
+        "prior_assessment": "direct static conflict",
+        "now_observed_early_failure": false,
+        "executed_in_early_gate": false,
+        "full_suite_failure_observed": false
+      },
+      {
+        "nodeid": "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations",
+        "prior_assessment": "conditional prediction; exporter result required",
+        "now_observed_early_failure": false,
+        "executed_in_early_gate": false,
+        "full_suite_failure_observed": false
+      }
+    ]
+  },
+  "required_historical_current_boundary_criteria": [
+    "Preserve d109 historical test source bytes, original checkpoint assertions and every original evidence/report/manifest/hash; no overwrite of prior acceptance/failure receipts.",
+    "A historical endpoint must authenticate the exact original source/public/decision snapshot and run original assertions at that immutable endpoint. Passing historical replay alone cannot accept B5-02.",
+    "Independent current-source checks must establish d109 to B4-03 exact35-cell allowlist, prior127 raw bytes,11 exact native/evidence-bound decisions,6 accepted and5 held actions, original-action accounting and no unrelated source changes.",
+    "Independent post-export B5-02 checks must verify142dataset/101benchmark and P231 qualified MAD track,674public/557formal/613mapped/1410relationships, unchanged tasks/identities/authors/affiliations/locations, preserved prior B5-01 effects and seven-output byte reproducibility.",
+    "Protection negatives must continue rejecting changed historical snapshots, unexpected paths, unauthorized taxonomy/decision edits, tampered source/evidence bindings, extra terminal closures and loss of original prefix.",
+    "Any proposed narrow boundary correction must be documented only after this actual failed checkpoint, reviewed independently against exact source and test diff, and require explicit authorization under the user stop rule before implementation or rerun. No blanket exemption, changed old hash/count, skip, xfail, weakened assertion or automatic failed-gate retry."
+  ],
+  "no_correction_proposed_or_implemented": true,
+  "no_additional_tests_validators_export_or_network_performed": true,
+  "write_scope": [
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02-2026-11-01/historical_guard_failure_matrix.json",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02-2026-11-01/historical_guard_failure_matrix.md"
+  ],
+  "git_visible_untracked_archive_paths": 114,
+  "ignored_but_physical_allowlisted_archive_paths": [
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/curated_validator.log",
+      "reason": ".gitignore:59 *.log",
+      "sha256": "ee04d5a9ebedfb91241ec39e418f969a6c6c0f5b7316df8d294bb39f4829ffe7"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/exclusions_validator.log",
+      "reason": ".gitignore:59 *.log",
+      "sha256": "1fadfe0741a198eaf009a4c2dc08fc234e7b451238157f8e1709960fe9732513"
+    },
+    {
+      "path": "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/evidence_archive/b4_03/qc/public_pair_validator.log",
+      "reason": ".gitignore:59 *.log",
+      "sha256": "ac8e0af99c38d4fee8a1fc1d7b45210537cd5cca35a273b8b547d32c8f869859"
+    }
+  ],
+  "archive_inventory_note": "117 new physical paths =114 ordinary Git-visible untracked paths +3 ignored copied .log evidence paths. All120 total source/archive paths match prepared hashes and sizes. Ignored logs are an inventory/staging consideration for later review; no files are missing and staging remains prohibited by the failed guard."
+}

@@ -26,6 +26,8 @@ from scripts.venue_audit import VenueAudit, confirmation_fingerprint
 from scripts.venues import canonical_venue_registry, read_venue_aliases
 from tests.corpus_quality_test_helpers import csv_records, published_bytes, published_context
 
+from tests.batch_b_historical_endpoints import b5_01_bytes, b5_01_context
+
 ROOT = Path(__file__).resolve().parents[1]
 BASE = '7fc8ceae702324628335944cf4b545a3733fdc56'
 MANIFEST = 'data/raw/corpus_quality_batch_b_wave_b4_02_2026_10_29/adjudication_manifest.json'
@@ -363,7 +365,7 @@ def test_transaction_accounting_is_reconstructed_without_a_fixed_live_tail_posit
 
 
 def test_public_identities_task_types_and_all_relationship_pairs_are_preserved():
-    current, original = load_context(ROOT), published_context(BASE)
+    current, original = b5_01_context(), published_context(BASE)
     assert set(current['papers']) == set(original['papers']) == set(packet()['public_ids'])
     assert current['counts'] == original['counts'] == packet()['corpus_unchanged']
     assert current['counts']['public'] == 674
@@ -374,8 +376,9 @@ def test_public_identities_task_types_and_all_relationship_pairs_are_preserved()
         assert paper['research_types'] == original['papers'][pid]['research_types']
     totals = dict(Counter(label for p in current['papers'].values() for label in p['tasks'] + p['research_types']))
     assert totals == packet()['taxonomy_unchanged']
-    # Authoritative labels themselves, not only stale public JSON, stay fixed.
-    assert (ROOT / 'data/curated/paper_taxonomy.csv').read_bytes() == published_bytes(BASE, 'data/curated/paper_taxonomy.csv')
+    # Authenticate the original venue-only endpoint, not later approved taxonomy.
+    # B5-02 separately checks every live identity, pair and authorized type delta.
+    assert b5_01_bytes('data/curated/paper_taxonomy.csv') == published_bytes(BASE, 'data/curated/paper_taxonomy.csv')
 
 
 def test_frozen_neurips_receipts_remain_exact_and_the_b3_correction_is_additive_only():

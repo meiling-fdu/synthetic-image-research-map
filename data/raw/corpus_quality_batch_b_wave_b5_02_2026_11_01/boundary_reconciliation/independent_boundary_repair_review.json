@@ -1,0 +1,1265 @@
+{
+  "verdict": "APPROVED_EXACT_REVIEWED_BOUNDARY_PATCH_PENDING_MANDATORY_TESTS_AND_FULL_LIVE_COVERAGE",
+  "reviewed_at_utc": "2026-11-01T11:20:38.763657+00:00",
+  "predecessor_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "boundary_matrix_sha256": "7b386c489b296dfde13c81de65248a4e0fb698645bb88d3947c1048130bb8ffe",
+  "proposed_diff_sha256": "38eec1ed71211d74603f67198b1937a87715928aef1281f4520b5582a9db31f4",
+  "files": [
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "successor_sha256": "3dd6388b9c697e696b96813d14236c94ef0d693feb5eb61063cf8a50b74b1a4e",
+      "bytes": 22734,
+      "predecessor_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "predecessor_sha256": "bde78da60eaf4f3660725dade4d11aed2225e13d28f675eabf52790cde65f5ec"
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "successor_sha256": "4a5041a57c7c6144dbd6b8aeeff6b0ce24a82c14054ea49b5c51729b94bb1b7e",
+      "bytes": 20739,
+      "predecessor_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "predecessor_sha256": "ede273958436346d7b94e24c4f970a6fca6fc6528f7e87b7f0ce87d71077f3a3"
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "successor_sha256": "443b5c598dc64881bdf8eb725f6b95079663c3d3ac5a94dbd31d077fcda780da",
+      "bytes": 22560,
+      "predecessor_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "predecessor_sha256": "87a1766308c46797b2b921e47da2755ea5f4c9144904b4fddd21b34ce0b5fa64"
+    },
+    {
+      "path": "tests/baseline_expectations.py",
+      "successor_sha256": "a3784c28227fe60aba50678a8690f4ede5005fd99f6e3e41d8c090981fab8fcb",
+      "bytes": 12377,
+      "predecessor_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "predecessor_sha256": "f1d55a8cfb74462dd1745bf8785e71d0a1f5b2bab1da824449138468dc73cad9"
+    },
+    {
+      "path": "tests/fixtures/batch_b_b5_01_endpoint.json",
+      "successor_sha256": "22000e8f7fda983e263453781d96f5eae139cfce6ff35f0ad973ac67ca4d1b04",
+      "bytes": 13574
+    },
+    {
+      "path": "tests/batch_b_historical_endpoints.py",
+      "successor_sha256": "fb94b138ad75334fbff3fc55873d07c311f06590b954258ad82b33c435b3bcf9",
+      "bytes": 1949
+    },
+    {
+      "path": "tests/test_batch_b_historical_endpoints.py",
+      "successor_sha256": "5d07dde0ef1c5e56d2a1983eceaa8346318b808eed9ee0f959e90a7700395baf",
+      "bytes": 9102,
+      "scope": "independent_new_negative_tests"
+    }
+  ],
+  "checks": [
+    {
+      "name": "prepared:tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "predecessor:tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same_test_names:tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same_assert_count:test_actual_csv_headers_keep_existing_schema",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_actual_csv_headers_keep_existing_schema",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_only_two_existing_records_and_exact_cell_allowlist_change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_only_two_existing_records_and_exact_cell_allowlist_change",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_101_prior_decision_rows_raw_prefix_preserved_with_only_two_terminal_appends",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_101_prior_decision_rows_raw_prefix_preserved_with_only_two_terminal_appends",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_actual_acceptance_conforms_to_schema_identity_policy_and_evidence",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_actual_acceptance_conforms_to_schema_identity_policy_and_evidence",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_real_registry_repeat_upsert_is_byte_identical_and_no_extra_decision",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_real_registry_repeat_upsert_is_byte_identical_and_no_extra_decision",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_acceptance_auditor_rejects_materially_incomplete_or_mismatched_decision",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_acceptance_auditor_rejects_materially_incomplete_or_mismatched_decision",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_only_original_two_actions_close_and_all_other_pending_questions_survive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_only_original_two_actions_close_and_all_other_pending_questions_survive",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_B1Q_packet_is_unmodified_with_all_original_limitations_history_and_corrections",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_B1Q_packet_is_unmodified_with_all_original_limitations_history_and_corrections",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_locked_R2_R3_are_exact_B1Q_policy_snapshot_and_original_questions_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_locked_R2_R3_are_exact_B1Q_policy_snapshot_and_original_questions_unchanged",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_all_49_frozen_NeurIPS_receipts_and_original_blocked_status_remain_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_all_49_frozen_NeurIPS_receipts_and_original_blocked_status_remain_unchanged",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with672_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with672_unchanged",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_public_map_delta_is_exactly_seven_existing_dependents_with_all1410_identities_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_public_map_delta_is_exactly_seven_existing_dependents_with_all1410_identities_preserved",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_paired_export_metadata_changes_only_UTC_generation_timestamp",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_paired_export_metadata_changes_only_UTC_generation_timestamp",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_recomputed_source_and_export_totals_match_with_only_R3_R2_additions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_recomputed_source_and_export_totals_match_with_only_R3_R2_additions",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_no_authoritative_paper_institution_publication_task_or_scope_data_changes_beyond_B1R",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_no_authoritative_paper_institution_publication_task_or_scope_data_changes_beyond_B1R",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_public_frontend_assets_are_unchanged_and_only_paired_data_files_change_under_web",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_public_frontend_assets_are_unchanged_and_only_paired_data_files_change_under_web",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "no_new_skip_or_xfail:tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "prepared:tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "predecessor:tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same_test_names:tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same_assert_count:test_exact_assigned_coverage_three_acceptances_and_twelve_holds",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_exact_assigned_coverage_three_acceptances_and_twelve_holds",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_live_formal_decision_is_unique_native_and_evidence_bound",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_live_formal_decision_is_unique_native_and_evidence_bound",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_native_ids_are_unique_and_do_not_collide_with_either_prior_history",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_native_ids_are_unique_and_do_not_collide_with_either_prior_history",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_all_original_decisions_remain_a_byte_identical_prefix",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_all_original_decisions_remain_a_byte_identical_prefix",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_native_repeat_submission_is_idempotent_without_rewriting_history",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_native_repeat_submission_is_idempotent_without_rewriting_history",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_only_three_authorized_venue_binding_cells_change_on_each_journal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_only_three_authorized_venue_binding_cells_change_on_each_journal",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_transaction_delta_is_exactly_nine_cells_and_three_new_aliases",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_transaction_delta_is_exactly_nine_cells_and_three_new_aliases",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_journal_bindings_resolve_to_source_backed_registry_and_native_confirmation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_journal_bindings_resolve_to_source_backed_registry_and_native_confirmation",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_identity_or_venue_change_invalidates_record_and_confirmation_fingerprint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_identity_or_venue_change_invalidates_record_and_confirmation_fingerprint",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_incomplete_or_mismatched_venue_acceptance_is_rejected",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_incomplete_or_mismatched_venue_acceptance_is_rejected",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_p001_track_boundary_is_a_nonterminal_hold_without_silent_main_or_registry_addition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_p001_track_boundary_is_a_nonterminal_hold_without_silent_main_or_registry_addition",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_u005_keeps_precise_affiliation_distinct_from_unverified_viewport_and_author_presence",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_u005_keeps_precise_affiliation_distinct_from_unverified_viewport_and_author_presence",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_exact_u005_romania_draft_is_rejected_by_current_country_policy_without_saving",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_exact_u005_romania_draft_is_rejected_by_current_country_policy_without_saving",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_confirmation_cannot_represent_the_required_approximate_point_qualifiers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_confirmation_cannot_represent_the_required_approximate_point_qualifiers",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_location_mappings_and_institution_sources_have_no_data_change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_location_mappings_and_institution_sources_have_no_data_change",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_transaction_accounting_is_reconstructed_without_a_fixed_live_tail_position",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_transaction_accounting_is_reconstructed_without_a_fixed_live_tail_position",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_frozen_neurips_receipts_remain_exact_and_the_b3_correction_is_additive_only",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_frozen_neurips_receipts_remain_exact_and_the_b3_correction_is_additive_only",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "no_new_skip_or_xfail:tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "prepared:tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "predecessor:tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same_test_names:tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same_assert_count:test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_action_ids_and_per_action_transaction_fingerprints_are_collision_free",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_action_ids_and_per_action_transaction_fingerprints_are_collision_free",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_only_eleven_actions_close_and_all_thirteen_new_holds_remain_open",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_only_eleven_actions_close_and_all_thirteen_new_holds_remain_open",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_unresolved_accounting_is_derived_from_the_live_original_ledger_and_public_identities",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_unresolved_accounting_is_derived_from_the_live_original_ledger_and_public_identities",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_exact_fifteen_paper_cells_change_without_identity_authors_dates_or_taxonomy_edits",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_exact_fifteen_paper_cells_change_without_identity_authors_dates_or_taxonomy_edits",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_all_eight_live_publication_urls_match_the_authorized_paper_identities",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_all_eight_live_publication_urls_match_the_authorized_paper_identities",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_all_three_live_journal_bindings_match_their_accepted_registry_states",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_all_three_live_journal_bindings_match_their_accepted_registry_states",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_all_public_bibliographic_identities_and_task_type_labels_are_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_all_public_bibliographic_identities_and_task_type_labels_are_unchanged",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_all_relationship_identities_pairs_affiliations_and_coordinates_are_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_all_relationship_identities_pairs_affiliations_and_coordinates_are_preserved",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_all_changed_map_rows_are_exact_url_dependents_with_correct_semantic_links",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_all_changed_map_rows_are_exact_url_dependents_with_correct_semantic_links",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_all_unresolved_p001_and_u005_policy_boundaries_survive_publication",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_all_unresolved_p001_and_u005_policy_boundaries_survive_publication",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_corpus_and_taxonomy_totals_are_recomputed_and_match_source_and_public_invariants",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_corpus_and_taxonomy_totals_are_recomputed_and_match_source_and_public_invariants",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_current_paired_export_metadata_has_one_valid_utc_generation_timestamp",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_current_paired_export_metadata_has_one_valid_utc_generation_timestamp",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_original_reports_and_manifests_still_expose_all_evidence_caveats",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_original_reports_and_manifests_still_expose_all_evidence_caveats",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "same_assert_count:test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical_numeric_values:test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations",
+      "passed": true,
+      "detail": "Exact numeric/boolean values in original assertion predicates; added snapshot PUBLIC[1] input-selector literal is not an altered assertion value."
+    },
+    {
+      "name": "no_new_skip_or_xfail:tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "prepared:tests/baseline_expectations.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "predecessor:tests/baseline_expectations.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "prepared:tests/fixtures/batch_b_b5_01_endpoint.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "prepared:tests/batch_b_historical_endpoints.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "exact_manifest_commit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "exact_manifest_schema",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fixed_manifest_hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/author_institution_mappings.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/institution_aliases.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/institution_audit_log.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/institution_author_overrides.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/institution_hierarchy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/institution_location_audit_log.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/institution_location_review.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/institution_locations.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/institution_review_queue.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/institution_search_relationships.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/institutions.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/paper_arxiv_links.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/paper_exclusions.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/paper_version_merges.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/papers.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/public_export_baseline.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/publication_overrides.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/review_decisions.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/curated/venue_aliases.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/arxiv_link_enrichment_report.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/arxiv_published_duplicate_review.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/authors.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/correction_backlog.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/high_risk_marker_review.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/institution_acronym_name_decisions.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/institution_author_overrides.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/institution_corrections.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/institution_english_name_overrides.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/institution_paper_risk_report.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/institution_record_overrides.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/institution_record_review_queue.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/institutions.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_paper_affiliation_enrichment.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_paper_affiliation_review.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_paper_coordinate_candidates.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_paper_coordinate_candidates_review.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_paper_coordinate_diagnostics.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_paper_coverage_report.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_paper_export_diagnostics.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_paper_gap_analysis.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_paper_openalex_manual_imports.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_paper_reconciliation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_paper_supplement_candidates.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_enriched.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_in_openalex_not_exported_diagnosis.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_batch3_candidates.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_batch3_import_ready.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_batch3_manual_review.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_batch3_openalex_matches.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_batch4_candidates.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_batch4_import_ready.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_batch4_manual_review.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_batch4_openalex_matches.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_final_uncovered_forced_candidates.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_final_uncovered_forced_import_ready.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_final_uncovered_forced_manual_review.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_final_uncovered_forced_openalex_matches.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_from_candidate_pool.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_from_candidate_pool_todo.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_from_candidate_pool_top50.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_top50_import_ready.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_top50_openalex_matches.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_missing_top50_scope_review.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_openalex_not_exported_review.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_openalex_problem_review.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_openalex_ready_all_batches.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_query_failed_retry_part1_rerun_candidates.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_query_failed_retry_part1_rerun_import_ready.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_query_failed_retry_part1_rerun_manual_review.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_query_failed_retry_part1_rerun_openalex_matches.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_query_failed_retry_part2_candidates.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_query_failed_retry_part2_import_ready.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_query_failed_retry_part2_manual_review.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/key_papers_query_failed_retry_part2_openalex_matches.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/legacy_scope_cleanup_audit_2026_09.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/legacy_scope_exclusion_migration_2026_09.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/legacy_scope_review_candidates_2026_09.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/marker_expansion_coordinate_todo_top50.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/marker_expansion_top50_affiliation_diagnostics.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/marker_expansion_top50_local_coordinate_matches.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/missing_affiliation_openalex_import_ready.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/missing_affiliation_openalex_import_skipped.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/missing_author_mappings_report.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/neurips_2026_targeted_gap_fill_reconciliation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/paper_abstracts.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/paper_arxiv_links.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/paper_author_affiliations.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/paper_marker_blocker_report.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/paper_preview_without_map_location.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/paper_version_overrides.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/papers.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/primary_paper_curation_2026_09_08.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/publication_overrides.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/systematic_literature_completeness_candidates_2026_09.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/systematic_tier1_primary_review_2026_09.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/systematic_tier1_reconciliation_2026_09.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/systematic_tier2_high_priority_evidence_review_2026_09.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/systematic_tier2_include_reconciliation_2026_09.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/systematic_tier2_normal_priority_evidence_review_2026_09.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/systematic_tier2_policy_application_2026_09.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/systematic_tier2_scope_policies_2026_09.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/systematic_tier2_scope_policy_clusters_2026_09.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:data/manual/work_notes/missing_affiliation_manual_notes.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:web/data/public_preview_map_data.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical107:web/data/public_preview_papers.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "unmodified_protected_or_shared:tests/public_refinement_snapshot.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "unmodified_protected_or_shared:tests/corpus_quality_test_helpers.py",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "check_count": 238,
+  "failed_checks": [],
+  "independent_scope": "Every changedline of6pathdiff reviewed; all55 originaltestnames andalloriginalassertcounts+numericvalues compared; all107pinnedhistoricalpaths independently recomputedfromGit. No scientificreview repeated; no repositorysourcewrite or testexecution bythisreviewer.",
+  "key_justifications": [
+    "B1S expectedsourcehashes/oldR2R3delta/fixed13897 preserved atimmutable df977; originalevidencehashes andaccepted R026/R253livechecks unchanged. Removing CURRENT_TAXONOMY_TOTALS conjunction fromoldendpoint check isnecessaryseparation; current578/142/101/21/86 andsource/publicsynchronization validatedbynewB5-02 gates.",
+    "B4-02 exactno-taxonomy-change assertion referencesauthenticated d109 taxonomy unchangedfrom7fc8. Itsvenue-onlyoriginaltransaction reconstructed byexisting manifesttests; allotherliveformalnativeID/venue/location/hold/evidencechecks unchanged.",
+    "B5-01 fixed127rows/15cells/sourcehashes/publicaudit/oldtypecounts readimmutable d109, notlatermutablefiles. Original24decisionbindings andoriginalassertionvalues remainexact; scopedlive8URLs/3journals/13holds/institutionfiles andgeneratedreport/pairedmetadata checksremainlive.",
+    "Newhelper binds exact40charcommit+manifestpath+manifesthash withliteral tuple guard. Entire107pathmanifest authenticatesonlyoriginalcuratedmanualpublic snapshots. No wildcard, no livefallback, no globalmonkeypatch, no protectedcentralhelper change.",
+    "baseline_expectations.py changes onlyapprovedcurrentdataset+4/benchmark+4 andtwo explanatorycommentlines; releasevalues/tasktotals/39paperinventoryunchanged. Existinghistoricalreaders keepoldprotectedbaselinebytes."
+  ],
+  "mandatory_followup": [
+    "Execute independentnegativefile afterapplication; do not count preparedtests aspasses.",
+    "FinishindependentB5-02currentpublicfielddelta/mapprovenance/pairedmetadata/reportguards. Historicalreplayalonecannotacceptcurrentintegration.",
+    "Runfullaffectedhistoricalguards thenallmandatoryofflinevalidation/exportreproducibility/preservation/hostedgates."
+  ],
+  "limitations": [
+    "Approvalcoversbyteexact6pathpreparedrepairpluslistednewnegativefileonly; anyfurthereditneedsupdatedreviewhashreceipt.",
+    "No sourcewrites ortests performed bythisreviewer. Thisisrepairreviewapproval, notB5-02publicationacceptance."
+  ],
+  "measurement_note": "Initial automated whole-function numeric comparison flagged two added PUBLIC[1] input selectors. Recomputed every assertion predicate directly: all historical numeric/boolean assertion values preserved. Initial measurement archived separately; no patch changed."
+}

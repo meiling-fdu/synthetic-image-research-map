@@ -1,0 +1,142 @@
+{
+  "schema": "batch-b-b5-integration-handoff-1",
+  "from_batch": "B4-03",
+  "to_batch": "B5-02",
+  "status": "VALIDATED_LOCAL_ADJUDICATION_CHECKPOINT",
+  "automatic_integration_authorized": false,
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "worktree": "/Users/meilinger/.codex/worktrees/batch-b-b4-03/synthetic-image-research-map",
+  "artifact_directory": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01",
+  "transaction_manifest": {
+    "path": "adjudication_manifest.json",
+    "sha256": "189eabed6bfd3989ceb1abc8300c7b80e12e4453cb13e1fa4397e72b6cd753f0",
+    "bytes": 241589
+  },
+  "changed_files": [
+    {
+      "path": "data/curated/papers.csv",
+      "before_sha256": "0fd82c4b242d86b6fe4dbf0c8dcd98cccc6a6930c0bd2e93b416a49a1bf0c3e4",
+      "after_sha256": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+      "approved_cell_changes": 5,
+      "appended_decisions": 0
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "before_sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "after_sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "approved_cell_changes": 30,
+      "appended_decisions": 0
+    },
+    {
+      "path": "data/curated/review_decisions.csv",
+      "before_sha256": "3430814d49d8e73a5836c71fb04b5acb3e95de3dac56bb795ca62dcf734bfda5",
+      "after_sha256": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea",
+      "approved_cell_changes": 0,
+      "appended_decisions": 11
+    }
+  ],
+  "accepted_actions": [
+    "R110",
+    "R171",
+    "R256",
+    "R275",
+    "R564",
+    "P231"
+  ],
+  "held_actions": [
+    "R138",
+    "R154",
+    "R161",
+    "R187",
+    "R231"
+  ],
+  "formal_decision_ids": {
+    "R110": "review:85175ec64aa71e08513d",
+    "R138": "review:fa865030dfa55383c974",
+    "R154": "review:b7a98d16a24ee222558e",
+    "R161": "review:870f03d0288890604003",
+    "R171": "review:dcd816756b7d488bf1a0",
+    "R187": "review:d12646730c864bfb6e2d",
+    "R231": "review:c140d27c2ce24aaab046",
+    "R256": "review:94810536cefd9de36972",
+    "R275": "review:14ecb31c9d42db4e4821",
+    "R564": "review:77cb071840ccde763f90",
+    "P231": "review:9f0d774714f7c178eff4"
+  },
+  "formal_decision_rows": 138,
+  "prior_127_raw_prefix_preserved": true,
+  "accounting_before": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 39,
+    "historical_unresolved_actions": 120,
+    "historical_unresolved_papers": 113,
+    "active_public_unresolved_actions": 118,
+    "active_public_unresolved_papers": 111
+  },
+  "accounting_after": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 45,
+    "historical_unresolved_actions": 114,
+    "historical_unresolved_papers": 108,
+    "active_public_unresolved_actions": 112,
+    "active_public_unresolved_papers": 106
+  },
+  "taxonomy_before": {
+    "research_types": {
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "dataset": 138,
+      "benchmark": 97
+    },
+    "tasks": {
+      "detection": 621,
+      "source_attribution": 84,
+      "localization": 45
+    }
+  },
+  "taxonomy_after": {
+    "research_types": {
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "dataset": 142,
+      "benchmark": 101
+    },
+    "tasks": {
+      "detection": 621,
+      "source_attribution": 84,
+      "localization": 45
+    }
+  },
+  "public_invariants": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "P231_qualification": "Main is not an official quoted MAD designation and does not assert ICMR main-conference publication. Preserve venue:mad, full workshop name and public formatting that suppresses Main. R231 remains independently evidence-insufficient.",
+  "R231_independence": "P231 closes only the track action. R231 remains evidence-insufficient with method unchanged; shared-paper final binding includes the separately approved P231 Main effect.",
+  "dependencies_and_conflict_risks": [
+    "Before future integration verify remote baseline and all pinned transaction/evidence bytes; preserve this local worktree and accepted d109 history.",
+    "Three curated CSVs can overlap concurrent changes: reconcile at identity/cell level; never copy whole prepared files onto a newer remote or concatenate decision histories blindly.",
+    "Recompute native IDs and original-action fingerprint uniqueness; require prior127 prefix plus11 exact rows unless later accepted remote decisions require independently justified reconciliation.",
+    "B4-01/B4-02 old worktrees are immutable historical archives already integrated by accepted B5-01; do not reapply their24 decisions.",
+    "B3-03 external packet123 seal plus pre-existing unsealed extra must be preserved; archive portable evidence/QC and B4 decision provenance before future publication.",
+    "Public artifacts intentionally stay at d109: future authorized export must expose dataset142/benchmark101 and P231 Main at MAD while preserving674/557/613/1410 and all tasks.",
+    "Exact old current-state B1S/B4/B5 assertions describe their original published endpoints. Preserve those snapshots and add independent future integration gates; do not overwrite old hashes/counts or weaken historical protections.",
+    "Keep scientific confidence, benchmark positive-class limits, version/source conflicts and operational reproducibility separate; no new scientific review is required merely for integration."
+  ],
+  "validation_receipt": {
+    "path": "validation.json",
+    "sha256": "50adb7dc2d943e6d04480607e0ec89bb15aee178c28ec53c135c5fedd2f0b120",
+    "bytes": 5740
+  },
+  "unresolved_blockers": [],
+  "no_stage_commit_export_push": true,
+  "NeurIPS_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+}

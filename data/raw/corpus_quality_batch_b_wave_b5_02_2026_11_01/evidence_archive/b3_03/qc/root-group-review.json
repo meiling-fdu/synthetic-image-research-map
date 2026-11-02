@@ -1,0 +1,291 @@
+{
+  "task": "B3-03 independent primary-evidence QC: root review group",
+  "reviewer": "b402_location_policy independent QC agent",
+  "reviewed_utc": "2026-10-31T13:28:40.943923+00:00",
+  "status": "PASS_WITH_QUALIFIED_VENUE_INTERPRETATION",
+  "passed": 29,
+  "failed": 0,
+  "input_record_sha256": {
+    "P231": "fbc58c162ca608e8254f0bf37c4dc0b6135eb1201c25892c6334476eceff6f84",
+    "R231": "03981e0235ffd86682b935b689c42999d1d18bd632dd3803c88f0022c5a1a0a1",
+    "R275": "e38e0fab7e38252080ae6ab1640bdcc94ddaf846be53ac2799bc311730b02e29"
+  },
+  "primary_sources": [
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/P231-official-program.html",
+      "sha256": "53a0015a413baf48e992209de2665b43bd7007e4e23787db40c9f6ee820255b0"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-neurips2025.pdf",
+      "sha256": "ebdcea81b1f588b74669e52261ab903ed70cb1b7f1a30f637d82d843e7071405"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-official-landing.html",
+      "sha256": "1d4427cc3b8e33ce2f7403f7c9016cf835ce262d5d9593c020aba6d91f980b1d"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R231-acm-primary.response",
+      "sha256": "9668a6ae05e8a81dfb1382e62475bf90c35fb9df322f819b755150d4990577c4"
+    }
+  ],
+  "independent_inspection": {
+    "new_retrievals": 0,
+    "new_manuscripts": 0,
+    "PDF_pages_independently_extracted": [
+      1,
+      2,
+      5,
+      6,
+      8,
+      19,
+      20,
+      21,
+      22
+    ],
+    "PDF_page_count": 31,
+    "existing_page_images_visually_inspected": [
+      "R275-table3-08.png",
+      "R275-table7-20.png"
+    ],
+    "scientific_experiments_or_dataset_downloads": 0
+  },
+  "decisions": [
+    {
+      "review_id": "P231",
+      "qc_agreement": "AGREE_CONDITIONAL_POLICY_INTERPRETATION",
+      "outcome": "SUPPORTED_ADDITION",
+      "exact_proposal": {
+        "venue_track": "Main"
+      },
+      "primary_finding": "Exact title and four ordered authors occur in final MAD2026 Session2 research-paper list. No literal Main label or DOI printed in program; DOI correspondence uses earlier published U017 identity receipt.",
+      "policy_basis": [
+        "LockedV1 distinguishes canonical venue,event/container and track.",
+        "docs/workshop_venue_audit_report.md:42\u201344 calls for paper/program verification before explicit Main or nestedWorkshop confirmation."
+      ],
+      "limitation": "Regular-session\u2192Main is an explicit repository normalization requiring maintainer acceptance. It is not publisher-literal metadata and V1 alone never proves every standalone event paper is Main.",
+      "mandatory_change": false
+    },
+    {
+      "review_id": "R231",
+      "qc_agreement": "AGREE",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "primary_finding": "The single ACM PDF request returned403 Cloudflare HTML. Earlier U017 page1 and current program prove identity/affiliations/eventrole only; NESS construction,partitions,evaluation and reusable resource claims have not been inspected.",
+      "exact_proposal": null,
+      "limitation": "No negative scientific finding; absence of accessible manuscript does not disprove dataset/benchmark contributions. Keep method/detection authoritative state and independent P231 action separate."
+    },
+    {
+      "review_id": "R275",
+      "qc_agreement": "AGREE",
+      "outcome": "SUPPORTED_ADDITION",
+      "exact_proposal": {
+        "research_types": [
+          "method",
+          "benchmark"
+        ],
+        "tasks": [
+          "detection"
+        ]
+      },
+      "primary_finding": "The paper explicitly contributes named test-only GenImage++ for future detector evaluation (\u00a71p2;\u00a75pp5\u20136), provides generator/settings and prompt/subset construction (C.2\u2013C.3pp19\u201321), and applies a fixed SDv1.4-training comparative evaluation (Table3p8). These substantive reusable evaluation specifications satisfy R2 beyond benchmark size or bigtables.",
+      "numerical_check": {
+        "Table7_counts_as_reported_in_k": [
+          6,
+          18.3,
+          30,
+          6,
+          18.3,
+          18.3,
+          6,
+          30,
+          6
+        ],
+        "derived_total_from_rounded_counts": 138900,
+        "Table3_OMAT_nine_values": [
+          96.53,
+          92.55,
+          97.6,
+          97.67,
+          100.0,
+          99.17,
+          98.27,
+          90.38,
+          98.82
+        ],
+        "derived_unweighted_mean": 96.77666666666667,
+        "reported_rounded_average": 96.78,
+        "illustrative_weighted_mean_from_rounded_counts": 95.93676025917927,
+        "weighted_value_role": "Independent arithmetic contrast only; not reported as an author result or image-level reanalysis."
+      },
+      "limitations": [
+        "C.4pp21\u201322 says no corresponding real images; GenImage++ scores do not establish balanced real/fake accuracy,specificity or AUC.",
+        "Table7 totals are derived from rounded counts,not a downloaded-file audit.",
+        "No empirical reproduction or causal endorsement of latent-prior explanation; code/data availability and licensing remain separate.",
+        "Official HTML Bing Fan versus PDF/canonical Bin Fan discrepancy remains explicit.",
+        "Only benchmark action assigned; no R1dataset or task action is created."
+      ]
+    }
+  ],
+  "disagreements": [],
+  "blocking_findings": [],
+  "minor_provenance_corrections_recommended": [
+    {
+      "review_id": "P231",
+      "field": "governing_policy_ids",
+      "observed": [],
+      "recommended": [
+        "V1"
+      ],
+      "reason": "Top-level array is empty although proposed change and source references correctly identify lockedV1. Annotate this evidence artifact for machine-readable traceability; no scientific outcome or authoritative change required."
+    }
+  ],
+  "checks": [
+    {
+      "name": "primary source SHA P231-official-program.html",
+      "passed": true,
+      "locator": "P231-official-program.html"
+    },
+    {
+      "name": "primary source SHA R275-neurips2025.pdf",
+      "passed": true,
+      "locator": "R275-neurips2025.pdf"
+    },
+    {
+      "name": "primary source SHA R275-official-landing.html",
+      "passed": true,
+      "locator": "R275-official-landing.html"
+    },
+    {
+      "name": "primary source SHA R231-acm-primary.response",
+      "passed": true,
+      "locator": "R231-acm-primary.response"
+    },
+    {
+      "name": "P231 exact title in final program",
+      "passed": true,
+      "locator": "Official program Session2"
+    },
+    {
+      "name": "P231 all four ordered authors",
+      "passed": true,
+      "locator": "Official program exact paper item"
+    },
+    {
+      "name": "P231 Session2 placement",
+      "passed": true,
+      "locator": "Official program14:30\u201315:30"
+    },
+    {
+      "name": "P231 literal Main absent",
+      "passed": true,
+      "locator": "Complete saved official program text"
+    },
+    {
+      "name": "P231 conditional Main caveat retained",
+      "passed": true,
+      "locator": "P231 limitations"
+    },
+    {
+      "name": "P231 no canonicalvenue/task/type change",
+      "passed": true,
+      "locator": "P231 bounded recommendation"
+    },
+    {
+      "name": "P231 previous DOI-matched identity receipt",
+      "passed": true,
+      "locator": "Published U017 identity/affiliation block only"
+    },
+    {
+      "name": "R231 only one manuscript attempt",
+      "passed": true,
+      "locator": "Saved retrieval history"
+    },
+    {
+      "name": "R231 HTTP403 HTML nonmanuscript",
+      "passed": true,
+      "locator": "Saved ACM response and headers"
+    },
+    {
+      "name": "R231 remains insufficient without negative contribution claim",
+      "passed": true,
+      "locator": "R231 disposition"
+    },
+    {
+      "name": "P231 and R231 remain independent",
+      "passed": true,
+      "locator": "Independent original actions on one paper"
+    },
+    {
+      "name": "R275 exact DOI landing links exact officialPDF",
+      "passed": true,
+      "locator": "Official proceedings landing"
+    },
+    {
+      "name": "R275 primary full title and sixauthorPDF identity",
+      "passed": true,
+      "locator": "Official PDF p1"
+    },
+    {
+      "name": "R275 explicit independently named future-evaluation contribution",
+      "passed": true,
+      "locator": "p2 contribution3"
+    },
+    {
+      "name": "R275 construction definitions beyond bigtables",
+      "passed": true,
+      "locator": "\u00a75pp5\u20136;AppendixC.2\u2013C.3pp19\u201321"
+    },
+    {
+      "name": "R275 shared SDv1.4 comparative protocol",
+      "passed": true,
+      "locator": "Table3 caption,p8"
+    },
+    {
+      "name": "R275 fake-only limitation explicit",
+      "passed": true,
+      "locator": "AppendixC.4pp21\u201322"
+    },
+    {
+      "name": "R275 named future-reuse artifacts independent of availability",
+      "passed": true,
+      "locator": "AppendixC.4p22"
+    },
+    {
+      "name": "Table7 nine rounded subset sizes sum138900",
+      "passed": true,
+      "locator": "Table7,p20 visually inspected"
+    },
+    {
+      "name": "Table3 nine-stratum mean rounds96.78",
+      "passed": true,
+      "locator": "Table3,p8 visually inspected"
+    },
+    {
+      "name": "R275 only R2 benchmarkaddition proposed",
+      "passed": true,
+      "locator": "R275 scoped recommendation"
+    },
+    {
+      "name": "R275 numerical/version caveats preserved",
+      "passed": true,
+      "locator": "R275 limitations"
+    },
+    {
+      "name": "P231 provisional only no formal acceptance",
+      "passed": true,
+      "locator": "Evidence-only boundary"
+    },
+    {
+      "name": "R231 provisional only no formal acceptance",
+      "passed": true,
+      "locator": "Evidence-only boundary"
+    },
+    {
+      "name": "R275 provisional only no formal acceptance",
+      "passed": true,
+      "locator": "Evidence-only boundary"
+    }
+  ],
+  "repository_writes": false,
+  "tests_run": false,
+  "exports_run": false
+}

@@ -1,0 +1,39 @@
+{
+  "mode": "affected_reconciled",
+  "command": [
+    "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--tb=short",
+    "tests/test_corpus_quality_batch_b_wave_b1s.py",
+    "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+    "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+    "tests/test_batch_b_historical_endpoints.py",
+    "tests/test_corpus_quality_batch_b_wave_b4_01.py",
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+    "--junitxml=/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/affected_reconciled.xml"
+  ],
+  "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+  "started_utc": "2026-11-01T12:01:16.000440+00:00",
+  "elapsed_seconds": 61.841,
+  "returncode": 0,
+  "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/affected_reconciled.log",
+  "log_sha256": "92fb380bc34ea769284e1982024984aa477d671e68aa9420de44eeac629557df",
+  "junit_sha256": "d5e9ed88d22ce6d29e735d051673c02278d33a718044f5f7ecd3bf61f774303e",
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "410",
+      "time": "60.471",
+      "timestamp": "2026-11-01T20:01:16.621579+08:00",
+      "hostname": "Meilingers-MacBook-Pro.local"
+    }
+  ],
+  "failures": []
+}

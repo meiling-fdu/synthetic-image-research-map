@@ -1,0 +1,29 @@
+{
+  "status": "APPROVED_EXACT_NARROW_CURRENT_TEST_CORRECTION",
+  "reviewer": "independent current export reviewer",
+  "recorded_utc": "2026-11-01T11:52:32.346459+00:00",
+  "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+  "predecessor_sha256": "62e0a478eff2051ee629f41e9f0b84ca05772cfddf198ef0b223a8fe7d64ae7b",
+  "successor_sha256": "89f68ce5802df739d867c06d9fdb8dda1b1e4159b9ec1be8b92e67c2e421c855",
+  "prepared_file": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/prepared_projection_v2/tests/test_corpus_quality_batch_b_wave_b5_02.py",
+  "diff": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/P231_marker_projection_exact_fix.diff",
+  "diff_sha256": "5672ff08e9294906e175ed40c4d0b0f288e32723d3b02c6c17cfe9e19e539965",
+  "basis": "First export independently passes3526assertions: exactly6paper/14mapdifferences. P231 maprecords are rebuilt by _curated_marker with no ambiguity_status key; confirmed-state VenueAudit returns before adding resolver state. Canonical P231 paper retains old unresolved value. The initial new test incorrectly carried legacy marker resolver state through deepcopy.",
+  "assertions_preserved": [
+    "whole public-paper record equality",
+    "whole map-record equality",
+    "exact six paper IDs and14dependents",
+    "all bibliographic identities/locations/tasks unchanged",
+    "source/evidence/decision hashes",
+    "P231 standaloneworkshopidentity"
+  ],
+  "added_negative_cases": [
+    "inserting old ambiguity_status into fresh P231 marker is rejected",
+    "removing retained ambiguity_status from P231 canonical paper is rejected"
+  ],
+  "source_changes_required": false,
+  "historical_tests_or_receipts_changed": false,
+  "repository_modified_by_reviewer": false,
+  "tests_executed_by_reviewer_this_followup": false,
+  "required_next_step": "Independent root review then apply exactsinglefile only and rerun affectedgate. No export/source regeneration required by test correction."
+}

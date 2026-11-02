@@ -1,0 +1,182 @@
+{
+  "schema": "batch-b-b3-03-per-paper-evidence-1",
+  "batch_id": "B3-03",
+  "planned_batch_id": "B2-03",
+  "reviewer_group": "A",
+  "review_id": "R138",
+  "action_ids": [
+    "R138"
+  ],
+  "paper_id": "curated:88b63de59a0eabcd1b02",
+  "title": "Incremental Learning for AI-Generated Image Detection",
+  "canonical_identity": {
+    "paper_id": "curated:88b63de59a0eabcd1b02",
+    "title": "Incremental Learning for AI-Generated Image Detection",
+    "authors": [
+      "Zihao Cai",
+      "Xue Song",
+      "Xinghan Li",
+      "Bo Li",
+      "Haijun Shan",
+      "Jingjing Chen"
+    ],
+    "doi": "10.1109/tmm.2026.3716041",
+    "arxiv_id": "",
+    "canonical_url": "https://doi.org/10.1109/tmm.2026.3716041",
+    "current_taxonomy_id": "paper_id:curated:88b63de59a0eabcd1b02"
+  },
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "original_review_question": "FakeCOCO is introduced as a 247,954-image contribution for domain-incremental detection.",
+  "governing_policies": {
+    "R1": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient."
+  },
+  "local_evidence_reused": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R138",
+      "finding": "FakeCOCO is introduced as a 247,954-image contribution for domain-incremental detection. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R138",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "paper_id:curated:88b63de59a0eabcd1b02",
+      "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R1",
+      "finding": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "local_byte_hash_verified": true
+    }
+  ],
+  "provisional_only": true,
+  "formal_maintainer_decision": false,
+  "authoritative_action_closed": false,
+  "current_tasks_preserved": true,
+  "method_label_preserved": true,
+  "authoritative_changes_by_reviewer": 0,
+  "written_utc": "2026-10-31T13:05:11.887229+00:00",
+  "outcome": "EVIDENCE_INSUFFICIENT",
+  "proposed_research_types": [
+    "method"
+  ],
+  "conditional_candidate_research_types": [
+    "method",
+    "dataset"
+  ],
+  "confidence": {
+    "identity": "high for DOI/author-repository correspondence",
+    "dataset_addition_sufficiency": "insufficient under the assigned manuscript-contribution/protocol review",
+    "hold": "high"
+  },
+  "identity_verification": {
+    "status": "DOI_TITLE_AUTHORS_VERIFIED_FULL_MANUSCRIPT_UNAVAILABLE",
+    "basis": "Crossref DOI registration exactly matches title,IEEE TMM and six canonical authors. Author repository cites the same DOI/document11617326 and BibTeX author sequence.",
+    "author_name_caveat": "README heading says Xinhan Li; its own BibTeX, canonical record and Crossref say Xinghan Li. Preserve this spelling conflict; no author correction is proposed."
+  },
+  "sources": [
+    {
+      "source_id": "R138-doi-registration.json",
+      "kind": "PRIMARY_DOI_REGISTRATION",
+      "url": "https://api.crossref.org/works/10.1109%2Ftmm.2026.3716041",
+      "artifact": "evidence/groupA/R138-doi-registration.json",
+      "sha256": "1d3e09a3311916a0c7ed1d6cf8a288a24ac4a5425f3496580b1e115a923b9659",
+      "bytes": 9851,
+      "version": "Accessed2026-10-31; bibliographic registration, not scientific full text"
+    },
+    {
+      "source_id": "R138-official-readme.txt",
+      "kind": "PRIMARY_AUTHOR_PROJECT_STATEMENT",
+      "url": "https://raw.githubusercontent.com/ac-miracle/FakeCOCO/main/README.md",
+      "artifact": "evidence/groupA/R138-official-readme.txt",
+      "sha256": "34c9c4e84ec8749c1ca54135c1cea4490099b708fe568c82060fd4add8fb45f0",
+      "bytes": 2404,
+      "version": "main branch capture2026-10-31; byte-pinned snapshot"
+    },
+    {
+      "source_id": "R138-canonical.html",
+      "kind": "ACCESS_FAILURE_NOT_MANUSCRIPT",
+      "url": "https://doi.org/10.1109/tmm.2026.3716041",
+      "artifact": "evidence/groupA/R138-canonical.html",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "version": "HTTP202 empty CloudFront WAF challenge; zero bytes"
+    }
+  ],
+  "scientific_review": {
+    "actual_endpoint": "Current local abstract describes domain-incremental generated-image detection and DDN; no task or method change is proposed. Full methods/evaluations were not inspected.",
+    "primary_evidence_available": "Author project calls FakeCOCO its proposed dataset and links its release on ModelScope. It describes generating from detailed COCO captions instead of simpleImageNet class names. This supports intended reusable provision, but does not document the complete original paper's construction, partitions or quantitative protocol.",
+    "not_independently_verified": [
+      "Original claimed247954 image count and twelve generation methods (currently only in local abstract/review record)",
+      "Real/fake counts, generation domains and domain-incremental partitions",
+      "DDN training protocol, comparison baselines and numerical tables",
+      "Paper contribution list and linkage of exact released files to its evaluation"
+    ],
+    "quantitative_evidence": [],
+    "source_access": "One canonical DOI request redirected toIEEE document11617326 and returnedHTTP202,x-amzn-waf-action:challenge and an empty body. No IEEE retry was made. The official author docs directory listing showed only two visualizations, not a full manuscript; those large images and any dataset were not downloaded."
+  },
+  "evidence_to_claim": [
+    {
+      "policy": "R1",
+      "claim": "Potential dataset addition",
+      "support": "Identity-linked author project and explicit release are positive evidence of reusable dataset intent.",
+      "scientifically_sufficient": false,
+      "missing": "Identity-matched complete scientific manuscript or equivalent authoritative construction/protocol documentation needed for this assigned review."
+    }
+  ],
+  "limitations_and_conflicts": [
+    {
+      "kind": "access_blocker",
+      "finding": "Identity-matched scientific methods and evaluation sections unavailable; release/README cannot substitute for required primary method/protocol evidence."
+    },
+    {
+      "kind": "license_scope",
+      "finding": "README explicitly restricts FakeCOCO to academic research and prohibits commercial use. No independent LICENSE-file capture was made; repository-wide or code-license status is unverified. Do not infer an unrestricted dataset license."
+    },
+    {
+      "kind": "identity_typography",
+      "finding": "README Xinhan vs registration/BibTeX Xinghan retained as a source caveat, not proof of a different paper."
+    }
+  ],
+  "proposed_B4_action": "KeepR138 unresolved as evidence-insufficient. Do not add dataset solely from the local abstract or assert that missing full text disproves the contribution. No benchmark action is added.",
+  "retrieval_cost": {
+    "successful_full_manuscripts": 0,
+    "full_manuscript_bytes": 0,
+    "canonical_network_attempts": 1,
+    "successful_nonmanuscript_bytes": 12255,
+    "new_dataset_or_weight_downloads": 0,
+    "repeated_IEEE_retrievals": 0
+  },
+  "sources_count": 3,
+  "actual_effort": {
+    "timing_basis": "Shared wave/reviewer wall span, not exclusive analyst hours. Individual focused timers were not instrumented before source recovery; no invented person-minute allocations.",
+    "wave_started_utc": "2026-10-31T12:15:02.337367+00:00",
+    "first_reliably_recorded_agent_retrieval_utc": "2026-10-31T12:22:39.349261+00:00",
+    "record_written_utc": "2026-10-31T13:05:11.887229+00:00",
+    "source_network_durations_available_in_retrieval_records": true,
+    "preparation_before_first_retrieval_not_separately_timed": true
+  },
+  "traceability_amendment": {
+    "recorded_utc": "2026-10-31T15:15:09.577370+00:00",
+    "reason": "Independent QC: repository-wide MIT assertion lacked a listed source capture. Removed that unverified assertion; preserved captured dataset-use restriction.",
+    "prior_record": "qc/groupA-traceability-before/R138.json",
+    "prior_sha256": "6d52960ca4f17303433bfec340e6362e391bd403fbe5eb7785a0c9c24a2e39d5",
+    "scientific_outcome_changed": false
+  }
+}

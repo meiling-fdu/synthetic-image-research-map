@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="3" time="0.723" timestamp="2026-11-01T17:19:31.950346+08:00" hostname="Meilingers-MacBook-Pro.local"><testcase classname="tests.test_corpus_quality_batch_b_wave_b1s" name="test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export[data/curated/paper_taxonomy.csv]" time="0.005"><failure message="AssertionError: assert '98026dec50ed...9fc5910da05d3' == '2388617d6221...2fa7324fe0fb9'&#10;  &#10;  - 2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9&#10;  + 98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3">path = 'data/curated/paper_taxonomy.csv'
+
+    @pytest.mark.parametrize('path', FROZEN['pre_export_frozen_source_sha256'])
+    def test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export(path):
+        # Only two mutable operational files have an accepted historical hash.
+        # B1Q/B1R evidence and the unchanged authoritative taxonomy stay live.
+        observed = endpoint_bytes(path) if path in {PAPERS, DECISIONS} else (ROOT / path).read_bytes()
+&gt;       assert sha(observed) == FROZEN['pre_export_frozen_source_sha256'][path]
+E       AssertionError: assert '98026dec50ed...9fc5910da05d3' == '2388617d6221...2fa7324fe0fb9'
+E         
+E         - 2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9
+E         + 98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3
+
+tests/test_corpus_quality_batch_b_wave_b1s.py:316: AssertionError</failure></testcase><testcase classname="tests.test_corpus_quality_batch_b_wave_b4_02" name="test_public_identities_task_types_and_all_relationship_pairs_are_preserved" time="0.459"><failure message="AssertionError: assert b'taxonomy_id...6T12:00:00Z\n' == b'taxonomy_id...6T12:00:00Z\n'&#10;  &#10;  At index 102833 diff: b';' != b','&#10;  Use -v to get more diff">def test_public_identities_task_types_and_all_relationship_pairs_are_preserved():
+        current, original = load_context(ROOT), published_context(BASE)
+        assert set(current['papers']) == set(original['papers']) == set(packet()['public_ids'])
+        assert current['counts'] == original['counts'] == packet()['corpus_unchanged']
+        assert current['counts']['public'] == 674
+        assert current['counts']['relationship_rows'] == current['counts']['unique_paper_institution_pairs'] == 1410
+        assert current['pairs'] == original['pairs']
+        for pid, paper in current['papers'].items():
+            assert paper['tasks'] == original['papers'][pid]['tasks']
+            assert paper['research_types'] == original['papers'][pid]['research_types']
+        totals = dict(Counter(label for p in current['papers'].values() for label in p['tasks'] + p['research_types']))
+        assert totals == packet()['taxonomy_unchanged']
+        # Authoritative labels themselves, not only stale public JSON, stay fixed.
+&gt;       assert (ROOT / 'data/curated/paper_taxonomy.csv').read_bytes() == published_bytes(BASE, 'data/curated/paper_taxonomy.csv')
+E       AssertionError: assert b'taxonomy_id...6T12:00:00Z\n' == b'taxonomy_id...6T12:00:00Z\n'
+E         
+E         At index 102833 diff: b';' != b','
+E         Use -v to get more diff
+
+tests/test_corpus_quality_batch_b_wave_b4_02.py:378: AssertionError</failure></testcase><testcase classname="tests.test_corpus_quality_batch_b_wave_b5_01" name="test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories" time="0.015"><failure message="AssertionError: assert (103 == 103 and 138 == 127)&#10; +  where 103 = len([{'decision_id': 'review:8483273ff88913a50c82', 'review_queue': 'high_risk_marker', 'target_type': 'marker', 'title': ...sistency:c6079667cca9087e3a0e', 'title': 'Detecting GAN Generated Fake Images Using Co-Occurrence Matrices', ...}, ...])&#10; +  and   138 = len([{'decision_id': 'review:8483273ff88913a50c82', 'review_queue': 'high_risk_marker', 'target_type': 'marker', 'title': ...sistency:c6079667cca9087e3a0e', 'title': 'Detecting GAN Generated Fake Images Using Co-Occurrence Matrices', ...}, ...])">def test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories():
+        baseline = published_bytes(BASE, DECISIONS)
+        current = (ROOT / DECISIONS).read_bytes()
+        before, after = csv_records(baseline), csv_records(current)
+&gt;       assert len(before) == 103 and len(after) == 127
+E       AssertionError: assert (103 == 103 and 138 == 127)
+E        +  where 103 = len([{'decision_id': 'review:8483273ff88913a50c82', 'review_queue': 'high_risk_marker', 'target_type': 'marker', 'title': ...sistency:c6079667cca9087e3a0e', 'title': 'Detecting GAN Generated Fake Images Using Co-Occurrence Matrices', ...}, ...])
+E        +  and   138 = len([{'decision_id': 'review:8483273ff88913a50c82', 'review_queue': 'high_risk_marker', 'target_type': 'marker', 'title': ...sistency:c6079667cca9087e3a0e', 'title': 'Detecting GAN Generated Fake Images Using Co-Occurrence Matrices', ...}, ...])
+
+tests/test_corpus_quality_batch_b_wave_b5_01.py:155: AssertionError</failure></testcase></testsuite></testsuites>

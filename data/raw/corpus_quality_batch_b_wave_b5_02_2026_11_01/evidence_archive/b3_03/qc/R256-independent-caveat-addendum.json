@@ -1,0 +1,16 @@
+{
+  "review_id": "R256",
+  "type": "INDEPENDENT_CAVEAT_INTERPRETATION_REFINEMENT_NOT_OUTCOME_CHANGE",
+  "original_record_preserved": true,
+  "original_record_sha256": "20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6",
+  "original_observation": "1000synthetic/category not divisible by3; exact per-generator integer category counts are absent.",
+  "independent_refinement": "Original record correctly notes1000 is not divisible by3, but the paper says1:1:1 across subsets. Global6000fakes can be2000pergenerator. No proven global ratio contradiction; exact per-category allocation remains unspecified. No classification disagreement.",
+  "source": {
+    "artifact": "evidence/groupB/R256-primary.pdf",
+    "sha256": "3bd336c171cdb0c201d4fa9da63c17c406f46fa65b70436d30c50390d41b49f3",
+    "locator": "PDFp5,section4 final paragraph"
+  },
+  "required_report_wording": "Generator balance may apply globally across subsets; do not claim an established contradiction. Exact per-category allocation is unspecified.",
+  "authoritative_records_changed": 0,
+  "provisional_disposition_changed": false
+}

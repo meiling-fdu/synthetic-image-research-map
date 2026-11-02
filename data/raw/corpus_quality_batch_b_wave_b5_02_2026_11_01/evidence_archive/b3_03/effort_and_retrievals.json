@@ -1,0 +1,264 @@
+{
+  "task": "B3-03 recorded effort and evidence costs",
+  "observed_start_utc": "2026-10-31T12:15:02.337367+00:00",
+  "observed_end_utc": "2026-10-31T15:54:36.511034+00:00",
+  "observed_elapsed_wall_seconds": 13174.174,
+  "elapsed_wall_is_not_analyst_person_time": true,
+  "exclusive_analyst_person_minutes": null,
+  "exclusive_analyst_time_limitation": "Not instrumented. Individual reviewer estimates are not actual labor; do not sum them or infer a complete recalibration of B2 estimates. Elapsed span includes parallel review, QC, output preparation and scheduling.",
+  "successful_full_manuscript_files": 6,
+  "full_manuscript_bytes": 64721117,
+  "one_identity_blocked_candidate": "R154 arXiv2508.13223v1; not accepted as publisher-final equivalent",
+  "manuscript_files": [
+    {
+      "path": "evidence/groupA/R110-canonical.pdf",
+      "bytes": 2606021,
+      "sha256": "3280157fb698bfda46e75caf4f39d3cb376f7803cd4bcd24f27c574da94acabe"
+    },
+    {
+      "path": "evidence/groupA/R154-author-v1.pdf",
+      "bytes": 25016438,
+      "sha256": "776c1304ebf723ad54e2d5ef2753c03a95b5a26bfa1447d7330aa75de3bbf5a0"
+    },
+    {
+      "path": "evidence/groupB/R171-primary.pdf",
+      "bytes": 8506583,
+      "sha256": "79917f3d9fb967aa52007069c89fa920e1dd428ec662900650bea049dc4dc255"
+    },
+    {
+      "path": "evidence/groupB/R256-primary.pdf",
+      "bytes": 1823151,
+      "sha256": "3bd336c171cdb0c201d4fa9da63c17c406f46fa65b70436d30c50390d41b49f3"
+    },
+    {
+      "path": "evidence/groupB/R564-primary.pdf",
+      "bytes": 18733551,
+      "sha256": "4e7b0f188213163d718e7294cde361001a1afd750592f8790f555655080cf213"
+    },
+    {
+      "path": "evidence/root/R275-neurips2025.pdf",
+      "bytes": 8035373,
+      "sha256": "ebdcea81b1f588b74669e52261ab903ed70cb1b7f1a30f637d82d843e7071405"
+    }
+  ],
+  "dataset_weight_or_model_downloads": 0,
+  "scientific_experiments_run": 0,
+  "paid_API_cost": 0,
+  "capture_request_records": 21,
+  "capture_requests_with_measured_duration": 19,
+  "sum_of_instrumented_request_seconds": 88.92,
+  "request_records": [
+    {
+      "log": "evidence/groupA/R110-retrieval.json",
+      "source_url": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf",
+      "started_utc": "2026-10-31T12:23:26.857205+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 5.624,
+      "http_status": 200,
+      "bytes": 2606021,
+      "error": null
+    },
+    {
+      "log": "evidence/groupA/R138-doi-registration-retrieval.json",
+      "source_url": "https://api.crossref.org/works/10.1109%2Ftmm.2026.3716041",
+      "started_utc": "2026-10-31T12:29:03.788076+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 1.665,
+      "http_status": 200,
+      "bytes": 9851,
+      "error": null
+    },
+    {
+      "log": "evidence/groupA/R138-official-readme-retrieval.json",
+      "source_url": "https://raw.githubusercontent.com/ac-miracle/FakeCOCO/main/README.md",
+      "started_utc": "2026-10-31T12:29:03.788010+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 2.873,
+      "http_status": 200,
+      "bytes": 2404,
+      "error": null
+    },
+    {
+      "log": "evidence/groupA/R138-retrieval.json",
+      "source_url": "https://doi.org/10.1109/tmm.2026.3716041",
+      "started_utc": "2026-10-31T12:23:26.857642+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 2.897,
+      "http_status": 202,
+      "bytes": 0,
+      "error": null
+    },
+    {
+      "log": "evidence/groupA/R154-author-v1-retrieval.json",
+      "source_url": "https://arxiv.org/pdf/2508.13223v1",
+      "started_utc": "2026-10-31T12:29:03.787539+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 21.755,
+      "http_status": 200,
+      "bytes": 25016438,
+      "error": null
+    },
+    {
+      "log": "evidence/groupA/R154-doi-registration-retrieval.json",
+      "source_url": "https://api.crossref.org/works/10.1609%2Faaai.v40i7.37421",
+      "started_utc": "2026-10-31T12:29:05.453541+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 1.425,
+      "http_status": 200,
+      "bytes": 4579,
+      "error": null
+    },
+    {
+      "log": "evidence/groupA/R154-retrieval.json",
+      "source_url": "https://doi.org/10.1609/aaai.v40i7.37421",
+      "started_utc": "2026-10-31T12:23:26.857728+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 4.376,
+      "http_status": 200,
+      "bytes": 7018,
+      "error": null
+    },
+    {
+      "log": "evidence/groupA/R187-doi-registration-retrieval.json",
+      "source_url": "https://api.crossref.org/works/10.1609%2Faaai.v40i45.41234",
+      "started_utc": "2026-10-31T12:29:05.497786+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 2.27,
+      "http_status": 200,
+      "bytes": 4634,
+      "error": null
+    },
+    {
+      "log": "evidence/groupA/R187-openreview-version-retrieval.json",
+      "source_url": "https://openreview.net/pdf/050d39a410122c0508adc8f49e78e1cae1070199.pdf",
+      "started_utc": "2026-10-31T12:29:03.787901+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 1.71,
+      "http_status": null,
+      "bytes": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "log": "evidence/groupA/R187-publisher-vor-retrieval.json",
+      "source_url": "https://ojs.aaai.org/index.php/AAAI/article/download/41234/45195",
+      "started_utc": "2026-10-31T12:34:38.366779+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 2.155,
+      "http_status": 200,
+      "bytes": 7019,
+      "error": null
+    },
+    {
+      "log": "evidence/groupA/R187-retrieval.json",
+      "source_url": "https://doi.org/10.1609/aaai.v40i45.41234",
+      "started_utc": "2026-10-31T12:23:26.857805+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 3.991,
+      "http_status": 200,
+      "bytes": 7018,
+      "error": null
+    },
+    {
+      "log": "evidence/groupB/R161-alternate-retrieval.json",
+      "source_url": "https://openreview.net/pdf?id=9QQ3Kc2hj6",
+      "started_utc": "2026-10-31T12:39:29.762882+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 3.864,
+      "http_status": null,
+      "bytes": null,
+      "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "log": "evidence/groupB/R161-landing-retrieval.json",
+      "source_url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/820e42f39773c6cbbd875553db45658f-Abstract-Conference.html",
+      "started_utc": "2026-10-31T12:29:08.702676+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 1.984,
+      "http_status": 200,
+      "bytes": 10282,
+      "error": null
+    },
+    {
+      "log": "evidence/groupB/primary_retrievals.json",
+      "source_url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/zhou26h/zhou26h.pdf",
+      "started_utc": "2026-10-31T12:29:10.696451+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 9.186,
+      "http_status": 200,
+      "bytes": 8506583,
+      "error": null
+    },
+    {
+      "log": "evidence/groupB/primary_retrievals.json",
+      "source_url": "https://openaccess.thecvf.com/content/ICCV2025W/APAI/papers/Cai_Adaptive_Test-Time_Semantic_Debiasing_for_AI-Generated_Image_Detection_ICCVW_2025_paper.pdf",
+      "started_utc": "2026-10-31T12:29:10.696782+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 4.469,
+      "http_status": 200,
+      "bytes": 1823151,
+      "error": null
+    },
+    {
+      "log": "evidence/groupB/primary_retrievals.json",
+      "source_url": "https://arxiv.org/pdf/2211.08615v7",
+      "started_utc": "2026-10-31T12:29:10.697275+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 6.813,
+      "http_status": 200,
+      "bytes": 18733551,
+      "error": null
+    },
+    {
+      "log": "evidence/groupB/primary_retrievals.json",
+      "source_url": "https://proceedings.iclr.cc/paper_files/paper/2026/file/820e42f39773c6cbbd875553db45658f-Paper-Conference.pdf",
+      "started_utc": "2026-10-31T12:29:10.697789+00:00",
+      "retrieved_utc": null,
+      "duration_seconds": 4.062,
+      "http_status": null,
+      "bytes": null,
+      "error": "RemoteDisconnected: Remote end closed connection without response"
+    },
+    {
+      "log": "evidence/root/metadata-retrievals.json",
+      "source_url": "https://mad2026.aimultimedialab.ro/program/",
+      "started_utc": null,
+      "retrieved_utc": "2026-10-31T12:51:37.212334+00:00",
+      "duration_seconds": null,
+      "http_status": 200,
+      "bytes": 10062,
+      "error": null
+    },
+    {
+      "log": "evidence/root/metadata-retrievals.json",
+      "source_url": "https://papers.neurips.cc/paper_files/paper/2025/hash/2c2be72635379ec8600eea13df4743e3-Abstract-Conference.html",
+      "started_utc": null,
+      "retrieved_utc": "2026-10-31T12:51:41.028019+00:00",
+      "duration_seconds": null,
+      "http_status": 200,
+      "bytes": 9991,
+      "error": null
+    },
+    {
+      "log": "evidence/root/retrievals.json",
+      "source_url": "https://papers.neurips.cc/paper_files/paper/2025/file/2c2be72635379ec8600eea13df4743e3-Paper-Conference.pdf",
+      "started_utc": null,
+      "retrieved_utc": "2026-10-31T12:31:52.822323+00:00",
+      "duration_seconds": 6.917,
+      "http_status": 200,
+      "bytes": 8035373,
+      "error": null
+    },
+    {
+      "log": "evidence/root/retrievals.json",
+      "source_url": "https://dl.acm.org/doi/pdf/10.1145/3810988.3812660",
+      "started_utc": null,
+      "retrieved_utc": "2026-10-31T12:31:53.706428+00:00",
+      "duration_seconds": 0.884,
+      "http_status": 403,
+      "bytes": 5568,
+      "error": null
+    }
+  ],
+  "coverage_limitation": "This ledger covers saved instrumented retrieval logs. Browser/web discovery calls and some metadata fetch timings/bytes were not comprehensively instrumented. It is not a universal count of network operations. Durations sum across parallel requests and are not elapsed wall time.",
+  "budget_observed": "At most one successfully obtained complete manuscript per paper. Failure payloads are not manuscripts. Metadata, official program and DOI registration captures preserved separately."
+}

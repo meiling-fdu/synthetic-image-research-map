@@ -1,0 +1,168 @@
+{
+  "review_id": "R564",
+  "paper_id": "doi:10.1109/tmm.2023.3313503",
+  "title": "GLFF: Global and Local Feature Fusion for AI-Synthesized Image Detection",
+  "doi": "10.1109/tmm.2023.3313503",
+  "arxiv_id": "2211.08615",
+  "authors": [
+    "Yan Ju",
+    "Shan Jia",
+    "Jialing Cai",
+    "Haiying Guan",
+    "Siwei Lyu"
+  ],
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "governing_policy_ids": [
+    "R1"
+  ],
+  "current_status": "UNRESOLVED",
+  "reviewer": "b303_record_recovery",
+  "reviewed_utc": "2026-10-31T15:49:40.647856+00:00",
+  "review_phase": "EVIDENCE_ONLY_PROVISIONAL",
+  "maintainer_acceptance": "PENDING_NOT_FORMAL_DECISION",
+  "formal_action_closed": false,
+  "authoritative_data_changed": false,
+  "local_evidence_refs": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R564",
+      "finding": "DF3 is introduced as a challenging fake-image dataset with six generators and post-processing. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R564",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "doi:10.1109/tmm.2023.3313503",
+      "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R1",
+      "finding": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+    }
+  ],
+  "retrieval_cost": {
+    "recovery_network_requests": 0,
+    "recovery_manuscripts_downloaded": 0,
+    "existing_capture_reused": true,
+    "new_source_research": false,
+    "inherited_full_manuscript_attempts": 1,
+    "inherited_accepted_manuscripts": 1,
+    "inherited_same_endpoint_retries": 0,
+    "inherited_pdf_bytes": 18733551,
+    "inherited_pdf_transport_seconds": 6.813,
+    "accounting_source": "primary_retrievals.json; fixed arXiv v7 capture reused."
+  },
+  "reported_performance_independently_reproduced": false,
+  "outcome": "SUPPORTED_ADDITION",
+  "proposed_research_types": [
+    "method",
+    "dataset"
+  ],
+  "scientifically_sufficient": true,
+  "rationale": "DF3 is an explicit contribution distinct from GLFF, with defined generative sources, systematic post-processing, manual cleanup, per-model/per-protocol counts and stated reuse to test future detectors. This establishes R1 dataset contribution beyond an experiment-only image pool. R2 is outside the assigned scope.",
+  "identity_verification": {
+    "status": "TITLE_AUTHORS_MATCH_CANONICAL_AUTHOR_VERSION",
+    "title_and_authors": "arXiv v7 PDF p1 matches canonical GLFF title modulo capitalization and all five authors in order.",
+    "doi": "Canonical 10.1109/tmm.2023.3313503 and arXiv 2211.08615 linkage retained from assigned input; PDF itself does not independently print/establish DOI.",
+    "arxiv": "Fixed requested URL 2211.08615v7; 13-page captured PDF, metadata creation 2023-09-06 and response Last-Modified 2023-09-09.",
+    "version": "Verified title/author-matched arXiv v7 author manuscript, not an inspected IEEE publisher-final PDF.",
+    "differences": "p2 describes extension of a preliminary work; p11 reference [11] is Fusing Global and Local Features for Generalized AI-Synthesized Image Detection, arXiv:2203.13964 with a different author list. Do not substitute that preliminary work or assume publisher-final equivalence."
+  },
+  "sources": [
+    {
+      "url": "https://arxiv.org/pdf/2211.08615v7",
+      "artifact": "evidence/groupB/R564-primary.pdf",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R564-primary.pdf",
+      "sha256": "4e7b0f188213163d718e7294cde361001a1afd750592f8790f555655080cf213",
+      "version": "arXiv:2211.08615v7, 13-page author manuscript",
+      "kind": "primary_manuscript"
+    }
+  ],
+  "scientific_review": {
+    "R1": {
+      "assessment": "SUPPORTED",
+      "reason": "p2 contribution bullet expressly constructs DF3; §IV pp6–7 documents reusable systematic resource; §V.D p8 describes Mixed subset as a tool for future detector robustness; conclusion p11 names planned code/dataset-details release."
+    },
+    "R2": {
+      "assessment": "NOT_REVIEWED_OUT_OF_SCOPE",
+      "reason": "Only R1 dataset addition assigned; benchmark wording in the manuscript does not authorize a benchmark-label proposal."
+    },
+    "empirical_validity": "Counts and performance are manuscript-reported; synthetic variants share base images and should not be treated as independent samples. No independent performance replication.",
+    "causal_interpretation": "Post-processing suppression of high-frequency traces and real-world representativeness are hypotheses/interpretations, not causal conclusions validated by this review.",
+    "availability": "p11 promises code and dataset details will be released at github.com/littlejuyan/GLFF. This is future-tense, not proof that dataset/code were available at capture or that images/license are downloadable.",
+    "reproducibility": "Detailed construction parameters and counts support contribution classification; no code, dataset, manifests or seeds were executed/verified. Dataset excludes real controls; p8 separately selects 1,000 FFHQ negatives for metric calculation."
+  },
+  "evidence": [
+    {
+      "source": "evidence/groupB/R564-primary.pdf",
+      "locator": "Contribution list p2; §IV DF3 Dataset p6; Table I p6",
+      "claim": "DF3 constructs fake faces from StyleGAN2, StyleGAN3, 3DGAN, Transformers, LSGM and Latent-diffusion, followed by five post-processing families. Six tabulated protocols include unprocessed originals as protocol 1."
+    },
+    {
+      "source": "evidence/groupB/R564-primary.pdf",
+      "locator": "§IV pp6–7",
+      "claim": "Common processing uses JPEG quality randomly selected in [20,90], Gaussian blur sigma in [1,4] or both; face blending uses SimSwap with FFHQ-unaligned and manual removal of failed outputs. Anti-forensics randomly uses CW or GANPrintR; multi-image compression groups still images as an H.264 sequence in HandBrake at quality 22 then extracts images. Mixed combines two/three processing families."
+    },
+    {
+      "source": "evidence/groupB/R564-primary.pdf",
+      "locator": "§V.C/D p8; Table II p8; Conclusion p11",
+      "claim": "DF3 is fake-only; 1,000 separately sampled FFHQ real controls enable AUC. Resource is intended for future robustness evaluation, with planned code/dataset-details release. Face blending introduces manipulated-face content; H.264 is an image post-processing construction step, not evidence of a video-detection task."
+    }
+  ],
+  "quantitative_evidence": [
+    {
+      "locator": "Table I p6; Table II p8",
+      "reported": {
+        "protocol_counts": {
+          "unprocessed": 6160,
+          "common_post_processing": 6160,
+          "face_blending": 5928,
+          "anti_forensics": 6135,
+          "multi_image_compression": 6160,
+          "mixed": 15933
+        },
+        "fake_total": 46476,
+        "real_in_DF3": 0,
+        "separate_FFHQ_real_controls": 1000
+      },
+      "caveat": "Narrative says approximately 46,400; exact table total is 46,476. Total includes related processed derivatives of 6,160 base images, not 46,476 independent generated images."
+    },
+    {
+      "locator": "Table I p6",
+      "reported_unprocessed_by_model": {
+        "StyleGAN2": 1000,
+        "StyleGAN3": 1000,
+        "3DGAN": 1000,
+        "Transformers": 961,
+        "LSGM": 1199,
+        "Latent_diffusion": 1000
+      },
+      "caveat": "Around 1,000 per model is approximate; preserve unequal source counts."
+    },
+    {
+      "locator": "§IV p6; §V.B/D pp7–8",
+      "reported": "Five post-processing families plus unprocessed = six evaluation protocols. Five baseline detectors; Nodown uses released pretrained weights, others retrained. AUCs average across six models, then protocols.",
+      "caveat": "CW attacks CNN-aug; paper excludes CNN-aug from anti-forensics comparison for fairness. Table averages/negative-class reuse and tailored attacks limit universal superiority interpretations."
+    }
+  ],
+  "limitations": [
+    "Face-only resource includes generated faces blended/swapped into real scenes; preserve this as a separate manipulation category description without changing current tasks or image scopes.",
+    "Author version only; publisher-final content and bibliographic linkage not independently compared.",
+    "Future-tense code/dataset-details release is weaker than verified current dataset availability; no license or files fetched.",
+    "No R2 benchmark label proposed; no attribution or video task inferred."
+  ],
+  "confidence": "High for R1 contribution support in identified arXiv v7; moderate for publisher-version bridge and operational availability."
+}

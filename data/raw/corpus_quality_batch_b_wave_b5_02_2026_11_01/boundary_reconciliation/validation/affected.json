@@ -1,0 +1,48 @@
+{
+  "mode": "affected",
+  "command": [
+    "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--tb=short",
+    "tests/test_corpus_quality_batch_b_wave_b1s.py",
+    "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+    "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+    "tests/test_batch_b_historical_endpoints.py",
+    "tests/test_corpus_quality_batch_b_wave_b4_01.py",
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+    "--junitxml=/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/affected.xml"
+  ],
+  "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+  "started_utc": "2026-11-01T11:46:52.398592+00:00",
+  "elapsed_seconds": 58.981,
+  "returncode": 1,
+  "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/affected.log",
+  "log_sha256": "479b1fc6125dd8abd4bdccf02dd12df6420900bf39c5246f73bd8341afd2f1ea",
+  "junit_sha256": "ff95a1852c3caf3dbf9befe165f6e9f74737c7b66dff8b53a729def5cd6fa698",
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "1",
+      "skipped": "0",
+      "tests": "408",
+      "time": "57.623",
+      "timestamp": "2026-11-01T19:46:52.916411+08:00",
+      "hostname": "Meilingers-MacBook-Pro.local"
+    }
+  ],
+  "failures": [
+    {
+      "test": {
+        "classname": "tests.test_corpus_quality_batch_b_wave_b5_02",
+        "name": "test_public_projection_updates_exactly_six_papers_and_fourteen_dependents",
+        "time": "1.379"
+      },
+      "failure": "tests/test_corpus_quality_batch_b_wave_b5_02.py:339: in test_public_projection_updates_exactly_six_papers_and_fourteen_dependents\n    assert_public_transaction(papers,markers)\ntests/test_corpus_quality_batch_b_wave_b5_02.py:333: in assert_public_transaction\n    assert row==expected_public_projection(old_maps[mid],rid,marker=True),(mid,'unapproved map projection')\nE   AssertionError: ('curated-map:892ef7f2c7b199932aef', 'unapproved map projection')\nE   assert {'id': 'curat...e': True, ...} == {'id': 'curat...e': True, ...}\nE     \nE     Omitting 78 identical items, use -vv to show\nE     Right contains 1 more item:\nE     {'ambiguity_status': 'unresolved'}\nE     Use -v to get more diff"
+    }
+  ]
+}

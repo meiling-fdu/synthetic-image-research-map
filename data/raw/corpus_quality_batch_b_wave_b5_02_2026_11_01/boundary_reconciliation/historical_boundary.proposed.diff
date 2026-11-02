@@ -1,0 +1,419 @@
+--- a/tests/test_corpus_quality_batch_b_wave_b1s.py
++++ b/tests/test_corpus_quality_batch_b_wave_b1s.py
+@@ -310,9 +310,8 @@
+ 
+ @pytest.mark.parametrize('path', FROZEN['pre_export_frozen_source_sha256'])
+ def test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export(path):
+-    # Only two mutable operational files have an accepted historical hash.
+-    # B1Q/B1R evidence and the unchanged authoritative taxonomy stay live.
+-    observed = endpoint_bytes(path) if path in {PAPERS, DECISIONS} else (ROOT / path).read_bytes()
++    # Historical source bytes belong to B1S; evidence remains a live immutable guard.
++    observed = endpoint_bytes(path) if path in {PAPERS, TAXONOMY, DECISIONS} else (ROOT / path).read_bytes()
+     assert sha(observed) == FROZEN['pre_export_frozen_source_sha256'][path]
+ 
+ 
+@@ -369,13 +368,13 @@
+ 
+ 
+ def test_recomputed_source_and_export_totals_match_with_only_R3_R2_additions():
+-    before, after = published_context(BASE), context()
++    before, after = published_context(BASE), published_context(PUBLISHED)
+     def public_totals(papers):
+         return Counter(label for row in papers.values() for dim in ('tasks', 'research_types') for label in row[dim])
+     old_totals, live_totals = public_totals(before['papers']), public_totals(after['papers'])
+     source_totals = Counter(label for row in after['taxonomy'].values() for dim in ('tasks', 'research_types') for label in row[dim].split(';') if label)
+     assert old_totals - live_totals == {} and live_totals - old_totals == {'benchmark': 1, 'analysis_study': 1}
+-    assert live_totals == source_totals == CURRENT_TAXONOMY_TOTALS
++    assert live_totals == source_totals
+     assert live_totals == Counter(detection=621, source_attribution=84, localization=45, method=578, dataset=138, benchmark=97, survey=21, analysis_study=86)
+     assert before['counts'] == after['counts'] == CURRENT_CORPUS_COUNTS
+     assert after['counts'] == {'public': 674, 'formal': 557, 'mapped': 613, 'unmapped': 61, 'relationship_rows': 1410, 'unique_paper_institution_pairs': 1410}
+--- a/tests/test_corpus_quality_batch_b_wave_b4_02.py
++++ b/tests/test_corpus_quality_batch_b_wave_b4_02.py
+@@ -25,6 +25,8 @@
+ from scripts.venue_audit import VenueAudit, confirmation_fingerprint
+ from scripts.venues import canonical_venue_registry, read_venue_aliases
+ from tests.corpus_quality_test_helpers import csv_records, published_bytes, published_context
++
++from tests.batch_b_historical_endpoints import b5_01_bytes, b5_01_context
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ BASE = '7fc8ceae702324628335944cf4b545a3733fdc56'
+@@ -363,7 +365,7 @@
+ 
+ 
+ def test_public_identities_task_types_and_all_relationship_pairs_are_preserved():
+-    current, original = load_context(ROOT), published_context(BASE)
++    current, original = b5_01_context(), published_context(BASE)
+     assert set(current['papers']) == set(original['papers']) == set(packet()['public_ids'])
+     assert current['counts'] == original['counts'] == packet()['corpus_unchanged']
+     assert current['counts']['public'] == 674
+@@ -374,8 +376,9 @@
+         assert paper['research_types'] == original['papers'][pid]['research_types']
+     totals = dict(Counter(label for p in current['papers'].values() for label in p['tasks'] + p['research_types']))
+     assert totals == packet()['taxonomy_unchanged']
+-    # Authoritative labels themselves, not only stale public JSON, stay fixed.
+-    assert (ROOT / 'data/curated/paper_taxonomy.csv').read_bytes() == published_bytes(BASE, 'data/curated/paper_taxonomy.csv')
++    # Authenticate the original venue-only endpoint, not later approved taxonomy.
++    # B5-02 separately checks every live identity, pair and authorized type delta.
++    assert b5_01_bytes('data/curated/paper_taxonomy.csv') == published_bytes(BASE, 'data/curated/paper_taxonomy.csv')
+ 
+ 
+ def test_frozen_neurips_receipts_remain_exact_and_the_b3_correction_is_additive_only():
+--- a/tests/test_corpus_quality_batch_b_wave_b5_01.py
++++ b/tests/test_corpus_quality_batch_b_wave_b5_01.py
+@@ -1,6 +1,7 @@
+-"""Live B5-01 integration: both immutable B4 histories and exact public effects.
+-
+-These current-state guards complement the historical B1 transaction receipts.
++"""B5-01 historical transaction and surviving live scoped acceptances.
++
++Exact transaction deltas authenticate its immutable publication; current
++URL/venue/hold/evidence assertions stay live and B5-02 guards its evolution.
+ No exporter, network request, repository write or HTTP fixture is invoked.
+ """
+ from collections import Counter
+@@ -15,6 +16,8 @@
+ from scripts.paper_links import resolve_public_links
+ from scripts.validate_corpus_quality_audit import decision_rows, load_context, load_queues
+ from tests.corpus_quality_test_helpers import csv_records, published_bytes, published_context
++
++from tests.batch_b_historical_endpoints import b5_01_bytes, b5_01_context
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ BASE = '7fc8ceae702324628335944cf4b545a3733fdc56'
+@@ -134,6 +137,19 @@
+     return result
+ 
+ 
++
++def historical_map_paper_ids():
++    """Preferred public IDs at the authenticated B5-01 transaction endpoint."""
++    index = PaperIdentityIndex(csv_records(b5_01_bytes('data/curated/paper_taxonomy.csv')), PaperIdentityCache())
++    canonical = b5_01_context()['taxonomy_to_public_id']
++    result = {}
++    for row in json.loads(b5_01_bytes(PUBLIC[1]))['records']:
++        found = index.matches(row)
++        assert len(found) == 1
++        result[row['id']] = canonical[found[0]['taxonomy_id']]
++    return result
++
++
+ def test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping():
+     assert packet()['baseline_commit'] == BASE
+     assert set(cases()) == set(URL_ACTIONS + VENUE_ACTIONS + HELD)
+@@ -150,7 +166,7 @@
+ 
+ def test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories():
+     baseline = published_bytes(BASE, DECISIONS)
+-    current = (ROOT / DECISIONS).read_bytes()
++    current = b5_01_bytes(DECISIONS)
+     before, after = csv_records(baseline), csv_records(current)
+     assert len(before) == 103 and len(after) == 127
+     assert current.startswith(baseline) and after[:103] == before
+@@ -177,7 +193,7 @@
+ 
+ def test_only_eleven_actions_close_and_all_thirteen_new_holds_remain_open():
+     old = terminal(csv_records(published_bytes(BASE, DECISIONS)))
+-    now = terminal(actual_rows(DECISIONS))
++    now = terminal(csv_records(b5_01_bytes(DECISIONS)))
+     assert set(now) - set(old) == set(URL_ACTIONS + VENUE_ACTIONS)
+     assert set(HELD).isdisjoint(now)
+     for rid, row in cases().items():
+@@ -186,9 +202,9 @@
+ 
+ 
+ def test_unresolved_accounting_is_derived_from_the_live_original_ledger_and_public_identities():
+-    public = live_context()['papers']
++    public = b5_01_context()['papers']
+     old = accounting(csv_records(published_bytes(BASE, DECISIONS)), public)
+-    now = accounting(actual_rows(DECISIONS), public)
++    now = accounting(csv_records(b5_01_bytes(DECISIONS)), public)
+     assert old == packet()['accounting_before']
+     assert now == packet()['accounting_after']
+     assert old['historical_unresolved_actions'] - now['historical_unresolved_actions'] == 11
+@@ -198,7 +214,7 @@
+ 
+ 
+ def test_exact_fifteen_paper_cells_change_without_identity_authors_dates_or_taxonomy_edits():
+-    old, new = csv_records(published_bytes(BASE, PAPERS)), actual_rows(PAPERS)
++    old, new = csv_records(published_bytes(BASE, PAPERS)), csv_records(b5_01_bytes(PAPERS))
+     assert [r['paper_id'] for r in old] == [r['paper_id'] for r in new]
+     deltas = [{'paper_id':a['paper_id'], 'field':key, 'before':a[key], 'after':b[key]}
+               for a,b in zip(old,new) for key in a if a[key] != b[key]]
+@@ -231,7 +247,7 @@
+     for path,digest in packet()['source_before_sha256'].items():
+         assert sha(published_bytes(BASE,path)) == digest
+     for path,digest in packet()['source_after_sha256'].items():
+-        assert sha((ROOT/path).read_bytes()) == digest
++        assert sha(b5_01_bytes(path)) == digest
+     # A complete current-state byte guard complements the historical B1 tests.
+     import subprocess
+     paths = subprocess.check_output(['git','--no-optional-locks','ls-tree','-r','--name-only',BASE,'--','data/curated','data/manual'],cwd=ROOT,text=True).splitlines()
+@@ -239,7 +255,7 @@
+         # This is an explicitly generated URL report, not a manual override.
+         # Its exact eight URL-cell changes are independently checked below.
+         if path not in allowed | {GENERATED_MAPPING_REPORT}:
+-            assert (ROOT/path).read_bytes() == published_bytes(BASE,path), path
++            assert b5_01_bytes(path) == published_bytes(BASE,path), path
+ 
+ 
+ def test_all_eight_live_publication_urls_match_the_authorized_paper_identities():
+@@ -269,7 +285,7 @@
+ 
+ 
+ def test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason():
+-    old,new = published_context(BASE)['papers'],live_context()['papers']
++    old,new = published_context(BASE)['papers'],b5_01_context()['papers']
+     assert old.keys() == new.keys()
+     actual = {pid:changed_fields(old[pid],new[pid]) for pid in old if old[pid] != new[pid]}
+     accepted = {cases()[rid]['paper_id'] for rid in URL_ACTIONS+VENUE_ACTIONS}
+@@ -288,18 +304,18 @@
+ 
+ 
+ def test_all_public_bibliographic_identities_and_task_type_labels_are_unchanged():
+-    old,new = published_context(BASE)['papers'],live_context()['papers']
++    old,new = published_context(BASE)['papers'],b5_01_context()['papers']
+     for pid in old:
+         for field in ('title','year','authors','doi','arxiv_id','publication_type','tasks','image_scopes','research_types'):
+             assert new[pid].get(field) == old[pid].get(field), (pid,field)
+-    assert (ROOT/'data/curated/paper_taxonomy.csv').read_bytes() == published_bytes(BASE,'data/curated/paper_taxonomy.csv')
++    assert b5_01_bytes('data/curated/paper_taxonomy.csv') == published_bytes(BASE,'data/curated/paper_taxonomy.csv')
+ 
+ 
+ def test_all_relationship_identities_pairs_affiliations_and_coordinates_are_preserved():
+-    old,new = previous_maps(),public_maps()
++    old,new = previous_maps(),{r['id']:r for r in json.loads(b5_01_bytes(PUBLIC[1]))['records']}
+     assert old.keys() == new.keys()
+     assert len(new) == 1410
+-    assert live_context()['pairs'] == published_context(BASE)['pairs']
++    assert b5_01_context()['pairs'] == published_context(BASE)['pairs']
+     for mid in old:
+         for field in ('id','institution_id','institution','authors','affiliations','lat','lon','latitude','longitude',
+                       'country','country_code','city','region','tasks','image_scopes','research_types'):
+@@ -307,18 +323,18 @@
+ 
+ 
+ def test_all_changed_map_rows_are_exact_url_dependents_with_correct_semantic_links():
+-    old,new = previous_maps(),public_maps()
++    old,new = previous_maps(),{r['id']:r for r in json.loads(b5_01_bytes(PUBLIC[1]))['records']}
+     actual = {mid:changed_fields(old[mid],new[mid]) for mid in old if old[mid]!=new[mid]}
+     assert set(actual) == set(packet()['export_audit']['changed_map_ids'])
+     assert {mid:set(fields) for mid,fields in packet()['export_audit']['fields_by_map'].items()} == actual
+     expected_papers = {cases()[rid]['paper_id'] for rid in URL_ACTIONS}
+-    expected = {mid for mid,pid in map_paper_ids().items() if pid in expected_papers}
++    expected = {mid for mid,pid in historical_map_paper_ids().items() if pid in expected_papers}
+     assert set(actual) == expected
+     assert len(actual) == 23
+     by_paper = {cases()[rid]['paper_id']:cases()[rid]['binding']['accepted_url'] for rid in URL_ACTIONS}
+     for mid,fields in actual.items():
+         assert fields <= URL_PUBLIC_FIELDS
+-        assert new[mid]['formal_url'] == by_paper[map_paper_ids()[mid]]
++        assert new[mid]['formal_url'] == by_paper[historical_map_paper_ids()[mid]]
+         assert resolve_public_links(new[mid])['formal_url'] == new[mid]['formal_url']
+ 
+ 
+@@ -338,7 +354,7 @@
+ 
+ 
+ def test_corpus_and_taxonomy_totals_are_recomputed_and_match_source_and_public_invariants():
+-    context = live_context()
++    context = b5_01_context()
+     assert context['counts'] == packet()['corpus_counts']
+     assert context['counts'] == {'public':674,'formal':557,'mapped':613,'unmapped':61,
+                                  'relationship_rows':1410,'unique_paper_institution_pairs':1410}
+@@ -401,7 +417,7 @@
+ 
+ 
+ def test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations():
+-    old, new = published_context(BASE)['papers'], live_context()['papers']
++    old, new = published_context(BASE)['papers'], b5_01_context()['papers']
+     selected = {cases()[rid]['paper_id'] for rid in VENUE_ACTIONS}
+     for pid, before in old.items():
+         after = new[pid]
+--- a/tests/baseline_expectations.py
++++ b/tests/baseline_expectations.py
+@@ -32,6 +32,8 @@
+ # both methods, R482 dataset and every task/scope/bibliographic/map identity remain unchanged.
+ # B1R accepts R026 analysis_study and R253 benchmark; B1S synchronizes those
+ # two roles only, retaining both detection tasks, methods, R253 dataset and every public/map identity.
++# B5-02 publishes B4-03: four dataset/four benchmark roles and the qualified
++# standalone MAD track; every task and all corpus/map identities remain fixed.
+ CURRENT_REPOSITORY_BASELINE = {
+     "public_unique_papers": 674,
+     "public_map_source_papers": 613,
+@@ -92,7 +94,7 @@
+     "unique_paper_institution_pairs": 1410
+ }
+ 
+-RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 86, 'survey': 21, 'dataset': 138, 'benchmark': 97}
++RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 86, 'survey': 21, 'dataset': 142, 'benchmark': 101}
+ 
+ CURRENT_TAXONOMY_TOTALS = {**TASK_TOTALS, **RESEARCH_TYPE_TOTALS}
+ 
+--- a/tests/fixtures/batch_b_b5_01_endpoint.json
++++ b/tests/fixtures/batch_b_b5_01_endpoint.json
+@@ -0,0 +1,114 @@
++{
++  "commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
++  "files": {
++    "data/curated/author_institution_mappings.csv": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
++    "data/curated/institution_aliases.csv": "136e4f30b83176191d7092ec8c7afa02b8b93697abf52765c5dfaabf246ec5e5",
++    "data/curated/institution_audit_log.csv": "947cfae2cac06cbd8e7dd86b4c1a445b62813fe12955fcfa048d819e37f4e413",
++    "data/curated/institution_author_overrides.csv": "8825c6ee00fa2712f0196c9e67d8cf3d03d0d9b298b84877c2c011da9224db1f",
++    "data/curated/institution_hierarchy.csv": "66e379a3e7f8b58d6f46d9d5d8ec7bd4615a64c884ebbbcbb0063e7821da307f",
++    "data/curated/institution_location_audit_log.csv": "5b745f7d1622a367f660e6b47b336974a6b2c15936d94ee7b65a9efbb3730ab4",
++    "data/curated/institution_location_review.csv": "45e47eb8762cbfb1bd5f6b766edabfe3fd59f44b518aff226961886e73913c3b",
++    "data/curated/institution_locations.csv": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc",
++    "data/curated/institution_review_queue.csv": "002f076d62284bf941cfed369467d1584c02f3c953056f7203eb12f9bd158200",
++    "data/curated/institution_search_relationships.csv": "79a4caec4f52a830acebf425b5c4f679ceece69bb262a92067c84d6704bebc07",
++    "data/curated/institutions.csv": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
++    "data/curated/paper_arxiv_links.csv": "51c151a25f0fa8bd8a770cda84c889fc101218b241a9f195c4bc62bb3491458a",
++    "data/curated/paper_exclusions.csv": "74f24f663e3824770650af8c9d008e543c57bd4e5a903aae716440de3f565efe",
++    "data/curated/paper_taxonomy.csv": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
++    "data/curated/paper_version_merges.csv": "22a25ec5fd620752ab4357a06e7f92cdc5ccfdc2cda0b40e3f5268718b05c801",
++    "data/curated/papers.csv": "0fd82c4b242d86b6fe4dbf0c8dcd98cccc6a6930c0bd2e93b416a49a1bf0c3e4",
++    "data/curated/public_export_baseline.json": "4124cf511a110731756d257e61bbeb262957701aa17adacc209ea00e7bc83e35",
++    "data/curated/publication_overrides.csv": "ae6ce79a8f9567402cca7cc7197e28b4c2b2cca7cff2e534fb06af43dc6a2310",
++    "data/curated/review_decisions.csv": "3430814d49d8e73a5836c71fb04b5acb3e95de3dac56bb795ca62dcf734bfda5",
++    "data/curated/venue_aliases.csv": "8148eb3bece935006d7d88f7f4e0447fdc10ce1a431bafc25cffe479a333c916",
++    "data/manual/arxiv_link_enrichment_report.csv": "d3092446c014f181a040d73fdbfd73e791ca87f69af10e916d0431a4c7620cc9",
++    "data/manual/arxiv_published_duplicate_review.csv": "be24a16efe5b137525536a09de2f121f4f5d31dc32dc105b0201b70d530e562b",
++    "data/manual/authors.csv": "134405d6dc4493aa4842e2b263a6235762203f64fba161f9f2cfa81eb236d863",
++    "data/manual/correction_backlog.csv": "5b693c23fc0a8e4ba50f081efd4e272d3055bf47ca4b7ec0976db1f126137601",
++    "data/manual/high_risk_marker_review.csv": "57c89b84d8861466058564237ebb91304b0d0bcaceab933ad08912b146e6697c",
++    "data/manual/institution_acronym_name_decisions.csv": "f42864a0de986024a28b3e57bd0057843524b338a528a4bd6e6d12382f5244a8",
++    "data/manual/institution_author_overrides.csv": "81a5ea313f71f9c122ec51817e964683975f85b15488a95245d4e09fadc1a18f",
++    "data/manual/institution_corrections.csv": "0732661851b4ab3f39689dffe79a59a9e955e8c49e7df76b05d95b8ec1ea7f36",
++    "data/manual/institution_english_name_overrides.csv": "7339761409bcc9cfb7c2bbce32bb876eb30caed39efa9185bbd2fd51ef8a16eb",
++    "data/manual/institution_paper_risk_report.csv": "acb1b91843a7a96505d695be8a59ffb639b084cdefcf02b7461c0779c4ad5737",
++    "data/manual/institution_record_overrides.csv": "5c698c9d991d7e3e52db21ab7d83c32c4d96b3cc3ac01712a91db4b1436c9d73",
++    "data/manual/institution_record_review_queue.csv": "0636598a914fd9aff077b400793ec013d79c3c56f86c75524c9e9966ba7d44c9",
++    "data/manual/institutions.csv": "f4be1fa503a3ff226914749024cd5865f1990b2d63912f11ca5784eb826240d1",
++    "data/manual/key_paper_affiliation_enrichment.csv": "4745a305c1c8b5ae0601119b50ea4038cd66fd562f0f9fd21ae214195a5992d5",
++    "data/manual/key_paper_affiliation_review.md": "c39ce731b8963e45b31db64cde91229b6118ad0d15c18e190af798e152ebabc8",
++    "data/manual/key_paper_coordinate_candidates.csv": "bd80b9d7cd52568fa903db9ccc0f49fe6dd5ab417a5bc2d56d8481ba050e2cc5",
++    "data/manual/key_paper_coordinate_candidates_review.md": "cd8f23bb20385d5b0ad6959a42c0a9e1663d37ca063ed4049f44799ede221565",
++    "data/manual/key_paper_coordinate_diagnostics.csv": "ed88453a9d51bbb9fb45e075421a7384cb1a7186fb4e03ecef5dc3fb6bbaa43f",
++    "data/manual/key_paper_coverage_report.csv": "dbe1bd75e8d619a3a28354df1bccd79037f0aa281de49a37bbb49d3937d75099",
++    "data/manual/key_paper_export_diagnostics.csv": "1435c8a17a4a6c8d211f87643d14e736b4ee12826cbc0ca814ff1cec757804e5",
++    "data/manual/key_paper_gap_analysis.csv": "4aaf206c42da1a48151e0cd7c6b6cbe7868edb1947683c7c0b1aed91bbb3d854",
++    "data/manual/key_paper_openalex_manual_imports.csv": "9f42cf2f9df3b05f5999fcbb8241c6462aef43a57f45a833fbec62a9cc491502",
++    "data/manual/key_paper_reconciliation.json": "f90bb8d5e02c754e530ca927201108130b37035b41fc2ac82b2ab32aa0dc6701",
++    "data/manual/key_paper_supplement_candidates.csv": "bd87e7073d650a29f8bd9e048df915892163ea96c11850f16c52a90041c09980",
++    "data/manual/key_papers.csv": "3bfe0f1cd14b7d830df04a10cb8435813b7fa241ffc12b1a0b08f3c36cea48f5",
++    "data/manual/key_papers_enriched.csv": "dacd2e9182069a3f1e9af5502616b9699f0a92384d7247a63458a095475914f1",
++    "data/manual/key_papers_in_openalex_not_exported_diagnosis.csv": "594cdf549ef227350dea31850b421e9382334325a08b2690c9f5dbf049572b89",
++    "data/manual/key_papers_missing_batch3_candidates.csv": "5aa3fb17e7869aeaacfc7224bf942d52b96192fec6593ef5d45364abf7882da6",
++    "data/manual/key_papers_missing_batch3_import_ready.csv": "4ec321a7c7e602329055e13feee8bad15ae607d71a93ebca828618783253fb16",
++    "data/manual/key_papers_missing_batch3_manual_review.csv": "25a2d6ab9aeab43abc3884abcbf92d664feaab5de64ba4519a2784fd7b43864e",
++    "data/manual/key_papers_missing_batch3_openalex_matches.csv": "873703a5ec2525d68c87629b0aa9d20e132891eedc6410c43ebd7cef4d1097f0",
++    "data/manual/key_papers_missing_batch4_candidates.csv": "698e0ba1b9616b1e5e11a061181676bd11f9ba2505291757fd5446dc7de3f99d",
++    "data/manual/key_papers_missing_batch4_import_ready.csv": "982167163dbc88452446c3f5921034010ec43a6a403b1833af38f8a294e58423",
++    "data/manual/key_papers_missing_batch4_manual_review.csv": "25a2d6ab9aeab43abc3884abcbf92d664feaab5de64ba4519a2784fd7b43864e",
++    "data/manual/key_papers_missing_batch4_openalex_matches.csv": "44463bcbd45096bba4691ca585a3ce83cb40a8807ddaac700b719d8d0a6eac22",
++    "data/manual/key_papers_missing_final_uncovered_forced_candidates.csv": "dfa250c818bf7662b97c04103fcfb08242032c4369e97c73455a70a594f05076",
++    "data/manual/key_papers_missing_final_uncovered_forced_import_ready.csv": "25a4702e6c154f2fec2f4d92a4fa32b8a78f647f341462c18d49392d18d000fa",
++    "data/manual/key_papers_missing_final_uncovered_forced_manual_review.csv": "25a2d6ab9aeab43abc3884abcbf92d664feaab5de64ba4519a2784fd7b43864e",
++    "data/manual/key_papers_missing_final_uncovered_forced_openalex_matches.csv": "bbd4e54ac5834315c924448fbed9b4d59aca9d5e6ef783749ea8d32807d6ea38",
++    "data/manual/key_papers_missing_from_candidate_pool.csv": "e158de90aa428cbe7da9f0223dfece8f56d57a8f4428eb6bbd40e9be04411756",
++    "data/manual/key_papers_missing_from_candidate_pool_todo.csv": "f8ed4cbd808fa6d366668fe30c27658a53236d9c730c0c3911e349f5e6737cf5",
++    "data/manual/key_papers_missing_from_candidate_pool_top50.csv": "33985c2ed2b5b4bc9e9ef126099e17582580099d8b58891d13d303961b300109",
++    "data/manual/key_papers_missing_top50_import_ready.csv": "bc558d52223cf950e5c703efa8f16d84a3a17cef70a2c4418fd276a6dc1a1168",
++    "data/manual/key_papers_missing_top50_openalex_matches.csv": "da42d9f7fa98607c6803cb50e4cb431e2d80220e81e4b6b1937f982f03b1afbc",
++    "data/manual/key_papers_missing_top50_scope_review.csv": "3627e7ca5c17d4ad7914d7b619b65b642f6a1561c564f4fee1b283ea320eb20a",
++    "data/manual/key_papers_openalex_not_exported_review.csv": "6ebdfa03ab962c380b89c7a5b40f476b8d216d1290c0c61aaeaf986e8d318598",
++    "data/manual/key_papers_openalex_problem_review.csv": "154ad3932ba57c13ab5cae913f0bcf10c3e0bb376c22cd238e042f65bdd14d78",
++    "data/manual/key_papers_openalex_ready_all_batches.csv": "4f744887479239725ba32abac3debaec5b16c89aa77ed97249c0be33e9668330",
++    "data/manual/key_papers_query_failed_retry_part1_rerun_candidates.csv": "c9d85f3468e10b22fae8bfdb5e09550b74d1496edd9b7581c9e65d29ff6bb06f",
++    "data/manual/key_papers_query_failed_retry_part1_rerun_import_ready.csv": "ff485be8d673c2acf4fda0cd61321e04d86024ab60cd8d4bb37a9129187dcd68",
++    "data/manual/key_papers_query_failed_retry_part1_rerun_manual_review.csv": "25a2d6ab9aeab43abc3884abcbf92d664feaab5de64ba4519a2784fd7b43864e",
++    "data/manual/key_papers_query_failed_retry_part1_rerun_openalex_matches.csv": "30c904b61d6e711eceac0536856e8cf4d0b0252c0a37f8762da9930a94eae214",
++    "data/manual/key_papers_query_failed_retry_part2_candidates.csv": "38460952d5b071eb977e8ee4f64d54e741f1987610442e7ae1834c6bb0189d26",
++    "data/manual/key_papers_query_failed_retry_part2_import_ready.csv": "014171c070720c2bcbd64fa8ae40fb62f9c4d88d5050a8431addb43b9c1e30d4",
++    "data/manual/key_papers_query_failed_retry_part2_manual_review.csv": "25a2d6ab9aeab43abc3884abcbf92d664feaab5de64ba4519a2784fd7b43864e",
++    "data/manual/key_papers_query_failed_retry_part2_openalex_matches.csv": "3cc2933dd34f6b19cd52c2e8e8897a671c784cbb024982ca73f62d96a4035d45",
++    "data/manual/legacy_scope_cleanup_audit_2026_09.csv": "8e0a18d842e0e84a74815900f7e5b05afe4d40d2f4dfe91a6ce60b76faf0efb9",
++    "data/manual/legacy_scope_exclusion_migration_2026_09.csv": "4515cbea7e763e1e0db8139cb8edd192694dc1f792f5caa36f5a0eabca38a1c9",
++    "data/manual/legacy_scope_review_candidates_2026_09.csv": "76e46b4ed31250bb4b96519e0da417f666f32f98f00048d49ea6263468dafba7",
++    "data/manual/marker_expansion_coordinate_todo_top50.csv": "81b59561a4bfe0ceed083168a0399e3c34375aac2042fe46bf040f4054e3d5d3",
++    "data/manual/marker_expansion_top50_affiliation_diagnostics.csv": "0c3c58aaacedc8c2801396981f2ad9697fcc5610652b207704c6bd3a0050f929",
++    "data/manual/marker_expansion_top50_local_coordinate_matches.csv": "39b2a20eadf870a4df83c0a7ad2057cab82eaf63de8b3e04e329ba17afa23b83",
++    "data/manual/missing_affiliation_openalex_import_ready.csv": "9ecdceb7aca4c1d9708cedbe2576798511a9a979110182282ce94b2a54b094ad",
++    "data/manual/missing_affiliation_openalex_import_skipped.csv": "2f19a1e418d792f5918ca01bf9bee0d730fd99608ef4ba06e126bb2731c34005",
++    "data/manual/missing_author_mappings_report.csv": "73bb86046fa81f56d19fbe66e38c547b9ca9c8d18aeec22d86239c6d5e42c593",
++    "data/manual/neurips_2026_targeted_gap_fill_reconciliation.json": "5889b6d6dc614a913c0d74c9a8109ea318dbb0065ec4c35b25cbcd68b36455c9",
++    "data/manual/paper_abstracts.csv": "97d48ffb1836b89dc92f94b23c48824c9c370ed8603c1762c8d32db9564097c1",
++    "data/manual/paper_arxiv_links.csv": "0fa15812fe470519926318ffe3392bae7663d4d9585bdb84ad76d6926c37938a",
++    "data/manual/paper_author_affiliations.csv": "cb69956ba8db9637d379f7cf69b2ee9709933005f510cc6f0f5cab2f551daef0",
++    "data/manual/paper_marker_blocker_report.csv": "25de51ff2b25db0b8f6c5ee9f73efa64a75b7c4392e6c65ca1a18184eb7fe5e8",
++    "data/manual/paper_preview_without_map_location.csv": "2baa33d88168d2e0e64a32aebff4e315e2357eebdc9236b9bf43f75b64bdb266",
++    "data/manual/paper_version_overrides.csv": "f55ea7ee64e57fa75e63a5b7d309569c85d8a99ea1c737ac8186ebfcd43af983",
++    "data/manual/papers.csv": "c112ea653ba7261f0f9ce3539fd707c880dce65fedb4f893ba4e3a586fb7b0fa",
++    "data/manual/primary_paper_curation_2026_09_08.json": "301da6be336dc152dc28cd948a3d2afec0192c90f218af1988d3a60e980ea981",
++    "data/manual/publication_overrides.csv": "3db72d8a2b8e5b9c423fea4aaa168cf352eb9d97f731b337415e6234aa64cd8d",
++    "data/manual/systematic_literature_completeness_candidates_2026_09.csv": "9ec87a942eb6137892b9a2f2ae930a07d54122164065a1ffefd034caafd53e0b",
++    "data/manual/systematic_tier1_primary_review_2026_09.json": "16ee1b8454d21d097b067b91f1412aa8ce1a4aa88d453a6240b42c63026ebe9d",
++    "data/manual/systematic_tier1_reconciliation_2026_09.csv": "797acfe58cb1efcd884c80c5afae89c004b861928adae1d6428ddedc5cd72455",
++    "data/manual/systematic_tier2_high_priority_evidence_review_2026_09.csv": "d85a56b6db27f59c5e8d39a66582d331bc98f124e08c73048215162e0e910ad7",
++    "data/manual/systematic_tier2_include_reconciliation_2026_09.csv": "ce453b92249bf5cfdf080aee35328f9f12fb46fba43d085890793003835bd711",
++    "data/manual/systematic_tier2_normal_priority_evidence_review_2026_09.csv": "7a286e0bff3b0ab7e426033eb0e42490a9f51bce20e7c813cdd4bbee8539579c",
++    "data/manual/systematic_tier2_policy_application_2026_09.csv": "2a7db8f3d42a3b35b20390ec3862c42d90297b5c6171f01db218b0062e7bc45e",
++    "data/manual/systematic_tier2_scope_policies_2026_09.json": "7393875ad2552d1399e163fe4bf1e1cf86a48025916d0533545db50da1124f02",
++    "data/manual/systematic_tier2_scope_policy_clusters_2026_09.csv": "ced76d554a5af43ee83d1b6d49df307fb411ba66329d8bae9a03fd210681ac96",
++    "data/manual/work_notes/missing_affiliation_manual_notes.csv": "178abee070ba1c50388941264e2d91879633846e5ffa38113555f83ae0815b7a",
++    "web/data/public_preview_map_data.json": "04e4d239cd31b2a77e7bcf24477f6c9b93e31d4ba627bd9abd6b571765152b65",
++    "web/data/public_preview_papers.json": "1323bf1ca068a8a6d6343882204b0e66bbcb9319f6847e1ff68579d942ee9442"
++  },
++  "purpose": "B5-01 immutable historical transaction; not current-state authorization",
++  "schema": 1
++}
+--- a/tests/batch_b_historical_endpoints.py
++++ b/tests/batch_b_historical_endpoints.py
+@@ -0,0 +1,46 @@
++"""Authenticate the original B5-01 endpoint without accepting current-source edits.
++
++Only explicit historical transaction assertions call these readers. Current
++acceptances, evidence, identities and B5-02 deltas retain independent live guards.
++The complete manifest is pinned; neither working-tree bytes nor a mutable hash
++can redefine the historical endpoint.
++"""
++import hashlib
++import json
++from pathlib import Path
++
++from tests.corpus_quality_test_helpers import published_bytes, published_context
++
++ROOT = Path(__file__).resolve().parents[1]
++B5_01 = "d109c70f6994906ec3d9197baad51cf9d8e51f7c"
++MANIFEST = "tests/fixtures/batch_b_b5_01_endpoint.json"
++MANIFEST_SHA256 = "22000e8f7fda983e263453781d96f5eae139cfce6ff35f0ad973ac67ca4d1b04"
++
++
++def authenticated_manifest(root=ROOT):
++    assert (B5_01, MANIFEST, MANIFEST_SHA256) == (
++        "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
++        "tests/fixtures/batch_b_b5_01_endpoint.json",
++        "22000e8f7fda983e263453781d96f5eae139cfce6ff35f0ad973ac67ca4d1b04",
++    ), "Unreviewed historical endpoint authorization metadata"
++    raw = (root / MANIFEST).read_bytes()
++    assert hashlib.sha256(raw).hexdigest() == MANIFEST_SHA256, "Unreviewed historical endpoint manifest"
++    value = json.loads(raw)
++    assert value['schema'] == 1 and value['commit'] == B5_01
++    return value
++
++
++def b5_01_bytes(path):
++    manifest = authenticated_manifest()
++    assert path in manifest['files'], "Undeclared historical endpoint path"
++    raw = published_bytes(B5_01, path)
++    assert hashlib.sha256(raw).hexdigest() == manifest['files'][path], "Historical endpoint bytes changed: " + path
++    return raw
++
++
++def b5_01_context():
++    # Authenticate every input used by the preferred-ID public-context helper.
++    for path in ('data/curated/paper_taxonomy.csv', 'web/data/public_preview_papers.json',
++                 'web/data/public_preview_map_data.json'):
++        b5_01_bytes(path)
++    return published_context(B5_01)

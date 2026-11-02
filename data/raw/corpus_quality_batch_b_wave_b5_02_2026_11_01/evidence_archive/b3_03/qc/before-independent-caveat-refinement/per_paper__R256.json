@@ -1,0 +1,165 @@
+{
+  "review_id": "R256",
+  "paper_id": "curated:c6bfe8f5199d1d8beb29",
+  "title": "Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection",
+  "doi": "10.1109/iccvw69036.2025.00165",
+  "arxiv_id": "",
+  "authors": [
+    "Yu Cai",
+    "Jiahe Tian",
+    "Xiaomeng Fu",
+    "Jiao Dai",
+    "Jizhong Han",
+    "Siwei Lyu"
+  ],
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "governing_policy_ids": [
+    "R1",
+    "R2"
+  ],
+  "current_status": "UNRESOLVED",
+  "reviewer": "b303_record_recovery",
+  "reviewed_utc": "2026-10-31T15:49:40.647856+00:00",
+  "review_phase": "EVIDENCE_ONLY_PROVISIONAL",
+  "maintainer_acceptance": "PENDING_NOT_FORMAL_DECISION",
+  "formal_action_closed": false,
+  "authoritative_data_changed": false,
+  "local_evidence_refs": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R256",
+      "finding": "CSAIID is explicitly presented and released as a cross-semantic detection benchmark. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R256",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R1",
+      "finding": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R2",
+      "finding": "Assign benchmark only when the paper contributes a reusable evaluation benchmark, challenge, protocol, systematic comparative framework, or benchmark resource intended to evaluate methods. Large experimental tables or evaluation across many generators alone are insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+    }
+  ],
+  "retrieval_cost": {
+    "recovery_network_requests": 0,
+    "recovery_manuscripts_downloaded": 0,
+    "existing_capture_reused": true,
+    "new_source_research": false,
+    "inherited_full_manuscript_attempts": 1,
+    "inherited_accepted_manuscripts": 1,
+    "inherited_same_endpoint_retries": 0,
+    "inherited_pdf_bytes": 1823151,
+    "inherited_pdf_transport_seconds": 4.469,
+    "accounting_source": "primary_retrievals.json; official CVF HTML discovery returned 403, but PDF capture succeeded."
+  },
+  "reported_performance_independently_reproduced": false,
+  "outcome": "SUPPORTED_ADDITION",
+  "proposed_research_types": [
+    "method",
+    "dataset",
+    "benchmark"
+  ],
+  "scientifically_sufficient": true,
+  "rationale": "CSAIID is a separately stated contribution with COCO/PartiPrompts provenance, three generator models, semantic curation and fixed balanced category subsets (R1). The six-category resource and comparative cross-semantic protocol grouped by external training source substantively evaluate detectors beyond ordinary experiments (R2).",
+  "identity_verification": {
+    "status": "TITLE_AUTHORS_MATCH_OFFICIAL_CVF_PDF",
+    "title_and_authors": "PDF p1 and PDF metadata match canonical title and all six authors in order.",
+    "doi": "10.1109/iccvw69036.2025.00165 retained from canonical input; not independently printed/verified in this PDF capture.",
+    "arxiv": "None in assigned canonical record.",
+    "version": "10-page official CVF ICCV 2025 Workshops APAI manuscript; source path and PDF Subject identify workshop version. No separate IEEE publisher PDF compared.",
+    "differences": "No unsupported publisher-final equivalence or venue/track correction proposed."
+  },
+  "sources": [
+    {
+      "url": "https://openaccess.thecvf.com/content/ICCV2025W/APAI/papers/Cai_Adaptive_Test-Time_Semantic_Debiasing_for_AI-Generated_Image_Detection_ICCVW_2025_paper.pdf",
+      "artifact": "evidence/groupB/R256-primary.pdf",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R256-primary.pdf",
+      "sha256": "3bd336c171cdb0c201d4fa9da63c17c406f46fa65b70436d30c50390d41b49f3",
+      "version": "Official CVF ICCV2025W / APAI 10-page PDF",
+      "kind": "primary_manuscript"
+    }
+  ],
+  "scientific_review": {
+    "R1": {
+      "assessment": "SUPPORTED",
+      "reason": "p2 explicitly identifies CSAIID among contributions; §4 p5 documents provenance, caption/prompt generation, category curation and count; p1 links public dataset."
+    },
+    "R2": {
+      "assessment": "SUPPORTED",
+      "reason": "CSAIID is expressly designed to assess cross-semantic generalization (p2), with fixed six semantic test subsets, external-training-source groups and ACC comparison rules (§5.2 pp5–6, Table 1 p6). This is a reusable evaluation resource, not merely many model results."
+    },
+    "empirical_validity": "Numbers are reported, not reproduced; generator/source/semantic shifts are intertwined. No guarantee of semantically disjoint training/test object inventories established.",
+    "causal_interpretation": "LSUN-to-ImageNet comparisons also alter forgery generators/training distributions; Table 1 discussion p6 acknowledges generator influence. Accuracy changes cannot isolate semantic diversity as a causal effect.",
+    "availability": "p1 public-data hyperlink resolves in cached annotation inventory to a Google Drive file; not visited or downloaded during recovery, and license/access status not verified.",
+    "reproducibility": "Fixed category sizes and training/evaluation conventions documented, but exact seeds, per-generator integer category counts and dataset manifest not recovered; no separate CSAIID training/validation split asserted."
+  },
+  "evidence": [
+    {
+      "source": "evidence/groupB/R256-primary.pdf",
+      "locator": "Abstract p1; contribution (3) p2; §4 p5",
+      "claim": "Named cross-semantic resource is curated from COCO real images and caption-conditioned fakes, with additional PartiPrompts fictional/abstract/world-knowledge content. Real counterparts for unpaired prompts are category-matched COCO training images, not matched scenes."
+    },
+    {
+      "source": "evidence/groupB/R256-primary.pdf",
+      "locator": "§4 p5",
+      "claim": "Six categories: Outdoor Scenes, People, Animals, Vehicles, Food, Complex. Synthetic generators are Stable Diffusion v2, LDM and LCM; paper claims 1:1:1 generator balance. Complex captures difficult multi-concept/uncategorizable scenes."
+    },
+    {
+      "source": "evidence/groupB/R256-primary.pdf",
+      "locator": "§5.1/5.2 p5; Table 1 caption and discussion p6",
+      "claim": "External training comes from UniForen (LSUN/ProGAN) or GenImage (ImageNet/SD1.4); ACC is reported per semantic subset. Official weights are used for previous methods; starred NPR results use reimplemented training with official code. NoDown-S and DIRE are explicit same-training-set exceptions. DF3 is the validation resource for ATTSD settings, not CSAIID."
+    }
+  ],
+  "quantitative_evidence": [
+    {
+      "locator": "§4 p5",
+      "reported": {
+        "semantic_subsets": 6,
+        "real_per_subset": 1000,
+        "synthetic_per_subset": 1000,
+        "total_images": 12000,
+        "nominal_generators": 3,
+        "generator_ratio_claim": "1:1:1"
+      },
+      "caveat": "1,000 synthetic images per subset is not divisible by three; exact per-generator integer counts/rounding are absent. Do not invent equal integer counts."
+    },
+    {
+      "locator": "Table 1 p6",
+      "reported": "ATTSD average ACC 82.30% for LSUN/ProGAN training, 90.42% for ImageNet/SD1.4; NPR 71.33% and 84.02%, respectively.",
+      "caveat": "Paired training settings change both real-source semantics and fake generator; the 8.12-point ATTSD difference does not isolate a semantic causal effect."
+    },
+    {
+      "locator": "§5.1 p5; effect-of-gradient-steps p8",
+      "reported": "DF3 selected for validation; test batch size 1 with six adaptation gradient steps per sample.",
+      "caveat": "Test-time adaptation incurs additional computation and uses target inputs; does not establish a static single-pass or label-free-reproduction guarantee."
+    }
+  ],
+  "limitations": [
+    "Source confirms reusable cross-semantic evaluation contribution; category overlap with existing training concepts and multi-generator changes limit claims of controlled pure semantic shift.",
+    "No fetched dataset, license, manifest, duplicate audit or experiment reproduction.",
+    "Fixed evaluation subsets are documented; no dedicated CSAIID training/validation/test partition is claimed.",
+    "Paper author/DOI/workshop identity retained without publication metadata edits."
+  ],
+  "confidence": "High for bounded R1/R2 contribution support; empirical causal and operational reproducibility limits remain."
+}

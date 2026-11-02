@@ -1,0 +1,82 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "R110 exact action once and no formal closure",
+      "pass": true
+    },
+    {
+      "check": "R110 source hashes and byte counts",
+      "pass": true
+    },
+    {
+      "check": "R110 task/method preserved",
+      "pass": true
+    },
+    {
+      "check": "R138 exact action once and no formal closure",
+      "pass": true
+    },
+    {
+      "check": "R138 source hashes and byte counts",
+      "pass": true
+    },
+    {
+      "check": "R138 task/method preserved",
+      "pass": true
+    },
+    {
+      "check": "R154 exact action once and no formal closure",
+      "pass": true
+    },
+    {
+      "check": "R154 source hashes and byte counts",
+      "pass": true
+    },
+    {
+      "check": "R154 task/method preserved",
+      "pass": true
+    },
+    {
+      "check": "R187 exact action once and no formal closure",
+      "pass": true
+    },
+    {
+      "check": "R187 source hashes and byte counts",
+      "pass": true
+    },
+    {
+      "check": "R187 task/method preserved",
+      "pass": true
+    },
+    {
+      "check": "Source worktree baseline exact",
+      "pass": true
+    },
+    {
+      "check": "Source repository status empty",
+      "pass": true
+    },
+    {
+      "check": "R154 identity hold not transfer unsupported final equivalence",
+      "pass": true
+    },
+    {
+      "check": "Exactly two successful manuscripts and each per-paper budget respected",
+      "pass": true
+    }
+  ],
+  "passed": 16,
+  "failed": 0,
+  "source_HEAD": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "source_git_status": "",
+  "scope": "GroupA evidence/identity/provenance consistency checks; no repository tests, exports or formal decisions. Full protected-inventory comparison is parent-owned.",
+  "records_sha256": {
+    "R110": "247059a94b94b3186670ef50ec38cf9117c4de2867a9ca2bd681c8cfe334f5e8",
+    "R138": "e8831986480d2e7008d2953dbf79437f1080a4bdcaf3ce2c0c9cb0b56c83f29f",
+    "R154": "e364eee5ebcbfc6dfdfa5470b5647e55d7556dc033e356b3ca723aeddbd69533",
+    "R187": "58c020b7e3f933b681fac60285e75f11d5dc074d450478d634b5672b4bc97ae9"
+  },
+  "authoritative_writes": 0,
+  "traceability_QC_amendments": "qc/groupA-traceability-amendments.json"
+}

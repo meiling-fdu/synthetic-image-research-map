@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "recorded_utc": "2026-10-31T15:15:09.594565+00:00",
+  "scope": "Two traceability corrections only; no retrievals, scientific outcome changes or repository edits.",
+  "changes": [
+    {
+      "artifact": "per_paper/R138.json",
+      "before_sha256": "6d52960ca4f17303433bfec340e6362e391bd403fbe5eb7785a0c9c24a2e39d5",
+      "after_sha256": "e8831986480d2e7008d2953dbf79437f1080a4bdcaf3ce2c0c9cb0b56c83f29f",
+      "change": "License traceability qualification only; outcome remainsEVIDENCE_INSUFFICIENT."
+    },
+    {
+      "source": "evidence/groupA/R154-author-v1.pdf",
+      "source_sha256": "776c1304ebf723ad54e2d5ef2753c03a95b5a26bfa1447d7330aa75de3bbf5a0",
+      "PDF_page": 17,
+      "content": "SFT/annotation implementation details; not Figure7",
+      "artifact": "evidence/groupA/R154-appendix-p17-SFT-details.png",
+      "artifact_sha256": "ba2ded6789f8013a74264164e5c7ce4ecfecd3cf0cd1cce92bdd06578519a47a",
+      "original_misnamed_copy": "qc/groupA-traceability-before/R154-appendix-Fig7.png",
+      "old_name_was_not_a_cited_source": true,
+      "scientific_outcome_changed": false
+    }
+  ],
+  "all_originals_preserved": true
+}

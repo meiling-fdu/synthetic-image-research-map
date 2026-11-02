@@ -1,0 +1,34 @@
+--- a/tests/test_corpus_quality_batch_b_wave_b5_02.py
++++ b/tests/test_corpus_quality_batch_b_wave_b5_02.py
+@@ -298,6 +298,10 @@
+         expected['venue_review_required']=False
+         expected.pop('venue_review_reason',None)
+         expected['metadata_status']['field_overrides'].pop('venue')
++        # Fresh curated markers have no ambiguity_status field; the canonical
++        # paper retains its historical value. Preserve that schema distinction.
++        if marker:
++            expected.pop('ambiguity_status',None)
+     return expected
+ 
+ 
+@@ -346,7 +350,8 @@
+ 
+ 
+ @pytest.mark.parametrize('damage',['unrelated_type','identity','author','publication_link','map_location',
+-                                   'map_identity','map_type','mad_identity','missing_resource','fake_benchmark'])
++                                   'map_identity','map_type','mad_identity','missing_resource','fake_benchmark',
++                                   'marker_ambiguity_insertion','paper_ambiguity_removal'])
+ def test_public_projection_rejects_unapproved_or_incomplete_changes(damage):
+     old_papers=published_context(BASE)['papers']
+     old_maps={row['id']:row for row in json.loads(old('web/data/public_preview_map_data.json'))['records']}
+@@ -366,6 +371,10 @@
+     elif damage=='mad_identity':papers[CASES['P231']['paper_id']]['venue_id']='venue:icmr'
+     elif damage=='missing_resource':papers[CASES['R110']['paper_id']]['research_types']=['method']
+     elif damage=='fake_benchmark':papers[CASES['R564']['paper_id']]['research_types'].append('benchmark')
++    elif damage=='marker_ambiguity_insertion':
++        target=next(mid for mid,pid in identities.items() if pid==CASES['P231']['paper_id'])
++        markers[target]['ambiguity_status']='unresolved'
++    elif damage=='paper_ambiguity_removal':papers[CASES['P231']['paper_id']].pop('ambiguity_status')
+     with pytest.raises(AssertionError):assert_public_transaction(papers,markers)
+ 
+ 

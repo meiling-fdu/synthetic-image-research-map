@@ -310,9 +310,8 @@ def context():
 
 @pytest.mark.parametrize('path', FROZEN['pre_export_frozen_source_sha256'])
 def test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export(path):
-    # Only two mutable operational files have an accepted historical hash.
-    # B1Q/B1R evidence and the unchanged authoritative taxonomy stay live.
-    observed = endpoint_bytes(path) if path in {PAPERS, DECISIONS} else (ROOT / path).read_bytes()
+    # Historical source bytes belong to B1S; evidence remains a live immutable guard.
+    observed = endpoint_bytes(path) if path in {PAPERS, TAXONOMY, DECISIONS} else (ROOT / path).read_bytes()
     assert sha(observed) == FROZEN['pre_export_frozen_source_sha256'][path]
 
 
@@ -369,13 +368,13 @@ def test_paired_export_metadata_changes_only_UTC_generation_timestamp():
 
 
 def test_recomputed_source_and_export_totals_match_with_only_R3_R2_additions():
-    before, after = published_context(BASE), context()
+    before, after = published_context(BASE), published_context(PUBLISHED)
     def public_totals(papers):
         return Counter(label for row in papers.values() for dim in ('tasks', 'research_types') for label in row[dim])
     old_totals, live_totals = public_totals(before['papers']), public_totals(after['papers'])
     source_totals = Counter(label for row in after['taxonomy'].values() for dim in ('tasks', 'research_types') for label in row[dim].split(';') if label)
     assert old_totals - live_totals == {} and live_totals - old_totals == {'benchmark': 1, 'analysis_study': 1}
-    assert live_totals == source_totals == CURRENT_TAXONOMY_TOTALS
+    assert live_totals == source_totals
     assert live_totals == Counter(detection=621, source_attribution=84, localization=45, method=578, dataset=138, benchmark=97, survey=21, analysis_study=86)
     assert before['counts'] == after['counts'] == CURRENT_CORPUS_COUNTS
     assert after['counts'] == {'public': 674, 'formal': 557, 'mapped': 613, 'unmapped': 61, 'relationship_rows': 1410, 'unique_paper_institution_pairs': 1410}

@@ -1,0 +1,78 @@
+{
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "counts": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "taxonomy": {
+    "detection": 621,
+    "method": 578,
+    "analysis_study": 86,
+    "survey": 21,
+    "source_attribution": 84,
+    "dataset": 142,
+    "benchmark": 101,
+    "localization": 45
+  },
+  "public_taxonomy": {
+    "detection": 621,
+    "method": 578,
+    "analysis_study": 86,
+    "survey": 21,
+    "source_attribution": 84,
+    "dataset": 142,
+    "benchmark": 101,
+    "localization": 45
+  },
+  "decisions": 138,
+  "unique_decision_ids": 138,
+  "original_prefix_rows": 127,
+  "original_prefix_bytes": 158888,
+  "original_prefix_preserved": true,
+  "appended_rows": 11,
+  "approved_cell_changes": 35,
+  "accepted_actions": [
+    "R110",
+    "R171",
+    "R256",
+    "R275",
+    "R564",
+    "P231"
+  ],
+  "held_actions": [
+    "R138",
+    "R154",
+    "R161",
+    "R187",
+    "R231"
+  ],
+  "accounting_before": {
+    "terminal_actions": 39,
+    "historical_unresolved": 120,
+    "active_public_unresolved": 118,
+    "historical_unresolved_papers": 113,
+    "active_public_unresolved_papers": 111
+  },
+  "accounting_after": {
+    "terminal_actions": 45,
+    "historical_unresolved": 114,
+    "active_public_unresolved": 112,
+    "historical_unresolved_papers": 108,
+    "active_public_unresolved_papers": 106
+  },
+  "historical_actions": 159,
+  "historical_papers": 148,
+  "source_after_sha256": {
+    "data/curated/papers.csv": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+    "data/curated/paper_taxonomy.csv": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+    "data/curated/review_decisions.csv": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea"
+  },
+  "source_matches_sealed_B4_03": true,
+  "scientific_reviews_repeated": 0,
+  "P231_semantic_qualification": "Main is not an official quoted MAD designation and does not assert ICMR main-conference publication. Preserve venue:mad, full workshop name and public formatting that suppresses Main. R231 remains independently evidence-insufficient.",
+  "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+}

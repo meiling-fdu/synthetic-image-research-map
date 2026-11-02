@@ -1,0 +1,641 @@
+{
+  "schema": "batch-b-b5-02r-local-validation-1",
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "recorded_utc": "2026-11-01T13:19:54.914208+00:00",
+  "status": "LOCAL_VALIDATION_COMPLETE_PUBLICATION_REQUIRES_FINAL_PRESERVATION_STAGED_AND_HOSTED_GATES",
+  "scientific_review_repeated": false,
+  "adjudication_repeated": false,
+  "approved_B4_03_source": {
+    "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+    "counts": {
+      "public": 674,
+      "formal": 557,
+      "mapped": 613,
+      "unmapped": 61,
+      "relationship_rows": 1410,
+      "unique_paper_institution_pairs": 1410
+    },
+    "taxonomy": {
+      "detection": 621,
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "source_attribution": 84,
+      "dataset": 142,
+      "benchmark": 101,
+      "localization": 45
+    },
+    "public_taxonomy": {
+      "detection": 621,
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "source_attribution": 84,
+      "dataset": 142,
+      "benchmark": 101,
+      "localization": 45
+    },
+    "decisions": 138,
+    "unique_decision_ids": 138,
+    "original_prefix_rows": 127,
+    "original_prefix_bytes": 158888,
+    "original_prefix_preserved": true,
+    "appended_rows": 11,
+    "approved_cell_changes": 35,
+    "accepted_actions": [
+      "R110",
+      "R171",
+      "R256",
+      "R275",
+      "R564",
+      "P231"
+    ],
+    "held_actions": [
+      "R138",
+      "R154",
+      "R161",
+      "R187",
+      "R231"
+    ],
+    "accounting_before": {
+      "terminal_actions": 39,
+      "historical_unresolved": 120,
+      "active_public_unresolved": 118,
+      "historical_unresolved_papers": 113,
+      "active_public_unresolved_papers": 111
+    },
+    "accounting_after": {
+      "terminal_actions": 45,
+      "historical_unresolved": 114,
+      "active_public_unresolved": 112,
+      "historical_unresolved_papers": 108,
+      "active_public_unresolved_papers": 106
+    },
+    "historical_actions": 159,
+    "historical_papers": 148,
+    "source_after_sha256": {
+      "data/curated/papers.csv": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+      "data/curated/paper_taxonomy.csv": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "data/curated/review_decisions.csv": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea"
+    },
+    "source_matches_sealed_B4_03": true,
+    "scientific_reviews_repeated": 0,
+    "P231_semantic_qualification": "Main is not an official quoted MAD designation and does not assert ICMR main-conference publication. Preserve venue:mad, full workshop name and public formatting that suppresses Main. R231 remains independently evidence-insufficient.",
+    "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+  },
+  "validation": {
+    "initial_guards": {
+      "mode": "initial_guards",
+      "command": [
+        "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--tb=short",
+        "tests/test_corpus_quality_batch_b_wave_b1s.py::test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export[data/curated/paper_taxonomy.csv]",
+        "tests/test_corpus_quality_batch_b_wave_b4_02.py::test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+        "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories",
+        "--junitxml=/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/initial_guards.xml"
+      ],
+      "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+      "started_utc": "2026-11-01T11:25:04.361845+00:00",
+      "elapsed_seconds": 1.546,
+      "returncode": 0,
+      "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/initial_guards.log",
+      "log_sha256": "5579c9d00782671b26e69f60038fa3683c7ffc36261e50d34ca1a5f1f071707b",
+      "junit_sha256": "acc088de0e8fdfb72dffc70e8dc117cca22daa5201665f892a2a865ddd8848e0",
+      "suites": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "0",
+          "tests": "3",
+          "time": "0.938",
+          "timestamp": "2026-11-01T19:25:04.800428+08:00",
+          "hostname": "Meilingers-MacBook-Pro.local"
+        }
+      ],
+      "failures": []
+    },
+    "affected_reconciled": {
+      "mode": "affected_reconciled",
+      "command": [
+        "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--tb=short",
+        "tests/test_corpus_quality_batch_b_wave_b1s.py",
+        "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+        "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+        "tests/test_batch_b_historical_endpoints.py",
+        "tests/test_corpus_quality_batch_b_wave_b4_01.py",
+        "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+        "--junitxml=/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/affected_reconciled.xml"
+      ],
+      "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+      "started_utc": "2026-11-01T12:01:16.000440+00:00",
+      "elapsed_seconds": 61.841,
+      "returncode": 0,
+      "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/affected_reconciled.log",
+      "log_sha256": "92fb380bc34ea769284e1982024984aa477d671e68aa9420de44eeac629557df",
+      "junit_sha256": "d5e9ed88d22ce6d29e735d051673c02278d33a718044f5f7ecd3bf61f774303e",
+      "suites": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "0",
+          "tests": "410",
+          "time": "60.471",
+          "timestamp": "2026-11-01T20:01:16.621579+08:00",
+          "hostname": "Meilingers-MacBook-Pro.local"
+        }
+      ],
+      "failures": []
+    },
+    "historical": {
+      "mode": "historical",
+      "command": [
+        "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--tb=short",
+        "tests/test_historical_integrity_successors.py",
+        "tests/test_public_refinement_successors.py",
+        "tests/test_b5_publish_fixture_successor.py",
+        "tests/test_historical_test_fixtures.py",
+        "tests/test_admin_publish_workflow_reliability.py",
+        "tests/test_publish_workflow_fixture_isolation.py",
+        "tests/test_systematic_tier1.py",
+        "tests/test_systematic_tier2_policy.py",
+        "tests/test_systematic_tier2_application.py",
+        "tests/test_systematic_tier2_include.py",
+        "tests/test_systematic_tier2_high_priority_evidence.py",
+        "tests/test_systematic_tier2_normal_priority_evidence.py",
+        "--junitxml=/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/historical.xml"
+      ],
+      "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+      "started_utc": "2026-11-01T12:16:36.571862+00:00",
+      "elapsed_seconds": 83.609,
+      "returncode": 0,
+      "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/historical.log",
+      "log_sha256": "860c3898164702dcef44493e4ecdb8cb4e4b5c951c7577c32004428d93d0f7a9",
+      "junit_sha256": "3b542b2e40f95be5f03b927f96e873d36d3d440d109259b07dcb5caeeec4a06b",
+      "suites": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "0",
+          "tests": "129",
+          "time": "82.900",
+          "timestamp": "2026-11-01T20:16:37.213982+08:00",
+          "hostname": "Meilingers-MacBook-Pro.local"
+        }
+      ],
+      "failures": []
+    },
+    "full": {
+      "mode": "full",
+      "command": [
+        "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--tb=short",
+        "tests",
+        "--junitxml=/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/full.xml"
+      ],
+      "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+      "started_utc": "2026-11-01T12:52:08.425194+00:00",
+      "elapsed_seconds": 740.924,
+      "returncode": 0,
+      "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/full.log",
+      "log_sha256": "e7da8d05237002fb6639ba41b27a568358890757810e670cbcd2779917209dbc",
+      "junit_sha256": "0e1da6a34dd9bfe5c21d78f5d7ec1c01831527377b790bf80aa30cf3f7b7aa18",
+      "suites": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "0",
+          "tests": "3077",
+          "time": "731.744",
+          "timestamp": "2026-11-01T20:52:08.968325+08:00",
+          "hostname": "Meilingers-MacBook-Pro.local"
+        }
+      ],
+      "failures": []
+    },
+    "curated": {
+      "mode": "curated",
+      "command": [
+        "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+        "scripts/validate_curated_database.py"
+      ],
+      "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+      "started_utc": "2026-11-01T13:16:09.661681+00:00",
+      "elapsed_seconds": 7.509,
+      "returncode": 0,
+      "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/curated.log",
+      "log_sha256": "ee04d5a9ebedfb91241ec39e418f969a6c6c0f5b7316df8d294bb39f4829ffe7"
+    },
+    "public": {
+      "mode": "public",
+      "command": [
+        "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+        "scripts/validate_public_preview.py"
+      ],
+      "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+      "started_utc": "2026-11-01T13:16:17.220154+00:00",
+      "elapsed_seconds": 8.089,
+      "returncode": 0,
+      "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/public.log",
+      "log_sha256": "84ed5a622291a93a89b16c5407cd03ce7e3a891f84a4cc1d4caa6e7b2171749a"
+    },
+    "exclusions": {
+      "mode": "exclusions",
+      "command": [
+        "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+        "scripts/validate_paper_exclusions.py"
+      ],
+      "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+      "started_utc": "2026-11-01T13:16:25.359653+00:00",
+      "elapsed_seconds": 2.914,
+      "returncode": 0,
+      "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/exclusions.log",
+      "log_sha256": "1fadfe0741a198eaf009a4c2dc08fc234e7b451238157f8e1709960fe9732513"
+    },
+    "coverage": {
+      "mode": "coverage",
+      "command": [
+        "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+        "scripts/audit_key_paper_coverage.py",
+        "--check"
+      ],
+      "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+      "started_utc": "2026-11-01T13:16:28.321278+00:00",
+      "elapsed_seconds": 2.341,
+      "returncode": 0,
+      "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/coverage.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "export_first": {
+      "mode": "export_first",
+      "command": [
+        "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+        "scripts/refresh_public_preview.py",
+        "--skip-search",
+        "--user-agent",
+        "SyntheticImageResearchMap/0.1 (offline Batch B B5-02R integration)"
+      ],
+      "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+      "started_utc": "2026-11-01T11:39:58.999501+00:00",
+      "elapsed_seconds": 103.364,
+      "returncode": 0,
+      "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/export_first.log",
+      "log_sha256": "7b37f9cf5d7dab804174cbffeb7ec460cd7689baecc41f28f0db1bdaed711e68"
+    },
+    "export_second": {
+      "mode": "export_second",
+      "command": [
+        "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+        "scripts/refresh_public_preview.py",
+        "--skip-search",
+        "--user-agent",
+        "SyntheticImageResearchMap/0.1 (offline Batch B B5-02R integration)"
+      ],
+      "cwd": "/Users/meilinger/.codex/worktrees/batch-b-b5-02/synthetic-image-research-map",
+      "started_utc": "2026-11-01T13:16:30.720795+00:00",
+      "elapsed_seconds": 101.621,
+      "returncode": 0,
+      "log": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/export_second.log",
+      "log_sha256": "7b37f9cf5d7dab804174cbffeb7ec460cd7689baecc41f28f0db1bdaed711e68"
+    }
+  },
+  "export_reproducibility": {
+    "EXPORT_REPRODUCIBLE": 1,
+    "comparison": "Exact bytes and sizes of all seven outputs; no normalized timestamps",
+    "first": {
+      "web/data/public_preview_papers.json": {
+        "sha256": "2a61f361996aebf56b53dbb7ba4c27a9f7a78be5c3e257c168674fb12ecbb89e",
+        "bytes": 9089588
+      },
+      "web/data/public_preview_map_data.json": {
+        "sha256": "c0bb42390eb44a1bd746512077ec6dc9a40d2fe579f6a73184a78ecf5a4a1e38",
+        "bytes": 19797093
+      },
+      "docs/public_preview_report.md": {
+        "sha256": "c89274eadc0e60d11fabe6ab3ba565308f19346911f4491e8c6a2883c5c5d82a",
+        "bytes": 4246
+      },
+      "docs/missing_author_mappings_report.md": {
+        "sha256": "37d7455e8b0b0ef3d0c46e261a35bbc11f0b862b313e1ec77b5f65acdb01e11d",
+        "bytes": 16049
+      },
+      "data/manual/missing_author_mappings_report.csv": {
+        "sha256": "73bb86046fa81f56d19fbe66e38c547b9ca9c8d18aeec22d86239c6d5e42c593",
+        "bytes": 389050
+      },
+      "docs/key_paper_coverage_report.md": {
+        "sha256": "e3f92feea95ab5464d59060741e7356c419cac71068ab5af2afefaa913fb5f86",
+        "bytes": 47719
+      },
+      "data/manual/key_paper_coverage_report.csv": {
+        "sha256": "dbe1bd75e8d619a3a28354df1bccd79037f0aa281de49a37bbb49d3937d75099",
+        "bytes": 175297
+      }
+    },
+    "second": {
+      "web/data/public_preview_papers.json": {
+        "sha256": "2a61f361996aebf56b53dbb7ba4c27a9f7a78be5c3e257c168674fb12ecbb89e",
+        "bytes": 9089588
+      },
+      "web/data/public_preview_map_data.json": {
+        "sha256": "c0bb42390eb44a1bd746512077ec6dc9a40d2fe579f6a73184a78ecf5a4a1e38",
+        "bytes": 19797093
+      },
+      "docs/public_preview_report.md": {
+        "sha256": "c89274eadc0e60d11fabe6ab3ba565308f19346911f4491e8c6a2883c5c5d82a",
+        "bytes": 4246
+      },
+      "docs/missing_author_mappings_report.md": {
+        "sha256": "37d7455e8b0b0ef3d0c46e261a35bbc11f0b862b313e1ec77b5f65acdb01e11d",
+        "bytes": 16049
+      },
+      "data/manual/missing_author_mappings_report.csv": {
+        "sha256": "73bb86046fa81f56d19fbe66e38c547b9ca9c8d18aeec22d86239c6d5e42c593",
+        "bytes": 389050
+      },
+      "docs/key_paper_coverage_report.md": {
+        "sha256": "e3f92feea95ab5464d59060741e7356c419cac71068ab5af2afefaa913fb5f86",
+        "bytes": 47719
+      },
+      "data/manual/key_paper_coverage_report.csv": {
+        "sha256": "dbe1bd75e8d619a3a28354df1bccd79037f0aa281de49a37bbb49d3937d75099",
+        "bytes": 175297
+      }
+    }
+  },
+  "archive_sources": {
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/comprehensive_boundary_matrix.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/comprehensive_boundary_matrix.json",
+      "sha256": "7b386c489b296dfde13c81de65248a4e0fb698645bb88d3947c1048130bb8ffe",
+      "bytes": 185578
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/comprehensive_boundary_matrix.md": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/comprehensive_boundary_matrix.md",
+      "sha256": "00e70e4bbaf73fb346c595710d0bde70d35f42fc232dfe59a2b0dde4150cf0a4",
+      "bytes": 19356
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/independent_boundary_repair_review.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/independent_boundary_repair_review.json",
+      "sha256": "0f8b0d438b10cba43139fea66182a2842efe0262227037aa37b984cbbf213119",
+      "bytes": 49202
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/independent_boundary_repair_review.md": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/independent_boundary_repair_review.md",
+      "sha256": "6857309391100f971bee1d62fe0fdab7711c550e2b082b42ad6bd13b26109297",
+      "bytes": 3792
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/historical_boundary.proposed.diff": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/historical_boundary.proposed.diff",
+      "sha256": "38eec1ed71211d74603f67198b1937a87715928aef1281f4520b5582a9db31f4",
+      "bytes": 29715
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/current_coverage_independent_root_review.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/current_coverage_independent_root_review.json",
+      "sha256": "6b3bf4daf996ac3ecca1d27349dbeb6ca8a6437b0971c7a630f05047423e6860",
+      "bytes": 1295
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/P231_projection_review.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/P231_projection_review.json",
+      "sha256": "5fec4475987ea41ccc684ede6a9ca019b8583a86aab38333a1745ce998ad26a0",
+      "bytes": 1547
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/P231_marker_projection_exact_fix.diff": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/P231_marker_projection_exact_fix.diff",
+      "sha256": "5672ff08e9294906e175ed40c4d0b0f288e32723d3b02c6c17cfe9e19e539965",
+      "bytes": 1952
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/P231_marker_projection_exact_fix_review.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/P231_marker_projection_exact_fix_review.json",
+      "sha256": "4a0ca483bd5d1bb9a959fd8c6d1e1d01fde2eb9c3055a3c374e0b7bdd3243f06",
+      "bytes": 2068
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/P231_marker_projection_independent_boundary_review.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/P231_marker_projection_independent_boundary_review.json",
+      "sha256": "2ba72563c1ad528b15b10aaad6c03c2336a0c3b06ec150ccb8092b19492a96f2",
+      "bytes": 9821
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/export_first_independent_review.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/export_first_independent_review.json",
+      "sha256": "59ac44cb14967399e2c3e9902e8e0ddc59241f256d942e7b044063a13ef9b3ea",
+      "bytes": 34742
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/integrated_state_recomputed.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/integrated_state_recomputed.json",
+      "sha256": "171c5ce51b5dbd0540ee4c34f62faef22fe4c32d2e845f11217f9fea40cc0af6",
+      "bytes": 2283
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/export_reproducibility.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/export_reproducibility.json",
+      "sha256": "3182bbc727fd46c9500924a8880692725447537120d41296717137dc0fd3432b",
+      "bytes": 2392
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/first_export_output_hashes.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/first_export_output_hashes.json",
+      "sha256": "bde9f8274207aabf6d2fb3c2527da67fdd596cc37092779ba825d8a8db8633ca",
+      "bytes": 1066
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/immutable_capture_whitespace_inventory.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/immutable_capture_whitespace_inventory.json",
+      "sha256": "25b49c13fdcdcaecc95318bb3b195dfac59b2c6ebf8bde88e91af5460ae3ce48",
+      "bytes": 1806
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/original_stop/historical_guard_failure_matrix.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02-2026-11-01/historical_guard_failure_matrix.json",
+      "sha256": "3041a081f01511071965f49dc01d2d4396592b14cec93452fd9e9227675f263b",
+      "bytes": 21851
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/original_stop/historical_guard_failure_matrix.md": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02-2026-11-01/historical_guard_failure_matrix.md",
+      "sha256": "c7ca074ccac6bb0024833943a65f4552649d6ca7f91760130b3846b00bf76a5d",
+      "bytes": 8879
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/original_stop/historical_pre_export_gate.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02-2026-11-01/historical_pre_export_gate.json",
+      "sha256": "997b3e298208d794214aea0dab6187d33624a12e2c361df2f23b4c7ffd4c5606",
+      "bytes": 5902
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/original_stop/historical_pre_export_gate.xml": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02-2026-11-01/historical_pre_export_gate.xml",
+      "sha256": "fb1fceb83c6be0d59d69a0deda19a8ed18a9ee2a63fc5a938aedd34319c74a81",
+      "bytes": 5187
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/original_stop/historical_pre_export_gate.log.txt": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02-2026-11-01/historical_pre_export_gate.log",
+      "sha256": "72bb0fdcc81d3eb46fb24a629fb6a38006effc2195ad7172241efb529aea3d85",
+      "bytes": 4267
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/initial_guards.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/initial_guards.json",
+      "sha256": "f10eab9bb4c798bfc6a5e5d1e04576705e55167e8cc4e5177a456f23fabaf5e3",
+      "bytes": 1577
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/initial_guards.xml": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/initial_guards.xml",
+      "sha256": "acc088de0e8fdfb72dffc70e8dc117cca22daa5201665f892a2a865ddd8848e0",
+      "bytes": 797
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/initial_guards.log.txt": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/initial_guards.log",
+      "sha256": "5579c9d00782671b26e69f60038fa3683c7ffc36261e50d34ca1a5f1f071707b",
+      "bytes": 98
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/affected.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/affected.json",
+      "sha256": "933bb1be3d57ffc2f131835d1e187da9971c46d706eb8b3c6d2c7b43c5cbf0f9",
+      "bytes": 2398
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/affected.xml": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/affected.xml",
+      "sha256": "ff95a1852c3caf3dbf9befe165f6e9f74737c7b66dff8b53a729def5cd6fa698",
+      "bytes": 69908
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/affected.log.txt": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/affected.log",
+      "sha256": "479b1fc6125dd8abd4bdccf02dd12df6420900bf39c5246f73bd8341afd2f1ea",
+      "bytes": 1575
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/affected_reconciled.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/affected_reconciled.json",
+      "sha256": "79ff411ce62082f5782cbf399b166839898a573942ebd3099de7587c81ad7738",
+      "bytes": 1485
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/affected_reconciled.xml": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/affected_reconciled.xml",
+      "sha256": "d5e9ed88d22ce6d29e735d051673c02278d33a718044f5f7ecd3bf61f774303e",
+      "bytes": 69218
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/affected_reconciled.log.txt": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/affected_reconciled.log",
+      "sha256": "92fb380bc34ea769284e1982024984aa477d671e68aa9420de44eeac629557df",
+      "bytes": 511
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/historical.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/historical.json",
+      "sha256": "1e01b6a3992aa2e6bd969d9709b9fcc492ec6dfaa05fe8d97648ebdb99dab1df",
+      "bytes": 1749
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/historical.xml": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/historical.xml",
+      "sha256": "3b542b2e40f95be5f03b927f96e873d36d3d440d109259b07dcb5caeeec4a06b",
+      "bytes": 20216
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/historical.log.txt": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/historical.log",
+      "sha256": "860c3898164702dcef44493e4ecdb8cb4e4b5c951c7577c32004428d93d0f7a9",
+      "bytes": 191
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/full.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/full.json",
+      "sha256": "624b9c58619e7e48ccfc321c8bb52a883334f04df04ab12585dc95e6ec114fd4",
+      "bytes": 1133
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/full.xml": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/full.xml",
+      "sha256": "0e1da6a34dd9bfe5c21d78f5d7ec1c01831527377b790bf80aa30cf3f7b7aa18",
+      "bytes": 448337
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/full.log.txt": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/full.log",
+      "sha256": "e7da8d05237002fb6639ba41b27a568358890757810e670cbcd2779917209dbc",
+      "bytes": 4237
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/curated.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/curated.json",
+      "sha256": "3825a1c26bb3a8952e04c5d39e473b9f6b69ebaed298dfd079011fefae1881e0",
+      "bytes": 565
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/curated.log.txt": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/curated.log",
+      "sha256": "ee04d5a9ebedfb91241ec39e418f969a6c6c0f5b7316df8d294bb39f4829ffe7",
+      "bytes": 31322
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/public.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/public.json",
+      "sha256": "5524ef2ab5146d9915dd9dd1aad5f9e3161f1014a2f99e05ec6c429e902a878f",
+      "bytes": 561
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/public.log.txt": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/public.log",
+      "sha256": "84ed5a622291a93a89b16c5407cd03ce7e3a891f84a4cc1d4caa6e7b2171749a",
+      "bytes": 12519
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/exclusions.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/exclusions.json",
+      "sha256": "cf1428e350da9090f587308947200748ad4452f1a2010ce811e3758d0698b58a",
+      "bytes": 571
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/exclusions.log.txt": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/exclusions.log",
+      "sha256": "1fadfe0741a198eaf009a4c2dc08fc234e7b451238157f8e1709960fe9732513",
+      "bytes": 450
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/coverage.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/coverage.json",
+      "sha256": "d13c53ced68410c7a8c3999a187408ee482699494c4916643bf311b0ba20d16e",
+      "bytes": 581
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/coverage.log.txt": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/coverage.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/export_first.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/export_first.json",
+      "sha256": "cb0d7fabf9c3a7ce2765560a11cda6bf9a09610515106df3aa55444695208083",
+      "bytes": 689
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/export_first.log.txt": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/export_first.log",
+      "sha256": "7b37f9cf5d7dab804174cbffeb7ec460cd7689baecc41f28f0db1bdaed711e68",
+      "bytes": 17992
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/export_second.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/export_second.json",
+      "sha256": "5f82f86cd31bf2a320d8ed67acc109dba43545800c5628c1e0af82adea929f02",
+      "bytes": 691
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/validation/export_second.log.txt": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/export_second.log",
+      "sha256": "7b37f9cf5d7dab804174cbffeb7ec460cd7689baecc41f28f0db1bdaed711e68",
+      "bytes": 17992
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/preservation_recovery.md": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/qc/preservation_recovery.md",
+      "sha256": "bcc8b19a26d2659e935c84e36b8c504ebb1e23dbb62e7f90ea51c8f060312755",
+      "bytes": 16060
+    },
+    "data/raw/corpus_quality_batch_b_wave_b5_02_2026_11_01/boundary_reconciliation/immutable_whitespace_independent_review.json": {
+      "original": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-02r-2026-11-01/qc/immutable_whitespace_independent_review.json",
+      "sha256": "53cc1112db6e4caa220ec613d5eadcc4612aacb18bb05d8497e44df6d93534b7",
+      "bytes": 6723
+    }
+  },
+  "publication_receipt": "Append-only external receipt is created only after exact remote SHA, Pages, live bytes and automatic hosted CI are verified.",
+  "protected_source_policy": "tests/public_refinement_snapshot.py and original historical receipts remain byte-identical; exact unprotected test diffs independently reviewed.",
+  "literal_raw_capture_whitespace": "Sealed captured source bytes are preserved; their whitespace is provenance, not edited executable text."
+}

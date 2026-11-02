@@ -1,0 +1,379 @@
+{
+  "task": "B3-03 final independent scientific and bounded-publication QC",
+  "status": "PASS_WITH_DOCUMENTED_QUALIFICATIONS",
+  "reviewed_utc": "2026-11-01T00:58:30.472528+00:00",
+  "papers": 10,
+  "actions": 11,
+  "independent_QC_receipts": [
+    {
+      "path": "qc/groupA-independent-review.json",
+      "sha256": "d7ad6fde0d945189419ef0836a955d214ee983edbf54d0cc5e4d7d9f1ad42712"
+    },
+    {
+      "path": "qc/groupB-independent-review.json",
+      "sha256": "3c5f731f50839b0d85878c98bd35e56fc59375857254a7c19cc8222517ac22e7"
+    },
+    {
+      "path": "qc/root-group-review.json",
+      "sha256": "bf1e4fe462eb80951eb16b947290f72180efe8cfe2c5b8bb8418ef9f2dc8096b"
+    }
+  ],
+  "all_actions_exactly_once": true,
+  "classification_disagreements": [],
+  "interpretation_refinements": [
+    {
+      "review_id": "R256",
+      "addendum": "qc/R256-independent-caveat-addendum.json",
+      "meaning": "No proven global generator-ratio contradiction; precise per-category allocation remains unspecified. Original reviewer record retained unchanged; contribution proposal unaffected."
+    }
+  ],
+  "decisions": [
+    {
+      "review_id": "R110",
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_QC_outcome": "SUPPORTED_ADDITION",
+      "agreement": true,
+      "basis": {
+        "review_id": "R110",
+        "qc_agreement": "AGREE",
+        "outcome": "SUPPORTED_ADDITION",
+        "provisional_research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "primary_basis": "Dedicated namedcuratedMRI-Forensics resource and explicit firstcontribution with construction, release intent; reusablecrossgenerator and crossdomain evaluation provisions with partitions,baselines,metrics satisfyR1/R2 independently ofperformance.",
+        "verified_caveats": [
+          "Table2 is generated-only recognition,not balancedaccuracy/specificity.",
+          "Table3 separately reports brain real/fake metrics andAUC.",
+          "RINE prose says slightlybetter ProGAN once,but all comparable Table2ProGANtestcells arelower:2.30vs75.07,1.60vs78.43,0.20vs3.50.",
+          "No patient-levelsplit,clinicalvalidity,releaseintegrity or causal/performance reproduction established."
+        ]
+      },
+      "receipt": "qc/groupA-independent-review.json"
+    },
+    {
+      "review_id": "R138",
+      "original_reviewer_outcome": "EVIDENCE_INSUFFICIENT",
+      "independent_QC_outcome": "EVIDENCE_INSUFFICIENT",
+      "agreement": true,
+      "basis": {
+        "review_id": "R138",
+        "qc_agreement": "AGREE",
+        "outcome": "EVIDENCE_INSUFFICIENT",
+        "provisional_research_types": [
+          "method"
+        ],
+        "primary_basis": "AuthorREADME positivelyidentifies proposed FakeCOCOrelease andCOCO-caption generation. It lacks inspectedpaper construction,partitions andquantitative protocol. ExactDOI IEEEendpoint is empty202WAF challenge; no fullscientificpaper available.",
+        "verified_caveats": [
+          "READMEXinhan vsBibTeX/CrossrefXinghan; nopresumedidentitychange.",
+          "Dataset-specific academic-onlyrestrictionexplicit; no unrestrictedlicenseinferred.",
+          "Hold doesnotdeny reusableintent or make datasetavailability anindependenttaxonomycriterion."
+        ]
+      },
+      "receipt": "qc/groupA-independent-review.json"
+    },
+    {
+      "review_id": "R154",
+      "original_reviewer_outcome": "IDENTITY_BLOCKED",
+      "independent_QC_outcome": "IDENTITY_BLOCKED",
+      "agreement": true,
+      "basis": {
+        "review_id": "R154",
+        "qc_agreement": "AGREE",
+        "outcome": "IDENTITY_BLOCKED",
+        "provisional_research_types": [
+          "method"
+        ],
+        "conditional_candidate_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "primary_basis": "The46pagearXivv1 explicitlycontributescuratedMIRAGE and source/generator-disjoint reusablebenchmark protocol. Exacttitle/eightcoauthorsmatchcanonicalDOI,but firstauthorChengXia conflicts withOuChengHuang; noauthoritativebridge permits transfer.",
+        "verified_caveats": [
+          "Main20,000 vsappendix2,000trainingsamples.",
+          "Main64pipelines/53models vsappendix64models.",
+          "Main64H20SFTGPU vsappendix8H20;effectivebatch64.",
+          "Table2mean72.81vs67.26gives5.55points,butOOD-C78.46<82.30; noevery-subset-superiority.",
+          "Table3ChameleonALL78.31/fake50.29/real98.37;CNNSpotaggregate64.21trainedMIRAGEvs68.89GenImage.",
+          "Table5GaussianBlurvsproseGaussianNoise.",
+          "Anonymoussources/humanplatformlabelagreement are notauditedcreationprovenance.",
+          "Manipulated/compositecandidateimagescope is version-conditionedfollowuponly; noauthoritativeactioncreated."
+        ]
+      },
+      "receipt": "qc/groupA-independent-review.json"
+    },
+    {
+      "review_id": "R161",
+      "original_reviewer_outcome": "EVIDENCE_INSUFFICIENT",
+      "independent_QC_outcome": "EVIDENCE_INSUFFICIENT",
+      "agreement": true,
+      "basis": {
+        "original_reviewer_outcome": "EVIDENCE_INSUFFICIENT",
+        "independent_QC_outcome": "EVIDENCE_INSUFFICIENT",
+        "agreement": true,
+        "basis": "Exact landing identity verified; first PDF RemoteDisconnected, alternate403. Abstract resource claim does not establish R1/R2 methods/protocol. Access failure is not negative scientific evidence.",
+        "contribution_confidence": "INSUFFICIENT",
+        "reproducibility_confidence": "NOT_ASSESSED_NO_FULL_TEXT"
+      },
+      "receipt": "qc/groupB-independent-review.json"
+    },
+    {
+      "review_id": "R171",
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_QC_outcome": "SUPPORTED_ADDITION",
+      "agreement": true,
+      "basis": {
+        "original_reviewer_outcome": "SUPPORTED_ADDITION",
+        "independent_QC_outcome": "SUPPORTED_ADDITION",
+        "agreement": true,
+        "proposed_research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "R1": "Named independently contributed CommGen15 construction/curation, source/composition details and intended provision. Native static-image contribution is substantive independently of extracted frames; all evaluation units are images, not a temporal video detection task.",
+        "R2": "Reusable balanced image-level evaluation resource with common preprocessing, external-training settings and Acc/AP protocol. Not inferred from platform count or table scale.",
+        "contribution_confidence": "HIGH_WITH_COMPOSITION_AND_PROVENANCE_LIMITS",
+        "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; dynamic galleries/platform versions, frame dependence and actual release/license not independently verified"
+      },
+      "receipt": "qc/groupB-independent-review.json"
+    },
+    {
+      "review_id": "R187",
+      "original_reviewer_outcome": "EVIDENCE_INSUFFICIENT",
+      "independent_QC_outcome": "EVIDENCE_INSUFFICIENT",
+      "agreement": true,
+      "basis": {
+        "review_id": "R187",
+        "qc_agreement": "AGREE",
+        "outcome": "EVIDENCE_INSUFFICIENT",
+        "provisional_research_types": [
+          "method"
+        ],
+        "primary_basis": "ExactDOItitle/sevenauthorsandprimaryabstractconfirmed,but medicaldataset construction/contribution/protocolunknown. CanonicalandVORresponses are browserchallengeHTML; OpenReviewPDFfailed403.",
+        "verified_caveats": [
+          "Abstract4.51%accuracy/3.93%APgains remain inheritedclaims,notverifiedexperimentalresults.",
+          "Noabsenceornegativecontributionfinding; nolabelfrommedicalmotivationonly."
+        ]
+      },
+      "receipt": "qc/groupA-independent-review.json"
+    },
+    {
+      "review_id": "P231",
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_QC_outcome": "SUPPORTED_ADDITION",
+      "agreement": true,
+      "qualified_agreement": "AGREE_CONDITIONAL_POLICY_INTERPRETATION",
+      "basis": {
+        "review_id": "P231",
+        "qc_agreement": "AGREE_CONDITIONAL_POLICY_INTERPRETATION",
+        "outcome": "SUPPORTED_ADDITION",
+        "exact_proposal": {
+          "venue_track": "Main"
+        },
+        "primary_finding": "Exact title and four ordered authors occur in final MAD2026 Session2 research-paper list. No literal Main label or DOI printed in program; DOI correspondence uses earlier published U017 identity receipt.",
+        "policy_basis": [
+          "LockedV1 distinguishes canonical venue,event/container and track.",
+          "docs/workshop_venue_audit_report.md:42–44 calls for paper/program verification before explicit Main or nestedWorkshop confirmation."
+        ],
+        "limitation": "Regular-session→Main is an explicit repository normalization requiring maintainer acceptance. It is not publisher-literal metadata and V1 alone never proves every standalone event paper is Main.",
+        "mandatory_change": false
+      },
+      "receipt": "qc/root-group-review.json"
+    },
+    {
+      "review_id": "R231",
+      "original_reviewer_outcome": "EVIDENCE_INSUFFICIENT",
+      "independent_QC_outcome": "EVIDENCE_INSUFFICIENT",
+      "agreement": true,
+      "qualified_agreement": "AGREE",
+      "basis": {
+        "review_id": "R231",
+        "qc_agreement": "AGREE",
+        "outcome": "EVIDENCE_INSUFFICIENT",
+        "primary_finding": "The single ACM PDF request returned403 Cloudflare HTML. Earlier U017 page1 and current program prove identity/affiliations/eventrole only; NESS construction,partitions,evaluation and reusable resource claims have not been inspected.",
+        "exact_proposal": null,
+        "limitation": "No negative scientific finding; absence of accessible manuscript does not disprove dataset/benchmark contributions. Keep method/detection authoritative state and independent P231 action separate."
+      },
+      "receipt": "qc/root-group-review.json"
+    },
+    {
+      "review_id": "R256",
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_QC_outcome": "SUPPORTED_ADDITION",
+      "agreement": true,
+      "basis": {
+        "original_reviewer_outcome": "SUPPORTED_ADDITION",
+        "independent_QC_outcome": "SUPPORTED_ADDITION",
+        "agreement": true,
+        "proposed_research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "R1": "Explicit separate CSAIID construction/semantic curation contribution beyond model training data.",
+        "R2": "Named intended cross-semantic evaluation resource with fixed categories and external-training comparisons; not merely extensive experiments.",
+        "contribution_confidence": "HIGH_WITH_SPECIFICATION_LIMITS",
+        "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; exact per-generator category counts/seeds/manifest unverified",
+        "caveat_refinement": "Original record correctly notes1000 is not divisible by3, but the paper says1:1:1 across subsets. Global6000fakes can be2000pergenerator. No proven global ratio contradiction; exact per-category allocation remains unspecified. No classification disagreement."
+      },
+      "receipt": "qc/groupB-independent-review.json"
+    },
+    {
+      "review_id": "R275",
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_QC_outcome": "SUPPORTED_ADDITION",
+      "agreement": true,
+      "qualified_agreement": "AGREE",
+      "basis": {
+        "review_id": "R275",
+        "qc_agreement": "AGREE",
+        "outcome": "SUPPORTED_ADDITION",
+        "exact_proposal": {
+          "research_types": [
+            "method",
+            "benchmark"
+          ],
+          "tasks": [
+            "detection"
+          ]
+        },
+        "primary_finding": "The paper explicitly contributes named test-only GenImage++ for future detector evaluation (§1p2;§5pp5–6), provides generator/settings and prompt/subset construction (C.2–C.3pp19–21), and applies a fixed SDv1.4-training comparative evaluation (Table3p8). These substantive reusable evaluation specifications satisfy R2 beyond benchmark size or bigtables.",
+        "numerical_check": {
+          "Table7_counts_as_reported_in_k": [
+            6,
+            18.3,
+            30,
+            6,
+            18.3,
+            18.3,
+            6,
+            30,
+            6
+          ],
+          "derived_total_from_rounded_counts": 138900,
+          "Table3_OMAT_nine_values": [
+            96.53,
+            92.55,
+            97.6,
+            97.67,
+            100.0,
+            99.17,
+            98.27,
+            90.38,
+            98.82
+          ],
+          "derived_unweighted_mean": 96.77666666666667,
+          "reported_rounded_average": 96.78,
+          "illustrative_weighted_mean_from_rounded_counts": 95.93676025917927,
+          "weighted_value_role": "Independent arithmetic contrast only; not reported as an author result or image-level reanalysis."
+        },
+        "limitations": [
+          "C.4pp21–22 says no corresponding real images; GenImage++ scores do not establish balanced real/fake accuracy,specificity or AUC.",
+          "Table7 totals are derived from rounded counts,not a downloaded-file audit.",
+          "No empirical reproduction or causal endorsement of latent-prior explanation; code/data availability and licensing remain separate.",
+          "Official HTML Bing Fan versus PDF/canonical Bin Fan discrepancy remains explicit.",
+          "Only benchmark action assigned; no R1dataset or task action is created."
+        ]
+      },
+      "receipt": "qc/root-group-review.json"
+    },
+    {
+      "review_id": "R564",
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_QC_outcome": "SUPPORTED_ADDITION",
+      "agreement": true,
+      "basis": {
+        "original_reviewer_outcome": "SUPPORTED_ADDITION",
+        "independent_QC_outcome": "SUPPORTED_ADDITION",
+        "agreement": true,
+        "proposed_research_types": [
+          "method",
+          "dataset"
+        ],
+        "R1": "Separate DF3 constructed/curated resource and future detector robustness use; not merely a one-off GLFF experiment pool.",
+        "R2": "NOT_REVIEWED; benchmark addition outside assigned action.",
+        "contribution_confidence": "HIGH_WITH_AUTHOR_VERSION_LIMITS",
+        "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; future release claim, processed derivatives and separate negative controls retained; publisher-final equality unverified"
+      },
+      "receipt": "qc/groupB-independent-review.json"
+    }
+  ],
+  "contribution_vs_reproducibility": {
+    "R110": {
+      "contribution": "Named curatedMRIresource plus reusable cross-generator/domain evaluation; separate substantive data and evaluation contributions underR1/R2.",
+      "contribution_confidence": "Supported conditional on normal maintainer identity/evidence acceptance",
+      "reproducibility": "Not independently reproduced; no patient-level independence, clinical validity, release-integrity or performance replication established."
+    },
+    "R171": {
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_QC_outcome": "SUPPORTED_ADDITION",
+      "agreement": true,
+      "proposed_research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "R1": "Named independently contributed CommGen15 construction/curation, source/composition details and intended provision. Native static-image contribution is substantive independently of extracted frames; all evaluation units are images, not a temporal video detection task.",
+      "R2": "Reusable balanced image-level evaluation resource with common preprocessing, external-training settings and Acc/AP protocol. Not inferred from platform count or table scale.",
+      "contribution_confidence": "HIGH_WITH_COMPOSITION_AND_PROVENANCE_LIMITS",
+      "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; dynamic galleries/platform versions, frame dependence and actual release/license not independently verified"
+    },
+    "R256": {
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_QC_outcome": "SUPPORTED_ADDITION",
+      "agreement": true,
+      "proposed_research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "R1": "Explicit separate CSAIID construction/semantic curation contribution beyond model training data.",
+      "R2": "Named intended cross-semantic evaluation resource with fixed categories and external-training comparisons; not merely extensive experiments.",
+      "contribution_confidence": "HIGH_WITH_SPECIFICATION_LIMITS",
+      "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; exact per-generator category counts/seeds/manifest unverified",
+      "caveat_refinement": "Original record correctly notes1000 is not divisible by3, but the paper says1:1:1 across subsets. Global6000fakes can be2000pergenerator. No proven global ratio contradiction; exact per-category allocation remains unspecified. No classification disagreement."
+    },
+    "R275": {
+      "contribution": "GenImage++ explicitly constructed as a reusable future detector evaluation resource with settings/prompt/subset specification and fixed comparative protocol, satisfyingR2.",
+      "contribution_confidence": "HIGH_WITH_GENERATED_ONLY_PROTOCOL_LIMIT",
+      "reproducibility": "Not reproduced; generated-only tests establish neither balanced authenticity accuracy nor real-class specificity. Rounded source counts are not a file audit. Availability and latent-prior causal interpretation are separate."
+    },
+    "R564": {
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_QC_outcome": "SUPPORTED_ADDITION",
+      "agreement": true,
+      "proposed_research_types": [
+        "method",
+        "dataset"
+      ],
+      "R1": "Separate DF3 constructed/curated resource and future detector robustness use; not merely a one-off GLFF experiment pool.",
+      "R2": "NOT_REVIEWED; benchmark addition outside assigned action.",
+      "contribution_confidence": "HIGH_WITH_AUTHOR_VERSION_LIMITS",
+      "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; future release claim, processed derivatives and separate negative controls retained; publisher-final equality unverified"
+    }
+  },
+  "P231_precision_boundary": {
+    "verdict": "SUPPORTED_ADDITION_QUALIFIED_NORMALIZATION_ONLY",
+    "official_evidence": "Exactpaper/title/fourauthors in MADSession2. Program does not literally label Main or regular-paper track.",
+    "repository_semantics": "docs/workshop_venue_audit_report.md:32,42–44 explicitly requires paper/program review before Main or documented nestedWorkshop confirmation. Existing canonicalvenue:mad retained; normalizing its ordinary paper-session role to Main is faithful only within that venue and requires explicit maintainer acceptance.",
+    "prohibited_inferences": [
+      "No mainICMRpublication claim",
+      "No official quotedMaintrack claim",
+      "No automaticMainfromstandalone workshop name",
+      "No canonicalvenue substitution"
+    ],
+    "source_hashes": {
+      "official_program": "53a0015a413baf48e992209de2665b43bd7007e4e23787db40c9f6ee820255b0",
+      "repository_track_report": "171560e3fef7f3e24a4e6c5b497de84b3cc09f4fbe04e2fd2bd932285e358660"
+    }
+  },
+  "hold_semantics": "R138,R161,R187,R231 hold for insufficient primary scientific evidence; R154 identity-blocked by unbridged first-author/version conflict. No access limitation is a negative scientific conclusion; P231/R231 remain independent.",
+  "source_records_unchanged_in_this_QC": true,
+  "authoritative_changes": 0,
+  "formal_decisions": 0,
+  "new_retrievals": 0,
+  "exports": 0
+}

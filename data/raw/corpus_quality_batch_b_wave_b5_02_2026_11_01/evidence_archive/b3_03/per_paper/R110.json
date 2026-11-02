@@ -1,0 +1,216 @@
+{
+  "schema": "batch-b-b3-03-per-paper-evidence-1",
+  "batch_id": "B3-03",
+  "planned_batch_id": "B2-03",
+  "reviewer_group": "A",
+  "review_id": "R110",
+  "action_ids": [
+    "R110"
+  ],
+  "paper_id": "curated:6976641cbfe602a7e617",
+  "title": "Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis",
+  "canonical_identity": {
+    "paper_id": "curated:6976641cbfe602a7e617",
+    "title": "Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis",
+    "authors": [
+      "Arpan Mahara",
+      "Naphtali Rishe",
+      "Malek Adjouadi"
+    ],
+    "doi": "",
+    "arxiv_id": "",
+    "canonical_url": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf",
+    "current_taxonomy_id": "paper_id:curated:6976641cbfe602a7e617"
+  },
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "original_review_question": "MRI-Forensics is introduced as a curated, released medical forensic benchmark dataset.",
+  "governing_policies": {
+    "R1": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+    "R2": "Assign benchmark only when the paper contributes a reusable evaluation benchmark, challenge, protocol, systematic comparative framework, or benchmark resource intended to evaluate methods. Large experimental tables or evaluation across many generators alone are insufficient."
+  },
+  "local_evidence_reused": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R110",
+      "finding": "MRI-Forensics is introduced as a curated, released medical forensic benchmark dataset. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R110",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "paper_id:curated:6976641cbfe602a7e617",
+      "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R1",
+      "finding": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R2",
+      "finding": "Assign benchmark only when the paper contributes a reusable evaluation benchmark, challenge, protocol, systematic comparative framework, or benchmark resource intended to evaluate methods. Large experimental tables or evaluation across many generators alone are insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "local_byte_hash_verified": true
+    }
+  ],
+  "provisional_only": true,
+  "formal_maintainer_decision": false,
+  "authoritative_action_closed": false,
+  "current_tasks_preserved": true,
+  "method_label_preserved": true,
+  "authoritative_changes_by_reviewer": 0,
+  "written_utc": "2026-10-31T13:05:11.887229+00:00",
+  "outcome": "SUPPORTED_ADDITION",
+  "proposed_research_types": [
+    "method",
+    "dataset",
+    "benchmark"
+  ],
+  "confidence": {
+    "identity": "high",
+    "R1_dataset_contribution": "high",
+    "R2_benchmark_contribution": "high",
+    "empirical_results_independently_reproduced": false
+  },
+  "identity_verification": {
+    "status": "VERIFIED_PRIMARY_PROCEEDINGS_MANUSCRIPT",
+    "basis": "Official CVF WACV2026W SAFE-2026 PDF, exact title and all three canonical authors on PDF page1. Footer states it is the accepted open-access workshop version apart from watermark; printed proceedings pages222-231. No DOI/arXiv identifier was invented.",
+    "version": "CVF accepted open-access workshop paper,10 PDF pages; publisher-final bibliographic equivalence not separately checked."
+  },
+  "sources": [
+    {
+      "source_id": "R110-canonical.pdf",
+      "kind": "PRIMARY_OFFICIAL_ACCEPTED_MANUSCRIPT",
+      "url": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf",
+      "artifact": "evidence/groupA/R110-canonical.pdf",
+      "sha256": "3280157fb698bfda46e75caf4f39d3cb376f7803cd4bcd24f27c574da94acabe",
+      "bytes": 2606021,
+      "version": "WACV2026W SAFE-2026 accepted open-access version"
+    },
+    {
+      "source_id": "R110-table2-3.png",
+      "kind": "DERIVED_VISUAL_VERIFICATION",
+      "url": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf",
+      "artifact": "evidence/groupA/R110-table2-3.png",
+      "sha256": "4b45a75312d2d6c150644c0d7cd3fa8b100db25d3f95a42efd767675fc7cec9d",
+      "bytes": 373237,
+      "version": "Rendered PDF page8, printed229; viewed by reviewer"
+    }
+  ],
+  "scientific_review": {
+    "actual_endpoint": "Binary authentic-versus-generated MRI discrimination, not clinical diagnosis or generator attribution. Existing detection task and method label are preserved.",
+    "contribution_locator": "PDFp2/printed223 Introduction contribution list; PDFp3/printed224 Section3.1; PDFpp5-8/printed226-229 Sections4.1-4.2 and Tables1-3.",
+    "data_resource": {
+      "name": "MRI-Forensics",
+      "authentic_images": 6306,
+      "synthetic_images": 37836,
+      "total_images": 44142,
+      "generator_configurations": [
+        "ProGAN",
+        "StyleGANv2-ADA",
+        "DiT-XL/2",
+        "DiT-L/2",
+        "RAR-XXL",
+        "RAR-XL"
+      ],
+      "construction": "Owned prostate DICOM data converted to high-quality JPEG with DCMTK dcmj2pnm, pixel-content hashing removes duplicates, images resized to256x256. Six unconditional generator configurations each yield6306 images.",
+      "location": "PDFp3/printed224 Section3.1",
+      "reuse_intent": "Named first contribution and explicitly provided with the framework; abstract links the dataset, code and pretrained weights to github.com/amaha7984/AIM-DWT. This is a separately described resource contribution, not merely an unnamed experiment set.",
+      "availability_verification": "Manuscript release statement inspected; actual dataset files, access terms, patient counts and release integrity were not independently downloaded or audited."
+    },
+    "benchmark_protocol": {
+      "location": "PDFpp5-8/printed226-229 Section4.2, Tables2-3",
+      "partition": "Per binary training configuration:4806 real+4806 fake train,1500 real+1500 fake validation. Cross-generator testing uses all6306 images of other synthetic generators; same-generator cells are blank because that generator was exhausted by train/validation.",
+      "baselines": [
+        "CNNSpot",
+        "DIRE",
+        "AIDE",
+        "RINE",
+        "AIM-DWT"
+      ],
+      "metrics": "Table2 measures generated-image recognition accuracy only. Separate cross-dataset brain evaluation reports real accuracy, fake accuracy and ROC AUC.",
+      "external_data": "7023 real brain MRIs from cited Nickparvar2021 resource, plus7023 synthetic examples for each of ProGAN andDiT-XL/2; prostate-trained weights reused without brain retraining.",
+      "R2_reason": "The paper contributes a named, reusable medical forensic testbed together with explicit cross-generator and cross-domain comparisons, partition sizes, baselines and metrics. These concrete evaluation provisions, not result-table size or the authors' benchmark label alone, support R2."
+    },
+    "quantitative_evidence": [
+      {
+        "location": "PDFp5/printed226 Table1",
+        "finding": "DiT-XL/2 FID15.3322; ProGAN KID0.0028±0.00028. These are generation quality statistics, not detector metrics."
+      },
+      {
+        "location": "PDFp8/printed229 Table2, visually checked",
+        "finding": "ProGAN-trained AIM-DWT reports100.0 fake-recognition accuracy for all five other generator columns. DiT-XL/2-trained AIM-DWT gives78.43 on ProGAN and99.81 onStyleGANv2. RAR-XXL-trained AIM-DWT gives3.50 onProGAN, whereas AIDE gives13.08 in that cell."
+      },
+      {
+        "location": "PDFp8/printed229 Table3, visually checked",
+        "finding": "ProGAN-trained AIM-DWT: real97.38/fake100.0/AUC100.0 against both brain fake families. DiT-XL/2-trained AIM-DWT against ProGAN brain fakes: real99.35/fake99.26/AUC99.96; againstDiT brain fakes: real99.35/fake99.99/AUC100.0."
+      }
+    ]
+  },
+  "evidence_to_claim": [
+    {
+      "policy": "R1",
+      "claim": "Add dataset",
+      "support": "Explicit first contribution, construction/curation and named reusable released resource; Sections1 and3.1.",
+      "scientifically_sufficient": true
+    },
+    {
+      "policy": "R2",
+      "claim": "Add benchmark",
+      "support": "Resource intended for method evaluation with specific partitions, cross-generator/cross-domain protocol, baselines and real/fake/AUC outputs in Section4.2.",
+      "scientifically_sufficient": true
+    }
+  ],
+  "limitations_and_conflicts": [
+    {
+      "kind": "evaluation_scope",
+      "finding": "Table2 is fake-only class recognition;100% there does not establish balanced real/fake accuracy, specificity or a low false-positive rate. All6306 prostate real images are allocated to train/validation. Table3 separately supplies real-class results on brain images."
+    },
+    {
+      "kind": "source_or_reproducibility_limit",
+      "finding": "No patient-level split, patient count or independent clinical provenance audit is established by the reviewed construction text. Generator training/source overlaps and actual release/license were not independently reproduced."
+    },
+    {
+      "kind": "prose_table_discrepancy",
+      "finding": "PDFp7/printed228 says RINE slightly outperforms AIM-DWT detecting ProGAN in one setting; Table2's displayed ProGAN test-column comparisons do not show that ordering. Preserve the text/table disagreement; do not repair the source or infer an undisplayed experiment."
+    },
+    {
+      "kind": "scope_limit",
+      "finding": "Unconditional256x256 prostate/brain experiments do not demonstrate conditional generation, higher-resolution images or all MRI modalities; limitations are acknowledged on PDFpp7-8."
+    }
+  ],
+  "proposed_B4_action": "Accept dataset and benchmark additions only through an independently justified formal R1/R2 decision; preserve detection and method. Contribution support does not validate or independently reproduce reported performance.",
+  "retrieval_cost": {
+    "successful_full_manuscripts": 1,
+    "full_manuscript_bytes": 2606021,
+    "new_dataset_or_weight_downloads": 0,
+    "canonical_network_attempts": 1,
+    "metadata_only_access_failures_and_environment_recovery_recorded_separately": true
+  },
+  "sources_count": 2,
+  "actual_effort": {
+    "timing_basis": "Shared wave/reviewer wall span, not exclusive analyst hours. Individual focused timers were not instrumented before source recovery; no invented person-minute allocations.",
+    "wave_started_utc": "2026-10-31T12:15:02.337367+00:00",
+    "first_reliably_recorded_agent_retrieval_utc": "2026-10-31T12:22:39.349261+00:00",
+    "record_written_utc": "2026-10-31T13:05:11.887229+00:00",
+    "source_network_durations_available_in_retrieval_records": true,
+    "preparation_before_first_retrieval_not_separately_timed": true
+  }
+}

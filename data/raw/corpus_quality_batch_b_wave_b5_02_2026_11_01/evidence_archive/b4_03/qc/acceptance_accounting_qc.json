@@ -1,0 +1,1766 @@
+{
+  "schema": "b403-independent-acceptance-accounting-qc-1",
+  "created_utc": "2026-11-01T08:33:27.832805+00:00",
+  "phase": "CURRENT_SOURCE_ONLY_ACCEPTANCE",
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "root": "/Users/meilinger/.codex/worktrees/batch-b-b4-03/synthetic-image-research-map",
+  "manifest": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/adjudication_manifest.json",
+  "status": "PASS",
+  "passed": 132,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "exact header data/curated/papers.csv",
+      "passed": true
+    },
+    {
+      "name": "exact header data/curated/paper_taxonomy.csv",
+      "passed": true
+    },
+    {
+      "name": "exact header data/curated/review_decisions.csv",
+      "passed": true
+    },
+    {
+      "name": "baseline HEAD",
+      "passed": true
+    },
+    {
+      "name": "no staging",
+      "passed": true
+    },
+    {
+      "name": "baseline127 unique IDs",
+      "passed": true
+    },
+    {
+      "name": "review reader exact registry",
+      "passed": true
+    },
+    {
+      "name": "taxonomy reader exact registry",
+      "passed": true
+    },
+    {
+      "name": "original ledger159/148",
+      "passed": true
+    },
+    {
+      "name": "baseline accounting",
+      "passed": true
+    },
+    {
+      "name": "all assigned IDs active public",
+      "passed": true
+    },
+    {
+      "name": "11 native IDs collision free",
+      "passed": true
+    },
+    {
+      "name": "manifest baseline and exact approved paths",
+      "passed": true
+    },
+    {
+      "name": "manifest exact before source hashes",
+      "passed": true
+    },
+    {
+      "name": "manifest exact after source hashes",
+      "passed": true
+    },
+    {
+      "name": "manifest exact accepted and held original actions",
+      "passed": true
+    },
+    {
+      "name": "B3 matrix is sealed",
+      "passed": true
+    },
+    {
+      "name": "exact11 manifest records",
+      "passed": true
+    },
+    {
+      "name": "exact138 decisions and prior byte prefix",
+      "passed": true
+    },
+    {
+      "name": "exact new decision IDs",
+      "passed": true
+    },
+    {
+      "name": "formal rows equal manifest",
+      "passed": true
+    },
+    {
+      "name": "source row IDs/order data/curated/papers.csv",
+      "passed": true
+    },
+    {
+      "name": "only changed token bytes data/curated/papers.csv",
+      "passed": true
+    },
+    {
+      "name": "source row IDs/order data/curated/paper_taxonomy.csv",
+      "passed": true
+    },
+    {
+      "name": "only changed token bytes data/curated/paper_taxonomy.csv",
+      "passed": true
+    },
+    {
+      "name": "manifest delta claims equal independent actual cells",
+      "passed": true
+    },
+    {
+      "name": "exact35 source cells/allowlist",
+      "passed": true
+    },
+    {
+      "name": "B3 per-paper record is sealed R110",
+      "passed": true
+    },
+    {
+      "name": "exact before-authority binding R110",
+      "passed": true
+    },
+    {
+      "name": "exact after-authority binding R110",
+      "passed": true
+    },
+    {
+      "name": "exact public bibliographic/ordered-author identity R110",
+      "passed": true
+    },
+    {
+      "name": "accepted-changes equals independently observed cells R110",
+      "passed": true
+    },
+    {
+      "name": "acceptance/hold gate R110",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "native ID matches preflight R110",
+      "passed": true
+    },
+    {
+      "name": "B3 per-paper record is sealed R138",
+      "passed": true
+    },
+    {
+      "name": "exact before-authority binding R138",
+      "passed": true
+    },
+    {
+      "name": "exact after-authority binding R138",
+      "passed": true
+    },
+    {
+      "name": "exact public bibliographic/ordered-author identity R138",
+      "passed": true
+    },
+    {
+      "name": "held accepted-changes remains null R138",
+      "passed": true
+    },
+    {
+      "name": "acceptance/hold gate R138",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "native ID matches preflight R138",
+      "passed": true
+    },
+    {
+      "name": "held taxonomy byte content R138",
+      "passed": true
+    },
+    {
+      "name": "held paper row R138",
+      "passed": true
+    },
+    {
+      "name": "B3 per-paper record is sealed R154",
+      "passed": true
+    },
+    {
+      "name": "exact before-authority binding R154",
+      "passed": true
+    },
+    {
+      "name": "exact after-authority binding R154",
+      "passed": true
+    },
+    {
+      "name": "exact public bibliographic/ordered-author identity R154",
+      "passed": true
+    },
+    {
+      "name": "held accepted-changes remains null R154",
+      "passed": true
+    },
+    {
+      "name": "acceptance/hold gate R154",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "native ID matches preflight R154",
+      "passed": true
+    },
+    {
+      "name": "held taxonomy byte content R154",
+      "passed": true
+    },
+    {
+      "name": "held paper row R154",
+      "passed": true
+    },
+    {
+      "name": "B3 per-paper record is sealed R161",
+      "passed": true
+    },
+    {
+      "name": "exact before-authority binding R161",
+      "passed": true
+    },
+    {
+      "name": "exact after-authority binding R161",
+      "passed": true
+    },
+    {
+      "name": "exact public bibliographic/ordered-author identity R161",
+      "passed": true
+    },
+    {
+      "name": "held accepted-changes remains null R161",
+      "passed": true
+    },
+    {
+      "name": "acceptance/hold gate R161",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "native ID matches preflight R161",
+      "passed": true
+    },
+    {
+      "name": "held taxonomy byte content R161",
+      "passed": true
+    },
+    {
+      "name": "held paper row R161",
+      "passed": true
+    },
+    {
+      "name": "B3 per-paper record is sealed R171",
+      "passed": true
+    },
+    {
+      "name": "exact before-authority binding R171",
+      "passed": true
+    },
+    {
+      "name": "exact after-authority binding R171",
+      "passed": true
+    },
+    {
+      "name": "exact public bibliographic/ordered-author identity R171",
+      "passed": true
+    },
+    {
+      "name": "accepted-changes equals independently observed cells R171",
+      "passed": true
+    },
+    {
+      "name": "acceptance/hold gate R171",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "native ID matches preflight R171",
+      "passed": true
+    },
+    {
+      "name": "B3 per-paper record is sealed R187",
+      "passed": true
+    },
+    {
+      "name": "exact before-authority binding R187",
+      "passed": true
+    },
+    {
+      "name": "exact after-authority binding R187",
+      "passed": true
+    },
+    {
+      "name": "exact public bibliographic/ordered-author identity R187",
+      "passed": true
+    },
+    {
+      "name": "held accepted-changes remains null R187",
+      "passed": true
+    },
+    {
+      "name": "acceptance/hold gate R187",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "native ID matches preflight R187",
+      "passed": true
+    },
+    {
+      "name": "held taxonomy byte content R187",
+      "passed": true
+    },
+    {
+      "name": "held paper row R187",
+      "passed": true
+    },
+    {
+      "name": "B3 per-paper record is sealed P231",
+      "passed": true
+    },
+    {
+      "name": "exact before-authority binding P231",
+      "passed": true
+    },
+    {
+      "name": "exact after-authority binding P231",
+      "passed": true
+    },
+    {
+      "name": "exact public bibliographic/ordered-author identity P231",
+      "passed": true
+    },
+    {
+      "name": "accepted-changes equals independently observed cells P231",
+      "passed": true
+    },
+    {
+      "name": "acceptance/hold gate P231",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "native ID matches preflight P231",
+      "passed": true
+    },
+    {
+      "name": "B3 per-paper record is sealed R231",
+      "passed": true
+    },
+    {
+      "name": "exact before-authority binding R231",
+      "passed": true
+    },
+    {
+      "name": "exact after-authority binding R231",
+      "passed": true
+    },
+    {
+      "name": "exact public bibliographic/ordered-author identity R231",
+      "passed": true
+    },
+    {
+      "name": "held accepted-changes remains null R231",
+      "passed": true
+    },
+    {
+      "name": "acceptance/hold gate R231",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "native ID matches preflight R231",
+      "passed": true
+    },
+    {
+      "name": "held taxonomy byte content R231",
+      "passed": true
+    },
+    {
+      "name": "B3 per-paper record is sealed R256",
+      "passed": true
+    },
+    {
+      "name": "exact before-authority binding R256",
+      "passed": true
+    },
+    {
+      "name": "exact after-authority binding R256",
+      "passed": true
+    },
+    {
+      "name": "exact public bibliographic/ordered-author identity R256",
+      "passed": true
+    },
+    {
+      "name": "accepted-changes equals independently observed cells R256",
+      "passed": true
+    },
+    {
+      "name": "acceptance/hold gate R256",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "native ID matches preflight R256",
+      "passed": true
+    },
+    {
+      "name": "B3 per-paper record is sealed R275",
+      "passed": true
+    },
+    {
+      "name": "exact before-authority binding R275",
+      "passed": true
+    },
+    {
+      "name": "exact after-authority binding R275",
+      "passed": true
+    },
+    {
+      "name": "exact public bibliographic/ordered-author identity R275",
+      "passed": true
+    },
+    {
+      "name": "accepted-changes equals independently observed cells R275",
+      "passed": true
+    },
+    {
+      "name": "acceptance/hold gate R275",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "native ID matches preflight R275",
+      "passed": true
+    },
+    {
+      "name": "B3 per-paper record is sealed R564",
+      "passed": true
+    },
+    {
+      "name": "exact before-authority binding R564",
+      "passed": true
+    },
+    {
+      "name": "exact after-authority binding R564",
+      "passed": true
+    },
+    {
+      "name": "exact public bibliographic/ordered-author identity R564",
+      "passed": true
+    },
+    {
+      "name": "accepted-changes equals independently observed cells R564",
+      "passed": true
+    },
+    {
+      "name": "acceptance/hold gate R564",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "native ID matches preflight R564",
+      "passed": true
+    },
+    {
+      "name": "all61 negative gates reject",
+      "passed": true
+    },
+    {
+      "name": "R564 no paper row/blank taxonomy paper_id",
+      "passed": true
+    },
+    {
+      "name": "exact6 new original terminals",
+      "passed": true
+    },
+    {
+      "name": "all5 holds remain unresolved",
+      "passed": true
+    },
+    {
+      "name": "expected current accounting",
+      "passed": true
+    },
+    {
+      "name": "manifest accounting before matches independent computation",
+      "passed": true
+    },
+    {
+      "name": "manifest accounting after matches independent computation",
+      "passed": true
+    },
+    {
+      "name": "R231 stays open while P231 closes",
+      "passed": true
+    },
+    {
+      "name": "all11 native repeated upserts preserve all bytes",
+      "passed": true
+    },
+    {
+      "name": "source-only +4dataset/+4benchmark phase",
+      "passed": true
+    },
+    {
+      "name": "exact tracked mutation scope",
+      "passed": true,
+      "detail": [
+        "data/curated/paper_taxonomy.csv",
+        "data/curated/papers.csv",
+        "data/curated/review_decisions.csv"
+      ]
+    },
+    {
+      "name": "no untracked repo files",
+      "passed": true
+    },
+    {
+      "name": "audit preserved git state",
+      "passed": true
+    },
+    {
+      "name": "audit preserved repository source bytes data/curated/papers.csv",
+      "passed": true
+    },
+    {
+      "name": "audit preserved audited input bytes data/curated/papers.csv",
+      "passed": true
+    },
+    {
+      "name": "audit preserved repository source bytes data/curated/paper_taxonomy.csv",
+      "passed": true
+    },
+    {
+      "name": "audit preserved audited input bytes data/curated/paper_taxonomy.csv",
+      "passed": true
+    },
+    {
+      "name": "audit preserved repository source bytes data/curated/review_decisions.csv",
+      "passed": true
+    },
+    {
+      "name": "audit preserved audited input bytes data/curated/review_decisions.csv",
+      "passed": true
+    }
+  ],
+  "details": {
+    "accounting_before": {
+      "original_actions": 159,
+      "original_papers": 148,
+      "terminal_actions": 39,
+      "historical_unresolved_actions": 120,
+      "historical_unresolved_papers": 113,
+      "active_public_unresolved_actions": 118,
+      "active_public_unresolved_papers": 111,
+      "closed_review_ids": [
+        "L013",
+        "P034",
+        "P049",
+        "P058",
+        "P068",
+        "P097",
+        "P105",
+        "P139",
+        "P150",
+        "P153",
+        "P177",
+        "P229",
+        "P254",
+        "P305",
+        "P490",
+        "R024",
+        "R026",
+        "R034",
+        "R100",
+        "R137",
+        "R181",
+        "R215",
+        "R236",
+        "R253",
+        "R267",
+        "R335",
+        "R359",
+        "R400",
+        "R482",
+        "R542",
+        "R566",
+        "R574",
+        "R596",
+        "R611",
+        "T056",
+        "T303",
+        "T345",
+        "T579",
+        "T631"
+      ],
+      "historical_unresolved_review_ids": [
+        "U001",
+        "U002",
+        "U003",
+        "U005",
+        "U006",
+        "U007",
+        "U008",
+        "U009",
+        "U011",
+        "U012",
+        "U013",
+        "U014",
+        "U015",
+        "U016",
+        "U018",
+        "U019",
+        "U020",
+        "U021",
+        "U022",
+        "U023",
+        "R223",
+        "R234",
+        "R187",
+        "R231",
+        "R363",
+        "R477",
+        "T093",
+        "R156",
+        "R161",
+        "R110",
+        "R275",
+        "R509",
+        "R045",
+        "R138",
+        "R154",
+        "T046",
+        "R171",
+        "R512",
+        "R256",
+        "R284",
+        "R149",
+        "R124",
+        "R625",
+        "T526",
+        "R251",
+        "T608",
+        "R564",
+        "R467",
+        "L003",
+        "L004",
+        "L005",
+        "L006",
+        "L007",
+        "L008",
+        "L009",
+        "L010",
+        "L011",
+        "L012",
+        "L014",
+        "L015",
+        "L016",
+        "L017",
+        "L018",
+        "L019",
+        "L020",
+        "L021",
+        "L022",
+        "L023",
+        "L024",
+        "L025",
+        "L026",
+        "L028",
+        "P001",
+        "P025",
+        "P028",
+        "P032",
+        "P048",
+        "P050",
+        "P160",
+        "P216",
+        "P231",
+        "P242",
+        "P251",
+        "P268",
+        "P269",
+        "P279",
+        "P312",
+        "P351",
+        "P360",
+        "P397",
+        "P418",
+        "P424",
+        "P430",
+        "P435",
+        "P442",
+        "P457",
+        "P464",
+        "P467",
+        "P478",
+        "P497",
+        "P510",
+        "P520",
+        "P526",
+        "P547",
+        "P562",
+        "P565",
+        "P604",
+        "P626",
+        "P632",
+        "P635",
+        "P063",
+        "P099",
+        "P193",
+        "P224",
+        "P257",
+        "P326",
+        "P357",
+        "P369",
+        "P466",
+        "P495"
+      ],
+      "active_public_unresolved_review_ids": [
+        "U001",
+        "U002",
+        "U003",
+        "U005",
+        "U006",
+        "U007",
+        "U008",
+        "U009",
+        "U011",
+        "U012",
+        "U013",
+        "U014",
+        "U015",
+        "U016",
+        "U018",
+        "U019",
+        "U020",
+        "U021",
+        "U022",
+        "U023",
+        "R223",
+        "R234",
+        "R187",
+        "R231",
+        "R363",
+        "R477",
+        "T093",
+        "R156",
+        "R161",
+        "R110",
+        "R275",
+        "R509",
+        "R045",
+        "R138",
+        "R154",
+        "T046",
+        "R171",
+        "R512",
+        "R256",
+        "R284",
+        "R149",
+        "R124",
+        "R625",
+        "T526",
+        "R251",
+        "T608",
+        "R564",
+        "R467",
+        "L003",
+        "L004",
+        "L005",
+        "L006",
+        "L007",
+        "L008",
+        "L009",
+        "L010",
+        "L011",
+        "L012",
+        "L014",
+        "L016",
+        "L017",
+        "L018",
+        "L019",
+        "L020",
+        "L021",
+        "L022",
+        "L023",
+        "L024",
+        "L025",
+        "L026",
+        "L028",
+        "P001",
+        "P025",
+        "P028",
+        "P032",
+        "P048",
+        "P050",
+        "P160",
+        "P216",
+        "P231",
+        "P242",
+        "P251",
+        "P268",
+        "P269",
+        "P279",
+        "P312",
+        "P351",
+        "P360",
+        "P397",
+        "P418",
+        "P424",
+        "P430",
+        "P435",
+        "P442",
+        "P457",
+        "P464",
+        "P467",
+        "P478",
+        "P497",
+        "P510",
+        "P520",
+        "P526",
+        "P547",
+        "P565",
+        "P604",
+        "P626",
+        "P632",
+        "P635",
+        "P063",
+        "P099",
+        "P193",
+        "P224",
+        "P257",
+        "P326",
+        "P357",
+        "P369",
+        "P466",
+        "P495"
+      ]
+    },
+    "accounting_current": {
+      "original_actions": 159,
+      "original_papers": 148,
+      "terminal_actions": 45,
+      "historical_unresolved_actions": 114,
+      "historical_unresolved_papers": 108,
+      "active_public_unresolved_actions": 112,
+      "active_public_unresolved_papers": 106,
+      "closed_review_ids": [
+        "L013",
+        "P034",
+        "P049",
+        "P058",
+        "P068",
+        "P097",
+        "P105",
+        "P139",
+        "P150",
+        "P153",
+        "P177",
+        "P229",
+        "P231",
+        "P254",
+        "P305",
+        "P490",
+        "R024",
+        "R026",
+        "R034",
+        "R100",
+        "R110",
+        "R137",
+        "R171",
+        "R181",
+        "R215",
+        "R236",
+        "R253",
+        "R256",
+        "R267",
+        "R275",
+        "R335",
+        "R359",
+        "R400",
+        "R482",
+        "R542",
+        "R564",
+        "R566",
+        "R574",
+        "R596",
+        "R611",
+        "T056",
+        "T303",
+        "T345",
+        "T579",
+        "T631"
+      ],
+      "historical_unresolved_review_ids": [
+        "U001",
+        "U002",
+        "U003",
+        "U005",
+        "U006",
+        "U007",
+        "U008",
+        "U009",
+        "U011",
+        "U012",
+        "U013",
+        "U014",
+        "U015",
+        "U016",
+        "U018",
+        "U019",
+        "U020",
+        "U021",
+        "U022",
+        "U023",
+        "R223",
+        "R234",
+        "R187",
+        "R231",
+        "R363",
+        "R477",
+        "T093",
+        "R156",
+        "R161",
+        "R509",
+        "R045",
+        "R138",
+        "R154",
+        "T046",
+        "R512",
+        "R284",
+        "R149",
+        "R124",
+        "R625",
+        "T526",
+        "R251",
+        "T608",
+        "R467",
+        "L003",
+        "L004",
+        "L005",
+        "L006",
+        "L007",
+        "L008",
+        "L009",
+        "L010",
+        "L011",
+        "L012",
+        "L014",
+        "L015",
+        "L016",
+        "L017",
+        "L018",
+        "L019",
+        "L020",
+        "L021",
+        "L022",
+        "L023",
+        "L024",
+        "L025",
+        "L026",
+        "L028",
+        "P001",
+        "P025",
+        "P028",
+        "P032",
+        "P048",
+        "P050",
+        "P160",
+        "P216",
+        "P242",
+        "P251",
+        "P268",
+        "P269",
+        "P279",
+        "P312",
+        "P351",
+        "P360",
+        "P397",
+        "P418",
+        "P424",
+        "P430",
+        "P435",
+        "P442",
+        "P457",
+        "P464",
+        "P467",
+        "P478",
+        "P497",
+        "P510",
+        "P520",
+        "P526",
+        "P547",
+        "P562",
+        "P565",
+        "P604",
+        "P626",
+        "P632",
+        "P635",
+        "P063",
+        "P099",
+        "P193",
+        "P224",
+        "P257",
+        "P326",
+        "P357",
+        "P369",
+        "P466",
+        "P495"
+      ],
+      "active_public_unresolved_review_ids": [
+        "U001",
+        "U002",
+        "U003",
+        "U005",
+        "U006",
+        "U007",
+        "U008",
+        "U009",
+        "U011",
+        "U012",
+        "U013",
+        "U014",
+        "U015",
+        "U016",
+        "U018",
+        "U019",
+        "U020",
+        "U021",
+        "U022",
+        "U023",
+        "R223",
+        "R234",
+        "R187",
+        "R231",
+        "R363",
+        "R477",
+        "T093",
+        "R156",
+        "R161",
+        "R509",
+        "R045",
+        "R138",
+        "R154",
+        "T046",
+        "R512",
+        "R284",
+        "R149",
+        "R124",
+        "R625",
+        "T526",
+        "R251",
+        "T608",
+        "R467",
+        "L003",
+        "L004",
+        "L005",
+        "L006",
+        "L007",
+        "L008",
+        "L009",
+        "L010",
+        "L011",
+        "L012",
+        "L014",
+        "L016",
+        "L017",
+        "L018",
+        "L019",
+        "L020",
+        "L021",
+        "L022",
+        "L023",
+        "L024",
+        "L025",
+        "L026",
+        "L028",
+        "P001",
+        "P025",
+        "P028",
+        "P032",
+        "P048",
+        "P050",
+        "P160",
+        "P216",
+        "P242",
+        "P251",
+        "P268",
+        "P269",
+        "P279",
+        "P312",
+        "P351",
+        "P360",
+        "P397",
+        "P418",
+        "P424",
+        "P430",
+        "P435",
+        "P442",
+        "P457",
+        "P464",
+        "P467",
+        "P478",
+        "P497",
+        "P510",
+        "P520",
+        "P526",
+        "P547",
+        "P565",
+        "P604",
+        "P626",
+        "P632",
+        "P635",
+        "P063",
+        "P099",
+        "P193",
+        "P224",
+        "P257",
+        "P326",
+        "P357",
+        "P369",
+        "P466",
+        "P495"
+      ]
+    },
+    "source_cell_deltas": [
+      {
+        "path": "data/curated/papers.csv",
+        "row_key": "curated:c6bfe8f5199d1d8beb29",
+        "field": "research_types",
+        "before": "method",
+        "after": "method;dataset;benchmark"
+      },
+      {
+        "path": "data/curated/papers.csv",
+        "row_key": "curated:0d918782407e05ade5bd",
+        "field": "venue_track",
+        "before": "workshops",
+        "after": "Main"
+      },
+      {
+        "path": "data/curated/papers.csv",
+        "row_key": "curated:a570863c3a6ac227b56c",
+        "field": "research_types",
+        "before": "method",
+        "after": "method;dataset;benchmark"
+      },
+      {
+        "path": "data/curated/papers.csv",
+        "row_key": "curated:6976641cbfe602a7e617",
+        "field": "research_types",
+        "before": "method",
+        "after": "method;dataset;benchmark"
+      },
+      {
+        "path": "data/curated/papers.csv",
+        "row_key": "curated:7cfe39b3bc63f5b55f51",
+        "field": "research_types",
+        "before": "method",
+        "after": "method;benchmark"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:6976641cbfe602a7e617",
+        "field": "audited_at",
+        "before": "2026-09-04",
+        "after": "2026-11-01"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:6976641cbfe602a7e617",
+        "field": "research_types",
+        "before": "method",
+        "after": "method;dataset;benchmark"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:6976641cbfe602a7e617",
+        "field": "research_types_evidence_excerpt",
+        "before": "With this assertion, we develop a new forensic detection framework that combines Autoregressive Image Models and Discrete Wavelet Transform (AIM-DWT) analysis that reliably detects AI-generated manipulations.",
+        "after": "Construction and evaluation: PDF pp3-8, Tables1-3. Prostate Table2 is fake-only; Table3 separately evaluates real brain images. Patient-level independence, clinical validity, release and reported performance are not independently reproduced."
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:6976641cbfe602a7e617",
+        "field": "research_types_evidence_source",
+        "before": "manual",
+        "after": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf; B3-03 per_paper/R110.json sha256:247059a94b94b3186670ef50ec38cf9117c4de2867a9ca2bd681c8cfe334f5e8"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:6976641cbfe602a7e617",
+        "field": "research_types_evidence_tier",
+        "before": "reused_audit+abstract",
+        "after": "primary_paper"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:6976641cbfe602a7e617",
+        "field": "research_types_review_reason",
+        "before": "",
+        "after": "B4-03 R110: R1/R2: MRI-Forensics is independently constructed and documented with reusable generator/split and detector evaluation protocols, beyond an experimental pool. Evidence and limitations retained in B3-03/per_paper/R110.json."
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:a570863c3a6ac227b56c",
+        "field": "audited_at",
+        "before": "2026-09-04",
+        "after": "2026-11-01"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:a570863c3a6ac227b56c",
+        "field": "research_types",
+        "before": "method",
+        "after": "method;dataset;benchmark"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:a570863c3a6ac227b56c",
+        "field": "research_types_evidence_excerpt",
+        "before": "To address this challenge, we propose the Peak-Guided Calibration (PGC) framework.",
+        "after": "Table1, section3, section5.1, AppendixC and Table10: 19,472 native images and 13,922 video-derived frames; 33,394 generated plus 33,394 COCO real. Nine static-image and six frame subsets remain distinct; frame correlation and platform/version limitations remain. Acc/AP evaluation does not establish independently reproduced performance."
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:a570863c3a6ac227b56c",
+        "field": "research_types_evidence_source",
+        "before": "openalex",
+        "after": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/zhou26h/zhou26h.pdf; B3-03 per_paper/R171.json sha256:d4015cec12b8ba98489196535741308e7e0918e6506a0fb171df328fcc06cd6e"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:a570863c3a6ac227b56c",
+        "field": "research_types_evidence_tier",
+        "before": "reused_audit+abstract",
+        "after": "primary_paper"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:a570863c3a6ac227b56c",
+        "field": "research_types_review_reason",
+        "before": "",
+        "after": "B4-03 R171: R1/R2: CommGen15 independently collects and standardizes commercial-platform outputs and defines a reusable external-training image-level evaluation resource. Evidence and limitations retained in B3-03/per_paper/R171.json."
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+        "field": "audited_at",
+        "before": "2026-09-04",
+        "after": "2026-11-01"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+        "field": "research_types",
+        "before": "method",
+        "after": "method;dataset;benchmark"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+        "field": "research_types_evidence_excerpt",
+        "before": "We propose Adaptive Test-Time Semantic Debiasing (ATTSD), a zero-shot approach that utilizes the visual-semantic space of large pretrained vision-language models to dynamically align feature representations during testing-without requiring additional training data or annotations.",
+        "after": "Section4 and section5, Table1: six categories with 1,000 real and 1,000 fake each (12,000 total), COCO/PartiPrompts and SDv2/LDM/LCM. A global 1:1:1 balance is arithmetically possible; exact per-category allocation is unspecified, not disproved. Changes in training regimes do not isolate semantic causality; results are not independently reproduced."
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+        "field": "research_types_evidence_source",
+        "before": "openalex",
+        "after": "https://openaccess.thecvf.com/content/ICCV2025W/APAI/papers/Cai_Adaptive_Test-Time_Semantic_Debiasing_for_AI-Generated_Image_Detection_ICCVW_2025_paper.pdf; B3-03 per_paper/R256.json sha256:20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+        "field": "research_types_evidence_tier",
+        "before": "reused_audit+abstract",
+        "after": "primary_paper"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+        "field": "research_types_review_reason",
+        "before": "",
+        "after": "B4-03 R256: R1/R2: CSAIID is a separately constructed cross-semantic resource with defined categories, real/fake sampling, generators and reusable external-training evaluation protocol. Evidence and limitations retained in B3-03/per_paper/R256.json."
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+        "field": "audited_at",
+        "before": "2026-09-04",
+        "after": "2026-11-01"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+        "field": "research_types",
+        "before": "method",
+        "after": "method;benchmark"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+        "field": "research_types_evidence_excerpt",
+        "before": "It also introduces the GenImage++ evaluation benchmark and reports improved cross-generator performance without redesigning the detector network.",
+        "after": "Contributions, section5, section6 and AppendixC.2-C.4 pp19-22 define nine strata (138,900 from rounded counts). Benchmark is generated-only with no matched reals: Table3 measures positive-class recognition, not balanced real/fake accuracy or specificity. R1 dataset label is not added; reported performance is not independently reproduced."
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+        "field": "research_types_evidence_source",
+        "before": "manual",
+        "after": "https://papers.neurips.cc/paper_files/paper/2025/file/2c2be72635379ec8600eea13df4743e3-Paper-Conference.pdf; B3-03 per_paper/R275.json sha256:e38e0fab7e38252080ae6ab1640bdcc94ddaf846be53ac2799bc311730b02e29"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+        "field": "research_types_evidence_tier",
+        "before": "reused_audit+abstract",
+        "after": "primary_paper"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+        "field": "research_types_review_reason",
+        "before": "",
+        "after": "B4-03 R275: R2 only: GenImage++ is an independently specified reusable test benchmark with new generator/prompt strata and evaluation protocol, not merely a large result table. Evidence and limitations retained in B3-03/per_paper/R275.json."
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "doi:10.1109/tmm.2023.3313503",
+        "field": "audited_at",
+        "before": "2026-09-04",
+        "after": "2026-11-01"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "doi:10.1109/tmm.2023.3313503",
+        "field": "research_types",
+        "before": "method",
+        "after": "method;dataset"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "doi:10.1109/tmm.2023.3313503",
+        "field": "research_types_evidence_excerpt",
+        "before": "To address this issue, we propose a Global and Local Feature Fusion (GLFF) framework to learn rich and discriminative representations by combining multi-scale global features from the whole image with refined local features from informative patches for AI-synthesized image detection.",
+        "after": "Contribution list, sectionIV and TableI pp6-7: 6,160 base fakes; 46,476 tabulated derivatives versus approximately 46,400 in prose; six protocols include unprocessed originals. Fake-only DF3 and 1,000 separate FFHQ real controls remain distinct. arXiv v7 author version is not verified publisher-final equivalence. No benchmark or task label is added; release availability is unverified."
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "doi:10.1109/tmm.2023.3313503",
+        "field": "research_types_evidence_source",
+        "before": "OpenAlex local raw cache",
+        "after": "https://arxiv.org/pdf/2211.08615v7; B3-03 per_paper/R564.json sha256:d891a5362525d23b6f8c2b44bf52263df471fa37f693d763b6338f1126eb3742"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "doi:10.1109/tmm.2023.3313503",
+        "field": "research_types_evidence_tier",
+        "before": "abstract",
+        "after": "primary_paper"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "row_key": "doi:10.1109/tmm.2023.3313503",
+        "field": "research_types_review_reason",
+        "before": "",
+        "after": "B4-03 R564: R1 only: DF3 is an independently constructed reusable fake-face resource with documented base generators and post-processing, beyond method-training usage. Evidence and limitations retained in B3-03/per_paper/R564.json."
+      }
+    ],
+    "negative_gates": [
+      {
+        "review_id": "R110",
+        "fault": "id",
+        "rejected": true
+      },
+      {
+        "review_id": "R110",
+        "fault": "action",
+        "rejected": true
+      },
+      {
+        "review_id": "R110",
+        "fault": "identity",
+        "rejected": true
+      },
+      {
+        "review_id": "R110",
+        "fault": "binding_token",
+        "rejected": true
+      },
+      {
+        "review_id": "R110",
+        "fault": "creator",
+        "rejected": true
+      },
+      {
+        "review_id": "R110",
+        "fault": "applied_types",
+        "rejected": true
+      },
+      {
+        "review_id": "R138",
+        "fault": "id",
+        "rejected": true
+      },
+      {
+        "review_id": "R138",
+        "fault": "action",
+        "rejected": true
+      },
+      {
+        "review_id": "R138",
+        "fault": "identity",
+        "rejected": true
+      },
+      {
+        "review_id": "R138",
+        "fault": "binding_token",
+        "rejected": true
+      },
+      {
+        "review_id": "R138",
+        "fault": "creator",
+        "rejected": true
+      },
+      {
+        "review_id": "R154",
+        "fault": "id",
+        "rejected": true
+      },
+      {
+        "review_id": "R154",
+        "fault": "action",
+        "rejected": true
+      },
+      {
+        "review_id": "R154",
+        "fault": "identity",
+        "rejected": true
+      },
+      {
+        "review_id": "R154",
+        "fault": "binding_token",
+        "rejected": true
+      },
+      {
+        "review_id": "R154",
+        "fault": "creator",
+        "rejected": true
+      },
+      {
+        "review_id": "R161",
+        "fault": "id",
+        "rejected": true
+      },
+      {
+        "review_id": "R161",
+        "fault": "action",
+        "rejected": true
+      },
+      {
+        "review_id": "R161",
+        "fault": "identity",
+        "rejected": true
+      },
+      {
+        "review_id": "R161",
+        "fault": "binding_token",
+        "rejected": true
+      },
+      {
+        "review_id": "R161",
+        "fault": "creator",
+        "rejected": true
+      },
+      {
+        "review_id": "R171",
+        "fault": "id",
+        "rejected": true
+      },
+      {
+        "review_id": "R171",
+        "fault": "action",
+        "rejected": true
+      },
+      {
+        "review_id": "R171",
+        "fault": "identity",
+        "rejected": true
+      },
+      {
+        "review_id": "R171",
+        "fault": "binding_token",
+        "rejected": true
+      },
+      {
+        "review_id": "R171",
+        "fault": "creator",
+        "rejected": true
+      },
+      {
+        "review_id": "R171",
+        "fault": "applied_types",
+        "rejected": true
+      },
+      {
+        "review_id": "R187",
+        "fault": "id",
+        "rejected": true
+      },
+      {
+        "review_id": "R187",
+        "fault": "action",
+        "rejected": true
+      },
+      {
+        "review_id": "R187",
+        "fault": "identity",
+        "rejected": true
+      },
+      {
+        "review_id": "R187",
+        "fault": "binding_token",
+        "rejected": true
+      },
+      {
+        "review_id": "R187",
+        "fault": "creator",
+        "rejected": true
+      },
+      {
+        "review_id": "P231",
+        "fault": "id",
+        "rejected": true
+      },
+      {
+        "review_id": "P231",
+        "fault": "action",
+        "rejected": true
+      },
+      {
+        "review_id": "P231",
+        "fault": "identity",
+        "rejected": true
+      },
+      {
+        "review_id": "P231",
+        "fault": "binding_token",
+        "rejected": true
+      },
+      {
+        "review_id": "P231",
+        "fault": "creator",
+        "rejected": true
+      },
+      {
+        "review_id": "P231",
+        "fault": "applied_track",
+        "rejected": true
+      },
+      {
+        "review_id": "R231",
+        "fault": "id",
+        "rejected": true
+      },
+      {
+        "review_id": "R231",
+        "fault": "action",
+        "rejected": true
+      },
+      {
+        "review_id": "R231",
+        "fault": "identity",
+        "rejected": true
+      },
+      {
+        "review_id": "R231",
+        "fault": "binding_token",
+        "rejected": true
+      },
+      {
+        "review_id": "R231",
+        "fault": "creator",
+        "rejected": true
+      },
+      {
+        "review_id": "R256",
+        "fault": "id",
+        "rejected": true
+      },
+      {
+        "review_id": "R256",
+        "fault": "action",
+        "rejected": true
+      },
+      {
+        "review_id": "R256",
+        "fault": "identity",
+        "rejected": true
+      },
+      {
+        "review_id": "R256",
+        "fault": "binding_token",
+        "rejected": true
+      },
+      {
+        "review_id": "R256",
+        "fault": "creator",
+        "rejected": true
+      },
+      {
+        "review_id": "R256",
+        "fault": "applied_types",
+        "rejected": true
+      },
+      {
+        "review_id": "R275",
+        "fault": "id",
+        "rejected": true
+      },
+      {
+        "review_id": "R275",
+        "fault": "action",
+        "rejected": true
+      },
+      {
+        "review_id": "R275",
+        "fault": "identity",
+        "rejected": true
+      },
+      {
+        "review_id": "R275",
+        "fault": "binding_token",
+        "rejected": true
+      },
+      {
+        "review_id": "R275",
+        "fault": "creator",
+        "rejected": true
+      },
+      {
+        "review_id": "R275",
+        "fault": "applied_types",
+        "rejected": true
+      },
+      {
+        "review_id": "R564",
+        "fault": "id",
+        "rejected": true
+      },
+      {
+        "review_id": "R564",
+        "fault": "action",
+        "rejected": true
+      },
+      {
+        "review_id": "R564",
+        "fault": "identity",
+        "rejected": true
+      },
+      {
+        "review_id": "R564",
+        "fault": "binding_token",
+        "rejected": true
+      },
+      {
+        "review_id": "R564",
+        "fault": "creator",
+        "rejected": true
+      },
+      {
+        "review_id": "R564",
+        "fault": "applied_types",
+        "rejected": true
+      }
+    ],
+    "idempotence": [
+      {
+        "review_id": "R110",
+        "two_real_upserts_byte_identical": true
+      },
+      {
+        "review_id": "R138",
+        "two_real_upserts_byte_identical": true
+      },
+      {
+        "review_id": "R154",
+        "two_real_upserts_byte_identical": true
+      },
+      {
+        "review_id": "R161",
+        "two_real_upserts_byte_identical": true
+      },
+      {
+        "review_id": "R171",
+        "two_real_upserts_byte_identical": true
+      },
+      {
+        "review_id": "R187",
+        "two_real_upserts_byte_identical": true
+      },
+      {
+        "review_id": "P231",
+        "two_real_upserts_byte_identical": true
+      },
+      {
+        "review_id": "R231",
+        "two_real_upserts_byte_identical": true
+      },
+      {
+        "review_id": "R256",
+        "two_real_upserts_byte_identical": true
+      },
+      {
+        "review_id": "R275",
+        "two_real_upserts_byte_identical": true
+      },
+      {
+        "review_id": "R564",
+        "two_real_upserts_byte_identical": true
+      }
+    ],
+    "source_research_type_counts": {
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "dataset": 142,
+      "benchmark": 101
+    },
+    "unchanged_public_research_type_counts": {
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "dataset": 138,
+      "benchmark": 97
+    }
+  },
+  "git_state_before": {
+    "head": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+    "status": " M data/curated/paper_taxonomy.csv\n M data/curated/papers.csv\n M data/curated/review_decisions.csv\n",
+    "staged": ""
+  },
+  "git_state_after": {
+    "head": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+    "status": " M data/curated/paper_taxonomy.csv\n M data/curated/papers.csv\n M data/curated/review_decisions.csv\n",
+    "staged": ""
+  },
+  "worktree_writes": false,
+  "exports": 0,
+  "source_retrievals": 0,
+  "scientific_reviews": 0,
+  "interpretation": "Current-source acceptance, accounting and temporary idempotence checks. Historical snapshot tests and unchanged public JSON validation have separate receipts; no source/public synchronization claim."
+}

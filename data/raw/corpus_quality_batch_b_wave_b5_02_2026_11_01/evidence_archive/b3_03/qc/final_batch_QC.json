@@ -1,0 +1,2865 @@
+{
+  "schema": "batch-b-final-document-coverage-qc-1",
+  "task": "B3-03 independent final document and coverage QC",
+  "reviewer": "b303_final_qc independent document/coverage reviewer",
+  "reviewed_utc": "2026-11-01T01:01:04.855346+00:00",
+  "status": "PASS",
+  "passed": 539,
+  "failed": 0,
+  "scope": "Document/coverage/scope/provenance consistency and recorded independent-QC/preservation dependencies. No scientific rediscovery, retrieval, manuscript downloads, corpus mutations, exports or full test suite.",
+  "papers": 10,
+  "actions": 11,
+  "outcome_counts": {
+    "SUPPORTED_ADDITION": 6,
+    "EVIDENCE_INSUFFICIENT": 4,
+    "IDENTITY_BLOCKED": 1
+  },
+  "formal_decision_rows": 127,
+  "historical_unresolved": 120,
+  "active_public_unresolved": 118,
+  "actions_formally_closed": 0,
+  "maintainer_acceptance": "PENDING_NOT_FORMAL_DECISION",
+  "input_sha256": {
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/assigned_inputs.json": "5c6a288317600f852f62943a560380d44b32213d1998a4a86f3ba52b25b82aca",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/batch_dispositions.json": "9f3704166c5c0ef9c1e5324995b29a712b756014ca36286169d4870f405e151e",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/b4_handoff.json": "6f46c7a2e642aef110ced8919bc05d5b3ecb64728fc398abad0e9cde85b76335",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/P231.json": "d9baf9b30dbf98019c22558f4b8db1b9bb28c050ae981fdecf34b6c6e0795b93",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R110.json": "247059a94b94b3186670ef50ec38cf9117c4de2867a9ca2bd681c8cfe334f5e8",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R138.json": "e8831986480d2e7008d2953dbf79437f1080a4bdcaf3ce2c0c9cb0b56c83f29f",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R154.json": "e364eee5ebcbfc6dfdfa5470b5647e55d7556dc033e356b3ca723aeddbd69533",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R161.json": "728f2906344be60ba93f025d7a6ce8390bd134aeec6fb9faac5cc5dd6fedc9ae",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R171.json": "d4015cec12b8ba98489196535741308e7e0918e6506a0fb171df328fcc06cd6e",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R187.json": "58c020b7e3f933b681fac60285e75f11d5dc074d450478d634b5672b4bc97ae9",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R231.json": "68a3d322959f9b6e6f4f2606152dfda6324521d2aad511ee03ef2485bca553b8",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R256.json": "20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R275.json": "e38e0fab7e38252080ae6ab1640bdcc94ddaf846be53ac2799bc311730b02e29",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/per_paper/R564.json": "d891a5362525d23b6f8c2b44bf52263df471fa37f693d763b6338f1126eb3742",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/batch_review.md": "bb9b7af294cd9aee499150d7ca890bae19777c3974480f337ee370e9330ba4ac",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b2-2026-10-28/backlog_matrix.json": "fead93a11f96adb4b6de008ec2085da7559a83109a4f6e2b79f7a5e0d4cd59eb",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b2-2026-10-28/batch_plan.md": "14af2a8bac007d21f7aef4fb70ee6f75d81bc1424a7eaf6f8b3654cfb6736c0e",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b2-2026-10-28/validation.json": "19d4b74904bce8735a3f99e812934c1930f30a4e722cf17674a3264272d472ad",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R110-canonical.pdf": "3280157fb698bfda46e75caf4f39d3cb376f7803cd4bcd24f27c574da94acabe",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R110-table2-3.png": "4b45a75312d2d6c150644c0d7cd3fa8b100db25d3f95a42efd767675fc7cec9d",
+    "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+    "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+    "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/curated/paper_taxonomy.csv": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+    "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R138-doi-registration.json": "1d3e09a3311916a0c7ed1d6cf8a288a24ac4a5425f3496580b1e115a923b9659",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R138-official-readme.txt": "34c9c4e84ec8749c1ca54135c1cea4490099b708fe568c82060fd4add8fb45f0",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R138-canonical.html": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R154-author-v1.pdf": "776c1304ebf723ad54e2d5ef2753c03a95b5a26bfa1447d7330aa75de3bbf5a0",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R154-doi-registration.json": "8386363c85f56156b8fe9d137cf7abc1cfa87f31729a88cbb1c256551622c4e2",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R154-tables2-4.png": "9e015b8428c2325992fe3cafa5e5df875594e1cad113ff54547728079f771cc4",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R154-canonical.html": "2326a0067974192fd1408f967a997e20bab5b381cb37ba99d738d735c091c818",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R161-official-landing.html": "bcded5b02e1b21886dd227b041067ac8e0d4adcf9adc9342aa8f244480a2eb6f",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/primary_retrievals.json": "91109941e3a69d5db4753b441938d65c9b7f97c1804d39f30c8c46b26eec588a",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R161-alternate-retrieval.json": "768b73f6d6e2596c4f16a3ffd2ed168b401f217d1c9fc83c73d9f5a5592edee2",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R171-primary.pdf": "79917f3d9fb967aa52007069c89fa920e1dd428ec662900650bea049dc4dc255",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R171-local-pmlr.html": "7fb76f85d1be7cf3009c9bfc9e58465cf870b395772288b8ca5ff1dab42e6b18",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R187-doi-registration.json": "c60a766d7e01db83446378f5daf594c6252b49d8bc837c602ac92f226b009744",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R187-canonical.html": "547e0bc4f963804ed3eed61ae8b1b5aa95a08fe184e19ee958bcdcbfcd5e8122",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R187-publisher-vor.html": "ad92e7630efa4e61e86f727f5c0317d7e49082c6779b8b4bccf9e4fdad9b1841",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/P231-official-program.html": "53a0015a413baf48e992209de2665b43bd7007e4e23787db40c9f6ee820255b0",
+    "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json": "ab426b7ff76f89677a9aa8656fa4cae19049e07de656c6d45e7fb4a2338d8088",
+    "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json": "b2ef27b7c70dd991f5ee29a794001bbd9f6ff6da2e9eff5cdb5d30c246d0726c",
+    "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/docs/publication_venue_normalization.md": "987d1d18ab5e7b11fea62f5a147c7fc32f79c7e2a7f75b0066c4075f4a0ec4af",
+    "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/docs/workshop_venue_audit_report.md": "171560e3fef7f3e24a4e6c5b497de84b3cc09f4fbe04e2fd2bd932285e358660",
+    "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/processed/workshop_venue_evidence.json": "040d09a5ed5fc349d37598547f8c126ced05f8aa1a50948f631f2a4e303e3f5b",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R231-acm-primary.response": "9668a6ae05e8a81dfb1382e62475bf90c35fb9df322f819b755150d4990577c4",
+    "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/docs/corpus_quality_batch_c_wave2_2026_10_06.md": "26c7ea83ead68cb7ff9eee2917a0bb688dacc528fe4208fef70b13be1a75a2be",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R256-primary.pdf": "3bd336c171cdb0c201d4fa9da63c17c406f46fa65b70436d30c50390d41b49f3",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-neurips2025.pdf": "ebdcea81b1f588b74669e52261ab903ed70cb1b7f1a30f637d82d843e7071405",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-official-landing.html": "1d4427cc3b8e33ce2f7403f7c9016cf835ce262d5d9593c020aba6d91f980b1d",
+    "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/docs/systematic_literature_completeness_audit_2026_09.md": "3f77e796a28b58fc9747bc184c0af6025aeae586d662fca99c19253db5a857ee",
+    "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/docs/targeted_literature_coverage_audit_2026-09-01.md": "9a5595b23800d6a70f9e4172175533bf8bc7b3fc217ec03ba5a675327887877d",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupB/R564-primary.pdf": "4e7b0f188213163d718e7294cde361001a1afd750592f8790f555655080cf213",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b5-01r3-2026-10-31/completion_receipt.json": "333e6b34894f4fb247b7888d9a8f82398778c1b8b92a5d9e8be179e3e5469fda",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/independent_scientific_QC.json": "136a3efe6945c5d64a09a929e384a79fd6462a833daf6f4afab5df70acb5ebc1",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/R256-independent-caveat-addendum.json": "a24360de94f6a91e0a47917d14cafffbba7b89a78fdf27cd019cf9415fecbfa5",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/independent_scientific_QC.md": "789ac8bcd1983174796a414df1824f8f48f7c896c1cdb285d14f3c2dac0081cf",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/final_batch_QC_preflight.json": "003117d6a552f84344ce7d31a93a4c29ca3459df16612677806271596a80a791",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/groupA-independent-review.json": "d7ad6fde0d945189419ef0836a955d214ee983edbf54d0cc5e4d7d9f1ad42712",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/groupB-independent-review.json": "3c5f731f50839b0d85878c98bd35e56fc59375857254a7c19cc8222517ac22e7",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/root-group-review.json": "bf1e4fe462eb80951eb16b947290f72180efe8cfe2c5b8bb8418ef9f2dc8096b",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/P231-before-policy-traceability-fix.json": "fbc58c162ca608e8254f0bf37c4dc0b6135eb1201c25892c6334476eceff6f84",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/R231-before-source-hash-annotation.json": "03981e0235ffd86682b935b689c42999d1d18bd632dd3803c88f0022c5a1a0a1",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/preservation_baseline.json": "751b06a9d330a50ffdde7342de30b514dac0bbe885c61007b58286e7af812171",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/baseline_validation_corrected.json": "8420c6a1415cc0219a9d84e8856ade2bd5eed7490da1744bd1fa39bdfb34fb24",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/preservation_final.json": "cb29fa69dc64a3d6c574ab5eb3c0f11731594d168c967366a1362fe4990c1ac9",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/validation.json": "484a9df525dd94389fe9ef392f46af2d357a2b89546e8eb428403a3dc2569420",
+    "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/qc/final_batch_qc_check.py": "b9d2b264e17530b6b73c89526e2a6e67e81f489557557a9b7960beb0f4b6ead1"
+  },
+  "dependencies": [
+    {
+      "path": "qc/groupA-independent-review.json",
+      "sha256": "d7ad6fde0d945189419ef0836a955d214ee983edbf54d0cc5e4d7d9f1ad42712",
+      "status": "PASS_WITH_NONBLOCKING_PROVENANCE_NOTES",
+      "failed": 0
+    },
+    {
+      "path": "qc/groupB-independent-review.json",
+      "sha256": "3c5f731f50839b0d85878c98bd35e56fc59375857254a7c19cc8222517ac22e7",
+      "status": "PASS_WITH_CAVEAT_REFINEMENT",
+      "failed": 0
+    },
+    {
+      "path": "qc/root-group-review.json",
+      "sha256": "bf1e4fe462eb80951eb16b947290f72180efe8cfe2c5b8bb8418ef9f2dc8096b",
+      "status": "PASS_WITH_QUALIFIED_VENUE_INTERPRETATION",
+      "failed": 0
+    },
+    {
+      "path": "qc/preservation_baseline.json",
+      "sha256": "751b06a9d330a50ffdde7342de30b514dac0bbe885c61007b58286e7af812171",
+      "status": "BASELINE_SNAPSHOT",
+      "failed": null
+    },
+    {
+      "path": "qc/baseline_validation_corrected.json",
+      "sha256": "8420c6a1415cc0219a9d84e8856ade2bd5eed7490da1744bd1fa39bdfb34fb24",
+      "status": "PASS",
+      "failed": 0
+    },
+    {
+      "path": "qc/preservation_final.json",
+      "sha256": "cb29fa69dc64a3d6c574ab5eb3c0f11731594d168c967366a1362fe4990c1ac9",
+      "status": "PASS",
+      "failed": 0
+    }
+  ],
+  "pending_dependencies": [],
+  "independent_scientific_QC": {
+    "path": "qc/independent_scientific_QC.json",
+    "sha256": "136a3efe6945c5d64a09a929e384a79fd6462a833daf6f4afab5df70acb5ebc1",
+    "status": "PASS_WITH_DOCUMENTED_QUALIFICATIONS"
+  },
+  "checks": [
+    {
+      "name": "Original B2-03 batch copied without membership or scope edit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Exactly 11 assigned actions, each once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Exactly 11 disposition actions, each once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Exactly 11 handoff actions, each once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Exactly 11 per-action records, no extra",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Exactly ten canonical paper IDs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Original batch ten members / eleven action mapping preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Membership and decision guard fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Original B2 planning hash batch_plan.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Original B2 planning hash backlog_matrix.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Original B2 planning hash validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Planning hashes agree across deliverables",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Baseline commit agrees across deliverables",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 exact original B2 identity/question",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 canonical identity/title retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 original question retained in disposition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 original B2 context unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 current tasks and method retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 proposed tasks unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 exact bounded outcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 governing policies bounded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 matrix pins current per-action record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 assigned/matrix formal-open state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 per-action no authoritative or formal change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 handoff duplicates disposition without alteration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 scoped research-type proposal only",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 source provenance copied intact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 sufficient source/identity limitation fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 primary-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 primary-0 source exists: evidence/groupA/R110-canonical.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 primary-0 source hash: evidence/groupA/R110-canonical.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 primary-0 source byte count: evidence/groupA/R110-canonical.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 primary-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 primary-1 source exists: evidence/groupA/R110-table2-3.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 primary-1 source hash: evidence/groupA/R110-table2-3.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 primary-1 source byte count: evidence/groupA/R110-table2-3.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-0 source exists: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-0 source hash: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-1 source exists: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-1 source hash: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-2 source exists: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-2 source hash: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-3 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-3 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-3 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-4 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-4 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 inherited-4 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 exact original B2 identity/question",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 canonical identity/title retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 original question retained in disposition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 original B2 context unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 current tasks and method retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 proposed tasks unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 exact bounded outcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 governing policies bounded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 matrix pins current per-action record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 assigned/matrix formal-open state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 per-action no authoritative or formal change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 handoff duplicates disposition without alteration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 hold proposes no authoritative edit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 source provenance copied intact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 sufficient source/identity limitation fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 primary-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 primary-0 source exists: evidence/groupA/R138-doi-registration.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 primary-0 source hash: evidence/groupA/R138-doi-registration.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 primary-0 source byte count: evidence/groupA/R138-doi-registration.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 primary-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 primary-1 source exists: evidence/groupA/R138-official-readme.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 primary-1 source hash: evidence/groupA/R138-official-readme.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 primary-1 source byte count: evidence/groupA/R138-official-readme.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 primary-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 primary-2 source exists: evidence/groupA/R138-canonical.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 primary-2 source hash: evidence/groupA/R138-canonical.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 primary-2 source byte count: evidence/groupA/R138-canonical.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 inherited-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 inherited-0 source exists: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 inherited-0 source hash: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 inherited-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 inherited-1 source exists: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 inherited-1 source hash: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 inherited-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 inherited-2 source exists: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 inherited-2 source hash: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 inherited-3 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 inherited-3 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 inherited-3 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 exact original B2 identity/question",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 canonical identity/title retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 original question retained in disposition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 original B2 context unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 current tasks and method retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 proposed tasks unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 exact bounded outcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 governing policies bounded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 matrix pins current per-action record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 assigned/matrix formal-open state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 per-action no authoritative or formal change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 handoff duplicates disposition without alteration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 hold proposes no authoritative edit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 source provenance copied intact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 sufficient source/identity limitation fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-0 source exists: evidence/groupA/R154-author-v1.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-0 source hash: evidence/groupA/R154-author-v1.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-0 source byte count: evidence/groupA/R154-author-v1.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-1 source exists: evidence/groupA/R154-doi-registration.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-1 source hash: evidence/groupA/R154-doi-registration.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-1 source byte count: evidence/groupA/R154-doi-registration.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-2 source exists: evidence/groupA/R154-tables2-4.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-2 source hash: evidence/groupA/R154-tables2-4.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-2 source byte count: evidence/groupA/R154-tables2-4.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-3 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-3 source exists: evidence/groupA/R154-canonical.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-3 source hash: evidence/groupA/R154-canonical.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 primary-3 source byte count: evidence/groupA/R154-canonical.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-0 source exists: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-0 source hash: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-1 source exists: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-1 source hash: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-2 source exists: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-2 source hash: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-3 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-3 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-3 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-4 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-4 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 inherited-4 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 exact original B2 identity/question",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 canonical identity/title retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 original question retained in disposition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 original B2 context unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 current tasks and method retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 proposed tasks unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 exact bounded outcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 governing policies bounded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 matrix pins current per-action record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 assigned/matrix formal-open state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 per-action no authoritative or formal change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 handoff duplicates disposition without alteration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 hold proposes no authoritative edit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 source provenance copied intact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 sufficient source/identity limitation fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 primary-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 primary-0 source exists: evidence/groupB/R161-official-landing.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 primary-0 source hash: evidence/groupB/R161-official-landing.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 primary-0 alternate path agrees",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 primary-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 primary-1 source exists: evidence/groupB/primary_retrievals.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 primary-1 source hash: evidence/groupB/primary_retrievals.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 primary-1 alternate path agrees",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 primary-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 primary-2 source exists: evidence/groupB/R161-alternate-retrieval.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 primary-2 source hash: evidence/groupB/R161-alternate-retrieval.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 primary-2 alternate path agrees",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-0 source exists: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-0 source hash: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-1 source exists: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-1 source hash: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-2 source exists: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-2 source hash: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-3 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-3 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-3 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-4 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-4 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 inherited-4 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 exact original B2 identity/question",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 canonical identity/title retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 original question retained in disposition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 original B2 context unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 current tasks and method retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 proposed tasks unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 exact bounded outcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 governing policies bounded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 matrix pins current per-action record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 assigned/matrix formal-open state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 per-action no authoritative or formal change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 handoff duplicates disposition without alteration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 scoped research-type proposal only",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 source provenance copied intact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 sufficient source/identity limitation fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 primary-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 primary-0 source exists: evidence/groupB/R171-primary.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 primary-0 source hash: evidence/groupB/R171-primary.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 primary-0 alternate path agrees",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 primary-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 primary-1 source exists: evidence/groupB/R171-local-pmlr.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 primary-1 source hash: evidence/groupB/R171-local-pmlr.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 primary-1 alternate path agrees",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-0 source exists: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-0 source hash: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-1 source exists: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-1 source hash: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-2 source exists: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-2 source hash: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-3 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-3 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-3 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-4 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-4 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 inherited-4 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 exact original B2 identity/question",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 canonical identity/title retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 original question retained in disposition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 original B2 context unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 current tasks and method retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 proposed tasks unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 exact bounded outcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 governing policies bounded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 matrix pins current per-action record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 assigned/matrix formal-open state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 per-action no authoritative or formal change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 handoff duplicates disposition without alteration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 hold proposes no authoritative edit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 source provenance copied intact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 sufficient source/identity limitation fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 primary-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 primary-0 source exists: evidence/groupA/R187-doi-registration.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 primary-0 source hash: evidence/groupA/R187-doi-registration.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 primary-0 source byte count: evidence/groupA/R187-doi-registration.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 primary-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 primary-1 source exists: evidence/groupA/R187-canonical.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 primary-1 source hash: evidence/groupA/R187-canonical.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 primary-1 source byte count: evidence/groupA/R187-canonical.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 primary-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 primary-2 source exists: evidence/groupA/R187-publisher-vor.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 primary-2 source hash: evidence/groupA/R187-publisher-vor.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 primary-2 source byte count: evidence/groupA/R187-publisher-vor.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 inherited-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 inherited-0 source exists: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 inherited-0 source hash: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 inherited-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 inherited-1 source exists: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 inherited-1 source hash: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 inherited-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 inherited-2 source exists: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 inherited-2 source hash: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 inherited-3 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 inherited-3 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 inherited-3 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 exact original B2 identity/question",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 canonical identity/title retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 original question retained in disposition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 original B2 context unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 current tasks and method retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 proposed tasks unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 exact bounded outcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 governing policies bounded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 matrix pins current per-action record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 assigned/matrix formal-open state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 per-action no authoritative or formal change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 handoff duplicates disposition without alteration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 only venue_track proposal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 preserves standalone canonical MAD venue",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 qualification and parent-conference boundary explicit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 source provenance copied intact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 sufficient source/identity limitation fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 primary-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 primary-0 source exists: /Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/P231-official-program.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 primary-0 source hash: /Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/P231-official-program.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 primary-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 primary-1 source exists: /Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 primary-1 source hash: /Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-0 source exists: data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-0 source hash: data/raw/corpus_quality_audit_2026_10_04/publication_metadata_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-1 source exists: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-1 source hash: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-2 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-2 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-3 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-3 source exists: docs/publication_venue_normalization.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-3 source hash: docs/publication_venue_normalization.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-4 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-4 source exists: docs/workshop_venue_audit_report.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-4 source hash: docs/workshop_venue_audit_report.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-5 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-5 source exists: data/processed/workshop_venue_evidence.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-5 source hash: data/processed/workshop_venue_evidence.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-6 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-6 source exists: data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 inherited-6 source hash: data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 exact original B2 identity/question",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 canonical identity/title retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 original question retained in disposition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 original B2 context unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 current tasks and method retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 proposed tasks unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 exact bounded outcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 governing policies bounded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 matrix pins current per-action record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 assigned/matrix formal-open state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 per-action no authoritative or formal change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 handoff duplicates disposition without alteration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 hold proposes no authoritative edit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 source provenance copied intact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 sufficient source/identity limitation fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 primary-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 primary-0 source exists: /Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R231-acm-primary.response",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 primary-0 source hash: /Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R231-acm-primary.response",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 primary-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 primary-1 source exists: /Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 primary-1 source hash: /Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map/data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 primary-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 primary-2 source exists: /Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/P231-official-program.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 primary-2 source hash: /Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/P231-official-program.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-0 source exists: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-0 source hash: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-1 source exists: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-1 source hash: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-2 source exists: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-2 source hash: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-3 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-3 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-3 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-4 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-4 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-4 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-5 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-5 source exists: data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-5 source hash: data/raw/corpus_quality_batch_c_wave2_2026_10_06/evidence_manifest.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-6 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-6 source exists: docs/corpus_quality_batch_c_wave2_2026_10_06.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 inherited-6 source hash: docs/corpus_quality_batch_c_wave2_2026_10_06.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 exact original B2 identity/question",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 canonical identity/title retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 original question retained in disposition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 original B2 context unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 current tasks and method retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 proposed tasks unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 exact bounded outcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 governing policies bounded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 matrix pins current per-action record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 assigned/matrix formal-open state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 per-action no authoritative or formal change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 handoff duplicates disposition without alteration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 scoped research-type proposal only",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 source provenance copied intact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 sufficient source/identity limitation fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 primary-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 primary-0 source exists: evidence/groupB/R256-primary.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 primary-0 source hash: evidence/groupB/R256-primary.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 primary-0 alternate path agrees",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-0 source exists: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-0 source hash: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-1 source exists: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-1 source hash: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-2 source exists: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-2 source hash: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-3 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-3 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-3 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-4 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-4 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 inherited-4 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 exact original B2 identity/question",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 canonical identity/title retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 original question retained in disposition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 original B2 context unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 current tasks and method retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 proposed tasks unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 exact bounded outcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 governing policies bounded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 matrix pins current per-action record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 assigned/matrix formal-open state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 per-action no authoritative or formal change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 handoff duplicates disposition without alteration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 scoped research-type proposal only",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 source provenance copied intact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 sufficient source/identity limitation fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 primary-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 primary-0 source exists: /Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-neurips2025.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 primary-0 source hash: /Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-neurips2025.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 primary-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 primary-1 source exists: /Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-official-landing.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 primary-1 source hash: /Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-official-landing.html",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-0 source exists: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-0 source hash: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-1 source exists: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-1 source hash: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-2 source exists: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-2 source hash: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-3 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-3 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-3 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-4 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-4 source exists: docs/systematic_literature_completeness_audit_2026_09.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-4 source hash: docs/systematic_literature_completeness_audit_2026_09.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-5 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-5 source exists: docs/targeted_literature_coverage_audit_2026-09-01.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 inherited-5 source hash: docs/targeted_literature_coverage_audit_2026-09-01.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 exact original B2 identity/question",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 canonical identity/title retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 original question retained in disposition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 original B2 context unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 current tasks and method retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 proposed tasks unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 exact bounded outcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 governing policies bounded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 matrix pins current per-action record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 assigned/matrix formal-open state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 per-action no authoritative or formal change",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 handoff duplicates disposition without alteration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 scoped research-type proposal only",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 source provenance copied intact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 sufficient source/identity limitation fields",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 primary-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 primary-0 source exists: evidence/groupB/R564-primary.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 primary-0 source hash: evidence/groupB/R564-primary.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 primary-0 alternate path agrees",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 inherited-0 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 inherited-0 source exists: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 inherited-0 source hash: data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 inherited-1 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 inherited-1 source exists: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 inherited-1 source hash: docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 inherited-2 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 inherited-2 source exists: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 inherited-2 source hash: data/curated/paper_taxonomy.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 inherited-3 source path specified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 inherited-3 source exists: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 inherited-3 source hash: data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Six proposals, four evidence holds, one identity block",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Global accounting exactly 127/120/118 unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No closure or B4 authorization",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Read-only boundary declaration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Handoff pins current disposition matrix",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Handoff pins current report",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Published accepted B5 receipt pinned",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report table exactly covers eleven canonical actions once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report explicitly preserves open/pending state and inventory boundaries",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report preserves exact public counts/taxonomy/tasks",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report separates contribution from performance/reproducibility",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 fake-only metric and prose/table caveats retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 version/author and numerical conflicts retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 mixed image/frame units and percentage-point caveats retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 report distinguishes possible global balance from unspecified category counts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 generated-only, rounded count, author spelling and method boundaries retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 version, dependent derivatives and separate real controls retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 Main normalization explicit in report",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Four missing-manuscript holds and R154 identity boundary distinguishable",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "No frozen NeurIPS migration inference",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Preserved companion document: qc/independent_scientific_QC.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Preserved companion document: qc/final_batch_QC_preflight.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Combined independent QC PASS with exact 11-action/10-paper scope",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Combined independent QC no classification disagreement or formal decision",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Matrix pins current independent scientific QC",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Combined independent decisions cover each original action exactly once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R110 independent and original verdicts separately retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R138 independent and original verdicts separately retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R154 independent and original verdicts separately retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R161 independent and original verdicts separately retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R171 independent and original verdicts separately retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R187 independent and original verdicts separately retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "P231 independent and original verdicts separately retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R231 independent and original verdicts separately retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 independent and original verdicts separately retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R275 independent and original verdicts separately retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R564 independent and original verdicts separately retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Combined QC binds exact peer receipt: qc/groupA-independent-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Combined QC binds exact peer receipt: qc/groupB-independent-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Combined QC binds exact peer receipt: qc/root-group-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 original record retained and additive refinement is non-adjudicative",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 refinement source pin and quantitative distinction preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R256 caveat addendum independently linked from matrix",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Combined QC P231 remains qualified normalization",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Dependency PASS / failed=0: qc/groupA-independent-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "qc/groupA-independent-review.json current record hash R110",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "qc/groupA-independent-review.json current record hash R138",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "qc/groupA-independent-review.json current record hash R154",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "qc/groupA-independent-review.json current record hash R187",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Dependency PASS / failed=0: qc/groupB-independent-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "qc/groupB-independent-review.json current record hash R161",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "qc/groupB-independent-review.json current record hash R171",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "qc/groupB-independent-review.json current record hash R256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "qc/groupB-independent-review.json current record hash R564",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Dependency PASS / failed=0: qc/root-group-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "qc/root-group-review.json preserved bounded amendment bridge P231",
+      "passed": true,
+      "detail": {
+        "before": "qc/P231-before-policy-traceability-fix.json",
+        "changed_fields": [
+          "governing_policy_ids",
+          "qc_provenance_fix"
+        ],
+        "after_sha256": "d9baf9b30dbf98019c22558f4b8db1b9bb28c050ae981fdecf34b6c6e0795b93"
+      }
+    },
+    {
+      "name": "qc/root-group-review.json preserved bounded amendment bridge R231",
+      "passed": true,
+      "detail": {
+        "before": "qc/R231-before-source-hash-annotation.json",
+        "changed_fields": [
+          "provenance_annotation",
+          "sources"
+        ],
+        "after_sha256": "68a3d322959f9b6e6f4f2606152dfda6324521d2aad511ee03ef2485bca553b8"
+      }
+    },
+    {
+      "name": "qc/root-group-review.json current record hash R275",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Preservation baseline pins assigned inputs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Dependency PASS / failed=0: qc/baseline_validation_corrected.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Dependency PASS / failed=0: qc/preservation_final.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final preservation binds current accepted baseline receipts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final preservation zero-change flags",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final preservation corpus, taxonomy and task counts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final preservation actual decision/unresolved counts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final preservation protected 128 / frozen 49 and archived histories",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Final preservation deferred debt and separate inventory",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Lightweight deliverable validation PASS with no failures",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: ../batch-b-b5-01r3-2026-10-31/completion_receipt.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: per_paper/R110.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: per_paper/R138.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: per_paper/R154.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: per_paper/R161.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: per_paper/R171.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: per_paper/R187.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: per_paper/P231.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: per_paper/R231.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: per_paper/R256.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: per_paper/R275.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: per_paper/R564.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: batch_dispositions.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: b4_handoff.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: effort_and_retrievals.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: qc/independent_scientific_QC.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: qc/groupA-independent-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: qc/groupB-independent-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: qc/root-group-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Report local link exists: qc/preservation_final.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Read-only Git HEAD baseline",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Read-only Git tree/index/untracked/ignored clean",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "blocking_findings": [],
+  "disagreements": [],
+  "manual_document_review": {
+    "R1_R2": "R1 construction/curation/reuse and R2 substantive reusable evaluation are separately explained; no reliance on scale alone. R275 only R2, R564 only R1.",
+    "P231": "Main is qualified repository normalization for regular-paper role at standalone MAD; no literal-official Main claim, parent ICMR upgrade or R231 closure.",
+    "holds": "Missing full-text findings do not deny the contribution; R154 candidate support is conditional on an authoritative first-author/version bridge.",
+    "caveats": "Versions, fake-only metrics, dependent derivatives, unverified availability, named source conflicts and quantitative discrepancies remain traceable in records and report.",
+    "R256_refinement": "Original review retained unchanged; additive independent QC explains that global 6000-fake 1:1:1 balance is arithmetically possible and exact per-category allocations remain unspecified. No global ratio contradiction is asserted.",
+    "pending_status": "All eleven formal actions stay open; evidence recommendations do not append decisions or decrement 120 historical / 118 active-public unresolved."
+  },
+  "repository_writes": false,
+  "downloads": 0,
+  "tests_run": false,
+  "exports_run": false,
+  "staging": false,
+  "commits_created": 0,
+  "pushes": 0,
+  "B4_started": false
+}

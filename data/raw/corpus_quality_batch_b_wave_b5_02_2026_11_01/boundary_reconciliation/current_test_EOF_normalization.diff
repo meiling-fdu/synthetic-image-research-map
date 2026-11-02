@@ -1,0 +1,7 @@
+--- tests/test_corpus_quality_batch_b_wave_b5_02.py
++++ tests/test_corpus_quality_batch_b_wave_b5_02.py
+@@ -465,4 +465,3 @@
+         assert b'method;dataset;benchmark' in raw[T]
+         raw[T]=raw[T].replace(b'method;dataset;benchmark',b'method;survey',1)
+     with pytest.raises(AssertionError):assert_source_transaction(raw)
+-

@@ -1,0 +1,3497 @@
+{
+  "status": "INDEPENDENT_READ_ONLY_COMPLETE_BOUNDARY_REVIEW",
+  "reviewed_at_utc": "2026-11-01T11:13:50.358457+00:00",
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "historical_endpoints": {
+    "B1S": {
+      "before": "dace181c2a9edbb7c467978e9e958e83fdddc143",
+      "published": "df9774b64f717d535d3f299a727545f4b9488adb"
+    },
+    "B4_02": {
+      "before": "7fc8ceae702324628335944cf4b545a3733fdc56",
+      "published_containing_exact_original_transaction": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+      "original_sealed_manifest": "data/raw/corpus_quality_batch_b_wave_b4_02_2026_10_29/adjudication_manifest.json",
+      "note": "No separate B4-02 published commit exists; reconstruct its independent103+15 decisions/9cells/3aliases from sealed manifest. d109 contains integrated B4-01+B4-02 and unchanged original taxonomy."
+    },
+    "B5_01": {
+      "before": "7fc8ceae702324628335944cf4b545a3733fdc56",
+      "published": "d109c70f6994906ec3d9197baad51cf9d8e51f7c"
+    }
+  },
+  "classification_legend": {
+    "1": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+    "2": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+    "3": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+    "4": "GENUINE_UNEXPECTED_REGRESSION"
+  },
+  "source_files": [
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "sha256": "bde78da60eaf4f3660725dade4d11aed2225e13d28f675eabf52790cde65f5ec",
+      "matches_d109": true,
+      "lines": 404
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "sha256": "ede273958436346d7b94e24c4f970a6fca6fc6528f7e87b7f0ce87d71077f3a3",
+      "matches_d109": true,
+      "lines": 392
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "sha256": "87a1766308c46797b2b921e47da2755ea5f4c9144904b4fddd21b34ce0b5fa64",
+      "matches_d109": true,
+      "lines": 421
+    }
+  ],
+  "test_function_count": 55,
+  "assertion_count": 292,
+  "functions": [
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_actual_csv_headers_keep_existing_schema",
+      "line": 167,
+      "end_line": 168,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "all three live CSV headers",
+      "reason": "Schema invariants are independent of row count and transaction age.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        168
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_only_two_existing_records_and_exact_cell_allowlist_change",
+      "line": 172,
+      "end_line": 191,
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "scope": "dace -> df977 papers/taxonomy bytes",
+      "reason": "Already uses baseline and immutable endpoint_bytes; exact14-cell B1S history remains unchanged.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        176,
+        177,
+        190,
+        191,
+        181,
+        182,
+        183,
+        184,
+        185
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_101_prior_decision_rows_raw_prefix_preserved_with_only_two_terminal_appends",
+      "line": 194,
+      "end_line": 201,
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "scope": "dace101 -> df977103 decisions",
+      "reason": "Already immutable; original two terminal decisions and prefix must remain exact.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        197,
+        198,
+        199,
+        200,
+        201
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_actual_acceptance_conforms_to_schema_identity_policy_and_evidence",
+      "line": 205,
+      "end_line": 214,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live R026/R253 decisions, paper and taxonomy records",
+      "reason": "Retained earlier acceptances remain valid in current source. B4-03 does not alter these records.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        210,
+        211,
+        212,
+        213,
+        214
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_real_registry_repeat_upsert_is_byte_identical_and_no_extra_decision",
+      "line": 218,
+      "end_line": 225,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "temporary copy of live decision registry",
+      "reason": "Idempotence remains meaningful with138 rows; do not constrain live total to103.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        223,
+        224,
+        225
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_acceptance_auditor_rejects_materially_incomplete_or_mismatched_decision",
+      "line": 230,
+      "end_line": 244,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live copies of R026/R253 acceptances, material negative cases",
+      "reason": "Keep all rejection cases and semantic gate, not only the decision hash.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        244
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_only_original_two_actions_close_and_all_other_pending_questions_survive",
+      "line": 247,
+      "end_line": 263,
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "scope": "dace -> df977 decisions with published public identities",
+      "reason": "Already immutable131/129 endpoint; do not substitute live114/112.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        251,
+        254,
+        255,
+        256,
+        258,
+        259,
+        263,
+        253,
+        262
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_B1Q_packet_is_unmodified_with_all_original_limitations_history_and_corrections",
+      "line": 267,
+      "end_line": 276,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live immutable B1Q evidence files",
+      "reason": "Pinned hashes and pending/evidence-only historical claims must stay live and unchanged.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        268,
+        269,
+        270,
+        273,
+        274,
+        275,
+        276
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_locked_R2_R3_are_exact_B1Q_policy_snapshot_and_original_questions_unchanged",
+      "line": 279,
+      "end_line": 293,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live locked policy and original audit inventory",
+      "reason": "Exact policy/queue bytes and original question equality remain enforced.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        286,
+        289,
+        293
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_all_49_frozen_NeurIPS_receipts_and_original_blocked_status_remain_unchanged",
+      "line": 296,
+      "end_line": 303,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live frozen49 and predecessor baseline",
+      "reason": "Never redirect NeurIPS checks to permit changed originals.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        298,
+        300,
+        303,
+        302
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export",
+      "line": 312,
+      "end_line": 316,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "mixed immutable B1S papers/decisions, live taxonomy and evidence",
+      "reason": "Whole taxonomy hash describes B1S endpoint and now conflicts with approved30-cell taxonomy addition. Three B1Q/B1R evidence hashes stay live.",
+      "boundary_change_needed": true,
+      "live_retention_required": "Live B5-02 source byte equality to approved B4-03 and all previous evidence hashes.",
+      "assertions": [
+        316
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with672_unchanged",
+      "line": 319,
+      "end_line": 334,
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "scope": "dace -> df977 public records",
+      "reason": "Already published_context(BASE/PUBLISHED); original two-paper delta preserved.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        321,
+        322,
+        324,
+        325,
+        330,
+        332,
+        333,
+        334
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_public_map_delta_is_exactly_seven_existing_dependents_with_all1410_identities_preserved",
+      "line": 337,
+      "end_line": 354,
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "scope": "dace -> df977 map records",
+      "reason": "Already immutable seven dependent rows and1410 pairs.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        340,
+        343,
+        344,
+        353,
+        354,
+        352
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_paired_export_metadata_changes_only_UTC_generation_timestamp",
+      "line": 357,
+      "end_line": 368,
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "scope": "dace -> df977 metadata",
+      "reason": "Already immutable original timestamp-only export receipt.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        366,
+        368,
+        363,
+        365
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_recomputed_source_and_export_totals_match_with_only_R3_R2_additions",
+      "line": 371,
+      "end_line": 383,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "dace public -> live context source/public with fixed138/97 and+1/+1",
+      "reason": "B1S transaction addition and exact historical totals must be checked at df977. CURRENT_TAXONOMY_TOTALS remains a separate live invariant and must evolve to142/101.",
+      "boundary_change_needed": true,
+      "live_retention_required": "Live source/public totals equality142/101;674/557/613/1410 and all task/image-scope maps unchanged.",
+      "assertions": [
+        377,
+        378,
+        379,
+        380,
+        381,
+        383
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_no_authoritative_paper_institution_publication_task_or_scope_data_changes_beyond_B1R",
+      "line": 386,
+      "end_line": 394,
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "scope": "dace -> df977 curated/manual",
+      "reason": "Already endpoint_bytes; historical14-cell allowlist and all unrelated source protection remain immutable.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        394,
+        391
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "test": "test_public_frontend_assets_are_unchanged_and_only_paired_data_files_change_under_web",
+      "line": 397,
+      "end_line": 404,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live web tree vs dace plus public dimensions",
+      "reason": "B5-02 changes paired JSON only and preserves all frontend bytes. Existing live frontend guard must remain live.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        399,
+        400,
+        404,
+        403
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_exact_assigned_coverage_three_acceptances_and_twelve_holds",
+      "line": 155,
+      "end_line": 164,
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "scope": "original B4-02 manifest",
+      "reason": "Immutable exact15 actions/3accepted/12held packet; no change.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_live_formal_decision_is_unique_native_and_evidence_bound",
+      "line": 168,
+      "end_line": 172,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live original15 native IDs and record identities",
+      "reason": "Each remains represented exactly once even after11 later appends.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        171,
+        172
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_native_ids_are_unique_and_do_not_collide_with_either_prior_history",
+      "line": 175,
+      "end_line": 181,
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "scope": "B4-02 manifest IDs vs7fc8103 and reservedB4-01 IDs",
+      "reason": "Immutable identity reservation history.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        179,
+        180,
+        181
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_all_original_decisions_remain_a_byte_identical_prefix",
+      "line": 184,
+      "end_line": 191,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live registry103-row original prefix and all IDs unique",
+      "reason": "Already additive; keep live138-row unique coverage.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        187,
+        188,
+        189,
+        190,
+        191
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_native_repeat_submission_is_idempotent_without_rewriting_history",
+      "line": 195,
+      "end_line": 202,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "temporary copy of live registry",
+      "reason": "Keep all15 repeats byte-identical at current138-row registry.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        200,
+        201,
+        202
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_only_three_authorized_venue_binding_cells_change_on_each_journal",
+      "line": 206,
+      "end_line": 216,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live P049/P058/P068 full rows vs7fc8 plus three venue cells",
+      "reason": "B4-03 targets unrelated papers; exact non-authorized-field protection must stay live.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        210,
+        214,
+        215,
+        216
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_transaction_delta_is_exactly_nine_cells_and_three_new_aliases",
+      "line": 219,
+      "end_line": 236,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "immutable nine-cell manifest and live alias append presence",
+      "reason": "Existing comments allow later independent alias appends; exact three original aliases remain once.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        221,
+        222,
+        224,
+        226,
+        228,
+        232,
+        233,
+        234,
+        235,
+        236
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_journal_bindings_resolve_to_source_backed_registry_and_native_confirmation",
+      "line": 240,
+      "end_line": 250,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live journal registry and VenueAudit",
+      "reason": "Keep native fingerprint and source-backed canonical venue acceptance live.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        246,
+        247,
+        249,
+        250
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_identity_or_venue_change_invalidates_record_and_confirmation_fingerprint",
+      "line": 257,
+      "end_line": 263,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "synthetic negative edits to live bound journals",
+      "reason": "Keep DOI/venue/publication-type tamper rejection.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        260,
+        262,
+        263
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_incomplete_or_mismatched_venue_acceptance_is_rejected",
+      "line": 267,
+      "end_line": 277,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "seven synthetic negative acceptance cases",
+      "reason": "Keep all seven evidence/ID/creator/fingerprint checks.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        277
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_p001_track_boundary_is_a_nonterminal_hold_without_silent_main_or_registry_addition",
+      "line": 280,
+      "end_line": 291,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live unrelated P001 and unresolved native hold",
+      "reason": "P231 Main authorization cannot leak into P001. Keep complete row equality and no registry addition.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        290,
+        291
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_u005_keeps_precise_affiliation_distinct_from_unverified_viewport_and_author_presence",
+      "line": 294,
+      "end_line": 307,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "immutable policy+current location schema",
+      "reason": "No location accepted; precision qualifiers not representable. Keep exacthold.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        297,
+        298,
+        299,
+        300,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_exact_u005_romania_draft_is_rejected_by_current_country_policy_without_saving",
+      "line": 310,
+      "end_line": 317,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "pure location-policy negative",
+      "reason": "Do not relax country policy to accept unrelatedU005.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": []
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_confirmation_cannot_represent_the_required_approximate_point_qualifiers",
+      "line": 320,
+      "end_line": 333,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "pure synthetic location schema semantics",
+      "reason": "Keep explicit fact that converters discard unsupported qualifiers; do not mistake known for approximate.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        330,
+        331,
+        332,
+        333
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_location_mappings_and_institution_sources_have_no_data_change",
+      "line": 336,
+      "end_line": 341,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live all institution/mapping bytes vs7fc8",
+      "reason": "All location/affiliation/alias data remain exact; must not redirect.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        341,
+        340
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_transaction_accounting_is_reconstructed_without_a_fixed_live_tail_position",
+      "line": 344,
+      "end_line": 362,
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "scope": "reconstructed original103+15 B4-02 endpoint + current hold preservation",
+      "reason": "Exact118 total and128/126 accounting already reconstructed from immutable manifest; live accepted IDs present/holds open remain enforced.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        347,
+        349,
+        357,
+        358,
+        359,
+        361,
+        362
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "line": 365,
+      "end_line": 378,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "live current public/type totals and full taxonomy bytes vs7fc8",
+      "reason": "Research types and entire taxonomy equality describe original venue-only checkpoint, conflicts after scientific successor. All public IDs, counts, tasks and pairs remain live invariants.",
+      "boundary_change_needed": true,
+      "live_retention_required": "Live674 identities,674/557/613/1410, samepairs/tasks; only approved resource fields evolve at B5-02.",
+      "assertions": [
+        367,
+        368,
+        369,
+        370,
+        371,
+        376,
+        378,
+        373,
+        374
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "test": "test_frozen_neurips_receipts_remain_exact_and_the_b3_correction_is_additive_only",
+      "line": 381,
+      "end_line": 392,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live frozen49 plus immutable originalU002 additive correction",
+      "reason": "Preserve510630/510663 narrative correction and all original B3 evidence.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        383,
+        387,
+        388,
+        389,
+        390,
+        391,
+        392,
+        385
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping",
+      "line": 137,
+      "end_line": 148,
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "scope": "immutable B5-01+B4-01+B4-02 manifest and original24 actions",
+      "reason": "No source delta; preserve full transaction records and fingerprint bindings.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        146,
+        147,
+        148
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories",
+      "line": 151,
+      "end_line": 163,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "7fc8103 -> live expected127 registry",
+      "reason": "Historical exact127 and24 appends must be anchored to d109. Current authorized138 must preserve full127 raw prefix and11 B4-03 exact rows.",
+      "boundary_change_needed": true,
+      "live_retention_required": "Live original127 raw prefix,138unique,11 exactnew IDs and no duplicateoriginalaction.",
+      "assertions": [
+        155,
+        156,
+        158,
+        159,
+        160,
+        163
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_action_ids_and_per_action_transaction_fingerprints_are_collision_free",
+      "line": 166,
+      "end_line": 175,
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "scope": "immutable24 original decisions and binding fingerprints",
+      "reason": "Keep native IDs, original action IDs and canonical JSON fingerprints.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        168,
+        169,
+        175,
+        172,
+        173
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_only_eleven_actions_close_and_all_thirteen_new_holds_remain_open",
+      "line": 178,
+      "end_line": 185,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "7fc8terminal -> live terminal set",
+      "reason": "Exactly11 newlyclosed applies toB5-01 only; B4-03 adds6. Original13 holds must remain open in live registry.",
+      "boundary_change_needed": true,
+      "live_retention_required": "All prior B5-01 acceptedactions remain valid, original13holds open; only6lateractions close.",
+      "assertions": [
+        181,
+        182,
+        184,
+        185
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_unresolved_accounting_is_derived_from_the_live_original_ledger_and_public_identities",
+      "line": 188,
+      "end_line": 197,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "live originalledger/current registry compared to old packet120/118",
+      "reason": "Historical B5-01 endpoint must retain120/118 and113/111papers. Current count114/112 must be computed independently.",
+      "boundary_change_needed": true,
+      "live_retention_required": "Original159/148ledger exact; live114/112,108/106papers; olddecisionprefix preserved.",
+      "assertions": [
+        192,
+        193,
+        194,
+        195,
+        196,
+        197
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_exact_fifteen_paper_cells_change_without_identity_authors_dates_or_taxonomy_edits",
+      "line": 200,
+      "end_line": 212,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "7fc8papers -> live current compared to15cellB5-01 manifest",
+      "reason": "Exact15 publicationcells remain historical; later papers adds4types+P231track. Do not append to oldmanifest or change15expected.",
+      "boundary_change_needed": true,
+      "live_retention_required": "Compare d109->current exactly5 papercells plus30taxonomy cells; preserve earlier15cells and unrelatedfields.",
+      "assertions": [
+        202,
+        206,
+        207,
+        208,
+        210,
+        211
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+      "line": 215,
+      "end_line": 226,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live publicationoverrides andvenuealiases vs7fc8",
+      "reason": "B4-03 doesnotchangeoverrideoraliasfiles. Keep exact original2+3append assertions live.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        225,
+        226,
+        219,
+        220,
+        222,
+        223
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match",
+      "line": 229,
+      "end_line": 242,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "oldB5-01 sourceafterhashes and wholecuratedmanual bytes vs7fc8",
+      "reason": "Original hash/fourfile allowlist belongs to d109; B4-03 changes papers/taxonomy/decisions. Must preserve unchangedallother sourceguardlive.",
+      "boundary_change_needed": true,
+      "live_retention_required": "Exactd109->current allowed3CSVhashes and35cells/11rows; everyothercuratedmanualbyte unchangedexcept generatedreport ifjustified.",
+      "assertions": [
+        232,
+        234,
+        242
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_all_eight_live_publication_urls_match_the_authorized_paper_identities",
+      "line": 245,
+      "end_line": 254,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live8 acceptedURLs and oldDOI/authors",
+      "reason": "B4-03 unrelatedtargets; keep authoritative acceptedURL/semanticlinks andexactDOIauthors live.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        251,
+        252,
+        253,
+        254
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_all_three_live_journal_bindings_match_their_accepted_registry_states",
+      "line": 257,
+      "end_line": 268,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "live3 journalbindings andcanonicalregistry",
+      "reason": "B4-03 unrelatedtargets; no reason to make these only historical.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        265,
+        266,
+        267,
+        268,
+        264
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason",
+      "line": 271,
+      "end_line": 287,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "7fc8public -> live current compared toold11paper exportaudit",
+      "reason": "B4-03 five resourcepapers +P231 track introduce authorized6papers; old11(+P001)exportaudit remains original d109 history.",
+      "boundary_change_needed": true,
+      "live_retention_required": "Livecompare againstd109 exact6approved IDs andfields; retain8URLs/3journalbindings.",
+      "assertions": [
+        273,
+        277,
+        278,
+        279,
+        281,
+        283,
+        285,
+        286,
+        287
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_all_public_bibliographic_identities_and_task_type_labels_are_unchanged",
+      "line": 290,
+      "end_line": 295,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "liveallpublic bibliographic/tasks/types andtaxonomybytes vs7fc8",
+      "reason": "Identity/tasks remain live; five researchtypes andtaxonomybytes must use originald109 forhistoricalnotaxonomy assertion.",
+      "boundary_change_needed": true,
+      "live_retention_required": "Allidentities/authors/identifiers/publicationtype/tasks/scopes liveunchanged; onlyapproved5types.",
+      "assertions": [
+        295,
+        294
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_all_relationship_identities_pairs_affiliations_and_coordinates_are_preserved",
+      "line": 298,
+      "end_line": 306,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "liveallmapfields includingresearchtypes vs7fc8",
+      "reason": "Onlyresearchtype per-mapcomparisonconflicts; IDs/pairs/authors/affiliations/coordinates/tasks/scopes remainlive.",
+      "boundary_change_needed": true,
+      "live_retention_required": "All1410 IDs/pairs/provenance exact; precise dependenttype propagation allowed.",
+      "assertions": [
+        300,
+        301,
+        302,
+        306
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_all_changed_map_rows_are_exact_url_dependents_with_correct_semantic_links",
+      "line": 309,
+      "end_line": 322,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "7fc8maps ->livecurrent old23URLdependent fielddeltaexportaudit",
+      "reason": "B4-03 producesadditional type/trackdependentrows. Original23rows+URL-onlydelta must remain d109 historicaltruth.",
+      "boundary_change_needed": true,
+      "live_retention_required": "Live d109->current exactdependentrows/fieldallowlist; publishedsemanticlinks remaincorrect.",
+      "assertions": [
+        312,
+        313,
+        316,
+        317,
+        320,
+        321,
+        322
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_all_unresolved_p001_and_u005_policy_boundaries_survive_publication",
+      "line": 325,
+      "end_line": 337,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "liveP001complete row, old13holddecisions and locationfiles",
+      "reason": "P231 unrelatedMADtrack must notchangeP001/U005/geography. Keepall13holds.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        330,
+        331,
+        332,
+        334,
+        337
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_corpus_and_taxonomy_totals_are_recomputed_and_match_source_and_public_invariants",
+      "line": 340,
+      "end_line": 349,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "livecounts andsource/public taxonomyvsoldpacket138/97",
+      "reason": "Historicald109 keeps674/557/613/1410and138/97. B5-02 source/public equal142/101 must get independentlivecoverage.",
+      "boundary_change_needed": true,
+      "live_retention_required": "All8taxonomylabelsrecomputed; task621/84/45, method578,dataset142,benchmark101,survey21,analysis86.",
+      "assertions": [
+        342,
+        343,
+        347,
+        348
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_current_paired_export_metadata_has_one_valid_utc_generation_timestamp",
+      "line": 352,
+      "end_line": 364,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "livepairedexportmetadata vs7fc8 timestampmonotonicity",
+      "reason": "Metadata keysotherthangenerationtimestamp andtop-levelschemas shouldremain unchanged; verifyactualexports. KeepUTC/pairedtimestampassertions live.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        364,
+        360,
+        361,
+        362
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_original_reports_and_manifests_still_expose_all_evidence_caveats",
+      "line": 367,
+      "end_line": 378,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "liveimmutableB5/B4/B3packets",
+      "reason": "KeepP03412vs13authors, U002postcodesandU005precision qualifiers unchanged.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        370,
+        371,
+        374,
+        375,
+        376,
+        378
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+      "line": 381,
+      "end_line": 400,
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "scope": "livegeneratedmappingreport vs7fc8",
+      "reason": "B4-03labels/trackshouldnotalterauthor-mappingreport. Preserveexact8URLcells. Ifexportdoeschangeunrelatedreport investigateinstead ofautoauthorizing.",
+      "boundary_change_needed": false,
+      "live_retention_required": "",
+      "assertions": [
+        384,
+        385,
+        400,
+        393,
+        395,
+        397,
+        398
+      ]
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "test": "test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations",
+      "line": 403,
+      "end_line": 421,
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "scope": "liveallpublicmetadata_status vs7fc8, only3journalexceptions",
+      "reason": "P231 acceptedtrackmayclearvenueflag; original3journal-onlystatusdelta belongs d109. Conditionalconflict untilactualexport inspected.",
+      "boundary_change_needed": true,
+      "live_retention_required": "Keep3journalmetadata/affiliationdebtassertions live; exactP231statusdelta mustbeexplicitlyderivedwithoutauthor/affiliationacceptance.",
+      "assertions": [
+        411,
+        412,
+        413,
+        414,
+        416,
+        421,
+        409
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "row_by_pid",
+      "line": 85,
+      "assertion": "assert len(matched) == 1",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Identity/uniqueness/sourceauthentication helper assertion remains required across snapshots."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "source_record",
+      "line": 96,
+      "assertion": "assert len(matches) == 1",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Identity/uniqueness/sourceauthentication helper assertion remains required across snapshots."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "terminal",
+      "line": 115,
+      "assertion": "assert rid in (None, prior_rid)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Identity/uniqueness/sourceauthentication helper assertion remains required across snapshots."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "terminal",
+      "line": 116,
+      "assertion": "assert row['review_note'].startswith(prior_rid + ' PROPOSE_CORRECTION_ACCEPTED:')",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Identity/uniqueness/sourceauthentication helper assertion remains required across snapshots."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "terminal",
+      "line": 119,
+      "assertion": "assert rid not in found, f'Duplicate original-action terminal: {rid}'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Identity/uniqueness/sourceauthentication helper assertion remains required across snapshots."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_actual_csv_headers_keep_existing_schema",
+      "line": 168,
+      "assertion": "assert tuple(next(csv.reader(io.StringIO((ROOT / path).read_text(), newline='')))) == columns",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Schema invariants are independent of row count and transaction age."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_two_existing_records_and_exact_cell_allowlist_change",
+      "line": 176,
+      "assertion": "assert [r[ident] for r in old] == [r[ident] for r in new]",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already uses baseline and immutable endpoint_bytes; exact14-cell B1S history remains unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_two_existing_records_and_exact_cell_allowlist_change",
+      "line": 177,
+      "assertion": "assert {a['paper_id'] for a, b in zip(old, new) if a != b} == set(TARGETS.values())",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already uses baseline and immutable endpoint_bytes; exact14-cell B1S history remains unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_two_existing_records_and_exact_cell_allowlist_change",
+      "line": 190,
+      "assertion": "assert new_raw == b''.join(reconstructed), 'Unapproved CSV token bytes changed'",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already uses baseline and immutable endpoint_bytes; exact14-cell B1S history remains unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_two_existing_records_and_exact_cell_allowlist_change",
+      "line": 191,
+      "assertion": "assert sum(len(ALLOW[path]) for _ in TARGETS) == (2 if path == PAPERS else 12)",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already uses baseline and immutable endpoint_bytes; exact14-cell B1S history remains unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_two_existing_records_and_exact_cell_allowlist_change",
+      "line": 181,
+      "assertion": "assert {k for k in before if before[k] != after[k]} == ALLOW[path]",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already uses baseline and immutable endpoint_bytes; exact14-cell B1S history remains unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_two_existing_records_and_exact_cell_allowlist_change",
+      "line": 182,
+      "assertion": "assert after['research_types'] == ';'.join(TYPES[rid])",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already uses baseline and immutable endpoint_bytes; exact14-cell B1S history remains unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_two_existing_records_and_exact_cell_allowlist_change",
+      "line": 183,
+      "assertion": "assert all(before[k] == after[k] for k in before if k not in ALLOW[path])",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already uses baseline and immutable endpoint_bytes; exact14-cell B1S history remains unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_two_existing_records_and_exact_cell_allowlist_change",
+      "line": 184,
+      "assertion": "assert before['tasks'] == after['tasks'] == 'detection'",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already uses baseline and immutable endpoint_bytes; exact14-cell B1S history remains unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_two_existing_records_and_exact_cell_allowlist_change",
+      "line": 185,
+      "assertion": "assert before['image_scopes'] == after['image_scopes'] == 'fully_generated'",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already uses baseline and immutable endpoint_bytes; exact14-cell B1S history remains unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_101_prior_decision_rows_raw_prefix_preserved_with_only_two_terminal_appends",
+      "line": 197,
+      "assertion": "assert len(old) == 101",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable; original two terminal decisions and prefix must remain exact."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_101_prior_decision_rows_raw_prefix_preserved_with_only_two_terminal_appends",
+      "line": 198,
+      "assertion": "assert len(new) == len({r['decision_id'] for r in new}) == 103",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable; original two terminal decisions and prefix must remain exact."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_101_prior_decision_rows_raw_prefix_preserved_with_only_two_terminal_appends",
+      "line": 199,
+      "assertion": "assert new_raw.startswith(old_raw) and new[:-2] == old",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable; original two terminal decisions and prefix must remain exact."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_101_prior_decision_rows_raw_prefix_preserved_with_only_two_terminal_appends",
+      "line": 200,
+      "assertion": "assert {r['decision_id'] for r in new[-2:]} == set(IDS.values())",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable; original two terminal decisions and prefix must remain exact."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_101_prior_decision_rows_raw_prefix_preserved_with_only_two_terminal_appends",
+      "line": 201,
+      "assertion": "assert terminal(new) == {**terminal(old), **IDS}",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable; original two terminal decisions and prefix must remain exact."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_actual_acceptance_conforms_to_schema_identity_policy_and_evidence",
+      "line": 210,
+      "assertion": "assert acceptance_valid(rid, decision, paper, taxonomy)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Retained earlier acceptances remain valid in current source. B4-03 does not alter these records."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_actual_acceptance_conforms_to_schema_identity_policy_and_evidence",
+      "line": 211,
+      "assertion": "assert decision['action'] in ALLOWED_REVIEW_ACTIONS and decision['review_queue'] in ALLOWED_REVIEW_QUEUES",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Retained earlier acceptances remain valid in current source. B4-03 does not alter these records."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_actual_acceptance_conforms_to_schema_identity_policy_and_evidence",
+      "line": 212,
+      "assertion": "assert decision['created_at'] == decision['updated_at']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Retained earlier acceptances remain valid in current source. B4-03 does not alter these records."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_actual_acceptance_conforms_to_schema_identity_policy_and_evidence",
+      "line": 213,
+      "assertion": "assert datetime.fromisoformat(decision['created_at'].replace('Z', '+00:00')).tzinfo is not None",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Retained earlier acceptances remain valid in current source. B4-03 does not alter these records."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_actual_acceptance_conforms_to_schema_identity_policy_and_evidence",
+      "line": 214,
+      "assertion": "assert 'no_action_after_review means the approved correction is complete' in decision['review_note']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Retained earlier acceptances remain valid in current source. B4-03 does not alter these records."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_real_registry_repeat_upsert_is_byte_identical_and_no_extra_decision",
+      "line": 223,
+      "assertion": "assert upsert_review_decision(row, path=target) == row",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Idempotence remains meaningful with138 rows; do not constrain live total to103."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_real_registry_repeat_upsert_is_byte_identical_and_no_extra_decision",
+      "line": 224,
+      "assertion": "assert upsert_review_decision(row, path=target) == row",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Idempotence remains meaningful with138 rows; do not constrain live total to103."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_real_registry_repeat_upsert_is_byte_identical_and_no_extra_decision",
+      "line": 225,
+      "assertion": "assert target.read_bytes() == raw",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Idempotence remains meaningful with138 rows; do not constrain live total to103."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_acceptance_auditor_rejects_materially_incomplete_or_mismatched_decision",
+      "line": 244,
+      "assertion": "assert not acceptance_valid(rid, decision, paper, taxonomy)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep all rejection cases and semantic gate, not only the decision hash."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_original_two_actions_close_and_all_other_pending_questions_survive",
+      "line": 251,
+      "assertion": "assert set(after['closed_review_ids']) - set(before['closed_review_ids']) == set(TARGETS)",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable131/129 endpoint; do not substitute live114/112."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_original_two_actions_close_and_all_other_pending_questions_survive",
+      "line": 254,
+      "assertion": "assert {k: after[k] for k in ('historical_actions', 'historical_papers')} == {'historical_actions': 159, 'historical_papers': 148}",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable131/129 endpoint; do not substitute live114/112."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_original_two_actions_close_and_all_other_pending_questions_survive",
+      "line": 255,
+      "assertion": "assert after['historical_unresolved_actions'] == before['historical_unresolved_actions'] - 2 == 131",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable131/129 endpoint; do not substitute live114/112."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_original_two_actions_close_and_all_other_pending_questions_survive",
+      "line": 256,
+      "assertion": "assert after['active_public_unresolved_actions'] == before['active_public_unresolved_actions'] - 2 == 129",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable131/129 endpoint; do not substitute live114/112."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_original_two_actions_close_and_all_other_pending_questions_survive",
+      "line": 258,
+      "assertion": "assert after['historical_unresolved_papers'] == 121",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable131/129 endpoint; do not substitute live114/112."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_original_two_actions_close_and_all_other_pending_questions_survive",
+      "line": 259,
+      "assertion": "assert after['active_public_unresolved_papers'] == 119",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable131/129 endpoint; do not substitute live114/112."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_original_two_actions_close_and_all_other_pending_questions_survive",
+      "line": 263,
+      "assertion": "assert {'R234', 'T046', 'T093', 'T608', 'T526', 'P526'} <= set(after['historical_unresolved_review_ids'])",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable131/129 endpoint; do not substitute live114/112."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_original_two_actions_close_and_all_other_pending_questions_survive",
+      "line": 253,
+      "assertion": "assert after[key] == [r for r in before[key] if r not in TARGETS]",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable131/129 endpoint; do not substitute live114/112."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_only_original_two_actions_close_and_all_other_pending_questions_survive",
+      "line": 262,
+      "assertion": "assert [(r['review_id'], r.get('dimension')) for r in ledger if r['batch'] == 'B' and r['paper_id'] == pid] == [(rid, 'research_types')]",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable131/129 endpoint; do not substitute live114/112."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_B1Q_packet_is_unmodified_with_all_original_limitations_history_and_corrections",
+      "line": 268,
+      "assertion": "assert sha((ROOT / path).read_bytes()) == BASELINE['evidence_sha256'][path]",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Pinned hashes and pending/evidence-only historical claims must stay live and unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_B1Q_packet_is_unmodified_with_all_original_limitations_history_and_corrections",
+      "line": 269,
+      "assertion": "assert packet()['evidence_only'] is True",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Pinned hashes and pending/evidence-only historical claims must stay live and unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_B1Q_packet_is_unmodified_with_all_original_limitations_history_and_corrections",
+      "line": 270,
+      "assertion": "assert set(packet()['review_ids']) == set(TARGETS)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Pinned hashes and pending/evidence-only historical claims must stay live and unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_B1Q_packet_is_unmodified_with_all_original_limitations_history_and_corrections",
+      "line": 273,
+      "assertion": "assert source['maintainer_acceptance'] == 'PENDING'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Pinned hashes and pending/evidence-only historical claims must stay live and unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_B1Q_packet_is_unmodified_with_all_original_limitations_history_and_corrections",
+      "line": 274,
+      "assertion": "assert source['authoritative_change_applied'] is False",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Pinned hashes and pending/evidence-only historical claims must stay live and unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_B1Q_packet_is_unmodified_with_all_original_limitations_history_and_corrections",
+      "line": 275,
+      "assertion": "assert source['original_action_remains_open'] is True",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Pinned hashes and pending/evidence-only historical claims must stay live and unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_B1Q_packet_is_unmodified_with_all_original_limitations_history_and_corrections",
+      "line": 276,
+      "assertion": "assert source['official_manuscript']['sha256'] in (ROOT / path).read_text()",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Pinned hashes and pending/evidence-only historical claims must stay live and unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_locked_R2_R3_are_exact_B1Q_policy_snapshot_and_original_questions_unchanged",
+      "line": 286,
+      "assertion": "assert value == live[policy]",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Exact policy/queue bytes and original question equality remain enforced."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_locked_R2_R3_are_exact_B1Q_policy_snapshot_and_original_questions_unchanged",
+      "line": 289,
+      "assertion": "assert original == actual",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Exact policy/queue bytes and original question equality remain enforced."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_locked_R2_R3_are_exact_B1Q_policy_snapshot_and_original_questions_unchanged",
+      "line": 293,
+      "assertion": "assert (ROOT / path).read_bytes() == baseline(path)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Exact policy/queue bytes and original question equality remain enforced."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_all_49_frozen_NeurIPS_receipts_and_original_blocked_status_remain_unchanged",
+      "line": 298,
+      "assertion": "assert (ROOT / path).read_bytes() == baseline(path)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Never redirect NeurIPS checks to permit changed originals."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_all_49_frozen_NeurIPS_receipts_and_original_blocked_status_remain_unchanged",
+      "line": 300,
+      "assertion": "assert len(frozen) == 49",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Never redirect NeurIPS checks to permit changed originals."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_all_49_frozen_NeurIPS_receipts_and_original_blocked_status_remain_unchanged",
+      "line": 303,
+      "assertion": "assert packet()['neurips_status'] == '7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Never redirect NeurIPS checks to permit changed originals."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_all_49_frozen_NeurIPS_receipts_and_original_blocked_status_remain_unchanged",
+      "line": 302,
+      "assertion": "assert sha(preserved_bytes(ROOT, p)) == fingerprint",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Never redirect NeurIPS checks to permit changed originals."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_all_accepted_source_bytes_and_B1Q_B1R_reports_survive_controlled_export",
+      "line": 316,
+      "assertion": "assert sha(observed) == FROZEN['pre_export_frozen_source_sha256'][path]",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Whole taxonomy hash describes B1S endpoint and now conflicts with approved30-cell taxonomy addition. Three B1Q/B1R evidence hashes stay live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with672_unchanged",
+      "line": 321,
+      "assertion": "assert before['papers'].keys() == after['papers'].keys()",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already published_context(BASE/PUBLISHED); original two-paper delta preserved."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with672_unchanged",
+      "line": 322,
+      "assertion": "assert len(after['papers']) == 674",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already published_context(BASE/PUBLISHED); original two-paper delta preserved."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with672_unchanged",
+      "line": 324,
+      "assertion": "assert changed == set(TARGETS.values())",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already published_context(BASE/PUBLISHED); original two-paper delta preserved."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with672_unchanged",
+      "line": 325,
+      "assertion": "assert sum(before['papers'][pid] == after['papers'][pid] for pid in before['papers'] if pid not in changed) == 672",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already published_context(BASE/PUBLISHED); original two-paper delta preserved."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with672_unchanged",
+      "line": 330,
+      "assertion": "assert after['papers'][pid] == expected",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already published_context(BASE/PUBLISHED); original two-paper delta preserved."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with672_unchanged",
+      "line": 332,
+      "assertion": "assert all(after['papers'][pid][key] == value for key, value in authoritative.items())",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already published_context(BASE/PUBLISHED); original two-paper delta preserved."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with672_unchanged",
+      "line": 333,
+      "assertion": "assert after['papers'][pid]['tasks'] == ['detection']",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already published_context(BASE/PUBLISHED); original two-paper delta preserved."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_paper_delta_is_exactly_two_types_and_review_reason_updates_with672_unchanged",
+      "line": 334,
+      "assertion": "assert after['papers'][pid]['image_scopes'] == ['fully_generated']",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already published_context(BASE/PUBLISHED); original two-paper delta preserved."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_map_delta_is_exactly_seven_existing_dependents_with_all1410_identities_preserved",
+      "line": 340,
+      "assertion": "assert len(before) == len(after) == 1410 and before.keys() == after.keys()",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable seven dependent rows and1410 pairs."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_map_delta_is_exactly_seven_existing_dependents_with_all1410_identities_preserved",
+      "line": 343,
+      "assertion": "assert changed == dependents and len(changed) == 7",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable seven dependent rows and1410 pairs."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_map_delta_is_exactly_seven_existing_dependents_with_all1410_identities_preserved",
+      "line": 344,
+      "assertion": "assert Counter(before[rid]['paper_id'] for rid in changed) == Counter({TARGETS['R026']: 4, TARGETS['R253']: 3})",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable seven dependent rows and1410 pairs."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_map_delta_is_exactly_seven_existing_dependents_with_all1410_identities_preserved",
+      "line": 353,
+      "assertion": "assert published_context(BASE)['pairs'] == published_context(PUBLISHED)['pairs']",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable seven dependent rows and1410 pairs."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_map_delta_is_exactly_seven_existing_dependents_with_all1410_identities_preserved",
+      "line": 354,
+      "assertion": "assert sum(published_context(PUBLISHED)['pairs'].values()) == len(published_context(PUBLISHED)['pairs']) == 1410",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable seven dependent rows and1410 pairs."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_map_delta_is_exactly_seven_existing_dependents_with_all1410_identities_preserved",
+      "line": 352,
+      "assertion": "assert after[rid] == expected",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable seven dependent rows and1410 pairs."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_paired_export_metadata_changes_only_UTC_generation_timestamp",
+      "line": 366,
+      "assertion": "assert timestamps[0] == timestamps[1]",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable original timestamp-only export receipt."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_paired_export_metadata_changes_only_UTC_generation_timestamp",
+      "line": 368,
+      "assertion": "assert is_utc_timestamp(timestamps[0])",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable original timestamp-only export receipt."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_paired_export_metadata_changes_only_UTC_generation_timestamp",
+      "line": 363,
+      "assertion": "assert old_meta == new_meta and new_time >= old_time",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable original timestamp-only export receipt."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_paired_export_metadata_changes_only_UTC_generation_timestamp",
+      "line": 365,
+      "assertion": "assert {k: v for k, v in before.items() if k not in {'records', 'metadata'}} == {k: v for k, v in after.items() if k not in {'records', 'metadata'}}",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already immutable original timestamp-only export receipt."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_recomputed_source_and_export_totals_match_with_only_R3_R2_additions",
+      "line": 377,
+      "assertion": "assert old_totals - live_totals == {} and live_totals - old_totals == {'benchmark': 1, 'analysis_study': 1}",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B1S transaction addition and exact historical totals must be checked at df977. CURRENT_TAXONOMY_TOTALS remains a separate live invariant and must evolve to142/101."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_recomputed_source_and_export_totals_match_with_only_R3_R2_additions",
+      "line": 378,
+      "assertion": "assert live_totals == source_totals == CURRENT_TAXONOMY_TOTALS",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B1S transaction addition and exact historical totals must be checked at df977. CURRENT_TAXONOMY_TOTALS remains a separate live invariant and must evolve to142/101."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_recomputed_source_and_export_totals_match_with_only_R3_R2_additions",
+      "line": 379,
+      "assertion": "assert live_totals == Counter(detection=621, source_attribution=84, localization=45, method=578, dataset=138, benchmark=97, survey=21, analysis_study=86)",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B1S transaction addition and exact historical totals must be checked at df977. CURRENT_TAXONOMY_TOTALS remains a separate live invariant and must evolve to142/101."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_recomputed_source_and_export_totals_match_with_only_R3_R2_additions",
+      "line": 380,
+      "assertion": "assert before['counts'] == after['counts'] == CURRENT_CORPUS_COUNTS",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B1S transaction addition and exact historical totals must be checked at df977. CURRENT_TAXONOMY_TOTALS remains a separate live invariant and must evolve to142/101."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_recomputed_source_and_export_totals_match_with_only_R3_R2_additions",
+      "line": 381,
+      "assertion": "assert after['counts'] == {'public': 674, 'formal': 557, 'mapped': 613, 'unmapped': 61, 'relationship_rows': 1410, 'unique_paper_institution_pairs': 1410}",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B1S transaction addition and exact historical totals must be checked at df977. CURRENT_TAXONOMY_TOTALS remains a separate live invariant and must evolve to142/101."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_recomputed_source_and_export_totals_match_with_only_R3_R2_additions",
+      "line": 383,
+      "assertion": "assert {pid: r[dim] for pid, r in before['papers'].items()} == {pid: r[dim] for pid, r in after['papers'].items()}",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B1S transaction addition and exact historical totals must be checked at df977. CURRENT_TAXONOMY_TOTALS remains a separate live invariant and must evolve to142/101."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_no_authoritative_paper_institution_publication_task_or_scope_data_changes_beyond_B1R",
+      "line": 394,
+      "assertion": "assert {k: v for k, v in old.items() if k != 'research_types'} == {k: v for k, v in new.items() if k != 'research_types'}",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already endpoint_bytes; historical14-cell allowlist and all unrelated source protection remain immutable."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_no_authoritative_paper_institution_publication_task_or_scope_data_changes_beyond_B1R",
+      "line": 391,
+      "assertion": "assert endpoint_bytes(path) == baseline(path), path",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Already endpoint_bytes; historical14-cell allowlist and all unrelated source protection remain immutable."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_frontend_assets_are_unchanged_and_only_paired_data_files_change_under_web",
+      "line": 399,
+      "assertion": "assert changed == set(PUBLIC)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B5-02 changes paired JSON only and preserves all frontend bytes. Existing live frontend guard must remain live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_frontend_assets_are_unchanged_and_only_paired_data_files_change_under_web",
+      "line": 400,
+      "assertion": "assert set(context()['papers']) == set(published_context(BASE)['papers'])",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B5-02 changes paired JSON only and preserves all frontend bytes. Existing live frontend guard must remain live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_frontend_assets_are_unchanged_and_only_paired_data_files_change_under_web",
+      "line": 404,
+      "assertion": "assert set(paper['taxonomy_review']) == {'tasks', 'image_scopes', 'research_types'}",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B5-02 changes paired JSON only and preserves all frontend bytes. Existing live frontend guard must remain live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "function": "test_public_frontend_assets_are_unchanged_and_only_paired_data_files_change_under_web",
+      "line": 403,
+      "assertion": "assert isinstance(paper[dimension], list)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B5-02 changes paired JSON only and preserves all frontend bytes. Existing live frontend guard must remain live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "case",
+      "line": 71,
+      "assertion": "assert len(found) == 1",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Identity/uniqueness/sourceauthentication helper assertion remains required across snapshots."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "source_row",
+      "line": 78,
+      "assertion": "assert len(found) == 1",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Identity/uniqueness/sourceauthentication helper assertion remains required across snapshots."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "terminal",
+      "line": 150,
+      "assertion": "assert rid not in result, 'Duplicate terminal decision for an original review'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Identity/uniqueness/sourceauthentication helper assertion remains required across snapshots."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_exact_assigned_coverage_three_acceptances_and_twelve_holds",
+      "line": 157,
+      "assertion": "assert [r['review_id'] for r in records] == ASSIGNED",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Immutable exact15 actions/3accepted/12held packet; no change."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_exact_assigned_coverage_three_acceptances_and_twelve_holds",
+      "line": 158,
+      "assertion": "assert len({r['paper_id'] for r in records}) == 11",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Immutable exact15 actions/3accepted/12held packet; no change."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_exact_assigned_coverage_three_acceptances_and_twelve_holds",
+      "line": 159,
+      "assertion": "assert [r['review_id'] for r in records if r['accepted']] == ACCEPTED",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Immutable exact15 actions/3accepted/12held packet; no change."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_exact_assigned_coverage_three_acceptances_and_twelve_holds",
+      "line": 160,
+      "assertion": "assert [r['review_id'] for r in records if not r['accepted']] == HELD",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Immutable exact15 actions/3accepted/12held packet; no change."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_exact_assigned_coverage_three_acceptances_and_twelve_holds",
+      "line": 161,
+      "assertion": "assert packet()['accepted_review_ids'] == ACCEPTED",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Immutable exact15 actions/3accepted/12held packet; no change."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_exact_assigned_coverage_three_acceptances_and_twelve_holds",
+      "line": 162,
+      "assertion": "assert packet()['held_review_ids'] == HELD",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Immutable exact15 actions/3accepted/12held packet; no change."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_exact_assigned_coverage_three_acceptances_and_twelve_holds",
+      "line": 163,
+      "assertion": "assert packet()['baseline_commit'] == BASE",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Immutable exact15 actions/3accepted/12held packet; no change."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_exact_assigned_coverage_three_acceptances_and_twelve_holds",
+      "line": 164,
+      "assertion": "assert packet()['exports_run'] == packet()['source_retrievals'] == packet()['geocoding_requests'] == 0",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Immutable exact15 actions/3accepted/12held packet; no change."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_live_formal_decision_is_unique_native_and_evidence_bound",
+      "line": 171,
+      "assertion": "assert found == [record['formal_decision']]",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Each remains represented exactly once even after11 later appends."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_live_formal_decision_is_unique_native_and_evidence_bound",
+      "line": 172,
+      "assertion": "assert acceptance_valid(record, found[0], source_row(rid))",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Each remains represented exactly once even after11 later appends."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_native_ids_are_unique_and_do_not_collide_with_either_prior_history",
+      "line": 179,
+      "assertion": "assert len(ids) == len(records) == 15",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Immutable identity reservation history."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_native_ids_are_unique_and_do_not_collide_with_either_prior_history",
+      "line": 180,
+      "assertion": "assert ids.isdisjoint({r['decision_id'] for r in original})",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Immutable identity reservation history."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_native_ids_are_unique_and_do_not_collide_with_either_prior_history",
+      "line": 181,
+      "assertion": "assert ids.isdisjoint(B4_01_RESERVED_IDS)",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Immutable identity reservation history."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_all_original_decisions_remain_a_byte_identical_prefix",
+      "line": 187,
+      "assertion": "assert sha(old) == packet()['source_sha256_before'][DECISIONS]",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Already additive; keep live138-row unique coverage."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_all_original_decisions_remain_a_byte_identical_prefix",
+      "line": 188,
+      "assertion": "assert raw.startswith(old)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Already additive; keep live138-row unique coverage."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_all_original_decisions_remain_a_byte_identical_prefix",
+      "line": 189,
+      "assertion": "assert len(csv_records(old)) == packet()['prior_registry_rows'] == 103",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Already additive; keep live138-row unique coverage."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_all_original_decisions_remain_a_byte_identical_prefix",
+      "line": 190,
+      "assertion": "assert csv_records(raw)[:103] == csv_records(old)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Already additive; keep live138-row unique coverage."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_all_original_decisions_remain_a_byte_identical_prefix",
+      "line": 191,
+      "assertion": "assert len(read_review_decisions()) == len({r['decision_id'] for r in read_review_decisions()})",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Already additive; keep live138-row unique coverage."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_native_repeat_submission_is_idempotent_without_rewriting_history",
+      "line": 200,
+      "assertion": "assert upsert_review_decision(decision, path=target) == decision",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep all15 repeats byte-identical at current138-row registry."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_native_repeat_submission_is_idempotent_without_rewriting_history",
+      "line": 201,
+      "assertion": "assert upsert_review_decision(decision, path=target) == decision",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep all15 repeats byte-identical at current138-row registry."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_native_repeat_submission_is_idempotent_without_rewriting_history",
+      "line": 202,
+      "assertion": "assert target.read_bytes() == before",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep all15 repeats byte-identical at current138-row registry."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_only_three_authorized_venue_binding_cells_change_on_each_journal",
+      "line": 210,
+      "assertion": "assert current == {**original, **changes}",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 targets unrelated papers; exact non-authorized-field protection must stay live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_only_three_authorized_venue_binding_cells_change_on_each_journal",
+      "line": 214,
+      "assertion": "assert sorted(actual, key=lambda d:d['field']) == sorted(expected_deltas, key=lambda d:d['field'])",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 targets unrelated papers; exact non-authorized-field protection must stay live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_only_three_authorized_venue_binding_cells_change_on_each_journal",
+      "line": 215,
+      "assertion": "assert set(changes) == {'venue_id', 'venue_name', 'venue_type'}",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 targets unrelated papers; exact non-authorized-field protection must stay live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_only_three_authorized_venue_binding_cells_change_on_each_journal",
+      "line": 216,
+      "assertion": "assert all(original[key] != current[key] for key in changes)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 targets unrelated papers; exact non-authorized-field protection must stay live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_delta_is_exactly_nine_cells_and_three_new_aliases",
+      "line": 221,
+      "assertion": "assert len(deltas) == 9",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Existing comments allow later independent alias appends; exact three original aliases remain once."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_delta_is_exactly_nine_cells_and_three_new_aliases",
+      "line": 222,
+      "assertion": "assert {d['paper_id'] for d in deltas} == {case(rid)['paper_id'] for rid in ACCEPTED}",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Existing comments allow later independent alias appends; exact three original aliases remain once."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_delta_is_exactly_nine_cells_and_three_new_aliases",
+      "line": 224,
+      "assertion": "assert len(appended) == 3",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Existing comments allow later independent alias appends; exact three original aliases remain once."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_delta_is_exactly_nine_cells_and_three_new_aliases",
+      "line": 226,
+      "assertion": "assert sha(published_bytes(BASE, ALIASES)) == packet()['source_sha256_before'][ALIASES]",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Existing comments allow later independent alias appends; exact three original aliases remain once."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_delta_is_exactly_nine_cells_and_three_new_aliases",
+      "line": 228,
+      "assertion": "assert current[:len(original)] == original",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Existing comments allow later independent alias appends; exact three original aliases remain once."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_delta_is_exactly_nine_cells_and_three_new_aliases",
+      "line": 232,
+      "assertion": "assert current.count(row) == 1",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Existing comments allow later independent alias appends; exact three original aliases remain once."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_delta_is_exactly_nine_cells_and_three_new_aliases",
+      "line": 233,
+      "assertion": "assert row['review_status'] == 'confirmed'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Existing comments allow later independent alias appends; exact three original aliases remain once."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_delta_is_exactly_nine_cells_and_three_new_aliases",
+      "line": 234,
+      "assertion": "assert row['venue_type'] == 'journal'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Existing comments allow later independent alias appends; exact three original aliases remain once."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_delta_is_exactly_nine_cells_and_three_new_aliases",
+      "line": 235,
+      "assertion": "assert row['venue_track'] == row['venue_acronym'] == ''",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Existing comments allow later independent alias appends; exact three original aliases remain once."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_delta_is_exactly_nine_cells_and_three_new_aliases",
+      "line": 236,
+      "assertion": "assert row['venue_id'] in {case(rid)['binding']['accepted_venue_fields']['venue_id'] for rid in ACCEPTED}",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Existing comments allow later independent alias appends; exact three original aliases remain once."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_journal_bindings_resolve_to_source_backed_registry_and_native_confirmation",
+      "line": 246,
+      "assertion": "assert all(canonical[k] == source[k] for k in ('venue_name', 'venue_type', 'venue_acronym'))",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep native fingerprint and source-backed canonical venue acceptance live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_journal_bindings_resolve_to_source_backed_registry_and_native_confirmation",
+      "line": 247,
+      "assertion": "assert source['venue'] == source['venue_name']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep native fingerprint and source-backed canonical venue acceptance live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_journal_bindings_resolve_to_source_backed_registry_and_native_confirmation",
+      "line": 249,
+      "assertion": "assert confirmation_fingerprint(source) in audit.confirmations",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep native fingerprint and source-backed canonical venue acceptance live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_journal_bindings_resolve_to_source_backed_registry_and_native_confirmation",
+      "line": 250,
+      "assertion": "assert audit.paper(source)[1] is None",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep native fingerprint and source-backed canonical venue acceptance live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_identity_or_venue_change_invalidates_record_and_confirmation_fingerprint",
+      "line": 260,
+      "assertion": "assert confirmation_fingerprint(changed) != record['binding']['venue_state_fingerprint']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep DOI/venue/publication-type tamper rejection."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_identity_or_venue_change_invalidates_record_and_confirmation_fingerprint",
+      "line": 262,
+      "assertion": "assert confirmation_fingerprint(changed) not in audit.confirmations",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep DOI/venue/publication-type tamper rejection."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_identity_or_venue_change_invalidates_record_and_confirmation_fingerprint",
+      "line": 263,
+      "assertion": "assert not acceptance_valid(record, record['formal_decision'], changed)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep DOI/venue/publication-type tamper rejection."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_incomplete_or_mismatched_venue_acceptance_is_rejected",
+      "line": 277,
+      "assertion": "assert not acceptance_valid(record, decision, source_row('P049'))",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep all seven evidence/ID/creator/fingerprint checks."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_p001_track_boundary_is_a_nonterminal_hold_without_silent_main_or_registry_addition",
+      "line": 283,
+      "assertion": "assert current == original",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 Main authorization cannot leak into P001. Keep complete row equality and no registry addition."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_p001_track_boundary_is_a_nonterminal_hold_without_silent_main_or_registry_addition",
+      "line": 284,
+      "assertion": "assert current['venue_track'] == current['venue_id'] == ''",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 Main authorization cannot leak into P001. Keep complete row equality and no registry addition."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_p001_track_boundary_is_a_nonterminal_hold_without_silent_main_or_registry_addition",
+      "line": 285,
+      "assertion": "assert record['disposition'] == 'VENUE_BINDING_REQUIRES_TRACK_DECISION'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 Main authorization cannot leak into P001. Keep complete row equality and no registry addition."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_p001_track_boundary_is_a_nonterminal_hold_without_silent_main_or_registry_addition",
+      "line": 286,
+      "assertion": "assert record['formal_decision']['action'] == 'unresolved'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 Main authorization cannot leak into P001. Keep complete row equality and no registry addition."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_p001_track_boundary_is_a_nonterminal_hold_without_silent_main_or_registry_addition",
+      "line": 287,
+      "assertion": "assert record['binding']['accepted_venue_fields'] is None",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 Main authorization cannot leak into P001. Keep complete row equality and no registry addition."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_p001_track_boundary_is_a_nonterminal_hold_without_silent_main_or_registry_addition",
+      "line": 288,
+      "assertion": "assert not any(a['venue_name'] == current['venue'] for a in packet()['appended_venue_alias_rows'])",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 Main authorization cannot leak into P001. Keep complete row equality and no registry addition."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_p001_track_boundary_is_a_nonterminal_hold_without_silent_main_or_registry_addition",
+      "line": 290,
+      "assertion": "assert record['binding']['venue_state_fingerprint'] in audit.explicit_conflicts",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 Main authorization cannot leak into P001. Keep complete row equality and no registry addition."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_p001_track_boundary_is_a_nonterminal_hold_without_silent_main_or_registry_addition",
+      "line": 291,
+      "assertion": "assert not audit.confirmations",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 Main authorization cannot leak into P001. Keep complete row equality and no registry addition."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_u005_keeps_precise_affiliation_distinct_from_unverified_viewport_and_author_presence",
+      "line": 297,
+      "assertion": "assert record['formal_decision']['action'] == 'unresolved'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "No location accepted; precision qualifiers not representable. Keep exacthold."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_u005_keeps_precise_affiliation_distinct_from_unverified_viewport_and_author_presence",
+      "line": 298,
+      "assertion": "assert record['disposition'] == 'LOCATION_PRECISION_NOT_REPRESENTABLE'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "No location accepted; precision qualifiers not representable. Keep exacthold."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_u005_keeps_precise_affiliation_distinct_from_unverified_viewport_and_author_presence",
+      "line": 299,
+      "assertion": "assert policy['recommendation'] == 'RETAIN_UNRESOLVED'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "No location accepted; precision qualifiers not representable. Keep exacthold."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_u005_keeps_precise_affiliation_distinct_from_unverified_viewport_and_author_presence",
+      "line": 300,
+      "assertion": "assert policy['accept_location_row'] is policy['accept_location_mapping_change'] is False",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "No location accepted; precision qualifiers not representable. Keep exacthold."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_u005_keeps_precise_affiliation_distinct_from_unverified_viewport_and_author_presence",
+      "line": 302,
+      "assertion": "assert (point['latitude'], point['longitude']) == (47.789438, 22.876378)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "No location accepted; precision qualifiers not representable. Keep exacthold."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_u005_keeps_precise_affiliation_distinct_from_unverified_viewport_and_author_presence",
+      "line": 303,
+      "assertion": "assert point['explicit_marker_verified'] is point['independent_geocode_verified'] is point['author_location_claim'] is False",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "No location accepted; precision qualifiers not representable. Keep exacthold."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_u005_keeps_precise_affiliation_distinct_from_unverified_viewport_and_author_presence",
+      "line": 304,
+      "assertion": "assert 'viewport' in point['point_kind']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "No location accepted; precision qualifiers not representable. Keep exacthold."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_u005_keeps_precise_affiliation_distinct_from_unverified_viewport_and_author_presence",
+      "line": 305,
+      "assertion": "assert 'not' in policy['paper_time_author_location'].lower()",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "No location accepted; precision qualifiers not representable. Keep exacthold."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_u005_keeps_precise_affiliation_distinct_from_unverified_viewport_and_author_presence",
+      "line": 306,
+      "assertion": "assert {'coordinate_kind', 'coordinate_precision', 'crs', 'positional_uncertainty', 'marker_verified'}.isdisjoint(INSTITUTION_LOCATION_COLUMNS)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "No location accepted; precision qualifiers not representable. Keep exacthold."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_u005_keeps_precise_affiliation_distinct_from_unverified_viewport_and_author_presence",
+      "line": 307,
+      "assertion": "assert '[venue-state:' not in record['formal_decision']['review_note']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "No location accepted; precision qualifiers not representable. Keep exacthold."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_confirmation_cannot_represent_the_required_approximate_point_qualifiers",
+      "line": 330,
+      "assertion": "assert converted['coordinate_status'] == 'known'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep explicit fact that converters discard unsupported qualifiers; do not mistake known for approximate."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_confirmation_cannot_represent_the_required_approximate_point_qualifiers",
+      "line": 331,
+      "assertion": "assert is_confirmed_location(converted)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep explicit fact that converters discard unsupported qualifiers; do not mistake known for approximate."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_confirmation_cannot_represent_the_required_approximate_point_qualifiers",
+      "line": 332,
+      "assertion": "assert set(qualifiers).isdisjoint(converted)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep explicit fact that converters discard unsupported qualifiers; do not mistake known for approximate."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_confirmation_cannot_represent_the_required_approximate_point_qualifiers",
+      "line": 333,
+      "assertion": "assert not is_confirmed_location({**converted, 'coordinate_status':'approximate'})",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Keep explicit fact that converters discard unsupported qualifiers; do not mistake known for approximate."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_location_mappings_and_institution_sources_have_no_data_change",
+      "line": 341,
+      "assertion": "assert not any(d['field'].startswith(('lat', 'lon', 'institution')) for d in packet()['paper_cell_deltas'])",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "All location/affiliation/alias data remain exact; must not redirect."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_location_mappings_and_institution_sources_have_no_data_change",
+      "line": 340,
+      "assertion": "assert (ROOT / path).read_bytes() == published_bytes(BASE, path)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "All location/affiliation/alias data remain exact; must not redirect."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_accounting_is_reconstructed_without_a_fixed_live_tail_position",
+      "line": 347,
+      "assertion": "assert len(original) == 103 and len(transaction) == 118",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Exact118 total and128/126 accounting already reconstructed from immutable manifest; live accepted IDs present/holds open remain enforced."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_accounting_is_reconstructed_without_a_fixed_live_tail_position",
+      "line": 349,
+      "assertion": "assert set(ASSIGNED) & closed.keys() == set(ACCEPTED)",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Exact118 total and128/126 accounting already reconstructed from immutable manifest; live accepted IDs present/holds open remain enforced."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_accounting_is_reconstructed_without_a_fixed_live_tail_position",
+      "line": 357,
+      "assertion": "assert actual == packet()['accounting_after']",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Exact118 total and128/126 accounting already reconstructed from immutable manifest; live accepted IDs present/holds open remain enforced."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_accounting_is_reconstructed_without_a_fixed_live_tail_position",
+      "line": 358,
+      "assertion": "assert actual['historical_unresolved_actions'] == 128",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Exact118 total and128/126 accounting already reconstructed from immutable manifest; live accepted IDs present/holds open remain enforced."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_accounting_is_reconstructed_without_a_fixed_live_tail_position",
+      "line": 359,
+      "assertion": "assert actual['active_public_unresolved_actions'] == 126",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Exact118 total and128/126 accounting already reconstructed from immutable manifest; live accepted IDs present/holds open remain enforced."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_accounting_is_reconstructed_without_a_fixed_live_tail_position",
+      "line": 361,
+      "assertion": "assert set(ACCEPTED) <= live_closed.keys()",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Exact118 total and128/126 accounting already reconstructed from immutable manifest; live accepted IDs present/holds open remain enforced."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_transaction_accounting_is_reconstructed_without_a_fixed_live_tail_position",
+      "line": 362,
+      "assertion": "assert set(HELD).isdisjoint(live_closed)",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Exact118 total and128/126 accounting already reconstructed from immutable manifest; live accepted IDs present/holds open remain enforced."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "line": 367,
+      "assertion": "assert set(current['papers']) == set(original['papers']) == set(packet()['public_ids'])",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Research types and entire taxonomy equality describe original venue-only checkpoint, conflicts after scientific successor. All public IDs, counts, tasks and pairs remain live invariants. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "line": 368,
+      "assertion": "assert current['counts'] == original['counts'] == packet()['corpus_unchanged']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Research types and entire taxonomy equality describe original venue-only checkpoint, conflicts after scientific successor. All public IDs, counts, tasks and pairs remain live invariants. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "line": 369,
+      "assertion": "assert current['counts']['public'] == 674",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Research types and entire taxonomy equality describe original venue-only checkpoint, conflicts after scientific successor. All public IDs, counts, tasks and pairs remain live invariants. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "line": 370,
+      "assertion": "assert current['counts']['relationship_rows'] == current['counts']['unique_paper_institution_pairs'] == 1410",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Research types and entire taxonomy equality describe original venue-only checkpoint, conflicts after scientific successor. All public IDs, counts, tasks and pairs remain live invariants. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "line": 371,
+      "assertion": "assert current['pairs'] == original['pairs']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Research types and entire taxonomy equality describe original venue-only checkpoint, conflicts after scientific successor. All public IDs, counts, tasks and pairs remain live invariants. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "line": 376,
+      "assertion": "assert totals == packet()['taxonomy_unchanged']",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Research types and entire taxonomy equality describe original venue-only checkpoint, conflicts after scientific successor. All public IDs, counts, tasks and pairs remain live invariants."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "line": 378,
+      "assertion": "assert (ROOT / 'data/curated/paper_taxonomy.csv').read_bytes() == published_bytes(BASE, 'data/curated/paper_taxonomy.csv')",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Research types and entire taxonomy equality describe original venue-only checkpoint, conflicts after scientific successor. All public IDs, counts, tasks and pairs remain live invariants."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "line": 373,
+      "assertion": "assert paper['tasks'] == original['papers'][pid]['tasks']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Research types and entire taxonomy equality describe original venue-only checkpoint, conflicts after scientific successor. All public IDs, counts, tasks and pairs remain live invariants. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_public_identities_task_types_and_all_relationship_pairs_are_preserved",
+      "line": 374,
+      "assertion": "assert paper['research_types'] == original['papers'][pid]['research_types']",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Research types and entire taxonomy equality describe original venue-only checkpoint, conflicts after scientific successor. All public IDs, counts, tasks and pairs remain live invariants."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_frozen_neurips_receipts_remain_exact_and_the_b3_correction_is_additive_only",
+      "line": 383,
+      "assertion": "assert len(frozen) == 49",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Preserve510630/510663 narrative correction and all original B3 evidence."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_frozen_neurips_receipts_remain_exact_and_the_b3_correction_is_additive_only",
+      "line": 387,
+      "assertion": "assert correction['review_id'] == 'U002'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Preserve510630/510663 narrative correction and all original B3 evidence."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_frozen_neurips_receipts_remain_exact_and_the_b3_correction_is_additive_only",
+      "line": 388,
+      "assertion": "assert correction['SAMR_contact_postcode'] == '510630'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Preserve510630/510663 narrative correction and all original B3 evidence."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_frozen_neurips_receipts_remain_exact_and_the_b3_correction_is_additive_only",
+      "line": 389,
+      "assertion": "assert correction['patent_CN112990582A_publication_2021_06_18_postcode'] == '510663'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Preserve510630/510663 narrative correction and all original B3 evidence."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_frozen_neurips_receipts_remain_exact_and_the_b3_correction_is_additive_only",
+      "line": 390,
+      "assertion": "assert correction['B3_narrative_reversed_source_attribution'] is True",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Preserve510630/510663 narrative correction and all original B3 evidence."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_frozen_neurips_receipts_remain_exact_and_the_b3_correction_is_additive_only",
+      "line": 391,
+      "assertion": "assert correction['B3_matrix_correct'] is True",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Preserve510630/510663 narrative correction and all original B3 evidence."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_frozen_neurips_receipts_remain_exact_and_the_b3_correction_is_additive_only",
+      "line": 392,
+      "assertion": "assert correction['B3_modified'] is False",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Preserve510630/510663 narrative correction and all original B3 evidence."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "function": "test_frozen_neurips_receipts_remain_exact_and_the_b3_correction_is_additive_only",
+      "line": 385,
+      "assertion": "assert sha((ROOT / path).read_bytes()) == digest",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Preserve510630/510663 narrative correction and all original B3 evidence."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "transactions",
+      "line": 59,
+      "assertion": "assert len(loaded) == 2",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Identity/uniqueness/sourceauthentication helper assertion remains required across snapshots."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "transactions",
+      "line": 57,
+      "assertion": "assert sha(raw) == item['manifest_sha256']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Identity/uniqueness/sourceauthentication helper assertion remains required across snapshots."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "cases",
+      "line": 68,
+      "assertion": "assert row['review_id'] not in result",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Identity/uniqueness/sourceauthentication helper assertion remains required across snapshots."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "terminal",
+      "line": 87,
+      "assertion": "assert rid not in result, 'Duplicate terminal decision for one original review action'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Identity/uniqueness/sourceauthentication helper assertion remains required across snapshots."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "map_paper_ids",
+      "line": 132,
+      "assertion": "assert len(found) == 1",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Identity/uniqueness/sourceauthentication helper assertion remains required across snapshots."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping",
+      "line": 138,
+      "assertion": "assert packet()['baseline_commit'] == BASE",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "No source delta; preserve full transaction records and fingerprint bindings."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping",
+      "line": 139,
+      "assertion": "assert set(cases()) == set(URL_ACTIONS + VENUE_ACTIONS + HELD)",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "No source delta; preserve full transaction records and fingerprint bindings."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping",
+      "line": 140,
+      "assertion": "assert len(cases()) == 24",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "No source delta; preserve full transaction records and fingerprint bindings."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping",
+      "line": 141,
+      "assertion": "assert packet()['accepted_review_ids'] == URL_ACTIONS + VENUE_ACTIONS",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "No source delta; preserve full transaction records and fingerprint bindings."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping",
+      "line": 142,
+      "assertion": "assert packet()['held_review_ids'] == HELD",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "No source delta; preserve full transaction records and fingerprint bindings."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping",
+      "line": 143,
+      "assertion": "assert [r['review_id'] for r in cases().values() if r['accepted']] == URL_ACTIONS + VENUE_ACTIONS",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "No source delta; preserve full transaction records and fingerprint bindings."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping",
+      "line": 144,
+      "assertion": "assert [r['review_id'] for r in cases().values() if not r['accepted']] == HELD",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "No source delta; preserve full transaction records and fingerprint bindings."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping",
+      "line": 146,
+      "assertion": "assert row['native_id'] == row['formal_decision']['decision_id'] == native_id(row['formal_decision'])",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "No source delta; preserve full transaction records and fingerprint bindings."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping",
+      "line": 147,
+      "assertion": "assert row['binding']['review_id'] == row['review_id']",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "No source delta; preserve full transaction records and fingerprint bindings."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping",
+      "line": 148,
+      "assertion": "assert row['binding']['baseline_commit'] == BASE",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "No source delta; preserve full transaction records and fingerprint bindings."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories",
+      "line": 155,
+      "assertion": "assert len(before) == 103 and len(after) == 127",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Historical exact127 and24 appends must be anchored to d109. Current authorized138 must preserve full127 raw prefix and11 B4-03 exact rows."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories",
+      "line": 156,
+      "assertion": "assert current.startswith(baseline) and after[:103] == before",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Historical exact127 and24 appends must be anchored to d109. Current authorized138 must preserve full127 raw prefix and11 B4-03 exact rows."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories",
+      "line": 158,
+      "assertion": "assert after[103:] == expected and len(expected) == 24",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Historical exact127 and24 appends must be anchored to d109. Current authorized138 must preserve full127 raw prefix and11 B4-03 exact rows."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories",
+      "line": 159,
+      "assertion": "assert len({r['decision_id'] for r in after}) == len(after)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Historical exact127 and24 appends must be anchored to d109. Current authorized138 must preserve full127 raw prefix and11 B4-03 exact rows. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories",
+      "line": 160,
+      "assertion": "assert packet()['decision_ids'] == [r['decision_id'] for r in expected]",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Historical exact127 and24 appends must be anchored to d109. Current authorized138 must preserve full127 raw prefix and11 B4-03 exact rows."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories",
+      "line": 163,
+      "assertion": "assert after[103:112] == [r['formal_decision'] for r in transactions()[0]['records']]",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Historical exact127 and24 appends must be anchored to d109. Current authorized138 must preserve full127 raw prefix and11 B4-03 exact rows."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_action_ids_and_per_action_transaction_fingerprints_are_collision_free",
+      "line": 168,
+      "assertion": "assert len({r['native_id'] for r in rows}) == 24",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Keep native IDs, original action IDs and canonical JSON fingerprints."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_action_ids_and_per_action_transaction_fingerprints_are_collision_free",
+      "line": 169,
+      "assertion": "assert len({r['binding_sha256'] for r in rows}) == 24",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Keep native IDs, original action IDs and canonical JSON fingerprints."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_action_ids_and_per_action_transaction_fingerprints_are_collision_free",
+      "line": 175,
+      "assertion": "assert {r['review_id'] for r in rows} == set(URL_ACTIONS + VENUE_ACTIONS + HELD)",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Keep native IDs, original action IDs and canonical JSON fingerprints."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_action_ids_and_per_action_transaction_fingerprints_are_collision_free",
+      "line": 172,
+      "assertion": "assert digest == row['binding_sha256']",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Keep native IDs, original action IDs and canonical JSON fingerprints."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_action_ids_and_per_action_transaction_fingerprints_are_collision_free",
+      "line": 173,
+      "assertion": "assert digest in row['formal_decision']['review_note']",
+      "classification": "IMMUTABLE_HISTORICAL_TRANSACTION_INVARIANT",
+      "rationale": "Keep native IDs, original action IDs and canonical JSON fingerprints."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_only_eleven_actions_close_and_all_thirteen_new_holds_remain_open",
+      "line": 181,
+      "assertion": "assert set(now) - set(old) == set(URL_ACTIONS + VENUE_ACTIONS)",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Exactly11 newlyclosed applies toB5-01 only; B4-03 adds6. Original13 holds must remain open in live registry."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_only_eleven_actions_close_and_all_thirteen_new_holds_remain_open",
+      "line": 182,
+      "assertion": "assert set(HELD).isdisjoint(now)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Exactly11 newlyclosed applies toB5-01 only; B4-03 adds6. Original13 holds must remain open in live registry. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_only_eleven_actions_close_and_all_thirteen_new_holds_remain_open",
+      "line": 184,
+      "assertion": "assert row['formal_decision']['action'] == ('no_action_after_review' if rid in URL_ACTIONS + VENUE_ACTIONS else 'unresolved')",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Exactly11 newlyclosed applies toB5-01 only; B4-03 adds6. Original13 holds must remain open in live registry. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_only_eleven_actions_close_and_all_thirteen_new_holds_remain_open",
+      "line": 185,
+      "assertion": "assert row['formal_decision']['review_note'].startswith('Batch B review ' + rid + ';')",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Exactly11 newlyclosed applies toB5-01 only; B4-03 adds6. Original13 holds must remain open in live registry. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_unresolved_accounting_is_derived_from_the_live_original_ledger_and_public_identities",
+      "line": 192,
+      "assertion": "assert old == packet()['accounting_before']",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Historical B5-01 endpoint must retain120/118 and113/111papers. Current count114/112 must be computed independently."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_unresolved_accounting_is_derived_from_the_live_original_ledger_and_public_identities",
+      "line": 193,
+      "assertion": "assert now == packet()['accounting_after']",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Historical B5-01 endpoint must retain120/118 and113/111papers. Current count114/112 must be computed independently."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_unresolved_accounting_is_derived_from_the_live_original_ledger_and_public_identities",
+      "line": 194,
+      "assertion": "assert old['historical_unresolved_actions'] - now['historical_unresolved_actions'] == 11",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Historical B5-01 endpoint must retain120/118 and113/111papers. Current count114/112 must be computed independently."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_unresolved_accounting_is_derived_from_the_live_original_ledger_and_public_identities",
+      "line": 195,
+      "assertion": "assert old['active_public_unresolved_actions'] - now['active_public_unresolved_actions'] == 11",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Historical B5-01 endpoint must retain120/118 and113/111papers. Current count114/112 must be computed independently."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_unresolved_accounting_is_derived_from_the_live_original_ledger_and_public_identities",
+      "line": 196,
+      "assertion": "assert (now['historical_unresolved_actions'], now['active_public_unresolved_actions']) == (120,118)",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Historical B5-01 endpoint must retain120/118 and113/111papers. Current count114/112 must be computed independently."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_unresolved_accounting_is_derived_from_the_live_original_ledger_and_public_identities",
+      "line": 197,
+      "assertion": "assert (now['historical_unresolved_papers'], now['active_public_unresolved_papers']) == (113,111)",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Historical B5-01 endpoint must retain120/118 and113/111papers. Current count114/112 must be computed independently."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_exact_fifteen_paper_cells_change_without_identity_authors_dates_or_taxonomy_edits",
+      "line": 202,
+      "assertion": "assert [r['paper_id'] for r in old] == [r['paper_id'] for r in new]",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Exact15 publicationcells remain historical; later papers adds4types+P231track. Do not append to oldmanifest or change15expected."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_exact_fifteen_paper_cells_change_without_identity_authors_dates_or_taxonomy_edits",
+      "line": 206,
+      "assertion": "assert normalize(deltas) == normalize(packet()['paper_cell_deltas'])",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Exact15 publicationcells remain historical; later papers adds4types+P231track. Do not append to oldmanifest or change15expected."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_exact_fifteen_paper_cells_change_without_identity_authors_dates_or_taxonomy_edits",
+      "line": 207,
+      "assertion": "assert len(deltas) == 15",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Exact15 publicationcells remain historical; later papers adds4types+P231track. Do not append to oldmanifest or change15expected."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_exact_fifteen_paper_cells_change_without_identity_authors_dates_or_taxonomy_edits",
+      "line": 208,
+      "assertion": "assert Counter(d['field'] for d in deltas) == {'paper_url':6,'venue_id':3,'venue_name':3,'venue_type':3}",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Exact15 publicationcells remain historical; later papers adds4types+P231track. Do not append to oldmanifest or change15expected."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_exact_fifteen_paper_cells_change_without_identity_authors_dates_or_taxonomy_edits",
+      "line": 210,
+      "assertion": "assert normalize(deltas) == normalize(expected)",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Exact15 publicationcells remain historical; later papers adds4types+P231track. Do not append to oldmanifest or change15expected."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_exact_fifteen_paper_cells_change_without_identity_authors_dates_or_taxonomy_edits",
+      "line": 211,
+      "assertion": "assert {d['paper_id'] for d in deltas if d['field']=='paper_url'}.isdisjoint(\n        {d['paper_id'] for d in deltas if d['field'].startswith('venue_')})",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Exact15 publicationcells remain historical; later papers adds4types+P231track. Do not append to oldmanifest or change15expected."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+      "line": 225,
+      "assertion": "assert csv_values(packet()['appended_publication_override_rows']) == csv_values(transactions()[0]['appended_publication_overrides'])",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 doesnotchangeoverrideoraliasfiles. Keep exact original2+3append assertions live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+      "line": 226,
+      "assertion": "assert packet()['appended_venue_alias_rows'] == transactions()[1]['appended_venue_alias_rows']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 doesnotchangeoverrideoraliasfiles. Keep exact original2+3append assertions live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+      "line": 219,
+      "assertion": "assert after_raw.startswith(before_raw)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 doesnotchangeoverrideoraliasfiles. Keep exact original2+3append assertions live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+      "line": 220,
+      "assertion": "assert after[:len(before)] == before",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 doesnotchangeoverrideoraliasfiles. Keep exact original2+3append assertions live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+      "line": 222,
+      "assertion": "assert after[len(before):] == expected",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 doesnotchangeoverrideoraliasfiles. Keep exact original2+3append assertions live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_url_override_and_alias_appends_are_exact_without_changing_prior_rows",
+      "line": 223,
+      "assertion": "assert len(after)-len(before) == expected_count",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 doesnotchangeoverrideoraliasfiles. Keep exact original2+3append assertions live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match",
+      "line": 232,
+      "assertion": "assert sha(published_bytes(BASE,path)) == digest",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Original hash/fourfile allowlist belongs to d109; B4-03 changes papers/taxonomy/decisions. Must preserve unchangedallother sourceguardlive."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match",
+      "line": 234,
+      "assertion": "assert sha((ROOT/path).read_bytes()) == digest",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Original hash/fourfile allowlist belongs to d109; B4-03 changes papers/taxonomy/decisions. Must preserve unchangedallother sourceguardlive."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_match",
+      "line": 242,
+      "assertion": "assert (ROOT/path).read_bytes() == published_bytes(BASE,path), path",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Original hash/fourfile allowlist belongs to d109; B4-03 changes papers/taxonomy/decisions. Must preserve unchangedallother sourceguardlive."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_eight_live_publication_urls_match_the_authorized_paper_identities",
+      "line": 251,
+      "assertion": "assert paper['title'] == record['title']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 unrelatedtargets; keep authoritative acceptedURL/semanticlinks andexactDOIauthors live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_eight_live_publication_urls_match_the_authorized_paper_identities",
+      "line": 252,
+      "assertion": "assert paper['formal_url'] == resolve_public_links(paper)['formal_url'] == accepted",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 unrelatedtargets; keep authoritative acceptedURL/semanticlinks andexactDOIauthors live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_eight_live_publication_urls_match_the_authorized_paper_identities",
+      "line": 253,
+      "assertion": "assert paper['doi'] == published_context(BASE)['papers'][record['paper_id']]['doi']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 unrelatedtargets; keep authoritative acceptedURL/semanticlinks andexactDOIauthors live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_eight_live_publication_urls_match_the_authorized_paper_identities",
+      "line": 254,
+      "assertion": "assert paper['authors'] == published_context(BASE)['papers'][record['paper_id']]['authors']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 unrelatedtargets; keep authoritative acceptedURL/semanticlinks andexactDOIauthors live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_three_live_journal_bindings_match_their_accepted_registry_states",
+      "line": 265,
+      "assertion": "assert paper['publication_type'] == paper['venue_type'] == 'journal'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 unrelatedtargets; no reason to make these only historical."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_three_live_journal_bindings_match_their_accepted_registry_states",
+      "line": 266,
+      "assertion": "assert paper['venue'] == paper['venue_name'] == registry[paper['venue_id']]['venue_name']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 unrelatedtargets; no reason to make these only historical."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_three_live_journal_bindings_match_their_accepted_registry_states",
+      "line": 267,
+      "assertion": "assert paper.get('venue_acronym','') == paper.get('venue_track','') == ''",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 unrelatedtargets; no reason to make these only historical."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_three_live_journal_bindings_match_their_accepted_registry_states",
+      "line": 268,
+      "assertion": "assert paper['authors'] == published_context(BASE)['papers'][record['paper_id']]['authors']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 unrelatedtargets; no reason to make these only historical."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_three_live_journal_bindings_match_their_accepted_registry_states",
+      "line": 264,
+      "assertion": "assert paper[field] == value",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03 unrelatedtargets; no reason to make these only historical."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason",
+      "line": 273,
+      "assertion": "assert old.keys() == new.keys()",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 five resourcepapers +P231 track introduce authorized6papers; old11(+P001)exportaudit remains original d109 history."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason",
+      "line": 277,
+      "assertion": "assert set(actual) in (accepted,accepted|{p001})",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 five resourcepapers +P231 track introduce authorized6papers; old11(+P001)exportaudit remains original d109 history."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason",
+      "line": 278,
+      "assertion": "assert set(actual) == set(packet()['export_audit']['changed_paper_ids'])",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 five resourcepapers +P231 track introduce authorized6papers; old11(+P001)exportaudit remains original d109 history."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason",
+      "line": 279,
+      "assertion": "assert {pid:set(fields) for pid,fields in packet()['export_audit']['fields_by_paper'].items()} == actual",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 five resourcepapers +P231 track introduce authorized6papers; old11(+P001)exportaudit remains original d109 history."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason",
+      "line": 281,
+      "assertion": "assert actual[cases()[rid]['paper_id']] <= URL_PUBLIC_FIELDS",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 five resourcepapers +P231 track introduce authorized6papers; old11(+P001)exportaudit remains original d109 history."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason",
+      "line": 283,
+      "assertion": "assert actual[cases()[rid]['paper_id']] <= VENUE_PUBLIC_FIELDS",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 five resourcepapers +P231 track introduce authorized6papers; old11(+P001)exportaudit remains original d109 history."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason",
+      "line": 285,
+      "assertion": "assert actual[p001] == {'venue_review_reason'}",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 five resourcepapers +P231 track introduce authorized6papers; old11(+P001)exportaudit remains original d109 history."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason",
+      "line": 286,
+      "assertion": "assert new[p001]['venue_review_required'] is True",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 five resourcepapers +P231 track introduce authorized6papers; old11(+P001)exportaudit remains original d109 history."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason",
+      "line": 287,
+      "assertion": "assert new[p001]['ambiguity_status'] == 'unresolved'",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 five resourcepapers +P231 track introduce authorized6papers; old11(+P001)exportaudit remains original d109 history."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_public_bibliographic_identities_and_task_type_labels_are_unchanged",
+      "line": 295,
+      "assertion": "assert (ROOT/'data/curated/paper_taxonomy.csv').read_bytes() == published_bytes(BASE,'data/curated/paper_taxonomy.csv')",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Identity/tasks remain live; five researchtypes andtaxonomybytes must use originald109 forhistoricalnotaxonomy assertion."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_public_bibliographic_identities_and_task_type_labels_are_unchanged",
+      "line": 294,
+      "assertion": "assert new[pid].get(field) == old[pid].get(field), (pid,field)",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Identity/tasks remain live; five researchtypes andtaxonomybytes must use originald109 forhistoricalnotaxonomy assertion."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_relationship_identities_pairs_affiliations_and_coordinates_are_preserved",
+      "line": 300,
+      "assertion": "assert old.keys() == new.keys()",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Onlyresearchtype per-mapcomparisonconflicts; IDs/pairs/authors/affiliations/coordinates/tasks/scopes remainlive. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_relationship_identities_pairs_affiliations_and_coordinates_are_preserved",
+      "line": 301,
+      "assertion": "assert len(new) == 1410",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Onlyresearchtype per-mapcomparisonconflicts; IDs/pairs/authors/affiliations/coordinates/tasks/scopes remainlive. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_relationship_identities_pairs_affiliations_and_coordinates_are_preserved",
+      "line": 302,
+      "assertion": "assert live_context()['pairs'] == published_context(BASE)['pairs']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Onlyresearchtype per-mapcomparisonconflicts; IDs/pairs/authors/affiliations/coordinates/tasks/scopes remainlive. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_relationship_identities_pairs_affiliations_and_coordinates_are_preserved",
+      "line": 306,
+      "assertion": "assert new[mid].get(field) == old[mid].get(field), (mid,field)",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Onlyresearchtype per-mapcomparisonconflicts; IDs/pairs/authors/affiliations/coordinates/tasks/scopes remainlive."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_changed_map_rows_are_exact_url_dependents_with_correct_semantic_links",
+      "line": 312,
+      "assertion": "assert set(actual) == set(packet()['export_audit']['changed_map_ids'])",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 producesadditional type/trackdependentrows. Original23rows+URL-onlydelta must remain d109 historicaltruth."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_changed_map_rows_are_exact_url_dependents_with_correct_semantic_links",
+      "line": 313,
+      "assertion": "assert {mid:set(fields) for mid,fields in packet()['export_audit']['fields_by_map'].items()} == actual",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 producesadditional type/trackdependentrows. Original23rows+URL-onlydelta must remain d109 historicaltruth."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_changed_map_rows_are_exact_url_dependents_with_correct_semantic_links",
+      "line": 316,
+      "assertion": "assert set(actual) == expected",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 producesadditional type/trackdependentrows. Original23rows+URL-onlydelta must remain d109 historicaltruth."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_changed_map_rows_are_exact_url_dependents_with_correct_semantic_links",
+      "line": 317,
+      "assertion": "assert len(actual) == 23",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 producesadditional type/trackdependentrows. Original23rows+URL-onlydelta must remain d109 historicaltruth."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_changed_map_rows_are_exact_url_dependents_with_correct_semantic_links",
+      "line": 320,
+      "assertion": "assert fields <= URL_PUBLIC_FIELDS",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 producesadditional type/trackdependentrows. Original23rows+URL-onlydelta must remain d109 historicaltruth."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_changed_map_rows_are_exact_url_dependents_with_correct_semantic_links",
+      "line": 321,
+      "assertion": "assert new[mid]['formal_url'] == by_paper[map_paper_ids()[mid]]",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 producesadditional type/trackdependentrows. Original23rows+URL-onlydelta must remain d109 historicaltruth."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_changed_map_rows_are_exact_url_dependents_with_correct_semantic_links",
+      "line": 322,
+      "assertion": "assert resolve_public_links(new[mid])['formal_url'] == new[mid]['formal_url']",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "B4-03 producesadditional type/trackdependentrows. Original23rows+URL-onlydelta must remain d109 historicaltruth."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_unresolved_p001_and_u005_policy_boundaries_survive_publication",
+      "line": 330,
+      "assertion": "assert row == old and row['venue_track'] == row['venue_id'] == ''",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 unrelatedMADtrack must notchangeP001/U005/geography. Keepall13holds."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_unresolved_p001_and_u005_policy_boundaries_survive_publication",
+      "line": 331,
+      "assertion": "assert cases()['U005']['disposition'] == 'LOCATION_PRECISION_NOT_REPRESENTABLE'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 unrelatedMADtrack must notchangeP001/U005/geography. Keepall13holds."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_unresolved_p001_and_u005_policy_boundaries_survive_publication",
+      "line": 332,
+      "assertion": "assert p001['disposition'] == 'VENUE_BINDING_REQUIRES_TRACK_DECISION'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 unrelatedMADtrack must notchangeP001/U005/geography. Keepall13holds."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_unresolved_p001_and_u005_policy_boundaries_survive_publication",
+      "line": 334,
+      "assertion": "assert cases()[rid]['formal_decision']['action'] == 'unresolved'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 unrelatedMADtrack must notchangeP001/U005/geography. Keepall13holds."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_all_unresolved_p001_and_u005_policy_boundaries_survive_publication",
+      "line": 337,
+      "assertion": "assert (ROOT/path).read_bytes() == published_bytes(BASE,path)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 unrelatedMADtrack must notchangeP001/U005/geography. Keepall13holds."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_corpus_and_taxonomy_totals_are_recomputed_and_match_source_and_public_invariants",
+      "line": 342,
+      "assertion": "assert context['counts'] == packet()['corpus_counts']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Historicald109 keeps674/557/613/1410and138/97. B5-02 source/public equal142/101 must get independentlivecoverage. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_corpus_and_taxonomy_totals_are_recomputed_and_match_source_and_public_invariants",
+      "line": 343,
+      "assertion": "assert context['counts'] == {'public':674,'formal':557,'mapped':613,'unmapped':61,\n                                 'relationship_rows':1410,'unique_paper_institution_pairs':1410}",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Historicald109 keeps674/557/613/1410and138/97. B5-02 source/public equal142/101 must get independentlivecoverage. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_corpus_and_taxonomy_totals_are_recomputed_and_match_source_and_public_invariants",
+      "line": 347,
+      "assertion": "assert public == source == packet()['taxonomy']",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Historicald109 keeps674/557/613/1410and138/97. B5-02 source/public equal142/101 must get independentlivecoverage."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_corpus_and_taxonomy_totals_are_recomputed_and_match_source_and_public_invariants",
+      "line": 348,
+      "assertion": "assert public == {'detection':621,'source_attribution':84,'localization':45,'method':578,\n                      'dataset':138,'benchmark':97,'survey':21,'analysis_study':86}",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "Historicald109 keeps674/557/613/1410and138/97. B5-02 source/public equal142/101 must get independentlivecoverage."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_current_paired_export_metadata_has_one_valid_utc_generation_timestamp",
+      "line": 364,
+      "assertion": "assert len(set(times)) == 1",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Metadata keysotherthangenerationtimestamp andtop-levelschemas shouldremain unchanged; verifyactualexports. KeepUTC/pairedtimestampassertions live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_current_paired_export_metadata_has_one_valid_utc_generation_timestamp",
+      "line": 360,
+      "assertion": "assert before == after",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Metadata keysotherthangenerationtimestamp andtop-levelschemas shouldremain unchanged; verifyactualexports. KeepUTC/pairedtimestampassertions live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_current_paired_export_metadata_has_one_valid_utc_generation_timestamp",
+      "line": 361,
+      "assertion": "assert newtime >= oldtime and is_utc_timestamp(newtime)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Metadata keysotherthangenerationtimestamp andtop-levelschemas shouldremain unchanged; verifyactualexports. KeepUTC/pairedtimestampassertions live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_current_paired_export_metadata_has_one_valid_utc_generation_timestamp",
+      "line": 362,
+      "assertion": "assert {k:v for k,v in old.items() if k not in {'records','metadata'}} == {k:v for k,v in new.items() if k not in {'records','metadata'}}",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "Metadata keysotherthangenerationtimestamp andtop-levelschemas shouldremain unchanged; verifyactualexports. KeepUTC/pairedtimestampassertions live."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_original_reports_and_manifests_still_expose_all_evidence_caveats",
+      "line": 370,
+      "assertion": "assert (original['canonical_author_count'],original['publisher_author_count']) == (12,13)",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "KeepP03412vs13authors, U002postcodesandU005precision qualifiers unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_original_reports_and_manifests_still_expose_all_evidence_caveats",
+      "line": 371,
+      "assertion": "assert 'Manni Cui' in original['author_difference']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "KeepP03412vs13authors, U002postcodesandU005precision qualifiers unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_original_reports_and_manifests_still_expose_all_evidence_caveats",
+      "line": 374,
+      "assertion": "assert correction['SAMR_contact_postcode'] == '510630'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "KeepP03412vs13authors, U002postcodesandU005precision qualifiers unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_original_reports_and_manifests_still_expose_all_evidence_caveats",
+      "line": 375,
+      "assertion": "assert correction['patent_CN112990582A_publication_2021_06_18_postcode'] == '510663'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "KeepP03412vs13authors, U002postcodesandU005precision qualifiers unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_original_reports_and_manifests_still_expose_all_evidence_caveats",
+      "line": 376,
+      "assertion": "assert correction['B3_modified'] is False",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "KeepP03412vs13authors, U002postcodesandU005precision qualifiers unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_original_reports_and_manifests_still_expose_all_evidence_caveats",
+      "line": 378,
+      "assertion": "assert not policy['accept_location_row'] and not policy['accept_location_mapping_change']",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "KeepP03412vs13authors, U002postcodesandU005precision qualifiers unchanged."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+      "line": 384,
+      "assertion": "assert len(old) == len(new) == len(live_context()['papers']) == 674",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03labels/trackshouldnotalterauthor-mappingreport. Preserveexact8URLcells. Ifexportdoeschangeunrelatedreport investigateinstead ofautoauthorizing."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+      "line": 385,
+      "assertion": "assert [r['paper_id'] for r in old] == [r['paper_id'] for r in new]",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03labels/trackshouldnotalterauthor-mappingreport. Preserveexact8URLcells. Ifexportdoeschangeunrelatedreport investigateinstead ofautoauthorizing."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+      "line": 400,
+      "assertion": "assert changed == expected",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03labels/trackshouldnotalterauthor-mappingreport. Preserveexact8URLcells. Ifexportdoeschangeunrelatedreport investigateinstead ofautoauthorizing."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+      "line": 393,
+      "assertion": "assert changed_fields(before, after) == {'url'}",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03labels/trackshouldnotalterauthor-mappingreport. Preserveexact8URLcells. Ifexportdoeschangeunrelatedreport investigateinstead ofautoauthorizing."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+      "line": 395,
+      "assertion": "assert len(found) == 1",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03labels/trackshouldnotalterauthor-mappingreport. Preserveexact8URLcells. Ifexportdoeschangeunrelatedreport investigateinstead ofautoauthorizing."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+      "line": 397,
+      "assertion": "assert pid not in changed and pid in expected",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03labels/trackshouldnotalterauthor-mappingreport. Preserveexact8URLcells. Ifexportdoeschangeunrelatedreport investigateinstead ofautoauthorizing."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_generated_mapping_report_changes_only_eight_authorized_url_cells",
+      "line": 398,
+      "assertion": "assert after['url'] == expected[pid]",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "B4-03labels/trackshouldnotalterauthor-mappingreport. Preserveexact8URLcells. Ifexportdoeschangeunrelatedreport investigateinstead ofautoauthorizing."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations",
+      "line": 411,
+      "assertion": "assert before['venue_review_required'] is True",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 acceptedtrackmayclearvenueflag; original3journal-onlystatusdelta belongs d109. Conditionalconflict untilactualexport inspected. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations",
+      "line": 412,
+      "assertion": "assert after['venue_review_required'] is False",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 acceptedtrackmayclearvenueflag; original3journal-onlystatusdelta belongs d109. Conditionalconflict untilactualexport inspected. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations",
+      "line": 413,
+      "assertion": "assert after['needs_review'] == before['needs_review'] is True",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 acceptedtrackmayclearvenueflag; original3journal-onlystatusdelta belongs d109. Conditionalconflict untilactualexport inspected. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations",
+      "line": 414,
+      "assertion": "assert after['missing_coordinates'] == before['missing_coordinates'] is True",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 acceptedtrackmayclearvenueflag; original3journal-onlystatusdelta belongs d109. Conditionalconflict untilactualexport inspected. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations",
+      "line": 416,
+      "assertion": "assert expected['field_overrides']['venue']['status'] == 'Needs review'",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 acceptedtrackmayclearvenueflag; original3journal-onlystatusdelta belongs d109. Conditionalconflict untilactualexport inspected. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations",
+      "line": 421,
+      "assertion": "assert after['metadata_status'] == expected",
+      "classification": "CURRENT_STATE_INVARIANT_MUST_REMAIN_ENFORCED",
+      "rationale": "P231 acceptedtrackmayclearvenueflag; original3journal-onlystatusdelta belongs d109. Conditionalconflict untilactualexport inspected. This specific identity/count/pair/hold assertion remains an unchanged live invariant."
+    },
+    {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "function": "test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations",
+      "line": 409,
+      "assertion": "assert after.get('metadata_status') == before.get('metadata_status')",
+      "classification": "HISTORICAL_INVARIANT_REQUIRING_AUTHENTICATED_SNAPSHOT_BOUNDARY",
+      "rationale": "P231 acceptedtrackmayclearvenueflag; original3journal-onlystatusdelta belongs d109. Conditionalconflict untilactualexport inspected."
+    }
+  ],
+  "protection_dependencies": [
+    {
+      "authority": "data/raw/systematic_gap_migration_2026_10_03/baseline.json",
+      "sha256": "7c15aad2c09ff8f5bc830fa23046604be8febc0c06d1f6a77af0c743da8ea439",
+      "named_path_presence": {
+        "tests/test_corpus_quality_batch_b_wave_b1s.py": false,
+        "tests/test_corpus_quality_batch_b_wave_b4_02.py": false,
+        "tests/test_corpus_quality_batch_b_wave_b5_01.py": false,
+        "tests/baseline_expectations.py": true,
+        "tests/corpus_quality_test_helpers.py": false,
+        "tests/public_refinement_snapshot.py": true
+      }
+    },
+    {
+      "authority": "data/processed/systematic_tier2_application_2026_09/baseline_sha256.json",
+      "sha256": "ebc92d11a296252f5b6add44e3458e84471aed1dd4fb3d6a8d2440f3bcebca27",
+      "named_path_presence": {
+        "tests/test_corpus_quality_batch_b_wave_b1s.py": false,
+        "tests/test_corpus_quality_batch_b_wave_b4_02.py": false,
+        "tests/test_corpus_quality_batch_b_wave_b5_01.py": false,
+        "tests/baseline_expectations.py": true,
+        "tests/corpus_quality_test_helpers.py": false,
+        "tests/public_refinement_snapshot.py": false
+      }
+    },
+    {
+      "authority": "data/processed/systematic_tier2_policy_2026_09/baseline_sha256.json",
+      "sha256": "e6634e780c589214bb8050b475a00a057aa01d75690ece6da0c408ea6eafd8fb",
+      "named_path_presence": {
+        "tests/test_corpus_quality_batch_b_wave_b1s.py": false,
+        "tests/test_corpus_quality_batch_b_wave_b4_02.py": false,
+        "tests/test_corpus_quality_batch_b_wave_b5_01.py": false,
+        "tests/baseline_expectations.py": true,
+        "tests/corpus_quality_test_helpers.py": false,
+        "tests/public_refinement_snapshot.py": false
+      }
+    },
+    {
+      "authority": "data/processed/systematic_tier2_normal_priority_evidence_review_2026_09/baseline_sha256.json",
+      "sha256": "6b5f83e68bffe430c925c871eb21f1760617cb998e3362f0f5e244b5af51c614",
+      "named_path_presence": {
+        "tests/test_corpus_quality_batch_b_wave_b1s.py": false,
+        "tests/test_corpus_quality_batch_b_wave_b4_02.py": false,
+        "tests/test_corpus_quality_batch_b_wave_b5_01.py": false,
+        "tests/baseline_expectations.py": false,
+        "tests/corpus_quality_test_helpers.py": false,
+        "tests/public_refinement_snapshot.py": false
+      }
+    },
+    {
+      "authority": "tests/fixtures/historical_test_fixture_manifest.json",
+      "sha256": "0f63e446299e8a73794dadb0b35b1af6e5156a584422493db6d4591ce4816c2b",
+      "named_path_presence": {
+        "tests/test_corpus_quality_batch_b_wave_b1s.py": false,
+        "tests/test_corpus_quality_batch_b_wave_b4_02.py": false,
+        "tests/test_corpus_quality_batch_b_wave_b5_01.py": false,
+        "tests/baseline_expectations.py": false,
+        "tests/corpus_quality_test_helpers.py": false,
+        "tests/public_refinement_snapshot.py": false
+      }
+    },
+    {
+      "authority": "tests/fixtures/public_website_refinement_2026_10_01.json",
+      "sha256": "1704cee41a57bde08fc100fa747869c22c81ed968a3cb5ec5c845629961e7618",
+      "named_path_presence": {
+        "tests/test_corpus_quality_batch_b_wave_b1s.py": false,
+        "tests/test_corpus_quality_batch_b_wave_b4_02.py": false,
+        "tests/test_corpus_quality_batch_b_wave_b5_01.py": false,
+        "tests/baseline_expectations.py": false,
+        "tests/corpus_quality_test_helpers.py": false,
+        "tests/public_refinement_snapshot.py": true
+      }
+    }
+  ],
+  "existing_mechanisms": {
+    "immutable_git_reader": "tests/corpus_quality_test_helpers.py:published_bytes/published_context preserve exact commit paper IDs and alias mapping",
+    "historical_fixture_restoration": "scripts/restore_historical_test_fixtures.py;117 preexisting hash-verified fixture inputs; manifest cannot redefine authority; no overwrites",
+    "exact_successor": "tests/public_refinement_snapshot.py B1A_TEST_SUCCESSOR exact namedfile/predecessorcommit+sha/fullsuccessorsha, with rejectiontests",
+    "archived_successor": "tests/archived_publish_fixture_successor.py authenticates complete archived R2 protocol; never replaces live restored guard module",
+    "b1g_protection": "tests/test_corpus_quality_batch_b_wave_b1g.py keeps12 REPAIR_FILES including public_refinement_snapshot.py byteexact against baseline; do notedit protectedhelper",
+    "three_named_sources": "None of3 named sources appears in oldpre-gap/Tier2/publicrefinement/historicalfixture authority pathinventories. Their oldSHA inimmutableB5-01file_inventory andoriginal manifests must stay immutable; not instruction to mutate those receipts."
+  },
+  "observed_vs_forecast": {
+    "observed_failures": 3,
+    "source": "historical_pre_export_gate.json/.log/.xml in prior B5 output",
+    "forecast_only": 14,
+    "no_new_tests_executed_by_reviewer": true
+  },
+  "verified_source_preservation": {
+    "scientific_review_repeated": false,
+    "repo_source_writes": false,
+    "tests_run": 0,
+    "prior_failure_matrix_sha256": "3041a081f01511071965f49dc01d2d4396592b14cec93452fd9e9227675f263b"
+  },
+  "recommendation": {
+    "verdict": "APPROVE_NARROW_AUTHENTICATED_SNAPSHOT_DESIGN_ONLY_EXACT_PATCH_REVIEW_STILL_REQUIRED",
+    "principle": "Historical endpoint expectedvalues/assertions remain exact. Read immutable published commits only for historical predicates; retain unaffected currentstateguards and independentB5-02current regression. No skip/globalmonkeypatch/blanket successor exemptions.",
+    "explicit_historical_reads": {
+      "B1S": "For mutable taxonomy in oldhash and exactB1Slabeldelta/totals, use df977 snapshot. Keep three evidencehashes and R026/R253 acceptance live; splitCURRENT_TAXONOMY_TOTALS check from old fixedcounter.",
+      "B4_02": "Reconstruct originalB4-02 using sealedmanifest +7fc8 or use d109 only for unchangedtaxonomy/type projection; keep all currentpublicIDs/counts/tasks/pairs, nativeacceptance/locationholds live.",
+      "B5_01": "For exact127rows,15paperdelta,sourceafterhashes,oldtaxonomy totals andoldexportaudit, read d109 endpoint. Keep live8URLs/3journals/13holds/institutions/unrelatedmetadata semanticguards. For mixedfunctions split historical typefield versusliveidentity/relationships, not blanket contextreplacement."
+    },
+    "snapshot_authentication": "Pin full40charpublishedcommits and perpathSHA256; exact pathinventory; authenticate beforeparse; tampertests reject source/hash/path/commit changes and unexpected snapshotfiles; neverderive expectedhash frommutablecurrentfile.",
+    "baseline_current_counts": "Update only live RESEARCH_TYPE_TOTALS dataset138->142 andbenchmark97->101 under reviewedB5-02delta; leave releaseconstants/39paperdelta unchanged. Existinghistoricalreaders preserveold protectedbaselinebytes.",
+    "negative_requirements": [
+      "changed historicalsnapshot bytes orsourcecommit/path/hash fail",
+      "alteredoriginalreceipt fails",
+      "changed original127decisionbytes fail",
+      "wrongnativeID/action/evidencebinding andextra terminalclose fail",
+      "unrelatedcurated/manualfileoridentity/task/location/publiclink edits fail",
+      "arbitrarysuccessormodification andauthorizationmetadata tampering fail",
+      "fullcurrent source/public mismatch fails evenwhen historical replaypasses"
+    ],
+    "no_genuine_regression_established": "Allthree actualfailures match exact approvedB4-03source. Additionalconditionalexport effects mustbereviewed afterexport; unexpectedresults mustbestopped, notclassifiedautomaticallyashistorical."
+  }
+}

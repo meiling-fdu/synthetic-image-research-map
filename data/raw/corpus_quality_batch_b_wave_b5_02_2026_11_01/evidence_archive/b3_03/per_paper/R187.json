@@ -1,0 +1,168 @@
+{
+  "schema": "batch-b-b3-03-per-paper-evidence-1",
+  "batch_id": "B3-03",
+  "planned_batch_id": "B2-03",
+  "reviewer_group": "A",
+  "review_id": "R187",
+  "action_ids": [
+    "R187"
+  ],
+  "paper_id": "curated:08aa2b51bb36247bdda3",
+  "title": "RealNet: Efficient and Unsupervised Detection of AI-Generated Images via Real-Only Representation Learning",
+  "canonical_identity": {
+    "paper_id": "curated:08aa2b51bb36247bdda3",
+    "title": "RealNet: Efficient and Unsupervised Detection of AI-Generated Images via Real-Only Representation Learning",
+    "authors": [
+      "Shuaibo Li",
+      "Laixin Zhang",
+      "Wei Ma",
+      "Jianwei Guo",
+      "Shibiao Xu",
+      "Zhijie Qiu",
+      "Hongbin Zha"
+    ],
+    "doi": "10.1609/aaai.v40i45.41234",
+    "arxiv_id": "",
+    "canonical_url": "https://doi.org/10.1609/aaai.v40i45.41234",
+    "current_taxonomy_id": "paper_id:curated:08aa2b51bb36247bdda3"
+  },
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "original_review_question": "A medically relevant synthetic-image dataset is introduced; verify release and contribution scope before adding.",
+  "governing_policies": {
+    "R1": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient."
+  },
+  "local_evidence_reused": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R187",
+      "finding": "A medically relevant synthetic-image dataset is introduced; verify release and contribution scope before adding. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R187",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "paper_id:curated:08aa2b51bb36247bdda3",
+      "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "local_byte_hash_verified": true
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R1",
+      "finding": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "local_byte_hash_verified": true
+    }
+  ],
+  "provisional_only": true,
+  "formal_maintainer_decision": false,
+  "authoritative_action_closed": false,
+  "current_tasks_preserved": true,
+  "method_label_preserved": true,
+  "authoritative_changes_by_reviewer": 0,
+  "written_utc": "2026-10-31T13:05:11.887229+00:00",
+  "outcome": "EVIDENCE_INSUFFICIENT",
+  "proposed_research_types": [
+    "method"
+  ],
+  "conditional_candidate_research_types": [
+    "method",
+    "dataset"
+  ],
+  "confidence": {
+    "DOI_title_author_identity": "high",
+    "R1_dataset_contribution_sufficiency": "insufficient",
+    "hold": "high"
+  },
+  "identity_verification": {
+    "status": "EXACT_DOI_TITLE_SEVEN_AUTHORS_VERIFIED_NO_SCIENTIFIC_FULLTEXT",
+    "basis": "Crossref confirms exact title, DOI, seven canonical authors and2026 proceedings. OpenReview search-index record vBHfhdWCsm lists the same seven authors and2026 copyright, but the manuscript itself was not accessible."
+  },
+  "sources": [
+    {
+      "source_id": "R187-doi-registration.json",
+      "kind": "PRIMARY_DOI_REGISTRATION_WITH_ABSTRACT",
+      "url": "https://api.crossref.org/works/10.1609%2Faaai.v40i45.41234",
+      "artifact": "evidence/groupA/R187-doi-registration.json",
+      "sha256": "c60a766d7e01db83446378f5daf594c6252b49d8bc837c602ac92f226b009744",
+      "bytes": 4634,
+      "version": "DOI registration accessed2026-10-31"
+    },
+    {
+      "source_id": "R187-canonical.html",
+      "kind": "ACCESS_FAILURE_NOT_MANUSCRIPT",
+      "url": "https://doi.org/10.1609/aaai.v40i45.41234",
+      "artifact": "evidence/groupA/R187-canonical.html",
+      "sha256": "547e0bc4f963804ed3eed61ae8b1b5aa95a08fe184e19ee958bcdcbfcd5e8122",
+      "bytes": 7018,
+      "version": "AAAI browser-challenge HTML"
+    },
+    {
+      "source_id": "R187-publisher-vor.html",
+      "kind": "ACCESS_FAILURE_NOT_MANUSCRIPT",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/download/41234/45195",
+      "artifact": "evidence/groupA/R187-publisher-vor.html",
+      "sha256": "ad92e7630efa4e61e86f727f5c0317d7e49082c6779b8b4bccf9e4fdad9b1841",
+      "bytes": 7019,
+      "version": "DOI-registered VOR endpoint also returns browser-challenge HTML"
+    }
+  ],
+  "scientific_review": {
+    "verified_primary_scientific_scope": "DOI-deposited abstract describes real-only representation learning, feature-space pseudo-negative generation and real/fake discrimination; no task or method change is proposed.",
+    "abstract_only_claim": "A medically relevant synthetic-image dataset is claimed, but its name, source provenance, generated sample counts, curation, partitions, intended reuse and independent contribution role cannot be established from the accessible abstract.",
+    "unverified_abstract_results": {
+      "accuracy_gain_claim": 4.51,
+      "average_precision_gain_claim": 3.93,
+      "unit": "Author-reported percent gains in deposited abstract; comparator, absolute values and exact tables are unavailable and not treated as verified quantitative experimental evidence."
+    },
+    "full_method_and_evaluation_evidence": null,
+    "quantitative_evidence": []
+  },
+  "evidence_to_claim": [
+    {
+      "policy": "R1",
+      "claim": "Potential medical dataset contribution",
+      "scientifically_sufficient": false,
+      "support": "Accessible primary abstract states a dataset exists.",
+      "missing": "Identity-matched full construction/contribution/evaluation sections needed to distinguish a reusable substantive data contribution from an experiment-only medical collection."
+    }
+  ],
+  "limitations_and_conflicts": [
+    {
+      "kind": "access_blocker",
+      "finding": "CanonicalAAAI page and exact DOI-registered VOR download return browser checks; OpenReview immutable PDF URL returnsHTTP403, and canonical PDF route redirects toverification. No challenge was solved or bypassed and no successful full manuscript was retrieved."
+    },
+    {
+      "kind": "source_sufficiency_limit",
+      "finding": "Do not substitute abstract or search-index snippets for unavailable methods/tables. Dataset contribution is neither accepted nor disproved."
+    }
+  ],
+  "proposed_B4_action": "KeepR187 unresolved as evidence-insufficient; preserve detection and method. Do not add dataset from the claimed medical application alone.",
+  "retrieval_cost": {
+    "successful_full_manuscripts": 0,
+    "full_manuscript_bytes": 0,
+    "new_dataset_or_weight_downloads": 0,
+    "successful_responses_were_metadata_or_challenge_only": true
+  },
+  "sources_count": 3,
+  "actual_effort": {
+    "timing_basis": "Shared wave/reviewer wall span, not exclusive analyst hours. Individual focused timers were not instrumented before source recovery; no invented person-minute allocations.",
+    "wave_started_utc": "2026-10-31T12:15:02.337367+00:00",
+    "first_reliably_recorded_agent_retrieval_utc": "2026-10-31T12:22:39.349261+00:00",
+    "record_written_utc": "2026-10-31T13:05:11.887229+00:00",
+    "source_network_durations_available_in_retrieval_records": true,
+    "preparation_before_first_retrieval_not_separately_timed": true
+  }
+}

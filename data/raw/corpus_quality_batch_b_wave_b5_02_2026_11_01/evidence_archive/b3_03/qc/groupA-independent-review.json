@@ -1,0 +1,465 @@
+{
+  "task": "B3-03 independent primary-evidence QC GroupA",
+  "reviewer": "b402_location_policy independent QC agent",
+  "reviewed_utc": "2026-10-31T15:15:11.430736+00:00",
+  "status": "PASS_WITH_NONBLOCKING_PROVENANCE_NOTES",
+  "passed": 51,
+  "failed": 0,
+  "input_record_sha256": {
+    "R110": "247059a94b94b3186670ef50ec38cf9117c4de2867a9ca2bd681c8cfe334f5e8",
+    "R138": "e8831986480d2e7008d2953dbf79437f1080a4bdcaf3ce2c0c9cb0b56c83f29f",
+    "R154": "e364eee5ebcbfc6dfdfa5470b5647e55d7556dc033e356b3ca723aeddbd69533",
+    "R187": "58c020b7e3f933b681fac60285e75f11d5dc074d450478d634b5672b4bc97ae9"
+  },
+  "primary_sources": [
+    {
+      "review_id": "R110",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R110-canonical.pdf",
+      "sha256": "3280157fb698bfda46e75caf4f39d3cb376f7803cd4bcd24f27c574da94acabe",
+      "kind": "PRIMARY_OFFICIAL_ACCEPTED_MANUSCRIPT"
+    },
+    {
+      "review_id": "R110",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R110-table2-3.png",
+      "sha256": "4b45a75312d2d6c150644c0d7cd3fa8b100db25d3f95a42efd767675fc7cec9d",
+      "kind": "DERIVED_VISUAL_VERIFICATION"
+    },
+    {
+      "review_id": "R138",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R138-doi-registration.json",
+      "sha256": "1d3e09a3311916a0c7ed1d6cf8a288a24ac4a5425f3496580b1e115a923b9659",
+      "kind": "PRIMARY_DOI_REGISTRATION"
+    },
+    {
+      "review_id": "R138",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R138-official-readme.txt",
+      "sha256": "34c9c4e84ec8749c1ca54135c1cea4490099b708fe568c82060fd4add8fb45f0",
+      "kind": "PRIMARY_AUTHOR_PROJECT_STATEMENT"
+    },
+    {
+      "review_id": "R138",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R138-canonical.html",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "ACCESS_FAILURE_NOT_MANUSCRIPT"
+    },
+    {
+      "review_id": "R154",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R154-author-v1.pdf",
+      "sha256": "776c1304ebf723ad54e2d5ef2753c03a95b5a26bfa1447d7330aa75de3bbf5a0",
+      "kind": "PRIMARY_AUTHOR_PREPRINT_CANDIDATE"
+    },
+    {
+      "review_id": "R154",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R154-doi-registration.json",
+      "sha256": "8386363c85f56156b8fe9d137cf7abc1cfa87f31729a88cbb1c256551622c4e2",
+      "kind": "PRIMARY_DOI_REGISTRATION"
+    },
+    {
+      "review_id": "R154",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R154-tables2-4.png",
+      "sha256": "9e015b8428c2325992fe3cafa5e5df875594e1cad113ff54547728079f771cc4",
+      "kind": "DERIVED_VISUAL_VERIFICATION"
+    },
+    {
+      "review_id": "R154",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R154-canonical.html",
+      "sha256": "2326a0067974192fd1408f967a997e20bab5b381cb37ba99d738d735c091c818",
+      "kind": "ACCESS_FAILURE_NOT_MANUSCRIPT"
+    },
+    {
+      "review_id": "R187",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R187-doi-registration.json",
+      "sha256": "c60a766d7e01db83446378f5daf594c6252b49d8bc837c602ac92f226b009744",
+      "kind": "PRIMARY_DOI_REGISTRATION_WITH_ABSTRACT"
+    },
+    {
+      "review_id": "R187",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R187-canonical.html",
+      "sha256": "547e0bc4f963804ed3eed61ae8b1b5aa95a08fe184e19ee958bcdcbfcd5e8122",
+      "kind": "ACCESS_FAILURE_NOT_MANUSCRIPT"
+    },
+    {
+      "review_id": "R187",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/groupA/R187-publisher-vor.html",
+      "sha256": "ad92e7630efa4e61e86f727f5c0317d7e49082c6779b8b4bccf9e4fdad9b1841",
+      "kind": "ACCESS_FAILURE_NOT_MANUSCRIPT"
+    }
+  ],
+  "independent_review": {
+    "new_retrievals": 0,
+    "new_manuscripts": 0,
+    "complete_primaryPDFs_independently_extracted": {
+      "R110": 10,
+      "R154": 46
+    },
+    "relevant_pages_inspected": {
+      "R110": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8
+      ],
+      "R154": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        16,
+        17
+      ]
+    },
+    "images_visually_inspected": [
+      "R110-table2-3.png",
+      "R154-tables2-4.png",
+      "R154-appendix-Fig7.png"
+    ],
+    "experiments_or_dataset_downloads": 0
+  },
+  "decisions": [
+    {
+      "review_id": "R110",
+      "qc_agreement": "AGREE",
+      "outcome": "SUPPORTED_ADDITION",
+      "provisional_research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "primary_basis": "Dedicated namedcuratedMRI-Forensics resource and explicit firstcontribution with construction, release intent; reusablecrossgenerator and crossdomain evaluation provisions with partitions,baselines,metrics satisfyR1/R2 independently ofperformance.",
+      "verified_caveats": [
+        "Table2 is generated-only recognition,not balancedaccuracy/specificity.",
+        "Table3 separately reports brain real/fake metrics andAUC.",
+        "RINE prose says slightlybetter ProGAN once,but all comparable Table2ProGANtestcells arelower:2.30vs75.07,1.60vs78.43,0.20vs3.50.",
+        "No patient-levelsplit,clinicalvalidity,releaseintegrity or causal/performance reproduction established."
+      ]
+    },
+    {
+      "review_id": "R138",
+      "qc_agreement": "AGREE",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "provisional_research_types": [
+        "method"
+      ],
+      "primary_basis": "AuthorREADME positivelyidentifies proposed FakeCOCOrelease andCOCO-caption generation. It lacks inspectedpaper construction,partitions andquantitative protocol. ExactDOI IEEEendpoint is empty202WAF challenge; no fullscientificpaper available.",
+      "verified_caveats": [
+        "READMEXinhan vsBibTeX/CrossrefXinghan; nopresumedidentitychange.",
+        "Dataset-specific academic-onlyrestrictionexplicit; no unrestrictedlicenseinferred.",
+        "Hold doesnotdeny reusableintent or make datasetavailability anindependenttaxonomycriterion."
+      ]
+    },
+    {
+      "review_id": "R154",
+      "qc_agreement": "AGREE",
+      "outcome": "IDENTITY_BLOCKED",
+      "provisional_research_types": [
+        "method"
+      ],
+      "conditional_candidate_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "primary_basis": "The46pagearXivv1 explicitlycontributescuratedMIRAGE and source/generator-disjoint reusablebenchmark protocol. Exacttitle/eightcoauthorsmatchcanonicalDOI,but firstauthorChengXia conflicts withOuChengHuang; noauthoritativebridge permits transfer.",
+      "verified_caveats": [
+        "Main20,000 vsappendix2,000trainingsamples.",
+        "Main64pipelines/53models vsappendix64models.",
+        "Main64H20SFTGPU vsappendix8H20;effectivebatch64.",
+        "Table2mean72.81vs67.26gives5.55points,butOOD-C78.46<82.30; noevery-subset-superiority.",
+        "Table3ChameleonALL78.31/fake50.29/real98.37;CNNSpotaggregate64.21trainedMIRAGEvs68.89GenImage.",
+        "Table5GaussianBlurvsproseGaussianNoise.",
+        "Anonymoussources/humanplatformlabelagreement are notauditedcreationprovenance.",
+        "Manipulated/compositecandidateimagescope is version-conditionedfollowuponly; noauthoritativeactioncreated."
+      ]
+    },
+    {
+      "review_id": "R187",
+      "qc_agreement": "AGREE",
+      "outcome": "EVIDENCE_INSUFFICIENT",
+      "provisional_research_types": [
+        "method"
+      ],
+      "primary_basis": "ExactDOItitle/sevenauthorsandprimaryabstractconfirmed,but medicaldataset construction/contribution/protocolunknown. CanonicalandVORresponses are browserchallengeHTML; OpenReviewPDFfailed403.",
+      "verified_caveats": [
+        "Abstract4.51%accuracy/3.93%APgains remain inheritedclaims,notverifiedexperimentalresults.",
+        "Noabsenceornegativecontributionfinding; nolabelfrommedicalmotivationonly."
+      ]
+    }
+  ],
+  "disagreements": [],
+  "blocking_findings": [],
+  "nonblocking_provenance_notes": [
+    {
+      "review_id": "R138",
+      "finding": "RepositoryMITlicenseassertion is not independently evidenced by the three listed preservedsourcecaptures. README only proves dataset-specific academic/noncommercialrestriction. Qualify MIT as unverified or link existing retainedlicenseevidence withoutnewretrieval."
+    },
+    {
+      "review_id": "R154",
+      "finding": "Savedartifact R154-appendix-Fig7.png actuallyshows PDFp17SFTdetails,not Figure7/p16. Keep bytes and labeltheactualpage inprovenance; counts2000verifiedfromindependentlyextractedp16text."
+    }
+  ],
+  "checks": [
+    {
+      "name": "R110 source hash R110-canonical.pdf",
+      "passed": true,
+      "locator": "evidence/groupA/R110-canonical.pdf"
+    },
+    {
+      "name": "R110 source hash R110-table2-3.png",
+      "passed": true,
+      "locator": "evidence/groupA/R110-table2-3.png"
+    },
+    {
+      "name": "R110 provisional-only no authoritative action",
+      "passed": true,
+      "locator": "Per-paper evidence boundary"
+    },
+    {
+      "name": "R110 task/method preserved",
+      "passed": true,
+      "locator": "Assigned scope"
+    },
+    {
+      "name": "R138 source hash R138-doi-registration.json",
+      "passed": true,
+      "locator": "evidence/groupA/R138-doi-registration.json"
+    },
+    {
+      "name": "R138 source hash R138-official-readme.txt",
+      "passed": true,
+      "locator": "evidence/groupA/R138-official-readme.txt"
+    },
+    {
+      "name": "R138 source hash R138-canonical.html",
+      "passed": true,
+      "locator": "evidence/groupA/R138-canonical.html"
+    },
+    {
+      "name": "R138 provisional-only no authoritative action",
+      "passed": true,
+      "locator": "Per-paper evidence boundary"
+    },
+    {
+      "name": "R138 task/method preserved",
+      "passed": true,
+      "locator": "Assigned scope"
+    },
+    {
+      "name": "R154 source hash R154-author-v1.pdf",
+      "passed": true,
+      "locator": "evidence/groupA/R154-author-v1.pdf"
+    },
+    {
+      "name": "R154 source hash R154-doi-registration.json",
+      "passed": true,
+      "locator": "evidence/groupA/R154-doi-registration.json"
+    },
+    {
+      "name": "R154 source hash R154-tables2-4.png",
+      "passed": true,
+      "locator": "evidence/groupA/R154-tables2-4.png"
+    },
+    {
+      "name": "R154 source hash R154-canonical.html",
+      "passed": true,
+      "locator": "evidence/groupA/R154-canonical.html"
+    },
+    {
+      "name": "R154 provisional-only no authoritative action",
+      "passed": true,
+      "locator": "Per-paper evidence boundary"
+    },
+    {
+      "name": "R154 task/method preserved",
+      "passed": true,
+      "locator": "Assigned scope"
+    },
+    {
+      "name": "R187 source hash R187-doi-registration.json",
+      "passed": true,
+      "locator": "evidence/groupA/R187-doi-registration.json"
+    },
+    {
+      "name": "R187 source hash R187-canonical.html",
+      "passed": true,
+      "locator": "evidence/groupA/R187-canonical.html"
+    },
+    {
+      "name": "R187 source hash R187-publisher-vor.html",
+      "passed": true,
+      "locator": "evidence/groupA/R187-publisher-vor.html"
+    },
+    {
+      "name": "R187 provisional-only no authoritative action",
+      "passed": true,
+      "locator": "Per-paper evidence boundary"
+    },
+    {
+      "name": "R187 task/method preserved",
+      "passed": true,
+      "locator": "Assigned scope"
+    },
+    {
+      "name": "R110 exact primary title/three authors",
+      "passed": true,
+      "locator": "OfficialCVF p1"
+    },
+    {
+      "name": "R110 named independent dataset contribution",
+      "passed": true,
+      "locator": "p2 Introduction contribution1"
+    },
+    {
+      "name": "R110 substantive construction curates reusable resource",
+      "passed": true,
+      "locator": "\u00a73.1p3/printed224"
+    },
+    {
+      "name": "R110 correct arithmetic real+sixgenerator totals",
+      "passed": true,
+      "locator": "Independent arithmetic"
+    },
+    {
+      "name": "R110 explicit reusable release assertion",
+      "passed": true,
+      "locator": "Abstract release statement,not independent availability audit"
+    },
+    {
+      "name": "R110 R2 protocol extends beyond large tables",
+      "passed": true,
+      "locator": "\u00a74.2pp5\u20138:specified baselines,partitions,unseen generators and crossdomain evaluation"
+    },
+    {
+      "name": "R110 fake-only Table2 explicit",
+      "passed": true,
+      "locator": "Table2caption and \u00a74.2.1"
+    },
+    {
+      "name": "R110 brain test real/fake/AUC distinct",
+      "passed": true,
+      "locator": "\u00a74.2.3 andTable3"
+    },
+    {
+      "name": "R110 proposed R1R2 only",
+      "passed": true,
+      "locator": "Provisional classification"
+    },
+    {
+      "name": "R110 RINE source conflict retained",
+      "passed": true,
+      "locator": "p7prose vsTable2p8 visuallychecked"
+    },
+    {
+      "name": "R154 canonical first author conflict material",
+      "passed": true,
+      "locator": "DOI registration vs arXivv1p1"
+    },
+    {
+      "name": "R154 remainingeight authors agree",
+      "passed": true,
+      "locator": "Crossref authors2\u20139 vsPDFp1"
+    },
+    {
+      "name": "R154 candidate R1 contribution substantive",
+      "passed": true,
+      "locator": "Candidatepp3\u20134"
+    },
+    {
+      "name": "R154 candidate R2 partitions and protocol substantive",
+      "passed": true,
+      "locator": "Candidatep4:ID/source/generator-disjoint OOD evaluation design"
+    },
+    {
+      "name": "R154 primary20k2k discrepancy verified",
+      "passed": true,
+      "locator": "Candidatep4 vsappendixp16"
+    },
+    {
+      "name": "R154 primary53model64model mismatch verified",
+      "passed": true,
+      "locator": "Candidatep4 vsappendixp16"
+    },
+    {
+      "name": "R154 source GPU discrepancy verified",
+      "passed": true,
+      "locator": "Candidatep6 vsappendixp17"
+    },
+    {
+      "name": "R154 source blur/noise discrepancy verified",
+      "passed": true,
+      "locator": "CandidateTable5caption/heading vsadjacentprose"
+    },
+    {
+      "name": "R154 mean advantage not per-subset advantage",
+      "passed": true,
+      "locator": "Table2 visuallychecked"
+    },
+    {
+      "name": "R154 identity hold no canonical transfer",
+      "passed": true,
+      "locator": "Current canonicalstate staysmethod; candidateR1R2 conditionalonly"
+    },
+    {
+      "name": "R138 exact DOI/title/author and project linkage",
+      "passed": true,
+      "locator": "DOI registration +authorREADMEcitation"
+    },
+    {
+      "name": "R138 positive resource intent distinct from complete protocol",
+      "passed": true,
+      "locator": "AuthorREADME:datasetrelease claim; nofullmethod/split/table"
+    },
+    {
+      "name": "R138 access202 empty challenge no manuscript",
+      "passed": true,
+      "locator": "Canonical singleIEEErequest"
+    },
+    {
+      "name": "R138 spelling discrepancy explicitly retained",
+      "passed": true,
+      "locator": "READMEheading vsBibTeX/DOI"
+    },
+    {
+      "name": "R138 hold no abstractonly acceptance",
+      "passed": true,
+      "locator": "Missingidentitymatched construction/protocol evidence"
+    },
+    {
+      "name": "R187 exact title DOI sevenauthor identity",
+      "passed": true,
+      "locator": "DOI primaryregistration"
+    },
+    {
+      "name": "R187 source abstract medical dataset unelaborated",
+      "passed": true,
+      "locator": "DOIdepositedabstractonly"
+    },
+    {
+      "name": "R187 actual challenge HTML R187-canonical.html",
+      "passed": true,
+      "locator": "R187-canonical.html"
+    },
+    {
+      "name": "R187 actual challenge HTML R187-publisher-vor.html",
+      "passed": true,
+      "locator": "R187-publisher-vor.html"
+    },
+    {
+      "name": "R187 explicitfulltext403 failure",
+      "passed": true,
+      "locator": "SavedOpenReviewretrievalfailure"
+    },
+    {
+      "name": "R187 hold no abstractonly acceptance",
+      "passed": true,
+      "locator": "Datasetclaimneitheracceptednordisproved"
+    }
+  ],
+  "repository_writes": false,
+  "tests_run": false,
+  "exports_run": false
+}

@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/private/tmp/batch-b-b5-01r2-2026-10-31/test-venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/B403_track_tests.xml",
+    "tests/test_review_decision_idempotence.py",
+    "tests/test_paper_level_venue_track.py",
+    "tests/test_frontend_venue_filters.py",
+    "tests/test_workshop_venue_audit.py::WorkshopVenueTests::test_controlled_singular_tracks_and_unknowns",
+    "tests/test_workshop_venue_audit.py::WorkshopVenueTests::test_standalone_identities_and_no_name_only_track_inference",
+    "tests/test_workshop_venue_audit.py::WorkshopVenueTests::test_standalone_existing_workshop_is_reviewed_not_guessed",
+    "tests/test_workshop_venue_audit.py::WorkshopVenueTests::test_blank_manual_track_does_not_erase_existing_assignment",
+    "tests/test_workshop_venue_audit.py::WorkshopVenueTests::test_rebuild_preserves_observed_tracks_but_manual_main_wins"
+  ],
+  "returncode": 0,
+  "seconds_monotonic": 5.550909208017401,
+  "stdout_sha256": "72a200f4a4ec70163196a7c4c263e0fa51db7221fb66c6bffa457be6a07f27a5",
+  "PATH": "/Users/meilinger/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/opt/homebrew/bin:/Users/meilinger/.local/bin:/Users/meilinger/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/TeX/texbin:/Users/meilinger/.codex/tmp/arg0-macos/codex-arg0AumTU7:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/meilinger/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Users/meilinger/.local/bin:/Users/meilinger/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS"
+}

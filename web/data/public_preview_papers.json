@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-10-30T07:19:56Z"
+    "public_preview_generated_at": "2026-11-01T11:41:11Z"
   },
   "records": [
     {
@@ -46612,8 +46612,23 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "dataset",
+        "benchmark"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "B4-03 R110: R1/R2: MRI-Forensics is independently constructed and documented with reusable generator/split and detector evaluation protocols, beyond an experimental pool. Evidence and limitations retained in B3-03/per_paper/R110.json."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -46627,19 +46642,7 @@
           "location_display": "Florida, United States"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "title": "Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles",
@@ -76095,7 +76098,9 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "dataset",
+        "benchmark"
       ],
       "taxonomy_status": "reviewed",
       "taxonomy_review": {
@@ -76106,7 +76111,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "B4-03 R171: R1/R2: CommGen15 independently collects and standardizes commercial-platform outputs and defines a reusable external-training image-level evaluation resource. Evidence and limitations retained in B3-03/per_paper/R171.json."
         }
       },
       "affiliations": [
@@ -102125,7 +102131,7 @@
       ],
       "venue_id": "venue:mad",
       "venue_acronym": "MAD",
-      "venue_track": "Workshop",
+      "venue_track": "Main",
       "raw_venue": "Proceedings of the 5th ACM International Workshop on Multimedia AI against Disinformation (MAD)",
       "venue_aliases": [
         "ACM International Workshop on Multimedia AI against Disinformation (MAD)",
@@ -102146,16 +102152,11 @@
         "unresolved": 0
       },
       "affiliation_complete": true,
-      "venue_review_required": true,
-      "venue_review_reason": "This is a standalone scholarly workshop venue. Its name alone does not establish a Workshop subtrack; confirm Main versus an actual nested workshop track from the paper/program, preserving the venue identity.",
+      "venue_review_required": false,
       "metadata_status": {
         "overall": "Verified",
         "default_field_status": "Verified",
         "field_overrides": {
-          "venue": {
-            "status": "Needs review",
-            "source": "OpenAlex"
-          },
           "affiliations": {
             "status": "Curated",
             "source": "Manual curation"
@@ -113427,8 +113428,23 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "dataset",
+        "benchmark"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "B4-03 R256: R1/R2: CSAIID is a separately constructed cross-semantic resource with defined categories, real/fake sampling, generators and reusable external-training evaluation protocol. Evidence and limitations retained in B3-03/per_paper/R256.json."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -113458,19 +113474,7 @@
           "location_display": "Beijing, China"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "title": "AdaptPrompt: Parameter-Efficient Adaptation of VLMs for Generalizable Deepfake Detection",
@@ -120642,8 +120646,22 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "benchmark"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed",
+          "reason": "B4-03 R275: R2 only: GenImage++ is an independently specified reusable test benchmark with new generator/prompt strata and evaluation protocol, not merely a large result table. Evidence and limitations retained in B3-03/per_paper/R275.json."
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -120679,19 +120697,7 @@
           "location_display": "Texas, United States"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "paper_id": "curated:e256ad6b672c3cf433ba",
@@ -235657,7 +235663,8 @@
         "fully_generated"
       ],
       "research_types": [
-        "method"
+        "method",
+        "dataset"
       ],
       "venue": "IEEE Transactions on Multimedia",
       "venue_name": "IEEE Transactions on Multimedia",
@@ -236030,7 +236037,8 @@
           "status": "reviewed"
         },
         "research_types": {
-          "status": "reviewed"
+          "status": "reviewed",
+          "reason": "B4-03 R564: R1 only: DF3 is an independently constructed reusable fake-face resource with documented base generators and post-processing, beyond method-training usage. Evidence and limitations retained in B3-03/per_paper/R564.json."
         }
       },
       "metadata_status": {

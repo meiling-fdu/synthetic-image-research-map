@@ -1,0 +1,681 @@
+{
+  "schema": "batch-b-b4-independent-preapply-1",
+  "reviewer": "b403_track",
+  "reviewed_utc": "2026-11-01T08:29:14.190949+00:00",
+  "verdict": "APPROVE_EXACT_CANDIDATE",
+  "repository_writes_performed": false,
+  "new_evidence_retrieval_or_scientific_review": false,
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "manifest_sha256": "189eabed6bfd3989ceb1abc8300c7b80e12e4453cb13e1fa4397e72b6cd753f0",
+  "candidate_source_after_sha256": {
+    "data/curated/papers.csv": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+    "data/curated/paper_taxonomy.csv": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+    "data/curated/review_decisions.csv": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea"
+  },
+  "candidate_fingerprints": [
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/prepare_adjudication.py",
+      "sha256": "94047de1e681b4fee38b8c441df6297a8a93d13f8a62b7ef3386b96428481660"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/adjudication_manifest.json",
+      "sha256": "189eabed6bfd3989ceb1abc8300c7b80e12e4453cb13e1fa4397e72b6cd753f0"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/preparation_clock.json",
+      "sha256": "98996e94b78ef85fc5077dc5ebb0a8f1b991198a1f180a6403783e569cdc33ab"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/investigation/schema_preflight.json",
+      "sha256": "453aa3060ee883d577607701b68ed9b90bfc1aed56a2fb677a9e40f42b05abfa"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/investigation/P231_semantics_review.json",
+      "sha256": "525fd4b7f8b93eb1a2c6eb5ac3e69e4e15c38db19a076cb1633b6697520ba3b0"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/qc/independent_adjudication_review.json",
+      "sha256": "1615d8b14adc45144109edee5608ee8757b7780838826cd4296b09379c6a08b2"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/prepared/data/curated/papers.csv",
+      "sha256": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/prepared/data/curated/paper_taxonomy.csv",
+      "sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3"
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-03-2026-11-01/prepared/data/curated/review_decisions.csv",
+      "sha256": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea"
+    }
+  ],
+  "checks": [
+    {
+      "name": "All 123 sealed B3 source files remain byte-identical",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Repository baseline and staged/unstaged state unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Current source files equal pinned baseline; manifest before/after hashes independently match",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Allowlist is exactly papers, taxonomy, decisions",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "CSV columns and row identities/order preserved; decisions append exactly eleven",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Every unchanged CSV record and both headers retain exact bytes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Actual semantic cell deltas equal manifest exactly, without extras",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Exact six accepted and five held actions",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R110 exact labels, unchanged tasks, method retained, source evidence is primary",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R110 canonical source URL, per-paper hash and page/table locators retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R171 exact labels, unchanged tasks, method retained, source evidence is primary",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R171 canonical source URL, per-paper hash and page/table locators retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R256 exact labels, unchanged tasks, method retained, source evidence is primary",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R256 canonical source URL, per-paper hash and page/table locators retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R275 exact labels, unchanged tasks, method retained, source evidence is primary",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R275 canonical source URL, per-paper hash and page/table locators retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R564 exact labels, unchanged tasks, method retained, source evidence is primary",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R564 canonical source URL, per-paper hash and page/table locators retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Exact allowed locations: 30 taxonomy cells, four paper resource labels, one paper track",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "P231 only workshops to Main with complete standalone MAD identity preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "No invented official Main designation or ICMR-main implication; R231 independent",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Old 127 decisions preserved and eleven native IDs unique without collision",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R110 exact native identity, final CSV decision, complete before/after state and digest binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R110 evidence, policies and limitations retained independently of reproduction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R110 terminal or hold action is correct",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R138 exact native identity, final CSV decision, complete before/after state and digest binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R138 evidence, policies and limitations retained independently of reproduction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R138 terminal or hold action is correct",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R154 exact native identity, final CSV decision, complete before/after state and digest binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R154 evidence, policies and limitations retained independently of reproduction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R154 terminal or hold action is correct",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R161 exact native identity, final CSV decision, complete before/after state and digest binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R161 evidence, policies and limitations retained independently of reproduction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R161 terminal or hold action is correct",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R171 exact native identity, final CSV decision, complete before/after state and digest binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R171 evidence, policies and limitations retained independently of reproduction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R171 terminal or hold action is correct",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R187 exact native identity, final CSV decision, complete before/after state and digest binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R187 evidence, policies and limitations retained independently of reproduction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R187 terminal or hold action is correct",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R231 exact native identity, final CSV decision, complete before/after state and digest binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R231 evidence, policies and limitations retained independently of reproduction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R231 terminal or hold action is correct",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R256 exact native identity, final CSV decision, complete before/after state and digest binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R256 evidence, policies and limitations retained independently of reproduction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R256 terminal or hold action is correct",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R275 exact native identity, final CSV decision, complete before/after state and digest binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R275 evidence, policies and limitations retained independently of reproduction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R275 terminal or hold action is correct",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R564 exact native identity, final CSV decision, complete before/after state and digest binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R564 evidence, policies and limitations retained independently of reproduction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R564 terminal or hold action is correct",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "P231 exact native identity, final CSV decision, complete before/after state and digest binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "P231 evidence, policies and limitations retained independently of reproduction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "P231 terminal or hold action is correct",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R231 recovered binding explicitly records P231 other-action effect while research labels stay method",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "P231 native venue fingerprint binds exact final standalone MAD state",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R256 refinement preserves global balance possibility and unspecified per-category allocation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Source label additions never assert empirical reproducibility",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Independent ledger accounting agrees, including five open holds",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Independent effective counts: dataset +4, benchmark +4, tasks and public coverage unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "No export/publication requested by manifest",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Manifest explicitly pins sealed final independent QC and R256 caveat addendum",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Manifest identifies evidence excerpts as reviewer summaries rather than literal manuscript quotations",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Candidate manifest remained stable during independent review",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "passed": 65,
+  "failed": 0,
+  "sealed_B3_files_verified": 123,
+  "actual_cell_deltas": [
+    {
+      "path": "data/curated/papers.csv",
+      "key_field": "paper_id",
+      "key": "curated:c6bfe8f5199d1d8beb29",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset;benchmark"
+    },
+    {
+      "path": "data/curated/papers.csv",
+      "key_field": "paper_id",
+      "key": "curated:0d918782407e05ade5bd",
+      "field": "venue_track",
+      "before": "workshops",
+      "after": "Main"
+    },
+    {
+      "path": "data/curated/papers.csv",
+      "key_field": "paper_id",
+      "key": "curated:a570863c3a6ac227b56c",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset;benchmark"
+    },
+    {
+      "path": "data/curated/papers.csv",
+      "key_field": "paper_id",
+      "key": "curated:6976641cbfe602a7e617",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset;benchmark"
+    },
+    {
+      "path": "data/curated/papers.csv",
+      "key_field": "paper_id",
+      "key": "curated:7cfe39b3bc63f5b55f51",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;benchmark"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:6976641cbfe602a7e617",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset;benchmark"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:6976641cbfe602a7e617",
+      "field": "research_types_review_reason",
+      "before": "",
+      "after": "B4-03 R110: R1/R2: MRI-Forensics is independently constructed and documented with reusable generator/split and detector evaluation protocols, beyond an experimental pool. Evidence and limitations retained in B3-03/per_paper/R110.json."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:6976641cbfe602a7e617",
+      "field": "research_types_evidence_tier",
+      "before": "reused_audit+abstract",
+      "after": "primary_paper"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:6976641cbfe602a7e617",
+      "field": "research_types_evidence_source",
+      "before": "manual",
+      "after": "https://openaccess.thecvf.com/content/WACV2026W/SAFE-2026/papers/Mahara_Forensic_Detection_of_Generated_MRI_Imagery_Using_Autoregressive_Modeling_and_WACVW_2026_paper.pdf; B3-03 per_paper/R110.json sha256:247059a94b94b3186670ef50ec38cf9117c4de2867a9ca2bd681c8cfe334f5e8"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:6976641cbfe602a7e617",
+      "field": "research_types_evidence_excerpt",
+      "before": "With this assertion, we develop a new forensic detection framework that combines Autoregressive Image Models and Discrete Wavelet Transform (AIM-DWT) analysis that reliably detects AI-generated manipulations.",
+      "after": "Construction and evaluation: PDF pp3-8, Tables1-3. Prostate Table2 is fake-only; Table3 separately evaluates real brain images. Patient-level independence, clinical validity, release and reported performance are not independently reproduced."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:6976641cbfe602a7e617",
+      "field": "audited_at",
+      "before": "2026-09-04",
+      "after": "2026-11-01"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:a570863c3a6ac227b56c",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset;benchmark"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:a570863c3a6ac227b56c",
+      "field": "research_types_review_reason",
+      "before": "",
+      "after": "B4-03 R171: R1/R2: CommGen15 independently collects and standardizes commercial-platform outputs and defines a reusable external-training image-level evaluation resource. Evidence and limitations retained in B3-03/per_paper/R171.json."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:a570863c3a6ac227b56c",
+      "field": "research_types_evidence_tier",
+      "before": "reused_audit+abstract",
+      "after": "primary_paper"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:a570863c3a6ac227b56c",
+      "field": "research_types_evidence_source",
+      "before": "openalex",
+      "after": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/zhou26h/zhou26h.pdf; B3-03 per_paper/R171.json sha256:d4015cec12b8ba98489196535741308e7e0918e6506a0fb171df328fcc06cd6e"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:a570863c3a6ac227b56c",
+      "field": "research_types_evidence_excerpt",
+      "before": "To address this challenge, we propose the Peak-Guided Calibration (PGC) framework.",
+      "after": "Table1, section3, section5.1, AppendixC and Table10: 19,472 native images and 13,922 video-derived frames; 33,394 generated plus 33,394 COCO real. Nine static-image and six frame subsets remain distinct; frame correlation and platform/version limitations remain. Acc/AP evaluation does not establish independently reproduced performance."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:a570863c3a6ac227b56c",
+      "field": "audited_at",
+      "before": "2026-09-04",
+      "after": "2026-11-01"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset;benchmark"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "field": "research_types_review_reason",
+      "before": "",
+      "after": "B4-03 R256: R1/R2: CSAIID is a separately constructed cross-semantic resource with defined categories, real/fake sampling, generators and reusable external-training evaluation protocol. Evidence and limitations retained in B3-03/per_paper/R256.json."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "field": "research_types_evidence_tier",
+      "before": "reused_audit+abstract",
+      "after": "primary_paper"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "field": "research_types_evidence_source",
+      "before": "openalex",
+      "after": "https://openaccess.thecvf.com/content/ICCV2025W/APAI/papers/Cai_Adaptive_Test-Time_Semantic_Debiasing_for_AI-Generated_Image_Detection_ICCVW_2025_paper.pdf; B3-03 per_paper/R256.json sha256:20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "field": "research_types_evidence_excerpt",
+      "before": "We propose Adaptive Test-Time Semantic Debiasing (ATTSD), a zero-shot approach that utilizes the visual-semantic space of large pretrained vision-language models to dynamically align feature representations during testing-without requiring additional training data or annotations.",
+      "after": "Section4 and section5, Table1: six categories with 1,000 real and 1,000 fake each (12,000 total), COCO/PartiPrompts and SDv2/LDM/LCM. A global 1:1:1 balance is arithmetically possible; exact per-category allocation is unspecified, not disproved. Changes in training regimes do not isolate semantic causality; results are not independently reproduced."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:c6bfe8f5199d1d8beb29",
+      "field": "audited_at",
+      "before": "2026-09-04",
+      "after": "2026-11-01"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;benchmark"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "field": "research_types_review_reason",
+      "before": "",
+      "after": "B4-03 R275: R2 only: GenImage++ is an independently specified reusable test benchmark with new generator/prompt strata and evaluation protocol, not merely a large result table. Evidence and limitations retained in B3-03/per_paper/R275.json."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "field": "research_types_evidence_tier",
+      "before": "reused_audit+abstract",
+      "after": "primary_paper"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "field": "research_types_evidence_source",
+      "before": "manual",
+      "after": "https://papers.neurips.cc/paper_files/paper/2025/file/2c2be72635379ec8600eea13df4743e3-Paper-Conference.pdf; B3-03 per_paper/R275.json sha256:e38e0fab7e38252080ae6ab1640bdcc94ddaf846be53ac2799bc311730b02e29"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "field": "research_types_evidence_excerpt",
+      "before": "It also introduces the GenImage++ evaluation benchmark and reports improved cross-generator performance without redesigning the detector network.",
+      "after": "Contributions, section5, section6 and AppendixC.2-C.4 pp19-22 define nine strata (138,900 from rounded counts). Benchmark is generated-only with no matched reals: Table3 measures positive-class recognition, not balanced real/fake accuracy or specificity. R1 dataset label is not added; reported performance is not independently reproduced."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "field": "audited_at",
+      "before": "2026-09-04",
+      "after": "2026-11-01"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "doi:10.1109/tmm.2023.3313503",
+      "field": "research_types",
+      "before": "method",
+      "after": "method;dataset"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "doi:10.1109/tmm.2023.3313503",
+      "field": "research_types_review_reason",
+      "before": "",
+      "after": "B4-03 R564: R1 only: DF3 is an independently constructed reusable fake-face resource with documented base generators and post-processing, beyond method-training usage. Evidence and limitations retained in B3-03/per_paper/R564.json."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "doi:10.1109/tmm.2023.3313503",
+      "field": "research_types_evidence_tier",
+      "before": "abstract",
+      "after": "primary_paper"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "doi:10.1109/tmm.2023.3313503",
+      "field": "research_types_evidence_source",
+      "before": "OpenAlex local raw cache",
+      "after": "https://arxiv.org/pdf/2211.08615v7; B3-03 per_paper/R564.json sha256:d891a5362525d23b6f8c2b44bf52263df471fa37f693d763b6338f1126eb3742"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "doi:10.1109/tmm.2023.3313503",
+      "field": "research_types_evidence_excerpt",
+      "before": "To address this issue, we propose a Global and Local Feature Fusion (GLFF) framework to learn rich and discriminative representations by combining multi-scale global features from the whole image with refined local features from informative patches for AI-synthesized image detection.",
+      "after": "Contribution list, sectionIV and TableI pp6-7: 6,160 base fakes; 46,476 tabulated derivatives versus approximately 46,400 in prose; six protocols include unprocessed originals. Fake-only DF3 and 1,000 separate FFHQ real controls remain distinct. arXiv v7 author version is not verified publisher-final equivalence. No benchmark or task label is added; release availability is unverified."
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "key_field": "taxonomy_id",
+      "key": "doi:10.1109/tmm.2023.3313503",
+      "field": "audited_at",
+      "before": "2026-09-04",
+      "after": "2026-11-01"
+    }
+  ],
+  "recovered_QC_findings": [
+    {
+      "finding": "Initial R231 expected_after_state.paper retained workshops while P231 changed the shared paper to Main.",
+      "resolution": "Corrected R231 complete final snapshot now contains Main and explicitly records P231 other_action_effects. R231 accepted_changes remains null; research-type hold remains unresolved."
+    },
+    {
+      "finding": "Initial candidate omitted direct independent final QC and R256 addendum pins and explicit excerpt role.",
+      "resolution": "Latest candidate is required to pin both QC inputs and identify excerpts as reviewer summaries; see checks."
+    }
+  ],
+  "limits": [
+    "Approval is bound to these exact manifest/script/prepared-file fingerprints; any modification needs recheck.",
+    "Contribution labels do not certify numerical performance, causality, clinical validity, current resource availability, licensing or runtime reproducibility.",
+    "P231 Main is normalized regular-paper placement within standalone MAD; no official literal Main label or ICMR-main placement is asserted.",
+    "No repository changes, exporter runs, new retrieval or primary scientific review were performed by this reviewer."
+  ]
+}

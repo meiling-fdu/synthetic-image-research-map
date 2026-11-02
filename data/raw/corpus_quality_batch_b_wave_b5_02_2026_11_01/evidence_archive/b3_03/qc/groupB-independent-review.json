@@ -1,0 +1,308 @@
+{
+  "task": "B3-03 independent scientific QC GroupB",
+  "reviewer": "root, independent of compact recovery reviewer who wrote the four source-review records",
+  "reviewed_utc": "2026-11-01T00:57:44.913428+00:00",
+  "status": "PASS_WITH_CAVEAT_REFINEMENT",
+  "passed": 43,
+  "failed": 0,
+  "input_record_sha256": {
+    "R161": "728f2906344be60ba93f025d7a6ce8390bd134aeec6fb9faac5cc5dd6fedc9ae",
+    "R171": "d4015cec12b8ba98489196535741308e7e0918e6506a0fb171df328fcc06cd6e",
+    "R256": "20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6",
+    "R564": "d891a5362525d23b6f8c2b44bf52263df471fa37f693d763b6338f1126eb3742"
+  },
+  "verdicts": {
+    "R161": {
+      "original_reviewer_outcome": "EVIDENCE_INSUFFICIENT",
+      "independent_QC_outcome": "EVIDENCE_INSUFFICIENT",
+      "agreement": true,
+      "basis": "Exact landing identity verified; first PDF RemoteDisconnected, alternate403. Abstract resource claim does not establish R1/R2 methods/protocol. Access failure is not negative scientific evidence.",
+      "contribution_confidence": "INSUFFICIENT",
+      "reproducibility_confidence": "NOT_ASSESSED_NO_FULL_TEXT"
+    },
+    "R171": {
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_QC_outcome": "SUPPORTED_ADDITION",
+      "agreement": true,
+      "proposed_research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "R1": "Named independently contributed CommGen15 construction/curation, source/composition details and intended provision. Native static-image contribution is substantive independently of extracted frames; all evaluation units are images, not a temporal video detection task.",
+      "R2": "Reusable balanced image-level evaluation resource with common preprocessing, external-training settings and Acc/AP protocol. Not inferred from platform count or table scale.",
+      "contribution_confidence": "HIGH_WITH_COMPOSITION_AND_PROVENANCE_LIMITS",
+      "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; dynamic galleries/platform versions, frame dependence and actual release/license not independently verified"
+    },
+    "R256": {
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_QC_outcome": "SUPPORTED_ADDITION",
+      "agreement": true,
+      "proposed_research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "R1": "Explicit separate CSAIID construction/semantic curation contribution beyond model training data.",
+      "R2": "Named intended cross-semantic evaluation resource with fixed categories and external-training comparisons; not merely extensive experiments.",
+      "contribution_confidence": "HIGH_WITH_SPECIFICATION_LIMITS",
+      "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; exact per-generator category counts/seeds/manifest unverified",
+      "caveat_refinement": "Original record correctly notes1000 is not divisible by3, but the paper says1:1:1 across subsets. Global6000fakes can be2000pergenerator. No proven global ratio contradiction; exact per-category allocation remains unspecified. No classification disagreement."
+    },
+    "R564": {
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_QC_outcome": "SUPPORTED_ADDITION",
+      "agreement": true,
+      "proposed_research_types": [
+        "method",
+        "dataset"
+      ],
+      "R1": "Separate DF3 constructed/curated resource and future detector robustness use; not merely a one-off GLFF experiment pool.",
+      "R2": "NOT_REVIEWED; benchmark addition outside assigned action.",
+      "contribution_confidence": "HIGH_WITH_AUTHOR_VERSION_LIMITS",
+      "reproducibility_confidence": "LIMITED_NOT_REPRODUCED; future release claim, processed derivatives and separate negative controls retained; publisher-final equality unverified"
+    }
+  },
+  "classification_disagreements": [],
+  "interpretation_refinements": [
+    {
+      "review_id": "R256",
+      "type": "INDEPENDENT_CAVEAT_INTERPRETATION_REFINEMENT_NOT_OUTCOME_CHANGE",
+      "original_record_preserved": true,
+      "original_record_sha256": "20a487ea9f1d96310ef63553ecd9a374247b2603da1d394834c33393cd78bae6",
+      "original_observation": "1000synthetic/category not divisible by3; exact per-generator integer category counts are absent.",
+      "independent_refinement": "Original record correctly notes1000 is not divisible by3, but the paper says1:1:1 across subsets. Global6000fakes can be2000pergenerator. No proven global ratio contradiction; exact per-category allocation remains unspecified. No classification disagreement.",
+      "source": {
+        "artifact": "evidence/groupB/R256-primary.pdf",
+        "sha256": "3bd336c171cdb0c201d4fa9da63c17c406f46fa65b70436d30c50390d41b49f3",
+        "locator": "PDFp5,section4 final paragraph"
+      },
+      "required_report_wording": "Generator balance may apply globally across subsets; do not claim an established contradiction. Exact per-category allocation is unspecified.",
+      "authoritative_records_changed": 0,
+      "provisional_disposition_changed": false
+    }
+  ],
+  "blocking_findings": [],
+  "primary_checks": "Opened actual PDF pages with pypdf and inspected existing source renderings; no new retrievals. Identity page1 title/authors and source hashes checked; individual basis/locators preserved above.",
+  "checks": [
+    {
+      "name": "R161 source exists evidence/groupB/R161-official-landing.html",
+      "passed": true,
+      "locator": "evidence/groupB/R161-official-landing.html"
+    },
+    {
+      "name": "R161 source SHA evidence/groupB/R161-official-landing.html",
+      "passed": true,
+      "locator": "evidence/groupB/R161-official-landing.html"
+    },
+    {
+      "name": "R161 source exists evidence/groupB/primary_retrievals.json",
+      "passed": true,
+      "locator": "evidence/groupB/primary_retrievals.json"
+    },
+    {
+      "name": "R161 source SHA evidence/groupB/primary_retrievals.json",
+      "passed": true,
+      "locator": "evidence/groupB/primary_retrievals.json"
+    },
+    {
+      "name": "R161 source exists evidence/groupB/R161-alternate-retrieval.json",
+      "passed": true,
+      "locator": "evidence/groupB/R161-alternate-retrieval.json"
+    },
+    {
+      "name": "R161 source SHA evidence/groupB/R161-alternate-retrieval.json",
+      "passed": true,
+      "locator": "evidence/groupB/R161-alternate-retrieval.json"
+    },
+    {
+      "name": "R161 task and existing method preserved",
+      "passed": true,
+      "locator": "per_paper/R161.json"
+    },
+    {
+      "name": "R161 remains evidence-only",
+      "passed": true,
+      "locator": "per_paper/R161.json"
+    },
+    {
+      "name": "R171 source exists evidence/groupB/R171-primary.pdf",
+      "passed": true,
+      "locator": "evidence/groupB/R171-primary.pdf"
+    },
+    {
+      "name": "R171 source SHA evidence/groupB/R171-primary.pdf",
+      "passed": true,
+      "locator": "evidence/groupB/R171-primary.pdf"
+    },
+    {
+      "name": "R171 source exists evidence/groupB/R171-local-pmlr.html",
+      "passed": true,
+      "locator": "evidence/groupB/R171-local-pmlr.html"
+    },
+    {
+      "name": "R171 source SHA evidence/groupB/R171-local-pmlr.html",
+      "passed": true,
+      "locator": "evidence/groupB/R171-local-pmlr.html"
+    },
+    {
+      "name": "R171 task and existing method preserved",
+      "passed": true,
+      "locator": "per_paper/R171.json"
+    },
+    {
+      "name": "R171 remains evidence-only",
+      "passed": true,
+      "locator": "per_paper/R171.json"
+    },
+    {
+      "name": "R256 source exists evidence/groupB/R256-primary.pdf",
+      "passed": true,
+      "locator": "evidence/groupB/R256-primary.pdf"
+    },
+    {
+      "name": "R256 source SHA evidence/groupB/R256-primary.pdf",
+      "passed": true,
+      "locator": "evidence/groupB/R256-primary.pdf"
+    },
+    {
+      "name": "R256 task and existing method preserved",
+      "passed": true,
+      "locator": "per_paper/R256.json"
+    },
+    {
+      "name": "R256 remains evidence-only",
+      "passed": true,
+      "locator": "per_paper/R256.json"
+    },
+    {
+      "name": "R564 source exists evidence/groupB/R564-primary.pdf",
+      "passed": true,
+      "locator": "evidence/groupB/R564-primary.pdf"
+    },
+    {
+      "name": "R564 source SHA evidence/groupB/R564-primary.pdf",
+      "passed": true,
+      "locator": "evidence/groupB/R564-primary.pdf"
+    },
+    {
+      "name": "R564 task and existing method preserved",
+      "passed": true,
+      "locator": "per_paper/R564.json"
+    },
+    {
+      "name": "R564 remains evidence-only",
+      "passed": true,
+      "locator": "per_paper/R564.json"
+    },
+    {
+      "name": "R161 retained evidence hold",
+      "passed": true,
+      "locator": "Official identity landing plus two failed PDF request receipts"
+    },
+    {
+      "name": "R171 exact scoped proposal",
+      "passed": true,
+      "locator": "per_paper/R171.json; separate R1/R2 basis below"
+    },
+    {
+      "name": "R256 exact scoped proposal",
+      "passed": true,
+      "locator": "per_paper/R256.json; separate R1/R2 basis below"
+    },
+    {
+      "name": "R564 R1-only proposal",
+      "passed": true,
+      "locator": "PDFp2 contribution, p6 TableI/sectionIV, p8 intended future use, p11 future-tense release"
+    },
+    {
+      "name": "R171 static/frame counts and real controls",
+      "passed": true,
+      "locator": "PDFp3 Table1 visually checked; p13 AppendixC realCOCO33394/total66788"
+    },
+    {
+      "name": "R171 actual independent image resource",
+      "passed": true,
+      "locator": "PDFp2 explicit CommGen15 contribution; p3 collection/crop320PNG; image-level classification distinct from video temporal inference"
+    },
+    {
+      "name": "R171 R2 reusable protocol beyond tables",
+      "passed": true,
+      "locator": "PDFp5 fixed0.5 Acc/AP/external training; pp6,17 Tables3/12; p9 research-only intended release; not proof of operational availability"
+    },
+    {
+      "name": "R171 numerical performance difference",
+      "passed": true,
+      "locator": "PDFp17 Table12; percentage points, not relative percent or independently verified pooled accuracy"
+    },
+    {
+      "name": "R256 R1 independent resource construction",
+      "passed": true,
+      "locator": "PDFp2 contribution(3); p5 section4 COCO/PartiPrompts,SDv2/LDM/LCM,semantic curation; actual PDFp5 visually checked"
+    },
+    {
+      "name": "R256 R2 intended evaluation resource",
+      "passed": true,
+      "locator": "PDFpp5–6 section5.2 and Table1 six semantic categories,external-training-source groups,accuracy comparisons; no invented training split"
+    },
+    {
+      "name": "R256 balanced category total",
+      "passed": true,
+      "locator": "PDFp5 section4"
+    },
+    {
+      "name": "R256 global1:1:1 feasible but per-category counts absent",
+      "passed": true,
+      "locator": "PDFp5 says across subsets; does not unambiguously require exact per-category equality. Corrected interpretation below."
+    },
+    {
+      "name": "R256 training-regime causal caveat",
+      "passed": true,
+      "locator": "PDFp6 Table1 LSUN/ProGAN vs ImageNet/SD1.4 changes both distributions; no isolated semantic causal inference"
+    },
+    {
+      "name": "R564 exact derivative count",
+      "passed": true,
+      "locator": "PDFp6 TableI visually checked; narrative approximately46400 retained"
+    },
+    {
+      "name": "R564 unprocessed count",
+      "passed": true,
+      "locator": "PDFp6 TableI; independent base-image and derivative units separated"
+    },
+    {
+      "name": "R564 resource reuse independent of classifier",
+      "passed": true,
+      "locator": "PDFp2 separate dataset contribution, sectionIVconstruction/curation, p8 Mixed protocol intended for future detectors"
+    },
+    {
+      "name": "R564 no availability or final-version overclaim",
+      "passed": true,
+      "locator": "ActualPDFp11 future-tense code/dataset-details release; requested arxiv2211.08615v7 captured, not inspected IEEEfinal"
+    },
+    {
+      "name": "R564 generated-only resource separated from controls",
+      "passed": true,
+      "locator": "ActualPDFp8 explicitly fake-only DF3 plus separately sampled1000FFHQ negatives, not46476independent generated bases"
+    },
+    {
+      "name": "Visual evidence exists R171-p03.png",
+      "passed": true,
+      "locator": "Viewed by independent QC root during resumed turn"
+    },
+    {
+      "name": "Visual evidence exists R256-p05.png",
+      "passed": true,
+      "locator": "Viewed by independent QC root during resumed turn"
+    },
+    {
+      "name": "Visual evidence exists R564-p06.png",
+      "passed": true,
+      "locator": "Viewed by independent QC root during resumed turn"
+    }
+  ],
+  "repository_writes": 0,
+  "new_retrievals": 0,
+  "scientific_experiments_run": 0,
+  "full_suite_or_exports_run": 0
+}

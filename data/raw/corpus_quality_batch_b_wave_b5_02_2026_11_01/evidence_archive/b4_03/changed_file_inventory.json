@@ -1,0 +1,42 @@
+{
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "files": [
+    {
+      "path": "data/curated/papers.csv",
+      "before_sha256": "0fd82c4b242d86b6fe4dbf0c8dcd98cccc6a6930c0bd2e93b416a49a1bf0c3e4",
+      "after_sha256": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+      "approved_cell_changes": 5,
+      "appended_decisions": 0
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "before_sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "after_sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "approved_cell_changes": 30,
+      "appended_decisions": 0
+    },
+    {
+      "path": "data/curated/review_decisions.csv",
+      "before_sha256": "3430814d49d8e73a5836c71fb04b5acb3e95de3dac56bb795ca62dcf734bfda5",
+      "after_sha256": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea",
+      "approved_cell_changes": 0,
+      "appended_decisions": 11
+    }
+  ],
+  "total_changed_cells": 35,
+  "new_decision_rows": 11,
+  "git": {
+    "head": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+    "branch": "DETACHED",
+    "status_short": " M data/curated/paper_taxonomy.csv\n M data/curated/papers.csv\n M data/curated/review_decisions.csv\n",
+    "staged_paths": [],
+    "untracked_files": 0,
+    "ignored_files": 0,
+    "diff_stat": " data/curated/paper_taxonomy.csv   | 10 +++++-----\n data/curated/papers.csv           | 10 +++++-----\n data/curated/review_decisions.csv | 11 +++++++++++\n 3 files changed, 21 insertions(+), 10 deletions(-)\n",
+    "source_after_sha256": {
+      "data/curated/papers.csv": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+      "data/curated/paper_taxonomy.csv": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "data/curated/review_decisions.csv": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea"
+    }
+  }
+}

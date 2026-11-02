@@ -1,0 +1,22 @@
+........................................................................ [ 17%]
+........................................................................ [ 35%]
+........................................................................ [ 52%]
+........................................................................ [ 70%]
+........................................................................ [ 88%]
+...........................F....................                         [100%]
+=================================== FAILURES ===================================
+__ test_public_projection_updates_exactly_six_papers_and_fourteen_dependents ___
+tests/test_corpus_quality_batch_b_wave_b5_02.py:339: in test_public_projection_updates_exactly_six_papers_and_fourteen_dependents
+    assert_public_transaction(papers,markers)
+tests/test_corpus_quality_batch_b_wave_b5_02.py:333: in assert_public_transaction
+    assert row==expected_public_projection(old_maps[mid],rid,marker=True),(mid,'unapproved map projection')
+E   AssertionError: ('curated-map:892ef7f2c7b199932aef', 'unapproved map projection')
+E   assert {'id': 'curat...e': True, ...} == {'id': 'curat...e': True, ...}
+E     
+E     Omitting 78 identical items, use -vv to show
+E     Right contains 1 more item:
+E     {'ambiguity_status': 'unresolved'}
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_corpus_quality_batch_b_wave_b5_02.py::test_public_projection_updates_exactly_six_papers_and_fourteen_dependents
+1 failed, 407 passed in 57.63s

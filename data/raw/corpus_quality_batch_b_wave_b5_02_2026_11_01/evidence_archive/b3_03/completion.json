@@ -1,0 +1,89 @@
+{
+  "task": "Batch B Wave B3-03 final independent QC and evidence-only handoff",
+  "status": "EVIDENCE_REVIEW_COMPLETE — READY_FOR_SEPARATELY_AUTHORIZED_B4-03",
+  "completed_utc": "2026-11-01T01:07:48.515587+00:00",
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "worktree": "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map",
+  "output": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31",
+  "papers": 10,
+  "actions": 11,
+  "outcomes": {
+    "SUPPORTED_ADDITION": 6,
+    "EVIDENCE_INSUFFICIENT": 4,
+    "IDENTITY_BLOCKED": 1
+  },
+  "all_selected_actions_remain_formally_open": true,
+  "formal_decisions": 127,
+  "historical_unresolved": 120,
+  "active_public_unresolved": 118,
+  "corpus_counts": {
+    "public_papers": 674,
+    "formal_papers": 557,
+    "mapped_papers": 613,
+    "relationship_rows": 1410
+  },
+  "unique_pairs": 1410,
+  "research_type_counts": {
+    "method": 578,
+    "analysis_study": 86,
+    "survey": 21,
+    "dataset": 138,
+    "benchmark": 97
+  },
+  "task_counts": {
+    "detection": 621,
+    "source_attribution": 84,
+    "localization": 45
+  },
+  "checks": {
+    "independent_document_QC": {
+      "passed": 539,
+      "failed": 0,
+      "pinned_inputs": 68
+    },
+    "evidence_identity_provenance": {
+      "passed": 154,
+      "failed": 0
+    },
+    "preservation": {
+      "passed": 81,
+      "failed": 0,
+      "individual_expected_hash_comparisons": 33859
+    }
+  },
+  "flags": {
+    "AUTHORITATIVE_CORPUS_CHANGED": 0,
+    "FROZEN_NEURIPS_CHANGED": 0,
+    "PREEXISTING_LOCAL_FILES_CHANGED": 0
+  },
+  "independent_caveat_refinement": "R256 global1:1:1 possible; per-category generator allocation unspecified. Original scientific reviewer record and authenticated evidence preserved; no outcome change.",
+  "P231": "Qualified normalization of regular MAD paper-session role to repository Main only, requiring future explicit maintainer acceptance; no literal officialMain label or parentICMR publication asserted.",
+  "B5_receipt": "PUBLISHED — CI ACCEPTED; existing archival receipt preserved without new CI/export/commit/publication",
+  "B4_archives_and_protected_inventories": "PASS; see pinned preservation receipt",
+  "retrievals_in_final_resume": 0,
+  "formal_decisions_appended": 0,
+  "exports_run": 0,
+  "staged_files": 0,
+  "commits_created": 0,
+  "pushes": 0,
+  "B4_started": false,
+  "final_git_state": {
+    "head": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+    "worktree": "/Users/meilinger/.codex/worktrees/batch-b-b3-03/synthetic-image-research-map",
+    "status_short_branch_exact": "## HEAD (no branch)\n",
+    "status_short_exact": "",
+    "staged_name_status_exact": "",
+    "untracked_files": 0,
+    "ignored_files": 0,
+    "tracked_worktree_clean": true,
+    "index_empty": true,
+    "relationships": 1410,
+    "unique_paper_institution_pairs": 1410,
+    "pair_schema": "exported record id plus institution_id; id is the stable public identity for every row, whereas paper_id is absent on234 legacy candidate rows",
+    "checked_utc": "2026-11-01T01:07:48.436626+00:00"
+  },
+  "effort_observability_note": "Earlier effort ledger is a timestamped capture of the prior review interval, not a claim of exclusive analyst time or continuous activity through this resumed completion. Overall timeline includes a usage-limit interruption; no person-time was fabricated.",
+  "archive_file_count": 123,
+  "checksums_sha256": "870f23c2058853a62b8fdaa40d88cab0bbcaded168b9fc2a475218f9bbfc621a",
+  "NeurIPS_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+}

@@ -1,0 +1,211 @@
+{
+  "review_id": "R275",
+  "paper_id": "curated:7cfe39b3bc63f5b55f51",
+  "title": "Breaking Latent Prior Bias in Detectors for Generalizable AIGC Image Detection",
+  "doi": "10.52202/085713-1030",
+  "arxiv_id": "2506.00874",
+  "authors": [
+    "Yue Zhou",
+    "Xinan He",
+    "Kaiqing Lin",
+    "Bin Fan",
+    "Feng Ding",
+    "Bin Li"
+  ],
+  "original_review": {
+    "review_id": "R275",
+    "paper_id": "curated:7cfe39b3bc63f5b55f51",
+    "title": "Breaking Latent Prior Bias in Detectors for Generalizable AIGC Image Detection",
+    "dimension": "research_types",
+    "current_labels": [
+      "method"
+    ],
+    "proposed_labels": [
+      "method",
+      "benchmark"
+    ],
+    "status": "LIKELY_FIX",
+    "confidence": "medium",
+    "reason": "The prior paper-methodology evidence explicitly identifies the GenImage++ evaluation benchmark.",
+    "evidence_url": "https://doi.org/10.52202/085713-1030",
+    "evidence_basis": "reused_audit+abstract",
+    "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:7cfe39b3bc63f5b55f51",
+    "evidence_excerpt": "This work identifies latent-prior bias as one reason AIGC detectors fail to generalize: detectors can learn shortcuts tied to patterns stemming from the initial",
+    "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The prior paper-methodology evidence explicitly identifies the GenImage++ evaluation benchmark.",
+    "batch": "B",
+    "current_tasks": [
+      "detection"
+    ],
+    "proposed_tasks": [
+      "detection"
+    ],
+    "current_research_types": [
+      "method"
+    ],
+    "proposed_research_types": [
+      "method",
+      "benchmark"
+    ]
+  },
+  "governing_policy_ids": [
+    "R2"
+  ],
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "current_status": "UNRESOLVED",
+  "local_evidence_refs": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R275",
+      "finding": "The prior paper-methodology evidence explicitly identifies the GenImage++ evaluation benchmark. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R275",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "paper_id:curated:7cfe39b3bc63f5b55f51",
+      "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R2",
+      "finding": "Assign benchmark only when the paper contributes a reusable evaluation benchmark, challenge, protocol, systematic comparative framework, or benchmark resource intended to evaluate methods. Large experimental tables or evaluation across many generators alone are insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+    },
+    {
+      "path": "docs/systematic_literature_completeness_audit_2026_09.md",
+      "locator": "GenImage++ lineage row",
+      "finding": "Associated paper represented and benchmark expansion recognized for corpus coverage, with existing taxonomy retained.",
+      "sha256": "3f77e796a28b58fc9747bc184c0af6025aeae586d662fca99c19253db5a857ee"
+    },
+    {
+      "path": "docs/targeted_literature_coverage_audit_2026-09-01.md",
+      "locator": "row13",
+      "finding": "Accepted-PDF/arXiv Bin Fan versus metadata Bing Fan discrepancy preserved; bibliographic/method identity reviewed, bounded R2 question not closed.",
+      "sha256": "9a5595b23800d6a70f9e4172175533bf8bc7b3fc217ec03ba5a675327887877d"
+    }
+  ],
+  "reviewer": "root",
+  "reviewed_utc": "2026-10-31T13:00:13.913124+00:00",
+  "maintainer_acceptance": "PENDING_NOT_FORMAL_DECISION",
+  "authoritative_data_changed": false,
+  "source_version": "Official NeurIPS2025 proceedings PDF,31pages; DOI-matched official landing directly links this exact PDF",
+  "sources": [
+    {
+      "kind": "official_primary_manuscript",
+      "url": "https://papers.neurips.cc/paper_files/paper/2025/file/2c2be72635379ec8600eea13df4743e3-Paper-Conference.pdf",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-neurips2025.pdf",
+      "sha256": "ebdcea81b1f588b74669e52261ab903ed70cb1b7f1a30f637d82d843e7071405"
+    },
+    {
+      "kind": "official_identity_landing",
+      "url": "https://papers.neurips.cc/paper_files/paper/2025/hash/2c2be72635379ec8600eea13df4743e3-Abstract-Conference.html",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-official-landing.html",
+      "sha256": "1d4427cc3b8e33ce2f7403f7c9016cf835ce262d5d9593c020aba6d91f980b1d"
+    }
+  ],
+  "identity_verification": {
+    "title": "Exact title matches",
+    "authors": "PDF matches canonical six authors including Bin Fan. Official HTML/Crossref spelling Bing Fan is a preserved pre-existing discrepancy, not a silent correction.",
+    "doi": "Official landing DOI10.52202/085713-1030 links exact manuscript",
+    "arxiv": "Prior validated2506.00874 linkage retained; no second manuscript retrieved"
+  },
+  "evidence": [
+    {
+      "locator": "Introduction contributions,p2; §5 pp5–6",
+      "claim": "GenImage++ is explicitly introduced as a new test-only benchmark for future detector evaluation, extending generators and prompt/style conditions."
+    },
+    {
+      "locator": "§6.1 p6; Table3/§6.4 p8",
+      "claim": "Common SDv1.4 training paradigm; nine generator/prompt strata compare13 external detector variants with OMAT CLIP+LoRA R4 using reported per-subset Accuracy%."
+    },
+    {
+      "locator": "AppendixC.2–C.3 pp19–21; Table7 p20",
+      "claim": "Specified generators and prompt engineering; subset sizes6k,18.3k,30k,6k,18.3k,18.3k,6k,30k,6k (138,900 generated images total). Construction and prompts support reuse independently of method performance."
+    },
+    {
+      "locator": "AppendixC.4 pp21–22",
+      "claim": "No matched real images in this test-only resource. Its results do not measure a balanced real/fake test or specificity."
+    }
+  ],
+  "quantitative_evidence": {
+    "Table3_avg_percent": {
+      "OMAT_CLIP_LoRA_R4": 96.78,
+      "DRCT_UniFD_SDv1": 69.43,
+      "DRCT_ConvB_SDv1": 73.54,
+      "RINE": 88.4
+    },
+    "metric_limitation": "Source calls these Accuracy%; because GenImage++ is generated-only, interpret as generated-class detection performance, not balanced authenticity accuracy/AUC. Nine-stratum mean differs from image-weighted scoring.",
+    "Table7_generated_total_derived": 138900,
+    "OMAT_Table3_nine_values": [
+      96.53,
+      92.55,
+      97.6,
+      97.67,
+      100.0,
+      99.17,
+      98.27,
+      90.38,
+      98.82
+    ]
+  },
+  "visual_checks": [
+    {
+      "page": 8,
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-table3-08.png",
+      "verified": "Table3 headers, values and nine-subset average inspected visually"
+    },
+    {
+      "page": 20,
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-03-2026-10-31/evidence/root/R275-table7-20.png",
+      "verified": "Table7 subset-size row and prompt construction inspected visually"
+    }
+  ],
+  "outcome": "SUPPORTED_ADDITION",
+  "proposed_research_types": [
+    "method",
+    "benchmark"
+  ],
+  "proposed_tasks": [
+    "detection"
+  ],
+  "proposed_changes": [
+    {
+      "field": "research_types",
+      "before": [
+        "method"
+      ],
+      "after": [
+        "method",
+        "benchmark"
+      ],
+      "policy": "R2"
+    }
+  ],
+  "scientifically_sufficient": true,
+  "confidence": "high for R2 contribution classification; no empirical reproduction",
+  "rationale": "Named resource, independent construction specification, explicit future-evaluation purpose and fixed comparative protocol satisfy R2; size/performance alone is not the basis. R1 dataset classification is outside this assigned action.",
+  "limitations": [
+    "138,900 is arithmetic from rounded Table7 subset counts; no dataset files downloaded or sample counts independently audited.",
+    "No matched real negatives; reported source performance and latent-prior causal explanation are not independently reproduced or endorsed.",
+    "The paper uses OMAT; earlier planning shorthand OAT is not used as a distinct method identity.",
+    "Bin/Bing Fan bibliographic discrepancy remains unchanged.",
+    "Code/data runtime, licensing and accessibility are separate from taxonomy support; HF dataset not downloaded."
+  ],
+  "retrieval_cost": {
+    "new_full_manuscripts_obtained": 1,
+    "new_primary_metadata_pages": 1,
+    "scientific_experiments_run": 0
+  },
+  "analyst_effort_minutes_estimate": 35
+}

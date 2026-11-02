@@ -1,6 +1,7 @@
-"""Live B5-01 integration: both immutable B4 histories and exact public effects.
+"""B5-01 historical transaction and surviving live scoped acceptances.
 
-These current-state guards complement the historical B1 transaction receipts.
+Exact transaction deltas authenticate its immutable publication; current
+URL/venue/hold/evidence assertions stay live and B5-02 guards its evolution.
 No exporter, network request, repository write or HTTP fixture is invoked.
 """
 from collections import Counter
@@ -15,6 +16,8 @@ from scripts.curated_export import PaperIdentityCache, PaperIdentityIndex
 from scripts.paper_links import resolve_public_links
 from scripts.validate_corpus_quality_audit import decision_rows, load_context, load_queues
 from tests.corpus_quality_test_helpers import csv_records, published_bytes, published_context
+
+from tests.batch_b_historical_endpoints import b5_01_bytes, b5_01_context
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = '7fc8ceae702324628335944cf4b545a3733fdc56'
@@ -134,6 +137,19 @@ def map_paper_ids():
     return result
 
 
+
+def historical_map_paper_ids():
+    """Preferred public IDs at the authenticated B5-01 transaction endpoint."""
+    index = PaperIdentityIndex(csv_records(b5_01_bytes('data/curated/paper_taxonomy.csv')), PaperIdentityCache())
+    canonical = b5_01_context()['taxonomy_to_public_id']
+    result = {}
+    for row in json.loads(b5_01_bytes(PUBLIC[1]))['records']:
+        found = index.matches(row)
+        assert len(found) == 1
+        result[row['id']] = canonical[found[0]['taxonomy_id']]
+    return result
+
+
 def test_integration_reuses_two_exact_immutable_adjudications_without_identifier_remapping():
     assert packet()['baseline_commit'] == BASE
     assert set(cases()) == set(URL_ACTIONS + VENUE_ACTIONS + HELD)
@@ -150,7 +166,7 @@ def test_integration_reuses_two_exact_immutable_adjudications_without_identifier
 
 def test_all_127_formal_rows_preserve_the_original_103_bytes_and_both_append_histories():
     baseline = published_bytes(BASE, DECISIONS)
-    current = (ROOT / DECISIONS).read_bytes()
+    current = b5_01_bytes(DECISIONS)
     before, after = csv_records(baseline), csv_records(current)
     assert len(before) == 103 and len(after) == 127
     assert current.startswith(baseline) and after[:103] == before
@@ -177,7 +193,7 @@ def test_action_ids_and_per_action_transaction_fingerprints_are_collision_free()
 
 def test_only_eleven_actions_close_and_all_thirteen_new_holds_remain_open():
     old = terminal(csv_records(published_bytes(BASE, DECISIONS)))
-    now = terminal(actual_rows(DECISIONS))
+    now = terminal(csv_records(b5_01_bytes(DECISIONS)))
     assert set(now) - set(old) == set(URL_ACTIONS + VENUE_ACTIONS)
     assert set(HELD).isdisjoint(now)
     for rid, row in cases().items():
@@ -186,9 +202,9 @@ def test_only_eleven_actions_close_and_all_thirteen_new_holds_remain_open():
 
 
 def test_unresolved_accounting_is_derived_from_the_live_original_ledger_and_public_identities():
-    public = live_context()['papers']
+    public = b5_01_context()['papers']
     old = accounting(csv_records(published_bytes(BASE, DECISIONS)), public)
-    now = accounting(actual_rows(DECISIONS), public)
+    now = accounting(csv_records(b5_01_bytes(DECISIONS)), public)
     assert old == packet()['accounting_before']
     assert now == packet()['accounting_after']
     assert old['historical_unresolved_actions'] - now['historical_unresolved_actions'] == 11
@@ -198,7 +214,7 @@ def test_unresolved_accounting_is_derived_from_the_live_original_ledger_and_publ
 
 
 def test_exact_fifteen_paper_cells_change_without_identity_authors_dates_or_taxonomy_edits():
-    old, new = csv_records(published_bytes(BASE, PAPERS)), actual_rows(PAPERS)
+    old, new = csv_records(published_bytes(BASE, PAPERS)), csv_records(b5_01_bytes(PAPERS))
     assert [r['paper_id'] for r in old] == [r['paper_id'] for r in new]
     deltas = [{'paper_id':a['paper_id'], 'field':key, 'before':a[key], 'after':b[key]}
               for a,b in zip(old,new) for key in a if a[key] != b[key]]
@@ -231,7 +247,7 @@ def test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_m
     for path,digest in packet()['source_before_sha256'].items():
         assert sha(published_bytes(BASE,path)) == digest
     for path,digest in packet()['source_after_sha256'].items():
-        assert sha((ROOT/path).read_bytes()) == digest
+        assert sha(b5_01_bytes(path)) == digest
     # A complete current-state byte guard complements the historical B1 tests.
     import subprocess
     paths = subprocess.check_output(['git','--no-optional-locks','ls-tree','-r','--name-only',BASE,'--','data/curated','data/manual'],cwd=ROOT,text=True).splitlines()
@@ -239,7 +255,7 @@ def test_only_four_authoritative_csv_files_have_changed_and_their_fingerprints_m
         # This is an explicitly generated URL report, not a manual override.
         # Its exact eight URL-cell changes are independently checked below.
         if path not in allowed | {GENERATED_MAPPING_REPORT}:
-            assert (ROOT/path).read_bytes() == published_bytes(BASE,path), path
+            assert b5_01_bytes(path) == published_bytes(BASE,path), path
 
 
 def test_all_eight_live_publication_urls_match_the_authorized_paper_identities():
@@ -269,7 +285,7 @@ def test_all_three_live_journal_bindings_match_their_accepted_registry_states():
 
 
 def test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_optional_p001_reason():
-    old,new = published_context(BASE)['papers'],live_context()['papers']
+    old,new = published_context(BASE)['papers'],b5_01_context()['papers']
     assert old.keys() == new.keys()
     actual = {pid:changed_fields(old[pid],new[pid]) for pid in old if old[pid] != new[pid]}
     accepted = {cases()[rid]['paper_id'] for rid in URL_ACTIONS+VENUE_ACTIONS}
@@ -288,18 +304,18 @@ def test_live_publication_changes_are_limited_to_eleven_accepted_papers_and_opti
 
 
 def test_all_public_bibliographic_identities_and_task_type_labels_are_unchanged():
-    old,new = published_context(BASE)['papers'],live_context()['papers']
+    old,new = published_context(BASE)['papers'],b5_01_context()['papers']
     for pid in old:
         for field in ('title','year','authors','doi','arxiv_id','publication_type','tasks','image_scopes','research_types'):
             assert new[pid].get(field) == old[pid].get(field), (pid,field)
-    assert (ROOT/'data/curated/paper_taxonomy.csv').read_bytes() == published_bytes(BASE,'data/curated/paper_taxonomy.csv')
+    assert b5_01_bytes('data/curated/paper_taxonomy.csv') == published_bytes(BASE,'data/curated/paper_taxonomy.csv')
 
 
 def test_all_relationship_identities_pairs_affiliations_and_coordinates_are_preserved():
-    old,new = previous_maps(),public_maps()
+    old,new = previous_maps(),{r['id']:r for r in json.loads(b5_01_bytes(PUBLIC[1]))['records']}
     assert old.keys() == new.keys()
     assert len(new) == 1410
-    assert live_context()['pairs'] == published_context(BASE)['pairs']
+    assert b5_01_context()['pairs'] == published_context(BASE)['pairs']
     for mid in old:
         for field in ('id','institution_id','institution','authors','affiliations','lat','lon','latitude','longitude',
                       'country','country_code','city','region','tasks','image_scopes','research_types'):
@@ -307,18 +323,18 @@ def test_all_relationship_identities_pairs_affiliations_and_coordinates_are_pres
 
 
 def test_all_changed_map_rows_are_exact_url_dependents_with_correct_semantic_links():
-    old,new = previous_maps(),public_maps()
+    old,new = previous_maps(),{r['id']:r for r in json.loads(b5_01_bytes(PUBLIC[1]))['records']}
     actual = {mid:changed_fields(old[mid],new[mid]) for mid in old if old[mid]!=new[mid]}
     assert set(actual) == set(packet()['export_audit']['changed_map_ids'])
     assert {mid:set(fields) for mid,fields in packet()['export_audit']['fields_by_map'].items()} == actual
     expected_papers = {cases()[rid]['paper_id'] for rid in URL_ACTIONS}
-    expected = {mid for mid,pid in map_paper_ids().items() if pid in expected_papers}
+    expected = {mid for mid,pid in historical_map_paper_ids().items() if pid in expected_papers}
     assert set(actual) == expected
     assert len(actual) == 23
     by_paper = {cases()[rid]['paper_id']:cases()[rid]['binding']['accepted_url'] for rid in URL_ACTIONS}
     for mid,fields in actual.items():
         assert fields <= URL_PUBLIC_FIELDS
-        assert new[mid]['formal_url'] == by_paper[map_paper_ids()[mid]]
+        assert new[mid]['formal_url'] == by_paper[historical_map_paper_ids()[mid]]
         assert resolve_public_links(new[mid])['formal_url'] == new[mid]['formal_url']
 
 
@@ -338,7 +354,7 @@ def test_all_unresolved_p001_and_u005_policy_boundaries_survive_publication():
 
 
 def test_corpus_and_taxonomy_totals_are_recomputed_and_match_source_and_public_invariants():
-    context = live_context()
+    context = b5_01_context()
     assert context['counts'] == packet()['corpus_counts']
     assert context['counts'] == {'public':674,'formal':557,'mapped':613,'unmapped':61,
                                  'relationship_rows':1410,'unique_paper_institution_pairs':1410}
@@ -401,7 +417,7 @@ def test_generated_mapping_report_changes_only_eight_authorized_url_cells():
 
 
 def test_three_journal_metadata_status_changes_do_not_accept_unresolved_affiliations():
-    old, new = published_context(BASE)['papers'], live_context()['papers']
+    old, new = published_context(BASE)['papers'], b5_01_context()['papers']
     selected = {cases()[rid]['paper_id'] for rid in VENUE_ACTIONS}
     for pid, before in old.items():
         after = new[pid]

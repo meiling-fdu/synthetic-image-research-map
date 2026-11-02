@@ -1,0 +1,40 @@
+{
+  "schema": "b403-completion-1",
+  "status": "VALIDATED_LOCAL_ADJUDICATION_COMPLETE",
+  "completed_utc": "2026-11-01T08:44:28.223528+00:00",
+  "baseline_commit": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+  "checksums_sha256": "fce10ceb31e7a807df3431d1de54f39abeeda49cbca9ec1d092c8f9faa79a39f",
+  "sealed_files": 60,
+  "manifest_sha256": "189eabed6bfd3989ceb1abc8300c7b80e12e4453cb13e1fa4397e72b6cd753f0",
+  "report": {
+    "path": "adjudication_report.md",
+    "sha256": "5f7bd71a30265f0b61455267a58066cdaf128545507033dc306fe54eb3b5682a",
+    "bytes": 9166
+  },
+  "handoff": {
+    "path": "b5_02_handoff.json",
+    "sha256": "7b0ce2efbc5cc003c69df6c54ade9493e95810cfbf1fa1b9b2408d1b500fc8d1",
+    "bytes": 5949
+  },
+  "git": {
+    "head": "d109c70f6994906ec3d9197baad51cf9d8e51f7c",
+    "branch": "DETACHED",
+    "status_short": " M data/curated/paper_taxonomy.csv\n M data/curated/papers.csv\n M data/curated/review_decisions.csv\n",
+    "staged_paths": [],
+    "untracked_files": 0,
+    "ignored_files": 0,
+    "diff_stat": " data/curated/paper_taxonomy.csv   | 10 +++++-----\n data/curated/papers.csv           | 10 +++++-----\n data/curated/review_decisions.csv | 11 +++++++++++\n 3 files changed, 21 insertions(+), 10 deletions(-)\n",
+    "source_after_sha256": {
+      "data/curated/papers.csv": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+      "data/curated/paper_taxonomy.csv": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "data/curated/review_decisions.csv": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea"
+    }
+  },
+  "accepts": 6,
+  "holds": 5,
+  "formal_decisions": 138,
+  "historical_unresolved": 114,
+  "active_public_unresolved": 112,
+  "no_export_stage_commit_push": true,
+  "NeurIPS_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+}
