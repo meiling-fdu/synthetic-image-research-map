@@ -1,0 +1,264 @@
+{
+  "schema": "b3-04-final-action-evidence-1",
+  "review_id": "R045",
+  "paper_id": "curated:885c512e1e964d2ec61f",
+  "title": "CLIP-ADA: CLIP-Guided Artifact-Invariant Generalizable Synthetic Image Detection",
+  "reviewer": "analysis-lane",
+  "reviewed_utc": "2026-11-02T02:35:44.339572+00:00",
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "assignment_sha256": "644442f487b11db752936c8b04a0f03073b692c5c81df35593b18e9b4f7c8f43",
+  "question": "The study systematically characterizes semantic and forensic features across CLIP layers.",
+  "governing_policy_ids": [
+    "R3"
+  ],
+  "locked_rule": "Assign analysis_study only when systematic empirical or theoretical analysis is a primary scientific contribution. Routine ablations, robustness tables, parameter sweeps, or supporting interpretability figures do not qualify by themselves.",
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "canonical_identity": {
+    "paper_id": "curated:885c512e1e964d2ec61f",
+    "title": "CLIP-ADA: CLIP-Guided Artifact-Invariant Generalizable Synthetic Image Detection",
+    "doi": "10.1109/tifs.2026.3676657",
+    "arxiv_id": "",
+    "authors": [
+      "Jingyi Deng",
+      "Chong Zhang",
+      "Chenken Xu",
+      "Chenhao Lin",
+      "Zhengyu Zhao",
+      "Shuai Liu",
+      "Qian Wang",
+      "Chao Shen"
+    ]
+  },
+  "proposed_research_types": [
+    "method"
+  ],
+  "outcome": "EVIDENCE_INSUFFICIENT",
+  "sources": [
+    {
+      "url": "https://doi.org/10.1109/TIFS.2026.3676657",
+      "artifact": "evidence/analysis/R045/doi-record.response",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R045/doi-record.response",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "role": "empty_authoritative_response",
+      "version": "IEEE document11450440",
+      "complete_manuscript": false
+    },
+    {
+      "url": "https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=11450440",
+      "artifact": "evidence/analysis/R045/publisher-pdf.response",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R045/publisher-pdf.response",
+      "sha256": "7fb22c208ed51bf54b8fd6cfbcae5cfbee19b8ac0dcaef7d7169072cdbee79c9",
+      "bytes": 15410,
+      "role": "access_failure_html",
+      "version": "IEEE document11450440",
+      "complete_manuscript": false
+    }
+  ],
+  "claims": [
+    {
+      "claim": "The original R3 proposal concerns whether CLIP-layer forensic/semantic characterization is a primary contribution. Preserved abstract-level statements do not establish its experimental protocol or independent primary role.",
+      "locator": "Original R045 ledger and current taxonomy excerpt",
+      "source": "assignment_reconciliation.json#R045",
+      "numerical_evidence": null,
+      "independently_reproduced": false
+    }
+  ],
+  "caveats": [
+    "DOI/publisher record returned HTTP202 with zero bytes; exact document PDF route returned HTTP418 HTML (15410bytes), not a manuscript.",
+    "No repeat IEEE retrieval was made after the single direct PDF failure.",
+    "Concurrent CLIP/BCP work was not modified or treated as published scientific evidence. No matching local full manuscript was found in the inspected archive inventory."
+  ],
+  "proposed_changes": [],
+  "formal_decision_recorded": false,
+  "formal_action_closed": false,
+  "maintainer_acceptance_pending": true,
+  "authoritative_data_changed": false,
+  "empirical_results_independently_reproduced": false,
+  "evidence_reuse": {
+    "original_review": {
+      "review_id": "R045",
+      "paper_id": "curated:885c512e1e964d2ec61f",
+      "title": "CLIP-ADA: CLIP-Guided Artifact-Invariant Generalizable Synthetic Image Detection",
+      "dimension": "research_types",
+      "current_labels": [
+        "method"
+      ],
+      "proposed_labels": [
+        "method",
+        "analysis_study"
+      ],
+      "status": "LIKELY_FIX",
+      "confidence": "medium",
+      "reason": "The study systematically characterizes semantic and forensic features across CLIP layers.",
+      "evidence_url": "https://doi.org/10.1109/tifs.2026.3676657",
+      "evidence_basis": "reused_audit+abstract",
+      "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:885c512e1e964d2ec61f",
+      "evidence_excerpt": "The rapid advancement of generative models necessitates detection methods that generalize to synthetic images containing diverse generator and semantic artifacts. Recent research has leveraged",
+      "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The study systematically characterizes semantic and forensic features across CLIP layers.",
+      "batch": "B",
+      "current_tasks": [
+        "detection"
+      ],
+      "proposed_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "proposed_research_types": [
+        "method",
+        "analysis_study"
+      ]
+    },
+    "planning_refs": [
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+        "locator": "review_id:R045",
+        "finding": "The study systematically characterizes semantic and forensic features across CLIP layers. Original open proposal only; not an accepted scientific disposition.",
+        "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+      },
+      {
+        "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+        "locator": "b-R045",
+        "finding": "Original bounded review question and preserved evidence requirements.",
+        "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "locator": "paper_id:curated:885c512e1e964d2ec61f",
+        "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+        "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9"
+      },
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+        "locator": "policy_id:R3",
+        "finding": "Assign analysis_study only when systematic empirical or theoretical analysis is a primary scientific contribution. Routine ablations, robustness tables, parameter sweeps, or supporting interpretability figures do not qualify by themselves.",
+        "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+      }
+    ],
+    "local_full_manuscript_inventory": "evidence/analysis/local_manuscript_inventory.json",
+    "local_full_manuscripts_reused": 0
+  },
+  "retrieval_history": [
+    {
+      "kind": "browser_exact_title_discovery",
+      "outcome": "A secondary ResearchGate metadata result matched the title/DOI; not used as scientific protocol evidence.",
+      "full_manuscript": false
+    },
+    {
+      "kind": "browser_doi_record",
+      "url": "https://doi.org/10.1109/tifs.2026.3676657",
+      "outcome": "tool reported inaccessible",
+      "full_manuscript": false
+    },
+    {
+      "kind": "curl_doi_record",
+      "url": "https://doi.org/10.1109/TIFS.2026.3676657",
+      "http_status": 202,
+      "curl_exit": 0,
+      "transferred_bytes": 0,
+      "full_manuscript": false
+    },
+    {
+      "kind": "curl_exact_publisher_pdf",
+      "url": "https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=11450440",
+      "http_status": 418,
+      "curl_exit": 0,
+      "transferred_bytes": 15410,
+      "full_manuscript": false
+    }
+  ],
+  "out_of_scope_observations": [],
+  "reproducibility_limitations": [
+    "No training, inference, result replication, data download or code execution was performed. Contribution support is distinct from empirical validity and operational reproducibility."
+  ],
+  "identity_verification": {
+    "existing_canonical_identity_preserved": true,
+    "canonical_doi": "10.1109/tifs.2026.3676657",
+    "doi_redirect_target": "https://ieeexplore.ieee.org/document/11450440/",
+    "fresh_primary_byline_verified": false,
+    "conflicting_identity_evidence_found": false,
+    "reason": "Exact canonical DOI route resolves to one IEEE document, but its record and full scientific body were inaccessible. Existing eight-author identity is preserved; no identity conflict is inferred from an access restriction."
+  },
+  "policy_analysis": "R3 cannot be decided from the title/abstract or a claim of systematic investigation alone. No complete identity-matched contribution list, CLIP-layer experimental design or numerical comparisons were available in this lane. Access failure supports a hold, not a negative scientific conclusion.",
+  "scientific_confidence": {
+    "primary_analysis_role": "UNDETERMINED",
+    "hold_justification": "high"
+  },
+  "original_review": {
+    "review_id": "R045",
+    "paper_id": "curated:885c512e1e964d2ec61f",
+    "title": "CLIP-ADA: CLIP-Guided Artifact-Invariant Generalizable Synthetic Image Detection",
+    "dimension": "research_types",
+    "current_labels": [
+      "method"
+    ],
+    "proposed_labels": [
+      "method",
+      "analysis_study"
+    ],
+    "status": "LIKELY_FIX",
+    "confidence": "medium",
+    "reason": "The study systematically characterizes semantic and forensic features across CLIP layers.",
+    "evidence_url": "https://doi.org/10.1109/tifs.2026.3676657",
+    "evidence_basis": "reused_audit+abstract",
+    "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:885c512e1e964d2ec61f",
+    "evidence_excerpt": "The rapid advancement of generative models necessitates detection methods that generalize to synthetic images containing diverse generator and semantic artifacts. Recent research has leveraged",
+    "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The study systematically characterizes semantic and forensic features across CLIP layers.",
+    "batch": "B",
+    "current_tasks": [
+      "detection"
+    ],
+    "proposed_tasks": [
+      "detection"
+    ],
+    "current_research_types": [
+      "method"
+    ],
+    "proposed_research_types": [
+      "method",
+      "analysis_study"
+    ]
+  },
+  "original_reviewer_record": {
+    "path": "per_paper/R045.json",
+    "sha256": "4f3e16e66537c65c5747fece3ba0ca3496e6c486a41f856e65c16eb07f3337f2",
+    "outcome": "EVIDENCE_INSUFFICIENT"
+  },
+  "provisional_disposition": "EVIDENCE_INSUFFICIENT",
+  "independent_QC": {
+    "status": "COMPLETE",
+    "receipt": "qc/analysis_independent_review.json",
+    "sha256": "e1af6cfae1b60c398ad50aad843c503b487d2c22207d305c1945855e7dd69716",
+    "verdict_record": {
+      "review_id": "R045",
+      "input_record_sha256": "4f3e16e66537c65c5747fece3ba0ca3496e6c486a41f856e65c16eb07f3337f2",
+      "original_reviewer_outcome": "EVIDENCE_INSUFFICIENT",
+      "independent_outcome": "EVIDENCE_INSUFFICIENT",
+      "disagreement": false,
+      "proposed_research_types": [
+        "method"
+      ],
+      "verdict": "APPROVE_EVIDENCE_INSUFFICIENT_HOLD",
+      "scientific_basis": "No complete identity-matched contribution/protocol body. Empty202DOI response and418publisherHTML are independently confirmed; abstract alone cannot establish R3.",
+      "claim_checks": [
+        "Original question and existing detection/method retained.",
+        "No access failure converted into a negative scientific disposition.",
+        "Concurrent CLIP/BCP work was neither changed nor used as an unreviewed scientific substitute."
+      ],
+      "limitations": [
+        "Fresh primary byline unavailable; no identity conflict inferred."
+      ]
+    },
+    "original_record_sha256": "4f3e16e66537c65c5747fece3ba0ca3496e6c486a41f856e65c16eb07f3337f2",
+    "disagreement_preserved": false
+  },
+  "current_authoritative_status": "UNRESOLVED",
+  "maintainer_acceptance": "PENDING"
+}

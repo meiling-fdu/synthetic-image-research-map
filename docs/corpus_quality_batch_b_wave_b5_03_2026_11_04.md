@@ -1,0 +1,19 @@
+# Batch B B5-03 controlled integration
+
+This integration carries the exact B4-04 transaction forward from published commit `2932b9a5b58a8c84761e381668925a765ca9719e`. The immutable adjudication manifest is `tests/fixtures/batch_b_b4_04/adjudication_manifest.json`; the machine-readable integration receipt is `data/raw/corpus_quality_batch_b_wave_b5_03_2026_11_04/integration_manifest.json`. Original B3 evidence and B4 decisions are preserved, not re-adjudicated.
+
+Eight accepted actions are R124, R149, R223, R363, R477, R509, R512 and R625. Only eight paper research-type cells and 48 corresponding taxonomy/evidence cells change. The 138-row formal decision prefix remains exact; thirteen decisions append, for 151 total. R045, R156, R251, R284 and P251 remain open. Historical unresolved actions become 106 and active-public unresolved actions 104.
+
+The corpus retains 674 public papers, 557 formal papers, 613 mapped papers, 61 unmapped papers and 1,410 unique relationships. Research-type totals are 578 method, 146 dataset, 102 benchmark, 21 survey and 90 analysis study. Tasks remain 621 detection, 84 source attribution and 45 localization. Canonical identity matching verifies each of the 674 paper records and all 1,410 map records; the 164 records lacking an optional paper_id keep that representation. Exactly eight paper records and 23 map records receive the accepted taxonomy projection.
+
+P251 still begins with Jefferson Ng. Jia Chyi Ng is a supported source spelling under an unresolved authoritative write-path question, not a personal alias. R512 retains the author-version limitation and unverified publisher-final status: reported accuracy 80.71%, versus a derived 83.33% always-fake baseline IF the five-fake/one-real prevalence applies. AUC is separate. Taxonomy acceptance does not claim independently reproduced empirical results.
+
+The unchanged official five-command offline export pipeline completed twice; all seven declared outputs are byte-identical across passes. Only the two public JSON datasets, the public report timestamp and the key coverage source fingerprint change. The related coverage CSV and both missing-mapping reports remain byte-identical. The corrected preflight uses PaperIdentityIndex, rejects ambiguous identity matches and preserves optional-ID omissions; positions identify already-matched source objects, not independent identity evidence.
+
+Historical assertions remain unchanged. Two B4 local-checkpoint assertions receive a separate authenticated 151-decision source snapshot with the original public exports. One B5-02 projection assertion receives the immutable 138-decision published snapshot. The existing Phase 1 context receives matching published taxonomy expectations for its single synchronization assertion. All other current-state tests use the actual exported state. The finite endpoint descriptor pins the exact scopes, input bytes, output hashes, canonical producers and three changed current count constants. Negative tests protect both historical and current boundaries.
+
+Recovered pre-export checks passed: 743 affected tests; 2,938 complete regular tests plus 389 subtests; zero failures; two existing pytest warnings. Canonical validators passed with zero structural errors and the same 62 public warnings. These results precede the exported state and do not substitute for final post-export acceptance. The final post-export suite, preservation closure, staged inventory, publication, live-byte checks and hosted acceptance are recorded in append-only archival receipts and the delivery report. No publication success is asserted by this precommit report.
+
+All original archival receipts, protected inventories, frozen NeurIPS artifacts, Batch C debts and the separate 39-paper inventory remain protected. No HTTP test, timeout or production server implementation is changed.
+
+`7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA`

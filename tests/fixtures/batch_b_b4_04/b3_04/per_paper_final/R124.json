@@ -1,0 +1,348 @@
+{
+  "schema": "b3-04-final-action-evidence-1",
+  "review_id": "R124",
+  "paper_id": "curated:d6fe2666a64b0c70ff6b",
+  "title": "GenShield: Unified Detection and Artifact Correction for AI-Generated Images",
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "assignment_sha256": "644442f487b11db752936c8b04a0f03073b692c5c81df35593b18e9b4f7c8f43",
+  "question": "The work constructs artifact-restoration pairs and a correction benchmark; verify the released dataset/protocol contribution.",
+  "original_review": {
+    "review_id": "R124",
+    "paper_id": "curated:d6fe2666a64b0c70ff6b",
+    "title": "GenShield: Unified Detection and Artifact Correction for AI-Generated Images",
+    "dimension": "research_types",
+    "current_labels": [
+      "method"
+    ],
+    "proposed_labels": [
+      "method",
+      "dataset",
+      "benchmark"
+    ],
+    "status": "LIKELY_FIX",
+    "confidence": "medium",
+    "reason": "The work constructs artifact-restoration pairs and a correction benchmark; verify the released dataset/protocol contribution.",
+    "evidence_url": "https://proceedings.mlr.press/v306/xu26cl.html",
+    "evidence_basis": "reused_audit+abstract",
+    "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:d6fe2666a64b0c70ff6b",
+    "evidence_excerpt": "Diffusion-based image synthesis has made AI-generated images (AIGI) increasingly photorealistic, raising urgent concerns about authenticity in applications such as misinformation detection, digital forensics, and",
+    "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The work constructs artifact-restoration pairs and a correction benchmark; verify the released dataset/protocol contribution.",
+    "batch": "B",
+    "current_tasks": [
+      "detection"
+    ],
+    "proposed_tasks": [
+      "detection"
+    ],
+    "current_research_types": [
+      "method"
+    ],
+    "proposed_research_types": [
+      "method",
+      "dataset",
+      "benchmark"
+    ]
+  },
+  "governing_policy_ids": [
+    "R1",
+    "R2"
+  ],
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "proposed_research_types": [
+    "method",
+    "dataset",
+    "benchmark"
+  ],
+  "outcome": "SUPPORTED_ADDITION",
+  "identity_verification": {
+    "matched": true,
+    "basis": "PDF first page and metadata title match the canonical work; all eight ordered authors match the PMLR landing and current record. The publisher landing itself links this exact PDF. Canonical arXiv2605.16122 is retained, but no claim is made that an uninspected arXiv version is byte-equivalent.",
+    "canonical_doi": "",
+    "canonical_arxiv_id": "2605.16122"
+  },
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/xu26cl/xu26cl.pdf",
+      "version": "Official PMLR306 proceedings PDF,26pages; title/byline verified",
+      "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R124-pmlr.pdf",
+      "sha256": "3a18aa2b13d10c1ce37293b522a62812fd74e5a3e06c09df7d432b1a9b4fc4cb",
+      "bytes": 11509691,
+      "kind": "full_manuscript",
+      "limitation": null
+    },
+    {
+      "url": "https://proceedings.mlr.press/v306/xu26cl.html",
+      "version": "Official PMLR306 landing",
+      "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R124-pmlr.html",
+      "sha256": "7828e70fc4854baf3a3305ef8934c58c08a40c3f97d8ae2367a83f7589cd90a9",
+      "bytes": 16969,
+      "kind": "publisher_identity_record",
+      "limitation": null
+    }
+  ],
+  "reused_local_evidence": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R124",
+      "finding": "The work constructs artifact-restoration pairs and a correction benchmark; verify the released dataset/protocol contribution. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "current_sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R124",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "current_sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "paper_id:curated:d6fe2666a64b0c70ff6b",
+      "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+      "current_sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R1",
+      "finding": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "current_sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R2",
+      "finding": "Assign benchmark only when the paper contributes a reusable evaluation benchmark, challenge, protocol, systematic comparative framework, or benchmark resource intended to evaluate methods. Large experimental tables or evaluation across many generators alone are insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "current_sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Dataset construction is an explicitly stated substantive contribution, not inferred from experimental data volume.",
+      "locator": "PDFp2 Introduction contribution(3);p4 section3.1;pp17-18 AppendixD",
+      "evidence": "GenShield-Set-Correct adds expert-filtered artifact/restored aligned targets and intermediate/termination supervision atop SynthScars; GenShield-Set-Detect restructures Holmes-Set authenticity/caption/reason answers. Section3.1 reports over10K correction tuples and66K detection image-text pairs. These are different units/subsets, not a combined image count.",
+      "source_bindings": [
+        {
+          "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/xu26cl/xu26cl.pdf",
+          "version": "Official PMLR306 proceedings PDF,26pages; title/byline verified",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R124-pmlr.pdf",
+          "sha256": "3a18aa2b13d10c1ce37293b522a62812fd74e5a3e06c09df7d432b1a9b4fc4cb",
+          "bytes": 11509691,
+          "kind": "full_manuscript",
+          "limitation": null
+        }
+      ]
+    },
+    {
+      "claim": "A reusable method-comparison protocol supports the assigned benchmark role.",
+      "locator": "PDFp7 section4.3/Table2;pp16-17 AppendixC.1/C.2;Figure5",
+      "evidence": "AppendixC explicitly supplies a unified correction evaluation pipeline: common Structure/Physics/Distortion binary residual-artifact judgments, evaluator prompt,20human raters on50test images, and common camera-photo prompt for HPSv3/CLIPScore/PickScore. Table2 applies it to external closed/open editors and artifact-correction models, not only GenShield variants.",
+      "source_bindings": [
+        {
+          "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/xu26cl/xu26cl.pdf",
+          "version": "Official PMLR306 proceedings PDF,26pages; title/byline verified",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R124-pmlr.pdf",
+          "sha256": "3a18aa2b13d10c1ce37293b522a62812fd74e5a3e06c09df7d432b1a9b4fc4cb",
+          "bytes": 11509691,
+          "kind": "full_manuscript",
+          "limitation": null
+        }
+      ]
+    },
+    {
+      "claim": "Published quantitative claims are source reports, with a retained internal comparison caveat.",
+      "locator": "PDFp7 Table2, visually inspected in R124-page07.png;section4.3",
+      "evidence": "Full GenShield reports GPT-assisted mean0.15, human mean0.16,HPSv3=6.20,CLIPScore=22.12,PickScore=18.86. Its own single-step variant reports HPSv3=6.23, so the prose claim of the highest HPSv3 is not true across every row of Table2. This does not negate the contributed protocol or establish independently reproduced superiority.",
+      "source_bindings": [
+        {
+          "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/xu26cl/xu26cl.pdf",
+          "version": "Official PMLR306 proceedings PDF,26pages; title/byline verified",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R124-pmlr.pdf",
+          "sha256": "3a18aa2b13d10c1ce37293b522a62812fd74e5a3e06c09df7d432b1a9b4fc4cb",
+          "bytes": 11509691,
+          "kind": "full_manuscript",
+          "limitation": null
+        }
+      ]
+    }
+  ],
+  "policy_analysis": {
+    "R1": "Supported by explicit contribution(3), distinct paired restoration annotations and detailed construction/provision, beyond merely reusing SynthScars/Holmes to train a method.",
+    "R2": "Supported by AppendixC standardized cross-method artifact-correction evaluation framework and evaluator template, not by result-table scale. Qualification: benchmark endpoint is correction quality, not a newly established independent authenticity benchmark."
+  },
+  "caveats": [
+    "Correction targets use an advanced proprietary editor; correction supervision inherits its limitations (AppendixA).",
+    "Official dataset/code availability, licenses, source-image disjointness and successful execution were not audited; public download alone is not an R1/R2 acceptance criterion.",
+    "Table2 HPSv3 full6.20 versus own single-step6.23 and prose-highest wording remain explicit.",
+    "The fifty-image human sample and20raters do not establish universal evaluation validity; no rater agreement/causal claim is independently reproduced.",
+    "Preserve detection task; do not add correction or localization tasks in this wave.",
+    "Independent QC: Figure5 opening says strict3-point scale, while per-category definitions and AppendixC specify binary0/1 for each of three categories. Retain this wording ambiguity; do not invent a three-valued scale or silently repair the prompt."
+  ],
+  "scientific_confidence": "high for bounded R1/R2 contribution support; empirical validity and operational reproducibility unverified",
+  "reproducibility_limitations": "No independent training, evaluation, dataset download or code execution performed. Contribution support does not claim reproduced performance, causal validity, release completeness or operational reproducibility.",
+  "proposed_changes": [
+    {
+      "field": "research_types",
+      "before": [
+        "method"
+      ],
+      "after": [
+        "method",
+        "dataset",
+        "benchmark"
+      ]
+    }
+  ],
+  "formal_action_closed": false,
+  "authoritative_data_changed": false,
+  "maintainer_acceptance": "PENDING",
+  "retrieval_history": {
+    "browser_operations": [
+      {
+        "review_id": "R124",
+        "operation": "open",
+        "url": "https://proceedings.mlr.press/v306/xu26cl.html",
+        "result": "Official landing available; title/eight-author sequence and publisher-linked PDF identified."
+      },
+      {
+        "review_id": "R124",
+        "operation": "click_publisher_PDF_link",
+        "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/xu26cl/xu26cl.pdf",
+        "result": "Browser unsupported application/octet-stream; subsequently one ordinary HTTP capture succeeded and verified PDF magic,26pages."
+      }
+    ],
+    "captured_requests": [
+      {
+        "review_id": "R124",
+        "url": "https://proceedings.mlr.press/v306/xu26cl.html",
+        "requested_utc": "2026-11-02T02:15:39.025641+00:00",
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R124-pmlr.html",
+        "method": "urllib.request.urlopen; identified official source; one attempt",
+        "status": 200,
+        "final_url": "https://proceedings.mlr.press/v306/xu26cl.html",
+        "headers": {
+          "Connection": "close",
+          "Content-Length": "16969",
+          "Server": "GitHub.com",
+          "Content-Type": "text/html; charset=utf-8",
+          "x-origin-cache": "HIT",
+          "Last-Modified": "Fri, 23 Oct 2026 21:49:53 GMT",
+          "Access-Control-Allow-Origin": "*",
+          "ETag": "\"6adbd681-4249\"",
+          "expires": "Sun, 01 Nov 2026 19:31:47 GMT",
+          "Cache-Control": "max-age=600",
+          "x-proxy-cache": "MISS",
+          "X-GitHub-Request-Id": "2544:3B77A0:68ADBB:6F9B80:6AE7914B",
+          "x-github-edge-region": "japaneast",
+          "Accept-Ranges": "bytes",
+          "Age": "0",
+          "Date": "Mon, 02 Nov 2026 02:15:40 GMT",
+          "Via": "1.1 varnish",
+          "X-Served-By": "cache-nrt-rjtt7900050-NRT",
+          "X-Cache": "HIT",
+          "X-Cache-Hits": "0",
+          "X-Timer": "S1793585740.827721,VS0,VE176",
+          "Vary": "Accept-Encoding",
+          "X-Fastly-Request-ID": "05d503b673c7bbc59fc5e01c699e3d375890de7e"
+        },
+        "bytes": 16969,
+        "sha256": "7828e70fc4854baf3a3305ef8934c58c08a40c3f97d8ae2367a83f7589cd90a9",
+        "elapsed_seconds": 1.0943885419983417,
+        "successful": true
+      },
+      {
+        "review_id": "R124",
+        "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/xu26cl/xu26cl.pdf",
+        "requested_utc": "2026-11-02T02:15:39.026055+00:00",
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R124-pmlr.pdf",
+        "method": "urllib.request.urlopen; identified official source; one attempt",
+        "status": 200,
+        "final_url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/xu26cl/xu26cl.pdf",
+        "headers": {
+          "Connection": "close",
+          "Content-Length": "11509691",
+          "Cache-Control": "max-age=300",
+          "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+          "Content-Type": "application/octet-stream",
+          "ETag": "\"5c81ba06164b865502730aee8ba686c0c1ae23c27fbd7677a271f207e57f98c7\"",
+          "Strict-Transport-Security": "max-age=31536000",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "deny",
+          "X-XSS-Protection": "1; mode=block",
+          "X-GitHub-Request-Id": "4966:BB078:33D1:68A5:6AE7F24B",
+          "x-github-edge-region": "japaneast",
+          "Accept-Ranges": "bytes",
+          "Date": "Mon, 02 Nov 2026 02:15:40 GMT",
+          "Via": "1.1 varnish",
+          "X-Served-By": "cache-nrt-rjtt7900062-NRT",
+          "X-Cache": "MISS",
+          "X-Cache-Hits": "0",
+          "X-Timer": "S1793585740.843073,VS0,VE680",
+          "Vary": "Authorization,Accept-Encoding",
+          "Access-Control-Allow-Origin": "*",
+          "Cross-Origin-Resource-Policy": "cross-origin",
+          "X-Fastly-Request-ID": "9f2f54c4f422e266c1e250911e2036407496bba2",
+          "Expires": "Mon, 02 Nov 2026 02:20:40 GMT",
+          "Source-Age": "0"
+        },
+        "bytes": 11509691,
+        "sha256": "3a18aa2b13d10c1ce37293b522a62812fd74e5a3e06c09df7d432b1a9b4fc4cb",
+        "elapsed_seconds": 2.8534235840197653,
+        "successful": true
+      }
+    ]
+  },
+  "completed_utc": "2026-11-02T02:35:42.749418+00:00",
+  "independent_qc": "COMPLETE; see independent_QC and preserved original reviewer record",
+  "effort": {
+    "shared_lane_effort_receipt": "reviewers/resources/effort_and_retrievals.json",
+    "per_action_active_minutes_measured": false,
+    "caution": "Do not sum overlapping parallel lane wall intervals as exclusive per-paper labor."
+  },
+  "original_reviewer_record": {
+    "path": "per_paper/R124.json",
+    "sha256": "2e90289801bf86af9277bfe89c1cd0ce58bd5b73e801c62e246734e794e8d2cd",
+    "outcome": "SUPPORTED_ADDITION"
+  },
+  "provisional_disposition": "SUPPORTED_ADDITION",
+  "independent_QC": {
+    "status": "COMPLETE",
+    "receipt": "qc/resources_independent_review.json",
+    "sha256": "f5d4926d6a77fb581a5c584621168ae633b23b65afbbaf84fd3df711c7a6442a",
+    "verdict_record": {
+      "review_id": "R124",
+      "paper_id": "curated:d6fe2666a64b0c70ff6b",
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_outcome": "SUPPORTED_ADDITION",
+      "agree_with_original": true,
+      "proposed_research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "current_tasks_preserved": [
+        "detection"
+      ],
+      "confidence": "HIGH for bounded contribution classification with source/version caveats"
+    },
+    "original_record_sha256": "2e90289801bf86af9277bfe89c1cd0ce58bd5b73e801c62e246734e794e8d2cd",
+    "disagreement_preserved": false
+  },
+  "current_authoritative_status": "UNRESOLVED"
+}

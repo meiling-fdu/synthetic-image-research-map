@@ -1,0 +1,1977 @@
+{
+  "schema": "b3-04-final-dispositions-1",
+  "phase": "EVIDENCE_ONLY_NOT_FORMAL_ADJUDICATION",
+  "date": "2026-11-02",
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "assignment": {
+    "path": "assignment_reconciliation.json",
+    "sha256": "644442f487b11db752936c8b04a0f03073b692c5c81df35593b18e9b4f7c8f43"
+  },
+  "original_B2_batch": "B2-04",
+  "papers": 12,
+  "actions": 13,
+  "outcome_counts": {
+    "EVIDENCE_INSUFFICIENT": 4,
+    "SUPPORTED_ADDITION": 9
+  },
+  "records": [
+    {
+      "review_id": "R045",
+      "paper_id": "curated:885c512e1e964d2ec61f",
+      "title": "CLIP-ADA: CLIP-Guided Artifact-Invariant Generalizable Synthetic Image Detection",
+      "original_action": {
+        "review_id": "R045",
+        "paper_id": "curated:885c512e1e964d2ec61f",
+        "title": "CLIP-ADA: CLIP-Guided Artifact-Invariant Generalizable Synthetic Image Detection",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "analysis_study"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "The study systematically characterizes semantic and forensic features across CLIP layers.",
+        "evidence_url": "https://doi.org/10.1109/tifs.2026.3676657",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:885c512e1e964d2ec61f",
+        "evidence_excerpt": "The rapid advancement of generative models necessitates detection methods that generalize to synthetic images containing diverse generator and semantic artifacts. Recent research has leveraged",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The study systematically characterizes semantic and forensic features across CLIP layers.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "analysis_study"
+        ]
+      },
+      "governing_policy_ids": [
+        "R3"
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "original_reviewer_outcome": "EVIDENCE_INSUFFICIENT",
+      "provisional_disposition": "EVIDENCE_INSUFFICIENT",
+      "proposed_research_types": [
+        "method"
+      ],
+      "proposed_field_changes": [],
+      "evidence_record": "per_paper_final/R045.json",
+      "evidence_record_sha256": "426c983ec7a8052e7fdbabd2a0d1085a91ccb56012b5e1add9871fc9dd6edecd",
+      "original_reviewer_record": {
+        "path": "per_paper/R045.json",
+        "sha256": "4f3e16e66537c65c5747fece3ba0ca3496e6c486a41f856e65c16eb07f3337f2",
+        "outcome": "EVIDENCE_INSUFFICIENT"
+      },
+      "independent_QC": {
+        "status": "COMPLETE",
+        "receipt": "qc/analysis_independent_review.json",
+        "sha256": "e1af6cfae1b60c398ad50aad843c503b487d2c22207d305c1945855e7dd69716",
+        "verdict_record": {
+          "review_id": "R045",
+          "input_record_sha256": "4f3e16e66537c65c5747fece3ba0ca3496e6c486a41f856e65c16eb07f3337f2",
+          "original_reviewer_outcome": "EVIDENCE_INSUFFICIENT",
+          "independent_outcome": "EVIDENCE_INSUFFICIENT",
+          "disagreement": false,
+          "proposed_research_types": [
+            "method"
+          ],
+          "verdict": "APPROVE_EVIDENCE_INSUFFICIENT_HOLD",
+          "scientific_basis": "No complete identity-matched contribution/protocol body. Empty202DOI response and418publisherHTML are independently confirmed; abstract alone cannot establish R3.",
+          "claim_checks": [
+            "Original question and existing detection/method retained.",
+            "No access failure converted into a negative scientific disposition.",
+            "Concurrent CLIP/BCP work was neither changed nor used as an unreviewed scientific substitute."
+          ],
+          "limitations": [
+            "Fresh primary byline unavailable; no identity conflict inferred."
+          ]
+        },
+        "original_record_sha256": "4f3e16e66537c65c5747fece3ba0ca3496e6c486a41f856e65c16eb07f3337f2",
+        "disagreement_preserved": false
+      },
+      "source_provenance": [
+        {
+          "url": "https://doi.org/10.1109/TIFS.2026.3676657",
+          "artifact": "evidence/analysis/R045/doi-record.response",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R045/doi-record.response",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "role": "empty_authoritative_response",
+          "version": "IEEE document11450440",
+          "complete_manuscript": false
+        },
+        {
+          "url": "https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=11450440",
+          "artifact": "evidence/analysis/R045/publisher-pdf.response",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R045/publisher-pdf.response",
+          "sha256": "7fb22c208ed51bf54b8fd6cfbcae5cfbee19b8ac0dcaef7d7169072cdbee79c9",
+          "bytes": 15410,
+          "role": "access_failure_html",
+          "version": "IEEE document11450440",
+          "complete_manuscript": false
+        }
+      ],
+      "limitations": [
+        "DOI/publisher record returned HTTP202 with zero bytes; exact document PDF route returned HTTP418 HTML (15410bytes), not a manuscript.",
+        "No repeat IEEE retrieval was made after the single direct PDF failure.",
+        "Concurrent CLIP/BCP work was not modified or treated as published scientific evidence. No matching local full manuscript was found in the inspected archive inventory."
+      ],
+      "scientific_confidence": {
+        "primary_analysis_role": "UNDETERMINED",
+        "hold_justification": "high"
+      },
+      "current_authoritative_status": "UNRESOLVED",
+      "formal_action_closed": false,
+      "authoritative_data_changed": false,
+      "maintainer_acceptance": "PENDING"
+    },
+    {
+      "review_id": "R124",
+      "paper_id": "curated:d6fe2666a64b0c70ff6b",
+      "title": "GenShield: Unified Detection and Artifact Correction for AI-Generated Images",
+      "original_action": {
+        "review_id": "R124",
+        "paper_id": "curated:d6fe2666a64b0c70ff6b",
+        "title": "GenShield: Unified Detection and Artifact Correction for AI-Generated Images",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset",
+          "benchmark"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "The work constructs artifact-restoration pairs and a correction benchmark; verify the released dataset/protocol contribution.",
+        "evidence_url": "https://proceedings.mlr.press/v306/xu26cl.html",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:d6fe2666a64b0c70ff6b",
+        "evidence_excerpt": "Diffusion-based image synthesis has made AI-generated images (AIGI) increasingly photorealistic, raising urgent concerns about authenticity in applications such as misinformation detection, digital forensics, and",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The work constructs artifact-restoration pairs and a correction benchmark; verify the released dataset/protocol contribution.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset",
+          "benchmark"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1",
+        "R2"
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "proposed_field_changes": [
+        {
+          "logical_field": "research_types",
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "benchmark"
+          ],
+          "authoritative_target": {
+            "path": "data/curated/paper_taxonomy.csv",
+            "row_key": {
+              "taxonomy_id": "paper_id:curated:d6fe2666a64b0c70ff6b"
+            },
+            "field": "research_types",
+            "before": "method",
+            "proposed_after": "method;dataset;benchmark"
+          },
+          "existing_compatibility_paper_row": true,
+          "compatibility_target_if_required_by_schema": {
+            "path": "data/curated/papers.csv",
+            "row_key": {
+              "paper_id": "curated:d6fe2666a64b0c70ff6b"
+            },
+            "field": "research_types"
+          }
+        }
+      ],
+      "evidence_record": "per_paper_final/R124.json",
+      "evidence_record_sha256": "67b490f19b22daba9e8982ad6535a594a4079cbad3560b51394a9bdb30410d18",
+      "original_reviewer_record": {
+        "path": "per_paper/R124.json",
+        "sha256": "2e90289801bf86af9277bfe89c1cd0ce58bd5b73e801c62e246734e794e8d2cd",
+        "outcome": "SUPPORTED_ADDITION"
+      },
+      "independent_QC": {
+        "status": "COMPLETE",
+        "receipt": "qc/resources_independent_review.json",
+        "sha256": "f5d4926d6a77fb581a5c584621168ae633b23b65afbbaf84fd3df711c7a6442a",
+        "verdict_record": {
+          "review_id": "R124",
+          "paper_id": "curated:d6fe2666a64b0c70ff6b",
+          "original_reviewer_outcome": "SUPPORTED_ADDITION",
+          "independent_outcome": "SUPPORTED_ADDITION",
+          "agree_with_original": true,
+          "proposed_research_types": [
+            "method",
+            "dataset",
+            "benchmark"
+          ],
+          "current_tasks_preserved": [
+            "detection"
+          ],
+          "confidence": "HIGH for bounded contribution classification with source/version caveats"
+        },
+        "original_record_sha256": "2e90289801bf86af9277bfe89c1cd0ce58bd5b73e801c62e246734e794e8d2cd",
+        "disagreement_preserved": false
+      },
+      "source_provenance": [
+        {
+          "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/xu26cl/xu26cl.pdf",
+          "version": "Official PMLR306 proceedings PDF,26pages; title/byline verified",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R124-pmlr.pdf",
+          "sha256": "3a18aa2b13d10c1ce37293b522a62812fd74e5a3e06c09df7d432b1a9b4fc4cb",
+          "bytes": 11509691,
+          "kind": "full_manuscript",
+          "limitation": null
+        },
+        {
+          "url": "https://proceedings.mlr.press/v306/xu26cl.html",
+          "version": "Official PMLR306 landing",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R124-pmlr.html",
+          "sha256": "7828e70fc4854baf3a3305ef8934c58c08a40c3f97d8ae2367a83f7589cd90a9",
+          "bytes": 16969,
+          "kind": "publisher_identity_record",
+          "limitation": null
+        }
+      ],
+      "limitations": [
+        "Correction targets use an advanced proprietary editor; correction supervision inherits its limitations (AppendixA).",
+        "Official dataset/code availability, licenses, source-image disjointness and successful execution were not audited; public download alone is not an R1/R2 acceptance criterion.",
+        "Table2 HPSv3 full6.20 versus own single-step6.23 and prose-highest wording remain explicit.",
+        "The fifty-image human sample and20raters do not establish universal evaluation validity; no rater agreement/causal claim is independently reproduced.",
+        "Preserve detection task; do not add correction or localization tasks in this wave.",
+        "Independent QC: Figure5 opening says strict3-point scale, while per-category definitions and AppendixC specify binary0/1 for each of three categories. Retain this wording ambiguity; do not invent a three-valued scale or silently repair the prompt."
+      ],
+      "scientific_confidence": "high for bounded R1/R2 contribution support; empirical validity and operational reproducibility unverified",
+      "current_authoritative_status": "UNRESOLVED",
+      "formal_action_closed": false,
+      "authoritative_data_changed": false,
+      "maintainer_acceptance": "PENDING"
+    },
+    {
+      "review_id": "R149",
+      "paper_id": "curated:cf55e35fcf11e09fdd12",
+      "title": "Locate-Then-Examine: Grounded Region Reasoning Improves Detection of AI-Generated Images",
+      "original_action": {
+        "review_id": "R149",
+        "paper_id": "curated:cf55e35fcf11e09fdd12",
+        "title": "Locate-Then-Examine: Grounded Region Reasoning Improves Detection of AI-Generated Images",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "TRACE is introduced as a 20,000-image dataset with region annotations and forensic explanations.",
+        "evidence_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Ji_Locate-Then-Examine_Grounded_Region_Reasoning_Improves_Detection_of_AI-Generated_Images_CVPR_2026_paper.pdf",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:cf55e35fcf11e09fdd12",
+        "evidence_excerpt": "The rapid growth of AI-generated imagery has blurred the boundary between real and synthetic content, raising practical concerns for digital integrity. Vision-language models (VLMs)",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: TRACE is introduced as a 20,000-image dataset with region annotations and forensic explanations.",
+        "batch": "B",
+        "current_tasks": [
+          "detection",
+          "localization"
+        ],
+        "proposed_tasks": [
+          "detection",
+          "localization"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1"
+      ],
+      "current_tasks": [
+        "detection",
+        "localization"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_research_types": [
+        "method",
+        "dataset"
+      ],
+      "proposed_field_changes": [
+        {
+          "logical_field": "research_types",
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset"
+          ],
+          "authoritative_target": {
+            "path": "data/curated/paper_taxonomy.csv",
+            "row_key": {
+              "taxonomy_id": "paper_id:curated:cf55e35fcf11e09fdd12"
+            },
+            "field": "research_types",
+            "before": "method",
+            "proposed_after": "method;dataset"
+          },
+          "existing_compatibility_paper_row": true,
+          "compatibility_target_if_required_by_schema": {
+            "path": "data/curated/papers.csv",
+            "row_key": {
+              "paper_id": "curated:cf55e35fcf11e09fdd12"
+            },
+            "field": "research_types"
+          }
+        }
+      ],
+      "evidence_record": "per_paper_final/R149.json",
+      "evidence_record_sha256": "9dcb2bbcc61f27de20c00e321c56c073ac1d806c7ad677c309ae83704bb53fb7",
+      "original_reviewer_record": {
+        "path": "per_paper/R149.json",
+        "sha256": "3763edb5dbb33d30c55c1230b278b744b2842eec174f92755f6d980df199ec3e",
+        "outcome": "SUPPORTED_ADDITION"
+      },
+      "independent_QC": {
+        "status": "COMPLETE",
+        "receipt": "qc/resources_independent_review.json",
+        "sha256": "f5d4926d6a77fb581a5c584621168ae633b23b65afbbaf84fd3df711c7a6442a",
+        "verdict_record": {
+          "review_id": "R149",
+          "paper_id": "curated:cf55e35fcf11e09fdd12",
+          "original_reviewer_outcome": "SUPPORTED_ADDITION",
+          "independent_outcome": "SUPPORTED_ADDITION",
+          "agree_with_original": true,
+          "proposed_research_types": [
+            "method",
+            "dataset"
+          ],
+          "current_tasks_preserved": [
+            "detection",
+            "localization"
+          ],
+          "confidence": "HIGH for bounded contribution classification with source/version caveats"
+        },
+        "original_record_sha256": "3763edb5dbb33d30c55c1230b278b744b2842eec174f92755f6d980df199ec3e",
+        "disagreement_preserved": false
+      },
+      "source_provenance": [
+        {
+          "url": "https://arxiv.org/html/2510.04225v2",
+          "version": "arXiv2510.04225v2,21Apr2026; complete HTML including appendices",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R149-arxiv-v2.html",
+          "sha256": "e412ac02c00e51f2a1a9249be17f6c3cfad2cdc2073fe9a459a1856522cde04b",
+          "bytes": 255625,
+          "kind": "full_manuscript",
+          "limitation": "CVPR2026 official PDF returned403. Publisher-final equivalence not verified."
+        }
+      ],
+      "limitations": [
+        "Complete source is author-deposited arXivv2, not verified CVPR final; preserve the official-PDF403.",
+        "Annotations are automated, not human-expert ground truth. AppendixA.5 explicitly notes inherited VLM bias and English-language limitation.",
+        "Reported20K/99.5%/3.24figures were not verified against a downloaded data release. Exact split disjointness, licenses, code/data availability and reproduction remain unverified.",
+        "The section4.1 statement that baselines are retrained has explicit format-incompatible exceptions; do not flatten into a fully identical training protocol.",
+        "Retain current detection;localization; no benchmark action or other task review is introduced."
+      ],
+      "scientific_confidence": "high for R1 contribution identity and support; moderate for final-version correspondence; reproducibility unverified",
+      "current_authoritative_status": "UNRESOLVED",
+      "formal_action_closed": false,
+      "authoritative_data_changed": false,
+      "maintainer_acceptance": "PENDING"
+    },
+    {
+      "review_id": "R156",
+      "paper_id": "curated:4ad04c01ae2850d5cc34",
+      "title": "MoFAIR: Self-Improving Post-Training for Robust and Explainable AIGC Forensics with Lightweight Reward Distillation",
+      "original_action": {
+        "review_id": "R156",
+        "paper_id": "curated:4ad04c01ae2850d5cc34",
+        "title": "MoFAIR: Self-Improving Post-Training for Robust and Explainable AIGC Forensics with Lightweight Reward Distillation",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "FAIR-Data is introduced as a 15,000-sample reasoning dataset with structured annotations.",
+        "evidence_url": "https://doi.org/10.1007/978-981-92-3429-5_44",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:4ad04c01ae2850d5cc34",
+        "evidence_excerpt": "Recent advances in generative AI have made reliable AI-generated content forensics an urgent necessity. Existing approaches suffer from brittle decision boundaries, hallucinated explanations, and",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: FAIR-Data is introduced as a 15,000-sample reasoning dataset with structured annotations.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1"
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "original_reviewer_outcome": "NOT_SUPPORTED",
+      "provisional_disposition": "EVIDENCE_INSUFFICIENT",
+      "proposed_research_types": [
+        "method"
+      ],
+      "proposed_field_changes": [],
+      "evidence_record": "per_paper_final/R156.json",
+      "evidence_record_sha256": "7a2723c56d044433f74a09a9227c074f10bd95f9d7bfd76786f7d89051f486d2",
+      "original_reviewer_record": {
+        "path": "per_paper/R156.json",
+        "sha256": "a60256b6ce789e363ed0f4d9aaf5b2cc1b98275964f798e8988acfd9397f9132",
+        "outcome": "NOT_SUPPORTED"
+      },
+      "independent_QC": {
+        "status": "COMPLETE",
+        "receipt": "qc/resources_independent_review.json",
+        "sha256": "f5d4926d6a77fb581a5c584621168ae633b23b65afbbaf84fd3df711c7a6442a",
+        "verdict_record": {
+          "review_id": "R156",
+          "paper_id": "curated:4ad04c01ae2850d5cc34",
+          "original_reviewer_outcome": "NOT_SUPPORTED",
+          "independent_outcome": "EVIDENCE_INSUFFICIENT",
+          "agree_with_original": false,
+          "proposed_research_types": [
+            "method"
+          ],
+          "current_tasks_preserved": [
+            "detection"
+          ],
+          "confidence": "MODERATE: method-support evidence is concrete; independently substantive resource status remains unresolved"
+        },
+        "original_record_sha256": "a60256b6ce789e363ed0f4d9aaf5b2cc1b98275964f798e8988acfd9397f9132",
+        "disagreement_preserved": true
+      },
+      "source_provenance": [
+        {
+          "url": "https://link.springer.com/content/pdf/10.1007/978-981-92-3429-5_44.pdf",
+          "version": "DOI-matched Springer chapter PDF,14pages,printed536-549",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R156-springer-pdf.response",
+          "sha256": "8295a572c0db1ba78b3984a8209d4714b4fc40438bedf60c79d5146a3517783c",
+          "bytes": 1607106,
+          "kind": "full_manuscript",
+          "limitation": null
+        },
+        {
+          "url": "https://link.springer.com/chapter/10.1007/978-981-92-3429-5_44",
+          "version": "DOI-matched publisher subscription preview",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R156-springer-chapter.html",
+          "sha256": "e3b875926533688e066ca03406ad87ed2e01a33fa9cb3d1e8a64d9609e303e97",
+          "bytes": 322131,
+          "kind": "publisher_identity_record",
+          "limitation": null
+        }
+      ],
+      "limitations": [
+        "This is a bounded negative recommendation on dataset addition, not a claim that FAIR-Data does not exist or can never be reusable.",
+        "Initial browser accessibility failures and publisher preview did not determine the verdict: the complete14-page officialPDF was obtained and inspected.",
+        "No negative conclusion is drawn merely from absence of public code/data, licensing or successful independent reproduction.",
+        "Algorithm1 is a raster figure absent from plain extraction; page6was rendered and read before making the input/output finding.",
+        "Exact image-source composition, external reuse/provision and curation detail are insufficiently specified for the requested R1 resource role; retain this limitation.",
+        "ICIC2026 edition versus publisher2027copyright is out of this assigned scientific review; no publication action added."
+      ],
+      "scientific_confidence": "MODERATE: method-support evidence is concrete; independently substantive resource status remains unresolved",
+      "current_authoritative_status": "UNRESOLVED",
+      "formal_action_closed": false,
+      "authoritative_data_changed": false,
+      "maintainer_acceptance": "PENDING"
+    },
+    {
+      "review_id": "R223",
+      "paper_id": "curated:038a578e520799c8671e",
+      "title": "Toward Generalizable Forgery Detection and Reasoning",
+      "original_action": {
+        "review_id": "R223",
+        "paper_id": "curated:038a578e520799c8671e",
+        "title": "Toward Generalizable Forgery Detection and Reasoning",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "MMFR-Dataset is a contributed collection of 120K images with 378K reasoning annotations.",
+        "evidence_url": "https://doi.org/10.1109/tip.2026.3673967",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:038a578e520799c8671e",
+        "evidence_excerpt": "Accurate and interpretable detection of AI-generated images is essential for mitigating risks associated with AI misuse. However, the substantial domain gap among generative models",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: MMFR-Dataset is a contributed collection of 120K images with 378K reasoning annotations.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1"
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_research_types": [
+        "method",
+        "dataset"
+      ],
+      "proposed_field_changes": [
+        {
+          "logical_field": "research_types",
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset"
+          ],
+          "authoritative_target": {
+            "path": "data/curated/paper_taxonomy.csv",
+            "row_key": {
+              "taxonomy_id": "paper_id:curated:038a578e520799c8671e"
+            },
+            "field": "research_types",
+            "before": "method",
+            "proposed_after": "method;dataset"
+          },
+          "existing_compatibility_paper_row": true,
+          "compatibility_target_if_required_by_schema": {
+            "path": "data/curated/papers.csv",
+            "row_key": {
+              "paper_id": "curated:038a578e520799c8671e"
+            },
+            "field": "research_types"
+          }
+        }
+      ],
+      "evidence_record": "per_paper_final/R223.json",
+      "evidence_record_sha256": "310e119f94ccab701692337fa0d99bf32b8b288b6cfe1bdade80b4cecd1f8009",
+      "original_reviewer_record": {
+        "path": "per_paper/R223.json",
+        "sha256": "584588d5eb0b11baa73d80f116c52876fa29d2f370f8b35c77b76577acdb9c68",
+        "outcome": "SUPPORTED_ADDITION"
+      },
+      "independent_QC": {
+        "status": "COMPLETE",
+        "receipt": "qc/resources_independent_review.json",
+        "sha256": "f5d4926d6a77fb581a5c584621168ae633b23b65afbbaf84fd3df711c7a6442a",
+        "verdict_record": {
+          "review_id": "R223",
+          "paper_id": "curated:038a578e520799c8671e",
+          "original_reviewer_outcome": "SUPPORTED_ADDITION",
+          "independent_outcome": "SUPPORTED_ADDITION",
+          "agree_with_original": true,
+          "proposed_research_types": [
+            "method",
+            "dataset"
+          ],
+          "current_tasks_preserved": [
+            "detection"
+          ],
+          "confidence": "HIGH for bounded contribution classification with source/version caveats"
+        },
+        "original_record_sha256": "584588d5eb0b11baa73d80f116c52876fa29d2f370f8b35c77b76577acdb9c68",
+        "disagreement_preserved": false
+      },
+      "source_provenance": [
+        {
+          "url": "https://arxiv.org/html/2503.21210v4",
+          "version": "arXiv2503.21210v4,07Apr2026; complete HTML",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R223-arxiv-v4.html",
+          "sha256": "e665dfad9672fc0f804405c1c9d0ecc838e708b2c201fa1910368e55d56bb1b6",
+          "bytes": 382430,
+          "kind": "full_manuscript",
+          "limitation": "IEEE DOI10.1109/tip.2026.3673967 retained; publisher-final equivalence not independently verified."
+        }
+      ],
+      "limitations": [
+        "Author-depositedv4 only; IEEE final equivalence not independently verified.",
+        "120K/378Ksummary versus121,256/379,207 detailed totals remain explicit.",
+        "530hours per expert versus15seconds/image and10experts is unresolved; no corrected labor figure is imposed.",
+        "GPT-4o-assisted reasoning and expert review do not prove factual causal validity of forensic explanations.",
+        "Dataset/code availability, licenses, disjointness and operational reproducibility were not tested; no datasets or models downloaded.",
+        "Retain detection/method; no new benchmark/task action.",
+        "Independent QC: III-A describes1000ImageNet+1000LAIONreal control pools, with LAION reused for nine generator conditions, while III-C counts10000real evaluation entries. The sum121256 is reported membership arithmetic, not verified unique-image/file cardinality."
+      ],
+      "scientific_confidence": "high for R1 substantive contribution; qualified for numerical resource properties, external validity and final-version correspondence",
+      "current_authoritative_status": "UNRESOLVED",
+      "formal_action_closed": false,
+      "authoritative_data_changed": false,
+      "maintainer_acceptance": "PENDING"
+    },
+    {
+      "review_id": "P251",
+      "paper_id": "doi:10.1109/i2cacis65476.2025.11100461",
+      "title": "A Review on Deepfake Image Detection Approaches, Techniques and Methods",
+      "original_action": {
+        "review_id": "P251",
+        "paper_id": "doi:10.1109/i2cacis65476.2025.11100461",
+        "title": "A Review on Deepfake Image Detection Approaches, Techniques and Methods",
+        "current": {
+          "year": 2025,
+          "publication_type": "conference",
+          "venue": "IEEE International Conference on Automatic Control and Intelligent Systems",
+          "venue_id": "venue:ieee-international-conference-on-automatic-control-and-intelligent-systems",
+          "venue_acronym": "I2CACIS",
+          "venue_track": "Main",
+          "doi": "10.1109/i2cacis65476.2025.11100461",
+          "paper_url": "https://doi.org/10.1109/i2cacis65476.2025.11100461",
+          "formal_url": "https://doi.org/10.1109/i2cacis65476.2025.11100461",
+          "arxiv_id": "",
+          "arxiv_url": "",
+          "authors": [
+            "Jefferson Ng",
+            "Muhammed Basheer Jasser",
+            "Bayan Issa",
+            "Samuel-Soma M. Ajibade",
+            "Hui Na Chua"
+          ]
+        },
+        "evidence_urls": [
+          "https://doi.org/10.1109/i2cacis65476.2025.11100461"
+        ],
+        "batch": "B",
+        "confidence": "bounded_to_available_evidence",
+        "evidence_required": "Read the formal paper byline and confirm full author order/names; do not silently merge name variants or add an empty author.",
+        "proposed_changes": {},
+        "status": "SOURCE_CONFLICT",
+        "reason": "Current author list differs materially from cached publisher-deposited names or includes an empty deposited author; neither source is assumed correct.",
+        "field_checks": {
+          "venue": "present",
+          "year": "present",
+          "publication_type": "formal_in_current_corpus",
+          "canonical_url": "present",
+          "doi": "present_not_independently_reverified",
+          "arxiv": "optional_not_a_defect",
+          "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+          "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+        },
+        "cached_crossref_check": {
+          "path": "data/raw/venue_audit_crossref/41f81b8d41c113f32f3c.json",
+          "doi": "10.1109/i2cacis65476.2025.11100461",
+          "years": [
+            2025
+          ],
+          "authors": [
+            "Jia Chyi Ng",
+            "Muhammed Basheer Jasser",
+            "Bayan Issa",
+            "Samuel-Soma M. Ajibade",
+            "Hui Na Chua"
+          ],
+          "normalized_author_sequence_matches": false,
+          "extra_bibliographic_evidence": {
+            "page": "512-517"
+          }
+        }
+      },
+      "governing_policy_ids": [],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method",
+        "survey"
+      ],
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_research_types": [
+        "method",
+        "survey"
+      ],
+      "proposed_field_changes": [
+        {
+          "paper_id": "doi:10.1109/i2cacis65476.2025.11100461",
+          "logical_field": "paper.authors[0].name",
+          "before": "Jefferson Ng",
+          "after": "Jia Chyi Ng",
+          "remaining_four_authors_order_unchanged": true,
+          "person_alias_equivalence": "UNVERIFIED; do not assert or merge",
+          "other_papers_affected": 0,
+          "existing_curated_papers_csv_row": false,
+          "implementation_boundary": "This record is OpenAlex-derived with no existing curated papers.csv row. B4 must verify a paper-scoped schema/write path and dependent display-string handling before any edit. Do not rewrite raw OpenAlex data, use an institution-only override as a paper-author fix, or propagate a person alias."
+        }
+      ],
+      "evidence_record": "per_paper_final/P251.json",
+      "evidence_record_sha256": "48e1505561de6e6a6fd7f332171ad4532dcc018443e56c962db12a0806afffbc",
+      "original_reviewer_record": {
+        "path": "per_paper/P251.json",
+        "sha256": "d8dfa0b894072f39751d3f992da90783e3d15ac1b1ae5720db0c141fad25de23",
+        "outcome": "SUPPORTED_ADDITION"
+      },
+      "independent_QC": {
+        "status": "COMPLETE",
+        "receipt": "qc/root_independent_review.json",
+        "sha256": "30d5149cb0483f307bd9e9ef8bf86c2324c6b0cb8c6ac2fe62556bfe80e18102",
+        "verdict_record": {
+          "review_id": "P251",
+          "independent_outcome": "SUPPORTED_ADDITION",
+          "agree_with_original_recommendation": true,
+          "qualification": "Bounded first display-name correction only. The originalB2alternative official completeauthor/order record requirement is met by edition-specific literalIEEEprintTOC plus exactDOI-linked institutional record; no paper-first-page or personalalias equivalence claim.",
+          "confidence": "HIGH for bibliographic display names/order; person-identity alias remains UNVERIFIED",
+          "proposed_types_unchanged": [
+            "method",
+            "survey"
+          ]
+        },
+        "original_record_sha256": "d8dfa0b894072f39751d3f992da90783e3d15ac1b1ae5720db0c141fad25de23",
+        "disagreement_preserved": false
+      },
+      "source_provenance": [
+        {
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-proceedings-TOC.pdf",
+          "url": "https://www.proceedings.com/content/081/081963webtoc.pdf",
+          "version": "IEEE 2025 proceedings print reproduction, Curran Associates; CFP25H61-POD; online ISBN9798331542948",
+          "role": "Edition-specific literal author/title/page evidence; not full manuscript",
+          "sha256": "a1587e31ac191d4a6a7ffb5bf0589b86eba9521884d227b8c49901eee983a282",
+          "bytes": 1171515
+        },
+        {
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-institutional-record.html",
+          "url": "https://scholarprofiles.sunwayuniversity.edu.my/en/publications/a-review-on-deepfake-image-detection-approaches-techniques-and-me/",
+          "version": "Institutional publication record captured2026-11-02",
+          "role": "DOI/title/edition/page and complete ordered author record; not methods/evaluation evidence",
+          "sha256": "dea95e7381f582d36205960d2f93557619566d4ea675725fe258d593bb1b5b6b",
+          "bytes": 52222
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/venue_audit_crossref/41f81b8d41c113f32f3c.json",
+          "url": "https://api.crossref.org/works/10.1109/I2CACIS65476.2025.11100461",
+          "version": "Previously preserved publisher deposit; no new Crossref request for P251",
+          "role": "DOI-matched bibliographic conflict corroboration; deposit alone did not decide preference",
+          "sha256": "5f2a741ef9483ca656ed3045b8617c841ea09ea4e512cf16fe66087b47c6ec50",
+          "bytes": 14032
+        }
+      ],
+      "limitations": [
+        "The six-page paper itself was not retrieved; literal byline is from its edition-specific proceedings TOC, not a paper-first-page claim.",
+        "Jefferson Ng has not been proven to be a personal alias of Jia Chyi Ng; propose correcting this work display byline only.",
+        "Institution metadata writes Samuel Soma without the hyphen; the printed TOC and existing canonical record use Samuel-Soma, which is preserved.",
+        "R251 scientific question remains independent and open.",
+        "This record is OpenAlex-derived with no existing curated papers.csv row. B4 must verify a paper-scoped schema/write path and dependent display-string handling before any edit. Do not rewrite raw OpenAlex data, use an institution-only override as a paper-author fix, or propagate a person alias."
+      ],
+      "scientific_confidence": "HIGH for bounded bibliographic byline; no scientific contribution finding",
+      "current_authoritative_status": "UNRESOLVED",
+      "formal_action_closed": false,
+      "authoritative_data_changed": false,
+      "maintainer_acceptance": "PENDING"
+    },
+    {
+      "review_id": "R251",
+      "paper_id": "doi:10.1109/i2cacis65476.2025.11100461",
+      "title": "A Review on Deepfake Image Detection Approaches, Techniques and Methods",
+      "original_action": {
+        "review_id": "R251",
+        "paper_id": "doi:10.1109/i2cacis65476.2025.11100461",
+        "title": "A Review on Deepfake Image Detection Approaches, Techniques and Methods",
+        "dimension": "research_types",
+        "current_labels": [
+          "method",
+          "survey"
+        ],
+        "proposed_labels": [
+          "survey"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "A literature review of existing approaches does not establish a novel method contribution. Confirm the full paper before removal.",
+        "evidence_url": "https://doi.org/10.1109/i2cacis65476.2025.11100461",
+        "evidence_basis": "abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#doi:10.1109/i2cacis65476.2025.11100461",
+        "evidence_excerpt": "Deepfake technology has been increasingly advanced and highly capable of generating and modifying media contents. Deepfake technologies like automated generation of scripts and avatars",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: A literature review of existing approaches does not establish a novel method contribution. Confirm the full paper before removal.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method",
+          "survey"
+        ],
+        "proposed_research_types": [
+          "survey"
+        ]
+      },
+      "governing_policy_ids": [
+        "R4"
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method",
+        "survey"
+      ],
+      "original_reviewer_outcome": "EVIDENCE_INSUFFICIENT",
+      "provisional_disposition": "EVIDENCE_INSUFFICIENT",
+      "proposed_research_types": [
+        "method",
+        "survey"
+      ],
+      "proposed_field_changes": [],
+      "evidence_record": "per_paper_final/R251.json",
+      "evidence_record_sha256": "2d87ec97ff695d5c7419b145d1f3e46e92005c67a0824b5617a39b95581e41b5",
+      "original_reviewer_record": {
+        "path": "per_paper/R251.json",
+        "sha256": "d6c190f54375dc51730ff4a552b2a12109117e631b44269ecb7bbb9991fb4314",
+        "outcome": "EVIDENCE_INSUFFICIENT"
+      },
+      "independent_QC": {
+        "status": "COMPLETE",
+        "receipt": "qc/root_independent_review.json",
+        "sha256": "30d5149cb0483f307bd9e9ef8bf86c2324c6b0cb8c6ac2fe62556bfe80e18102",
+        "verdict_record": {
+          "review_id": "R251",
+          "independent_outcome": "EVIDENCE_INSUFFICIENT",
+          "agree_with_original_recommendation": true,
+          "qualification": "Keep method;survey and detection unchanged pending complete primary scientific evidence. HTTP418 is an access gap, not a negative novelty finding or a resolved action.",
+          "confidence": "HIGH that the present packet is insufficient; no confidence assertion about absent novelty"
+        },
+        "original_record_sha256": "d6c190f54375dc51730ff4a552b2a12109117e631b44269ecb7bbb9991fb4314",
+        "disagreement_preserved": false
+      },
+      "source_provenance": [
+        {
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-institutional-record.html",
+          "url": "https://scholarprofiles.sunwayuniversity.edu.my/en/publications/a-review-on-deepfake-image-detection-approaches-techniques-and-me/",
+          "version": "Institutional publication record captured2026-11-02",
+          "role": "DOI/title/edition/page and complete ordered author record; not methods/evaluation evidence",
+          "sha256": "dea95e7381f582d36205960d2f93557619566d4ea675725fe258d593bb1b5b6b",
+          "bytes": 52222
+        },
+        {
+          "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/venue_audit_crossref/41f81b8d41c113f32f3c.json",
+          "url": "https://api.crossref.org/works/10.1109/I2CACIS65476.2025.11100461",
+          "version": "Previously preserved publisher deposit; no new Crossref request for P251",
+          "role": "DOI-matched bibliographic conflict corroboration; deposit alone did not decide preference",
+          "sha256": "5f2a741ef9483ca656ed3045b8617c841ea09ea4e512cf16fe66087b47c6ec50",
+          "bytes": 14032
+        },
+        {
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-proceedings-TOC.pdf",
+          "url": "https://www.proceedings.com/content/081/081963webtoc.pdf",
+          "version": "IEEE 2025 proceedings print reproduction, Curran Associates; CFP25H61-POD; online ISBN9798331542948",
+          "role": "Edition-specific literal author/title/page evidence; not full manuscript",
+          "sha256": "a1587e31ac191d4a6a7ffb5bf0589b86eba9521884d227b8c49901eee983a282",
+          "bytes": 1171515
+        },
+        {
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R251-ieee-manuscript.response",
+          "url": "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11100461",
+          "version": "HTTP418 HTML challenge, not PDF",
+          "role": "Preserved failed access response only",
+          "sha256": "5950e2e869635c4f0fca68056d541b1871e47c7853691021fc55edfc986b600d",
+          "bytes": 15410
+        }
+      ],
+      "limitations": [
+        "No full scientific manuscript obtained.",
+        "Do not convert HTTP418 access failure into a negative scientific conclusion.",
+        "The supported P251 bibliographic proposal cannot close R251."
+      ],
+      "scientific_confidence": "INSUFFICIENT to decide method removal; HIGH that inspected material does not meet the required complete-paper gate",
+      "current_authoritative_status": "UNRESOLVED",
+      "formal_action_closed": false,
+      "authoritative_data_changed": false,
+      "maintainer_acceptance": "PENDING"
+    },
+    {
+      "review_id": "R284",
+      "paper_id": "curated:cba231098f84685520e8",
+      "title": "Combating Dataset Misalignment for Robust AI-Generated Image Detection in the Real World",
+      "original_action": {
+        "review_id": "R284",
+        "paper_id": "curated:cba231098f84685520e8",
+        "title": "Combating Dataset Misalignment for Robust AI-Generated Image Detection in the Real World",
+        "dimension": "research_types",
+        "current_labels": [
+          "dataset"
+        ],
+        "proposed_labels": [
+          "dataset",
+          "analysis_study"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "The contribution diagnoses dataset-encoding misalignment and its effect on real-world generalization.",
+        "evidence_url": "https://doi.org/10.1145/3709022.3736541",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:cba231098f84685520e8",
+        "evidence_excerpt": "AI-generated images are increasingly prevalent on the web, raising concerns about the real-world applicability of detection methods. While current detectors perform well on benchmark",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The contribution diagnoses dataset-encoding misalignment and its effect on real-world generalization.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "dataset"
+        ],
+        "proposed_research_types": [
+          "dataset",
+          "analysis_study"
+        ]
+      },
+      "governing_policy_ids": [
+        "R3"
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "dataset"
+      ],
+      "original_reviewer_outcome": "EVIDENCE_INSUFFICIENT",
+      "provisional_disposition": "EVIDENCE_INSUFFICIENT",
+      "proposed_research_types": [
+        "dataset"
+      ],
+      "proposed_field_changes": [],
+      "evidence_record": "per_paper_final/R284.json",
+      "evidence_record_sha256": "360c3719d26bd24c8f518b4bf9875e05088505bd1f03b08c4afecb20085863da",
+      "original_reviewer_record": {
+        "path": "per_paper/R284.json",
+        "sha256": "bc9313270c15b2d3bfd7d0c61390a5548f7f62e0beab01ae5de419740e2366d6",
+        "outcome": "EVIDENCE_INSUFFICIENT"
+      },
+      "independent_QC": {
+        "status": "COMPLETE",
+        "receipt": "qc/analysis_independent_review.json",
+        "sha256": "e1af6cfae1b60c398ad50aad843c503b487d2c22207d305c1945855e7dd69716",
+        "verdict_record": {
+          "review_id": "R284",
+          "input_record_sha256": "bc9313270c15b2d3bfd7d0c61390a5548f7f62e0beab01ae5de419740e2366d6",
+          "original_reviewer_outcome": "EVIDENCE_INSUFFICIENT",
+          "independent_outcome": "EVIDENCE_INSUFFICIENT",
+          "disagreement": false,
+          "proposed_research_types": [
+            "dataset"
+          ],
+          "verdict": "APPROVE_EVIDENCE_INSUFFICIENT_HOLD",
+          "scientific_basis": "Official institution metadata independently verifies title,DOI and Choi/Jung/Woo sequence. Publisher PDF response is403HTML; abstract motivation cannot establish the full systematic-comparison contribution.",
+          "claim_checks": [
+            "Institution record is treated as bibliographic/abstract evidence only.",
+            "Preserve current dataset/detection; no method or new action added."
+          ],
+          "limitations": [
+            "Full contribution list, controlled encoding comparisons and quantitative tables unavailable."
+          ]
+        },
+        "original_record_sha256": "bc9313270c15b2d3bfd7d0c61390a5548f7f62e0beab01ae5de419740e2366d6",
+        "disagreement_preserved": false
+      },
+      "source_provenance": [
+        {
+          "url": "https://scholarx.skku.edu/item/3b755c7a-41af-4e21-83d1-565ddccb83a4",
+          "artifact": "evidence/analysis/R284/institution-record.html",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R284/institution-record.html",
+          "sha256": "50a2c3389443f02c2f930d05ba5d7b6854153629b6e879456bd5acef8751bd3e",
+          "bytes": 25702,
+          "role": "official_institution_metadata_and_abstract",
+          "version": "SKKU publication record",
+          "complete_manuscript": false
+        },
+        {
+          "url": "https://dl.acm.org/doi/pdf/10.1145/3709022.3736541",
+          "artifact": "evidence/analysis/R284/publisher-pdf.response",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R284/publisher-pdf.response",
+          "sha256": "c0fb2054fa67441f822fd78dd52242c43c4955d46a2c6176fcc293908bb4ec15",
+          "bytes": 5483,
+          "role": "access_failure_html",
+          "version": "ACM DOI-matched PDF route",
+          "complete_manuscript": false
+        }
+      ],
+      "limitations": [
+        "Authoritative ACM PDF route returned HTTP403 HTML (5483bytes).",
+        "Official SKKU record is metadata/abstract, not a substitute for unavailable methods and tables.",
+        "Dataset encoding/resize/compression claims and any causal interpretation were not independently evaluated. Existing dataset and detection labels stay intact."
+      ],
+      "scientific_confidence": {
+        "bibliographic_identity": "high",
+        "primary_analysis_role": "UNDETERMINED",
+        "hold_justification": "high"
+      },
+      "current_authoritative_status": "UNRESOLVED",
+      "formal_action_closed": false,
+      "authoritative_data_changed": false,
+      "maintainer_acceptance": "PENDING"
+    },
+    {
+      "review_id": "R363",
+      "paper_id": "curated:14272073fa5bc0e301b5",
+      "title": "LEGION: Learning to Ground and Explain for Synthetic Image Detection",
+      "original_action": {
+        "review_id": "R363",
+        "paper_id": "curated:14272073fa5bc0e301b5",
+        "title": "LEGION: Learning to Ground and Explain for Synthetic Image Detection",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "SynthScars contributes 12,236 images with expert artifact masks, explanations and categories.",
+        "evidence_url": "https://doi.org/10.1109/iccv51701.2025.01760",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:14272073fa5bc0e301b5",
+        "evidence_excerpt": "The rapid advancements in generative technology have emerged as a double-edged sword. While offering powerful tools that enhance convenience, they also pose significant social",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: SynthScars contributes 12,236 images with expert artifact masks, explanations and categories.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset"
+        ]
+      },
+      "governing_policy_ids": [
+        "R1"
+      ],
+      "current_tasks": [
+        "detection",
+        "localization"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_research_types": [
+        "method",
+        "dataset"
+      ],
+      "proposed_field_changes": [
+        {
+          "logical_field": "research_types",
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "dataset"
+          ],
+          "authoritative_target": {
+            "path": "data/curated/paper_taxonomy.csv",
+            "row_key": {
+              "taxonomy_id": "paper_id:curated:14272073fa5bc0e301b5"
+            },
+            "field": "research_types",
+            "before": "method",
+            "proposed_after": "method;dataset"
+          },
+          "existing_compatibility_paper_row": true,
+          "compatibility_target_if_required_by_schema": {
+            "path": "data/curated/papers.csv",
+            "row_key": {
+              "paper_id": "curated:14272073fa5bc0e301b5"
+            },
+            "field": "research_types"
+          }
+        }
+      ],
+      "evidence_record": "per_paper_final/R363.json",
+      "evidence_record_sha256": "2126769b4fdadc403352669ce9f3921ed644a5557b0db83aa2f3561e0f27e6ab",
+      "original_reviewer_record": {
+        "path": "per_paper/R363.json",
+        "sha256": "e3c7b75d1d8e7e2dcc04fd1b7b1235a5e9af82779f21ea75b51da06dc4eb1e0e",
+        "outcome": "SUPPORTED_ADDITION"
+      },
+      "independent_QC": {
+        "status": "COMPLETE",
+        "receipt": "qc/resources_independent_review.json",
+        "sha256": "f5d4926d6a77fb581a5c584621168ae633b23b65afbbaf84fd3df711c7a6442a",
+        "verdict_record": {
+          "review_id": "R363",
+          "paper_id": "curated:14272073fa5bc0e301b5",
+          "original_reviewer_outcome": "SUPPORTED_ADDITION",
+          "independent_outcome": "SUPPORTED_ADDITION",
+          "agree_with_original": true,
+          "proposed_research_types": [
+            "method",
+            "dataset"
+          ],
+          "current_tasks_preserved": [
+            "detection",
+            "localization"
+          ],
+          "confidence": "HIGH for bounded contribution classification with source/version caveats"
+        },
+        "original_record_sha256": "e3c7b75d1d8e7e2dcc04fd1b7b1235a5e9af82779f21ea75b51da06dc4eb1e0e",
+        "disagreement_preserved": false
+      },
+      "source_provenance": [
+        {
+          "url": "https://arxiv.org/html/2503.15264v1",
+          "version": "arXiv2503.15264v1,19Mar2025; complete HTML including appendices",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R363-arxiv-v1.html",
+          "sha256": "b198fbd3b2f9b83c7134febd1fa417afe3a58f2deea86bcc8a2261182f6eab2b",
+          "bytes": 380813,
+          "kind": "full_manuscript",
+          "limitation": "Canonical ICCV DOI10.1109/iccv51701.2025.01760 retained; exact final publisher manuscript not inspected."
+        }
+      ],
+      "limitations": [
+        "OnlyarXivv1fullmanuscript inspected; exact final ICCVversion equivalence unverified.",
+        "V1says code/model/dataset will be released. No current release availability,license/data contents or reproduction verified.",
+        "All12,236images are fully synthetic; this is not a balanced real/fake dataset.",
+        "Human-expert annotations and source statistics are reported,not independently reproduced; complex/small-artifact limitations remain.",
+        "Preserve existingT363 detection;localization acceptance. No R2benchmark question added."
+      ],
+      "scientific_confidence": "high for bounded R1 dataset contribution; qualified for final-version/release correspondence and empirical validation",
+      "current_authoritative_status": "UNRESOLVED",
+      "formal_action_closed": false,
+      "authoritative_data_changed": false,
+      "maintainer_acceptance": "PENDING"
+    },
+    {
+      "review_id": "R477",
+      "paper_id": "curated:3312da81174f7d411081",
+      "title": "Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images",
+      "original_action": {
+        "review_id": "R477",
+        "paper_id": "curated:3312da81174f7d411081",
+        "title": "Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images",
+        "dimension": "research_types",
+        "current_labels": [
+          "dataset"
+        ],
+        "proposed_labels": [
+          "dataset",
+          "analysis_study"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "The main contribution measures detector performance as synthetic images evolve during online dissemination.",
+        "evidence_url": "https://doi.org/10.1007/978-3-031-92648-8_24",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:3312da81174f7d411081",
+        "evidence_excerpt": "Synthetic images disseminated online significantly differ from those used during the training and evaluation of the state-of-the-art detectors. In this work, we analyze the",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The main contribution measures detector performance as synthetic images evolve during online dissemination.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "dataset"
+        ],
+        "proposed_research_types": [
+          "dataset",
+          "analysis_study"
+        ]
+      },
+      "governing_policy_ids": [
+        "R3"
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "dataset"
+      ],
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_research_types": [
+        "dataset",
+        "analysis_study"
+      ],
+      "proposed_field_changes": [
+        {
+          "logical_field": "research_types",
+          "before": [
+            "dataset"
+          ],
+          "after": [
+            "dataset",
+            "analysis_study"
+          ],
+          "authoritative_target": {
+            "path": "data/curated/paper_taxonomy.csv",
+            "row_key": {
+              "taxonomy_id": "paper_id:curated:3312da81174f7d411081"
+            },
+            "field": "research_types",
+            "before": "dataset",
+            "proposed_after": "dataset;analysis_study"
+          },
+          "existing_compatibility_paper_row": true,
+          "compatibility_target_if_required_by_schema": {
+            "path": "data/curated/papers.csv",
+            "row_key": {
+              "paper_id": "curated:3312da81174f7d411081"
+            },
+            "field": "research_types"
+          }
+        }
+      ],
+      "evidence_record": "per_paper_final/R477.json",
+      "evidence_record_sha256": "11070da436680042629f0ae1928a56d0df59fac351853821ad0d26f42c4ce962",
+      "original_reviewer_record": {
+        "path": "per_paper/R477.json",
+        "sha256": "275334c1a3613fd00f51e5451a788e390959116dd35b41c7edf1930f2fa33444",
+        "outcome": "SUPPORTED_ADDITION"
+      },
+      "independent_QC": {
+        "status": "COMPLETE",
+        "receipt": "qc/analysis_independent_review.json",
+        "sha256": "e1af6cfae1b60c398ad50aad843c503b487d2c22207d305c1945855e7dd69716",
+        "verdict_record": {
+          "review_id": "R477",
+          "input_record_sha256": "275334c1a3613fd00f51e5451a788e390959116dd35b41c7edf1930f2fa33444",
+          "original_reviewer_outcome": "SUPPORTED_ADDITION",
+          "independent_outcome": "SUPPORTED_ADDITION",
+          "disagreement": false,
+          "proposed_research_types": [
+            "dataset",
+            "analysis_study"
+          ],
+          "verdict": "APPROVE_PROVISIONAL_R3_ADDITION_WITH_SOURCE_CAVEATS",
+          "scientific_basis": "PDFpp2-3 Introduction explicitly frames in-the-wild calibration, discrimination and time-dependent degradation as primary contributions;§§4.4-4.8 are separate structured studies. This exceeds routine FOSID dataset validation or method ablation.",
+          "claim_checks": [
+            "Full18-page authorPDF title/six-author work identity and version2408.11541v1 independently inspected; no Springer-final equivalence inferred.",
+            "§4.8/Q1-Q4 basic-image protocol, EERthreshold/BA,AUC and averaging across four seed lineages/five real datasets verified.",
+            "Table6 render independently verifies FreqDetect55.1/56.5 to48.2/47.9 and overallrelative-2.6/-3.2, not percentagepointdrops.",
+            "Table1 displayed totalURL cells sum3003versus3070reported; unique955/basic713 reconcile.",
+            "Table4 Rine overall71.2/75.9 versus Table5Rine53.5/54.9, while Table5PatchCraft71.2/75.9, supports retained suspectedrowlabel interchange without repair.",
+            "Table6 shows eightnegativeBA,onezeroDire,threepositive; narrative9of12 differs. AUCtennegative confirmed."
+          ],
+          "limitations": [
+            "Four selected lineages and copy histories provide observational evidence, not a universal causal elapsed-time effect.",
+            "Rounded-table counts cannot rule out hidden unrounded differences; no corrected scientific source imposed.",
+            "Existingdatasetrole preserved; unassignedmethod/benchmark roles not proposed."
+          ]
+        },
+        "original_record_sha256": "275334c1a3613fd00f51e5451a788e390959116dd35b41c7edf1930f2fa33444",
+        "disagreement_preserved": false
+      },
+      "source_provenance": [
+        {
+          "url": "https://arxiv.org/pdf/2408.11541v1",
+          "artifact": "evidence/analysis/R477/primary.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R477/primary.pdf",
+          "sha256": "2f901e5686d07c448dc7f5e53b9da6fd16e35d672518c95a4314912fb1084f45",
+          "bytes": 3961338,
+          "role": "complete_author_manuscript",
+          "version": "arXiv2408.11541v1",
+          "complete_manuscript": true
+        },
+        {
+          "url": "https://arxiv.org/pdf/2408.11541v1",
+          "artifact": "evidence/analysis/R477/primary.txt",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R477/primary.txt",
+          "sha256": "e4d3ebefa5422a294caa22714b0325273a7b38b2aafeb4ee528835913ee68829",
+          "bytes": 55631,
+          "role": "derived_full_text",
+          "version": "arXiv2408.11541v1",
+          "complete_manuscript": true
+        },
+        {
+          "url": "https://arxiv.org/pdf/2408.11541v1",
+          "artifact": "evidence/analysis/R477/page-13.png",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R477/page-13.png",
+          "sha256": "dc0529526079bd227e7aa39002fec7eaded4668474c43559097d91ebead4ab9d",
+          "bytes": 344358,
+          "role": "rendered_table_page",
+          "version": "arXiv2408.11541v1 PDFp13",
+          "complete_manuscript": false
+        }
+      ],
+      "limitations": [
+        "Author manuscript v1 is not asserted byte-equivalent to Springer final.",
+        "Table1 reports3070total URLs, whereas the four displayed TotalURLs cells678+772+808+745 sum to3003; preserve both.",
+        "Table5 Rine/PatchCraft displayed All scores appear interchanged relative to Table4; do not silently repair method labels.",
+        "§4.8 narrative says nine BA declines, but rounded Table6 cells show eight negative BA differences, one zero(Dire), and three positive values; ten negative AUC differences are supported. Hidden unrounded values were not available.",
+        "Overall -2.6%/-3.2% are reported mean relative changes, not percentage-point drops.",
+        "Four deliberately selected seed lineages, observational copy histories and nonuniform post-processing do not identify a universal causal effect of elapsed time. EER thresholds and best-of25pretrained models are evaluation choices, not an independently calibrated deployment claim."
+      ],
+      "scientific_confidence": {
+        "primary_analysis_contribution": "high",
+        "reported_numeric_validity": "qualified_by_documented_discrepancies",
+        "causal_generalization": "limited"
+      },
+      "current_authoritative_status": "UNRESOLVED",
+      "formal_action_closed": false,
+      "authoritative_data_changed": false,
+      "maintainer_acceptance": "PENDING"
+    },
+    {
+      "review_id": "R509",
+      "paper_id": "curated:8603d8942c241dd876ed",
+      "title": "On the Exploitation of DCT-Traces in the Generative-AI Domain",
+      "original_action": {
+        "review_id": "R509",
+        "paper_id": "curated:8603d8942c241dd876ed",
+        "title": "On the Exploitation of DCT-Traces in the Generative-AI Domain",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "analysis_study"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "The main contribution systematically characterizes DCT coefficient distributions and persistence under JPEG.",
+        "evidence_url": "https://doi.org/10.1109/icip51287.2024.10648013",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:8603d8942c241dd876ed",
+        "evidence_excerpt": "Deepfakes represent one of the toughest challenges in the world of Cybersecurity and Digital Forensics, especially considering the high-quality results obtained with recent generative",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The main contribution systematically characterizes DCT coefficient distributions and persistence under JPEG.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "analysis_study"
+        ]
+      },
+      "governing_policy_ids": [
+        "R3"
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_research_types": [
+        "method",
+        "analysis_study"
+      ],
+      "proposed_field_changes": [
+        {
+          "logical_field": "research_types",
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "analysis_study"
+          ],
+          "authoritative_target": {
+            "path": "data/curated/paper_taxonomy.csv",
+            "row_key": {
+              "taxonomy_id": "paper_id:curated:8603d8942c241dd876ed"
+            },
+            "field": "research_types",
+            "before": "method",
+            "proposed_after": "method;analysis_study"
+          },
+          "existing_compatibility_paper_row": true,
+          "compatibility_target_if_required_by_schema": {
+            "path": "data/curated/papers.csv",
+            "row_key": {
+              "paper_id": "curated:8603d8942c241dd876ed"
+            },
+            "field": "research_types"
+          }
+        }
+      ],
+      "evidence_record": "per_paper_final/R509.json",
+      "evidence_record_sha256": "642a97568799ce08187780d23e566e5388bafe20aaf1ae4432f84ccdd827074b",
+      "original_reviewer_record": {
+        "path": "per_paper/R509.json",
+        "sha256": "1b652c0780ca4699fbe355ebfc9fcae5ac18762cecaf133b40dcf37c7879166b",
+        "outcome": "SUPPORTED_ADDITION"
+      },
+      "independent_QC": {
+        "status": "COMPLETE",
+        "receipt": "qc/analysis_independent_review.json",
+        "sha256": "e1af6cfae1b60c398ad50aad843c503b487d2c22207d305c1945855e7dd69716",
+        "verdict_record": {
+          "review_id": "R509",
+          "input_record_sha256": "1b652c0780ca4699fbe355ebfc9fcae5ac18762cecaf133b40dcf37c7879166b",
+          "original_reviewer_outcome": "SUPPORTED_ADDITION",
+          "independent_outcome": "SUPPORTED_ADDITION",
+          "disagreement": false,
+          "proposed_research_types": [
+            "method",
+            "analysis_study"
+          ],
+          "verdict": "APPROVE_PROVISIONAL_R3_ADDITION_WITH_SOURCE_CAVEATS",
+          "scientific_basis": "Fullv3first-page contribution bullets explicitly prioritize statistical characterization and distinguishing DCT traces. Sections4.1/4.3/5 systematically examine distributions, feature subsets and JPEG persistence; this is primary analysis beyond supporting ablations.",
+          "claim_checks": [
+            "Title/Pontorno-Guarnera-Battiato and version2402.02209v3 independently verified from full7-pagePDF; finalIEEE equivalence remains unverified.",
+            "Renderedp2Table1 andprose independently confirm19341versus19334real and72336/72329derived totals, neither72334.",
+            "Section4.3 explicitly averages LIME contributions over correctly classified TEST images; held-out selection/evaluation separation not established.",
+            "Renderedp5Table2 independently verifiesGBallRAW82.57/80.81,POSLIMERAW82.21/80.34,KNNABSLIMERAW68.07/65.25andQF30=53.05/50.30.",
+            "Figure5caption contradictoryQFdirection independently visible;§5.2describesstrongercompressionatlowerQF."
+          ],
+          "limitations": [
+            "Feature-selection protocol may induce optimistic evaluation; contribution support does not certify empirical validity.",
+            "Real/GAN/DM-family prediction does not create an individual-generator attribution action.",
+            "Existingmethod/detection retained."
+          ]
+        },
+        "original_record_sha256": "1b652c0780ca4699fbe355ebfc9fcae5ac18762cecaf133b40dcf37c7879166b",
+        "disagreement_preserved": false
+      },
+      "source_provenance": [
+        {
+          "url": "https://arxiv.org/pdf/2402.02209v3",
+          "artifact": "evidence/analysis/R509/primary.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R509/primary.pdf",
+          "sha256": "b8671fac2b501658e07ff82e89ee4c5cfccc7beecad1000df9406db7c02e9e8e",
+          "bytes": 5436842,
+          "role": "complete_author_manuscript",
+          "version": "arXiv2402.02209v3",
+          "complete_manuscript": true
+        },
+        {
+          "url": "https://arxiv.org/pdf/2402.02209v3",
+          "artifact": "evidence/analysis/R509/primary.txt",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R509/primary.txt",
+          "sha256": "027f5c835b429749a43f339f441a39d7ac9ec1c42a922e9aad019ba2680bd5e6",
+          "bytes": 54045,
+          "role": "derived_full_text",
+          "version": "arXiv2402.02209v3",
+          "complete_manuscript": true
+        },
+        {
+          "url": "https://arxiv.org/pdf/2402.02209v3",
+          "artifact": "evidence/analysis/R509/page-2.png",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R509/page-2.png",
+          "sha256": "37ff87787243fda31ee5d3cf658ae0839a4ca76590371fedb5de854d46eec9a3",
+          "bytes": 942159,
+          "role": "rendered_table_and_dataset_page",
+          "version": "arXiv2402.02209v3 PDFp2",
+          "complete_manuscript": false
+        },
+        {
+          "url": "https://arxiv.org/pdf/2402.02209v3",
+          "artifact": "evidence/analysis/R509/page-5.png",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R509/page-5.png",
+          "sha256": "9cd91c283b0e6192f24fb37e9d8b046179ff687a1012095a6840abbb867c0d5d",
+          "bytes": 526778,
+          "role": "rendered_results_page",
+          "version": "arXiv2402.02209v3 PDFp5",
+          "complete_manuscript": false
+        }
+      ],
+      "limitations": [
+        "Manuscript v3 is not asserted publisher-final equivalent; no scientific evidence is silently borrowed from a later work.",
+        "§3 prose gives72334total images and19334real,37572GAN,15423DM; their sum is72329. Table1 instead gives19341real, and its displayed GAN architecture rows sum37572 while its DM rows sum15423, yielding72336overall. Neither sum equals72334; no correction is applied.",
+        "§4.3 averages LIME contributions over correctly classified test images; a separate selection/evaluation split is not established in the inspected text, so test-informed feature-selection optimism remains a validity concern.",
+        "The three prediction classes are real/GAN-family/DM-family; this review does not change current tasks or equate broad family recognition with individual generator attribution.",
+        "Figure5 caption says high frequencies vanish as QF increases, while §5.2 correctly discusses stronger compression as QF decreases. Preserve the caption/text inconsistency.",
+        "Table2 shows all-coefficient GradientBoosting RAW82.57% versus POS-LIME82.21%; do not restate LIME as uniformly superior. Correlations, classification accuracy and LIME importance do not establish unique universally causal fingerprints."
+      ],
+      "scientific_confidence": {
+        "primary_analysis_contribution": "high",
+        "reported_data_totals": "internally_inconsistent",
+        "empirical_validity": "qualified_by_selection_protocol_and_source_inconsistencies"
+      },
+      "current_authoritative_status": "UNRESOLVED",
+      "formal_action_closed": false,
+      "authoritative_data_changed": false,
+      "maintainer_acceptance": "PENDING"
+    },
+    {
+      "review_id": "R512",
+      "paper_id": "curated:c3041d4480f5780e7492",
+      "title": "Parents and Children: Distinguishing Multimodal Deepfakes from Natural Images",
+      "original_action": {
+        "review_id": "R512",
+        "paper_id": "curated:c3041d4480f5780e7492",
+        "title": "Parents and Children: Distinguishing Multimodal Deepfakes from Natural Images",
+        "dimension": "research_types",
+        "current_labels": [
+          "method",
+          "dataset"
+        ],
+        "proposed_labels": [
+          "method",
+          "dataset",
+          "analysis_study"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "The paper conducts a systematic comparison of contrastive/classification features and disentangles semantic versus low-level evidence.",
+        "evidence_url": "https://doi.org/10.1145/3665497",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:c3041d4480f5780e7492",
+        "evidence_excerpt": "Recent advancements in diffusion models have enabled the generation of realistic deepfakes from textual prompts in natural language. While these models have numerous benefits",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The paper conducts a systematic comparison of contrastive/classification features and disentangles semantic versus low-level evidence.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method",
+          "dataset"
+        ],
+        "proposed_research_types": [
+          "method",
+          "dataset",
+          "analysis_study"
+        ]
+      },
+      "governing_policy_ids": [
+        "R3"
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method",
+        "dataset"
+      ],
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_research_types": [
+        "method",
+        "dataset",
+        "analysis_study"
+      ],
+      "proposed_field_changes": [
+        {
+          "logical_field": "research_types",
+          "before": [
+            "method",
+            "dataset"
+          ],
+          "after": [
+            "method",
+            "dataset",
+            "analysis_study"
+          ],
+          "authoritative_target": {
+            "path": "data/curated/paper_taxonomy.csv",
+            "row_key": {
+              "taxonomy_id": "paper_id:curated:c3041d4480f5780e7492"
+            },
+            "field": "research_types",
+            "before": "method;dataset",
+            "proposed_after": "method;dataset;analysis_study"
+          },
+          "existing_compatibility_paper_row": true,
+          "compatibility_target_if_required_by_schema": {
+            "path": "data/curated/papers.csv",
+            "row_key": {
+              "paper_id": "curated:c3041d4480f5780e7492"
+            },
+            "field": "research_types"
+          }
+        }
+      ],
+      "evidence_record": "per_paper_final/R512.json",
+      "evidence_record_sha256": "2323b1e23570e85fcd748afb4b5bc05aa6fac4058bba2bb6282b207522497c93",
+      "original_reviewer_record": {
+        "path": "per_paper/R512.json",
+        "sha256": "530cd184a265bc88869f7a62f2d586ef261cb52b47b44fafb07ee77ae819d281",
+        "outcome": "SUPPORTED_ADDITION"
+      },
+      "independent_QC": {
+        "status": "COMPLETE",
+        "receipt": "qc/root_independent_review.json",
+        "sha256": "30d5149cb0483f307bd9e9ef8bf86c2324c6b0cb8c6ac2fe62556bfe80e18102",
+        "verdict_record": {
+          "review_id": "R512",
+          "independent_outcome": "SUPPORTED_ADDITION",
+          "agree_with_original_recommendation": true,
+          "proposed_research_types": [
+            "method",
+            "dataset",
+            "analysis_study"
+          ],
+          "qualification": "PrimaryR3empirical contribution supported in completearXivv2. Add explicit prevalence caveat; do not infer publisher-final numerical equivalence, causal disentanglement or independent reproduction.",
+          "confidence": "HIGH for contribution classification in inspectedauthorv2; operational reproducibility unverified"
+        },
+        "original_record_sha256": "530cd184a265bc88869f7a62f2d586ef261cb52b47b44fafb07ee77ae819d281",
+        "disagreement_preserved": false
+      },
+      "source_provenance": [
+        {
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-arxiv-v2.html",
+          "url": "https://arxiv.org/html/2304.00500v2",
+          "version": "arXiv2304.00500v2,21May2024; author manuscript withTOMM2024 header, not proven byte-equivalent to publisher-final",
+          "role": "Complete scientific source for primaryR3 contribution and protocols/tables",
+          "sha256": "982a1156d8f653d9226c27f25e277ffe5fa7c274a51abb04b1f27251728cdd42",
+          "bytes": 472552
+        },
+        {
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-crossref.json",
+          "url": "https://api.crossref.org/works/10.1145/3665497",
+          "version": "Publisher-deposited DOI metadata captured2026-11-02",
+          "role": "Exact DOI/title/six ordered authors/journal identity correspondence; not final-manuscript scientific evidence",
+          "sha256": "f3e31dd8ce4bdc37c1f3fff3724330aff2f49acfba721820d2fe9e87e46c7c46",
+          "bytes": 26249
+        },
+        {
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-arxiv-v2-tables.json",
+          "url": "https://arxiv.org/html/2304.00500v2",
+          "version": "Deterministic local extraction from complete arXivv2 HTML; rawsource remains immutable",
+          "role": "Structured table transcription, cross-check against rawsource IDs",
+          "sha256": "62fedc9d8dd0774acfeb41711e1d9eb0e8bbe229a224dc2b07799402a634f548",
+          "bytes": 26763
+        }
+      ],
+      "limitations": [
+        "Only two versions of the same StableDiffusion generator family are evaluated here; cross-version results are not universal cross-generator generalization.",
+        "Learned projections encourage semantic/style separation. They do not independently prove that all low-level cues are removed or causally isolate semantics.",
+        "Overall accuracy uses the documented evaluation composition; training balances one randomly selected fake per real cluster, while full dataset clusters contain five generated children.",
+        "Table2 99.68 is validation accuracy; corresponding SD1.4 test accuracy is99.64. Preserve split labels.",
+        "Authorv2 Table3 contains literal .63.26 and nonmonotonic R@3/R@5 entries in some rows; retain source anomalies rather than silently repair them. These cells are not used to authorize theR3 addition.",
+        "No complete publisher-final manuscript was inspected. DOI/title/byline match is bibliographic correspondence, not proof of identical final numerical content.",
+        "New benchmark/data availability or task-label changes are outside this action.",
+        "Independent QC: Under the full six-image evaluation clusters in Sec4.2, the five-fake/one-real prevalence yields an always-fake accuracy of5/6=83.33%. Reported semantic accuracy80.71% is below that derived baseline; AUC85.54 measures a different ranking property. This limits performance interpretation but does not decide primaryR3 contribution support. No new experiment was run.",
+        "Independent QC: Preserve original derived tableJSON. All528 numeric cells match rawHTML, but57MathML fallback duplications and4citation-spacing differences affect nonnumeric transcriptions. Interpret metric/direction headers from primaryHTML, not duplicated fallback text."
+      ],
+      "scientific_confidence": "HIGH for primary-analysis contribution in inspected authorv2; publisher-final version equivalence remains unverified",
+      "current_authoritative_status": "UNRESOLVED",
+      "formal_action_closed": false,
+      "authoritative_data_changed": false,
+      "maintainer_acceptance": "PENDING"
+    },
+    {
+      "review_id": "R625",
+      "paper_id": "curated:dcf7aae2c8590b07aff3",
+      "title": "Leveraging Frequency Analysis for Deep Fake Image Recognition",
+      "original_action": {
+        "review_id": "R625",
+        "paper_id": "curated:dcf7aae2c8590b07aff3",
+        "title": "Leveraging Frequency Analysis for Deep Fake Image Recognition",
+        "dimension": "research_types",
+        "current_labels": [
+          "method"
+        ],
+        "proposed_labels": [
+          "method",
+          "analysis_study"
+        ],
+        "status": "LIKELY_FIX",
+        "confidence": "medium",
+        "reason": "The work systematically establishes frequency artifacts across architectures/resolutions and traces them to upsampling.",
+        "evidence_url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+        "evidence_basis": "reused_audit+abstract",
+        "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:dcf7aae2c8590b07aff3",
+        "evidence_excerpt": "Deep neural networks can generate images that are astonishingly realistic, so much so that it is often hard for humans to distinguish them from",
+        "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The work systematically establishes frequency artifacts across architectures/resolutions and traces them to upsampling.",
+        "batch": "B",
+        "current_tasks": [
+          "detection"
+        ],
+        "proposed_tasks": [
+          "detection"
+        ],
+        "current_research_types": [
+          "method"
+        ],
+        "proposed_research_types": [
+          "method",
+          "analysis_study"
+        ]
+      },
+      "governing_policy_ids": [
+        "R3"
+      ],
+      "current_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "provisional_disposition": "SUPPORTED_ADDITION",
+      "proposed_research_types": [
+        "method",
+        "analysis_study"
+      ],
+      "proposed_field_changes": [
+        {
+          "logical_field": "research_types",
+          "before": [
+            "method"
+          ],
+          "after": [
+            "method",
+            "analysis_study"
+          ],
+          "authoritative_target": {
+            "path": "data/curated/paper_taxonomy.csv",
+            "row_key": {
+              "taxonomy_id": "paper_id:curated:dcf7aae2c8590b07aff3"
+            },
+            "field": "research_types",
+            "before": "method",
+            "proposed_after": "method;analysis_study"
+          },
+          "existing_compatibility_paper_row": true,
+          "compatibility_target_if_required_by_schema": {
+            "path": "data/curated/papers.csv",
+            "row_key": {
+              "paper_id": "curated:dcf7aae2c8590b07aff3"
+            },
+            "field": "research_types"
+          }
+        }
+      ],
+      "evidence_record": "per_paper_final/R625.json",
+      "evidence_record_sha256": "d5abbeb2c4d3827535fd663ee52ba0e9f8de0a45777ff0af99ab1e6c4b2359b7",
+      "original_reviewer_record": {
+        "path": "per_paper/R625.json",
+        "sha256": "a162e2f3314822770a768f2ecfda2b48eebffbce81c8b7673b53ba02f31b20c2",
+        "outcome": "SUPPORTED_ADDITION"
+      },
+      "independent_QC": {
+        "status": "COMPLETE",
+        "receipt": "qc/analysis_independent_review.json",
+        "sha256": "e1af6cfae1b60c398ad50aad843c503b487d2c22207d305c1945855e7dd69716",
+        "verdict_record": {
+          "review_id": "R625",
+          "input_record_sha256": "a162e2f3314822770a768f2ecfda2b48eebffbce81c8b7673b53ba02f31b20c2",
+          "original_reviewer_outcome": "SUPPORTED_ADDITION",
+          "independent_outcome": "SUPPORTED_ADDITION",
+          "disagreement": false,
+          "proposed_research_types": [
+            "method",
+            "analysis_study"
+          ],
+          "verdict": "APPROVE_PROVISIONAL_R3_ADDITION_WITH_MINOR_LOCATOR_ANNOTATION",
+          "scientific_basis": "Independently reopened original cached browser reference turn249view0, without a newURL discovery/download. OfficialPMLR12-pagecontent gives explicit primary frequency-characterization/upsampling contributions and controlledStyleGAN/LSUNexperiments in§3.2-3.3 and§4.2; R3 support is distinct from classificationperformance.",
+          "claim_checks": [
+            "Cached officialfirstpage independently matches fulltitle and sixauthors/ICML2020/PMLR119; canonicalarXiv2003.08685 preserved rather than substitutinganotherpaper.",
+            "§3.3 describesStyleGANvariants differing in nearest-neighbor/bilinear/binomialupsampling at256x256 andFigure3spectralmeansover10000images.",
+            "§4.1/Table1 confirms16000imagesperclass,10000/1000/5000split,75.78pixelversus100.00DCTaccuracy and24.22percentagepointgain.",
+            "Table2PDFp7 independently confirms98.24/85.96/84.20DCTaccuracies acrossupsamplingvariants.",
+            "OriginalprovenancereceiptSHAhashesreviewerobservations,notfullPDFbytes; bothlocalPDFpathsareidenticalpartialtransportbytes and are excluded fromscientificsupport."
+          ],
+          "limitations": [
+            "SourcePDFbytehash andlocalvisualpagelayout unavailable. Cached renderedprimarytext is sufficient for bounded scientificQC, but its capturehash is not a sourcePDFhash.",
+            "Upsampling evidence concerns the investigatedStyleGAN/LSUNconfiguration; do notgeneralizetoallmodernarchitecturesorclaimindependentcausalreproduction."
+          ],
+          "minor_locator_correction": {
+            "original_record": "out_of_scope_observations[0]",
+            "original": "§4.2,Table3",
+            "verified": "§4.3 Source Identification,Table3 PDFp8",
+            "disposition_affected": false,
+            "requested_action": "Record an additive locator annotation in final QC/handoff; preserve original reviewer record. No newtaskaction created."
+          }
+        },
+        "original_record_sha256": "a162e2f3314822770a768f2ecfda2b48eebffbce81c8b7673b53ba02f31b20c2",
+        "disagreement_preserved": false
+      },
+      "source_provenance": [
+        {
+          "url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+          "artifact": "evidence/analysis/R625/browser_primary_review.json",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R625/browser_primary_review.json",
+          "sha256": "da1dce45b5c010564daa64db0efa0cadb0dc725a70b054a8fe39b1c4f8b2b301",
+          "bytes": 1639,
+          "role": "full_primary_manuscript_browser_provenance_receipt",
+          "version": "Official PMLR119 ICML2020 proceedings",
+          "complete_manuscript": true,
+          "sha256_scope": "The SHA256 authenticates this derived provenance receipt, not the source PDF; source-document byte hash unavailable."
+        },
+        {
+          "url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+          "artifact": "evidence/analysis/R625/primary.initial-partial.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R625/primary.initial-partial.pdf",
+          "sha256": "673f12d0dbaf8188ffe0c49ea7aa0820af5f7751a39499401337f9c85c92db28",
+          "bytes": 3077971,
+          "role": "incomplete_transport_artifact_not_scientific_claim_support",
+          "version": "Official PMLR119 PDFpartial",
+          "complete_manuscript": false
+        }
+      ],
+      "limitations": [
+        "Complete authoritative12-page PDF was scientifically inspected through the browser. Local curl PDF is incomplete and is never treated or hashed as a complete source. Browser-only full-source byte checksum remains unavailable.",
+        "The upsampling intervention is controlled within the evaluated StyleGAN/LSUN configuration; the paper’s broader wording about all current GANs is not independently reproduced or generalized to every architecture or modern diffusion model.",
+        "The headline real/fake result100% concerns the specified FFHQ/StyleGAN split and simple frequency classifier; it is not a claim of universal real-world accuracy.",
+        "Original task labels stay detection; scientific resource/benchmark labels and new task reviews are outside this R3 action.",
+        "Independent QC locator correction: five-way source identification appears in Sec4.3, Table3/PDFp8, rather than the original out-of-scope note Sec4.2. This does not affect the assignedR3 recommendation or create a new task-review action."
+      ],
+      "scientific_confidence": {
+        "primary_analysis_contribution": "high",
+        "official_work_identity": "high",
+        "operational_reproducibility": "not_tested"
+      },
+      "current_authoritative_status": "UNRESOLVED",
+      "formal_action_closed": false,
+      "authoritative_data_changed": false,
+      "maintainer_acceptance": "PENDING"
+    }
+  ],
+  "formal_decisions_before_after": [
+    138,
+    138
+  ],
+  "historical_unresolved_before_after": [
+    114,
+    114
+  ],
+  "active_public_unresolved_before_after": [
+    112,
+    112
+  ],
+  "corpus_before_after": [
+    {
+      "public": 674,
+      "formal": 557,
+      "mapped": 613,
+      "unmapped": 61,
+      "relationship_rows": 1410,
+      "unique_paper_institution_pairs": 1410
+    },
+    {
+      "public": 674,
+      "formal": 557,
+      "mapped": 613,
+      "unmapped": 61,
+      "relationship_rows": 1410,
+      "unique_paper_institution_pairs": 1410
+    }
+  ],
+  "tasks_before_after": [
+    {
+      "detection": 621,
+      "source_attribution": 84,
+      "localization": 45
+    },
+    {
+      "detection": 621,
+      "source_attribution": 84,
+      "localization": 45
+    }
+  ],
+  "taxonomy_before_after": [
+    {
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "dataset": 142,
+      "benchmark": 101
+    },
+    {
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "dataset": 142,
+      "benchmark": 101
+    }
+  ],
+  "independent_QC": {
+    "path": "qc/independent_scientific_qc.json",
+    "sha256": "77f8f1a48b35ec0ab8a66c0179c95241605b483d79b4013cee05c50c5c424685"
+  },
+  "new_actions_created": 0,
+  "neurips_status": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+}

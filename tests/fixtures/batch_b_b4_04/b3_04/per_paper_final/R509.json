@@ -1,0 +1,341 @@
+{
+  "schema": "b3-04-final-action-evidence-1",
+  "review_id": "R509",
+  "paper_id": "curated:8603d8942c241dd876ed",
+  "title": "On the Exploitation of DCT-Traces in the Generative-AI Domain",
+  "reviewer": "analysis-lane",
+  "reviewed_utc": "2026-11-02T02:35:44.339572+00:00",
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "assignment_sha256": "644442f487b11db752936c8b04a0f03073b692c5c81df35593b18e9b4f7c8f43",
+  "question": "The main contribution systematically characterizes DCT coefficient distributions and persistence under JPEG.",
+  "governing_policy_ids": [
+    "R3"
+  ],
+  "locked_rule": "Assign analysis_study only when systematic empirical or theoretical analysis is a primary scientific contribution. Routine ablations, robustness tables, parameter sweeps, or supporting interpretability figures do not qualify by themselves.",
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "canonical_identity": {
+    "paper_id": "curated:8603d8942c241dd876ed",
+    "title": "On the Exploitation of DCT-Traces in the Generative-AI Domain",
+    "doi": "10.1109/icip51287.2024.10648013",
+    "arxiv_id": "",
+    "authors": [
+      "Orazio Pontorno",
+      "Luca Guarnera",
+      "Sebastiano Battiato"
+    ]
+  },
+  "proposed_research_types": [
+    "method",
+    "analysis_study"
+  ],
+  "outcome": "SUPPORTED_ADDITION",
+  "sources": [
+    {
+      "url": "https://arxiv.org/pdf/2402.02209v3",
+      "artifact": "evidence/analysis/R509/primary.pdf",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R509/primary.pdf",
+      "sha256": "b8671fac2b501658e07ff82e89ee4c5cfccc7beecad1000df9406db7c02e9e8e",
+      "bytes": 5436842,
+      "role": "complete_author_manuscript",
+      "version": "arXiv2402.02209v3",
+      "complete_manuscript": true
+    },
+    {
+      "url": "https://arxiv.org/pdf/2402.02209v3",
+      "artifact": "evidence/analysis/R509/primary.txt",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R509/primary.txt",
+      "sha256": "027f5c835b429749a43f339f441a39d7ac9ec1c42a922e9aad019ba2680bd5e6",
+      "bytes": 54045,
+      "role": "derived_full_text",
+      "version": "arXiv2402.02209v3",
+      "complete_manuscript": true
+    },
+    {
+      "url": "https://arxiv.org/pdf/2402.02209v3",
+      "artifact": "evidence/analysis/R509/page-2.png",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R509/page-2.png",
+      "sha256": "37ff87787243fda31ee5d3cf658ae0839a4ca76590371fedb5de854d46eec9a3",
+      "bytes": 942159,
+      "role": "rendered_table_and_dataset_page",
+      "version": "arXiv2402.02209v3 PDFp2",
+      "complete_manuscript": false
+    },
+    {
+      "url": "https://arxiv.org/pdf/2402.02209v3",
+      "artifact": "evidence/analysis/R509/page-5.png",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R509/page-5.png",
+      "sha256": "9cd91c283b0e6192f24fb37e9d8b046179ff687a1012095a6840abbb867c0d5d",
+      "bytes": 526778,
+      "role": "rendered_results_page",
+      "version": "arXiv2402.02209v3 PDFp5",
+      "complete_manuscript": false
+    }
+  ],
+  "claims": [
+    {
+      "claim": "The two explicit contribution bullets frame statistical characterization of GAN/diffusion imagery and differentiating DCT traces as the primary work. Coefficient distributions and JPEG persistence are the studied objects, rather than incidental detector ablations.",
+      "locator": "§1 contribution bullets p1;§4.1,Figures3–4 pp3–4;§5 p5",
+      "source": "evidence/analysis/R509/primary.pdf",
+      "numerical_evidence": null,
+      "independently_reproduced": false
+    },
+    {
+      "claim": "Experiments compare three broad image classes, standard classifiers and manual/LIME subsets of63AC statistics, followed by JPEG quality factors90/70/50/30.",
+      "locator": "§3–§5,Table2 p5",
+      "source": "evidence/analysis/R509/primary.pdf",
+      "numerical_evidence": {
+        "GradientBoosting_all_RAW_accuracy_F1": [
+          82.57,
+          80.81
+        ],
+        "GradientBoosting_POS_LIME_RAW_accuracy_F1": [
+          82.21,
+          80.34
+        ],
+        "KNN_ABS_LIME_RAW_accuracy_F1": [
+          68.07,
+          65.25
+        ],
+        "KNN_ABS_LIME_QF30_accuracy_F1": [
+          53.05,
+          50.3
+        ]
+      },
+      "independently_reproduced": false
+    }
+  ],
+  "caveats": [
+    "Manuscript v3 is not asserted publisher-final equivalent; no scientific evidence is silently borrowed from a later work.",
+    "§3 prose gives72334total images and19334real,37572GAN,15423DM; their sum is72329. Table1 instead gives19341real, and its displayed GAN architecture rows sum37572 while its DM rows sum15423, yielding72336overall. Neither sum equals72334; no correction is applied.",
+    "§4.3 averages LIME contributions over correctly classified test images; a separate selection/evaluation split is not established in the inspected text, so test-informed feature-selection optimism remains a validity concern.",
+    "The three prediction classes are real/GAN-family/DM-family; this review does not change current tasks or equate broad family recognition with individual generator attribution.",
+    "Figure5 caption says high frequencies vanish as QF increases, while §5.2 correctly discusses stronger compression as QF decreases. Preserve the caption/text inconsistency.",
+    "Table2 shows all-coefficient GradientBoosting RAW82.57% versus POS-LIME82.21%; do not restate LIME as uniformly superior. Correlations, classification accuracy and LIME importance do not establish unique universally causal fingerprints."
+  ],
+  "proposed_changes": [
+    {
+      "field": "research_types",
+      "before": [
+        "method"
+      ],
+      "after": [
+        "method",
+        "analysis_study"
+      ],
+      "policy_id": "R3"
+    }
+  ],
+  "formal_decision_recorded": false,
+  "formal_action_closed": false,
+  "maintainer_acceptance_pending": true,
+  "authoritative_data_changed": false,
+  "empirical_results_independently_reproduced": false,
+  "evidence_reuse": {
+    "original_review": {
+      "review_id": "R509",
+      "paper_id": "curated:8603d8942c241dd876ed",
+      "title": "On the Exploitation of DCT-Traces in the Generative-AI Domain",
+      "dimension": "research_types",
+      "current_labels": [
+        "method"
+      ],
+      "proposed_labels": [
+        "method",
+        "analysis_study"
+      ],
+      "status": "LIKELY_FIX",
+      "confidence": "medium",
+      "reason": "The main contribution systematically characterizes DCT coefficient distributions and persistence under JPEG.",
+      "evidence_url": "https://doi.org/10.1109/icip51287.2024.10648013",
+      "evidence_basis": "reused_audit+abstract",
+      "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:8603d8942c241dd876ed",
+      "evidence_excerpt": "Deepfakes represent one of the toughest challenges in the world of Cybersecurity and Digital Forensics, especially considering the high-quality results obtained with recent generative",
+      "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The main contribution systematically characterizes DCT coefficient distributions and persistence under JPEG.",
+      "batch": "B",
+      "current_tasks": [
+        "detection"
+      ],
+      "proposed_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "proposed_research_types": [
+        "method",
+        "analysis_study"
+      ]
+    },
+    "planning_refs": [
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+        "locator": "review_id:R509",
+        "finding": "The main contribution systematically characterizes DCT coefficient distributions and persistence under JPEG. Original open proposal only; not an accepted scientific disposition.",
+        "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+      },
+      {
+        "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+        "locator": "b-R509",
+        "finding": "Original bounded review question and preserved evidence requirements.",
+        "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "locator": "paper_id:curated:8603d8942c241dd876ed",
+        "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+        "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9"
+      },
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+        "locator": "policy_id:R3",
+        "finding": "Assign analysis_study only when systematic empirical or theoretical analysis is a primary scientific contribution. Routine ablations, robustness tables, parameter sweeps, or supporting interpretability figures do not qualify by themselves.",
+        "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+      }
+    ],
+    "local_full_manuscript_inventory": "evidence/analysis/local_manuscript_inventory.json",
+    "local_full_manuscripts_reused": 0
+  },
+  "retrieval_history": [
+    {
+      "kind": "browser_abstract_record",
+      "url": "https://arxiv.org/abs/2402.02209",
+      "outcome": "version history identifies v3,30July2024",
+      "full_manuscript": false
+    },
+    {
+      "kind": "browser_primary_html_earlier_version",
+      "url": "https://arxiv.org/html/2402.02209v1",
+      "outcome": "complete older scientific HTML inspected as discovery context, not used for final numeric claims",
+      "full_manuscript": true,
+      "unique_manuscript_version": "2402.02209v1",
+      "transferred_bytes": null
+    },
+    {
+      "kind": "browser_primary_html_current_version",
+      "url": "https://arxiv.org/html/2402.02209v3",
+      "outcome": "complete current author HTML inspected",
+      "full_manuscript": true,
+      "unique_manuscript_version": "2402.02209v3",
+      "transferred_bytes": null
+    },
+    {
+      "kind": "curl_primary_pdf",
+      "url": "https://arxiv.org/pdf/2402.02209v3",
+      "http_status": 200,
+      "curl_exit": 28,
+      "budget_seconds": 120,
+      "transferred_bytes": 3837432,
+      "full_manuscript": false
+    },
+    {
+      "kind": "conditional_range_continuation",
+      "url": "https://arxiv.org/pdf/2402.02209v3",
+      "http_status": 206,
+      "curl_exit": 0,
+      "budget_seconds": 240,
+      "transferred_bytes": 1599410,
+      "final_assembled_bytes": 5436842,
+      "full_manuscript": true,
+      "unique_manuscript_version": "2402.02209v3",
+      "continuation_is_not_another_unique_manuscript": true
+    }
+  ],
+  "out_of_scope_observations": [],
+  "reproducibility_limitations": [
+    "No training, inference, result replication, data download or code execution was performed. Contribution support is distinct from empirical validity and operational reproducibility."
+  ],
+  "identity_verification": {
+    "title_matches": true,
+    "three_author_sequence_matches": true,
+    "canonical_doi": "10.1109/icip51287.2024.10648013",
+    "reviewed_manuscript": "arXiv:2402.02209v3,30July2024",
+    "publisher_final_equivalence_verified": false,
+    "qualification": "Identity-matched author manuscript and author publication listing support work correspondence, but IEEE final text was not fetched. v1HTML was discovery/earlier-version context; all final numeric and protocol claims use v3PDF."
+  },
+  "policy_analysis": "SUPPORTED_ADDITION under locked R3. Explicit primary statistical research questions, systematic coefficient-distribution examination and cross-condition JPEG experiments support an analysis_study contribution in addition to existing method. This is not inferred merely from the table size or explainability visualization; empirical and selection-design limitations remain independent.",
+  "scientific_confidence": {
+    "primary_analysis_contribution": "high",
+    "reported_data_totals": "internally_inconsistent",
+    "empirical_validity": "qualified_by_selection_protocol_and_source_inconsistencies"
+  },
+  "original_review": {
+    "review_id": "R509",
+    "paper_id": "curated:8603d8942c241dd876ed",
+    "title": "On the Exploitation of DCT-Traces in the Generative-AI Domain",
+    "dimension": "research_types",
+    "current_labels": [
+      "method"
+    ],
+    "proposed_labels": [
+      "method",
+      "analysis_study"
+    ],
+    "status": "LIKELY_FIX",
+    "confidence": "medium",
+    "reason": "The main contribution systematically characterizes DCT coefficient distributions and persistence under JPEG.",
+    "evidence_url": "https://doi.org/10.1109/icip51287.2024.10648013",
+    "evidence_basis": "reused_audit+abstract",
+    "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:8603d8942c241dd876ed",
+    "evidence_excerpt": "Deepfakes represent one of the toughest challenges in the world of Cybersecurity and Digital Forensics, especially considering the high-quality results obtained with recent generative",
+    "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The main contribution systematically characterizes DCT coefficient distributions and persistence under JPEG.",
+    "batch": "B",
+    "current_tasks": [
+      "detection"
+    ],
+    "proposed_tasks": [
+      "detection"
+    ],
+    "current_research_types": [
+      "method"
+    ],
+    "proposed_research_types": [
+      "method",
+      "analysis_study"
+    ]
+  },
+  "original_reviewer_record": {
+    "path": "per_paper/R509.json",
+    "sha256": "1b652c0780ca4699fbe355ebfc9fcae5ac18762cecaf133b40dcf37c7879166b",
+    "outcome": "SUPPORTED_ADDITION"
+  },
+  "provisional_disposition": "SUPPORTED_ADDITION",
+  "independent_QC": {
+    "status": "COMPLETE",
+    "receipt": "qc/analysis_independent_review.json",
+    "sha256": "e1af6cfae1b60c398ad50aad843c503b487d2c22207d305c1945855e7dd69716",
+    "verdict_record": {
+      "review_id": "R509",
+      "input_record_sha256": "1b652c0780ca4699fbe355ebfc9fcae5ac18762cecaf133b40dcf37c7879166b",
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_outcome": "SUPPORTED_ADDITION",
+      "disagreement": false,
+      "proposed_research_types": [
+        "method",
+        "analysis_study"
+      ],
+      "verdict": "APPROVE_PROVISIONAL_R3_ADDITION_WITH_SOURCE_CAVEATS",
+      "scientific_basis": "Fullv3first-page contribution bullets explicitly prioritize statistical characterization and distinguishing DCT traces. Sections4.1/4.3/5 systematically examine distributions, feature subsets and JPEG persistence; this is primary analysis beyond supporting ablations.",
+      "claim_checks": [
+        "Title/Pontorno-Guarnera-Battiato and version2402.02209v3 independently verified from full7-pagePDF; finalIEEE equivalence remains unverified.",
+        "Renderedp2Table1 andprose independently confirm19341versus19334real and72336/72329derived totals, neither72334.",
+        "Section4.3 explicitly averages LIME contributions over correctly classified TEST images; held-out selection/evaluation separation not established.",
+        "Renderedp5Table2 independently verifiesGBallRAW82.57/80.81,POSLIMERAW82.21/80.34,KNNABSLIMERAW68.07/65.25andQF30=53.05/50.30.",
+        "Figure5caption contradictoryQFdirection independently visible;§5.2describesstrongercompressionatlowerQF."
+      ],
+      "limitations": [
+        "Feature-selection protocol may induce optimistic evaluation; contribution support does not certify empirical validity.",
+        "Real/GAN/DM-family prediction does not create an individual-generator attribution action.",
+        "Existingmethod/detection retained."
+      ]
+    },
+    "original_record_sha256": "1b652c0780ca4699fbe355ebfc9fcae5ac18762cecaf133b40dcf37c7879166b",
+    "disagreement_preserved": false
+  },
+  "current_authoritative_status": "UNRESOLVED",
+  "maintainer_acceptance": "PENDING"
+}

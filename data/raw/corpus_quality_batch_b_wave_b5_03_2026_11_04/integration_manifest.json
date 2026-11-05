@@ -1,0 +1,421 @@
+{
+  "schema": "batch-b-b503-integration-1",
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "adjudication_manifest": {
+    "path": "tests/fixtures/batch_b_b4_04/adjudication_manifest.json",
+    "sha256": "82e6592d020b69bb85341ffe7a495d5beab2b0673e3f8757ff5f0c900ec14b89"
+  },
+  "source_after_sha256": {
+    "data/curated/papers.csv": "2303d301874305f48b29e18c70c20f00761a23d29460787c2e4d7ac2d8e4d0e3",
+    "data/curated/paper_taxonomy.csv": "512c52da54fc0ea21e9e0e177911f62283ce1998fae4b4d7812f79b0a7b23f70",
+    "data/curated/review_decisions.csv": "00d900260d3000d6a0d6b58a0838345dab612fd9693ca0eae7f0d738ce213195"
+  },
+  "public_invariants": {
+    "public": 674,
+    "formal": 557,
+    "mapped": 613,
+    "unmapped": 61,
+    "relationship_rows": 1410,
+    "unique_paper_institution_pairs": 1410
+  },
+  "taxonomy_before": {
+    "research_types": {
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "dataset": 142,
+      "benchmark": 101
+    },
+    "tasks": {
+      "detection": 621,
+      "source_attribution": 84,
+      "localization": 45
+    }
+  },
+  "taxonomy_after": {
+    "research_types": {
+      "method": 578,
+      "analysis_study": 90,
+      "survey": 21,
+      "dataset": 146,
+      "benchmark": 102
+    },
+    "tasks": {
+      "detection": 621,
+      "source_attribution": 84,
+      "localization": 45
+    }
+  },
+  "accounting_before": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 45,
+    "historical_unresolved": 114,
+    "active_public_unresolved": 112,
+    "historical_unresolved_papers": 108,
+    "active_public_unresolved_papers": 106
+  },
+  "accounting_after": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 53,
+    "historical_unresolved": 106,
+    "active_public_unresolved": 104,
+    "historical_unresolved_papers": 100,
+    "active_public_unresolved_papers": 98
+  },
+  "formal_decisions": 151,
+  "exact_preserved_prefix": 138,
+  "appended_decisions": 13,
+  "approved_cells": 56,
+  "accepted": [
+    {
+      "review_id": "R124",
+      "paper_id": "curated:d6fe2666a64b0c70ff6b",
+      "binding_sha256": "266527797fe0fbc53605f8826c7906b2c02c3aa466983833204b5ed966d4fd1f",
+      "source_provenance": [
+        {
+          "url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/xu26cl/xu26cl.pdf",
+          "version": "Official PMLR306 proceedings PDF,26pages; title/byline verified",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R124-pmlr.pdf",
+          "sha256": "3a18aa2b13d10c1ce37293b522a62812fd74e5a3e06c09df7d432b1a9b4fc4cb",
+          "bytes": 11509691,
+          "kind": "full_manuscript",
+          "limitation": null
+        },
+        {
+          "url": "https://proceedings.mlr.press/v306/xu26cl.html",
+          "version": "Official PMLR306 landing",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R124-pmlr.html",
+          "sha256": "7828e70fc4854baf3a3305ef8934c58c08a40c3f97d8ae2367a83f7589cd90a9",
+          "bytes": 16969,
+          "kind": "publisher_identity_record",
+          "limitation": null
+        }
+      ],
+      "scientific_limitations": [
+        "Correction targets use an advanced proprietary editor; correction supervision inherits its limitations (AppendixA).",
+        "Official dataset/code availability, licenses, source-image disjointness and successful execution were not audited; public download alone is not an R1/R2 acceptance criterion.",
+        "Table2 HPSv3 full6.20 versus own single-step6.23 and prose-highest wording remain explicit.",
+        "The fifty-image human sample and20raters do not establish universal evaluation validity; no rater agreement/causal claim is independently reproduced.",
+        "Preserve detection task; do not add correction or localization tasks in this wave.",
+        "Independent QC: Figure5 opening says strict3-point scale, while per-category definitions and AppendixC specify binary0/1 for each of three categories. Retain this wording ambiguity; do not invent a three-valued scale or silently repair the prompt."
+      ]
+    },
+    {
+      "review_id": "R149",
+      "paper_id": "curated:cf55e35fcf11e09fdd12",
+      "binding_sha256": "64c0affecfd6955581540d4929200982e6fc2cfde3a7b3a4f9cb648d782823ee",
+      "source_provenance": [
+        {
+          "url": "https://arxiv.org/html/2510.04225v2",
+          "version": "arXiv2510.04225v2,21Apr2026; complete HTML including appendices",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R149-arxiv-v2.html",
+          "sha256": "e412ac02c00e51f2a1a9249be17f6c3cfad2cdc2073fe9a459a1856522cde04b",
+          "bytes": 255625,
+          "kind": "full_manuscript",
+          "limitation": "CVPR2026 official PDF returned403. Publisher-final equivalence not verified."
+        }
+      ],
+      "scientific_limitations": [
+        "Complete source is author-deposited arXivv2, not verified CVPR final; preserve the official-PDF403.",
+        "Annotations are automated, not human-expert ground truth. AppendixA.5 explicitly notes inherited VLM bias and English-language limitation.",
+        "Reported20K/99.5%/3.24figures were not verified against a downloaded data release. Exact split disjointness, licenses, code/data availability and reproduction remain unverified.",
+        "The section4.1 statement that baselines are retrained has explicit format-incompatible exceptions; do not flatten into a fully identical training protocol.",
+        "Retain current detection;localization; no benchmark action or other task review is introduced."
+      ]
+    },
+    {
+      "review_id": "R223",
+      "paper_id": "curated:038a578e520799c8671e",
+      "binding_sha256": "e2d1edad8c9a68c4b000eb51307118fe8ffe3e8e18e68a47f0d0a606843da113",
+      "source_provenance": [
+        {
+          "url": "https://arxiv.org/html/2503.21210v4",
+          "version": "arXiv2503.21210v4,07Apr2026; complete HTML",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R223-arxiv-v4.html",
+          "sha256": "e665dfad9672fc0f804405c1c9d0ecc838e708b2c201fa1910368e55d56bb1b6",
+          "bytes": 382430,
+          "kind": "full_manuscript",
+          "limitation": "IEEE DOI10.1109/tip.2026.3673967 retained; publisher-final equivalence not independently verified."
+        }
+      ],
+      "scientific_limitations": [
+        "Author-depositedv4 only; IEEE final equivalence not independently verified.",
+        "120K/378Ksummary versus121,256/379,207 detailed totals remain explicit.",
+        "530hours per expert versus15seconds/image and10experts is unresolved; no corrected labor figure is imposed.",
+        "GPT-4o-assisted reasoning and expert review do not prove factual causal validity of forensic explanations.",
+        "Dataset/code availability, licenses, disjointness and operational reproducibility were not tested; no datasets or models downloaded.",
+        "Retain detection/method; no new benchmark/task action.",
+        "Independent QC: III-A describes1000ImageNet+1000LAIONreal control pools, with LAION reused for nine generator conditions, while III-C counts10000real evaluation entries. The sum121256 is reported membership arithmetic, not verified unique-image/file cardinality."
+      ]
+    },
+    {
+      "review_id": "R363",
+      "paper_id": "curated:14272073fa5bc0e301b5",
+      "binding_sha256": "ec0f266a0fdef09ed3ec6e72ec1367161b7b36908deb32045a1ea316b9ade66a",
+      "source_provenance": [
+        {
+          "url": "https://arxiv.org/html/2503.15264v1",
+          "version": "arXiv2503.15264v1,19Mar2025; complete HTML including appendices",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R363-arxiv-v1.html",
+          "sha256": "b198fbd3b2f9b83c7134febd1fa417afe3a58f2deea86bcc8a2261182f6eab2b",
+          "bytes": 380813,
+          "kind": "full_manuscript",
+          "limitation": "Canonical ICCV DOI10.1109/iccv51701.2025.01760 retained; exact final publisher manuscript not inspected."
+        }
+      ],
+      "scientific_limitations": [
+        "OnlyarXivv1fullmanuscript inspected; exact final ICCVversion equivalence unverified.",
+        "V1says code/model/dataset will be released. No current release availability,license/data contents or reproduction verified.",
+        "All12,236images are fully synthetic; this is not a balanced real/fake dataset.",
+        "Human-expert annotations and source statistics are reported,not independently reproduced; complex/small-artifact limitations remain.",
+        "Preserve existingT363 detection;localization acceptance. No R2benchmark question added."
+      ]
+    },
+    {
+      "review_id": "R477",
+      "paper_id": "curated:3312da81174f7d411081",
+      "binding_sha256": "9f731fd25536fb747d1e1ba378fbdfc4ac938c3637fd514061c767c6e7c485f3",
+      "source_provenance": [
+        {
+          "url": "https://arxiv.org/pdf/2408.11541v1",
+          "artifact": "evidence/analysis/R477/primary.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R477/primary.pdf",
+          "sha256": "2f901e5686d07c448dc7f5e53b9da6fd16e35d672518c95a4314912fb1084f45",
+          "bytes": 3961338,
+          "role": "complete_author_manuscript",
+          "version": "arXiv2408.11541v1",
+          "complete_manuscript": true
+        },
+        {
+          "url": "https://arxiv.org/pdf/2408.11541v1",
+          "artifact": "evidence/analysis/R477/primary.txt",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R477/primary.txt",
+          "sha256": "e4d3ebefa5422a294caa22714b0325273a7b38b2aafeb4ee528835913ee68829",
+          "bytes": 55631,
+          "role": "derived_full_text",
+          "version": "arXiv2408.11541v1",
+          "complete_manuscript": true
+        },
+        {
+          "url": "https://arxiv.org/pdf/2408.11541v1",
+          "artifact": "evidence/analysis/R477/page-13.png",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R477/page-13.png",
+          "sha256": "dc0529526079bd227e7aa39002fec7eaded4668474c43559097d91ebead4ab9d",
+          "bytes": 344358,
+          "role": "rendered_table_page",
+          "version": "arXiv2408.11541v1 PDFp13",
+          "complete_manuscript": false
+        }
+      ],
+      "scientific_limitations": [
+        "Author manuscript v1 is not asserted byte-equivalent to Springer final.",
+        "Table1 reports3070total URLs, whereas the four displayed TotalURLs cells678+772+808+745 sum to3003; preserve both.",
+        "Table5 Rine/PatchCraft displayed All scores appear interchanged relative to Table4; do not silently repair method labels.",
+        "§4.8 narrative says nine BA declines, but rounded Table6 cells show eight negative BA differences, one zero(Dire), and three positive values; ten negative AUC differences are supported. Hidden unrounded values were not available.",
+        "Overall -2.6%/-3.2% are reported mean relative changes, not percentage-point drops.",
+        "Four deliberately selected seed lineages, observational copy histories and nonuniform post-processing do not identify a universal causal effect of elapsed time. EER thresholds and best-of25pretrained models are evaluation choices, not an independently calibrated deployment claim."
+      ]
+    },
+    {
+      "review_id": "R509",
+      "paper_id": "curated:8603d8942c241dd876ed",
+      "binding_sha256": "ec65ae7ea4e775dc9f8877a3b17032b6d843008b6a3f0cfd1c3521be5410ff86",
+      "source_provenance": [
+        {
+          "url": "https://arxiv.org/pdf/2402.02209v3",
+          "artifact": "evidence/analysis/R509/primary.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R509/primary.pdf",
+          "sha256": "b8671fac2b501658e07ff82e89ee4c5cfccc7beecad1000df9406db7c02e9e8e",
+          "bytes": 5436842,
+          "role": "complete_author_manuscript",
+          "version": "arXiv2402.02209v3",
+          "complete_manuscript": true
+        },
+        {
+          "url": "https://arxiv.org/pdf/2402.02209v3",
+          "artifact": "evidence/analysis/R509/primary.txt",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R509/primary.txt",
+          "sha256": "027f5c835b429749a43f339f441a39d7ac9ec1c42a922e9aad019ba2680bd5e6",
+          "bytes": 54045,
+          "role": "derived_full_text",
+          "version": "arXiv2402.02209v3",
+          "complete_manuscript": true
+        },
+        {
+          "url": "https://arxiv.org/pdf/2402.02209v3",
+          "artifact": "evidence/analysis/R509/page-2.png",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R509/page-2.png",
+          "sha256": "37ff87787243fda31ee5d3cf658ae0839a4ca76590371fedb5de854d46eec9a3",
+          "bytes": 942159,
+          "role": "rendered_table_and_dataset_page",
+          "version": "arXiv2402.02209v3 PDFp2",
+          "complete_manuscript": false
+        },
+        {
+          "url": "https://arxiv.org/pdf/2402.02209v3",
+          "artifact": "evidence/analysis/R509/page-5.png",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R509/page-5.png",
+          "sha256": "9cd91c283b0e6192f24fb37e9d8b046179ff687a1012095a6840abbb867c0d5d",
+          "bytes": 526778,
+          "role": "rendered_results_page",
+          "version": "arXiv2402.02209v3 PDFp5",
+          "complete_manuscript": false
+        }
+      ],
+      "scientific_limitations": [
+        "Manuscript v3 is not asserted publisher-final equivalent; no scientific evidence is silently borrowed from a later work.",
+        "§3 prose gives72334total images and19334real,37572GAN,15423DM; their sum is72329. Table1 instead gives19341real, and its displayed GAN architecture rows sum37572 while its DM rows sum15423, yielding72336overall. Neither sum equals72334; no correction is applied.",
+        "§4.3 averages LIME contributions over correctly classified test images; a separate selection/evaluation split is not established in the inspected text, so test-informed feature-selection optimism remains a validity concern.",
+        "The three prediction classes are real/GAN-family/DM-family; this review does not change current tasks or equate broad family recognition with individual generator attribution.",
+        "Figure5 caption says high frequencies vanish as QF increases, while §5.2 correctly discusses stronger compression as QF decreases. Preserve the caption/text inconsistency.",
+        "Table2 shows all-coefficient GradientBoosting RAW82.57% versus POS-LIME82.21%; do not restate LIME as uniformly superior. Correlations, classification accuracy and LIME importance do not establish unique universally causal fingerprints."
+      ]
+    },
+    {
+      "review_id": "R512",
+      "paper_id": "curated:c3041d4480f5780e7492",
+      "binding_sha256": "d087e35a371a71a4a5dd7e65abc11d209c326df6aa356dc4dbe9c616bd8e8a2b",
+      "source_provenance": [
+        {
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-arxiv-v2.html",
+          "url": "https://arxiv.org/html/2304.00500v2",
+          "version": "arXiv2304.00500v2,21May2024; author manuscript withTOMM2024 header, not proven byte-equivalent to publisher-final",
+          "role": "Complete scientific source for primaryR3 contribution and protocols/tables",
+          "sha256": "982a1156d8f653d9226c27f25e277ffe5fa7c274a51abb04b1f27251728cdd42",
+          "bytes": 472552
+        },
+        {
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-crossref.json",
+          "url": "https://api.crossref.org/works/10.1145/3665497",
+          "version": "Publisher-deposited DOI metadata captured2026-11-02",
+          "role": "Exact DOI/title/six ordered authors/journal identity correspondence; not final-manuscript scientific evidence",
+          "sha256": "f3e31dd8ce4bdc37c1f3fff3724330aff2f49acfba721820d2fe9e87e46c7c46",
+          "bytes": 26249
+        },
+        {
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-arxiv-v2-tables.json",
+          "url": "https://arxiv.org/html/2304.00500v2",
+          "version": "Deterministic local extraction from complete arXivv2 HTML; rawsource remains immutable",
+          "role": "Structured table transcription, cross-check against rawsource IDs",
+          "sha256": "62fedc9d8dd0774acfeb41711e1d9eb0e8bbe229a224dc2b07799402a634f548",
+          "bytes": 26763
+        }
+      ],
+      "scientific_limitations": [
+        "Only two versions of the same StableDiffusion generator family are evaluated here; cross-version results are not universal cross-generator generalization.",
+        "Learned projections encourage semantic/style separation. They do not independently prove that all low-level cues are removed or causally isolate semantics.",
+        "Overall accuracy uses the documented evaluation composition; training balances one randomly selected fake per real cluster, while full dataset clusters contain five generated children.",
+        "Table2 99.68 is validation accuracy; corresponding SD1.4 test accuracy is99.64. Preserve split labels.",
+        "Authorv2 Table3 contains literal .63.26 and nonmonotonic R@3/R@5 entries in some rows; retain source anomalies rather than silently repair them. These cells are not used to authorize theR3 addition.",
+        "No complete publisher-final manuscript was inspected. DOI/title/byline match is bibliographic correspondence, not proof of identical final numerical content.",
+        "New benchmark/data availability or task-label changes are outside this action.",
+        "Independent QC: Under the full six-image evaluation clusters in Sec4.2, the five-fake/one-real prevalence yields an always-fake accuracy of5/6=83.33%. Reported semantic accuracy80.71% is below that derived baseline; AUC85.54 measures a different ranking property. This limits performance interpretation but does not decide primaryR3 contribution support. No new experiment was run.",
+        "Independent QC: Preserve original derived tableJSON. All528 numeric cells match rawHTML, but57MathML fallback duplications and4citation-spacing differences affect nonnumeric transcriptions. Interpret metric/direction headers from primaryHTML, not duplicated fallback text."
+      ]
+    },
+    {
+      "review_id": "R625",
+      "paper_id": "curated:dcf7aae2c8590b07aff3",
+      "binding_sha256": "479f2cbcd25ce3436aa5ca6807c1dc472d06b3be59c64f61985231076bc19b1a",
+      "source_provenance": [
+        {
+          "url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+          "artifact": "evidence/analysis/R625/browser_primary_review.json",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R625/browser_primary_review.json",
+          "sha256": "da1dce45b5c010564daa64db0efa0cadb0dc725a70b054a8fe39b1c4f8b2b301",
+          "bytes": 1639,
+          "role": "full_primary_manuscript_browser_provenance_receipt",
+          "version": "Official PMLR119 ICML2020 proceedings",
+          "complete_manuscript": true,
+          "sha256_scope": "The SHA256 authenticates this derived provenance receipt, not the source PDF; source-document byte hash unavailable."
+        },
+        {
+          "url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+          "artifact": "evidence/analysis/R625/primary.initial-partial.pdf",
+          "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R625/primary.initial-partial.pdf",
+          "sha256": "673f12d0dbaf8188ffe0c49ea7aa0820af5f7751a39499401337f9c85c92db28",
+          "bytes": 3077971,
+          "role": "incomplete_transport_artifact_not_scientific_claim_support",
+          "version": "Official PMLR119 PDFpartial",
+          "complete_manuscript": false
+        }
+      ],
+      "scientific_limitations": [
+        "Complete authoritative12-page PDF was scientifically inspected through the browser. Local curl PDF is incomplete and is never treated or hashed as a complete source. Browser-only full-source byte checksum remains unavailable.",
+        "The upsampling intervention is controlled within the evaluated StyleGAN/LSUN configuration; the paper’s broader wording about all current GANs is not independently reproduced or generalized to every architecture or modern diffusion model.",
+        "The headline real/fake result100% concerns the specified FFHQ/StyleGAN split and simple frequency classifier; it is not a claim of universal real-world accuracy.",
+        "Original task labels stay detection; scientific resource/benchmark labels and new task reviews are outside this R3 action.",
+        "Independent QC locator correction: five-way source identification appears in Sec4.3, Table3/PDFp8, rather than the original out-of-scope note Sec4.2. This does not affect the assignedR3 recommendation or create a new task-review action."
+      ]
+    }
+  ],
+  "held_actions": [
+    {
+      "review_id": "R045",
+      "disposition": "EVIDENCE_INSUFFICIENT",
+      "paper_id": "curated:885c512e1e964d2ec61f"
+    },
+    {
+      "review_id": "R156",
+      "disposition": "EVIDENCE_INSUFFICIENT",
+      "paper_id": "curated:4ad04c01ae2850d5cc34"
+    },
+    {
+      "review_id": "P251",
+      "disposition": "AUTHORITATIVE_WRITE_PATH_BLOCKED",
+      "paper_id": "doi:10.1109/i2cacis65476.2025.11100461"
+    },
+    {
+      "review_id": "R251",
+      "disposition": "EVIDENCE_INSUFFICIENT",
+      "paper_id": "doi:10.1109/i2cacis65476.2025.11100461"
+    },
+    {
+      "review_id": "R284",
+      "disposition": "EVIDENCE_INSUFFICIENT",
+      "paper_id": "curated:cba231098f84685520e8"
+    }
+  ],
+  "generated_outputs": {
+    "web/data/public_preview_papers.json": "cdf4f0677853978f38ffd6645ffd46a04002973ccdd9b6cbc2b6fff6dc356616",
+    "web/data/public_preview_map_data.json": "1b305459a1e6781a8b9a6fb86de014d71c87e06184da7c0afeb2eb5a73ad1dba",
+    "docs/public_preview_report.md": "c163db591ba85b7bbf17d9ff0de267f61996a1eac314ac5c97b870ed7d7fb732",
+    "docs/missing_author_mappings_report.md": "37d7455e8b0b0ef3d0c46e261a35bbc11f0b862b313e1ec77b5f65acdb01e11d",
+    "data/manual/missing_author_mappings_report.csv": "73bb86046fa81f56d19fbe66e38c547b9ca9c8d18aeec22d86239c6d5e42c593",
+    "docs/key_paper_coverage_report.md": "e71ca0f2393e14ca49ed132a315bdad366fbfc1b80fd91e9fe99dde58eb2fa27",
+    "data/manual/key_paper_coverage_report.csv": "dbe1bd75e8d619a3a28354df1bccd79037f0aa281de49a37bbb49d3937d75099"
+  },
+  "export_reproducible": 1,
+  "paper_projection_count": 8,
+  "marker_projection_count": 23,
+  "legacy_optional_paper_id_absent": 164,
+  "scientific_results_independently_reproduced": false,
+  "preexport_validation": {
+    "affected_tests": 743,
+    "full_regular_tests": 2938,
+    "subtests": 389,
+    "failures": 0,
+    "existing_pytest_warnings": 2,
+    "structural_errors": 0,
+    "existing_public_warnings": 62
+  },
+  "archival_checkpoint_receipts": {
+    "integration_recovery.json": "5c390e257a87fee4a58ef5ab334b21e9d3c73e30a488b1b853ead228f8034d9a",
+    "qc/derived_report_dependency_review.json": "8b679eeaeed97d1398a425de574da5e5f93e54b3261cc667e625a4b115056260",
+    "qc/preexport_boundary_implementation_review.json": "201fecca84215d32c9ff1ef9f521ed3ffea56ea0e5046af7f8b0f54f43581549",
+    "qc/http_authorization_and_result.json": "d8a8a519fc672fb7d200143400de4fc4dcbd23ed41020cdd2b0e9ba96ef243aa",
+    "qc/affected.json": "d32e81edb78dea1233851df17d43b64a232c7aaaa494989ad8242ef164c3bd64",
+    "qc/full_preexport.json": "3db07ba19e8723b4ecc14fc394badf27cb780db92443d12bf944a01cb401fca8",
+    "qc/validators_preexport.json": "4d72a90b4982ef0e560cd8baae47d713adae518e8fb3cd5508c79458c471ee51",
+    "qc/preservation_preexport_posttest_closure.json": "a8a80294e4e71950a51d851af831b44065a5ecd68e9ef33dc8eabcd43307d4d6",
+    "qc/export_preflight_identity_review.json": "1444c76730be0b34e04296c1f32c013071cc57a2c768096471e7528690900473",
+    "qc/export_output_review.json": "916281bc88c7436eabad11fbd677e59b46d71447e8c872bb08839e5004d9a1a3",
+    "qc/export_reproducibility.json": "84e077a4da2115c41e08a39206945348bf4d63287c4af9433132a404f35038d7",
+    "qc/postexport_dependency_review.json": "456c9e142dd27cd12f75bab0fab8eba5a7b6890e27b52009dd2374408e45fa2c"
+  },
+  "archival_root": "batch-b-b5-03-2026-11-04; append-only external receipts preserve full logs and later post-export/hosted acceptance",
+  "publication_acceptance": "NOT_ASSERTED_BY_THIS_PRECOMMIT_SOURCE_MANIFEST",
+  "frozen_neurips": "7+1 MIGRATION STILL BLOCKED BY OFFICIAL METADATA"
+}

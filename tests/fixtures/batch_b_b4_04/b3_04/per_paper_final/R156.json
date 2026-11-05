@@ -1,0 +1,301 @@
+{
+  "schema": "b3-04-final-action-evidence-1",
+  "review_id": "R156",
+  "paper_id": "curated:4ad04c01ae2850d5cc34",
+  "title": "MoFAIR: Self-Improving Post-Training for Robust and Explainable AIGC Forensics with Lightweight Reward Distillation",
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "assignment_sha256": "644442f487b11db752936c8b04a0f03073b692c5c81df35593b18e9b4f7c8f43",
+  "question": "FAIR-Data is introduced as a 15,000-sample reasoning dataset with structured annotations.",
+  "original_review": {
+    "review_id": "R156",
+    "paper_id": "curated:4ad04c01ae2850d5cc34",
+    "title": "MoFAIR: Self-Improving Post-Training for Robust and Explainable AIGC Forensics with Lightweight Reward Distillation",
+    "dimension": "research_types",
+    "current_labels": [
+      "method"
+    ],
+    "proposed_labels": [
+      "method",
+      "dataset"
+    ],
+    "status": "LIKELY_FIX",
+    "confidence": "medium",
+    "reason": "FAIR-Data is introduced as a 15,000-sample reasoning dataset with structured annotations.",
+    "evidence_url": "https://doi.org/10.1007/978-981-92-3429-5_44",
+    "evidence_basis": "reused_audit+abstract",
+    "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:4ad04c01ae2850d5cc34",
+    "evidence_excerpt": "Recent advances in generative AI have made reliable AI-generated content forensics an urgent necessity. Existing approaches suffer from brittle decision boundaries, hallucinated explanations, and",
+    "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: FAIR-Data is introduced as a 15,000-sample reasoning dataset with structured annotations.",
+    "batch": "B",
+    "current_tasks": [
+      "detection"
+    ],
+    "proposed_tasks": [
+      "detection"
+    ],
+    "current_research_types": [
+      "method"
+    ],
+    "proposed_research_types": [
+      "method",
+      "dataset"
+    ]
+  },
+  "governing_policy_ids": [
+    "R1"
+  ],
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "proposed_research_types": [
+    "method"
+  ],
+  "outcome": "EVIDENCE_INSUFFICIENT",
+  "identity_verification": {
+    "matched": true,
+    "basis": "Complete publisher PDF title, DOI in metadata/front matter and seven-author byline match the canonical work and ordered authors. Chapter is ICIC2026, printed536-549, while publisher copyright/metadata says2027; this is retained as a bibliographic caveat rather than changed.",
+    "canonical_doi": "10.1007/978-981-92-3429-5_44",
+    "canonical_arxiv_id": ""
+  },
+  "sources": [
+    {
+      "url": "https://link.springer.com/content/pdf/10.1007/978-981-92-3429-5_44.pdf",
+      "version": "DOI-matched Springer chapter PDF,14pages,printed536-549",
+      "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R156-springer-pdf.response",
+      "sha256": "8295a572c0db1ba78b3984a8209d4714b4fc40438bedf60c79d5146a3517783c",
+      "bytes": 1607106,
+      "kind": "full_manuscript",
+      "limitation": null
+    },
+    {
+      "url": "https://link.springer.com/chapter/10.1007/978-981-92-3429-5_44",
+      "version": "DOI-matched publisher subscription preview",
+      "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R156-springer-chapter.html",
+      "sha256": "e3b875926533688e066ca03406ad87ed2e01a33fa9cb3d1e8a64d9609e303e97",
+      "bytes": 322131,
+      "kind": "publisher_identity_record",
+      "limitation": null
+    }
+  ],
+  "reused_local_evidence": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R156",
+      "finding": "FAIR-Data is introduced as a 15,000-sample reasoning dataset with structured annotations. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "current_sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R156",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "current_sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "paper_id:curated:4ad04c01ae2850d5cc34",
+      "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+      "current_sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R1",
+      "finding": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "current_sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "FAIR-Data is framed as internal training/evaluation support; the complete source does not establish the requested independently substantive reusable resource contribution.",
+      "locator": "PDFp2 printed537 Introduction and contributions1-3;pp5-6 section3.3/Algorithm1;PDFp9 printed544 section4.1",
+      "evidence": "Introduction says FAIR-Data supports end-to-end training and contains15K curated images with labels,source/content tags and rationales. All three named main contributions concern post-training framework, reward distillation and measured improvements. Algorithm1 MoFAIR (visually inspected atp6) takes CoT dataset and training set as inputs and returns an optimized policy; it is not a FAIR-Data curation/provision algorithm despite section4.1 citing it for construction.",
+      "source_bindings": [
+        {
+          "url": "https://link.springer.com/content/pdf/10.1007/978-981-92-3429-5_44.pdf",
+          "version": "DOI-matched Springer chapter PDF,14pages,printed536-549",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R156-springer-pdf.response",
+          "sha256": "8295a572c0db1ba78b3984a8209d4714b4fc40438bedf60c79d5146a3517783c",
+          "bytes": 1607106,
+          "kind": "full_manuscript",
+          "limitation": null
+        }
+      ]
+    },
+    {
+      "claim": "Concrete experimental use is documented and distinguished from resource-contribution acceptance.",
+      "locator": "PDFp9 section4.1/Table1;PDFp10 Table2",
+      "evidence": "FAIR-Data15,000samples split8:1:1 for in-domain evaluation. Table1 MoFAIR accuracy93.7%,AUC0.977,AP0.973; Table2 zero-shotSo-Fake-Set accuracy95.1%,F194.9%. These results support reported method evaluation, not R1 by themselves.",
+      "source_bindings": [
+        {
+          "url": "https://link.springer.com/content/pdf/10.1007/978-981-92-3429-5_44.pdf",
+          "version": "DOI-matched Springer chapter PDF,14pages,printed536-549",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R156-springer-pdf.response",
+          "sha256": "8295a572c0db1ba78b3984a8209d4714b4fc40438bedf60c79d5146a3517783c",
+          "bytes": 1607106,
+          "kind": "full_manuscript",
+          "limitation": null
+        }
+      ]
+    }
+  ],
+  "policy_analysis": "Conservative independent QC hold under lockedR1. The complete source supports method-internal15Ktraining/evaluation use, but also explicitly asserts a curated structured resource. Method-centric contribution bullets and Algorithm1dataset-input/policy-output do not prove absence of independent resource significance. Neither dataset addition nor categorical rejection is currently established.",
+  "caveats": [
+    "This is a bounded negative recommendation on dataset addition, not a claim that FAIR-Data does not exist or can never be reusable.",
+    "Initial browser accessibility failures and publisher preview did not determine the verdict: the complete14-page officialPDF was obtained and inspected.",
+    "No negative conclusion is drawn merely from absence of public code/data, licensing or successful independent reproduction.",
+    "Algorithm1 is a raster figure absent from plain extraction; page6was rendered and read before making the input/output finding.",
+    "Exact image-source composition, external reuse/provision and curation detail are insufficiently specified for the requested R1 resource role; retain this limitation.",
+    "ICIC2026 edition versus publisher2027copyright is out of this assigned scientific review; no publication action added."
+  ],
+  "scientific_confidence": "MODERATE: method-support evidence is concrete; independently substantive resource status remains unresolved",
+  "reproducibility_limitations": "No independent training, evaluation, dataset download or code execution performed. Contribution support does not claim reproduced performance, causal validity, release completeness or operational reproducibility.",
+  "proposed_changes": [],
+  "formal_action_closed": false,
+  "authoritative_data_changed": false,
+  "maintainer_acceptance": "PENDING",
+  "retrieval_history": {
+    "browser_operations": [
+      {
+        "review_id": "R156",
+        "operation": "open",
+        "url": "https://doi.org/10.1007/978-981-92-3429-5_44",
+        "result": "Browser tool says URL inaccessible; this is not proof no manuscript exists."
+      },
+      {
+        "review_id": "R156",
+        "operation": "open",
+        "url": "https://link.springer.com/chapter/10.1007/978-981-92-3429-5_44",
+        "result": "Browser inaccessible; ordinary HTTP capture subsequently obtained DOI-matched subscription-preview page."
+      },
+      {
+        "review_id": "R156",
+        "operation": "search",
+        "query": "\"MoFAIR\" \"Self-Improving\" \"Liu\" arxiv",
+        "domains": [
+          "arxiv.org",
+          "link.springer.com"
+        ],
+        "result": "Official Springer book result confirms chapter/title/authors; no author manuscript identified. Search result not a full manuscript."
+      },
+      {
+        "review_id": "R156",
+        "operation": "open",
+        "url": "https://link.springer.com/content/pdf/10.1007/978-981-92-3429-5_44.pdf",
+        "result": "Browser inaccessible; one explicit publisher-PDF capture subsequently returned complete14-page DOI-matchedPDF. Failure history retained; no access hold falsely inferred."
+      }
+    ],
+    "captured_requests": [
+      {
+        "review_id": "R156",
+        "url": "https://link.springer.com/chapter/10.1007/978-981-92-3429-5_44",
+        "requested_utc": "2026-11-02T02:15:40.120108+00:00",
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R156-springer-chapter.html",
+        "method": "urllib.request.urlopen; identified official source; one attempt",
+        "status": 200,
+        "final_url": "https://link.springer.com/chapter/10.1007/978-981-92-3429-5_44?error=cookies_not_supported&code=32876daa-8b25-4c65-afdc-afbbaf9b9ba5",
+        "headers": {
+          "Connection": "close",
+          "etag": "W/\"649de1e8495be0c37fc91340b3fe6b2b\"",
+          "server": "Oscar Platform 0.1822.0",
+          "age": "0",
+          "x-b3-sampled": "1",
+          "x-b3-traceid": "07367dfdd490eb9c",
+          "x-b3-spanid": "b38627132c5ebe7d",
+          "tracestate": "gorouter=09deea83cf64df03",
+          "x-vcap-request-id": "d44897de-cd4c-4cbe-5595-34dd873e7565",
+          "content-type": "text/html; charset=utf-8",
+          "via": "1.1 google, 1.1 varnish",
+          "accept-ranges": "bytes",
+          "set-cookie": "sim-inst-token=\"\"; Domain=.springer.com; Path=/; secure; HttpOnly",
+          "x-content-type-options": "nosniff",
+          "x-robots-tag": "nocache",
+          "x-frame-options": "DENY",
+          "traceparent": "00-d44897decd4c4cbe559534dd873e7565-9b189eeeb5a08b5c-01",
+          "x-dump-request-bodies": "0",
+          "Date": "Mon, 02 Nov 2026 02:15:44 GMT",
+          "X-Served-By": "cache-b949c1dc-internal, cache-nrt-rjaa8190061-NRT, cache-nrt-rjtt7900036-NRT",
+          "X-Cache": "MISS, MISS, MISS",
+          "X-Cache-Hits": "0, 0",
+          "X-Timer": "S1793585744.205454,VS0,VE757",
+          "Vary": "x-frame-options,X-Oscar-Cache-Mode, Accept-Encoding",
+          "alt-svc": "h3=\":443\";ma=86400,h3-29=\":443\";ma=86400,h3-27=\":443\";ma=86400",
+          "transfer-encoding": "chunked"
+        },
+        "bytes": 322131,
+        "sha256": "e3b875926533688e066ca03406ad87ed2e01a33fa9cb3d1e8a64d9609e303e97",
+        "elapsed_seconds": 5.597875999985263,
+        "successful": true
+      },
+      {
+        "url": "https://link.springer.com/content/pdf/10.1007/978-981-92-3429-5_44.pdf",
+        "http_status": 200,
+        "bytes": 1607106,
+        "sha256": "8295a572c0db1ba78b3984a8209d4714b4fc40438bedf60c79d5146a3517783c",
+        "retrieved_utc": "2026-11-02T02:21:48.111433+00:00",
+        "headers_path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R156-springer-pdf.headers",
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R156-springer-pdf.response",
+        "full_manuscript": true,
+        "pages": 14
+      }
+    ]
+  },
+  "completed_utc": "2026-11-02T02:35:42.749418+00:00",
+  "independent_qc": "COMPLETE; see independent_QC and preserved original reviewer record",
+  "effort": {
+    "shared_lane_effort_receipt": "reviewers/resources/effort_and_retrievals.json",
+    "per_action_active_minutes_measured": false,
+    "caution": "Do not sum overlapping parallel lane wall intervals as exclusive per-paper labor."
+  },
+  "original_reviewer_record": {
+    "path": "per_paper/R156.json",
+    "sha256": "a60256b6ce789e363ed0f4d9aaf5b2cc1b98275964f798e8988acfd9397f9132",
+    "outcome": "NOT_SUPPORTED"
+  },
+  "provisional_disposition": "EVIDENCE_INSUFFICIENT",
+  "independent_QC": {
+    "status": "COMPLETE",
+    "receipt": "qc/resources_independent_review.json",
+    "sha256": "f5d4926d6a77fb581a5c584621168ae633b23b65afbbaf84fd3df711c7a6442a",
+    "verdict_record": {
+      "review_id": "R156",
+      "paper_id": "curated:4ad04c01ae2850d5cc34",
+      "original_reviewer_outcome": "NOT_SUPPORTED",
+      "independent_outcome": "EVIDENCE_INSUFFICIENT",
+      "agree_with_original": false,
+      "proposed_research_types": [
+        "method"
+      ],
+      "current_tasks_preserved": [
+        "detection"
+      ],
+      "confidence": "MODERATE: method-support evidence is concrete; independently substantive resource status remains unresolved"
+    },
+    "original_record_sha256": "a60256b6ce789e363ed0f4d9aaf5b2cc1b98275964f798e8988acfd9397f9132",
+    "disagreement_preserved": true
+  },
+  "current_authoritative_status": "UNRESOLVED",
+  "reviewer_disagreement": {
+    "review_id": "R156",
+    "original": "NOT_SUPPORTED",
+    "independent_conservative": "EVIDENCE_INSUFFICIENT",
+    "adopt_for_final_evidence_handoff": "EVIDENCE_INSUFFICIENT",
+    "reason": "No datasetaddition is currently supported, but explicit curated15Kstructuredresource assertions and incompleteconstruction/provision details do not establish that resource has only method-internal significance. Methodcentricbullets and Algorithm1input/output support doubt, not categorical absence. Preserveoriginalmoderatenegativereview and recordthis independentuncertainty.",
+    "missing_evidence": "Primaryauthor/publisher resource specification clarifying sourcecomposition, annotationconstruction and intendedindependent systematicprovision/reuse; no need to demand a publicdownload or run code merely to classify contribution.",
+    "authoritative_resolution_changed": false
+  },
+  "remaining_evidence_required": "Primaryauthor/publisher resource specification clarifying sourcecomposition, annotationconstruction and intendedindependent systematicprovision/reuse; no need to demand a publicdownload or run code merely to classify contribution."
+}

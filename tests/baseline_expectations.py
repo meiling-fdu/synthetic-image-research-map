@@ -94,7 +94,7 @@ CURRENT_CORPUS_COUNTS = {
     "unique_paper_institution_pairs": 1410
 }
 
-RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 86, 'survey': 21, 'dataset': 142, 'benchmark': 101}
+RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 90, 'survey': 21, 'dataset': 146, 'benchmark': 102}
 
 CURRENT_TAXONOMY_TOTALS = {**TASK_TOTALS, **RESEARCH_TYPE_TOTALS}
 

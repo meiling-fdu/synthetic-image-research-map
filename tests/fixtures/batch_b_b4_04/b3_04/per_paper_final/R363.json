@@ -1,0 +1,289 @@
+{
+  "schema": "b3-04-final-action-evidence-1",
+  "review_id": "R363",
+  "paper_id": "curated:14272073fa5bc0e301b5",
+  "title": "LEGION: Learning to Ground and Explain for Synthetic Image Detection",
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "assignment_sha256": "644442f487b11db752936c8b04a0f03073b692c5c81df35593b18e9b4f7c8f43",
+  "question": "SynthScars contributes 12,236 images with expert artifact masks, explanations and categories.",
+  "original_review": {
+    "review_id": "R363",
+    "paper_id": "curated:14272073fa5bc0e301b5",
+    "title": "LEGION: Learning to Ground and Explain for Synthetic Image Detection",
+    "dimension": "research_types",
+    "current_labels": [
+      "method"
+    ],
+    "proposed_labels": [
+      "method",
+      "dataset"
+    ],
+    "status": "LIKELY_FIX",
+    "confidence": "medium",
+    "reason": "SynthScars contributes 12,236 images with expert artifact masks, explanations and categories.",
+    "evidence_url": "https://doi.org/10.1109/iccv51701.2025.01760",
+    "evidence_basis": "reused_audit+abstract",
+    "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:14272073fa5bc0e301b5",
+    "evidence_excerpt": "The rapid advancements in generative technology have emerged as a double-edged sword. While offering powerful tools that enhance convenience, they also pose significant social",
+    "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: SynthScars contributes 12,236 images with expert artifact masks, explanations and categories.",
+    "batch": "B",
+    "current_tasks": [
+      "detection"
+    ],
+    "proposed_tasks": [
+      "detection"
+    ],
+    "current_research_types": [
+      "method"
+    ],
+    "proposed_research_types": [
+      "method",
+      "dataset"
+    ]
+  },
+  "governing_policy_ids": [
+    "R1"
+  ],
+  "current_tasks": [
+    "detection",
+    "localization"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "proposed_research_types": [
+    "method",
+    "dataset"
+  ],
+  "outcome": "SUPPORTED_ADDITION",
+  "identity_verification": {
+    "matched": true,
+    "basis": "Full title, arXiv identity and all eleven named authors match the canonical work. Author/affiliation formatting differences are not used to alter identities. Dataset contribution is supported in this explicitv1 manuscript; no byte-equivalence to the ICCV final is claimed.",
+    "canonical_doi": "10.1109/iccv51701.2025.01760",
+    "canonical_arxiv_id": "2503.15264"
+  },
+  "sources": [
+    {
+      "url": "https://arxiv.org/html/2503.15264v1",
+      "version": "arXiv2503.15264v1,19Mar2025; complete HTML including appendices",
+      "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R363-arxiv-v1.html",
+      "sha256": "b198fbd3b2f9b83c7134febd1fa417afe3a58f2deea86bcc8a2261182f6eab2b",
+      "bytes": 380813,
+      "kind": "full_manuscript",
+      "limitation": "Canonical ICCV DOI10.1109/iccv51701.2025.01760 retained; exact final publisher manuscript not inspected."
+    }
+  ],
+  "reused_local_evidence": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R363",
+      "finding": "SynthScars contributes 12,236 images with expert artifact masks, explanations and categories. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "current_sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R363",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "current_sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "paper_id:curated:14272073fa5bc0e301b5",
+      "finding": "Current tasks=detection;localization; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+      "current_sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R1",
+      "finding": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "current_sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "docs/corpus_quality_batch_c_decision_sheet_2026_10_05.md",
+      "locator": "C14/T363",
+      "finding": "Artifact-localization task accepted from saved abstract mIoU/F1 claims; does not decide R1.",
+      "sha256": "e5f329b7620e62bb041268059de60094d17284c3ae66b186abecd63a40d27d45",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/docs/corpus_quality_batch_c_decision_sheet_2026_10_05.md",
+      "current_sha256": "e5f329b7620e62bb041268059de60094d17284c3ae66b186abecd63a40d27d45",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_wave_b1j_2026_10_21.md",
+      "locator": "R400 comparison conditions / LEGION",
+      "finding": "LEGION follows SynthScars training protocol in another paper comparison; not original dataset-contribution evidence.",
+      "sha256": "a6cb8f65f3631bda4edee080aae58c4c6ae8cb0427b191a006ec42dea35830b7",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/docs/corpus_quality_batch_b_wave_b1j_2026_10_21.md",
+      "current_sha256": "a6cb8f65f3631bda4edee080aae58c4c6ae8cb0427b191a006ec42dea35830b7",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "SynthScars is an explicit separately contributed resource with dedicated curation and annotation methods.",
+      "locator": "Introduction contribution1;sections3.1-3.3;AppendixA.1-A.3",
+      "evidence": "Curates public-source synthetic images using feature-cluster sampling and VLM quality filtering, then adds irregular-polygon artifact masks, explanations and three artifact categories. AppendixA.2 describes12trained annotators and240totalannotationhours. This goes beyond using existing data for LEGION experiments.",
+      "source_bindings": [
+        {
+          "url": "https://arxiv.org/html/2503.15264v1",
+          "version": "arXiv2503.15264v1,19Mar2025; complete HTML including appendices",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R363-arxiv-v1.html",
+          "sha256": "b198fbd3b2f9b83c7134febd1fa417afe3a58f2deea86bcc8a2261182f6eab2b",
+          "bytes": 380813,
+          "kind": "full_manuscript",
+          "limitation": "Canonical ICCV DOI10.1109/iccv51701.2025.01760 retained; exact final publisher manuscript not inspected."
+        }
+      ]
+    },
+    {
+      "claim": "Image and artifact-instance counts use distinct units with correct table arithmetic.",
+      "locator": "AppendixA.4/Table6/Table7",
+      "evidence": "Table6 images11,236train+1,000test=12,236. Table7 artifact instances23,913train+2,653test=26,566. Structure artifacts21,233train+2,406test=23,639, and1,542physics+1,385distortion+23,639structure=26,566. Do not conflate26,566artifacts with12,236images or treat23,639as the whole artifact total.",
+      "source_bindings": [
+        {
+          "url": "https://arxiv.org/html/2503.15264v1",
+          "version": "arXiv2503.15264v1,19Mar2025; complete HTML including appendices",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R363-arxiv-v1.html",
+          "sha256": "b198fbd3b2f9b83c7134febd1fa417afe3a58f2deea86bcc8a2261182f6eab2b",
+          "bytes": 380813,
+          "kind": "full_manuscript",
+          "limitation": "Canonical ICCV DOI10.1109/iccv51701.2025.01760 retained; exact final publisher manuscript not inspected."
+        }
+      ]
+    },
+    {
+      "claim": "The resource is fully synthetic and annotated for artifacts; authenticity and mask evaluation should not be conflated.",
+      "locator": "Abstract;section5.2;AppendixE",
+      "evidence": "The manuscript presents an11,236/1,000train/test resource for artifact localization and evaluates on externalLOKI/RichHFdomains; AppendixE notes missed small/subtle artifacts and complex scenes. Existing detection;localization acceptance is preserved independently; no task classification is re-adjudicated.",
+      "source_bindings": [
+        {
+          "url": "https://arxiv.org/html/2503.15264v1",
+          "version": "arXiv2503.15264v1,19Mar2025; complete HTML including appendices",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R363-arxiv-v1.html",
+          "sha256": "b198fbd3b2f9b83c7134febd1fa417afe3a58f2deea86bcc8a2261182f6eab2b",
+          "bytes": 380813,
+          "kind": "full_manuscript",
+          "limitation": "Canonical ICCV DOI10.1109/iccv51701.2025.01760 retained; exact final publisher manuscript not inspected."
+        }
+      ]
+    }
+  ],
+  "policy_analysis": {
+    "R1": "Supported by explicit substantive dataset contribution and dedicated systematic curation/annotation/resource specification. Public release verification is not necessary for classification support, and v1future-release language is not converted into a verified-current-release claim."
+  },
+  "caveats": [
+    "OnlyarXivv1fullmanuscript inspected; exact final ICCVversion equivalence unverified.",
+    "V1says code/model/dataset will be released. No current release availability,license/data contents or reproduction verified.",
+    "All12,236images are fully synthetic; this is not a balanced real/fake dataset.",
+    "Human-expert annotations and source statistics are reported,not independently reproduced; complex/small-artifact limitations remain.",
+    "Preserve existingT363 detection;localization acceptance. No R2benchmark question added."
+  ],
+  "scientific_confidence": "high for bounded R1 dataset contribution; qualified for final-version/release correspondence and empirical validation",
+  "reproducibility_limitations": "No independent training, evaluation, dataset download or code execution performed. Contribution support does not claim reproduced performance, causal validity, release completeness or operational reproducibility.",
+  "proposed_changes": [
+    {
+      "field": "research_types",
+      "before": [
+        "method"
+      ],
+      "after": [
+        "method",
+        "dataset"
+      ]
+    }
+  ],
+  "formal_action_closed": false,
+  "authoritative_data_changed": false,
+  "maintainer_acceptance": "PENDING",
+  "retrieval_history": {
+    "browser_operations": [
+      {
+        "review_id": "R363",
+        "operation": "open",
+        "url": "https://arxiv.org/html/2503.15264",
+        "result": "Full HTML available; identifies v1,19Mar2025."
+      }
+    ],
+    "captured_requests": [
+      {
+        "review_id": "R363",
+        "url": "https://arxiv.org/html/2503.15264v1",
+        "requested_utc": "2026-11-02T02:15:41.879519+00:00",
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R363-arxiv-v1.html",
+        "method": "urllib.request.urlopen; identified official source; one attempt",
+        "status": 200,
+        "final_url": "https://arxiv.org/html/2503.15264v1",
+        "headers": {
+          "Connection": "close",
+          "Content-Length": "380813",
+          "server": "Google Frontend",
+          "via": "1.1 google, 1.1 varnish, 1.1 varnish, 1.1 varnish",
+          "x-robots-tag": "nofollow",
+          "link": "<https://arxiv.org/html/2503.15264>; rel='canonical'",
+          "content-type": "text/html; charset=utf-8",
+          "access-control-allow-origin": "*",
+          "last-modified": "Mon, 24 Aug 2026 20:46:25 GMT",
+          "etag": "\"CJyE+6KRupYDEAE=\"",
+          "Accept-Ranges": "bytes",
+          "Age": "838098",
+          "Date": "Mon, 02 Nov 2026 02:15:42 GMT",
+          "X-Served-By": "cache-lga-kjfk8660054-LGA, cache-lga-kjfk8660054-LGA, cache-lga-kjfk8660050-LGA, cache-nrt-rjtt7900049-NRT",
+          "X-Cache": "MISS, HIT, HIT",
+          "X-Timer": "S1793585743.585496,VS0,VE1"
+        },
+        "bytes": 380813,
+        "sha256": "b198fbd3b2f9b83c7134febd1fa417afe3a58f2deea86bcc8a2261182f6eab2b",
+        "elapsed_seconds": 1.3453622499946505,
+        "successful": true
+      }
+    ]
+  },
+  "completed_utc": "2026-11-02T02:35:42.749418+00:00",
+  "independent_qc": "COMPLETE; see independent_QC and preserved original reviewer record",
+  "effort": {
+    "shared_lane_effort_receipt": "reviewers/resources/effort_and_retrievals.json",
+    "per_action_active_minutes_measured": false,
+    "caution": "Do not sum overlapping parallel lane wall intervals as exclusive per-paper labor."
+  },
+  "original_reviewer_record": {
+    "path": "per_paper/R363.json",
+    "sha256": "e3c7b75d1d8e7e2dcc04fd1b7b1235a5e9af82779f21ea75b51da06dc4eb1e0e",
+    "outcome": "SUPPORTED_ADDITION"
+  },
+  "provisional_disposition": "SUPPORTED_ADDITION",
+  "independent_QC": {
+    "status": "COMPLETE",
+    "receipt": "qc/resources_independent_review.json",
+    "sha256": "f5d4926d6a77fb581a5c584621168ae633b23b65afbbaf84fd3df711c7a6442a",
+    "verdict_record": {
+      "review_id": "R363",
+      "paper_id": "curated:14272073fa5bc0e301b5",
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_outcome": "SUPPORTED_ADDITION",
+      "agree_with_original": true,
+      "proposed_research_types": [
+        "method",
+        "dataset"
+      ],
+      "current_tasks_preserved": [
+        "detection",
+        "localization"
+      ],
+      "confidence": "HIGH for bounded contribution classification with source/version caveats"
+    },
+    "original_record_sha256": "e3c7b75d1d8e7e2dcc04fd1b7b1235a5e9af82779f21ea75b51da06dc4eb1e0e",
+    "disagreement_preserved": false
+  },
+  "current_authoritative_status": "UNRESOLVED"
+}

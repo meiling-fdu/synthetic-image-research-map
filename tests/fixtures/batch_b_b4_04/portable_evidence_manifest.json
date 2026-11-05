@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "partial_archive": true,
+  "purpose": "Exact reviewed source/decision/QC input for local B4-04 regression tests; no scientific review repeated.",
+  "original_archives_unchanged": true,
+  "omitted_evidence": [
+    "manuscript PDF bytes",
+    "browser source captures and raw network responses",
+    "unrelated archived records"
+  ],
+  "limitations": "Original source/version/access/numerical caveats remain in exact copied B3 and decision records; no omitted primary document is represented as bundled or independently reproduced.",
+  "entries": [
+    {
+      "path": "tests/fixtures/batch_b_b4_04/adjudication_manifest.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-04-2026-11-03/adjudication_manifest.json",
+      "source_sha256": "82e6592d020b69bb85341ffe7a495d5beab2b0673e3f8757ff5f0c900ec14b89",
+      "stored_sha256": "82e6592d020b69bb85341ffe7a495d5beab2b0673e3f8757ff5f0c900ec14b89",
+      "bytes": 356394
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/published_tree_sha256.json.gz",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-04-2026-11-03/qc/native_baseline.json",
+      "source_sha256": "2f5c4560c8321d7f4d66d6063578a7c2013668ecd45012051655a96767689e8f",
+      "stored_sha256": "363d7634085471ab5046ae89417d9d4af2278495441defb45feed3332c0796be",
+      "bytes": 232045,
+      "derived_payload_sha256": "66edd718661f78a66d802ab69d4c135b28798995a373cfb1cc47000d54d693b1",
+      "transformation": "Extract authenticated native_state.tracked and published commit into canonical JSON; losslessly gzip with mtime=0. Original receipt remains unchanged."
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/qc/independent_preapply_review.json.gz",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-04-2026-11-03/qc/independent_preapply_review.json",
+      "source_sha256": "08f5ba0b909bdf3933a03b98fcd9e0a6eee91c782d97ff9c75d14ee5bb027cd1",
+      "stored_sha256": "dd3b949c2a564f77e952cb0e2c9ccc60bdadcc88a5484291c9a19166bc655a31",
+      "bytes": 114981
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/investigation/P251_write_path_assessment.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-04-2026-11-03/investigation/P251_write_path_assessment.json",
+      "source_sha256": "bf7868d3fcf0d8359a3654ccb07188a40b1354f738737f48c8a91609b18a4e09",
+      "stored_sha256": "bf7868d3fcf0d8359a3654ccb07188a40b1354f738737f48c8a91609b18a4e09",
+      "bytes": 13904
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/batch_dispositions.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/batch_dispositions.json",
+      "source_sha256": "2940a50d236c346af9bd3e4335b3a40c7bb4e71c2b935096daafc01a97c96c43",
+      "stored_sha256": "2940a50d236c346af9bd3e4335b3a40c7bb4e71c2b935096daafc01a97c96c43",
+      "bytes": 95169
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/per_paper_final/R045.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/per_paper_final/R045.json",
+      "source_sha256": "426c983ec7a8052e7fdbabd2a0d1085a91ccb56012b5e1add9871fc9dd6edecd",
+      "stored_sha256": "426c983ec7a8052e7fdbabd2a0d1085a91ccb56012b5e1add9871fc9dd6edecd",
+      "bytes": 12089
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/per_paper_final/R124.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/per_paper_final/R124.json",
+      "source_sha256": "67b490f19b22daba9e8982ad6535a594a4079cbad3560b51394a9bdb30410d18",
+      "stored_sha256": "67b490f19b22daba9e8982ad6535a594a4079cbad3560b51394a9bdb30410d18",
+      "bytes": 19076
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/per_paper_final/R149.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/per_paper_final/R149.json",
+      "source_sha256": "9dcb2bbcc61f27de20c00e321c56c073ac1d806c7ad677c309ae83704bb53fb7",
+      "stored_sha256": "9dcb2bbcc61f27de20c00e321c56c073ac1d806c7ad677c309ae83704bb53fb7",
+      "bytes": 15091
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/per_paper_final/R156.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/per_paper_final/R156.json",
+      "source_sha256": "7a2723c56d044433f74a09a9227c074f10bd95f9d7bfd76786f7d89051f486d2",
+      "stored_sha256": "7a2723c56d044433f74a09a9227c074f10bd95f9d7bfd76786f7d89051f486d2",
+      "bytes": 17697
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/per_paper_final/R223.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/per_paper_final/R223.json",
+      "source_sha256": "310e119f94ccab701692337fa0d99bf32b8b288b6cfe1bdade80b4cecd1f8009",
+      "stored_sha256": "310e119f94ccab701692337fa0d99bf32b8b288b6cfe1bdade80b4cecd1f8009",
+      "bytes": 14696
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/per_paper_final/P251.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/per_paper_final/P251.json",
+      "source_sha256": "48e1505561de6e6a6fd7f332171ad4532dcc018443e56c962db12a0806afffbc",
+      "stored_sha256": "48e1505561de6e6a6fd7f332171ad4532dcc018443e56c962db12a0806afffbc",
+      "bytes": 15873
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/per_paper_final/R251.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/per_paper_final/R251.json",
+      "source_sha256": "2d87ec97ff695d5c7419b145d1f3e46e92005c67a0824b5617a39b95581e41b5",
+      "stored_sha256": "2d87ec97ff695d5c7419b145d1f3e46e92005c67a0824b5617a39b95581e41b5",
+      "bytes": 10013
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/per_paper_final/R284.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/per_paper_final/R284.json",
+      "source_sha256": "360c3719d26bd24c8f518b4bf9875e05088505bd1f03b08c4afecb20085863da",
+      "stored_sha256": "360c3719d26bd24c8f518b4bf9875e05088505bd1f03b08c4afecb20085863da",
+      "bytes": 12210
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/per_paper_final/R363.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/per_paper_final/R363.json",
+      "source_sha256": "2126769b4fdadc403352669ce9f3921ed644a5557b0db83aa2f3561e0f27e6ab",
+      "stored_sha256": "2126769b4fdadc403352669ce9f3921ed644a5557b0db83aa2f3561e0f27e6ab",
+      "bytes": 15742
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/per_paper_final/R477.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/per_paper_final/R477.json",
+      "source_sha256": "11070da436680042629f0ae1928a56d0df59fac351853821ad0d26f42c4ce962",
+      "stored_sha256": "11070da436680042629f0ae1928a56d0df59fac351853821ad0d26f42c4ce962",
+      "bytes": 15746
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/per_paper_final/R509.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/per_paper_final/R509.json",
+      "source_sha256": "642a97568799ce08187780d23e566e5388bafe20aaf1ae4432f84ccdd827074b",
+      "stored_sha256": "642a97568799ce08187780d23e566e5388bafe20aaf1ae4432f84ccdd827074b",
+      "bytes": 16371
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/per_paper_final/R512.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/per_paper_final/R512.json",
+      "source_sha256": "2323b1e23570e85fcd748afb4b5bc05aa6fac4058bba2bb6282b207522497c93",
+      "stored_sha256": "2323b1e23570e85fcd748afb4b5bc05aa6fac4058bba2bb6282b207522497c93",
+      "bytes": 16724
+    },
+    {
+      "path": "tests/fixtures/batch_b_b4_04/b3_04/per_paper_final/R625.json",
+      "source": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/per_paper_final/R625.json",
+      "source_sha256": "d5abbeb2c4d3827535fd663ee52ba0e9f8de0a45777ff0af99ab1e6c4b2359b7",
+      "stored_sha256": "d5abbeb2c4d3827535fd663ee52ba0e9f8de0a45777ff0af99ab1e6c4b2359b7",
+      "bytes": 17838
+    }
+  ]
+}

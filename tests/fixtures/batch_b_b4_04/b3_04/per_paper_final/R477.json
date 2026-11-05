@@ -1,0 +1,331 @@
+{
+  "schema": "b3-04-final-action-evidence-1",
+  "review_id": "R477",
+  "paper_id": "curated:3312da81174f7d411081",
+  "title": "Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images",
+  "reviewer": "analysis-lane",
+  "reviewed_utc": "2026-11-02T02:35:44.339572+00:00",
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "assignment_sha256": "644442f487b11db752936c8b04a0f03073b692c5c81df35593b18e9b4f7c8f43",
+  "question": "The main contribution measures detector performance as synthetic images evolve during online dissemination.",
+  "governing_policy_ids": [
+    "R3"
+  ],
+  "locked_rule": "Assign analysis_study only when systematic empirical or theoretical analysis is a primary scientific contribution. Routine ablations, robustness tables, parameter sweeps, or supporting interpretability figures do not qualify by themselves.",
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "dataset"
+  ],
+  "canonical_identity": {
+    "paper_id": "curated:3312da81174f7d411081",
+    "title": "Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images",
+    "doi": "10.1007/978-3-031-92648-8_24",
+    "arxiv_id": "",
+    "authors": [
+      "Dimitrios Karageogiou",
+      "Quentin Bammey",
+      "Valentin Porcellini",
+      "Bertrand Goupil",
+      "Denis Teyssou",
+      "Symeon Papadopoulos"
+    ]
+  },
+  "proposed_research_types": [
+    "dataset",
+    "analysis_study"
+  ],
+  "outcome": "SUPPORTED_ADDITION",
+  "sources": [
+    {
+      "url": "https://arxiv.org/pdf/2408.11541v1",
+      "artifact": "evidence/analysis/R477/primary.pdf",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R477/primary.pdf",
+      "sha256": "2f901e5686d07c448dc7f5e53b9da6fd16e35d672518c95a4314912fb1084f45",
+      "bytes": 3961338,
+      "role": "complete_author_manuscript",
+      "version": "arXiv2408.11541v1",
+      "complete_manuscript": true
+    },
+    {
+      "url": "https://arxiv.org/pdf/2408.11541v1",
+      "artifact": "evidence/analysis/R477/primary.txt",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R477/primary.txt",
+      "sha256": "e4d3ebefa5422a294caa22714b0325273a7b38b2aafeb4ee528835913ee68829",
+      "bytes": 55631,
+      "role": "derived_full_text",
+      "version": "arXiv2408.11541v1",
+      "complete_manuscript": true
+    },
+    {
+      "url": "https://arxiv.org/pdf/2408.11541v1",
+      "artifact": "evidence/analysis/R477/page-13.png",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R477/page-13.png",
+      "sha256": "dc0529526079bd227e7aa39002fec7eaded4668474c43559097d91ebead4ab9d",
+      "bytes": 344358,
+      "role": "rendered_table_page",
+      "version": "arXiv2408.11541v1 PDFp13",
+      "complete_manuscript": false
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Introduction contributions and sections4.4–4.8 make calibration, in-the-wild discrimination and temporal detector degradation primary study questions, beyond validating the FOSID resource.",
+      "locator": "Introduction pp2–3; sections4.4–4.8 pp9–13",
+      "source": "evidence/analysis/R477/primary.pdf",
+      "numerical_evidence": null,
+      "independently_reproduced": false
+    },
+    {
+      "claim": "Time-ordered copies of four fact-checked seed images are split into quarters. Basic images from Q1 versus Q4 are evaluated using balanced accuracy at an EER threshold and AUC, averaged over five real-image datasets.",
+      "locator": "§4.8 pp12–13,Table6 p13",
+      "source": "evidence/analysis/R477/primary.pdf",
+      "numerical_evidence": {
+        "reported_Q1_Q4_overall_relative_BA_change_percent": -2.6,
+        "reported_Q1_Q4_overall_relative_AUC_change_percent": -3.2,
+        "FreqDetect_Q1_BA_AUC": [
+          55.1,
+          56.5
+        ],
+        "FreqDetect_Q4_BA_AUC": [
+          48.2,
+          47.9
+        ]
+      },
+      "independently_reproduced": false
+    },
+    {
+      "claim": "FOSID includes four seed lineages and a small unique-image set; reported temporal evidence is observational, not a general causal estimate for elapsed time.",
+      "locator": "§3,Table1 p7;§4.8,Table6 p13",
+      "source": "evidence/analysis/R477/primary.pdf",
+      "numerical_evidence": {
+        "unique_images": 955,
+        "basic_images": 713,
+        "reported_seed_lifespans_months": [
+          9,
+          3,
+          3,
+          10
+        ]
+      },
+      "independently_reproduced": false
+    }
+  ],
+  "caveats": [
+    "Author manuscript v1 is not asserted byte-equivalent to Springer final.",
+    "Table1 reports3070total URLs, whereas the four displayed TotalURLs cells678+772+808+745 sum to3003; preserve both.",
+    "Table5 Rine/PatchCraft displayed All scores appear interchanged relative to Table4; do not silently repair method labels.",
+    "§4.8 narrative says nine BA declines, but rounded Table6 cells show eight negative BA differences, one zero(Dire), and three positive values; ten negative AUC differences are supported. Hidden unrounded values were not available.",
+    "Overall -2.6%/-3.2% are reported mean relative changes, not percentage-point drops.",
+    "Four deliberately selected seed lineages, observational copy histories and nonuniform post-processing do not identify a universal causal effect of elapsed time. EER thresholds and best-of25pretrained models are evaluation choices, not an independently calibrated deployment claim."
+  ],
+  "proposed_changes": [
+    {
+      "field": "research_types",
+      "before": [
+        "dataset"
+      ],
+      "after": [
+        "dataset",
+        "analysis_study"
+      ],
+      "policy_id": "R3"
+    }
+  ],
+  "formal_decision_recorded": false,
+  "formal_action_closed": false,
+  "maintainer_acceptance_pending": true,
+  "authoritative_data_changed": false,
+  "empirical_results_independently_reproduced": false,
+  "evidence_reuse": {
+    "original_review": {
+      "review_id": "R477",
+      "paper_id": "curated:3312da81174f7d411081",
+      "title": "Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images",
+      "dimension": "research_types",
+      "current_labels": [
+        "dataset"
+      ],
+      "proposed_labels": [
+        "dataset",
+        "analysis_study"
+      ],
+      "status": "LIKELY_FIX",
+      "confidence": "medium",
+      "reason": "The main contribution measures detector performance as synthetic images evolve during online dissemination.",
+      "evidence_url": "https://doi.org/10.1007/978-3-031-92648-8_24",
+      "evidence_basis": "reused_audit+abstract",
+      "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:3312da81174f7d411081",
+      "evidence_excerpt": "Synthetic images disseminated online significantly differ from those used during the training and evaluation of the state-of-the-art detectors. In this work, we analyze the",
+      "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The main contribution measures detector performance as synthetic images evolve during online dissemination.",
+      "batch": "B",
+      "current_tasks": [
+        "detection"
+      ],
+      "proposed_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "dataset"
+      ],
+      "proposed_research_types": [
+        "dataset",
+        "analysis_study"
+      ]
+    },
+    "planning_refs": [
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+        "locator": "review_id:R477",
+        "finding": "The main contribution measures detector performance as synthetic images evolve during online dissemination. Original open proposal only; not an accepted scientific disposition.",
+        "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+      },
+      {
+        "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+        "locator": "b-R477",
+        "finding": "Original bounded review question and preserved evidence requirements.",
+        "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "locator": "paper_id:curated:3312da81174f7d411081",
+        "finding": "Current tasks=detection; research_types=dataset; retained evidence tier/source remains traceable.",
+        "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9"
+      },
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+        "locator": "policy_id:R3",
+        "finding": "Assign analysis_study only when systematic empirical or theoretical analysis is a primary scientific contribution. Routine ablations, robustness tables, parameter sweeps, or supporting interpretability figures do not qualify by themselves.",
+        "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+      }
+    ],
+    "local_full_manuscript_inventory": "evidence/analysis/local_manuscript_inventory.json",
+    "local_full_manuscripts_reused": 0
+  },
+  "retrieval_history": [
+    {
+      "kind": "browser_primary_html",
+      "url": "https://arxiv.org/html/2408.11541v1",
+      "outcome": "complete scientific HTML accessible and inspected",
+      "full_manuscript": true,
+      "unique_manuscript_version": "2408.11541v1",
+      "transferred_bytes": null
+    },
+    {
+      "kind": "curl_primary_pdf",
+      "url": "https://arxiv.org/pdf/2408.11541v1",
+      "http_status": 200,
+      "curl_exit": 28,
+      "budget_seconds": 120,
+      "transferred_bytes": 3413848,
+      "full_manuscript": false
+    },
+    {
+      "kind": "conditional_range_continuation",
+      "url": "https://arxiv.org/pdf/2408.11541v1",
+      "http_status": 206,
+      "curl_exit": 0,
+      "budget_seconds": 240,
+      "transferred_bytes": 547490,
+      "final_assembled_bytes": 3961338,
+      "full_manuscript": true,
+      "unique_manuscript_version": "2408.11541v1",
+      "continuation_is_not_another_unique_manuscript": true
+    }
+  ],
+  "out_of_scope_observations": [],
+  "reproducibility_limitations": [
+    "No training, inference, result replication, data download or code execution was performed. Contribution support is distinct from empirical validity and operational reproducibility."
+  ],
+  "identity_verification": {
+    "title_matches": true,
+    "six_author_sequence_matches": true,
+    "canonical_doi": "10.1007/978-3-031-92648-8_24",
+    "reviewed_manuscript": "arXiv:2408.11541v1,21August2024",
+    "publisher_final_equivalence_verified": false,
+    "qualification": "Author manuscript independently matches title and six-author work identity; Springer final bytes and publication-year semantics are not adjudicated. Minor Karageogiou/Karageorgiou internal spelling remains literal and unnormalized."
+  },
+  "policy_analysis": "SUPPORTED_ADDITION under locked R3. Detector behavior under online dissemination is explicitly a primary scientific contribution and is studied through a structured temporal and multi-dataset protocol, independently of the existing dataset role. The proposal preserves dataset and adds analysis_study; it does not certify the numerical/causal claims or add an unassigned method/benchmark role.",
+  "scientific_confidence": {
+    "primary_analysis_contribution": "high",
+    "reported_numeric_validity": "qualified_by_documented_discrepancies",
+    "causal_generalization": "limited"
+  },
+  "original_review": {
+    "review_id": "R477",
+    "paper_id": "curated:3312da81174f7d411081",
+    "title": "Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images",
+    "dimension": "research_types",
+    "current_labels": [
+      "dataset"
+    ],
+    "proposed_labels": [
+      "dataset",
+      "analysis_study"
+    ],
+    "status": "LIKELY_FIX",
+    "confidence": "medium",
+    "reason": "The main contribution measures detector performance as synthetic images evolve during online dissemination.",
+    "evidence_url": "https://doi.org/10.1007/978-3-031-92648-8_24",
+    "evidence_basis": "reused_audit+abstract",
+    "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:3312da81174f7d411081",
+    "evidence_excerpt": "Synthetic images disseminated online significantly differ from those used during the training and evaluation of the state-of-the-art detectors. In this work, we analyze the",
+    "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The main contribution measures detector performance as synthetic images evolve during online dissemination.",
+    "batch": "B",
+    "current_tasks": [
+      "detection"
+    ],
+    "proposed_tasks": [
+      "detection"
+    ],
+    "current_research_types": [
+      "dataset"
+    ],
+    "proposed_research_types": [
+      "dataset",
+      "analysis_study"
+    ]
+  },
+  "original_reviewer_record": {
+    "path": "per_paper/R477.json",
+    "sha256": "275334c1a3613fd00f51e5451a788e390959116dd35b41c7edf1930f2fa33444",
+    "outcome": "SUPPORTED_ADDITION"
+  },
+  "provisional_disposition": "SUPPORTED_ADDITION",
+  "independent_QC": {
+    "status": "COMPLETE",
+    "receipt": "qc/analysis_independent_review.json",
+    "sha256": "e1af6cfae1b60c398ad50aad843c503b487d2c22207d305c1945855e7dd69716",
+    "verdict_record": {
+      "review_id": "R477",
+      "input_record_sha256": "275334c1a3613fd00f51e5451a788e390959116dd35b41c7edf1930f2fa33444",
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_outcome": "SUPPORTED_ADDITION",
+      "disagreement": false,
+      "proposed_research_types": [
+        "dataset",
+        "analysis_study"
+      ],
+      "verdict": "APPROVE_PROVISIONAL_R3_ADDITION_WITH_SOURCE_CAVEATS",
+      "scientific_basis": "PDFpp2-3 Introduction explicitly frames in-the-wild calibration, discrimination and time-dependent degradation as primary contributions;§§4.4-4.8 are separate structured studies. This exceeds routine FOSID dataset validation or method ablation.",
+      "claim_checks": [
+        "Full18-page authorPDF title/six-author work identity and version2408.11541v1 independently inspected; no Springer-final equivalence inferred.",
+        "§4.8/Q1-Q4 basic-image protocol, EERthreshold/BA,AUC and averaging across four seed lineages/five real datasets verified.",
+        "Table6 render independently verifies FreqDetect55.1/56.5 to48.2/47.9 and overallrelative-2.6/-3.2, not percentagepointdrops.",
+        "Table1 displayed totalURL cells sum3003versus3070reported; unique955/basic713 reconcile.",
+        "Table4 Rine overall71.2/75.9 versus Table5Rine53.5/54.9, while Table5PatchCraft71.2/75.9, supports retained suspectedrowlabel interchange without repair.",
+        "Table6 shows eightnegativeBA,onezeroDire,threepositive; narrative9of12 differs. AUCtennegative confirmed."
+      ],
+      "limitations": [
+        "Four selected lineages and copy histories provide observational evidence, not a universal causal elapsed-time effect.",
+        "Rounded-table counts cannot rule out hidden unrounded differences; no corrected scientific source imposed.",
+        "Existingdatasetrole preserved; unassignedmethod/benchmark roles not proposed."
+      ]
+    },
+    "original_record_sha256": "275334c1a3613fd00f51e5451a788e390959116dd35b41c7edf1930f2fa33444",
+    "disagreement_preserved": false
+  },
+  "current_authoritative_status": "UNRESOLVED",
+  "maintainer_acceptance": "PENDING"
+}

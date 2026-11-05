@@ -1,0 +1,263 @@
+{
+  "schema": "b4-04-P251-existing-write-path-independent-assessment-1",
+  "completed_utc": "2026-11-03T05:22:35.775504+00:00",
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "review_id": "P251",
+  "paper_id": "doi:10.1109/i2cacis65476.2025.11100461",
+  "openalex_url": "https://openalex.org/W4413255768",
+  "safe_existing_authoritative_write_path": false,
+  "recommendation": "HOLD",
+  "formal_outcome_recommended": "UNRESOLVED_SCHEMA_AND_IDENTITY_PRESERVATION_HOLD",
+  "exact_blocker": "No demonstrated existing author-only authoritative write path preserves the accepted raw-derived paper identity and all non-author metadata/affiliation displays. The normal missing-row update_curated_paper path creates curated:4fd68908e5a809d55585 rather than doi:10.1109/i2cacis65476.2025.11100461. Confirmed or explicit-primary-review metadata precedence applies broad curated fields and leaves Jia Chyi Ng unmapped while Jefferson Ng remains in raw-derived affiliation author strings; an unconfirmed nonauthoritative row does not replace the displayed name. No paper-scoped formal affiliation occurrence evidence authorizes transferring the old name mapping, and no existing curated mapping row exists for this paper.",
+  "scientific_or_bibliographic_evidence_reopened": false,
+  "accepted_display_byline_evidence_remains_supported": true,
+  "accepted_publication_question": "Jia Chyi Ng is the independently supported first printed/displayed author of this exact work; personal alias equivalence and paper-time affiliation transfer are not established.",
+  "source_trace": [
+    {
+      "stage": "processed OpenAlex work",
+      "path": "data/processed/openalex_candidate_papers.csv",
+      "identity": "https://openalex.org/W4413255768",
+      "evidence": "One work row; authors_ordered first string Jefferson Ng."
+    },
+    {
+      "stage": "in-scope candidate",
+      "path": "data/processed/openalex_candidate_papers_in_scope.csv",
+      "evidence": "Same exact ordered five-name list."
+    },
+    {
+      "stage": "paper-time candidate affiliations",
+      "path": "data/processed/openalex_candidate_affiliations.csv",
+      "evidence": "Five author occurrence rows; author_order1 Jefferson Ng. Read-only source context, not verified equivalence to Jia Chyi Ng."
+    },
+    {
+      "stage": "current authoritative curated tables",
+      "path": "data/curated/papers.csv + author_institution_mappings.csv",
+      "evidence": "No P251 curated paper row and no P251 curated mapping rows by DOI/OpenAlex/canonical ID."
+    },
+    {
+      "stage": "public paper and two relationships",
+      "path": "web/data/public_preview_papers.json + public_preview_map_data.json",
+      "evidence": "Full byline, marker byline, institution_authors, affiliation authors and both author index arrays retain the original name; canonical public identity is DOI-derived because no explicit paper_id field exists."
+    }
+  ],
+  "existing_schema_alternatives": [
+    {
+      "mechanism": "Existing metadata update, confirmed",
+      "result": "UNSAFE",
+      "evidence": "Requested byline updates, but canonical identity, provenance/review fields and affiliation completeness change."
+    },
+    {
+      "mechanism": "Existing metadata update, needs_review only",
+      "result": "INSUFFICIENT_AND_UNSAFE",
+      "evidence": "Does not override the existing byline, still adds new curated identity and metadata fields."
+    },
+    {
+      "mechanism": "Existing explicit primary-source review precedence",
+      "result": "UNSAFE",
+      "evidence": "Byline updates, but same identity/provenance and unmapped-author failures as confirmed update."
+    },
+    {
+      "mechanism": "Low-level manual complete-row insertion with a hand-selected DOI ID",
+      "result": "NOT_A_PROVEN_APPROVED_FIELD_SCOPED_PATH",
+      "evidence": "Generic CSV serialization can encode a row, but provides no paper-author field mask or proof that broad metadata/provenance and every author-affiliation display remain unchanged. Bypassing the existing missing-row identity policy and inventing an occurrence transfer is not authorized. No such row was created."
+    },
+    {
+      "mechanism": "Institution-author override",
+      "result": "WRONG_SCOPE",
+      "evidence": "Existing mechanism changes institution-specific authors and does not replace a populated complete paper byline; user expressly excludes using it as a roster fix."
+    },
+    {
+      "mechanism": "Formal publication roster planner",
+      "result": "MISSING_REQUIRED_OCCURRENCE_EVIDENCE",
+      "evidence": "Needs a paper-scoped verified mapping matrix. P251 has no existing curated mapping row, and B3 printed TOC/display-name evidence does not establish personal identity or affiliation transfer."
+    },
+    {
+      "mechanism": "Author affiliation status audit",
+      "result": "WRONG_SCOPE",
+      "evidence": "Annotates mapped/noninstitutional/unresolved status of one existing author, not its display name."
+    }
+  ],
+  "temporary_checks": {
+    "methodology": "Unchanged existing update_curated_paper function with read_curated_papers returning a deep-copied actual source table and write_curated_papers intercepted in memory. Existing integrate_curated_records and detail-author transforms run on one target paper/two target markers plus an unrelated control; no export CLI or output writers executed. These are scoped unit projections, not regenerated public datasets.",
+    "probe_result_path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b4-04-2026-11-03/investigation/P251_temp_probe_results.json",
+    "probe_result_sha256": "56371b239ca5a730dee5dd4195b8b681dd49b0f9edac5dc9916db47db94d8753",
+    "cases": [
+      {
+        "case": "existing_admin_authors_patch",
+        "effective_public_identity_before": "doi:10.1109/i2cacis65476.2025.11100461",
+        "effective_public_identity_after": "curated:4fd68908e5a809d55585",
+        "canonical_identity_preserved": false,
+        "requested_display_names_applied": true,
+        "non_author_fields_changed": [
+          "affiliation_complete",
+          "author_affiliation_counts",
+          "author_affiliation_indices",
+          "author_institution_indices",
+          "curation_status",
+          "metadata_source",
+          "paper_id",
+          "review_status",
+          "source_database"
+        ],
+        "first_author_after": {
+          "name": "Jia Chyi Ng",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        "relationship_count_before_after": [
+          2,
+          2
+        ],
+        "unrelated_control_paper_unchanged": true,
+        "all_required_boundaries_pass": false
+      },
+      {
+        "case": "existing_admin_authors_patch_keep_unconfirmed",
+        "effective_public_identity_before": "doi:10.1109/i2cacis65476.2025.11100461",
+        "effective_public_identity_after": "curated:4fd68908e5a809d55585",
+        "canonical_identity_preserved": false,
+        "requested_display_names_applied": false,
+        "non_author_fields_changed": [
+          "curation_status",
+          "metadata_source",
+          "paper_id",
+          "review_status"
+        ],
+        "first_author_after": {
+          "name": "Jefferson Ng",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": true,
+          "affiliation_status": "mapped"
+        },
+        "relationship_count_before_after": [
+          2,
+          2
+        ],
+        "unrelated_control_paper_unchanged": true,
+        "all_required_boundaries_pass": false
+      },
+      {
+        "case": "existing_primary_source_review_patch",
+        "effective_public_identity_before": "doi:10.1109/i2cacis65476.2025.11100461",
+        "effective_public_identity_after": "curated:4fd68908e5a809d55585",
+        "canonical_identity_preserved": false,
+        "requested_display_names_applied": true,
+        "non_author_fields_changed": [
+          "affiliation_complete",
+          "author_affiliation_counts",
+          "author_affiliation_indices",
+          "author_institution_indices",
+          "curation_status",
+          "metadata_source",
+          "paper_id",
+          "review_status",
+          "source_database"
+        ],
+        "first_author_after": {
+          "name": "Jia Chyi Ng",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        "relationship_count_before_after": [
+          2,
+          2
+        ],
+        "unrelated_control_paper_unchanged": true,
+        "all_required_boundaries_pass": false
+      }
+    ],
+    "before_after_deltas": "Complete paper and two marker deltas, old/new name occurrence paths, input row and planned metadata row are preserved in P251_temp_probe_results.json."
+  },
+  "code_and_existing_test_locators": [
+    {
+      "path": "scripts/curated_schema.py",
+      "lines": "18-47",
+      "purpose": "Existing papers CSV supports full authors text, not a sparse masked paper-author override."
+    },
+    {
+      "path": "scripts/curated_papers.py",
+      "lines": "543-570,633-746",
+      "purpose": "Existing effective-paper updater; raw missing-row path chooses hash-derived curated ID; fixed normalized full metadata shape."
+    },
+    {
+      "path": "scripts/curated_export.py",
+      "lines": "93-127,858-930,968-1015,2210-2265",
+      "purpose": "Curated identity/provenance/full metadata overlay and matching by DOI; paper_id is an override field."
+    },
+    {
+      "path": "scripts/export_public_preview.py",
+      "lines": "663-675,902-970,1130-1200,1280-1428,3212-3241,4849-4873",
+      "purpose": "DOI-grouped public author/affiliation rebuilding, names keyed to existing occurrence evidence, final order sync is not a rename mechanism."
+    },
+    {
+      "path": "scripts/export_public_preview.py",
+      "lines": "1721-1762",
+      "purpose": "Processed authors_ordered becomes the public byline."
+    },
+    {
+      "path": "scripts/export_candidate_map_data.py",
+      "lines": "923-948,1119-1163,1406-1425",
+      "purpose": "Publication overrides contain bounded publication fields; institution-author override edits institution authors only, not the complete paper author roster."
+    },
+    {
+      "path": "scripts/formal_author_curation.py",
+      "lines": "1-53",
+      "purpose": "Formal correction planner needs an explicitly verified occurrence-to-mapping matrix; it does not invent one or safely rename source-derived associations."
+    },
+    {
+      "path": "scripts/author_affiliation_reviews.py",
+      "lines": "25-57,60-85,101-119",
+      "purpose": "Author affiliation status audit annotates existing names; it is not a byline rename or global alias."
+    },
+    {
+      "path": "tests/test_paper_metadata_editing.py",
+      "lines": "918-944,1335-1351,1473-1545",
+      "purpose": "Existing metadata serialization/confirmed metadata propagation tests do not establish raw-derived author-only identity and affiliation preservation."
+    },
+    {
+      "path": "tests/test_formal_publication_authors.py",
+      "lines": "1-90",
+      "purpose": "Formal roster tests require occurrence mapping evidence and reject missing/invalid mappings."
+    }
+  ],
+  "read_source_sha256": {
+    "data/curated/author_institution_mappings.csv": "9f5318ce08341a8882c23f8414f5a30fbb4330fb644799e3b99a3f7bf0c8250b",
+    "data/curated/papers.csv": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+    "data/processed/openalex_candidate_affiliations.csv": "edae6ebbf6b6c713b20fe66801724715fe58b5d0c9436bdd301902e63b10b1c9",
+    "data/processed/openalex_candidate_papers.csv": "9d6f0ff95f891a3f93816f34d828d23b12245567b243562b2181ba4dee839d1e",
+    "data/processed/openalex_candidate_papers_in_scope.csv": "e75736db039ecfab6299aa2b6c2e78d8ec265cf88931496fdb73055367864bb5",
+    "scripts/author_affiliation_reviews.py": "71287c1748eb34034439bbdf3a1f71fef699700ecd0bf6d559d1f570ebbd5e88",
+    "scripts/curated_export.py": "fcd27f8e016499a888dec8fadaa0b8c882a7fb45562ba0588b55c0d51bf141ae",
+    "scripts/curated_papers.py": "f91faaf71389078f52309a84586748bb0573dc8026b244529e7fa3a4e02817a0",
+    "scripts/curated_schema.py": "6a33111655f24c6652248e7a69d05d1f39aa6afa15d9aec6ce96f32abe632d6e",
+    "scripts/export_candidate_map_data.py": "ac7ecfb49845edfde91c89e8d693adec7378e84b830a8d21da29a22deb70d739",
+    "scripts/export_public_preview.py": "61281e36160c126aae3daeabb317ca9fed33703df78002b1913280af1308bfba",
+    "scripts/formal_author_curation.py": "bc1474a2bd5126b0be60406a1ed9fff56c5a2a9ffdc21d0ae0947873b243d50e",
+    "tests/test_formal_publication_authors.py": "bff071e523f42a14ea767db653387ef05f974d239c8dc710906c77be5ab027d7",
+    "tests/test_paper_metadata_editing.py": "4e0f12d3a62ce777ec3ca1473c11ced369dadb18a9d58a1c84857817d80fd7fd"
+  },
+  "preservation": {
+    "native_source_bytes_unchanged": true,
+    "production_CSV_writes": 0,
+    "temporary_CSV_writes": 0,
+    "raw_capture_changes": 0,
+    "public_export_files_written": 0,
+    "new_manuscript_or_external_retrievals": 0,
+    "new_override_or_schema": false,
+    "global_alias_changes": 0,
+    "stages": 0,
+    "commits": 0,
+    "pushes": 0
+  },
+  "next_maintainer_boundary": "Record P251 as an unresolved formal hold while preserving its supported publication evidence. Any future author-only correction requires a separately approved identity-preserving paper-scoped mechanism and explicit provenance for all affected author displays/affiliation occurrences; do not expand B4-04 into identity cleanup."
+}

@@ -1,0 +1,279 @@
+{
+  "schema": "b3-04-final-action-evidence-1",
+  "review_id": "R149",
+  "paper_id": "curated:cf55e35fcf11e09fdd12",
+  "title": "Locate-Then-Examine: Grounded Region Reasoning Improves Detection of AI-Generated Images",
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "assignment_sha256": "644442f487b11db752936c8b04a0f03073b692c5c81df35593b18e9b4f7c8f43",
+  "question": "TRACE is introduced as a 20,000-image dataset with region annotations and forensic explanations.",
+  "original_review": {
+    "review_id": "R149",
+    "paper_id": "curated:cf55e35fcf11e09fdd12",
+    "title": "Locate-Then-Examine: Grounded Region Reasoning Improves Detection of AI-Generated Images",
+    "dimension": "research_types",
+    "current_labels": [
+      "method"
+    ],
+    "proposed_labels": [
+      "method",
+      "dataset"
+    ],
+    "status": "LIKELY_FIX",
+    "confidence": "medium",
+    "reason": "TRACE is introduced as a 20,000-image dataset with region annotations and forensic explanations.",
+    "evidence_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Ji_Locate-Then-Examine_Grounded_Region_Reasoning_Improves_Detection_of_AI-Generated_Images_CVPR_2026_paper.pdf",
+    "evidence_basis": "reused_audit+abstract",
+    "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:cf55e35fcf11e09fdd12",
+    "evidence_excerpt": "The rapid growth of AI-generated imagery has blurred the boundary between real and synthetic content, raising practical concerns for digital integrity. Vision-language models (VLMs)",
+    "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: TRACE is introduced as a 20,000-image dataset with region annotations and forensic explanations.",
+    "batch": "B",
+    "current_tasks": [
+      "detection",
+      "localization"
+    ],
+    "proposed_tasks": [
+      "detection",
+      "localization"
+    ],
+    "current_research_types": [
+      "method"
+    ],
+    "proposed_research_types": [
+      "method",
+      "dataset"
+    ]
+  },
+  "governing_policy_ids": [
+    "R1"
+  ],
+  "current_tasks": [
+    "detection",
+    "localization"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "proposed_research_types": [
+    "method",
+    "dataset"
+  ],
+  "outcome": "SUPPORTED_ADDITION",
+  "identity_verification": {
+    "matched": true,
+    "basis": "Version header2510.04225v2, full title and all eight ordered author names match the canonical arXiv identity and existing record. Typography uses non-ASCII hyphens but no semantic title difference. DOI10.48550/arxiv.2510.04225 matches that arXiv work. Exact CVPR final manuscript was not inspected.",
+    "canonical_doi": "10.48550/arxiv.2510.04225",
+    "canonical_arxiv_id": "2510.04225"
+  },
+  "sources": [
+    {
+      "url": "https://arxiv.org/html/2510.04225v2",
+      "version": "arXiv2510.04225v2,21Apr2026; complete HTML including appendices",
+      "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R149-arxiv-v2.html",
+      "sha256": "e412ac02c00e51f2a1a9249be17f6c3cfad2cdc2073fe9a459a1856522cde04b",
+      "bytes": 255625,
+      "kind": "full_manuscript",
+      "limitation": "CVPR2026 official PDF returned403. Publisher-final equivalence not verified."
+    }
+  ],
+  "reused_local_evidence": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R149",
+      "finding": "TRACE is introduced as a 20,000-image dataset with region annotations and forensic explanations. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "current_sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R149",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "current_sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "paper_id:curated:cf55e35fcf11e09fdd12",
+      "finding": "Current tasks=detection;localization; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+      "current_sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R1",
+      "finding": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "current_sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "TRACE is an explicitly contributed annotated forensic data resource.",
+      "locator": "Introduction second contribution;section3.2;AppendixA.1-A.3",
+      "evidence": "Construction supplies image/authenticity/explanation/box tuples, GPT-4o explanations, Qwen2.5-VL grounding, repeat-explanation consistency and repeat-box IoU checks, and filtering of boxes covering more than50%of the image or misaligned objects. This annotation/curation contribution is separately described from the LTE training algorithm.",
+      "source_bindings": [
+        {
+          "url": "https://arxiv.org/html/2510.04225v2",
+          "version": "arXiv2510.04225v2,21Apr2026; complete HTML including appendices",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R149-arxiv-v2.html",
+          "sha256": "e412ac02c00e51f2a1a9249be17f6c3cfad2cdc2073fe9a459a1856522cde04b",
+          "bytes": 255625,
+          "kind": "full_manuscript",
+          "limitation": "CVPR2026 official PDF returned403. Publisher-final equivalence not verified."
+        }
+      ]
+    },
+    {
+      "claim": "Reported dataset units and composition are specific and internally distinguishable.",
+      "locator": "section3.2 Image Distribution;AppendixA.1",
+      "evidence": "20,000images=10,000real+10,000generated. Real images are equally sourced from ImageNet/COCO; generated images equally from GPT-Image-1/Gemini2.5FlashImage.99.5%have at least one box; mean3.24boxes/image. These counts are reported, not independently measured from the dataset.",
+      "source_bindings": [
+        {
+          "url": "https://arxiv.org/html/2510.04225v2",
+          "version": "arXiv2510.04225v2,21Apr2026; complete HTML including appendices",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R149-arxiv-v2.html",
+          "sha256": "e412ac02c00e51f2a1a9249be17f6c3cfad2cdc2073fe9a459a1856522cde04b",
+          "bytes": 255625,
+          "kind": "full_manuscript",
+          "limitation": "CVPR2026 official PDF returned403. Publisher-final equivalence not verified."
+        }
+      ]
+    },
+    {
+      "claim": "The resource has grounding and explanatory supervision beyond a label-only training set, while evaluation limitations remain.",
+      "locator": "Table1;section4.1;AppendixA.5 andG",
+      "evidence": "Table1 reports LTE7B/32B accuracy0.942/0.972 andIoU0.316/0.359. FakeShield/LEGION format incompatibility prevents common TRACE retraining; section4.1 identifies pretrained/external-training alternatives. AppendixG refers to full20K training scale although main text also uses a TRACE test split; exact independent partition sizes/disjointness are not established by this review.",
+      "source_bindings": [
+        {
+          "url": "https://arxiv.org/html/2510.04225v2",
+          "version": "arXiv2510.04225v2,21Apr2026; complete HTML including appendices",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R149-arxiv-v2.html",
+          "sha256": "e412ac02c00e51f2a1a9249be17f6c3cfad2cdc2073fe9a459a1856522cde04b",
+          "bytes": 255625,
+          "kind": "full_manuscript",
+          "limitation": "CVPR2026 official PDF returned403. Publisher-final equivalence not verified."
+        }
+      ]
+    }
+  ],
+  "policy_analysis": {
+    "R1": "Supported: introduction explicitly claims an evidence-aligned forensic dataset; full section3.2 and AppendixA provide new structured annotations, automated curation and a separately characterized resource. Not inferred merely from LTE experiments or dataset naming."
+  },
+  "caveats": [
+    "Complete source is author-deposited arXivv2, not verified CVPR final; preserve the official-PDF403.",
+    "Annotations are automated, not human-expert ground truth. AppendixA.5 explicitly notes inherited VLM bias and English-language limitation.",
+    "Reported20K/99.5%/3.24figures were not verified against a downloaded data release. Exact split disjointness, licenses, code/data availability and reproduction remain unverified.",
+    "The section4.1 statement that baselines are retrained has explicit format-incompatible exceptions; do not flatten into a fully identical training protocol.",
+    "Retain current detection;localization; no benchmark action or other task review is introduced."
+  ],
+  "scientific_confidence": "high for R1 contribution identity and support; moderate for final-version correspondence; reproducibility unverified",
+  "reproducibility_limitations": "No independent training, evaluation, dataset download or code execution performed. Contribution support does not claim reproduced performance, causal validity, release completeness or operational reproducibility.",
+  "proposed_changes": [
+    {
+      "field": "research_types",
+      "before": [
+        "method"
+      ],
+      "after": [
+        "method",
+        "dataset"
+      ]
+    }
+  ],
+  "formal_action_closed": false,
+  "authoritative_data_changed": false,
+  "maintainer_acceptance": "PENDING",
+  "retrieval_history": {
+    "browser_operations": [
+      {
+        "review_id": "R149",
+        "operation": "open",
+        "url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Ji_Locate-Then-Examine_Grounded_Region_Reasoning_Improves_Detection_of_AI-Generated_Images_CVPR_2026_paper.pdf",
+        "result": "HTTP403; publisher PDF not obtained by this request."
+      },
+      {
+        "review_id": "R149",
+        "operation": "open",
+        "url": "https://arxiv.org/html/2510.04225",
+        "result": "Full HTML available; identifies v2,21Apr2026."
+      }
+    ],
+    "captured_requests": [
+      {
+        "review_id": "R149",
+        "url": "https://arxiv.org/html/2510.04225v2",
+        "requested_utc": "2026-11-02T02:15:39.026159+00:00",
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R149-arxiv-v2.html",
+        "method": "urllib.request.urlopen; identified official source; one attempt",
+        "status": 200,
+        "final_url": "https://arxiv.org/html/2510.04225v2",
+        "headers": {
+          "Connection": "close",
+          "Content-Length": "255625",
+          "server": "Google Frontend",
+          "via": "1.1 google, 1.1 varnish, 1.1 varnish, 1.1 varnish",
+          "x-robots-tag": "nofollow",
+          "last-modified": "Mon, 24 Aug 2026 21:43:55 GMT",
+          "etag": "\"CNvug5CeupYDEAE=\"",
+          "link": "<https://arxiv.org/html/2510.04225>; rel='canonical'",
+          "access-control-allow-origin": "*",
+          "content-type": "text/html; charset=utf-8",
+          "Accept-Ranges": "bytes",
+          "Age": "1577628",
+          "Date": "Mon, 02 Nov 2026 02:15:39 GMT",
+          "X-Served-By": "cache-lga21947-LGA, cache-lga21947-LGA, cache-lga21922-LGA, cache-nrt-rjtt7900050-NRT",
+          "X-Cache": "MISS, HIT, HIT",
+          "X-Timer": "S1793585740.836334,VS0,VE153"
+        },
+        "bytes": 255625,
+        "sha256": "e412ac02c00e51f2a1a9249be17f6c3cfad2cdc2073fe9a459a1856522cde04b",
+        "elapsed_seconds": 1.505881541990675,
+        "successful": true
+      }
+    ]
+  },
+  "completed_utc": "2026-11-02T02:35:42.749418+00:00",
+  "independent_qc": "COMPLETE; see independent_QC and preserved original reviewer record",
+  "effort": {
+    "shared_lane_effort_receipt": "reviewers/resources/effort_and_retrievals.json",
+    "per_action_active_minutes_measured": false,
+    "caution": "Do not sum overlapping parallel lane wall intervals as exclusive per-paper labor."
+  },
+  "original_reviewer_record": {
+    "path": "per_paper/R149.json",
+    "sha256": "3763edb5dbb33d30c55c1230b278b744b2842eec174f92755f6d980df199ec3e",
+    "outcome": "SUPPORTED_ADDITION"
+  },
+  "provisional_disposition": "SUPPORTED_ADDITION",
+  "independent_QC": {
+    "status": "COMPLETE",
+    "receipt": "qc/resources_independent_review.json",
+    "sha256": "f5d4926d6a77fb581a5c584621168ae633b23b65afbbaf84fd3df711c7a6442a",
+    "verdict_record": {
+      "review_id": "R149",
+      "paper_id": "curated:cf55e35fcf11e09fdd12",
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_outcome": "SUPPORTED_ADDITION",
+      "agree_with_original": true,
+      "proposed_research_types": [
+        "method",
+        "dataset"
+      ],
+      "current_tasks_preserved": [
+        "detection",
+        "localization"
+      ],
+      "confidence": "HIGH for bounded contribution classification with source/version caveats"
+    },
+    "original_record_sha256": "3763edb5dbb33d30c55c1230b278b744b2842eec174f92755f6d980df199ec3e",
+    "disagreement_preserved": false
+  },
+  "current_authoritative_status": "UNRESOLVED"
+}

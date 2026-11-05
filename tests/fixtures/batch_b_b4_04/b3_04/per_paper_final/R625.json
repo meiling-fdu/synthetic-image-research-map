@@ -1,0 +1,355 @@
+{
+  "schema": "b3-04-final-action-evidence-1",
+  "review_id": "R625",
+  "paper_id": "curated:dcf7aae2c8590b07aff3",
+  "title": "Leveraging Frequency Analysis for Deep Fake Image Recognition",
+  "reviewer": "analysis-lane",
+  "reviewed_utc": "2026-11-02T02:35:44.339572+00:00",
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "assignment_sha256": "644442f487b11db752936c8b04a0f03073b692c5c81df35593b18e9b4f7c8f43",
+  "question": "The work systematically establishes frequency artifacts across architectures/resolutions and traces them to upsampling.",
+  "governing_policy_ids": [
+    "R3"
+  ],
+  "locked_rule": "Assign analysis_study only when systematic empirical or theoretical analysis is a primary scientific contribution. Routine ablations, robustness tables, parameter sweeps, or supporting interpretability figures do not qualify by themselves.",
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "canonical_identity": {
+    "paper_id": "curated:dcf7aae2c8590b07aff3",
+    "title": "Leveraging Frequency Analysis for Deep Fake Image Recognition",
+    "doi": "10.48550/arxiv.2003.08685",
+    "arxiv_id": "2003.08685",
+    "authors": [
+      "Joel Frank",
+      "Thorsten Eisenhofer",
+      "Lea Schönherr",
+      "Asja Fischer",
+      "Dorothea Kolossa",
+      "Thorsten Holz"
+    ]
+  },
+  "proposed_research_types": [
+    "method",
+    "analysis_study"
+  ],
+  "outcome": "SUPPORTED_ADDITION",
+  "sources": [
+    {
+      "url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+      "artifact": "evidence/analysis/R625/browser_primary_review.json",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R625/browser_primary_review.json",
+      "sha256": "da1dce45b5c010564daa64db0efa0cadb0dc725a70b054a8fe39b1c4f8b2b301",
+      "bytes": 1639,
+      "role": "full_primary_manuscript_browser_provenance_receipt",
+      "version": "Official PMLR119 ICML2020 proceedings",
+      "complete_manuscript": true,
+      "sha256_scope": "The SHA256 authenticates this derived provenance receipt, not the source PDF; source-document byte hash unavailable."
+    },
+    {
+      "url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+      "artifact": "evidence/analysis/R625/primary.initial-partial.pdf",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R625/primary.initial-partial.pdf",
+      "sha256": "673f12d0dbaf8188ffe0c49ea7aa0820af5f7751a39499401337f9c85c92db28",
+      "bytes": 3077971,
+      "role": "incomplete_transport_artifact_not_scientific_claim_support",
+      "version": "Official PMLR119 PDFpartial",
+      "complete_manuscript": false
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Contribution bullets independently prioritize frequency-domain characterization across GAN architectures/data/resolutions and controlled upsampling investigations, alongside detection methods.",
+      "locator": "Introduction bullets PDFp2;§3.2–3.3 PDFpp3–5",
+      "source": "evidence/analysis/R625/browser_primary_review.json",
+      "numerical_evidence": null,
+      "independently_reproduced": false
+    },
+    {
+      "claim": "Upsampling analysis trains otherwise matching StyleGAN variants on LSUN bedrooms at256×256 with nearest-neighbor, bilinear and binomial upsampling, comparing mean DCT spectra over10000images.",
+      "locator": "§3.3,Figure3 PDFp5;Table2 PDFp7",
+      "source": "evidence/analysis/R625/browser_primary_review.json",
+      "numerical_evidence": {
+        "DCT_ridge_nearest_neighbor_accuracy_percent": 98.24,
+        "DCT_ridge_bilinear_accuracy_percent": 85.96,
+        "DCT_ridge_binomial_accuracy_percent": 84.2
+      },
+      "independently_reproduced": false
+    },
+    {
+      "claim": "A separate real/fake experiment uses16000images per class, split10000train/1000validation/5000test per class, comparing ridge regression in pixel versus DCT domains.",
+      "locator": "§4.1,Table1 PDFp6",
+      "source": "evidence/analysis/R625/browser_primary_review.json",
+      "numerical_evidence": {
+        "ridge_pixel_accuracy_percent": 75.78,
+        "ridge_DCT_accuracy_percent": 100.0,
+        "reported_gain_percentage_points": 24.22
+      },
+      "independently_reproduced": false
+    }
+  ],
+  "caveats": [
+    "Complete authoritative12-page PDF was scientifically inspected through the browser. Local curl PDF is incomplete and is never treated or hashed as a complete source. Browser-only full-source byte checksum remains unavailable.",
+    "The upsampling intervention is controlled within the evaluated StyleGAN/LSUN configuration; the paper’s broader wording about all current GANs is not independently reproduced or generalized to every architecture or modern diffusion model.",
+    "The headline real/fake result100% concerns the specified FFHQ/StyleGAN split and simple frequency classifier; it is not a claim of universal real-world accuracy.",
+    "Original task labels stay detection; scientific resource/benchmark labels and new task reviews are outside this R3 action.",
+    "Independent QC locator correction: five-way source identification appears in Sec4.3, Table3/PDFp8, rather than the original out-of-scope note Sec4.2. This does not affect the assignedR3 recommendation or create a new task-review action."
+  ],
+  "proposed_changes": [
+    {
+      "field": "research_types",
+      "before": [
+        "method"
+      ],
+      "after": [
+        "method",
+        "analysis_study"
+      ],
+      "policy_id": "R3"
+    }
+  ],
+  "formal_decision_recorded": false,
+  "formal_action_closed": false,
+  "maintainer_acceptance_pending": true,
+  "authoritative_data_changed": false,
+  "empirical_results_independently_reproduced": false,
+  "evidence_reuse": {
+    "original_review": {
+      "review_id": "R625",
+      "paper_id": "curated:dcf7aae2c8590b07aff3",
+      "title": "Leveraging Frequency Analysis for Deep Fake Image Recognition",
+      "dimension": "research_types",
+      "current_labels": [
+        "method"
+      ],
+      "proposed_labels": [
+        "method",
+        "analysis_study"
+      ],
+      "status": "LIKELY_FIX",
+      "confidence": "medium",
+      "reason": "The work systematically establishes frequency artifacts across architectures/resolutions and traces them to upsampling.",
+      "evidence_url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+      "evidence_basis": "reused_audit+abstract",
+      "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:dcf7aae2c8590b07aff3",
+      "evidence_excerpt": "Deep neural networks can generate images that are astonishingly realistic, so much so that it is often hard for humans to distinguish them from",
+      "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The work systematically establishes frequency artifacts across architectures/resolutions and traces them to upsampling.",
+      "batch": "B",
+      "current_tasks": [
+        "detection"
+      ],
+      "proposed_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "method"
+      ],
+      "proposed_research_types": [
+        "method",
+        "analysis_study"
+      ]
+    },
+    "planning_refs": [
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+        "locator": "review_id:R625",
+        "finding": "The work systematically establishes frequency artifacts across architectures/resolutions and traces them to upsampling. Original open proposal only; not an accepted scientific disposition.",
+        "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+      },
+      {
+        "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+        "locator": "b-R625",
+        "finding": "Original bounded review question and preserved evidence requirements.",
+        "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "locator": "paper_id:curated:dcf7aae2c8590b07aff3",
+        "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+        "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9"
+      },
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+        "locator": "policy_id:R3",
+        "finding": "Assign analysis_study only when systematic empirical or theoretical analysis is a primary scientific contribution. Routine ablations, robustness tables, parameter sweeps, or supporting interpretability figures do not qualify by themselves.",
+        "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+      },
+      {
+        "path": "docs/key_paper_reconciliation.md",
+        "locator": "row6",
+        "finding": "ICML/PMLR title/six authors and arXiv/catalog identity reconciled; no full R3 analysis-protocol extract retained in this record.",
+        "sha256": "1788a0c1d947e749dca7f1fb40acb0b462f057263ec1dc4dc02e2434cabe8e44"
+      }
+    ],
+    "local_full_manuscript_inventory": "evidence/analysis/local_manuscript_inventory.json",
+    "local_full_manuscripts_reused": 0
+  },
+  "retrieval_history": [
+    {
+      "kind": "browser_official_proceedings_record",
+      "url": "https://proceedings.mlr.press/v119/frank20a.html",
+      "outcome": "Exact title,six authors,proceedings and page range verified",
+      "full_manuscript": false
+    },
+    {
+      "kind": "curl_primary_pdf",
+      "url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+      "http_status": 200,
+      "curl_exit": 28,
+      "budget_seconds": 120,
+      "transferred_bytes": 3077971,
+      "full_manuscript": false
+    },
+    {
+      "kind": "conditional_range_continuation",
+      "url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+      "http_status": 200,
+      "curl_exit": 56,
+      "transferred_bytes": 0,
+      "outcome": "Server ignored byte range; curl refused resumption. No further curl/full-PDF transport was attempted.",
+      "full_manuscript": false
+    },
+    {
+      "kind": "browser_official_full_pdf",
+      "url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+      "outcome": "Complete12-page primary PDF read; protocol and Table1/2/3 locations verified",
+      "full_manuscript": true,
+      "unique_manuscript_version": "PMLR119-frank20a",
+      "transferred_bytes": null
+    },
+    {
+      "kind": "browser_pdf_page_screenshots",
+      "url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+      "pages_one_based": [
+        6,
+        7
+      ],
+      "outcome": "Tool returned references but no local image bytes; no screenshot byte-hash or visual-layout verification claimed",
+      "full_manuscript": false
+    }
+  ],
+  "out_of_scope_observations": [
+    {
+      "observation": "§4.3,Table3 also evaluates five-way real/four-GAN source identification. This is an independent task-classification observation; no new action or task correction is created in B3-04.",
+      "source_url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+      "locator": "§4.3 Source Identification; Table3 PDFp8",
+      "assigned_R3_decision_affected": false
+    }
+  ],
+  "reproducibility_limitations": [
+    "No training, inference, result replication, data download or code execution was performed. Contribution support is distinct from empirical validity and operational reproducibility."
+  ],
+  "identity_verification": {
+    "official_proceedings_title_and_six_authors_match": true,
+    "official_publication": "PMLR119:3247–3258,ICML2020",
+    "canonical_arxiv_identity_preserved": "2003.08685",
+    "reviewed_source_version": "Official PMLR proceedings PDF",
+    "arxiv_bytes_used_for_scientific_claims": false,
+    "publisher_final_equivalence_to_other_versions_claimed": false
+  },
+  "policy_analysis": "SUPPORTED_ADDITION under locked R3. Frequency-spectrum characterization and upsampling experiments are explicitly primary contributions with dedicated protocols and comparisons; method support is independently retained. Reported tests support a classification proposal, not an independently reproduced universal causal law.",
+  "scientific_confidence": {
+    "primary_analysis_contribution": "high",
+    "official_work_identity": "high",
+    "operational_reproducibility": "not_tested"
+  },
+  "original_review": {
+    "review_id": "R625",
+    "paper_id": "curated:dcf7aae2c8590b07aff3",
+    "title": "Leveraging Frequency Analysis for Deep Fake Image Recognition",
+    "dimension": "research_types",
+    "current_labels": [
+      "method"
+    ],
+    "proposed_labels": [
+      "method",
+      "analysis_study"
+    ],
+    "status": "LIKELY_FIX",
+    "confidence": "medium",
+    "reason": "The work systematically establishes frequency artifacts across architectures/resolutions and traces them to upsampling.",
+    "evidence_url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+    "evidence_basis": "reused_audit+abstract",
+    "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:dcf7aae2c8590b07aff3",
+    "evidence_excerpt": "Deep neural networks can generate images that are astonishingly realistic, so much so that it is often hard for humans to distinguish them from",
+    "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The work systematically establishes frequency artifacts across architectures/resolutions and traces them to upsampling.",
+    "batch": "B",
+    "current_tasks": [
+      "detection"
+    ],
+    "proposed_tasks": [
+      "detection"
+    ],
+    "current_research_types": [
+      "method"
+    ],
+    "proposed_research_types": [
+      "method",
+      "analysis_study"
+    ]
+  },
+  "original_reviewer_record": {
+    "path": "per_paper/R625.json",
+    "sha256": "a162e2f3314822770a768f2ecfda2b48eebffbce81c8b7673b53ba02f31b20c2",
+    "outcome": "SUPPORTED_ADDITION"
+  },
+  "provisional_disposition": "SUPPORTED_ADDITION",
+  "independent_QC": {
+    "status": "COMPLETE",
+    "receipt": "qc/analysis_independent_review.json",
+    "sha256": "e1af6cfae1b60c398ad50aad843c503b487d2c22207d305c1945855e7dd69716",
+    "verdict_record": {
+      "review_id": "R625",
+      "input_record_sha256": "a162e2f3314822770a768f2ecfda2b48eebffbce81c8b7673b53ba02f31b20c2",
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_outcome": "SUPPORTED_ADDITION",
+      "disagreement": false,
+      "proposed_research_types": [
+        "method",
+        "analysis_study"
+      ],
+      "verdict": "APPROVE_PROVISIONAL_R3_ADDITION_WITH_MINOR_LOCATOR_ANNOTATION",
+      "scientific_basis": "Independently reopened original cached browser reference turn249view0, without a newURL discovery/download. OfficialPMLR12-pagecontent gives explicit primary frequency-characterization/upsampling contributions and controlledStyleGAN/LSUNexperiments in§3.2-3.3 and§4.2; R3 support is distinct from classificationperformance.",
+      "claim_checks": [
+        "Cached officialfirstpage independently matches fulltitle and sixauthors/ICML2020/PMLR119; canonicalarXiv2003.08685 preserved rather than substitutinganotherpaper.",
+        "§3.3 describesStyleGANvariants differing in nearest-neighbor/bilinear/binomialupsampling at256x256 andFigure3spectralmeansover10000images.",
+        "§4.1/Table1 confirms16000imagesperclass,10000/1000/5000split,75.78pixelversus100.00DCTaccuracy and24.22percentagepointgain.",
+        "Table2PDFp7 independently confirms98.24/85.96/84.20DCTaccuracies acrossupsamplingvariants.",
+        "OriginalprovenancereceiptSHAhashesreviewerobservations,notfullPDFbytes; bothlocalPDFpathsareidenticalpartialtransportbytes and are excluded fromscientificsupport."
+      ],
+      "limitations": [
+        "SourcePDFbytehash andlocalvisualpagelayout unavailable. Cached renderedprimarytext is sufficient for bounded scientificQC, but its capturehash is not a sourcePDFhash.",
+        "Upsampling evidence concerns the investigatedStyleGAN/LSUNconfiguration; do notgeneralizetoallmodernarchitecturesorclaimindependentcausalreproduction."
+      ],
+      "minor_locator_correction": {
+        "original_record": "out_of_scope_observations[0]",
+        "original": "§4.2,Table3",
+        "verified": "§4.3 Source Identification,Table3 PDFp8",
+        "disposition_affected": false,
+        "requested_action": "Record an additive locator annotation in final QC/handoff; preserve original reviewer record. No newtaskaction created."
+      }
+    },
+    "original_record_sha256": "a162e2f3314822770a768f2ecfda2b48eebffbce81c8b7673b53ba02f31b20c2",
+    "disagreement_preserved": false
+  },
+  "current_authoritative_status": "UNRESOLVED",
+  "maintainer_acceptance": "PENDING",
+  "original_out_of_scope_observations": [
+    {
+      "observation": "§4.2,Table3 also evaluates five-way real/four-GAN source identification. This is an independent task-classification observation; no new action or task correction is created in B3-04.",
+      "source_url": "https://proceedings.mlr.press/v119/frank20a/frank20a.pdf",
+      "locator": "§4.2 PDFpp6–8,Table3 PDFp8",
+      "assigned_R3_decision_affected": false
+    }
+  ],
+  "locator_correction": {
+    "original_record": "out_of_scope_observations[0]",
+    "original": "§4.2,Table3",
+    "verified": "§4.3 Source Identification,Table3 PDFp8",
+    "disposition_affected": false,
+    "requested_action": "Record an additive locator annotation in final QC/handoff; preserve original reviewer record. No newtaskaction created."
+  }
+}

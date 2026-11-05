@@ -1,0 +1,271 @@
+{
+  "schema": "b3-04-final-action-evidence-1",
+  "review_id": "R223",
+  "paper_id": "curated:038a578e520799c8671e",
+  "title": "Toward Generalizable Forgery Detection and Reasoning",
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "assignment_sha256": "644442f487b11db752936c8b04a0f03073b692c5c81df35593b18e9b4f7c8f43",
+  "question": "MMFR-Dataset is a contributed collection of 120K images with 378K reasoning annotations.",
+  "original_review": {
+    "review_id": "R223",
+    "paper_id": "curated:038a578e520799c8671e",
+    "title": "Toward Generalizable Forgery Detection and Reasoning",
+    "dimension": "research_types",
+    "current_labels": [
+      "method"
+    ],
+    "proposed_labels": [
+      "method",
+      "dataset"
+    ],
+    "status": "LIKELY_FIX",
+    "confidence": "medium",
+    "reason": "MMFR-Dataset is a contributed collection of 120K images with 378K reasoning annotations.",
+    "evidence_url": "https://doi.org/10.1109/tip.2026.3673967",
+    "evidence_basis": "reused_audit+abstract",
+    "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:038a578e520799c8671e",
+    "evidence_excerpt": "Accurate and interpretable detection of AI-generated images is essential for mitigating risks associated with AI misuse. However, the substantial domain gap among generative models",
+    "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: MMFR-Dataset is a contributed collection of 120K images with 378K reasoning annotations.",
+    "batch": "B",
+    "current_tasks": [
+      "detection"
+    ],
+    "proposed_tasks": [
+      "detection"
+    ],
+    "current_research_types": [
+      "method"
+    ],
+    "proposed_research_types": [
+      "method",
+      "dataset"
+    ]
+  },
+  "governing_policy_ids": [
+    "R1"
+  ],
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method"
+  ],
+  "proposed_research_types": [
+    "method",
+    "dataset"
+  ],
+  "outcome": "SUPPORTED_ADDITION",
+  "identity_verification": {
+    "matched": true,
+    "basis": "Version header, title and all eight author identities match the canonical record. HTML affiliation/byline flattening is treated as formatting, not an author rewrite. This review supports the same arXiv work and does not assert exact equality to an uninspected IEEE final manuscript.",
+    "canonical_doi": "10.1109/tip.2026.3673967",
+    "canonical_arxiv_id": "2503.21210"
+  },
+  "sources": [
+    {
+      "url": "https://arxiv.org/html/2503.21210v4",
+      "version": "arXiv2503.21210v4,07Apr2026; complete HTML",
+      "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R223-arxiv-v4.html",
+      "sha256": "e665dfad9672fc0f804405c1c9d0ecc838e708b2c201fa1910368e55d56bb1b6",
+      "bytes": 382430,
+      "kind": "full_manuscript",
+      "limitation": "IEEE DOI10.1109/tip.2026.3673967 retained; publisher-final equivalence not independently verified."
+    }
+  ],
+  "reused_local_evidence": [
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "locator": "review_id:R223",
+      "finding": "MMFR-Dataset is a contributed collection of 120K images with 378K reasoning annotations. Original open proposal only; not an accepted scientific disposition.",
+      "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+      "current_sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "locator": "b-R223",
+      "finding": "Original bounded review question and preserved evidence requirements.",
+      "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+      "current_sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "data/curated/paper_taxonomy.csv",
+      "locator": "paper_id:curated:038a578e520799c8671e",
+      "finding": "Current tasks=detection; research_types=method; retained evidence tier/source remains traceable.",
+      "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/curated/paper_taxonomy.csv",
+      "current_sha256": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    },
+    {
+      "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "locator": "policy_id:R1",
+      "finding": "Assign dataset only when construction, release, curation, or systematic provision of a reusable dataset/data resource is itself a substantive paper contribution. Data generated or collected solely to run the paper's experiments is insufficient.",
+      "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "artifact": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+      "current_sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+      "kind": "reused_local_metadata_or_prior_review_not_full_manuscript"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "MMFR-Dataset is explicitly and independently contributed, with dedicated construction, annotation and statistics.",
+      "locator": "Introduction contribution2;sectionIII/III-A/III-B1-3/III-C;TableII",
+      "evidence": "Dataset adds structured four-stage low/high-level reasoning annotations, GPT-4o generation and human verification. Training uses DiffusionDB synthetic and LAION-Aesthetics real images; evaluation includes ten generators and real controls. This is not just baseline data use or a method ablation.",
+      "source_bindings": [
+        {
+          "url": "https://arxiv.org/html/2503.21210v4",
+          "version": "arXiv2503.21210v4,07Apr2026; complete HTML",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R223-arxiv-v4.html",
+          "sha256": "e665dfad9672fc0f804405c1c9d0ecc838e708b2c201fa1910368e55d56bb1b6",
+          "bytes": 382430,
+          "kind": "full_manuscript",
+          "limitation": "IEEE DOI10.1109/tip.2026.3673967 retained; publisher-final equivalence not independently verified."
+        }
+      ]
+    },
+    {
+      "claim": "Detailed counts differ from abstract/summary approximations and must remain traceable.",
+      "locator": "sectionIII-C versusAbstract/Introduction/TableII",
+      "evidence": "Detailed image counts50,266synthetic+50,990real training+10,000synthetic+10,000real evaluation=121,256. Detailed annotations129,345+183,082+25,054+41,726=379,207. Abstract/TableII report120Kimages/378Kannotations. Preserve both rather than silently changing the source claims.",
+      "source_bindings": [
+        {
+          "url": "https://arxiv.org/html/2503.21210v4",
+          "version": "arXiv2503.21210v4,07Apr2026; complete HTML",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R223-arxiv-v4.html",
+          "sha256": "e665dfad9672fc0f804405c1c9d0ecc838e708b2c201fa1910368e55d56bb1b6",
+          "bytes": 382430,
+          "kind": "full_manuscript",
+          "limitation": "IEEE DOI10.1109/tip.2026.3673967 retained; publisher-final equivalence not independently verified."
+        }
+      ]
+    },
+    {
+      "claim": "Verification protocol has a material unresolved labor-accounting ambiguity.",
+      "locator": "sectionIII-B2 Expert Verification",
+      "evidence": "Text says10experts,about15seconds/image,around530human-hours per expert.121,256images at15seconds would beabout505.23total hours for one pass, versus5,300hours across10experts if530meansperexpert. Additional rounds may add work, but this review cannot reconcile the published wording. Reported independent spot check:2,000images/7.8Kannotations,94.87%agreement,4.62%falseacceptance,7.69%falserejection.",
+      "source_bindings": [
+        {
+          "url": "https://arxiv.org/html/2503.21210v4",
+          "version": "arXiv2503.21210v4,07Apr2026; complete HTML",
+          "artifact": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R223-arxiv-v4.html",
+          "sha256": "e665dfad9672fc0f804405c1c9d0ecc838e708b2c201fa1910368e55d56bb1b6",
+          "bytes": 382430,
+          "kind": "full_manuscript",
+          "limitation": "IEEE DOI10.1109/tip.2026.3673967 retained; publisher-final equivalence not independently verified."
+        }
+      ]
+    }
+  ],
+  "policy_analysis": {
+    "R1": "Supported by explicit dataset contribution, dedicated multi-stage annotation/provision and separately specified train/evaluation resources. Numerical and verification ambiguities affect confidence in reported resource properties and validation, not the existence of a substantive dataset contribution. R2 is not assigned, so no benchmark addition proposed."
+  },
+  "caveats": [
+    "Author-depositedv4 only; IEEE final equivalence not independently verified.",
+    "120K/378Ksummary versus121,256/379,207 detailed totals remain explicit.",
+    "530hours per expert versus15seconds/image and10experts is unresolved; no corrected labor figure is imposed.",
+    "GPT-4o-assisted reasoning and expert review do not prove factual causal validity of forensic explanations.",
+    "Dataset/code availability, licenses, disjointness and operational reproducibility were not tested; no datasets or models downloaded.",
+    "Retain detection/method; no new benchmark/task action.",
+    "Independent QC: III-A describes1000ImageNet+1000LAIONreal control pools, with LAION reused for nine generator conditions, while III-C counts10000real evaluation entries. The sum121256 is reported membership arithmetic, not verified unique-image/file cardinality."
+  ],
+  "scientific_confidence": "high for R1 substantive contribution; qualified for numerical resource properties, external validity and final-version correspondence",
+  "reproducibility_limitations": "No independent training, evaluation, dataset download or code execution performed. Contribution support does not claim reproduced performance, causal validity, release completeness or operational reproducibility.",
+  "proposed_changes": [
+    {
+      "field": "research_types",
+      "before": [
+        "method"
+      ],
+      "after": [
+        "method",
+        "dataset"
+      ]
+    }
+  ],
+  "formal_action_closed": false,
+  "authoritative_data_changed": false,
+  "maintainer_acceptance": "PENDING",
+  "retrieval_history": {
+    "browser_operations": [
+      {
+        "review_id": "R223",
+        "operation": "open",
+        "url": "https://arxiv.org/html/2503.21210",
+        "result": "Full HTML available; identifies v4,07Apr2026."
+      }
+    ],
+    "captured_requests": [
+      {
+        "review_id": "R223",
+        "url": "https://arxiv.org/html/2503.21210v4",
+        "requested_utc": "2026-11-02T02:15:40.532130+00:00",
+        "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/resources/R223-arxiv-v4.html",
+        "method": "urllib.request.urlopen; identified official source; one attempt",
+        "status": 200,
+        "final_url": "https://arxiv.org/html/2503.21210v4",
+        "headers": {
+          "Connection": "close",
+          "Content-Length": "382430",
+          "content-type": "text/html; charset=utf-8",
+          "access-control-allow-origin": "*",
+          "via": "1.1 google, 1.1 varnish, 1.1 varnish, 1.1 varnish",
+          "link": "<https://arxiv.org/html/2503.21210>; rel='canonical'",
+          "etag": "\"COH0gKj6uZYDEAE=\"",
+          "x-robots-tag": "nofollow",
+          "server": "Google Frontend",
+          "last-modified": "Mon, 24 Aug 2026 19:03:41 GMT",
+          "Accept-Ranges": "bytes",
+          "Age": "1569871",
+          "Date": "Mon, 02 Nov 2026 02:15:41 GMT",
+          "X-Served-By": "cache-lga-kjfk8660076-LGA, cache-lga-kjfk8660076-LGA, cache-lga-kjfk8660055-LGA, cache-nrt-rjtt7900046-NRT",
+          "X-Cache": "MISS, HIT, HIT",
+          "X-Timer": "S1793585741.288230,VS0,VE1"
+        },
+        "bytes": 382430,
+        "sha256": "e665dfad9672fc0f804405c1c9d0ecc838e708b2c201fa1910368e55d56bb1b6",
+        "elapsed_seconds": 1.3616063329391181,
+        "successful": true
+      }
+    ]
+  },
+  "completed_utc": "2026-11-02T02:35:42.749418+00:00",
+  "independent_qc": "COMPLETE; see independent_QC and preserved original reviewer record",
+  "effort": {
+    "shared_lane_effort_receipt": "reviewers/resources/effort_and_retrievals.json",
+    "per_action_active_minutes_measured": false,
+    "caution": "Do not sum overlapping parallel lane wall intervals as exclusive per-paper labor."
+  },
+  "original_reviewer_record": {
+    "path": "per_paper/R223.json",
+    "sha256": "584588d5eb0b11baa73d80f116c52876fa29d2f370f8b35c77b76577acdb9c68",
+    "outcome": "SUPPORTED_ADDITION"
+  },
+  "provisional_disposition": "SUPPORTED_ADDITION",
+  "independent_QC": {
+    "status": "COMPLETE",
+    "receipt": "qc/resources_independent_review.json",
+    "sha256": "f5d4926d6a77fb581a5c584621168ae633b23b65afbbaf84fd3df711c7a6442a",
+    "verdict_record": {
+      "review_id": "R223",
+      "paper_id": "curated:038a578e520799c8671e",
+      "original_reviewer_outcome": "SUPPORTED_ADDITION",
+      "independent_outcome": "SUPPORTED_ADDITION",
+      "agree_with_original": true,
+      "proposed_research_types": [
+        "method",
+        "dataset"
+      ],
+      "current_tasks_preserved": [
+        "detection"
+      ],
+      "confidence": "HIGH for bounded contribution classification with source/version caveats"
+    },
+    "original_record_sha256": "584588d5eb0b11baa73d80f116c52876fa29d2f370f8b35c77b76577acdb9c68",
+    "disagreement_preserved": false
+  },
+  "current_authoritative_status": "UNRESOLVED"
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "b503-exact-preexport-derived-report-1",
+  "baseline": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "source_manifest": "82e6592d020b69bb85341ffe7a495d5beab2b0673e3f8757ff5f0c900ec14b89",
+  "producer": {
+    "path": "scripts/audit_key_paper_coverage.py",
+    "sha256": "fc7ead80ca66f427cb59b09271a2d9165cadfff1a6f91832cbfa7c464d22cbfb",
+    "entrypoint": "main",
+    "call_graph": [
+      "main:366 -> expected_artifacts(root):310",
+      "expected_artifacts:334 -> compute_audit(existing sources and immutable predecessor)",
+      "expected_artifacts:341 -> render_csv; :342 -> render_markdown",
+      "main:367-373 -> only returned artifacts, UTF-8 temporary and atomic replace"
+    ],
+    "official_command": [
+      "python3",
+      "scripts/audit_key_paper_coverage.py"
+    ],
+    "generator_main_executed_by_reviewer": false
+  },
+  "inputs": {
+    "data/manual/key_papers.csv": "3bfe0f1cd14b7d830df04a10cb8435813b7fa241ffc12b1a0b08f3c36cea48f5",
+    "data/processed/openalex_candidate_papers.csv": "9d6f0ff95f891a3f93816f34d828d23b12245567b243562b2181ba4dee839d1e",
+    "web/data/openalex_candidate_map_data.json": "3a61759ec651433dadb8d9f173a191a8e70abf98300e5a02f87af411f2d1bfc0",
+    "web/data/public_preview_map_data.json": "c0bb42390eb44a1bd746512077ec6dc9a40d2fe579f6a73184a78ecf5a4a1e38",
+    "web/data/public_preview_papers.json": "2a61f361996aebf56b53dbb7ba4c27a9f7a78be5c3e257c168674fb12ecbb89e",
+    "data/curated/paper_exclusions.csv": "74f24f663e3824770650af8c9d008e543c57bd4e5a903aae716440de3f565efe",
+    "data/manual/key_paper_reconciliation.json": "f90bb8d5e02c754e530ca927201108130b37035b41fc2ac82b2ab32aa0dc6701",
+    "data/curated/papers.csv": "2303d301874305f48b29e18c70c20f00761a23d29460787c2e4d7ac2d8e4d0e3",
+    "data/processed/legacy_scope_exclusion_migration_2026_09/predecessor_666_snapshot.json": "2999da7901044df18f64c29e68f58daedc6d5b9c23dad774ef79a7fe18d8e6ec"
+  },
+  "outputs": {
+    "docs/key_paper_coverage_report.md": "c54d01b6cc41c603603e00e4219c00c9afe876bdc4fad1f50f2fbf60c71fbd12",
+    "data/manual/key_paper_coverage_report.csv": "dbe1bd75e8d619a3a28354df1bccd79037f0aa281de49a37bbb49d3937d75099"
+  },
+  "predecessor_report": "e3f92feea95ab5464d59060741e7356c419cac71068ab5af2afefaa913fb5f86",
+  "independent_review": {
+    "sha256": "8b679eeaeed97d1398a425de574da5e5f93e54b3261cc667e625a4b115056260",
+    "checks": 33
+  },
+  "stage": "PREEXPORT_REPORT_ONLY",
+  "public_exports_changed": false
+}

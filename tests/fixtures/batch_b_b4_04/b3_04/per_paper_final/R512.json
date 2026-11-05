@@ -1,0 +1,304 @@
+{
+  "schema": "b3-04-final-action-evidence-1",
+  "review_id": "R512",
+  "paper_id": "curated:c3041d4480f5780e7492",
+  "title": "Parents and Children: Distinguishing Multimodal Deepfakes from Natural Images",
+  "question": "The paper conducts a systematic comparison of contrastive/classification features and disentangles semantic versus low-level evidence.",
+  "original_review": {
+    "review_id": "R512",
+    "paper_id": "curated:c3041d4480f5780e7492",
+    "title": "Parents and Children: Distinguishing Multimodal Deepfakes from Natural Images",
+    "dimension": "research_types",
+    "current_labels": [
+      "method",
+      "dataset"
+    ],
+    "proposed_labels": [
+      "method",
+      "dataset",
+      "analysis_study"
+    ],
+    "status": "LIKELY_FIX",
+    "confidence": "medium",
+    "reason": "The paper conducts a systematic comparison of contrastive/classification features and disentangles semantic versus low-level evidence.",
+    "evidence_url": "https://doi.org/10.1145/3665497",
+    "evidence_basis": "reused_audit+abstract",
+    "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:c3041d4480f5780e7492",
+    "evidence_excerpt": "Recent advancements in diffusion models have enabled the generation of realistic deepfakes from textual prompts in natural language. While these models have numerous benefits",
+    "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The paper conducts a systematic comparison of contrastive/classification features and disentangles semantic versus low-level evidence.",
+    "batch": "B",
+    "current_tasks": [
+      "detection"
+    ],
+    "proposed_tasks": [
+      "detection"
+    ],
+    "current_research_types": [
+      "method",
+      "dataset"
+    ],
+    "proposed_research_types": [
+      "method",
+      "dataset",
+      "analysis_study"
+    ]
+  },
+  "governing_policy_ids": [
+    "R3"
+  ],
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method",
+    "dataset"
+  ],
+  "proposed_research_types": [
+    "method",
+    "dataset",
+    "analysis_study"
+  ],
+  "sources": [
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-arxiv-v2.html",
+      "url": "https://arxiv.org/html/2304.00500v2",
+      "version": "arXiv2304.00500v2,21May2024; author manuscript withTOMM2024 header, not proven byte-equivalent to publisher-final",
+      "role": "Complete scientific source for primaryR3 contribution and protocols/tables",
+      "sha256": "982a1156d8f653d9226c27f25e277ffe5fa7c274a51abb04b1f27251728cdd42",
+      "bytes": 472552
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-crossref.json",
+      "url": "https://api.crossref.org/works/10.1145/3665497",
+      "version": "Publisher-deposited DOI metadata captured2026-11-02",
+      "role": "Exact DOI/title/six ordered authors/journal identity correspondence; not final-manuscript scientific evidence",
+      "sha256": "f3e31dd8ce4bdc37c1f3fff3724330aff2f49acfba721820d2fe9e87e46c7c46",
+      "bytes": 26249
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-arxiv-v2-tables.json",
+      "url": "https://arxiv.org/html/2304.00500v2",
+      "version": "Deterministic local extraction from complete arXivv2 HTML; rawsource remains immutable",
+      "role": "Structured table transcription, cross-check against rawsource IDs",
+      "sha256": "62fedc9d8dd0774acfeb41711e1d9eb0e8bbe229a224dc2b07799402a634f548",
+      "bytes": 26763
+    }
+  ],
+  "claims": [
+    {
+      "claim": "A systematic perceptual-versus-semantic detectability study is a stated primary objective and appears in the contribution framing and conclusion, beyond routine method ablations.",
+      "source_path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-arxiv-v2.html",
+      "locator": "S1 Introduction, Contributions; S3.SS1-S3.SS4; S5 Conclusion"
+    },
+    {
+      "claim": "Real/fake linear probing compares six frozen feature backbones and within/cross StableDiffusion1.4/2.0 settings on caption-linked COCOFake semantic clusters.",
+      "source_path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-arxiv-v2.html",
+      "locator": "S3.SS2; S3.SS5; S4.SS1-S4.SS3; Table2(S4.T2)",
+      "quantitative": {
+        "OpenCLIP_LAION2B_SD14_to_SD14_validation_overall_accuracy": 99.68,
+        "OpenCLIP_LAION2B_SD14_to_SD14_test_overall_accuracy": 99.64,
+        "OpenCLIP_LAION2B_SD14_to_SD20_test_overall_accuracy": 98.96,
+        "RN50_ImageNet_SD14_to_SD14_test_overall_accuracy": 90.62
+      }
+    },
+    {
+      "claim": "A second analysis measures caption-semantic preservation through exact-pair and intra-cluster retrieval; it is distinct from authenticity classification.",
+      "source_path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-arxiv-v2.html",
+      "locator": "S3.SS3; S4.SS2; Table3(S4.T3)",
+      "quantitative": {
+        "OpenCLIP_LAION2B_SD14_test_exact_pair_R1": 39.57,
+        "OpenCLIP_LAION2B_SD14_test_intracluster_R1": 50.46
+      }
+    },
+    {
+      "claim": "Learned semantic/style projections use cluster and authenticity supervision; comparative probing quantifies the proposed separation. These operational projections do not prove universal causal disentanglement.",
+      "source_path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-arxiv-v2.html",
+      "locator": "S3.SS4, equations4-5; S4.SS1; S4.SS4; Tables4-5(S4.T4/S4.T5)",
+      "quantitative": {
+        "Table5_CLIP_RN50_SD20_to_SD20_semantic_AUC": 85.54,
+        "Table5_same_semantic_overall_accuracy": 80.71,
+        "Table5_same_style_AUC": 99.79,
+        "Table4_CLIP_RN50_SD14_to_SD14_semantic_AUC": 80.73,
+        "Table4_same_style_AUC": 99.87
+      }
+    },
+    {
+      "claim": "ReportedCOCOFake counts include real images in split totals; generated-only counts must be computed with five children per real parent, not equated to all-image totals.",
+      "source_path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-arxiv-v2.html",
+      "locator": "S3.SS5",
+      "quantitative": {
+        "real_training": 113287,
+        "real_validation": 5000,
+        "real_test": 5000,
+        "all_images_training_per_SD_version": 679722,
+        "all_images_validation_per_version": 30000,
+        "all_images_test_per_version": 30000,
+        "generated_per_version_derived_not_filecount": 616435,
+        "generated_two_versions_derived_not_filecount": 1232870
+      }
+    }
+  ],
+  "authoritative_data_changed": false,
+  "formal_action_closed": false,
+  "maintainer_acceptance": "PENDING",
+  "current_authoritative_status": "UNRESOLVED",
+  "empirical_results_independently_reproduced": false,
+  "independent_QC": {
+    "status": "COMPLETE",
+    "receipt": "qc/root_independent_review.json",
+    "sha256": "30d5149cb0483f307bd9e9ef8bf86c2324c6b0cb8c6ac2fe62556bfe80e18102",
+    "verdict_record": {
+      "review_id": "R512",
+      "independent_outcome": "SUPPORTED_ADDITION",
+      "agree_with_original_recommendation": true,
+      "proposed_research_types": [
+        "method",
+        "dataset",
+        "analysis_study"
+      ],
+      "qualification": "PrimaryR3empirical contribution supported in completearXivv2. Add explicit prevalence caveat; do not infer publisher-final numerical equivalence, causal disentanglement or independent reproduction.",
+      "confidence": "HIGH for contribution classification in inspectedauthorv2; operational reproducibility unverified"
+    },
+    "original_record_sha256": "530cd184a265bc88869f7a62f2d586ef261cb52b47b44fafb07ee77ae819d281",
+    "disagreement_preserved": false
+  },
+  "scientific_confidence": "HIGH for primary-analysis contribution in inspected authorv2; publisher-final version equivalence remains unverified",
+  "proposed_changes": [
+    {
+      "field": "research_types",
+      "before": [
+        "method",
+        "dataset"
+      ],
+      "after": [
+        "method",
+        "dataset",
+        "analysis_study"
+      ],
+      "qualification": "ProvisionalR3 addition grounded in complete authorv2; preserve all current method/dataset/task/bibliographic/institutional fields and version limitations."
+    }
+  ],
+  "outcome": "SUPPORTED_ADDITION",
+  "identity_verification": {
+    "verified": true,
+    "canonical_DOI": "10.1145/3665497",
+    "arxiv_version": "2304.00500v2",
+    "ordered_authors": [
+      "Roberto Amoroso",
+      "Davide Morelli",
+      "Marcella Cornia",
+      "Lorenzo Baraldi",
+      "Alberto Del Bimbo",
+      "Rita Cucchiara"
+    ],
+    "correspondence": "Six names and work title match canonical current record and newly captured exact ACM publisher deposit; arXivv2 declares TOMM2024. No conflicting work identity found. Complete version equivalence with December2024 publisher-final was not checked.",
+    "publisher_final_equivalence_verified": false,
+    "institutional_author_PDF_retrieval": "LibreSSL handshake failed; no PDF bytes obtained; version caveat retained"
+  },
+  "policy_analysis": "LockedR3 is supported by primary contribution framing and multiple independently defined empirical questions: feature-family detectability, caption preservation and semantic/style projection probing. Exact protocols, metrics and comparative Tables1-5 substantiate a systematic analysis; this does not rely solely on a large table, released dataset, t-SNE figure or supporting robustness ablation. Preserve method;dataset and detection; add only analysis_study. No benchmark question is introduced.",
+  "caveats": [
+    "Only two versions of the same StableDiffusion generator family are evaluated here; cross-version results are not universal cross-generator generalization.",
+    "Learned projections encourage semantic/style separation. They do not independently prove that all low-level cues are removed or causally isolate semantics.",
+    "Overall accuracy uses the documented evaluation composition; training balances one randomly selected fake per real cluster, while full dataset clusters contain five generated children.",
+    "Table2 99.68 is validation accuracy; corresponding SD1.4 test accuracy is99.64. Preserve split labels.",
+    "Authorv2 Table3 contains literal .63.26 and nonmonotonic R@3/R@5 entries in some rows; retain source anomalies rather than silently repair them. These cells are not used to authorize theR3 addition.",
+    "No complete publisher-final manuscript was inspected. DOI/title/byline match is bibliographic correspondence, not proof of identical final numerical content.",
+    "New benchmark/data availability or task-label changes are outside this action.",
+    "Independent QC: Under the full six-image evaluation clusters in Sec4.2, the five-fake/one-real prevalence yields an always-fake accuracy of5/6=83.33%. Reported semantic accuracy80.71% is below that derived baseline; AUC85.54 measures a different ranking property. This limits performance interpretation but does not decide primaryR3 contribution support. No new experiment was run.",
+    "Independent QC: Preserve original derived tableJSON. All528 numeric cells match rawHTML, but57MathML fallback duplications and4citation-spacing differences affect nonnumeric transcriptions. Interpret metric/direction headers from primaryHTML, not duplicated fallback text."
+  ],
+  "reproducibility_limitations": [
+    "No code or dataset downloaded/executed; all quantitative values are source-reported, not independently reproduced.",
+    "Dataset-count arithmetic is a consistency check on reported units, not a resource inventory or download validation."
+  ],
+  "retrieval_history": [
+    {
+      "name": "R512-author-manuscript.pdf",
+      "url": "https://www.iris.unimore.it/retrieve/f7ab941d-4ed2-4c1f-98a0-d13d9b2f5e33/2024_TOMM_DeepFake.pdf",
+      "purpose": "Institutional accepted author manuscript; exact title/byline/DOI must be checked inside; not assumed publisher-final.",
+      "started_utc": "2026-11-02T02:04:45.906427+00:00",
+      "elapsed_seconds": 1.942,
+      "command": [
+        "curl",
+        "-sS",
+        "-L",
+        "--max-time",
+        "180",
+        "--connect-timeout",
+        "30",
+        "-D",
+        "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-author-manuscript.pdf.headers",
+        "-o",
+        "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-author-manuscript.pdf",
+        "-w",
+        "%{http_code}\n%{url_effective}\n%{content_type}\n",
+        "https://www.iris.unimore.it/retrieve/f7ab941d-4ed2-4c1f-98a0-d13d9b2f5e33/2024_TOMM_DeepFake.pdf"
+      ],
+      "returncode": 35,
+      "response_summary": [
+        "000",
+        "https://www.iris.unimore.it/retrieve/f7ab941d-4ed2-4c1f-98a0-d13d9b2f5e33/2024_TOMM_DeepFake.pdf",
+        ""
+      ],
+      "stderr": "curl: (35) LibreSSL/3.3.6: error:1404B410:SSL routines:ST_CONNECT:sslv3 alert handshake failure\n",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-author-manuscript.pdf",
+      "bytes": 0,
+      "sha256": null,
+      "PDF_magic": false,
+      "identity_verified": false,
+      "scientific_claims_supported_by_retrieval_alone": false
+    },
+    {
+      "url": "https://arxiv.org/html/2304.00500v2",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-arxiv-v2.html",
+      "returncode": 0,
+      "http_status": 200,
+      "bytes": 472552,
+      "sha256": "982a1156d8f653d9226c27f25e277ffe5fa7c274a51abb04b1f27251728cdd42",
+      "kind": "new_complete_primary_HTML_manuscript",
+      "earlier_browser_open_also_succeeded": true
+    },
+    {
+      "url": "https://api.crossref.org/works/10.1145/3665497",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/R512-crossref.json",
+      "returncode": 0,
+      "http_status": 200,
+      "bytes": 26249,
+      "sha256": "f3e31dd8ce4bdc37c1f3fff3724330aff2f49acfba721820d2fe9e87e46c7c46",
+      "kind": "new_exact_DOI_publisher_metadata"
+    }
+  ],
+  "effort": {
+    "measurement": "Elapsed wall-clock observation window from first instrumented root capture; includes network/parallel waits. Preparatory discovery/shared baseline time not included. Not a measured human-labour estimate.",
+    "started_utc": "2026-11-02T02:04:45.906427+00:00",
+    "completed_utc": "2026-11-02T02:14:49.216561+00:00",
+    "elapsed_seconds": 603.31
+  },
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "assignment_sha256": "644442f487b11db752936c8b04a0f03073b692c5c81df35593b18e9b4f7c8f43",
+  "original_reviewer_record": {
+    "path": "per_paper/R512.json",
+    "sha256": "530cd184a265bc88869f7a62f2d586ef261cb52b47b44fafb07ee77ae819d281",
+    "outcome": "SUPPORTED_ADDITION"
+  },
+  "provisional_disposition": "SUPPORTED_ADDITION",
+  "evaluation_prevalence_caveat": {
+    "reported_accuracy_percent": 80.71,
+    "fake_per_real": 5,
+    "real_per_cluster": 1,
+    "derived_always_fake_accuracy_percent": 83.33333333333333,
+    "reported_semantic_AUC_percent": 85.54,
+    "independently_reproduced": false,
+    "classification_effect": "Does not independently determine R3 contribution classification."
+  },
+  "derived_table_qualification": {
+    "id": "R512_DERIVED_TABLE_MATHML_FALLBACK",
+    "severity": "DERIVATION_LIMITATION_NOT_CLASSIFICATION_BLOCKER",
+    "receipt": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/qc/root_table_extraction_qc_addendum.json",
+    "sha256": "ae5504943024fa539cd5b3c884960455d1eaefacbcff55809c0d55be74d93a6c",
+    "numeric_cells_checked": 528,
+    "numeric_differences": 0,
+    "nonnumeric_differences": 61,
+    "required_action": "Preserve original tableJSON and label MathML-fallback duplicates; use rawHTML headers for interpretation. No silent source correction."
+  }
+}

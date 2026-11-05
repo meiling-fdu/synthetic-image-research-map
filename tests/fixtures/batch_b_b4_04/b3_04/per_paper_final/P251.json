@@ -1,0 +1,316 @@
+{
+  "schema": "b3-04-final-action-evidence-1",
+  "review_id": "P251",
+  "paper_id": "doi:10.1109/i2cacis65476.2025.11100461",
+  "title": "A Review on Deepfake Image Detection Approaches, Techniques and Methods",
+  "question": "Current author list differs materially from cached publisher-deposited names or includes an empty deposited author; neither source is assumed correct.",
+  "original_review": {
+    "review_id": "P251",
+    "paper_id": "doi:10.1109/i2cacis65476.2025.11100461",
+    "title": "A Review on Deepfake Image Detection Approaches, Techniques and Methods",
+    "current": {
+      "year": 2025,
+      "publication_type": "conference",
+      "venue": "IEEE International Conference on Automatic Control and Intelligent Systems",
+      "venue_id": "venue:ieee-international-conference-on-automatic-control-and-intelligent-systems",
+      "venue_acronym": "I2CACIS",
+      "venue_track": "Main",
+      "doi": "10.1109/i2cacis65476.2025.11100461",
+      "paper_url": "https://doi.org/10.1109/i2cacis65476.2025.11100461",
+      "formal_url": "https://doi.org/10.1109/i2cacis65476.2025.11100461",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "authors": [
+        "Jefferson Ng",
+        "Muhammed Basheer Jasser",
+        "Bayan Issa",
+        "Samuel-Soma M. Ajibade",
+        "Hui Na Chua"
+      ]
+    },
+    "evidence_urls": [
+      "https://doi.org/10.1109/i2cacis65476.2025.11100461"
+    ],
+    "batch": "B",
+    "confidence": "bounded_to_available_evidence",
+    "evidence_required": "Read the formal paper byline and confirm full author order/names; do not silently merge name variants or add an empty author.",
+    "proposed_changes": {},
+    "status": "SOURCE_CONFLICT",
+    "reason": "Current author list differs materially from cached publisher-deposited names or includes an empty deposited author; neither source is assumed correct.",
+    "field_checks": {
+      "venue": "present",
+      "year": "present",
+      "publication_type": "formal_in_current_corpus",
+      "canonical_url": "present",
+      "doi": "present_not_independently_reverified",
+      "arxiv": "optional_not_a_defect",
+      "author_order": "present; prior project evidence retained; not independently reverified for every paper",
+      "volume_issue_pages": "FIELD_NOT_SUPPORTED_BY_SCHEMA; not a defect"
+    },
+    "cached_crossref_check": {
+      "path": "data/raw/venue_audit_crossref/41f81b8d41c113f32f3c.json",
+      "doi": "10.1109/i2cacis65476.2025.11100461",
+      "years": [
+        2025
+      ],
+      "authors": [
+        "Jia Chyi Ng",
+        "Muhammed Basheer Jasser",
+        "Bayan Issa",
+        "Samuel-Soma M. Ajibade",
+        "Hui Na Chua"
+      ],
+      "normalized_author_sequence_matches": false,
+      "extra_bibliographic_evidence": {
+        "page": "512-517"
+      }
+    }
+  },
+  "governing_policy_ids": [],
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "method",
+    "survey"
+  ],
+  "proposed_research_types": [
+    "method",
+    "survey"
+  ],
+  "sources": [
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-proceedings-TOC.pdf",
+      "url": "https://www.proceedings.com/content/081/081963webtoc.pdf",
+      "version": "IEEE 2025 proceedings print reproduction, Curran Associates; CFP25H61-POD; online ISBN9798331542948",
+      "role": "Edition-specific literal author/title/page evidence; not full manuscript",
+      "sha256": "a1587e31ac191d4a6a7ffb5bf0589b86eba9521884d227b8c49901eee983a282",
+      "bytes": 1171515
+    },
+    {
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-institutional-record.html",
+      "url": "https://scholarprofiles.sunwayuniversity.edu.my/en/publications/a-review-on-deepfake-image-detection-approaches-techniques-and-me/",
+      "version": "Institutional publication record captured2026-11-02",
+      "role": "DOI/title/edition/page and complete ordered author record; not methods/evaluation evidence",
+      "sha256": "dea95e7381f582d36205960d2f93557619566d4ea675725fe258d593bb1b5b6b",
+      "bytes": 52222
+    },
+    {
+      "path": "/Users/meilinger/.codex/worktrees/batch-b-b3-04/synthetic-image-research-map/data/raw/venue_audit_crossref/41f81b8d41c113f32f3c.json",
+      "url": "https://api.crossref.org/works/10.1109/I2CACIS65476.2025.11100461",
+      "version": "Previously preserved publisher deposit; no new Crossref request for P251",
+      "role": "DOI-matched bibliographic conflict corroboration; deposit alone did not decide preference",
+      "sha256": "5f2a741ef9483ca656ed3045b8617c841ea09ea4e512cf16fe66087b47c6ec50",
+      "bytes": 14032
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Proceedings title and literal ordered byline support Jia Chyi Ng in first position, followed by the existing four authors.",
+      "source_path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-proceedings-TOC.pdf",
+      "locator": "PDFpage9, printedTOCpagexii, entry startingpage512; rendered PNG visually inspected",
+      "verified_literals": {
+        "title": "A Review on Deepfake Image Detection Approaches, Techniques and Methods",
+        "ordered_names": [
+          "Jia Chyi Ng",
+          "Muhammed Basheer Jasser",
+          "Bayan Issa",
+          "Samuel-Soma M. Ajibade",
+          "Hui Na Chua"
+        ],
+        "starting_page": 512
+      }
+    },
+    {
+      "claim": "IEEE edition and the author institution record identify the same work, rather than an unrelated review.",
+      "source_path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-institutional-record.html",
+      "locator": "citation_title/citation_doi/citation_author/citation_firstpage/citation_lastpage/citation_inbook_title meta tags",
+      "verified_literals": {
+        "DOI": "10.1109/I2CACIS65476.2025.11100461",
+        "pages": "512-517",
+        "online_ISBN": "9798331542948"
+      }
+    },
+    {
+      "claim": "The TOC is an IEEE-copyright print representation distributed by Curran; electronic ISBN matches institutional record.",
+      "source_path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-proceedings-TOC.pdf",
+      "locator": "PDFpages1-2, cover/copyright/catalog; visually inspectedpage2",
+      "verified_literals": {
+        "catalog": "CFP25H61-POD",
+        "print_ISBN": "979-8-3315-4295-5",
+        "online_ISBN": "979-8-3315-4294-8"
+      }
+    }
+  ],
+  "authoritative_data_changed": false,
+  "formal_action_closed": false,
+  "maintainer_acceptance": "PENDING",
+  "current_authoritative_status": "UNRESOLVED",
+  "empirical_results_independently_reproduced": false,
+  "independent_QC": {
+    "status": "COMPLETE",
+    "receipt": "qc/root_independent_review.json",
+    "sha256": "30d5149cb0483f307bd9e9ef8bf86c2324c6b0cb8c6ac2fe62556bfe80e18102",
+    "verdict_record": {
+      "review_id": "P251",
+      "independent_outcome": "SUPPORTED_ADDITION",
+      "agree_with_original_recommendation": true,
+      "qualification": "Bounded first display-name correction only. The originalB2alternative official completeauthor/order record requirement is met by edition-specific literalIEEEprintTOC plus exactDOI-linked institutional record; no paper-first-page or personalalias equivalence claim.",
+      "confidence": "HIGH for bibliographic display names/order; person-identity alias remains UNVERIFIED",
+      "proposed_types_unchanged": [
+        "method",
+        "survey"
+      ]
+    },
+    "original_record_sha256": "d8dfa0b894072f39751d3f992da90783e3d15ac1b1ae5720db0c141fad25de23",
+    "disagreement_preserved": false
+  },
+  "scientific_confidence": "HIGH for bounded bibliographic byline; no scientific contribution finding",
+  "proposed_changes": [
+    {
+      "field": "authors",
+      "before": [
+        "Jefferson Ng",
+        "Muhammed Basheer Jasser",
+        "Bayan Issa",
+        "Samuel-Soma M. Ajibade",
+        "Hui Na Chua"
+      ],
+      "after": [
+        "Jia Chyi Ng",
+        "Muhammed Basheer Jasser",
+        "Bayan Issa",
+        "Samuel-Soma M. Ajibade",
+        "Hui Na Chua"
+      ],
+      "qualification": "Replace only first display name in the exact work record. Do not merge personal identities, silently create aliases, change affiliation strings, or reorder the other four authors. Later maintainer adjudication/integration must reconcile dependent author strings explicitly."
+    }
+  ],
+  "outcome": "SUPPORTED_ADDITION",
+  "outcome_semantics": "Supported bounded bibliographic display-name correction; this vocabulary does not imply a new research-type label.",
+  "identity_verification": {
+    "canonical_DOI": "10.1109/i2cacis65476.2025.11100461",
+    "verified": true,
+    "correspondence": "Exact title, all five author positions, event edition/year, online ISBN and starting page512 agree between IEEE-copyright proceedings representation, DOI-linked institution record and cached deposit. Existing Jefferson Ng conflicts with all three; no author is inserted/deleted/reordered.",
+    "literal_published_author_order": [
+      "Jia Chyi Ng",
+      "Muhammed Basheer Jasser",
+      "Bayan Issa",
+      "Samuel-Soma M. Ajibade",
+      "Hui Na Chua"
+    ],
+    "paper_first_page_inspected": false,
+    "official_complete_author_order_record_inspected": true,
+    "personal_identity_alias_verified": false
+  },
+  "policy_analysis": "B2-04 requires literal printed or official complete ordered authors; machine-readable deposit is corroboration, not automatic authority. The IEEE proceedings representation supplies the literal order; institutional DOI/title/page metadata completes correspondence. No conference-track question is reviewed.",
+  "caveats": [
+    "The six-page paper itself was not retrieved; literal byline is from its edition-specific proceedings TOC, not a paper-first-page claim.",
+    "Jefferson Ng has not been proven to be a personal alias of Jia Chyi Ng; propose correcting this work display byline only.",
+    "Institution metadata writes Samuel Soma without the hyphen; the printed TOC and existing canonical record use Samuel-Soma, which is preserved.",
+    "R251 scientific question remains independent and open.",
+    "This record is OpenAlex-derived with no existing curated papers.csv row. B4 must verify a paper-scoped schema/write path and dependent display-string handling before any edit. Do not rewrite raw OpenAlex data, use an institution-only override as a paper-author fix, or propagate a person alias."
+  ],
+  "reproducibility_limitations": [
+    "No scientific experiments or author-person identity equivalence were reproduced."
+  ],
+  "retrieval_history": [
+    {
+      "name": "P251-institutional-record.html",
+      "url": "https://scholarprofiles.sunwayuniversity.edu.my/en/publications/a-review-on-deepfake-image-detection-approaches-techniques-and-me/",
+      "purpose": "Institutional work record with DOI and complete author order; byline corroboration, not full scientific evidence.",
+      "started_utc": "2026-11-02T02:04:45.906670+00:00",
+      "elapsed_seconds": 0.945,
+      "command": [
+        "curl",
+        "-sS",
+        "-L",
+        "--max-time",
+        "180",
+        "--connect-timeout",
+        "30",
+        "-D",
+        "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-institutional-record.html.headers",
+        "-o",
+        "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-institutional-record.html",
+        "-w",
+        "%{http_code}\n%{url_effective}\n%{content_type}\n",
+        "https://scholarprofiles.sunwayuniversity.edu.my/en/publications/a-review-on-deepfake-image-detection-approaches-techniques-and-me/"
+      ],
+      "returncode": 0,
+      "response_summary": [
+        "200",
+        "https://scholarprofiles.sunwayuniversity.edu.my/en/publications/a-review-on-deepfake-image-detection-approaches-techniques-and-me/",
+        "text/html;charset=UTF-8"
+      ],
+      "stderr": "",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-institutional-record.html",
+      "bytes": 52222,
+      "sha256": "dea95e7381f582d36205960d2f93557619566d4ea675725fe258d593bb1b5b6b",
+      "PDF_magic": false,
+      "identity_verified": false,
+      "scientific_claims_supported_by_retrieval_alone": false
+    },
+    {
+      "name": "P251-proceedings-TOC.pdf",
+      "url": "https://www.proceedings.com/content/081/081963webtoc.pdf",
+      "purpose": "Edition-specific proceedings table of contents; verify literal title/byline/page and edition; not full scientific manuscript.",
+      "started_utc": "2026-11-02T02:04:45.909914+00:00",
+      "elapsed_seconds": 5.87,
+      "command": [
+        "curl",
+        "-sS",
+        "-L",
+        "--max-time",
+        "180",
+        "--connect-timeout",
+        "30",
+        "-D",
+        "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-proceedings-TOC.pdf.headers",
+        "-o",
+        "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-proceedings-TOC.pdf",
+        "-w",
+        "%{http_code}\n%{url_effective}\n%{content_type}\n",
+        "https://www.proceedings.com/content/081/081963webtoc.pdf"
+      ],
+      "returncode": 0,
+      "response_summary": [
+        "200",
+        "https://www.proceedings.com/content/081/081963webtoc.pdf",
+        "application/pdf"
+      ],
+      "stderr": "",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/root/P251-proceedings-TOC.pdf",
+      "bytes": 1171515,
+      "sha256": "a1587e31ac191d4a6a7ffb5bf0589b86eba9521884d227b8c49901eee983a282",
+      "PDF_magic": true,
+      "identity_verified": false,
+      "scientific_claims_supported_by_retrieval_alone": false
+    }
+  ],
+  "effort": {
+    "measurement": "Elapsed wall-clock observation window from first instrumented root capture; includes network/parallel waits. Preparatory discovery/shared baseline time not included. Not a measured human-labour estimate.",
+    "started_utc": "2026-11-02T02:04:45.906427+00:00",
+    "completed_utc": "2026-11-02T02:14:49.214983+00:00",
+    "elapsed_seconds": 603.309
+  },
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "assignment_sha256": "644442f487b11db752936c8b04a0f03073b692c5c81df35593b18e9b4f7c8f43",
+  "original_reviewer_record": {
+    "path": "per_paper/P251.json",
+    "sha256": "d8dfa0b894072f39751d3f992da90783e3d15ac1b1ae5720db0c141fad25de23",
+    "outcome": "SUPPORTED_ADDITION"
+  },
+  "provisional_disposition": "SUPPORTED_ADDITION",
+  "paper_level_field_correction": {
+    "paper_id": "doi:10.1109/i2cacis65476.2025.11100461",
+    "logical_field": "paper.authors[0].name",
+    "before": "Jefferson Ng",
+    "after": "Jia Chyi Ng",
+    "remaining_four_authors_order_unchanged": true,
+    "person_alias_equivalence": "UNVERIFIED; do not assert or merge",
+    "other_papers_affected": 0,
+    "existing_curated_papers_csv_row": false,
+    "implementation_boundary": "This record is OpenAlex-derived with no existing curated papers.csv row. B4 must verify a paper-scoped schema/write path and dependent display-string handling before any edit. Do not rewrite raw OpenAlex data, use an institution-only override as a paper-author fix, or propagate a person alias."
+  }
+}

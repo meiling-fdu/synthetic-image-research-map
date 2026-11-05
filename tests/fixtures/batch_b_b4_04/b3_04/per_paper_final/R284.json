@@ -1,0 +1,267 @@
+{
+  "schema": "b3-04-final-action-evidence-1",
+  "review_id": "R284",
+  "paper_id": "curated:cba231098f84685520e8",
+  "title": "Combating Dataset Misalignment for Robust AI-Generated Image Detection in the Real World",
+  "reviewer": "analysis-lane",
+  "reviewed_utc": "2026-11-02T02:35:44.339572+00:00",
+  "baseline_commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "assignment_sha256": "644442f487b11db752936c8b04a0f03073b692c5c81df35593b18e9b4f7c8f43",
+  "question": "The contribution diagnoses dataset-encoding misalignment and its effect on real-world generalization.",
+  "governing_policy_ids": [
+    "R3"
+  ],
+  "locked_rule": "Assign analysis_study only when systematic empirical or theoretical analysis is a primary scientific contribution. Routine ablations, robustness tables, parameter sweeps, or supporting interpretability figures do not qualify by themselves.",
+  "current_tasks": [
+    "detection"
+  ],
+  "current_research_types": [
+    "dataset"
+  ],
+  "canonical_identity": {
+    "paper_id": "curated:cba231098f84685520e8",
+    "title": "Combating Dataset Misalignment for Robust AI-Generated Image Detection in the Real World",
+    "doi": "10.1145/3709022.3736541",
+    "arxiv_id": "",
+    "authors": [
+      "Hyeongjun Choi",
+      "Inho Jung",
+      "Simon S. Woo"
+    ]
+  },
+  "proposed_research_types": [
+    "dataset"
+  ],
+  "outcome": "EVIDENCE_INSUFFICIENT",
+  "sources": [
+    {
+      "url": "https://scholarx.skku.edu/item/3b755c7a-41af-4e21-83d1-565ddccb83a4",
+      "artifact": "evidence/analysis/R284/institution-record.html",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R284/institution-record.html",
+      "sha256": "50a2c3389443f02c2f930d05ba5d7b6854153629b6e879456bd5acef8751bd3e",
+      "bytes": 25702,
+      "role": "official_institution_metadata_and_abstract",
+      "version": "SKKU publication record",
+      "complete_manuscript": false
+    },
+    {
+      "url": "https://dl.acm.org/doi/pdf/10.1145/3709022.3736541",
+      "artifact": "evidence/analysis/R284/publisher-pdf.response",
+      "path": "/Users/meilinger/.codex/visualizations/2026/10/02/01a0fd3f-53f2-7811-a204-a10941e224b5/batch-b-b3-04-2026-11-02/evidence/analysis/R284/publisher-pdf.response",
+      "sha256": "c0fb2054fa67441f822fd78dd52242c43c4955d46a2c6176fcc293908bb4ec15",
+      "bytes": 5483,
+      "role": "access_failure_html",
+      "version": "ACM DOI-matched PDF route",
+      "complete_manuscript": false
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Official institutional metadata matches the assigned title, Choi/Jung/Woo authors, DOI and workshop publication; its abstract identifies encoding/compression misalignment as the research motivation.",
+      "locator": "SKKU title/author/DOI/abstract fields",
+      "source": "evidence/analysis/R284/institution-record.html",
+      "numerical_evidence": null,
+      "independently_reproduced": false
+    }
+  ],
+  "caveats": [
+    "Authoritative ACM PDF route returned HTTP403 HTML (5483bytes).",
+    "Official SKKU record is metadata/abstract, not a substitute for unavailable methods and tables.",
+    "Dataset encoding/resize/compression claims and any causal interpretation were not independently evaluated. Existing dataset and detection labels stay intact."
+  ],
+  "proposed_changes": [],
+  "formal_decision_recorded": false,
+  "formal_action_closed": false,
+  "maintainer_acceptance_pending": true,
+  "authoritative_data_changed": false,
+  "empirical_results_independently_reproduced": false,
+  "evidence_reuse": {
+    "original_review": {
+      "review_id": "R284",
+      "paper_id": "curated:cba231098f84685520e8",
+      "title": "Combating Dataset Misalignment for Robust AI-Generated Image Detection in the Real World",
+      "dimension": "research_types",
+      "current_labels": [
+        "dataset"
+      ],
+      "proposed_labels": [
+        "dataset",
+        "analysis_study"
+      ],
+      "status": "LIKELY_FIX",
+      "confidence": "medium",
+      "reason": "The contribution diagnoses dataset-encoding misalignment and its effect on real-world generalization.",
+      "evidence_url": "https://doi.org/10.1145/3709022.3736541",
+      "evidence_basis": "reused_audit+abstract",
+      "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:cba231098f84685520e8",
+      "evidence_excerpt": "AI-generated images are increasingly prevalent on the web, raising concerns about the real-world applicability of detection methods. While current detectors perform well on benchmark",
+      "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The contribution diagnoses dataset-encoding misalignment and its effect on real-world generalization.",
+      "batch": "B",
+      "current_tasks": [
+        "detection"
+      ],
+      "proposed_tasks": [
+        "detection"
+      ],
+      "current_research_types": [
+        "dataset"
+      ],
+      "proposed_research_types": [
+        "dataset",
+        "analysis_study"
+      ]
+    },
+    "planning_refs": [
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/taxonomy_review.json",
+        "locator": "review_id:R284",
+        "finding": "The contribution diagnoses dataset-encoding misalignment and its effect on real-world generalization. Original open proposal only; not an accepted scientific disposition.",
+        "sha256": "ad84e82b3dd82d0018d57caeed93353585ca4e83e3e2d800c00c0db656d637a1"
+      },
+      {
+        "path": "docs/corpus_quality_batch_b_intake_triage_2026_10_12.md",
+        "locator": "b-R284",
+        "finding": "Original bounded review question and preserved evidence requirements.",
+        "sha256": "a40d37dc3abd8198ea4d00384d19b25905a036519ee691718fac1d11a19e5459"
+      },
+      {
+        "path": "data/curated/paper_taxonomy.csv",
+        "locator": "paper_id:curated:cba231098f84685520e8",
+        "finding": "Current tasks=detection; research_types=dataset; retained evidence tier/source remains traceable.",
+        "sha256": "2388617d62211ebea18af8827095a1a776ce0c160d1942511212fa7324fe0fb9"
+      },
+      {
+        "path": "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json",
+        "locator": "policy_id:R3",
+        "finding": "Assign analysis_study only when systematic empirical or theoretical analysis is a primary scientific contribution. Routine ablations, robustness tables, parameter sweeps, or supporting interpretability figures do not qualify by themselves.",
+        "sha256": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+      }
+    ],
+    "local_full_manuscript_inventory": "evidence/analysis/local_manuscript_inventory.json",
+    "local_full_manuscripts_reused": 0
+  },
+  "retrieval_history": [
+    {
+      "kind": "browser_exact_title_discovery",
+      "outcome": "Official SKKU institutional record identified; secondary entries only used for source discovery.",
+      "full_manuscript": false
+    },
+    {
+      "kind": "browser_doi_record",
+      "url": "https://doi.org/10.1145/3709022.3736541",
+      "outcome": "tool inaccessible",
+      "full_manuscript": false
+    },
+    {
+      "kind": "browser_publisher_record",
+      "url": "https://dl.acm.org/doi/10.1145/3709022.3736541",
+      "http_status": 403,
+      "full_manuscript": false
+    },
+    {
+      "kind": "curl_publisher_pdf",
+      "url": "https://dl.acm.org/doi/pdf/10.1145/3709022.3736541",
+      "http_status": 403,
+      "curl_exit": 0,
+      "transferred_bytes": 5483,
+      "full_manuscript": false
+    },
+    {
+      "kind": "curl_institution_record",
+      "url": "https://scholarx.skku.edu/item/3b755c7a-41af-4e21-83d1-565ddccb83a4",
+      "http_status": 200,
+      "curl_exit": 0,
+      "transferred_bytes": 25702,
+      "full_manuscript": false
+    }
+  ],
+  "out_of_scope_observations": [],
+  "reproducibility_limitations": [
+    "No training, inference, result replication, data download or code execution was performed. Contribution support is distinct from empirical validity and operational reproducibility."
+  ],
+  "identity_verification": {
+    "existing_canonical_identity_preserved": true,
+    "official_institution_record": "https://scholarx.skku.edu/item/3b755c7a-41af-4e21-83d1-565ddccb83a4",
+    "title_matches": true,
+    "three_author_sequence_matches": true,
+    "doi_matches": "10.1145/3709022.3736541",
+    "official_record_pages": "15–20",
+    "full_scientific_manuscript_identity_not_available": true,
+    "publisher_final_equivalence_verified": false
+  },
+  "policy_analysis": "The official abstract motivates a primary misalignment study, but R3 requires inspecting actual controlled comparisons, contribution framing and quantitative evaluation. The complete ACM paper was not available, so the original analysis_study addition remains unsupported by sufficient evidence at this checkpoint; this does not mean scientifically NOT_SUPPORTED.",
+  "scientific_confidence": {
+    "bibliographic_identity": "high",
+    "primary_analysis_role": "UNDETERMINED",
+    "hold_justification": "high"
+  },
+  "original_review": {
+    "review_id": "R284",
+    "paper_id": "curated:cba231098f84685520e8",
+    "title": "Combating Dataset Misalignment for Robust AI-Generated Image Detection in the Real World",
+    "dimension": "research_types",
+    "current_labels": [
+      "dataset"
+    ],
+    "proposed_labels": [
+      "dataset",
+      "analysis_study"
+    ],
+    "status": "LIKELY_FIX",
+    "confidence": "medium",
+    "reason": "The contribution diagnoses dataset-encoding misalignment and its effect on real-world generalization.",
+    "evidence_url": "https://doi.org/10.1145/3709022.3736541",
+    "evidence_basis": "reused_audit+abstract",
+    "project_evidence": "data/curated/paper_taxonomy.csv#paper_id:curated:cba231098f84685520e8",
+    "evidence_excerpt": "AI-generated images are increasingly prevalent on the web, raising concerns about the real-world applicability of detection methods. While current detectors perform well on benchmark",
+    "evidence_required": "Verify the primary paper contribution/evaluation section before applying the proposed labels. Specific question: The contribution diagnoses dataset-encoding misalignment and its effect on real-world generalization.",
+    "batch": "B",
+    "current_tasks": [
+      "detection"
+    ],
+    "proposed_tasks": [
+      "detection"
+    ],
+    "current_research_types": [
+      "dataset"
+    ],
+    "proposed_research_types": [
+      "dataset",
+      "analysis_study"
+    ]
+  },
+  "original_reviewer_record": {
+    "path": "per_paper/R284.json",
+    "sha256": "bc9313270c15b2d3bfd7d0c61390a5548f7f62e0beab01ae5de419740e2366d6",
+    "outcome": "EVIDENCE_INSUFFICIENT"
+  },
+  "provisional_disposition": "EVIDENCE_INSUFFICIENT",
+  "independent_QC": {
+    "status": "COMPLETE",
+    "receipt": "qc/analysis_independent_review.json",
+    "sha256": "e1af6cfae1b60c398ad50aad843c503b487d2c22207d305c1945855e7dd69716",
+    "verdict_record": {
+      "review_id": "R284",
+      "input_record_sha256": "bc9313270c15b2d3bfd7d0c61390a5548f7f62e0beab01ae5de419740e2366d6",
+      "original_reviewer_outcome": "EVIDENCE_INSUFFICIENT",
+      "independent_outcome": "EVIDENCE_INSUFFICIENT",
+      "disagreement": false,
+      "proposed_research_types": [
+        "dataset"
+      ],
+      "verdict": "APPROVE_EVIDENCE_INSUFFICIENT_HOLD",
+      "scientific_basis": "Official institution metadata independently verifies title,DOI and Choi/Jung/Woo sequence. Publisher PDF response is403HTML; abstract motivation cannot establish the full systematic-comparison contribution.",
+      "claim_checks": [
+        "Institution record is treated as bibliographic/abstract evidence only.",
+        "Preserve current dataset/detection; no method or new action added."
+      ],
+      "limitations": [
+        "Full contribution list, controlled encoding comparisons and quantitative tables unavailable."
+      ]
+    },
+    "original_record_sha256": "bc9313270c15b2d3bfd7d0c61390a5548f7f62e0beab01ae5de419740e2366d6",
+    "disagreement_preserved": false
+  },
+  "current_authoritative_status": "UNRESOLVED",
+  "maintainer_acceptance": "PENDING"
+}

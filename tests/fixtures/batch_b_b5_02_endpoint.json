@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "commit": "2932b9a5b58a8c84761e381668925a765ca9719e",
+  "decision_rows": 138,
+  "taxonomy": {
+    "research_types": {
+      "method": 578,
+      "analysis_study": 86,
+      "survey": 21,
+      "dataset": 142,
+      "benchmark": 101
+    },
+    "tasks": {
+      "detection": 621,
+      "source_attribution": 84,
+      "localization": 45
+    }
+  },
+  "accounting": {
+    "original_actions": 159,
+    "original_papers": 148,
+    "terminal_actions": 45,
+    "historical_unresolved": 114,
+    "active_public_unresolved": 112,
+    "historical_unresolved_papers": 108,
+    "active_public_unresolved_papers": 106
+  },
+  "files": {
+    "data/curated/papers.csv": "e38c269bb4870ef03914f993a247f809cdbb5c0daf06ae01efa526c762b15d87",
+    "data/curated/paper_taxonomy.csv": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+    "data/curated/review_decisions.csv": "9d2a5cd8190634b8bf85afb969549b0a62652e50697c5b129d64970fd64a44ea",
+    "web/data/public_preview_papers.json": "2a61f361996aebf56b53dbb7ba4c27a9f7a78be5c3e257c168674fb12ecbb89e",
+    "web/data/public_preview_map_data.json": "c0bb42390eb44a1bd746512077ec6dc9a40d2fe579f6a73184a78ecf5a4a1e38"
+  },
+  "original_test_sha256": {
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+    "tests/test_batch_b_historical_endpoints.py": "5d07dde0ef1c5e56d2a1983eceaa8346318b808eed9ee0f959e90a7700395baf",
+    "tests/test_corpus_quality_batch_c_phase1.py": "9293d5c8e5062ea1d1f46a0da4e0ff6355046b1e2212b593b34b9d46afd3166e"
+  },
+  "scope": {
+    "test_corpus_quality_batch_b_wave_b5_02": [
+      "test_raw_prefix_and_every_actual_cell_delta",
+      "test_authoritative_public_taxonomy_totals_match_exact_approved_evolution",
+      "test_accounting_independent_original_ledger",
+      "test_native_helper_double_submission_is_byte_and_timestamp_idempotent",
+      "test_only_approved_authoritative_files_and_exact_source_bytes_change",
+      "test_current_source_has_an_independent_exact_transaction_guard",
+      "test_current_source_guard_rejects_tampering_independently_of_historical_success"
+    ],
+    "test_batch_b_historical_endpoints": [
+      "test_snapshot_reader_has_no_mutable_current_source_fallback",
+      "test_passing_historical_replay_does_not_authorize_current_source_corruption"
+    ],
+    "test_corpus_quality_batch_c_phase1": [
+      "test_exact_approved_taxonomy_change",
+      "test_recomputed_counts_and_registry_export_synchronization"
+    ]
+  },
+  "c_context_input_sha256": {
+    "web/data/public_preview_papers.json": "2a61f361996aebf56b53dbb7ba4c27a9f7a78be5c3e257c168674fb12ecbb89e",
+    "web/data/public_preview_map_data.json": "c0bb42390eb44a1bd746512077ec6dc9a40d2fe579f6a73184a78ecf5a4a1e38",
+    "data/curated/paper_taxonomy.csv": "98026dec50ed5b81b60b4792da623e89468da5ee3da96ef7a4a9fc5910da05d3",
+    "data/curated/institutions.csv": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
+    "data/manual/neurips_2026_targeted_gap_fill_reconciliation.json": "5889b6d6dc614a913c0d74c9a8109ea318dbb0065ec4c35b25cbcd68b36455c9",
+    "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55"
+  }
+}
