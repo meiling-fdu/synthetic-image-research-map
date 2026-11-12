@@ -1,0 +1,1191 @@
+{
+  "schema": "b5-04-exact-historical-scopes-v1",
+  "prior_commit": "db1abff06d9ee077ae62421079059ee3af95607f",
+  "probe_junit_sha256": "0d977bbafb057e62f3f3c02a47b56ff0ebf0c4a5365601c5581c0052eda9ab9a",
+  "probe_failures": {
+    "failure": 80,
+    "error": 33
+  },
+  "live_tests_with_reviewed_current_baseline_successor": [
+    "test_corpus_quality_batch_b_wave_b1a::test_live_b1a_exclusions_and_original_pending_questions_survive_successors",
+    "test_corpus_quality_batch_b_wave_b1b::test_live_b1b_adjudications_survive_successor_scope_decisions",
+    "test_corpus_quality_batch_b_wave_b1c::test_live_p490_exclusion_and_separate_decisions_survive_successor_taxonomy_review",
+    "test_corpus_quality_batch_b_wave_b1h::test_corpus_and_taxonomy_totals_recompute_the_exact_single_paper_transfer",
+    "test_corpus_quality_batch_b_wave_b1m::test_current_corpus_and_taxonomy_totals_still_have_independent_live_guards",
+    "test_paper_metadata_consistency_audit::test_full_corpus_has_no_unexplained_metadata_inconsistency",
+    "test_repository_baseline::test_current_repository_counts_recompute_from_authoritative_files",
+    "test_repository_baseline::test_public_paper_map_coverage_matches_reviewed_blockers"
+  ],
+  "successor_sha256": {
+    "data/curated/papers.csv": "6ac7c17fbdb0a21d4f61c789e5c3973d2ea1c773fa38fb0df9d366bbd6ebee13",
+    "data/curated/author_institution_mappings.csv": "d9f126b14f0ecae724a2bc91643874aa2b53551f22724509f3589072b3e6b85f",
+    "data/curated/review_decisions.csv": "6fe7b6f5f7d4d0ed1811931fa0c284e9f0b6164c4369023e5f1317bf1626f36e",
+    "web/data/public_preview_papers.json": "2b28501ece24cfa16ce8e8457e5ee39387ab9d5b5eb82dbf8220f9a32d130fc0",
+    "web/data/public_preview_map_data.json": "fa8117e83841e273f01f2635f6e5a6959928e127c78b6e94dff40e444ccae59f",
+    "docs/public_preview_report.md": "555bdf33f05a7c37408ed461a8fa5aba724c6cef4ae3d2801e5eeb631f1c32bf",
+    "data/manual/missing_author_mappings_report.csv": "5c750b3b623804aae23168c8ff734332006eaee25463fc4d7f03d293525ad26e",
+    "docs/missing_author_mappings_report.md": "37d7455e8b0b0ef3d0c46e261a35bbc11f0b862b313e1ec77b5f65acdb01e11d",
+    "docs/key_paper_coverage_report.md": "7345a9ce3658e8fec037e0a5d91168376dc936a368f9cc2df0bee435adffd499",
+    "data/manual/key_paper_coverage_report.csv": "dbe1bd75e8d619a3a28354df1bccd79037f0aa281de49a37bbb49d3937d75099",
+    "data/curated/institutions.csv": "64c4a79abf95622d6440d3e151ac8732193d902d4fd98248ddbe4428b01a7326",
+    "data/curated/institution_locations.csv": "38eaf75bd55ffd20116d2d29cb629b83f07606decd840bacc0bb4e59d5dbb4bc",
+    "data/curated/institution_hierarchy.csv": "66e379a3e7f8b58d6f46d9d5d8ec7bd4615a64c884ebbbcbb0063e7821da307f",
+    "data/curated/paper_taxonomy.csv": "512c52da54fc0ea21e9e0e177911f62283ce1998fae4b4d7812f79b0a7b23f70",
+    "data/raw/corpus_quality_audit_2026_10_04/batch_c_policy_decisions.json": "ee097956eafca891155380e95d13173070fca413aad371f0dc57bfcb86374f55",
+    "tests/baseline_expectations.py": "c184a399940b75db4287018baab800c3aeb12fc2d4df78fc429ed40ac60f5929"
+  },
+  "scopes": {
+    "tests/test_b4_04_regression_boundaries.py::test_P251_cannot_acquire_an_unauthorized_curated_author_row": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_declared_untracked_and_ignored_fixture_bytes_cannot_change[data/processed/neurips_2026_targeted_gap_fill_2026_10/baseline_validation.log]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_declared_untracked_and_ignored_fixture_bytes_cannot_change[data/processed/neurips_2026_targeted_gap_fill_2026_10/staged/papers.csv]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_each_hold_cannot_be_silently_closed[P251]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_each_hold_cannot_be_silently_closed[R045]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_each_hold_cannot_be_silently_closed[R156]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_each_hold_cannot_be_silently_closed[R251]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_each_hold_cannot_be_silently_closed[R284]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_historical_pass_does_not_authorize_unrelated_current_changes[data/curated/author_institution_mappings.csv]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_historical_pass_does_not_authorize_unrelated_current_changes[data/curated/institution_locations.csv]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_historical_pass_does_not_authorize_unrelated_current_changes[data/curated/institutions.csv]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_historical_pass_does_not_authorize_unrelated_current_changes[data/curated/paper_taxonomy.csv]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_historical_pass_does_not_authorize_unrelated_current_changes[data/curated/papers.csv]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_historical_pass_does_not_authorize_unrelated_current_changes[data/curated/review_decisions.csv]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_historical_pass_does_not_authorize_unrelated_current_changes[tests/public_refinement_snapshot.py]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_historical_pass_does_not_authorize_unrelated_current_changes[web/data/public_preview_map_data.json]": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_immutable_138_and_actual_151_are_independently_valid": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_b4_04_regression_boundaries.py::test_original_decision_history_remains_an_exact_prefix": {
+      "path": "tests/test_b4_04_regression_boundaries.py",
+      "sha256": "d4be413fb4c42e1051887496b5c33b497194b6518e7a0e3e72b74eec4f472748",
+      "bindings": [
+        "old_guard_root"
+      ],
+      "why": "Test the original 151-decision state and existing injected faults at the immutable endpoint.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_batch_b_historical_endpoints.py::test_passing_historical_replay_does_not_authorize_current_source_corruption[data/curated/author_institution_mappings.csv]": {
+      "path": "tests/test_batch_b_historical_endpoints.py",
+      "sha256": "5d07dde0ef1c5e56d2a1983eceaa8346318b808eed9ee0f959e90a7700395baf",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the existing B5-02 tamper replay and original positive control.",
+      "basis": "existing independently authorized historical fixture"
+    },
+    "tests/test_batch_b_historical_endpoints.py::test_passing_historical_replay_does_not_authorize_current_source_corruption[data/curated/institution_locations.csv]": {
+      "path": "tests/test_batch_b_historical_endpoints.py",
+      "sha256": "5d07dde0ef1c5e56d2a1983eceaa8346318b808eed9ee0f959e90a7700395baf",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the existing B5-02 tamper replay and original positive control.",
+      "basis": "existing independently authorized historical fixture"
+    },
+    "tests/test_batch_b_historical_endpoints.py::test_passing_historical_replay_does_not_authorize_current_source_corruption[data/curated/institutions.csv]": {
+      "path": "tests/test_batch_b_historical_endpoints.py",
+      "sha256": "5d07dde0ef1c5e56d2a1983eceaa8346318b808eed9ee0f959e90a7700395baf",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the existing B5-02 tamper replay and original positive control.",
+      "basis": "existing independently authorized historical fixture"
+    },
+    "tests/test_batch_b_historical_endpoints.py::test_passing_historical_replay_does_not_authorize_current_source_corruption[data/curated/paper_taxonomy.csv]": {
+      "path": "tests/test_batch_b_historical_endpoints.py",
+      "sha256": "5d07dde0ef1c5e56d2a1983eceaa8346318b808eed9ee0f959e90a7700395baf",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the existing B5-02 tamper replay and original positive control.",
+      "basis": "existing independently authorized historical fixture"
+    },
+    "tests/test_batch_b_historical_endpoints.py::test_passing_historical_replay_does_not_authorize_current_source_corruption[data/curated/papers.csv]": {
+      "path": "tests/test_batch_b_historical_endpoints.py",
+      "sha256": "5d07dde0ef1c5e56d2a1983eceaa8346318b808eed9ee0f959e90a7700395baf",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the existing B5-02 tamper replay and original positive control.",
+      "basis": "existing independently authorized historical fixture"
+    },
+    "tests/test_batch_b_historical_endpoints.py::test_passing_historical_replay_does_not_authorize_current_source_corruption[data/curated/review_decisions.csv]": {
+      "path": "tests/test_batch_b_historical_endpoints.py",
+      "sha256": "5d07dde0ef1c5e56d2a1983eceaa8346318b808eed9ee0f959e90a7700395baf",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the existing B5-02 tamper replay and original positive control.",
+      "basis": "existing independently authorized historical fixture"
+    },
+    "tests/test_batch_b_historical_endpoints.py::test_passing_historical_replay_does_not_authorize_current_source_corruption[data/manual/papers.csv]": {
+      "path": "tests/test_batch_b_historical_endpoints.py",
+      "sha256": "5d07dde0ef1c5e56d2a1983eceaa8346318b808eed9ee0f959e90a7700395baf",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the existing B5-02 tamper replay and original positive control.",
+      "basis": "existing independently authorized historical fixture"
+    },
+    "tests/test_batch_b_historical_endpoints.py::test_snapshot_reader_has_no_mutable_current_source_fallback": {
+      "path": "tests/test_batch_b_historical_endpoints.py",
+      "sha256": "5d07dde0ef1c5e56d2a1983eceaa8346318b808eed9ee0f959e90a7700395baf",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the existing immutable B5-02 snapshot and original positive guard.",
+      "basis": "existing independently authorized historical fixture"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1b.py::test_unrelated_author_institution_and_scope_sources_remain_exact[data/curated/author_institution_mappings.csv]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1b.py",
+      "sha256": "954d1eef4d422cf1921986c00f66780243bdf196a942d018d371e244d95a2c5e",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1e.py::test_current_taxonomy_totals_and_exact_two_label_delta_are_recomputed": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1e.py",
+      "sha256": "4e721b8d7602edbd49492f7456e175e7da07daf2924d382ff3097685a024be79",
+      "bindings": [
+        "test_old_map_context",
+        "test_old_counts"
+      ],
+      "why": "Use the original map set and fixed count operand for the older transaction.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1e.py::test_unrelated_authoritative_metadata_identity_and_relationship_files_are_byte_exact[data/curated/author_institution_mappings.csv]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1e.py",
+      "sha256": "4e721b8d7602edbd49492f7456e175e7da07daf2924d382ff3097685a024be79",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1f.py::test_corpus_relationships_and_taxonomy_totals_recompute_without_drift": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1f.py",
+      "sha256": "b39cb1151bb52ebf2ccc539e211dba2b695f012edf64e58e76da89d56450e40b",
+      "bindings": [
+        "test_old_map_context",
+        "test_old_counts"
+      ],
+      "why": "Use the original map set and fixed count operand for the older transaction.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1g.py::test_public_papers_relationships_and_taxonomy_totals_recompute_without_drift": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1g.py",
+      "sha256": "55e9c0199319733ed1c21f41fd6922b3554b55734abddb4903893eb93bb7237f",
+      "bindings": [
+        "test_old_map_context",
+        "test_old_counts"
+      ],
+      "why": "Use the original map set and fixed count operand for the older transaction.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1h.py::test_original_questions_locked_policy_and_unrelated_authoritative_tables_are_immutable": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1h.py",
+      "sha256": "3782e07c1d84764b1393706eca160bbf63fccebf500e60b289375c9f74a927bb",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1h.py::test_public_delta_is_one_paper_and_two_map_research_type_metadata_changes_only": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1h.py",
+      "sha256": "3782e07c1d84764b1393706eca160bbf63fccebf500e60b289375c9f74a927bb",
+      "bindings": [
+        "test_old_map_context"
+      ],
+      "why": "Use the original map set for pair equality. The paper and selected marker assertions remain live.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1i.py::test_accepted_R2_rule_original_questions_and_unrelated_authoritative_tables_are_unchanged": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1i.py",
+      "sha256": "bcd27f9d3fcb90889962d1c012651bc61011cad716387b7440958da4ee29f526",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1i.py::test_live_corpus_and_taxonomy_recompute_the_single_benchmark_addition": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1i.py",
+      "sha256": "bcd27f9d3fcb90889962d1c012651bc61011cad716387b7440958da4ee29f526",
+      "bindings": [
+        "test_old_map_context",
+        "test_old_counts"
+      ],
+      "why": "Use the original map set and fixed count operand for the older transaction.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1i.py::test_public_semantic_delta_is_only_R574_and_its_existing_three_map_rows": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1i.py",
+      "sha256": "bcd27f9d3fcb90889962d1c012651bc61011cad716387b7440958da4ee29f526",
+      "bindings": [
+        "test_old_map_context"
+      ],
+      "why": "Use the original map set for pair equality. The paper and selected marker assertions remain live.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1j.py::test_live_corpus_and_taxonomy_recompute_only_dataset_and_benchmark_additions": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1j.py",
+      "sha256": "e6adac06c22826cfcf1fa87320b02d01472251357848e26be6771f7dfb494f6f",
+      "bindings": [
+        "test_old_map_context",
+        "test_old_counts"
+      ],
+      "why": "Use the original map set and fixed count operand for the older transaction.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1j.py::test_original_questions_locked_R1_R2_T2_and_unrelated_authoritative_tables_are_unchanged": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1j.py",
+      "sha256": "e6adac06c22826cfcf1fa87320b02d01472251357848e26be6771f7dfb494f6f",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1k.py::test_original_questions_policies_and_all_unrelated_authoritative_files_are_unchanged": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1k.py",
+      "sha256": "0da8574cdc8157fc4a82f7e3587f78bb24a9542a14c9950ab439c2875ce0c79e",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1k.py::test_recomputed_current_counts_change_only_benchmark_minus_one": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1k.py",
+      "sha256": "0da8574cdc8157fc4a82f7e3587f78bb24a9542a14c9950ab439c2875ce0c79e",
+      "bindings": [
+        "test_old_map_context",
+        "test_old_counts"
+      ],
+      "why": "Use the original map set and fixed count operand for the older transaction.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1l.py::test_original_questions_policy_and_all_unrelated_authoritative_files_are_unchanged": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1l.py",
+      "sha256": "732e7eec44549673af33a53ed4f25c5bdd0a85e26bf4e1ef7b2a08338c4f3d1f",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1l.py::test_recomputed_live_counts_add_two_datasets_and_no_other_label_or_corpus_delta": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1l.py",
+      "sha256": "732e7eec44549673af33a53ed4f25c5bdd0a85e26bf4e1ef7b2a08338c4f3d1f",
+      "bindings": [
+        "test_old_map_context",
+        "test_old_counts"
+      ],
+      "why": "Use the original map set and fixed count operand for the older transaction.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1m.py::test_original_questions_locked_R2_and_all_unrelated_authoritative_files_remain_unchanged": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1m.py",
+      "sha256": "244526b5adeba2e9c9fd30da994f68ff07302223afd8ff1f2191c1d41837fdd7",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1m.py::test_recomputed_corpus_task_and_type_counts_change_only_two_benchmarks": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1m.py",
+      "sha256": "244526b5adeba2e9c9fd30da994f68ff07302223afd8ff1f2191c1d41837fdd7",
+      "bindings": [
+        "test_old_counts"
+      ],
+      "why": "The reviewed live expectation changes. Preserve the old count operand of this exact historic comparison.",
+      "basis": "pinned historical count operand inspected in original source"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1n.py::test_current_authority_fingerprints_change_only_five_allowed_data_dependencies": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1n.py",
+      "sha256": "480e58a53b34b4627cc5a876c09a40af8d1707b4551847991c51aaf92db202a1",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1n.py::test_original_questions_policies_and_unrelated_authoritative_files_are_unchanged": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1n.py",
+      "sha256": "480e58a53b34b4627cc5a876c09a40af8d1707b4551847991c51aaf92db202a1",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1n.py::test_recomputed_corpus_tasks_scopes_and_types_add_exactly_one_benchmark": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1n.py",
+      "sha256": "480e58a53b34b4627cc5a876c09a40af8d1707b4551847991c51aaf92db202a1",
+      "bindings": [
+        "test_old_counts"
+      ],
+      "why": "The reviewed live expectation changes. Preserve the old count operand of this exact historic comparison.",
+      "basis": "pinned historical count operand inspected in original source"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1o.py::test_original_review_questions_locked_policies_and_unrelated_authority_are_immutable": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1o.py",
+      "sha256": "3649a560ea7bf817994d2664dd75350462d7e7812fd0ae2f7cef34a8a4d1768c",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1p.py::test_counts_recompute_from_public_rows_with_only_benchmark_and_analysis_additions": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1p.py",
+      "sha256": "a141179b5740f829a128ae3686e8f2da5018f73f544818adb8b65b6e0d0cd940",
+      "bindings": [
+        "test_old_counts"
+      ],
+      "why": "The reviewed live expectation changes. Preserve the old count operand of this exact historic comparison.",
+      "basis": "pinned historical count operand inspected in original source"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1p.py::test_original_questions_locked_policies_and_all_unrelated_authority_are_immutable": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1p.py",
+      "sha256": "a141179b5740f829a128ae3686e8f2da5018f73f544818adb8b65b6e0d0cd940",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b1s.py::test_recomputed_source_and_export_totals_match_with_only_R3_R2_additions": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b1s.py",
+      "sha256": "3dd6388b9c697e696b96813d14236c94ef0d693feb5eb61063cf8a50b74b1a4e",
+      "bindings": [
+        "test_old_counts"
+      ],
+      "why": "The reviewed live expectation changes. Preserve the old count operand of this exact historic comparison.",
+      "basis": "pinned historical count operand inspected in original source"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b4_02.py::test_location_mappings_and_institution_sources_have_no_data_change": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_02.py",
+      "sha256": "4a5041a57c7c6144dbd6b8aeeff6b0ce24a82c14054ea49b5c51729b94bb1b7e",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b4_04.py::test_accounting_closes_only_eight_taxonomy_questions": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_04.py",
+      "sha256": "2dca0104c44e3bb1108f2de80434ba1bd0631f9abf24ba0c5f0321f887fb89d1",
+      "bindings": [
+        "test_r_snapshot"
+      ],
+      "why": "Exact 151-decision predecessor transaction and its unresolved accounting.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b4_04.py::test_all_other_curated_manual_raw_and_website_paths_unchanged": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_04.py",
+      "sha256": "2dca0104c44e3bb1108f2de80434ba1bd0631f9abf24ba0c5f0321f887fb89d1",
+      "bindings": [
+        "old_guard",
+        "local151_source_overlay"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b4_04.py::test_exact_source_delta_and_prior138_raw_prefix": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_04.py",
+      "sha256": "2dca0104c44e3bb1108f2de80434ba1bd0631f9abf24ba0c5f0321f887fb89d1",
+      "bindings": [
+        "test_r_snapshot"
+      ],
+      "why": "Exact 151-decision predecessor transaction and its unresolved accounting.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b4_04.py::test_recomputed_source_totals_and_unchanged_public_identities_and_relationships": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b4_04.py",
+      "sha256": "2dca0104c44e3bb1108f2de80434ba1bd0631f9abf24ba0c5f0321f887fb89d1",
+      "bindings": [
+        "old_guard",
+        "local151_source_overlay"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_all_unresolved_p001_and_u005_policy_boundaries_survive_publication": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "sha256": "443b5c598dc64881bdf8eb725f6b95079663c3d3ac5a94dbd31d077fcda780da",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Read only the separately superseded mapping path at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_01.py::test_generated_mapping_report_changes_only_eight_authorized_url_cells": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_01.py",
+      "sha256": "443b5c598dc64881bdf8eb725f6b95079663c3d3ac5a94dbd31d077fcda780da",
+      "bindings": [
+        "test_root_mapping_report"
+      ],
+      "why": "Preserve the earlier exact eight URL changes. Other reads remain live.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_accounting_independent_original_ledger": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_authoritative_public_taxonomy_totals_match_exact_approved_evolution": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_current_source_guard_rejects_tampering_independently_of_historical_success[identity]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_current_source_guard_rejects_tampering_independently_of_historical_success[predecessor_decision]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_current_source_guard_rejects_tampering_independently_of_historical_success[successor_decision_id]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_current_source_guard_rejects_tampering_independently_of_historical_success[taxonomy_type]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_current_source_guard_rejects_tampering_independently_of_historical_success[unrelated_task]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_current_source_has_an_independent_exact_transaction_guard": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_generated_mapping_and_coverage_csvs_have_no_unrelated_changes": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "test_r_mapping_report"
+      ],
+      "why": "Read only the mapping report at its immutable predecessor.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_native_helper_double_submission_is_byte_and_timestamp_idempotent[P231]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_native_helper_double_submission_is_byte_and_timestamp_idempotent[R110]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_native_helper_double_submission_is_byte_and_timestamp_idempotent[R138]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_native_helper_double_submission_is_byte_and_timestamp_idempotent[R154]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_native_helper_double_submission_is_byte_and_timestamp_idempotent[R161]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_native_helper_double_submission_is_byte_and_timestamp_idempotent[R171]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_native_helper_double_submission_is_byte_and_timestamp_idempotent[R187]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_native_helper_double_submission_is_byte_and_timestamp_idempotent[R231]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_native_helper_double_submission_is_byte_and_timestamp_idempotent[R256]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_native_helper_double_submission_is_byte_and_timestamp_idempotent[R275]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_native_helper_double_submission_is_byte_and_timestamp_idempotent[R564]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_only_approved_authoritative_files_and_exact_source_bytes_change": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_public_projection_updates_exactly_six_papers_and_fourteen_dependents": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_02.py::test_raw_prefix_and_every_actual_cell_delta": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_02.py",
+      "sha256": "7648eeedebd42fbf8188b17964fa9358cc68e451f10e0681d2d1648c6252c835",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_actual151_decisions_and_only_reviewed_source_delta": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_current_public_and_source_counts_and_expectations_agree": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_current_report_is_canonical_and_repeatable": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_report_and_paths"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_export_projection_and_all_optional_identity_omissions": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_projection"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[data/curated/institutions.csv]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[data/curated/paper_taxonomy.csv]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[data/curated/papers.csv]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[data/curated/review_decisions.csv]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[data/manual/key_paper_coverage_report.csv]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[docs/key_paper_coverage_report.md]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[docs/public_preview_report.md]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[scripts/audit_key_paper_coverage.py]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[scripts/export_public_preview.py]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[tests/b5_03_historical_fixtures.py]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[tests/baseline_expectations.py]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[tests/test_corpus_quality_batch_b_wave_b5_02.py]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[web/app.js]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[web/data/public_preview_map_data.json]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_historical_success_never_authorizes_current_tampering[web/data/public_preview_papers.json]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_guard"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_local151_and_published138_are_distinct_authenticated_checkpoints": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard",
+        "local151_source_overlay"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_local151_snapshot_source_export_and_metadata_tampering_rejected[.git/HEAD]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard",
+        "local151_source_overlay"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_local151_snapshot_source_export_and_metadata_tampering_rejected[.git/index]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard",
+        "local151_source_overlay"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_local151_snapshot_source_export_and_metadata_tampering_rejected[.git/objects/info/alternates]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard",
+        "local151_source_overlay"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_local151_snapshot_source_export_and_metadata_tampering_rejected[data/curated/paper_taxonomy.csv]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard",
+        "local151_source_overlay"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_local151_snapshot_source_export_and_metadata_tampering_rejected[data/curated/papers.csv]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard",
+        "local151_source_overlay"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_local151_snapshot_source_export_and_metadata_tampering_rejected[data/curated/review_decisions.csv]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard",
+        "local151_source_overlay"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_local151_snapshot_source_export_and_metadata_tampering_rejected[web/data/public_preview_map_data.json]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard",
+        "local151_source_overlay"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_local151_snapshot_source_export_and_metadata_tampering_rejected[web/data/public_preview_papers.json]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard",
+        "local151_source_overlay"
+      ],
+      "why": "Preserve the exact existing fixture route and its original 151-decision guard.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_recomputed_descriptor_hash_cannot_expand_authorization[baseline]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_report_and_paths"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_recomputed_descriptor_hash_cannot_expand_authorization[historical_scopes]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_report_and_paths"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_recomputed_descriptor_hash_cannot_expand_authorization[inputs]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_report_and_paths"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_recomputed_descriptor_hash_cannot_expand_authorization[outputs]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_report_and_paths"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_recomputed_descriptor_hash_cannot_expand_authorization[payload_sha256]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_report_and_paths"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_recomputed_descriptor_hash_cannot_expand_authorization[replacements]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_report_and_paths"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_recomputed_descriptor_hash_cannot_expand_authorization[source_manifest]": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_report_and_paths"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_b_wave_b5_03.py::test_reordered_records_cannot_be_accepted_by_position_alone": {
+      "path": "tests/test_corpus_quality_batch_b_wave_b5_03.py",
+      "sha256": "7142efff7ad308d63c453abd807efa276f6665bfc9ee3c43a4316a021e810a4b",
+      "bindings": [
+        "old_guard_root",
+        "old_projection"
+      ],
+      "why": "Exact B5-03 report, corpus, projection or tamper boundary.",
+      "basis": "observed historical probe failure"
+    },
+    "tests/test_corpus_quality_batch_c_phase1.py::test_exact_approved_taxonomy_change[published-2932b9a-R084]": {
+      "path": "tests/test_corpus_quality_batch_c_phase1.py",
+      "sha256": "9293d5c8e5062ea1d1f46a0da4e0ff6355046b1e2212b593b34b9d46afd3166e",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the existing old guard and historical count operand where used.",
+      "basis": "existing independently authorized historical fixture"
+    },
+    "tests/test_corpus_quality_batch_c_phase1.py::test_exact_approved_taxonomy_change[published-2932b9a-R121]": {
+      "path": "tests/test_corpus_quality_batch_c_phase1.py",
+      "sha256": "9293d5c8e5062ea1d1f46a0da4e0ff6355046b1e2212b593b34b9d46afd3166e",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the existing old guard and historical count operand where used.",
+      "basis": "existing independently authorized historical fixture"
+    },
+    "tests/test_corpus_quality_batch_c_phase1.py::test_exact_approved_taxonomy_change[published-2932b9a-T363]": {
+      "path": "tests/test_corpus_quality_batch_c_phase1.py",
+      "sha256": "9293d5c8e5062ea1d1f46a0da4e0ff6355046b1e2212b593b34b9d46afd3166e",
+      "bindings": [
+        "old_guard"
+      ],
+      "why": "Preserve the existing old guard and historical count operand where used.",
+      "basis": "existing independently authorized historical fixture"
+    },
+    "tests/test_corpus_quality_batch_c_phase1.py::test_recomputed_counts_and_registry_export_synchronization[published-2932b9a]": {
+      "path": "tests/test_corpus_quality_batch_c_phase1.py",
+      "sha256": "9293d5c8e5062ea1d1f46a0da4e0ff6355046b1e2212b593b34b9d46afd3166e",
+      "bindings": [
+        "old_guard",
+        "test_old_counts"
+      ],
+      "why": "Preserve the existing old guard and historical count operand where used.",
+      "basis": "existing independently authorized historical fixture"
+    },
+    "tests/test_corpus_quality_batch_c_phase1.py::test_ucsb_provenance_and_public_relationships_are_unchanged": {
+      "path": "tests/test_corpus_quality_batch_c_phase1.py",
+      "sha256": "9293d5c8e5062ea1d1f46a0da4e0ff6355046b1e2212b593b34b9d46afd3166e",
+      "bindings": [
+        "test_root_mappings"
+      ],
+      "why": "Preserve the existing old guard and historical count operand where used.",
+      "basis": "existing independently authorized historical fixture"
+    }
+  }
+}

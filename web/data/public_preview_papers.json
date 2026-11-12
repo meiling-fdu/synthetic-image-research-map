@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-11-04T03:33:01Z"
+    "public_preview_generated_at": "2026-11-11T08:22:35Z"
   },
   "records": [
     {
@@ -42339,7 +42339,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -42349,7 +42349,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -42359,7 +42359,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -42369,7 +42369,7 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -42379,7 +42379,7 @@
             3
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -42389,7 +42389,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -42399,7 +42399,7 @@
             4
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -42409,7 +42409,7 @@
             4
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         },
@@ -42419,7 +42419,7 @@
             3
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
           "affiliation_status": "mapped"
         }
@@ -42428,22 +42428,35 @@
       "metadata_source": "openalex",
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 4,
       "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "paper_only_review",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Changsha University of Science and Technology (CSUST)",
+        "Shenzhen MSU-BIT University (SMBU)",
+        "Hunan University of Science and Technology (HNUST)",
+        "Hunan University"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Hunan",
+        "Guangdong"
+      ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {
           "mapping_id": "mapping:59717de03fbe53a3b5b5",
           "institution_id": "institution:6bdc62fb06ac696f",
+          "location_id": "",
           "institution": "Changsha University of Science and Technology",
           "institution_authors": [
             "Dengyong Zhang",
@@ -42452,39 +42465,46 @@
             "Yun Song"
           ],
           "raw_affiliation": "School of Computer Science and Technology, Changsha University of Science and Technology, Changsha, China",
-          "mapping_status": "needs_review"
+          "mapping_status": "active",
+          "affiliation_order": 1
         },
         {
           "mapping_id": "mapping:6456b8bdf7002d769476",
           "institution_id": "institution:11d4e5b507bbbada",
+          "location_id": "",
           "institution": "Shenzhen MSU-BIT University",
           "institution_authors": [
             "Changsheng Chen"
           ],
           "raw_affiliation": "Faculty of Engineering, Shenzhen MSU-BIT University, Shenzhen, China",
-          "mapping_status": "needs_review"
+          "mapping_status": "active",
+          "affiliation_order": 2
         },
         {
           "mapping_id": "mapping:22611f0898a942d4554e",
           "institution_id": "institution:42d2e85e0328361b",
+          "location_id": "",
           "institution": "Hunan University of Science and Technology",
           "institution_authors": [
             "Jin Wang",
             "Xiangling Ding"
           ],
           "raw_affiliation": "School of Computer and Science and Engineering, Hunan University of Science and Technology, Xiangtan, China",
-          "mapping_status": "needs_review"
+          "mapping_status": "active",
+          "affiliation_order": 3
         },
         {
           "mapping_id": "mapping:049f07debf3a1d281504",
           "institution_id": "institution:be8fe6da68f67876",
+          "location_id": "",
           "institution": "Hunan University",
           "institution_authors": [
             "Gaobo Yang",
             "Xin Liao"
           ],
           "raw_affiliation": "College of Computer Science and Electronic Engineering, Hunan University, Changsha, China",
-          "mapping_status": "needs_review"
+          "mapping_status": "active",
+          "affiliation_order": 4
         }
       ],
       "author_institution_affiliations": [
@@ -42493,13 +42513,17 @@
           "institution_id": "institution:6bdc62fb06ac696f",
           "institution": "Changsha University of Science and Technology (CSUST)",
           "institution_type": "university",
-          "authors": [],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": true,
+          "authors": [
+            "Dengyong Zhang",
+            "Miao Hu",
+            "Jiaxin Chen",
+            "Yun Song"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
           "source_institution_names": [
             "Changsha University of Science and Technology"
           ],
-          "preliminary": true,
           "canonical_name": "Changsha University of Science and Technology",
           "canonical_institution_name": "Changsha University of Science and Technology",
           "abbreviation": "CSUST"
@@ -42509,13 +42533,14 @@
           "institution_id": "institution:11d4e5b507bbbada",
           "institution": "Shenzhen MSU-BIT University (SMBU)",
           "institution_type": "university",
-          "authors": [],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": true,
+          "authors": [
+            "Changsheng Chen"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
           "source_institution_names": [
             "Shenzhen MSU-BIT University"
           ],
-          "preliminary": true,
           "canonical_name": "Shenzhen MSU-BIT University",
           "canonical_institution_name": "Shenzhen MSU-BIT University",
           "abbreviation": "SMBU"
@@ -42525,13 +42550,15 @@
           "institution_id": "institution:42d2e85e0328361b",
           "institution": "Hunan University of Science and Technology (HNUST)",
           "institution_type": "university",
-          "authors": [],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": true,
+          "authors": [
+            "Jin Wang",
+            "Xiangling Ding"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
           "source_institution_names": [
             "Hunan University of Science and Technology"
           ],
-          "preliminary": true,
           "canonical_name": "Hunan University of Science and Technology",
           "canonical_institution_name": "Hunan University of Science and Technology",
           "abbreviation": "HNUST"
@@ -42541,10 +42568,12 @@
           "institution_id": "institution:be8fe6da68f67876",
           "institution": "Hunan University",
           "institution_type": "university",
-          "authors": [],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": true,
-          "preliminary": true
+          "authors": [
+            "Gaobo Yang",
+            "Xin Liao"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
         }
       ],
       "author_institution_indices": [
@@ -42639,7 +42668,7 @@
           "institution_ids": [
             "institution:6bdc62fb06ac696f"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -42650,7 +42679,7 @@
           "institution_ids": [
             "institution:6bdc62fb06ac696f"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -42661,7 +42690,7 @@
           "institution_ids": [
             "institution:6bdc62fb06ac696f"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -42672,7 +42701,7 @@
           "institution_ids": [
             "institution:11d4e5b507bbbada"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -42683,7 +42712,7 @@
           "institution_ids": [
             "institution:42d2e85e0328361b"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -42694,7 +42723,7 @@
           "institution_ids": [
             "institution:6bdc62fb06ac696f"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -42705,7 +42734,7 @@
           "institution_ids": [
             "institution:be8fe6da68f67876"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -42716,7 +42745,7 @@
           "institution_ids": [
             "institution:be8fe6da68f67876"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -42727,81 +42756,56 @@
           "institution_ids": [
             "institution:42d2e85e0328361b"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         }
       ],
-      "affiliations": [
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "aggregated_locations": [
         {
-          "index": 1,
-          "name": "Changsha University of Science and Technology (CSUST)",
-          "canonical_name": "Changsha University of Science and Technology",
+          "institution_name": "Changsha University of Science and Technology (CSUST)",
           "institution_id": "institution:6bdc62fb06ac696f",
           "institution_type": "university",
-          "country": "",
-          "country_code": "",
-          "region": "",
-          "location_display": "",
-          "source_institution_names": [
-            "Changsha University of Science and Technology"
-          ],
-          "preliminary": true,
-          "canonical_institution_name": "Changsha University of Science and Technology",
-          "abbreviation": "CSUST"
+          "country": "China",
+          "country_code": "CN",
+          "region": "Hunan",
+          "region_code": "",
+          "location_display": "Hunan, China"
         },
         {
-          "index": 2,
-          "name": "Shenzhen MSU-BIT University (SMBU)",
-          "canonical_name": "Shenzhen MSU-BIT University",
+          "institution_name": "Shenzhen MSU-BIT University (SMBU)",
           "institution_id": "institution:11d4e5b507bbbada",
           "institution_type": "university",
-          "country": "",
-          "country_code": "",
-          "region": "",
-          "location_display": "",
-          "source_institution_names": [
-            "Shenzhen MSU-BIT University"
-          ],
-          "preliminary": true,
-          "canonical_institution_name": "Shenzhen MSU-BIT University",
-          "abbreviation": "SMBU"
+          "country": "China",
+          "country_code": "CN",
+          "region": "Guangdong",
+          "region_code": "",
+          "location_display": "Guangdong, China"
         },
         {
-          "index": 3,
-          "name": "Hunan University of Science and Technology (HNUST)",
-          "canonical_name": "Hunan University of Science and Technology",
+          "institution_name": "Hunan University of Science and Technology (HNUST)",
           "institution_id": "institution:42d2e85e0328361b",
           "institution_type": "university",
-          "country": "",
-          "country_code": "",
-          "region": "",
-          "location_display": "",
-          "source_institution_names": [
-            "Hunan University of Science and Technology"
-          ],
-          "preliminary": true,
-          "canonical_institution_name": "Hunan University of Science and Technology",
-          "abbreviation": "HNUST"
+          "country": "China",
+          "country_code": "CN",
+          "region": "Hunan",
+          "region_code": "",
+          "location_display": "Hunan, China"
         },
         {
-          "index": 4,
-          "name": "Hunan University",
-          "canonical_name": "Hunan University",
+          "institution_name": "Hunan University",
           "institution_id": "institution:be8fe6da68f67876",
           "institution_type": "university",
-          "country": "",
-          "country_code": "",
-          "region": "",
-          "location_display": "",
-          "preliminary": true
+          "country": "China",
+          "country_code": "CN",
+          "region": "Hunan",
+          "region_code": "",
+          "location_display": "Hunan, China"
         }
       ],
-      "current_institution": null,
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "aggregated_locations": [],
       "aggregated_institution_types": [
         "university"
       ],
@@ -42835,7 +42839,8 @@
         "default_field_status": "Verified",
         "field_overrides": {
           "affiliations": {
-            "status": "Needs review"
+            "status": "Curated",
+            "source": "OpenAlex"
           }
         },
         "source": "OpenAlex"
@@ -42860,7 +42865,69 @@
         "research_types": {
           "status": "reviewed"
         }
-      }
+      },
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Changsha University of Science and Technology (CSUST)",
+          "canonical_name": "Changsha University of Science and Technology",
+          "institution_id": "institution:6bdc62fb06ac696f",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China",
+          "source_institution_names": [
+            "Changsha University of Science and Technology"
+          ],
+          "canonical_institution_name": "Changsha University of Science and Technology",
+          "abbreviation": "CSUST"
+        },
+        {
+          "index": 2,
+          "name": "Shenzhen MSU-BIT University (SMBU)",
+          "canonical_name": "Shenzhen MSU-BIT University",
+          "institution_id": "institution:11d4e5b507bbbada",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China",
+          "source_institution_names": [
+            "Shenzhen MSU-BIT University"
+          ],
+          "canonical_institution_name": "Shenzhen MSU-BIT University",
+          "abbreviation": "SMBU"
+        },
+        {
+          "index": 3,
+          "name": "Hunan University of Science and Technology (HNUST)",
+          "canonical_name": "Hunan University of Science and Technology",
+          "institution_id": "institution:42d2e85e0328361b",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China",
+          "source_institution_names": [
+            "Hunan University of Science and Technology"
+          ],
+          "canonical_institution_name": "Hunan University of Science and Technology",
+          "abbreviation": "HNUST"
+        },
+        {
+          "index": 4,
+          "name": "Hunan University",
+          "canonical_name": "Hunan University",
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China"
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:c420495aae5c20e0ea2a",
@@ -204848,7 +204915,7 @@
       ],
       "venue_id": "venue:wifs",
       "venue_acronym": "WIFS",
-      "venue_track": "Workshop",
+      "venue_track": "Main",
       "raw_venue": "2024 IEEE International Workshop on Information Forensics and Security (WIFS)",
       "venue_aliases": [
         "IEEE International Workshop on Information Forensics and Security (WIFS)",
@@ -204875,16 +204942,11 @@
         "unresolved": 0
       },
       "affiliation_complete": true,
-      "venue_review_required": true,
-      "venue_review_reason": "This is a standalone scholarly workshop venue. Its name alone does not establish a Workshop subtrack; confirm Main versus an actual nested workshop track from the paper/program, preserving the venue identity.",
+      "venue_review_required": false,
       "metadata_status": {
         "overall": "Verified",
         "default_field_status": "Verified",
         "field_overrides": {
-          "venue": {
-            "status": "Needs review",
-            "source": "OpenAlex"
-          },
           "arxiv": {
             "status": "Verified",
             "source": "arXiv"

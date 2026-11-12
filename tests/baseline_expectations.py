@@ -36,13 +36,13 @@ data change and the identity and relationship invariants in
 # standalone MAD track; every task and all corpus/map identities remain fixed.
 CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 674,
-    "public_map_source_papers": 613,
-    "public_papers_with_map": 613,
-    "public_papers_without_map": 61,
+    "public_map_source_papers": 614,
+    "public_papers_with_map": 614,
+    "public_papers_without_map": 60,
     "total_institution_registry_rows": 748,
     "active_canonical_institutions": 727,
     "non_active_institution_registry_rows": 21,
-    "public_paper_institution_relationships": 1410,
+    "public_paper_institution_relationships": 1414,
     "institution_hierarchy_edges": 16,
     "institution_aliases": 120
 }
@@ -88,10 +88,10 @@ TASK_TOTALS = {'detection': 621, 'source_attribution': 84, 'localization': 45}
 CURRENT_CORPUS_COUNTS = {
     "public": 674,
     "formal": 557,
-    "mapped": 613,
-    "unmapped": 61,
-    "relationship_rows": 1410,
-    "unique_paper_institution_pairs": 1410
+    "mapped": 614,
+    "unmapped": 60,
+    "relationship_rows": 1414,
+    "unique_paper_institution_pairs": 1414
 }
 
 RESEARCH_TYPE_TOTALS = {'method': 578, 'analysis_study': 90, 'survey': 21, 'dataset': 146, 'benchmark': 102}
@@ -115,8 +115,6 @@ RELEASE_TASK_TOTALS = {
 
 PUBLIC_PAPERS_WITHOUT_MAP = {
     "Diffusion-Driven Forgery Detection: Distilling Latent Features for Generalized Image Forensics":
-        "missing_affiliation_rows",
-    "FALCON-Net: Feature Aggregation of Local Patterns for AI-Generated Image Detection":
         "missing_affiliation_rows",
     "NSFF: Noise and Semantic Features Fusion for AI-Generated Image Detection":
         "missing_affiliation_rows",

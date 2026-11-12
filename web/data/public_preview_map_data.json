@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-11-04T03:33:01Z"
+    "public_preview_generated_at": "2026-11-11T08:22:35Z"
   },
   "records": [
     {
@@ -588764,6 +588764,2169 @@
           "affiliations": {
             "status": "Curated",
             "source": "Manual curation"
+          }
+        },
+        "source": "OpenAlex"
+      }
+    },
+    {
+      "id": "curated-map:a52431c02e2e85eee658",
+      "paper_id": "curated:c495f498c11dab35ecbc",
+      "title": "FALCON-Net: Feature Aggregation of Local Patterns for AI-Generated Image Detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "IEEE Transactions on Information Forensics and Security",
+      "venue_name": "IEEE Transactions on Information Forensics and Security",
+      "venue_id": "venue:ieee-transactions-on-information-forensics-and-security",
+      "venue_acronym": "TIFS",
+      "venue_type": "journal",
+      "venue_track": "",
+      "raw_venue": "IEEE Transactions on Information Forensics and Security",
+      "publication_type": "journal",
+      "abstract": "With the rapid development of generative models, the visual quality of generated images has become almost indistinguishable from real images, which poses a huge challenge to content authenticity verification. A key limitation of existing detectors is their reliance on model-specific cues, resulting in poor generalization to unseen models. Based on the observation of local differences in the generated images, we found that the generated images lack device-specific sensor noise and unnatural pixel intensity variations caused by the oversimplified generation process. These discrepancies provide important forensic cues for distinguishing between real and generated images. We propose the Feature Aggregation for Localized Context and Noise Network (FALCON-Net), which leverages these discrepancies to enhance detection capabilities. FALCON-Net integrates two complementary modules to enhance detection capabilities: the Intrinsic Noise Pattern Isolation (INP) module isolates device-specific noise patterns by analyzing high-frequency features in the frequency domain, while the Local Variation Pattern (LVP) module models the complex relationships between local pixels to capture directional intensity variations and reveal unnatural regularities in generated images. By combining these sensor-level and local structural cues, FALCON-Net identifies fundamental generative inconsistencies, ensuring robustness to post-processing and strong generalization to unseen models. Extensive experimental results show that FALCON-Net achieves the state-of-the-art performance in detecting generated images and shows good generalization ability to unseen generative models. The code is available at https://github.com/humiaomiaohaha/FALCON-Net.",
+      "abstract_source": "openalex",
+      "doi": "10.1109/tifs.2026.3683286",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "formal_url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "primary_url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "openalex_url": "https://openalex.org/W7154125740",
+      "url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "authors": [
+        {
+          "name": "Dengyong Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Miao Hu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jiaxin Chen",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Changsheng Chen",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jin Wang",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yun Song",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Gaobo Yang",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xin Liao",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xiangling Ding",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "institution": "Changsha University of Science and Technology (CSUST)",
+      "institution_id": "institution:6bdc62fb06ac696f",
+      "location_id": "location:24ff901ade26602be031",
+      "institution_authors": [
+        "Dengyong Zhang",
+        "Miao Hu",
+        "Jiaxin Chen",
+        "Yun Song"
+      ],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Hunan",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Changsha",
+      "latitude": 28.0705674,
+      "longitude": 113.0029417,
+      "lat": 28.0705674,
+      "lon": 113.0029417,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "mapping_id": "mapping:59717de03fbe53a3b5b5",
+      "affiliation_order": 1,
+      "raw_affiliation": "School of Computer Science and Technology, Changsha University of Science and Technology, Changsha, China",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: School of Computer Science and Technology, Changsha University of Science and Technology, Changsha, China",
+      "location_display": "Hunan, China",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:6bdc62fb06ac696f",
+          "institution": "Changsha University of Science and Technology (CSUST)",
+          "institution_type": "university",
+          "authors": [
+            "Dengyong Zhang",
+            "Miao Hu",
+            "Jiaxin Chen",
+            "Yun Song"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Changsha University of Science and Technology"
+          ],
+          "canonical_name": "Changsha University of Science and Technology",
+          "canonical_institution_name": "Changsha University of Science and Technology",
+          "abbreviation": "CSUST"
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:11d4e5b507bbbada",
+          "institution": "Shenzhen MSU-BIT University (SMBU)",
+          "institution_type": "university",
+          "authors": [
+            "Changsheng Chen"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Shenzhen MSU-BIT University"
+          ],
+          "canonical_name": "Shenzhen MSU-BIT University",
+          "canonical_institution_name": "Shenzhen MSU-BIT University",
+          "abbreviation": "SMBU"
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:42d2e85e0328361b",
+          "institution": "Hunan University of Science and Technology (HNUST)",
+          "institution_type": "university",
+          "authors": [
+            "Jin Wang",
+            "Xiangling Ding"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Hunan University of Science and Technology"
+          ],
+          "canonical_name": "Hunan University of Science and Technology",
+          "canonical_institution_name": "Hunan University of Science and Technology",
+          "abbreviation": "HNUST"
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution": "Hunan University",
+          "institution_type": "university",
+          "authors": [
+            "Gaobo Yang",
+            "Xin Liao"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Dengyong Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Miao Hu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Jiaxin Chen",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Changsheng Chen",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:11d4e5b507bbbada"
+          ]
+        },
+        {
+          "author": "Jin Wang",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ]
+        },
+        {
+          "author": "Yun Song",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Gaobo Yang",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ]
+        },
+        {
+          "author": "Xin Liao",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ]
+        },
+        {
+          "author": "Xiangling Ding",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ]
+        }
+      ],
+      "venue_label": "IEEE Transactions on Information Forensics and Security (TIFS)",
+      "venue_aliases": [
+        "IEEE Transactions on Information Forensics and Security",
+        "TIFS",
+        "IEEE TIFS"
+      ],
+      "ambiguity_status": "resolved",
+      "venue_review_required": false,
+      "institution_type": "university",
+      "source_institution_names": [
+        "Changsha University of Science and Technology"
+      ],
+      "source_institution": "Changsha University of Science and Technology",
+      "canonical_name": "Changsha University of Science and Technology",
+      "canonical_institution_name": "Changsha University of Science and Technology",
+      "abbreviation": "CSUST",
+      "mapping_lineage_ids": [
+        "mapping:59717de03fbe53a3b5b5"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 9,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Changsha University of Science and Technology (CSUST)",
+          "canonical_name": "Changsha University of Science and Technology",
+          "institution_id": "institution:6bdc62fb06ac696f",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China",
+          "source_institution_names": [
+            "Changsha University of Science and Technology"
+          ],
+          "canonical_institution_name": "Changsha University of Science and Technology",
+          "abbreviation": "CSUST"
+        },
+        {
+          "index": 2,
+          "name": "Shenzhen MSU-BIT University (SMBU)",
+          "canonical_name": "Shenzhen MSU-BIT University",
+          "institution_id": "institution:11d4e5b507bbbada",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China",
+          "source_institution_names": [
+            "Shenzhen MSU-BIT University"
+          ],
+          "canonical_institution_name": "Shenzhen MSU-BIT University",
+          "abbreviation": "SMBU"
+        },
+        {
+          "index": 3,
+          "name": "Hunan University of Science and Technology (HNUST)",
+          "canonical_name": "Hunan University of Science and Technology",
+          "institution_id": "institution:42d2e85e0328361b",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China",
+          "source_institution_names": [
+            "Hunan University of Science and Technology"
+          ],
+          "canonical_institution_name": "Hunan University of Science and Technology",
+          "abbreviation": "HNUST"
+        },
+        {
+          "index": 4,
+          "name": "Hunan University",
+          "canonical_name": "Hunan University",
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China"
+        }
+      ],
+      "current_institution": {
+        "index": 1,
+        "name": "Changsha University of Science and Technology (CSUST)",
+        "canonical_name": "Changsha University of Science and Technology",
+        "institution_id": "institution:6bdc62fb06ac696f",
+        "institution_type": "university",
+        "country": "China",
+        "country_code": "",
+        "region": "Hunan",
+        "location_display": "Hunan, China",
+        "source_institution_names": [
+          "Changsha University of Science and Technology"
+        ],
+        "canonical_institution_name": "Changsha University of Science and Technology",
+        "abbreviation": "CSUST"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Dengyong Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Miao Hu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jiaxin Chen",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Changsheng Chen",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:11d4e5b507bbbada"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jin Wang",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yun Song",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Gaobo Yang",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xin Liao",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xiangling Ding",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "is_arxiv_preprint": false,
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Curated",
+            "source": "OpenAlex"
+          }
+        },
+        "source": "OpenAlex"
+      }
+    },
+    {
+      "id": "curated-map:c7aa7902d43c8619715a",
+      "paper_id": "curated:c495f498c11dab35ecbc",
+      "title": "FALCON-Net: Feature Aggregation of Local Patterns for AI-Generated Image Detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "IEEE Transactions on Information Forensics and Security",
+      "venue_name": "IEEE Transactions on Information Forensics and Security",
+      "venue_id": "venue:ieee-transactions-on-information-forensics-and-security",
+      "venue_acronym": "TIFS",
+      "venue_type": "journal",
+      "venue_track": "",
+      "raw_venue": "IEEE Transactions on Information Forensics and Security",
+      "publication_type": "journal",
+      "abstract": "With the rapid development of generative models, the visual quality of generated images has become almost indistinguishable from real images, which poses a huge challenge to content authenticity verification. A key limitation of existing detectors is their reliance on model-specific cues, resulting in poor generalization to unseen models. Based on the observation of local differences in the generated images, we found that the generated images lack device-specific sensor noise and unnatural pixel intensity variations caused by the oversimplified generation process. These discrepancies provide important forensic cues for distinguishing between real and generated images. We propose the Feature Aggregation for Localized Context and Noise Network (FALCON-Net), which leverages these discrepancies to enhance detection capabilities. FALCON-Net integrates two complementary modules to enhance detection capabilities: the Intrinsic Noise Pattern Isolation (INP) module isolates device-specific noise patterns by analyzing high-frequency features in the frequency domain, while the Local Variation Pattern (LVP) module models the complex relationships between local pixels to capture directional intensity variations and reveal unnatural regularities in generated images. By combining these sensor-level and local structural cues, FALCON-Net identifies fundamental generative inconsistencies, ensuring robustness to post-processing and strong generalization to unseen models. Extensive experimental results show that FALCON-Net achieves the state-of-the-art performance in detecting generated images and shows good generalization ability to unseen generative models. The code is available at https://github.com/humiaomiaohaha/FALCON-Net.",
+      "abstract_source": "openalex",
+      "doi": "10.1109/tifs.2026.3683286",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "formal_url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "primary_url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "openalex_url": "https://openalex.org/W7154125740",
+      "url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "authors": [
+        {
+          "name": "Dengyong Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Miao Hu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jiaxin Chen",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Changsheng Chen",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jin Wang",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yun Song",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Gaobo Yang",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xin Liao",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xiangling Ding",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "institution": "Shenzhen MSU-BIT University (SMBU)",
+      "institution_id": "institution:11d4e5b507bbbada",
+      "location_id": "location:746e8c5352691ed57b23",
+      "institution_authors": [
+        "Changsheng Chen"
+      ],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Guangdong",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Shenzhen",
+      "latitude": 22.6819166,
+      "longitude": 114.2003376,
+      "lat": 22.6819166,
+      "lon": 114.2003376,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "mapping_id": "mapping:6456b8bdf7002d769476",
+      "affiliation_order": 2,
+      "raw_affiliation": "Faculty of Engineering, Shenzhen MSU-BIT University, Shenzhen, China",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Faculty of Engineering, Shenzhen MSU-BIT University, Shenzhen, China",
+      "location_display": "Guangdong, China",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:6bdc62fb06ac696f",
+          "institution": "Changsha University of Science and Technology (CSUST)",
+          "institution_type": "university",
+          "authors": [
+            "Dengyong Zhang",
+            "Miao Hu",
+            "Jiaxin Chen",
+            "Yun Song"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Changsha University of Science and Technology"
+          ],
+          "canonical_name": "Changsha University of Science and Technology",
+          "canonical_institution_name": "Changsha University of Science and Technology",
+          "abbreviation": "CSUST"
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:11d4e5b507bbbada",
+          "institution": "Shenzhen MSU-BIT University (SMBU)",
+          "institution_type": "university",
+          "authors": [
+            "Changsheng Chen"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Shenzhen MSU-BIT University"
+          ],
+          "canonical_name": "Shenzhen MSU-BIT University",
+          "canonical_institution_name": "Shenzhen MSU-BIT University",
+          "abbreviation": "SMBU"
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:42d2e85e0328361b",
+          "institution": "Hunan University of Science and Technology (HNUST)",
+          "institution_type": "university",
+          "authors": [
+            "Jin Wang",
+            "Xiangling Ding"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Hunan University of Science and Technology"
+          ],
+          "canonical_name": "Hunan University of Science and Technology",
+          "canonical_institution_name": "Hunan University of Science and Technology",
+          "abbreviation": "HNUST"
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution": "Hunan University",
+          "institution_type": "university",
+          "authors": [
+            "Gaobo Yang",
+            "Xin Liao"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Dengyong Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Miao Hu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Jiaxin Chen",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Changsheng Chen",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:11d4e5b507bbbada"
+          ]
+        },
+        {
+          "author": "Jin Wang",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ]
+        },
+        {
+          "author": "Yun Song",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Gaobo Yang",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ]
+        },
+        {
+          "author": "Xin Liao",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ]
+        },
+        {
+          "author": "Xiangling Ding",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ]
+        }
+      ],
+      "venue_label": "IEEE Transactions on Information Forensics and Security (TIFS)",
+      "venue_aliases": [
+        "IEEE Transactions on Information Forensics and Security",
+        "TIFS",
+        "IEEE TIFS"
+      ],
+      "ambiguity_status": "resolved",
+      "venue_review_required": false,
+      "institution_type": "university",
+      "source_institution_names": [
+        "Shenzhen MSU-BIT University"
+      ],
+      "source_institution": "Shenzhen MSU-BIT University",
+      "canonical_name": "Shenzhen MSU-BIT University",
+      "canonical_institution_name": "Shenzhen MSU-BIT University",
+      "abbreviation": "SMBU",
+      "mapping_lineage_ids": [
+        "mapping:6456b8bdf7002d769476"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 9,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Changsha University of Science and Technology (CSUST)",
+          "canonical_name": "Changsha University of Science and Technology",
+          "institution_id": "institution:6bdc62fb06ac696f",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China",
+          "source_institution_names": [
+            "Changsha University of Science and Technology"
+          ],
+          "canonical_institution_name": "Changsha University of Science and Technology",
+          "abbreviation": "CSUST"
+        },
+        {
+          "index": 2,
+          "name": "Shenzhen MSU-BIT University (SMBU)",
+          "canonical_name": "Shenzhen MSU-BIT University",
+          "institution_id": "institution:11d4e5b507bbbada",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China",
+          "source_institution_names": [
+            "Shenzhen MSU-BIT University"
+          ],
+          "canonical_institution_name": "Shenzhen MSU-BIT University",
+          "abbreviation": "SMBU"
+        },
+        {
+          "index": 3,
+          "name": "Hunan University of Science and Technology (HNUST)",
+          "canonical_name": "Hunan University of Science and Technology",
+          "institution_id": "institution:42d2e85e0328361b",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China",
+          "source_institution_names": [
+            "Hunan University of Science and Technology"
+          ],
+          "canonical_institution_name": "Hunan University of Science and Technology",
+          "abbreviation": "HNUST"
+        },
+        {
+          "index": 4,
+          "name": "Hunan University",
+          "canonical_name": "Hunan University",
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China"
+        }
+      ],
+      "current_institution": {
+        "index": 2,
+        "name": "Shenzhen MSU-BIT University (SMBU)",
+        "canonical_name": "Shenzhen MSU-BIT University",
+        "institution_id": "institution:11d4e5b507bbbada",
+        "institution_type": "university",
+        "country": "China",
+        "country_code": "",
+        "region": "Guangdong",
+        "location_display": "Guangdong, China",
+        "source_institution_names": [
+          "Shenzhen MSU-BIT University"
+        ],
+        "canonical_institution_name": "Shenzhen MSU-BIT University",
+        "abbreviation": "SMBU"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Dengyong Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Miao Hu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jiaxin Chen",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Changsheng Chen",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:11d4e5b507bbbada"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jin Wang",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yun Song",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Gaobo Yang",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xin Liao",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xiangling Ding",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "is_arxiv_preprint": false,
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Curated",
+            "source": "OpenAlex"
+          }
+        },
+        "source": "OpenAlex"
+      }
+    },
+    {
+      "id": "curated-map:196435d334ab9ceab9d7",
+      "paper_id": "curated:c495f498c11dab35ecbc",
+      "title": "FALCON-Net: Feature Aggregation of Local Patterns for AI-Generated Image Detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "IEEE Transactions on Information Forensics and Security",
+      "venue_name": "IEEE Transactions on Information Forensics and Security",
+      "venue_id": "venue:ieee-transactions-on-information-forensics-and-security",
+      "venue_acronym": "TIFS",
+      "venue_type": "journal",
+      "venue_track": "",
+      "raw_venue": "IEEE Transactions on Information Forensics and Security",
+      "publication_type": "journal",
+      "abstract": "With the rapid development of generative models, the visual quality of generated images has become almost indistinguishable from real images, which poses a huge challenge to content authenticity verification. A key limitation of existing detectors is their reliance on model-specific cues, resulting in poor generalization to unseen models. Based on the observation of local differences in the generated images, we found that the generated images lack device-specific sensor noise and unnatural pixel intensity variations caused by the oversimplified generation process. These discrepancies provide important forensic cues for distinguishing between real and generated images. We propose the Feature Aggregation for Localized Context and Noise Network (FALCON-Net), which leverages these discrepancies to enhance detection capabilities. FALCON-Net integrates two complementary modules to enhance detection capabilities: the Intrinsic Noise Pattern Isolation (INP) module isolates device-specific noise patterns by analyzing high-frequency features in the frequency domain, while the Local Variation Pattern (LVP) module models the complex relationships between local pixels to capture directional intensity variations and reveal unnatural regularities in generated images. By combining these sensor-level and local structural cues, FALCON-Net identifies fundamental generative inconsistencies, ensuring robustness to post-processing and strong generalization to unseen models. Extensive experimental results show that FALCON-Net achieves the state-of-the-art performance in detecting generated images and shows good generalization ability to unseen generative models. The code is available at https://github.com/humiaomiaohaha/FALCON-Net.",
+      "abstract_source": "openalex",
+      "doi": "10.1109/tifs.2026.3683286",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "formal_url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "primary_url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "openalex_url": "https://openalex.org/W7154125740",
+      "url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "authors": [
+        {
+          "name": "Dengyong Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Miao Hu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jiaxin Chen",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Changsheng Chen",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jin Wang",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yun Song",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Gaobo Yang",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xin Liao",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xiangling Ding",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "institution": "Hunan University of Science and Technology (HNUST)",
+      "institution_id": "institution:42d2e85e0328361b",
+      "location_id": "location:31be200653d3e8540ffd",
+      "institution_authors": [
+        "Jin Wang",
+        "Xiangling Ding"
+      ],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Hunan",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Xiangtan",
+      "latitude": 27.9063746,
+      "longitude": 112.9166685,
+      "lat": 27.9063746,
+      "lon": 112.9166685,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "mapping_id": "mapping:22611f0898a942d4554e",
+      "affiliation_order": 3,
+      "raw_affiliation": "School of Computer and Science and Engineering, Hunan University of Science and Technology, Xiangtan, China",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: School of Computer and Science and Engineering, Hunan University of Science and Technology, Xiangtan, China",
+      "location_display": "Hunan, China",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:6bdc62fb06ac696f",
+          "institution": "Changsha University of Science and Technology (CSUST)",
+          "institution_type": "university",
+          "authors": [
+            "Dengyong Zhang",
+            "Miao Hu",
+            "Jiaxin Chen",
+            "Yun Song"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Changsha University of Science and Technology"
+          ],
+          "canonical_name": "Changsha University of Science and Technology",
+          "canonical_institution_name": "Changsha University of Science and Technology",
+          "abbreviation": "CSUST"
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:11d4e5b507bbbada",
+          "institution": "Shenzhen MSU-BIT University (SMBU)",
+          "institution_type": "university",
+          "authors": [
+            "Changsheng Chen"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Shenzhen MSU-BIT University"
+          ],
+          "canonical_name": "Shenzhen MSU-BIT University",
+          "canonical_institution_name": "Shenzhen MSU-BIT University",
+          "abbreviation": "SMBU"
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:42d2e85e0328361b",
+          "institution": "Hunan University of Science and Technology (HNUST)",
+          "institution_type": "university",
+          "authors": [
+            "Jin Wang",
+            "Xiangling Ding"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Hunan University of Science and Technology"
+          ],
+          "canonical_name": "Hunan University of Science and Technology",
+          "canonical_institution_name": "Hunan University of Science and Technology",
+          "abbreviation": "HNUST"
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution": "Hunan University",
+          "institution_type": "university",
+          "authors": [
+            "Gaobo Yang",
+            "Xin Liao"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Dengyong Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Miao Hu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Jiaxin Chen",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Changsheng Chen",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:11d4e5b507bbbada"
+          ]
+        },
+        {
+          "author": "Jin Wang",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ]
+        },
+        {
+          "author": "Yun Song",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Gaobo Yang",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ]
+        },
+        {
+          "author": "Xin Liao",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ]
+        },
+        {
+          "author": "Xiangling Ding",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ]
+        }
+      ],
+      "venue_label": "IEEE Transactions on Information Forensics and Security (TIFS)",
+      "venue_aliases": [
+        "IEEE Transactions on Information Forensics and Security",
+        "TIFS",
+        "IEEE TIFS"
+      ],
+      "ambiguity_status": "resolved",
+      "venue_review_required": false,
+      "institution_type": "university",
+      "source_institution_names": [
+        "Hunan University of Science and Technology"
+      ],
+      "source_institution": "Hunan University of Science and Technology",
+      "canonical_name": "Hunan University of Science and Technology",
+      "canonical_institution_name": "Hunan University of Science and Technology",
+      "abbreviation": "HNUST",
+      "mapping_lineage_ids": [
+        "mapping:22611f0898a942d4554e"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 9,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Changsha University of Science and Technology (CSUST)",
+          "canonical_name": "Changsha University of Science and Technology",
+          "institution_id": "institution:6bdc62fb06ac696f",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China",
+          "source_institution_names": [
+            "Changsha University of Science and Technology"
+          ],
+          "canonical_institution_name": "Changsha University of Science and Technology",
+          "abbreviation": "CSUST"
+        },
+        {
+          "index": 2,
+          "name": "Shenzhen MSU-BIT University (SMBU)",
+          "canonical_name": "Shenzhen MSU-BIT University",
+          "institution_id": "institution:11d4e5b507bbbada",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China",
+          "source_institution_names": [
+            "Shenzhen MSU-BIT University"
+          ],
+          "canonical_institution_name": "Shenzhen MSU-BIT University",
+          "abbreviation": "SMBU"
+        },
+        {
+          "index": 3,
+          "name": "Hunan University of Science and Technology (HNUST)",
+          "canonical_name": "Hunan University of Science and Technology",
+          "institution_id": "institution:42d2e85e0328361b",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China",
+          "source_institution_names": [
+            "Hunan University of Science and Technology"
+          ],
+          "canonical_institution_name": "Hunan University of Science and Technology",
+          "abbreviation": "HNUST"
+        },
+        {
+          "index": 4,
+          "name": "Hunan University",
+          "canonical_name": "Hunan University",
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China"
+        }
+      ],
+      "current_institution": {
+        "index": 3,
+        "name": "Hunan University of Science and Technology (HNUST)",
+        "canonical_name": "Hunan University of Science and Technology",
+        "institution_id": "institution:42d2e85e0328361b",
+        "institution_type": "university",
+        "country": "China",
+        "country_code": "",
+        "region": "Hunan",
+        "location_display": "Hunan, China",
+        "source_institution_names": [
+          "Hunan University of Science and Technology"
+        ],
+        "canonical_institution_name": "Hunan University of Science and Technology",
+        "abbreviation": "HNUST"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Dengyong Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Miao Hu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jiaxin Chen",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Changsheng Chen",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:11d4e5b507bbbada"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jin Wang",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yun Song",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Gaobo Yang",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xin Liao",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xiangling Ding",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "is_arxiv_preprint": false,
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Curated",
+            "source": "OpenAlex"
+          }
+        },
+        "source": "OpenAlex"
+      }
+    },
+    {
+      "id": "curated-map:49cf8be144ed56a2a36f",
+      "paper_id": "curated:c495f498c11dab35ecbc",
+      "title": "FALCON-Net: Feature Aggregation of Local Patterns for AI-Generated Image Detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "IEEE Transactions on Information Forensics and Security",
+      "venue_name": "IEEE Transactions on Information Forensics and Security",
+      "venue_id": "venue:ieee-transactions-on-information-forensics-and-security",
+      "venue_acronym": "TIFS",
+      "venue_type": "journal",
+      "venue_track": "",
+      "raw_venue": "IEEE Transactions on Information Forensics and Security",
+      "publication_type": "journal",
+      "abstract": "With the rapid development of generative models, the visual quality of generated images has become almost indistinguishable from real images, which poses a huge challenge to content authenticity verification. A key limitation of existing detectors is their reliance on model-specific cues, resulting in poor generalization to unseen models. Based on the observation of local differences in the generated images, we found that the generated images lack device-specific sensor noise and unnatural pixel intensity variations caused by the oversimplified generation process. These discrepancies provide important forensic cues for distinguishing between real and generated images. We propose the Feature Aggregation for Localized Context and Noise Network (FALCON-Net), which leverages these discrepancies to enhance detection capabilities. FALCON-Net integrates two complementary modules to enhance detection capabilities: the Intrinsic Noise Pattern Isolation (INP) module isolates device-specific noise patterns by analyzing high-frequency features in the frequency domain, while the Local Variation Pattern (LVP) module models the complex relationships between local pixels to capture directional intensity variations and reveal unnatural regularities in generated images. By combining these sensor-level and local structural cues, FALCON-Net identifies fundamental generative inconsistencies, ensuring robustness to post-processing and strong generalization to unseen models. Extensive experimental results show that FALCON-Net achieves the state-of-the-art performance in detecting generated images and shows good generalization ability to unseen generative models. The code is available at https://github.com/humiaomiaohaha/FALCON-Net.",
+      "abstract_source": "openalex",
+      "doi": "10.1109/tifs.2026.3683286",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "formal_url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "primary_url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "openalex_url": "https://openalex.org/W7154125740",
+      "url": "https://doi.org/10.1109/tifs.2026.3683286",
+      "authors": [
+        {
+          "name": "Dengyong Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Miao Hu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jiaxin Chen",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Changsheng Chen",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jin Wang",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yun Song",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Gaobo Yang",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xin Liao",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xiangling Ding",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "institution": "Hunan University",
+      "institution_id": "institution:be8fe6da68f67876",
+      "location_id": "location:be8fe6da68f67876f00e",
+      "institution_authors": [
+        "Gaobo Yang",
+        "Xin Liao"
+      ],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Hunan",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Changsha",
+      "latitude": 28.183548,
+      "longitude": 112.9413466,
+      "lat": 28.183548,
+      "lon": 112.9413466,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "mapping_id": "mapping:049f07debf3a1d281504",
+      "affiliation_order": 4,
+      "raw_affiliation": "College of Computer Science and Electronic Engineering, Hunan University, Changsha, China",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: College of Computer Science and Electronic Engineering, Hunan University, Changsha, China",
+      "location_display": "Hunan, China",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:6bdc62fb06ac696f",
+          "institution": "Changsha University of Science and Technology (CSUST)",
+          "institution_type": "university",
+          "authors": [
+            "Dengyong Zhang",
+            "Miao Hu",
+            "Jiaxin Chen",
+            "Yun Song"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Changsha University of Science and Technology"
+          ],
+          "canonical_name": "Changsha University of Science and Technology",
+          "canonical_institution_name": "Changsha University of Science and Technology",
+          "abbreviation": "CSUST"
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:11d4e5b507bbbada",
+          "institution": "Shenzhen MSU-BIT University (SMBU)",
+          "institution_type": "university",
+          "authors": [
+            "Changsheng Chen"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Shenzhen MSU-BIT University"
+          ],
+          "canonical_name": "Shenzhen MSU-BIT University",
+          "canonical_institution_name": "Shenzhen MSU-BIT University",
+          "abbreviation": "SMBU"
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:42d2e85e0328361b",
+          "institution": "Hunan University of Science and Technology (HNUST)",
+          "institution_type": "university",
+          "authors": [
+            "Jin Wang",
+            "Xiangling Ding"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Hunan University of Science and Technology"
+          ],
+          "canonical_name": "Hunan University of Science and Technology",
+          "canonical_institution_name": "Hunan University of Science and Technology",
+          "abbreviation": "HNUST"
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution": "Hunan University",
+          "institution_type": "university",
+          "authors": [
+            "Gaobo Yang",
+            "Xin Liao"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Dengyong Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Miao Hu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Jiaxin Chen",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Changsheng Chen",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:11d4e5b507bbbada"
+          ]
+        },
+        {
+          "author": "Jin Wang",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ]
+        },
+        {
+          "author": "Yun Song",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ]
+        },
+        {
+          "author": "Gaobo Yang",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ]
+        },
+        {
+          "author": "Xin Liao",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ]
+        },
+        {
+          "author": "Xiangling Ding",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ]
+        }
+      ],
+      "venue_label": "IEEE Transactions on Information Forensics and Security (TIFS)",
+      "venue_aliases": [
+        "IEEE Transactions on Information Forensics and Security",
+        "TIFS",
+        "IEEE TIFS"
+      ],
+      "ambiguity_status": "resolved",
+      "venue_review_required": false,
+      "institution_type": "university",
+      "canonical_name": "Hunan University",
+      "canonical_institution_name": "Hunan University",
+      "mapping_lineage_ids": [
+        "mapping:049f07debf3a1d281504"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 9,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Changsha University of Science and Technology (CSUST)",
+          "canonical_name": "Changsha University of Science and Technology",
+          "institution_id": "institution:6bdc62fb06ac696f",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China",
+          "source_institution_names": [
+            "Changsha University of Science and Technology"
+          ],
+          "canonical_institution_name": "Changsha University of Science and Technology",
+          "abbreviation": "CSUST"
+        },
+        {
+          "index": 2,
+          "name": "Shenzhen MSU-BIT University (SMBU)",
+          "canonical_name": "Shenzhen MSU-BIT University",
+          "institution_id": "institution:11d4e5b507bbbada",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China",
+          "source_institution_names": [
+            "Shenzhen MSU-BIT University"
+          ],
+          "canonical_institution_name": "Shenzhen MSU-BIT University",
+          "abbreviation": "SMBU"
+        },
+        {
+          "index": 3,
+          "name": "Hunan University of Science and Technology (HNUST)",
+          "canonical_name": "Hunan University of Science and Technology",
+          "institution_id": "institution:42d2e85e0328361b",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China",
+          "source_institution_names": [
+            "Hunan University of Science and Technology"
+          ],
+          "canonical_institution_name": "Hunan University of Science and Technology",
+          "abbreviation": "HNUST"
+        },
+        {
+          "index": 4,
+          "name": "Hunan University",
+          "canonical_name": "Hunan University",
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China"
+        }
+      ],
+      "current_institution": {
+        "index": 4,
+        "name": "Hunan University",
+        "canonical_name": "Hunan University",
+        "institution_id": "institution:be8fe6da68f67876",
+        "institution_type": "university",
+        "country": "China",
+        "country_code": "",
+        "region": "Hunan",
+        "location_display": "Hunan, China"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Dengyong Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Miao Hu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jiaxin Chen",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Changsheng Chen",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:11d4e5b507bbbada"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jin Wang",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yun Song",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6bdc62fb06ac696f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Gaobo Yang",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xin Liao",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xiangling Ding",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:42d2e85e0328361b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "is_arxiv_preprint": false,
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
+      "metadata_status": {
+        "overall": "Verified",
+        "default_field_status": "Verified",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Curated",
+            "source": "OpenAlex"
           }
         },
         "source": "OpenAlex"

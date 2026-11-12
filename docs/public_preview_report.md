@@ -11,7 +11,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-11-04T03:33:01Z |
+| public_preview_generated_at | 2026-11-11T08:22:35Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1410 |
-| Unique mapped papers | 613 |
-| Unique institutions | 559 |
+| Map records | 1414 |
+| Unique mapped papers | 614 |
+| Unique institutions | 560 |
 | Countries | 47 |
 | arXiv/preprint records | 775 |
-| Records with DOI | 1086 |
-| Records with venue | 1406 |
+| Records with DOI | 1090 |
+| Records with venue | 1410 |
 | Records missing venue | 4 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -36,7 +36,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Task | Records |
 | --- | ---: |
-| detection | 567 |
+| detection | 568 |
 | source_attribution | 77 |
 | localization | 38 |
 
@@ -45,7 +45,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 | Year | Records |
 | --- | ---: |
 | 2027 | 1 |
-| 2026 | 229 |
+| 2026 | 230 |
 | 2025 | 182 |
 | 2024 | 102 |
 | 2023 | 42 |
@@ -74,7 +74,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Country | Records |
 | --- | ---: |
-| China | 740 |
+| China | 744 |
 | United States | 188 |
 | Italy | 91 |
 | India | 55 |
@@ -104,7 +104,7 @@ Unique mapped papers are matched to `web/data/public_preview_papers.json` using 
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1324 |
+| high | 1328 |
 | medium | 86 |
 
 ## Potential quality issues
