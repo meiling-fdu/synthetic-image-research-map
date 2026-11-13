@@ -1,0 +1,30 @@
+{
+  "prior_commit": "9ca5c1c617ba34f24cf2e159f7a94255fddd526a",
+  "prior_tree": "65d9872b03089713e420e1357fb3febda62a3ec3",
+  "prior_ledger_sha256": "6fe7b6f5f7d4d0ed1811931fa0c284e9f0b6164c4369023e5f1317bf1626f36e",
+  "actual_ledger_sha256": "c59d9fe6113ab33553e8423cde710d9230d82487bebf3d84e34fc3c4e0b938c9",
+  "inherited_guard_sha256": "1ada47ef6e1f279b9afb65956b869e6694d29b8186330a37a868a7a54d417342",
+  "test_sha256": {
+    "tests/test_corpus_quality_batch_b_wave_b5_04.py": "994990a5008e72fd461e52cd8fa02201844beb97cedc3df1210aac45bebe2a33",
+    "tests/test_b5_04_historical_routing.py": "4e8b8a21a5a044ca065d5089a869aed66dfdb2b64f5c23ecd8e523b31c2adf22"
+  },
+  "ledger_operand_scope": [
+    "tests/test_corpus_quality_batch_b_wave_b5_04.py::test_authoritative_changes_and_nine_native_decisions",
+    "tests/test_corpus_quality_batch_b_wave_b5_04.py::test_ledger_accounting_from_original_action_inventory",
+    "tests/test_corpus_quality_batch_b_wave_b5_04.py::test_unauthorized_source_mutation_is_rejected[data/curated/author_institution_mappings.csv-mapping:59717de03fbe53a3b5b5-mapping:aaaaaaaaaaaaaaaaaaaa]",
+    "tests/test_corpus_quality_batch_b_wave_b5_04.py::test_unauthorized_source_mutation_is_rejected[data/curated/author_institution_mappings.csv-location:24ff901ade26602be031-location:aaaaaaaaaaaaaaaaaaaa]",
+    "tests/test_corpus_quality_batch_b_wave_b5_04.py::test_unauthorized_source_mutation_is_rejected[data/curated/author_institution_mappings.csv-,Changsha University of Science and Technology,-,Unverified Institution,]",
+    "tests/test_corpus_quality_batch_b_wave_b5_04.py::test_unauthorized_source_mutation_is_rejected[data/curated/papers.csv-curated:2117831292318de4cf18-curated:aaaaaaaaaaaaaaaaaaaa]",
+    "tests/test_corpus_quality_batch_b_wave_b5_04.py::test_unauthorized_source_mutation_is_rejected[data/curated/review_decisions.csv-review:-revieW:]",
+    "tests/test_corpus_quality_batch_b_wave_b5_04.py::test_unauthorized_source_mutation_is_rejected[data/curated/institution_locations.csv-28.0705674-28.0705675]",
+    "tests/test_corpus_quality_batch_b_wave_b5_04.py::test_unauthorized_curated_field_edit_is_rejected[data/curated/author_institution_mappings.csv-mapping_id-affiliation_order-9]",
+    "tests/test_corpus_quality_batch_b_wave_b5_04.py::test_unauthorized_curated_field_edit_is_rejected[data/curated/papers.csv-paper_id-venue_track-Workshop]",
+    "tests/test_b5_04_historical_routing.py::test_prior_replay_cannot_hide_actual_b504_tampering[data/curated/papers.csv]",
+    "tests/test_b5_04_historical_routing.py::test_prior_replay_cannot_hide_actual_b504_tampering[data/curated/author_institution_mappings.csv]",
+    "tests/test_b5_04_historical_routing.py::test_prior_replay_cannot_hide_actual_b504_tampering[data/curated/review_decisions.csv]",
+    "tests/test_b5_04_historical_routing.py::test_prior_replay_cannot_hide_actual_b504_tampering[data/curated/institution_locations.csv]",
+    "tests/test_b5_04_historical_routing.py::test_prior_replay_cannot_hide_actual_b504_tampering[web/data/public_preview_map_data.json]",
+    "tests/test_b5_04_historical_routing.py::test_prior_replay_cannot_hide_actual_b504_tampering[data/manual/missing_author_mappings_report.csv]",
+    "tests/test_b5_04_historical_routing.py::test_prior_replay_cannot_hide_actual_b504_tampering[tests/baseline_expectations.py]"
+  ]
+}
